@@ -1,7 +1,19 @@
 import React, {Component} from 'react';
 import './video.css';
+import axios from 'axios';
+
+const BASE_URL = 'https://www.googleapis.com/youtube/v3/search';
+const API_KEY = '?=AIzaSyDdIblebqEZ9li79ntEKeDZBQwwCjBXe48';
 
 class Video extends Component {
+    constructor (props) {
+        super(props);
+    }
+    componentWillMount () {
+        axios.get(`${BASE_URL}`).then( (response) => {
+            console.log("Here is a response: ", response);
+        })
+    }
     render() {
         return (
             <div className="container col-xs-6 col-sm-offset-3 main-vid-container">
