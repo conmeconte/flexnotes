@@ -1,7 +1,7 @@
 import React from 'react';
-import '../assets/css/app.css';
-import logo from '../assets/images/logo.svg';
 import Panel from './panel/panel';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 // import Video from './video/video';
 
 import Modal from './modal';
@@ -9,11 +9,9 @@ import Modal from './modal';
 const App = () => (
     <div>
         <div className="app">
-            <img src={logo} className="logo rotate"/>
-            <h1>Welcome to React</h1>
+            <Panel/>
         </div>
         {/*<Modal />*/}
-        <Panel/>
     </div>
 );
 
