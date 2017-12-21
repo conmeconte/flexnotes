@@ -1,0 +1,13 @@
+.main-vid-container {
+    height: 100vh;
+    position: relative;
+    top: 5vh;
+}
+.video-container {
+    position: relative;
+    border: 1px solid #000;
+    height: 50%;
+    top: 3vh;
+    text-align: center;
+    line-height: 45vh;
+}
