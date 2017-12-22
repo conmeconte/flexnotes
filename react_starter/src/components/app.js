@@ -1,7 +1,7 @@
 import React from 'react';
 // import Panel from './panel/panel';
 import Video from './video/video';
-import bootstrap from '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import bootstrap from '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 import Modal from './modal';
 
