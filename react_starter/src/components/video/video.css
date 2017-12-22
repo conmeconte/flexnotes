@@ -3,11 +3,14 @@
     position: relative;
     top: 5vh;
 }
-.video-container {
-    position: relative;
-    border: 1px solid #000;
-    height: 50%;
-    top: 3vh;
-    text-align: center;
-    line-height: 45vh;
+.video-items {
+    list-style-type: none;
+}
+.results-container li,
+.results-container button {
+    display: inline-block;
+}
+.result-item {
+    margin-bottom: 1vh;
+    margin-top: 1vh;
 }

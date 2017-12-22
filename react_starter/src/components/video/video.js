@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './video.css';
 import $ from 'jquery';
+import Results from './results';
 
 // const BASE_URL = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true';
 const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
@@ -12,13 +13,12 @@ class Video extends Component {
         this.checkAuth = this.checkAuth.bind(this);
         this.handleAuthResult = this.handleAuthResult.bind(this);
         this.loadAPIClientInterfaces = this.loadAPIClientInterfaces.bind(this);
-        // this.handleAPILoaded = this.handleAPILoaded.bind(this);
         this.search = this.search.bind(this);
         this.OAUTH2_CLIENT_ID = '921823203830-e91j7vj9gqr6ftkvcaot3iffhcii7vtp.apps.googleusercontent.com';
         this.OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
         this.state = {
-          gapiReady: false
-        };
+            videos: []
+        }
     }
     componentDidMount() {
         this.loadYouTubeApi();
@@ -69,12 +69,8 @@ class Video extends Component {
     }
     loadAPIClientInterfaces () {
         gapi.client.load('youtube', 'v3', function() {
-            // this.handleAPILoaded();
-            console.log('API Loaded.')
+            console.log('API Loaded. Ready for search.')
         });
-    }
-    handleAPILoaded () {
-        $('#search-button').attr('disabled', false);
     }
     search () {
         this.checkAuth();
@@ -84,15 +80,11 @@ class Video extends Component {
             q: q,
             part: 'snippet'
         });
-
-        request.execute(function(response) {
-            const str = JSON.stringify(response.result);
+        request.execute((response) => {
             const videos = [];
-            var vidObject;
             const listOfVideoInfo = response.result.items;
-            console.log(response.result);
             for (var listOfVideoInfoIndex = 0; listOfVideoInfoIndex < listOfVideoInfo.length; listOfVideoInfoIndex++) {
-                vidObject = {
+                const vidObject = {
                     videoTitle: listOfVideoInfo[listOfVideoInfoIndex].snippet.title,
                     videoId: listOfVideoInfo[listOfVideoInfoIndex].id.videoId,
                     url: 'https://www.youtube.com/embed/' + listOfVideoInfo[listOfVideoInfoIndex].id.videoId,
@@ -103,18 +95,15 @@ class Video extends Component {
                 };
                 videos.push(vidObject);
             }
-            // for (let i = 0; i < videos.length; i++) {
-            //     let iframe = document.createElement("iframe");
-            //     iframe.setAttribute("src", videos[i].url);
-            //     iframe.setAttribute("frameborder", 0);
-            //     iframe.style.width = "420";
-            //     iframe.style.height = "315";
-            //     document.querySelector(".video-container").append(iframe);
-            // }
             console.log("List of video objects: ", videos);
+            this.setState({
+                videos: videos
+            });
         });
     }
     render() {
+            const {videos} = this.state;
+            console.log(videos);
             return (
                 <div className="container col-xs-6 col-sm-offset-3 main-vid-container">
                     <div className="input-group">
@@ -134,6 +123,9 @@ class Video extends Component {
                     </div>
                     <div className="video-container">
 
+                    </div>
+                    <div className="results-container">
+                        <Results results={videos}/>
                     </div>
                 </div>
             );
