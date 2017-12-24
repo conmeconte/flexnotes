@@ -118,7 +118,7 @@ class Video extends Component {
                     <ul className="dropdown-menu">
                     <li><a href="#">URL</a></li>
                     <li><a href="#">Keyword</a></li>
-                    </ul>
+                    </u
                     </span>
                     </div>
                     <div className="video-container">
