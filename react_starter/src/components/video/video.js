@@ -77,6 +77,11 @@ class Video extends Component {
         this.checkAuth();
         this.loadAPIClientInterfaces();
         var q = $('#query').val();
+        if (q === '') {
+            document.getElementById("query").setAttribute("placeholder", "Please enter a search keyword.");
+            console.log("Search can\'t be completed.")
+            return;
+        }
         var request = gapi.client.youtube.search.list({
             q: q,
             part: 'snippet'
@@ -110,7 +115,7 @@ class Video extends Component {
                 <div className="results-input-container row">
                     <div className="results-container col-xs-4 pull-right">
                         <div className="input-group col-xs-12">
-                            <input id="query" className="form-control" type="text" placeholder="Search by keyword" />
+                            <input id="query" className="form-control" type="text" placeholder="Search..." />
                             <span className="input-group-btn">
                                 <button id="search-button" type="button" className="btn btn-primary"
                                     onClick={this.search}>Search</button>
