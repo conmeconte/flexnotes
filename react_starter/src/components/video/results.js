@@ -23,12 +23,12 @@ class Results extends Component {
             return (
                 <div className="result-item col-xs-12" key={index}>
                     <li className="video-items">{item.videoTitle}</li>
-                    <button className="btn btn-success pull-right" onClick={ () => { this.play(item.url) }}>Play Video</button>
+                    <button className="btn-sm btn-success pull-right" onClick={ () => { this.play(item.url) }}>Play Video</button>
                 </div>
             );
         });
         return (
-            <div>{list}</div>
+            <div className="results">{list}</div>
         );
 
     }

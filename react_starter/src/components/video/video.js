@@ -20,6 +20,8 @@ class Video extends Component {
         this.state = {
             videos: []
         }
+        this.close = this.close.bind(this);
+        this.open = this.open.bind(this);
     }
     componentDidMount() {
         this.loadYouTubeApi();
@@ -107,22 +109,32 @@ class Video extends Component {
             });
         });
     }
+    close() {
+        console.log('Close was clicked');
+        document.querySelector(".results-container.sidebar").style.display = "none";
+    }
+    open () {
+        console.log('Open was clicked');
+        document.querySelector(".results-container.sidebar").style.display = "block";
+    }
     render() {
         const { videos } = this.state;
         console.log(videos);
         return (
             <div className="main">
-                <div className="results-input-container row">
-                    <div className="results-container col-xs-4 pull-right">
-                        <div className="input-group col-xs-12">
+                <span onClick={this.open} className="hamburger glyphicon glyphicon-menu-hamburger pull-right"></span>
+                {/* <div className="results-input-container row"> */}
+                    <div className="results-container sidebar col-xs-4 pull-right">
+                        <div className="search-button-input input-group col-xs-10">
                             <input id="query" className="form-control" type="text" placeholder="Search..." />
                             <span className="input-group-btn">
                                 <button id="search-button" type="button" className="btn btn-primary"
-                                    onClick={this.search}>Search</button>
-                                <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                    onClick={this.search}><span className="glyphicon glyphicon-search"></span></button>
+                                {/* <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                     <span className="caret"></span>
-                                </button>
+                                </button> */}
+                                <button onClick={this.close} className="close">X</button>
                                 <ul className="dropdown-menu">
                                     <li><a href="#">URL</a></li>
                                     <li><a href="#">Keyword</a></li>
@@ -131,10 +143,10 @@ class Video extends Component {
                         </div>
                         <Results results={videos} />
                     </div>
-                    <div className="col-xs-8 pull-left">
+                    <div id="video-wrapper" className="video-wrapper col-xs-12">
                         <VideoContainer/>
                     </div>
-                </div>
+                {/* </div> */}
             </div>
 
         );

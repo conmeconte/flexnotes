@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default () => {
-    return <div className="video-container"></div>
+    return <div id="video-container" className="video-container"></div>
 }
