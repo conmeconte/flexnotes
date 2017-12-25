@@ -111,11 +111,13 @@ class Video extends Component {
     }
     close() {
         console.log('Close was clicked');
-        document.querySelector(".results-container.sidebar").style.display = "none";
+        document.querySelector(".results-container.sidebar").style.width = "0";
+        document.querySelector(".results-container.sidebar").classList.remove("col-xs-4");
     }
     open () {
         console.log('Open was clicked');
-        document.querySelector(".results-container.sidebar").style.display = "block";
+        document.querySelector(".results-container.sidebar").style.width = "65%";
+        document.querySelector(".results-container.sidebar").classList.add("col-xs-4");
     }
     render() {
         const { videos } = this.state;

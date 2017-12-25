@@ -23,7 +23,8 @@ class Results extends Component {
             return (
                 <div className="result-item col-xs-12" key={index}>
                     <li className="video-items">{item.videoTitle}</li>
-                    <button className="btn-sm btn-success pull-right" onClick={ () => { this.play(item.url) }}>Play Video</button>
+                    <button className="btn-sm btn-success pull-right" onClick={ () => { console.log("Add button was clicked.")} }><span className="glyphicon glyphicon-plus"></span></button>
+                    <button className="btn-sm btn-primary pull-right" onClick={ () => { this.play(item.url) }}><span className="glyphicon glyphicon-play"></span></button>
                 </div>
             );
         });
