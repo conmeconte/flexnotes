@@ -1,0 +1,40 @@
+*{
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+.main {
+    background-color: #333;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 2vh;
+}
+.results-input-container {
+    height: 100%;
+    position: relative;
+}
+.video-items {
+    list-style-type: none;
+}
+.results-container li,
+.results-container button {
+    display: inline-block;
+}
+.result-item {
+    margin-bottom: 1vh;
+    margin-top: 1vh;
+}
+.results-container {
+    position: absolute;
+    top: 0;
+    width: 30%;
+}
+.video-container {
+    height: 96vh;
+}
+.row.results-input-container {
+    margin-left: 0;
+    margin-right: 0;
+}
