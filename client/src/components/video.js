@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './video.css';
+import '../assets/css/video.css'
 import $ from 'jquery';
 import Results from './results';
 import VideoContainer from './video-container';
