@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './video.css';
 import $ from 'jquery';
 import Results from './results';
+import VideoContainer from './video-container';
 
 // const BASE_URL = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true';
 const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
 
 class Video extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.googleApiClientReady = this.googleApiClientReady.bind(this);
         this.checkAuth = this.checkAuth.bind(this);
@@ -23,7 +24,7 @@ class Video extends Component {
     componentDidMount() {
         this.loadYouTubeApi();
     }
-    loadYouTubeApi () {
+    loadYouTubeApi() {
         const script = document.createElement("script");
         script.src = 'https://apis.google.com/js/client.js?onload=googleApiClientReady';
         script.onload = () => {
@@ -36,19 +37,19 @@ class Video extends Component {
         }
         document.body.appendChild(script);
     }
-    googleApiClientReady () {
-        gapi.auth.init(function() {
+    googleApiClientReady() {
+        gapi.auth.init(function () {
             window.setTimeout(checkAuth, 1);
         });
     }
-    checkAuth () {
+    checkAuth() {
         gapi.auth.authorize({
             client_id: this.OAUTH2_CLIENT_ID,
             scope: this.OAUTH2_SCOPES,
             immediate: true
         }, this.handleAuthResult);
     }
-    handleAuthResult (authResult) {
+    handleAuthResult(authResult) {
         if (authResult && !authResult.error) {
             // Authorization was successful. Hide authorization prompts and show
             // content that should be visible after authorization succeeds.
@@ -58,21 +59,21 @@ class Video extends Component {
         } else {
             // Make the #login-link clickable. Attempt a non-immediate OAuth 2.0
             // client flow. The current function is called when that flow completes.
-//            $('#login-link').click(function() {
+            //            $('#login-link').click(function() {
             gapi.auth.authorize({
                 client_id: this.OAUTH2_CLIENT_ID,
                 scope: this.OAUTH2_SCOPES,
                 immediate: false
             }, this.handleAuthResult);
-//            });
+            //            });
         }
     }
-    loadAPIClientInterfaces () {
-        gapi.client.load('youtube', 'v3', function() {
+    loadAPIClientInterfaces() {
+        gapi.client.load('youtube', 'v3', function () {
             console.log('API Loaded. Ready for search.')
         });
     }
-    search () {
+    search() {
         this.checkAuth();
         this.loadAPIClientInterfaces();
         var q = $('#query').val();
@@ -102,33 +103,36 @@ class Video extends Component {
         });
     }
     render() {
-            const {videos} = this.state;
-            console.log(videos);
-            return (
-                <div className="container col-xs-6 col-sm-offset-3 main-vid-container">
-                    <div className="input-group">
-                        <input id="query" className="form-control" type="text"/>
-                        <span className="input-group-btn">
-                    <button id="search-button" type="button" className="btn btn-primary"
-                            onClick={this.search}>Search</button>
-                    <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                    <span className="caret"></span>
-                    </button>
-                    <ul className="dropdown-menu">
-                    <li><a href="#">URL</a></li>
-                    <li><a href="#">Keyword</a></li>
-                    </u
-                    </span>
+        const { videos } = this.state;
+        console.log(videos);
+        return (
+            <div className="main">
+                <div className="results-input-container row">
+                    <div className="results-container col-xs-4 pull-right">
+                        <div className="input-group col-xs-12">
+                            <input id="query" className="form-control" type="text" placeholder="Search by keyword" />
+                            <span className="input-group-btn">
+                                <button id="search-button" type="button" className="btn btn-primary"
+                                    onClick={this.search}>Search</button>
+                                <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span className="caret"></span>
+                                </button>
+                                <ul className="dropdown-menu">
+                                    <li><a href="#">URL</a></li>
+                                    <li><a href="#">Keyword</a></li>
+                                </ul>
+                            </span>
+                        </div>
+                        <Results results={videos} />
                     </div>
-                    <div className="video-container">
-
-                    </div>
-                    <div className="results-container">
-                        <Results results={videos}/>
+                    <div className="col-xs-8 pull-left">
+                        <VideoContainer/>
                     </div>
                 </div>
-            );
+            </div>
+
+        );
     }
 }
 

@@ -1,7 +1,18 @@
-.main-vid-container {
-    height: 100vh;
+*{
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+.main {
+    background-color: #333;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.results-input-container {
+    height: 100%;
     position: relative;
-    top: 5vh;
 }
 .video-items {
     list-style-type: none;
@@ -13,4 +24,16 @@
 .result-item {
     margin-bottom: 1vh;
     margin-top: 1vh;
+}
+.results-container {
+    position: absolute;
+    top: 0;
+    width: 30%;
+}
+.video-container {
+    height: 100vh;
+}
+.row.results-input-container {
+    margin-left: 0;
+    margin-right: 0;
 }
