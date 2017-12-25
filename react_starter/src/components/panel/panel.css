@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+.container {
+    height: 100vh;
+}
+.row {
+    height: 50%;
+    position: relative;
+    right: -16vh;
+}
+.panels {
+    border: 1px solid #000;
+    height: 100%;
+    line-height: 45vh;
+}
