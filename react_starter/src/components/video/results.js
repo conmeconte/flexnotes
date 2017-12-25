@@ -28,7 +28,7 @@ class Results extends Component {
             );
         });
         return (
-            <div className="results">{list}</div>
+            <div className="results text-left">{list}</div>
         );
 
     }

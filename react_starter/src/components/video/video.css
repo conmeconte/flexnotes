@@ -23,12 +23,13 @@
 button.close {
     color: #fff;
     position: relative;
-    top: -3vh;
-    left: 4vh;
+    top: -3.5vh;
+    left: 6vh;
 }
 .results-container {
     height: 100%;
     z-index: 3;
+    overflow: scroll;
 }
 .results-container li,
 .results-container button {
@@ -43,7 +44,7 @@ button.close {
     top: 0;
     right: 2vh;
     background-color: #000;
-    width: 50%;
+    width: 65%;
 }
 .row.results-input-container {
     margin-left: 0;
