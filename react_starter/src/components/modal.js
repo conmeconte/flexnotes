@@ -25,7 +25,8 @@ class Modal extends Component {
         // console.log('Modal Props: ', this.props);
         const button = (
             <button onClick={() => this.setState({visible: true})} className="btn blue">
-                <i className="material-icons">date_range</i>
+                {/* <i className="material-icons">date_range</i> */}
+                <span className="glyphicon glyphicon-calendar"></span>
             </button>
         );
 

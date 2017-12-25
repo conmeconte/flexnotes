@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Video from '../video/video';
+import Modal from '../modal';
 import './panel.css';
 
 class Panel extends Component {
@@ -14,6 +15,7 @@ class Panel extends Component {
                     <div className="panels video"><Video/></div>
                     <div className="panels">Meistertask</div>
                 </div>
+                <Modal/>
             </div>
         );
     }
