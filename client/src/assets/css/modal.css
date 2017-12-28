@@ -13,3 +13,9 @@
     margin: auto;
     width: 50%;
 }
+
+.mockCal {
+    height: 200px;
+    width: 100%;
+    border: 1px solid black;
+}
