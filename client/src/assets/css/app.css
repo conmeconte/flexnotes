@@ -1,0 +1,17 @@
+@font-face {
+    font-family: blocky;
+    src: url(../fonts/blocky.ttf);
+}
+
+body {
+    margin: 2% 4%;
+}
+
+.app {
+    background-color: #000;
+    color: #fff;
+    font-family: blocky;
+    font-size: 25px;
+    padding: 50px;
+    text-align: center;
+}
