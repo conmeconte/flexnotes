@@ -29,13 +29,13 @@ export default class Binder extends Component {
         let new_tab_obj = {
             tab_id: new_index,
             tab_color: 'red',
-            tab_name: 'TabName',
+            tab_name: 'NewTab',
             tab_url: new_url,
             page_arr_obj: [{
 
                 page_id: 1,
                 page_color: 'green',
-                page_name: 'PageName',
+                page_name: 'Page1',
                 page_date: '',
                 page_url: '/page1'
             }]
@@ -66,15 +66,15 @@ export default class Binder extends Component {
         const tab_route = tab_arr_obj.map((item, index) => {
             return(
                 <Route key={item.tab_id} path={binder_url + item.tab_url} render={()=> 
-                    <Tab tabObj={item}/>
+                    <Tab tabObj={item} binderUrl={binder_url}/>
                 }
                 />
             );
         });
             return(
     
-                <div className='nav_column'>
-                    <h2>Tabs</h2>
+                <div className='nav_tab'>
+                    <h4>Tabs</h4>
                     <ul>
                         {tab_link}
                     </ul>

@@ -4,7 +4,7 @@
 }
 
 body {
-    margin: 0;
+    margin: 2% 4%;
 }
 
 .app {
@@ -14,21 +14,4 @@ body {
     font-size: 25px;
     padding: 50px;
     text-align: center;
-}
-
-.app .logo {
-    height: 200px;
-}
-
-.rotate {
-    animation: spin 10s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
 }

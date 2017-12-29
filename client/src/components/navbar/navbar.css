@@ -1,0 +1,39 @@
+.nav_binder, .nav_tab, .nav_page {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;    
+}
+
+ul > li {
+    list-style: none;
+}
+
+.nav_binder {
+    border: 2px solid red;
+    display: inline-block;
+    position: relative;
+    width: 10vw;
+}
+
+.nav_tab {
+    border: 2px solid blue;
+    display: inline-block;
+    position: absolute;
+    top: 100%;
+    width: 50%;
+
+}
+
+.nav_page {
+    border: 2px solid green;
+    display: inline-block; 
+    position: absolute;
+    top: 0%;
+    left: 100%;
+    width: 100%;   
+}
