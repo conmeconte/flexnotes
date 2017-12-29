@@ -19,24 +19,24 @@ export default class Tab extends Component {
         console.log('addTab clicked');
         const {binder} = this.state;
         console.log("addPage: ",binder);
-        const {tab_arr_obj} = binder;
+        const {page_arr_obj} = binder;
         //console.log('tab_arr_obj:',tab_arr_obj);
 
-        let length = tab_arr_obj.length;
-        let new_index = tab_arr_obj[length-1].tab_id + 1;
+        let length = page_arr_obj.length;
+        let new_index = page_arr_obj[length-1].page_id + 1;
         //console.log('tab_arr_obj',tab_arr_obj[length-1]);
-        let new_url = '/tab' + new_index;
+        let new_url = '/page' + new_index;
         //console.log('new_url:',new_url);
         let new_page_obj = {
-                page_id: 1,
+                page_id: new_index,
                 page_color: 'green',
                 page_name: 'PageName',
                 page_date: '',
-                page_url: '/page1'
+                page_url: new_url
             };
         
 
-        binder.tab_arr_obj = [...binder.tab_arr_obj, new_tab_obj];
+        binder.page_arr_obj = [...binder.page_arr_obj, new_page_obj];
 
         this.setState({
             binder: binder
@@ -71,8 +71,8 @@ export default class Tab extends Component {
         });
             return(
     
-                <div className='nav_tab'>
-                    <h2>Pages</h2>
+                <div className='nav_page'>
+                    <h5>Pages</h5>
                     <ul>
                         {page_link}
                     </ul>

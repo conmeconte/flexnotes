@@ -74,7 +74,7 @@ export default class Binder extends Component {
             return(
     
                 <div className='nav_tab'>
-                    <h2>Tabs</h2>
+                    <h4>Tabs</h4>
                     <ul>
                         {tab_link}
                     </ul>

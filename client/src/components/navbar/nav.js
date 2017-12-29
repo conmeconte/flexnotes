@@ -146,7 +146,7 @@ export default class Nav extends Component {
 
         return(
             <div className="nav_binder">
-                <h1>Binder</h1>
+                <h3>Binder</h3>
                 <ul>
                     {binder_link}
                 </ul>

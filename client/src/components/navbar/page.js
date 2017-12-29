@@ -9,8 +9,7 @@ export default class Page extends Component{
         return(
             <div>
                 <ul>
-                    <li>Test Page</li>
-                    <li>Test Page2</li>
+                    <li>Open in notes panel</li>
                 </ul>
             </div>
         );
