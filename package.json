@@ -1,0 +1,26 @@
+{
+  "name": "c10.17_notes_for_you",
+  "version": "1.0.0",
+  "description": "backend package",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conmeconte/c10.17_notes_for_you.git"
+  },
+  "author": "Chung Hong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/conmeconte/c10.17_notes_for_you/issues"
+  },
+  "homepage": "https://github.com/conmeconte/c10.17_notes_for_you#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.3"
+  }
+}
