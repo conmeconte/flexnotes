@@ -29,13 +29,13 @@ export default class Binder extends Component {
         let new_tab_obj = {
             tab_id: new_index,
             tab_color: 'red',
-            tab_name: 'TabName',
+            tab_name: 'NewTab',
             tab_url: new_url,
             page_arr_obj: [{
 
                 page_id: 1,
                 page_color: 'green',
-                page_name: 'PageName',
+                page_name: 'Page1',
                 page_date: '',
                 page_url: '/page1'
             }]

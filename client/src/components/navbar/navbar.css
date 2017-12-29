@@ -1,5 +1,12 @@
 .nav_binder, .nav_tab, .nav_page {
     display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;    
 }
 
 ul > li {
@@ -17,8 +24,9 @@ ul > li {
     border: 2px solid blue;
     display: inline-block;
     position: absolute;
-    left: 100%;
-    top: 0%;
+    top: 100%;
+    width: 50%;
+
 }
 
 .nav_page {
@@ -26,5 +34,6 @@ ul > li {
     display: inline-block; 
     position: absolute;
     top: 0%;
-    left: 100%;   
+    left: 100%;
+    width: 100%;   
 }

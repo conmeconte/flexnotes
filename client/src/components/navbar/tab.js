@@ -30,7 +30,7 @@ export default class Tab extends Component {
         let new_page_obj = {
                 page_id: new_index,
                 page_color: 'green',
-                page_name: 'PageName',
+                page_name: 'NewPage',
                 page_date: '',
                 page_url: new_url
             };
