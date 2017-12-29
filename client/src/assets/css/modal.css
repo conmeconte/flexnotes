@@ -1,0 +1,21 @@
+.confirmModal {
+    display: flex;
+    width: 100vw;
+    height: 50vh;
+    position: fixed;
+    /*background-color: rgba(0, 0, 0, .75);*/
+    bottom: 0;
+    left: 25%;
+    z-index: 1000;
+}
+
+.modal-content {
+    margin: auto;
+    width: 50%;
+}
+
+.mockCal {
+    height: 200px;
+    width: 100%;
+    border: 1px solid black;
+}
