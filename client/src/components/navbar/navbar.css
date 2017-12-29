@@ -1,3 +1,9 @@
-.nav_bar >ul{
+.nav_binder {
+    border: 2px solid red;
+    display: inline-block;
+}
+
+.nav_tab {
+    border: 2px solid blue;
     display: inline-block;
 }

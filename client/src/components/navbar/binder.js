@@ -66,14 +66,14 @@ export default class Binder extends Component {
         const tab_route = tab_arr_obj.map((item, index) => {
             return(
                 <Route key={item.tab_id} path={binder_url + item.tab_url} render={()=> 
-                    <Tab tabObj={item}/>
+                    <Tab tabObj={item} binderUrl={binder_url}/>
                 }
                 />
             );
         });
             return(
     
-                <div className='nav_column'>
+                <div className='nav_tab'>
                     <h2>Tabs</h2>
                     <ul>
                         {tab_link}
