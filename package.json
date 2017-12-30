@@ -20,7 +20,11 @@
   },
   "homepage": "https://github.com/conmeconte/c10.17_notes_for_you#readme",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "mongoose": "^5.0.0-rc0",
+    "passport": "^0.4.0",
+    "cookie-session": "^2.0.0-beta.3",
+    "passport-google-oauth20": "^1.0.0"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
