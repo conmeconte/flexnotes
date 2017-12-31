@@ -6,7 +6,7 @@ const keys= require('./config/keys');
 require('./models/user');
 require('./services/passport');// user must be loaded first so that it creates the mongoose schema to be used in passport
 
-mongoose.connect(keys.mogoURI);
+mongoose.connect(keys.mongoURI);
 
 const app= express();
 
