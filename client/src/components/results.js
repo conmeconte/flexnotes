@@ -19,7 +19,7 @@ class Results extends Component {
         var iframe = document.createElement("iframe");
         iframe.src = link;
         iframe.style.width = '100%';
-        iframe.style.height = '90%';
+        iframe.style.height = '100%';
         document.querySelector(".video-container").innerText = "";
         document.querySelector(".video-container").append(iframe);
     }

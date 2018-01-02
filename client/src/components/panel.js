@@ -3,18 +3,20 @@ import Video from './video';
 import Notes from './notes';
 import Modal from './modal';
 import '../assets/css/panel.css';
+import { SortablePane, Pane } from 'react-sortable-pane';
 
 class Panel extends Component {
     render () {
         return (
+
             <div className="container-fluid text-center">
                 <div className="row col-xs-5">
-                    <div className="panels">Lectures</div>
-                    <div className="panels"><Notes/></div>
-                </div>
-                <div className="row col-xs-5">
-                    <div className="panels video"><Video/></div>
-                    <div className="panels">Meistertask/To Do</div>
+                <SortablePane className="col-xs-6" direction="horizontal" margin={5}>
+                    <Pane id={0} key={0} width={300} height={300}><div className="panels">Lectures</div></Pane>
+                    <Pane id={1} key={1} isSortable="true" width={300} height={300}><div className="panels"><Notes/></div></Pane>
+                    <Pane id={2} key={2} isSortable="true" width={300} height={300}><div className="panels video"><Video/></div></Pane>
+                    <Pane id={3} key={3} isSortable="true" width={300} height={300}><div className="panels">Meistertask/To Do</div></Pane>
+                </SortablePane>
                 </div>
                 <Modal/>
             </div>
