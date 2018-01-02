@@ -83,6 +83,7 @@ export default class Nav extends Component {
 
         this.addBinder = this.addBinder.bind(this);
         this.deleteBinder = this.deleteBinder.bind(this);
+        this.updateBinderName = this.updateBinderName.bind(this);
     }
 
     addBinder(){
@@ -95,7 +96,7 @@ export default class Nav extends Component {
 
         let new_binder_obj = {
             binder_id: new_index,
-            binder_name: 'newBinderName',
+            binder_name: 'New Binder',
             binder_color: 'color',
             binder_url: new_url,
             tab_arr_obj: new_tab_arr
@@ -106,11 +107,20 @@ export default class Nav extends Component {
         });
     }
 
-    deleteBinder(){
+    deleteBinder(binder_id){
+        console.log('delete button clicked, binder_id: ', binder_id);
+        // const tempData = this.state.todoData.slice();
+        // console.log(tempData);
+        // tempData.splice(index, 1);
+
+        // this.setState({
+        //     todoData: tempData
+        // });
 
     }
 
-    updateBinderName(){
+    updateBinderName(binder_id){
+        console.log('edit button clicked, binder_id: ', binder_id);
 
     }
 
@@ -132,7 +142,15 @@ export default class Nav extends Component {
         const binder_link = binder_array.map((item, index) => {
             console.log('map:', item);
             return (
-                <li key={item.binder_id}><Link to={item.binder_url}>{item.binder_name}</Link></li>
+                <li key={item.binder_id}>
+                    <Link to={item.binder_url}>{item.binder_name}</Link>
+                    <button type="button" className="btn btn-default btn-xs btn_edit" onClick={()=>this.updateBinderName(item.binder_id)}>
+                        <span className="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="button" className="btn btn-default btn-xs btn_delete"  onClick={()=>this.deleteBinder(item.binder_id)} >
+                        <span className="glyphicon glyphicon-remove"></span>
+                    </button>
+                </li>
             );               
         });
 
@@ -146,12 +164,17 @@ export default class Nav extends Component {
 
         return(
             <div className="nav_binder col-xs-2">
-                <h3>Binder</h3>
-                <ul>
+
+                <h3 className="nav_header">Binder</h3>
+                <button className="btn btn-default btn-xs nav_header btn_add" onClick={this.addBinder}>
+                    <span className="glyphicon glyphicon-plus"></span>
+                </button>                
+
+                <ul className="nav-binder-row">
                     {binder_link}
                 </ul>
                 {binder_route}
-                <button onClick={this.addBinder}>Add Binder</button>
+
             </div>
         );
     }
