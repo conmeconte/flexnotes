@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/conmeconte/c10.17_notes_for_you#readme",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "re-resizable": "^4.1.2"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
