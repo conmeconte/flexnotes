@@ -14,10 +14,6 @@ class Panel extends Component {
                 <SortablePane className="col-xs-6" direction="horizontal" margin={5}>
                     <Pane id={0} key={0} width={300} height={300}><div className="panels">Lectures</div></Pane>
                     <Pane id={1} key={1} isSortable="true" width={300} height={300}><div className="panels"><Notes/></div></Pane>
-                {/* </SortablePane> */}
-                {/* </div> */}
-                {/* <div className="row col-xs-5"> */}
-                {/* <SortablePane> */}
                     <Pane id={2} key={2} isSortable="true" width={300} height={300}><div className="panels video"><Video/></div></Pane>
                     <Pane id={3} key={3} isSortable="true" width={300} height={300}><div className="panels">Meistertask/To Do</div></Pane>
                 </SortablePane>
