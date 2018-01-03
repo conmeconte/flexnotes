@@ -18,6 +18,7 @@ class App extends Component {
                <BrowserRouter >
                 <div className="container">
                     <Route exact path="/main" component={Panel} />
+                    <Route exact path="/" component={Login} />
                         {/* // <NavBar/>
                         // <Panel/>
                         // <Login /> */}
