@@ -14,7 +14,7 @@ ul {
 }
 
 ul > li {
-    list-style: circle;
+    list-style: none;
 }
 
 .nav_binder {
