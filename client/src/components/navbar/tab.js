@@ -57,7 +57,10 @@ export default class Tab extends Component {
         const page_link = page_arr_obj.map((item, index) => {
         console.log('map:', item);
             return (
-                <li key={item.page_id}><Link to={binderUrl + tab_url + item.page_url}>{item.page_name}</Link></li>
+                <li key={item.page_id}><Link to={binderUrl + tab_url + item.page_url}>
+                <div className="pageDiv">
+                    {item.page_name}
+                </div></Link></li>
             );               
          });
     
@@ -73,12 +76,13 @@ export default class Tab extends Component {
     
                 <div className='nav_page'>
                     <h5>Pages</h5>
-                    <ul>
+                    <button onClick={this.addPage}>Add Page</button>
+                    <ul className="nav-page-col">
                         {page_link}
                     </ul>
         
                     {page_route}
-                    <button onClick={this.addPage}>Add Page</button>
+                    
                 </div>
             );
     }

@@ -9,7 +9,21 @@ class Notes extends Component {
 
         this.state = {
             text: ''
-        }
+        };
+
+        this.modules = {
+            toolbar: [
+                [{ 'size': ['small', false, 'large', 'huge'] }],
+                [{ 'font': [] }],
+                ['bold', 'italic', 'underline','strike'],
+                [{ 'color': [] }, { 'background': [] }],
+                [{ 'align': [] }],
+                [{'list': 'ordered'}, {'list': 'bullet'}],
+                [{ 'indent': '-1'}, { 'indent': '+1' }],
+                [{ 'script': 'sub'}, { 'script': 'super' }, 'formula'],
+                ['link', 'image', 'video'],
+            ]
+        };
 
         this.handleChange = this.handleChange.bind(this)
     }
@@ -24,8 +38,9 @@ class Notes extends Component {
         return (
             <div className="notesPanel">
                 <h3>Notes Panel</h3>
-                <ReactQuill value={this.state.text}
-                        onChange={this.handleChange} />
+                <ReactQuill modules={this.modules}
+                            value={this.state.text}
+                            onChange={this.handleChange} />
             </div>
         )
     }
