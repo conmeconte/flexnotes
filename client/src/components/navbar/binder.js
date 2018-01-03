@@ -59,7 +59,11 @@ export default class Binder extends Component {
         const tab_link = tab_arr_obj.map((item, index) => {
         console.log('map:', item);
             return (
-                <li key={item.tab_id}><Link to={binder_url + item.tab_url}>{item.tab_name}</Link></li>
+                <li key={item.tab_id}><Link to={binder_url + item.tab_url}>
+                    <div className="tabDiv">
+                        {item.tab_name}
+                    </div>
+                </Link></li>
             );               
          });
     
@@ -75,12 +79,13 @@ export default class Binder extends Component {
     
                 <div className='nav_tab'>
                     <h4>Tabs</h4>
-                    <ul>
+                    <button onClick={this.addTab}>Add Tab</button>
+                    <ul className="nav-tab-col">
                         {tab_link}
                     </ul>
         
                     {tab_route}
-                    <button onClick={this.addTab}>Add Tab</button>
+                   
                 </div>
             );
     }

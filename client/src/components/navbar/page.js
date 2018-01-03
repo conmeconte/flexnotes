@@ -7,11 +7,7 @@ export default class Page extends Component{
 
     render(){
         return(
-            <div>
-                <ul>
-                    <li>Open in notes panel</li>
-                </ul>
-            </div>
+            <div>Open in notes panel</div>
         );
     }
 }
