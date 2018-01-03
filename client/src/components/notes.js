@@ -23,7 +23,6 @@ class Notes extends Component {
 
         return (
             <div className="notesPanel">
-                <h3>Notes Panel</h3>
                 <ReactQuill value={this.state.text}
                         onChange={this.handleChange} />
             </div>

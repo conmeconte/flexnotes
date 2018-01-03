@@ -4,22 +4,30 @@ import Notes from './notes';
 import Slides from './slides';
 import Modal from './modal';
 import '../assets/css/panel.css';
-import { SortablePane, Pane } from 'react-sortable-pane';
+// import { SortablePane, Pane } from 'react-sortable-pane';
+// import Resizable from 're-resizable';
+import SplitPane from 'react-split-pane';
 
 class Panel extends Component {
-    render () {
+    render() {
         return (
-
-            <div className="container-fluid text-center">
-                <div className="row col-xs-5">
-                <SortablePane className="col-xs-6" direction="horizontal" margin={5}>
-                    <Pane id={0} key={0} width={300} height={300}><div className="panels"><Slides/></div></Pane>
-                    <Pane id={1} key={1} isSortable="true" width={300} height={300}><div className="panels"><Notes/></div></Pane>
-                    <Pane id={2} key={2} isSortable="true" width={300} height={300}><div className="panels video"><Video/></div></Pane>
-                    <Pane id={3} key={3} isSortable="true" width={300} height={300}><div className="panels">Meistertask/To Do</div></Pane>
-                </SortablePane>
-                </div>
-                <Modal/>
+            <div>
+                {/* <SplitPane split="vertical" defaultSize={200}>
+                    <div><Notes/></div>
+                    <div><Video/></div>
+                    <div><Slides/></div>
+                    <div>MeisterTask</div>
+                </SplitPane> */}
+                <SplitPane split="vertical" minSize={200} defaultSize={400}>
+                    <SplitPane split="horizontal" minSize={200} defaultSize={400}>
+                        <div><Slides/></div>
+                        <div><Video/></div>
+                     </SplitPane>
+                     <SplitPane split="horizontal" minSize={200} defaultSize={400}>
+                        <div className="notes-parent-panel"><Notes/></div>
+                        <div>MeisterTask</div>
+                     </SplitPane>
+                </SplitPane>
             </div>
         );
     }
