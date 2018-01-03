@@ -1,8 +1,8 @@
 {
   "name": "react_starter",
   "version": "1.0.0",
-  "proxy":{                                       
-    "/auth/google":{
+  "proxy": {
+    "/auth/google": {
       "target": "http://localhost:9000"
     },
     "/api/*": {
