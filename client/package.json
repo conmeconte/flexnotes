@@ -1,6 +1,14 @@
 {
   "name": "react_starter",
   "version": "1.0.0",
+  "proxy": {
+    "/auth/google": {
+      "target": "http://localhost:9000"
+    },
+    "/api/*": {
+      "target": "http://localhost:9000"
+    }
+  },
   "description": "Starting setup for react redux project",
   "main": "index.js",
   "scripts": {
@@ -26,7 +34,7 @@
     "react-quill": "^1.2.2",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "react-sortable-pane": "^0.6.7",
+    "react-sortable-pane": "^0.6.8",
     "redux": "^3.7.2",
     "youtube-search-api-with-axios": "^2.0.0"
   },
