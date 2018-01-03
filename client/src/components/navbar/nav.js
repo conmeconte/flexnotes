@@ -84,10 +84,8 @@ export default class Nav extends Component {
 
         this.addBinder = this.addBinder.bind(this);
         this.deleteBinder = this.deleteBinder.bind(this);
-        this.updateBinderName = this.updateBinderName.bind(this);
         this.editable = this.editable.bind(this);
         this.notEditable = this.notEditable.bind(this);
-        this.commitEdits = this.commitEdits.bind(this);
     }
 
     addBinder(){
@@ -95,20 +93,38 @@ export default class Nav extends Component {
         const {binder_array, new_tab_arr} = this.state;
 
         let length = binder_array.length;
-        let new_index = binder_array[length-1].binder_id + 1;
-        let new_url = '/binder' + new_index;
+        if(length === 0){
+            //new binder when there are no binders
+            let new_binder_obj = {
+                binder_id: 1,
+                binder_name: 'Binder1',
+                binder_color: 'color',
+                binder_url: '/binder1',
+                tab_arr_obj: new_tab_arr
+            }
 
-        let new_binder_obj = {
-            binder_id: new_index,
-            binder_name: 'New Binder',
-            binder_color: 'color',
-            binder_url: new_url,
-            tab_arr_obj: new_tab_arr
+            this.setState({
+                binder_array: [new_binder_obj]
+            });
+
+        } else {
+            let new_index = binder_array[length-1].binder_id + 1;
+            let new_url = '/binder' + new_index;
+    
+            let new_binder_obj = {
+                binder_id: new_index,
+                binder_name: 'New Binder',
+                binder_color: 'color',
+                binder_url: new_url,
+                tab_arr_obj: new_tab_arr
+            }
+    
+            this.setState({
+                binder_array: [...binder_array, new_binder_obj]
+            });
+
         }
 
-        this.setState({
-            binder_array: [...binder_array, new_binder_obj]
-        });
     }
 
     deleteBinder(delete_id){
@@ -126,21 +142,6 @@ export default class Nav extends Component {
         this.setState({
             binder_array: binder_array
         });
-        //popup modal to confirm delete
-
-        // const tempData = this.state.todoData.slice();
-        // console.log(tempData);
-        // tempData.splice(index, 1);
-
-        // this.setState({
-        //     todoData: tempData
-        // });
-
-    }
-
-    updateBinderName(binder_id){
-        console.log('edit button clicked, binder_id: ', binder_id);
-
     }
 
     editable(){
@@ -157,34 +158,26 @@ export default class Nav extends Component {
         });
     }
 
-    keyPressed(event) {
-        if(event.key == 'Enter') {
-          //this.notEditable();
-      }
-    }
+    // keyPressed(event) {
+    //     if(event.key == 'Enter') {
+    //       //this.notEditable();
+    //   }
+    // }
 
     textChanged(e, id){
         const {binder_array} = this.state;
-        console.log("text changed, id:", id);
-        console.log(e.target.value);
+        //console.log("text changed, id:", id);
+        //console.log(e.target.value);
 
         for(let i =0; i<binder_array.length; i++){
             if(binder_array[i].binder_id===id ){
-                console.log('binder_id and id match');
+                //console.log('binder_id and id match');
                 binder_array[i].binder_name = e.target.value;
             }
         }
         this.setState({
             binder_array: binder_array
         });
-    }
-
-    commitEdits(){
-        console.log("commit edits clicked");
-        this.setState({
-            editable: false
-        });
-
     }
 
     /*
@@ -200,14 +193,12 @@ export default class Nav extends Component {
     */
     render(){
         const {binder_array, editable} = this.state;
-        console.log('Render binderArray:', binder_array);
-        //console.log('Render edit_array:', this.state.edit_array);
+        //console.log('Render binderArray:', binder_array);
         let binder_link = [];
         //map binders
         if(editable){
-
             binder_link = binder_array.map((item, index) => {
-                console.log('editable map:', item);
+                //console.log('editable map:', item);
                 return (
                     <li key={item.binder_id}>
                         <input 
@@ -229,7 +220,7 @@ export default class Nav extends Component {
 
         } else {
             binder_link = binder_array.map((item, index) => {
-                console.log('map:', item);
+                //console.log('map:', item);
                 return (
                     <li key={item.binder_id}>
                         <Link to={item.binder_url}>{item.binder_name}</Link>
@@ -257,7 +248,7 @@ export default class Nav extends Component {
                 <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'hidden': 'visible'}`} onClick={this.editable}>
                         <span className="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'visible': 'hidden'}`} onClick={this.commitEdits}>
+                <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'visible': 'hidden'}`} onClick={this.notEditable}>
                         <span className="glyphicon glyphicon-ok"></span>
                 </button>
 
