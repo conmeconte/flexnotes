@@ -18,7 +18,7 @@ ul > li {
 }
 
 .nav_binder {
-    border: 5px ridge red;
+    border: 1px solid red;
     display: inline-block;
     position: relative;
 
@@ -62,4 +62,16 @@ ul > li {
     border: 2px solid black;
     margin-left: 2%;  
     margin-right: 2%;
+}
+
+.edit_input{
+    width: 50%;
+}
+
+.visible{
+    visibility: visible;
+}
+
+.hidden{
+    visibility: hidden;
 }
