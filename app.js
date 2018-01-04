@@ -7,7 +7,13 @@ require('./models/user');
 require('./services/passport');// user must be loaded first so that it creates the mongoose schema to be used in passport
 
 mongoose.connect(keys.mongoURI);
-
+// mongoose testing
+var db = mongoose.connection; 
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('connected to mongodb through mongoose')
+});
+// end of testing
 const app= express();
 
 app.use(
