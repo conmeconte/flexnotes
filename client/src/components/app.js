@@ -10,7 +10,6 @@ class App extends Component {
             <div>
                 <NavBar/>
                 <Panel/>
-
                 <Login />
             </div>
         );
