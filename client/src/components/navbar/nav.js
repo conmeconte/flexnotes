@@ -221,7 +221,7 @@ export default class Nav extends Component {
                 //console.log('map:', item);
                 return (
                     <li key={item.binder_id}>
-                        <Link to={item.binder_url}>{item.binder_name}</Link>
+                        <Link to={'/main' + item.binder_url}>{item.binder_name}</Link>
                     </li>
                 );
             });
@@ -233,7 +233,7 @@ export default class Nav extends Component {
 
         const binder_route = binder_array.map((item, index) => {
             return (
-                <Route key={item.binder_id} path={item.binder_url} render={() =>
+                <Route key={item.binder_id} path={'/main' + item.binder_url} render={() =>
                     <Binder binder_obj={item} />}
                 />
             );
