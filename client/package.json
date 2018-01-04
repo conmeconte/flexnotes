@@ -29,6 +29,7 @@
     "google-client-api": "^1.0.4",
     "immutable": "^3.8.2",
     "jquery": "^3.2.1",
+    "material-design-icons": "^3.0.1",
     "re-resizable": "^4.1.2",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",

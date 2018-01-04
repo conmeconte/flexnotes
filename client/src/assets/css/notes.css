@@ -1,4 +1,21 @@
-.notesPanel {
-    width: 100%;
-    margin-bottom: 2%;
+.notes-component {
+    padding: 20px;
+}
+
+.notesTitle {
+    margin-top: 0px;
+}
+
+.toolbar {
+    margin-left: -5px;
+}
+
+.editor {
+    margin-top: 20px;
+}
+
+.search-box {
+    float: right;
+    font-size: 18px;
+    border-radius: 5px;
 }
