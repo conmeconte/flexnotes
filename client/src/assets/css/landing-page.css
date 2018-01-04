@@ -50,19 +50,28 @@ body {
 }
 .login-info {
     position: relative;
-    top: 28%;
+    top: 10%;
+}
+.login-info h3 {
+    font-size: 3vmin
 }
 .login-info img {
     margin-top: 12px;
+    display: block;
+    margin: 0 auto;
 }
 .item-list {
     position: relative;
     top: 17%;
     text-align: left;
     line-height: 5.5vh;
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
-    font-size: 22px;
+    font-size: 3vmin;
+
+}
+.item-list li:nth-child(3) {
+    font-size: 2vmin;
 }
 .item-list li {
     border-bottom: 2px solid darkorange; 
@@ -70,4 +79,16 @@ body {
 }
 .flex {
     color: darkorange;
+}
+.user-circle {
+    border: 3px solid #fff;
+    border-radius: 50%;
+}
+.glyphicon.glyphicon-user {
+    border: 2px solid #fff;
+    border-radius: 50%;
+    width: 7vw;
+    height: 8vh;
+    line-height: 7vh;
+    font-size: 4vmin;
 }

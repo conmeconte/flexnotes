@@ -21,6 +21,7 @@ class LandingPage extends Component {
                     <div className="google-div">
                         <div className="login-info">
                             <h3>Sign In</h3>
+                            <div className="glyphicon glyphicon-user"></div>
                             <img  src={googleButton}/>
                         </div>
                     </div>
