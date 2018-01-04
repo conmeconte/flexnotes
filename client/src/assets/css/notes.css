@@ -1,17 +1,21 @@
 .notes-component {
-    padding: 20px;
+    margin: 0;
+    border: 0;
+    padding: 10px;
 }
 
 .notesTitle {
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 .toolbar {
     margin-left: -5px;
+    text-align: left;
 }
 
 .editor {
     margin-top: 20px;
+    text-align: left;
 }
 
 .search-box {
