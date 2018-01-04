@@ -20,7 +20,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import googleButton from '../assets/images/google-login.png';
+import googleButton from "../assets/images/google-login.png";
 
 class Header extends Component{
     renderContent(){
