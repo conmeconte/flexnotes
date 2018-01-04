@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose=require('mongoose');
 const cookieSession= require('cookie-session');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 const keys= require('./config/keys');
 require('./models/user');
 require('./services/passport');// user must be loaded first so that it creates the mongoose schema to be used in passport
@@ -16,6 +17,8 @@ db.once('open', function() {
 // end of testing
 const app= express();
 
+
+app.use(bodyParser.json());
 app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 1000,  //set up cookie life-time, might have to use express session if we want to store more data into a single session    })
@@ -27,6 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/apiRoutes')(app);
 
 
 
