@@ -8,7 +8,9 @@ module.exports = app =>{
 
     app.get('/auth/google/callback', passport.authenticate('google'),
     (req, res)=>{
-        res.redirect('/')
+
+        res.redirect('/main');
+
     });
 
     app.get('/api/logout', (req,res)=>{
@@ -22,6 +24,11 @@ module.exports = app =>{
 =======
         console.log(req.user);
         res.send(req.user); //req.session has what cookie has saved 
+<<<<<<< HEAD
 >>>>>>> 6ca3dda076ccd400dbf0e94c1bd7ba52e694d8ea
     })
 }
+=======
+    });
+};
+>>>>>>> 534b50529c420f59b0dd52cd40603e15c51ad136
