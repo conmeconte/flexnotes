@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-class Login extends Component{
+class LandingPage extends Component{
     renderContent(){
         switch (this.props.auth){
             case null:
@@ -28,7 +28,8 @@ class Login extends Component{
                     {this.renderContent()}
                 </ul>
             </div>
-        </nav>      
+        </nav>
+        
         );
     }
 
@@ -37,4 +38,4 @@ function mapStateToProps({ auth }){
     return {auth};
 }
 
-export default connect(mapStateToProps)(Login); 
+export default connect(mapStateToProps)(LandingPage); 

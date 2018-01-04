@@ -6,7 +6,7 @@ import * as actions from "../actions";
 //import NavBar from '../components/navbar/nav';
 import Login from './login';
 import Dashboard from './dashboard';
-import '../assets/css/app.css';
+import LandingPage from './LandingPage';
 
 class App extends Component {
     componentDidMount(){
@@ -17,11 +17,9 @@ class App extends Component {
             <div>
                <BrowserRouter >
                 <div className="container">
-                    <Route exact path="/main" component={Dashboard} />
-                    <Route exact path="/" component={Login} />
-                        {/* // <NavBar/>
-                        // <Panel/>
-                        // <Login /> */}
+                    <Route path="/main" component={Dashboard} />
+                    <Route exact path="/" component={LandingPage} />
+
                 </div>
                 </BrowserRouter>
             </div>
