@@ -11,7 +11,7 @@ export default class Nav extends Component {
 
         this.state = {
             editable: false,
-            binder_array: [
+            binder_arr_obj: [
                 {
                     binder_id: 1,
                     binder_name: 'Binder1',
@@ -90,9 +90,9 @@ export default class Nav extends Component {
 
     addBinder(){
         console.log('add Binder');
-        const {binder_array, new_tab_arr} = this.state;
+        const {binder_arr_obj, new_tab_arr} = this.state;
 
-        let length = binder_array.length;
+        let length = binder_arr_obj.length;
         if(length === 0){
             //new binder when there are no binders
             let new_binder_obj = {
@@ -104,11 +104,11 @@ export default class Nav extends Component {
             }
 
             this.setState({
-                binder_array: [new_binder_obj]
+                binder_arr_obj: [new_binder_obj]
             });
 
         } else {
-            let new_index = binder_array[length-1].binder_id + 1;
+            let new_index = binder_arr_obj[length-1].binder_id + 1;
             let new_url = '/binder' + new_index;
     
             let new_binder_obj = {
@@ -120,7 +120,7 @@ export default class Nav extends Component {
             }
     
             this.setState({
-                binder_array: [...binder_array, new_binder_obj]
+                binder_arr_obj: [...binder_arr_obj, new_binder_obj]
             });
 
         }
@@ -130,17 +130,17 @@ export default class Nav extends Component {
     deleteBinder(delete_id){
         console.log('delete button clicked, binder_id: ', delete_id);
 
-        const {binder_array} = this.state;
-        console.log(binder_array);
+        const {binder_arr_obj} = this.state;
+        console.log(binder_arr_obj);
         let deleteIndex = 0;
-        for(deleteIndex; deleteIndex<binder_array.length; deleteIndex++){
-            if(binder_array[deleteIndex].binder_id === delete_id){
-                binder_array.splice(deleteIndex, 1);
+        for(deleteIndex; deleteIndex<binder_arr_obj.length; deleteIndex++){
+            if(binder_arr_obj[deleteIndex].binder_id === delete_id){
+                binder_arr_obj.splice(deleteIndex, 1);
             }
         }
 
         this.setState({
-            binder_array: binder_array
+            binder_arr_obj: binder_arr_obj
         });
     }
 
@@ -165,18 +165,18 @@ export default class Nav extends Component {
     // }
 
     textChanged(e, id){
-        const {binder_array} = this.state;
+        const {binder_arr_obj} = this.state;
         //console.log("text changed, id:", id);
         //console.log(e.target.value);
 
-        for(let i =0; i<binder_array.length; i++){
-            if(binder_array[i].binder_id===id ){
+        for(let i =0; i<binder_arr_obj.length; i++){
+            if(binder_arr_obj[i].binder_id===id ){
                 //console.log('binder_id and id match');
-                binder_array[i].binder_name = e.target.value;
+                binder_arr_obj[i].binder_name = e.target.value;
             }
         }
         this.setState({
-            binder_array: binder_array
+            binder_arr_obj: binder_arr_obj
         });
     }
 
@@ -192,12 +192,12 @@ export default class Nav extends Component {
 
     */
     render(){
-        const {binder_array, editable} = this.state;
+        const {binder_arr_obj, editable} = this.state;
         //console.log('Render binderArray:', binder_array);
         let binder_link = [];
         //map binders
         if(editable){
-            binder_link = binder_array.map((item, index) => {
+            binder_link = binder_arr_obj.map((item, index) => {
                 //console.log('editable map:', item);
                 return (
                     <li key={item.binder_id}>
@@ -219,7 +219,7 @@ export default class Nav extends Component {
             });
 
         } else {
-            binder_link = binder_array.map((item, index) => {
+            binder_link = binder_arr_obj.map((item, index) => {
                 //console.log('map:', item);
                 return (
                     <li key={item.binder_id}>
@@ -233,7 +233,7 @@ export default class Nav extends Component {
 
 
 
-        const binder_route = binder_array.map((item, index) => {
+        const binder_route = binder_arr_obj.map((item, index) => {
             return(
                 <Route key={item.binder_id} path={'/main'+item.binder_url} render={()=> 
                     <Binder binder_obj={item}/>}
