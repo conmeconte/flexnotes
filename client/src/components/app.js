@@ -6,6 +6,7 @@ import * as actions from "../actions";
 //import NavBar from '../components/navbar/nav';
 import Login from './login';
 import Dashboard from './dashboard';
+import LandingPage from './LandingPage';
 import '../assets/css/app.css';
 
 class App extends Component {
@@ -18,11 +19,9 @@ class App extends Component {
             <div>
                <BrowserRouter >
                 <div className="container">
-                    <Route path="/main" component={Dashboard} />
-                    <Route exact path="/" component={Login} />
-                        {/* // <NavBar/>
-                        // <Panel/>
-                        // <Login /> */}
+                    <Route exact path="/main" component={Dashboard} />
+                    <Route exact path="/" component={LandingPage} />
+
                 </div>
                 </BrowserRouter>
             </div>
