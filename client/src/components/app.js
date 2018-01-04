@@ -19,7 +19,7 @@ class App extends Component {
             <div>
                <BrowserRouter >
                 <div className="container">
-                    <Route exact path="/main" component={Dashboard} />
+                    <Route path="/main" component={Dashboard} />
                     <Route exact path="/" component={LandingPage} />
 
                 </div>
