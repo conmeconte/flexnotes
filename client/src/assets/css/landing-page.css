@@ -1,0 +1,73 @@
+body {
+    box-sizing: border-box;
+}
+.landing-page-container {
+    text-align: center;
+    height: 100vh;
+}
+.landing-page-container h1,
+.landing-page-container h2 {
+    margin: 0;
+    line-height: 25px;
+}
+.landing-page-container h1 {
+    line-height: 60px;
+    text-shadow: 2px 2px 1px #000;
+    letter-spacing: 0.3vmin;
+}
+.landing-page-container h2 {
+    font-weight: 100;
+}
+.login-container {
+    border: 1px solid #000;
+    width: 72vw;
+    height: 56vh;
+    margin: 0 auto;
+    position: relative;
+    top: 6vh;
+    border-radius: 2px;
+    box-shadow: 2px 2px 10px #000;
+}
+.google-div,
+.info {
+    width: 50%;
+    height: 100%;
+    display: inline-block;
+    border: 1px solid #000;
+    vertical-align: top;
+}
+.info {
+    background-color: #fff;
+}
+.info h3 {
+    position: relative;
+    top: 5vh;
+    font-size: 4vmin;
+}
+.google-div {
+    background-color: #29bf89;
+    color: #fff;
+}
+.login-info {
+    position: relative;
+    top: 28%;
+}
+.login-info img {
+    margin-top: 12px;
+}
+.item-list {
+    position: relative;
+    top: 17%;
+    text-align: left;
+    line-height: 5.5vh;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 22px;
+}
+.item-list li {
+    border-bottom: 2px solid darkorange; 
+    list-style-type: circle;
+}
+.flex {
+    color: darkorange;
+}

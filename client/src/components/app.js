@@ -4,7 +4,8 @@ import { connect} from 'react-redux';
 import * as actions from "../actions";
 //import Panel from './panel';
 //import NavBar from '../components/navbar/nav';
-import Login from './login';
+// import Login from './login';
+import LandingPage from './landingpage';
 import Dashboard from './dashboard';
 import '../assets/css/app.css';
 
@@ -17,9 +18,9 @@ class App extends Component {
         return (
             <div>
                <BrowserRouter >
-                <div className="container">
+                <div>
                     <Route exact path="/main" component={Dashboard} />
-                    <Route exact path="/" component={Login} />
+                    <Route exact path="/" component={LandingPage} />
                         {/* // <NavBar/>
                         // <Panel/>
                         // <Login /> */}
