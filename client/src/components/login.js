@@ -38,16 +38,19 @@ class Header extends Component{
     render() {
         // console.log(this.props);
         return(
-        <nav>
-            <div className="nav-wrapper">
-            {/* ternary expression  */}
-                <Link to={this.props.auth ? '/main' : '/'} className="left brand-logo"> 
-                FlexNote</Link>
-                <ul className="right">
-                    {this.renderContent()}
-                </ul>
-            </div>
-        </nav>
+        // <nav>
+        //     <div className="nav-wrapper">
+        //     {/* ternary expression  */}
+        //         <Link to={this.props.auth ? '/main' : '/'} className="left brand-logo"> 
+        //         FlexNote</Link>
+        //         <ul className="right">
+        //             {this.renderContent()}
+        //         </ul>
+        //     </div>
+        // </nav>
+        <div className="landingPageContainer">
+            
+        </div>
         
         );
     }
