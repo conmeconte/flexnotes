@@ -1,47 +1,45 @@
 import React, {Component} from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import { Editor } from 'slate-react';
+import { Value } from 'slate';
+
 import '../assets/css/notes.css';
 
+const initialValue = Value.fromJSON({
+    document: {
+        nodes: [
+            {
+                kind: 'block',
+                type: 'paragraph',
+                nodes: [
+                    {
+                        kind: 'text',
+                        leaves: [
+                            {
+                                text: 'A line of text in a paragraph.'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+})
+
 class Notes extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        value: initialValue
+    };
 
-        this.state = {
-            text: ''
-        };
-
-        this.modules = {
-            toolbar: [
-                [{ 'size': ['small', false, 'large', 'huge'] }],
-                [{ 'font': [] }],
-                ['bold', 'italic', 'underline','strike'],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'align': [] }],
-                [{'list': 'ordered'}, {'list': 'bullet'}],
-                [{ 'indent': '-1'}, { 'indent': '+1' }],
-                [{ 'script': 'sub'}, { 'script': 'super' }, 'formula'],
-                ['link', 'image', 'video'],
-            ]
-        };
-
-        this.handleChange = this.handleChange.bind(this)
-    }
-
-    handleChange(value) {
-        this.setState({ text: value })
-        console.log(value);
-    }
+    onChange = ({ value }) => {
+        this.setState({ value })
+    };
 
     render() {
-
         return (
-            <div className="notesPanel">
-                <h3>Notes Panel</h3>
-                <ReactQuill modules={this.modules}
-                            value={this.state.text}
-                            onChange={this.handleChange} />
-            </div>
+            <Editor
+                value={this.state.value}
+                onChange={this.onChange}
+            />
         )
     }
 }
