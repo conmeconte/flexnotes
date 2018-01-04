@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
+import { isKeyHotkey } from 'is-hotkey';
 
 import '../assets/css/notes.css';
-
-// start rich text toolbar part 1
-import { isKeyHotkey } from 'is-hotkey';
 
 const DEFAULT_NODE = 'paragraph';
 
@@ -13,7 +11,7 @@ const isBoldHotkey = isKeyHotkey('mod+b');
 const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
-// end rich text toolbar part 1
+
 
 const existingValue = JSON.parse(localStorage.getItem('content'));
 const initialValue = Value.fromJSON(existingValue || {
@@ -43,16 +41,6 @@ class Notes extends Component {
         value: initialValue
     };
 
-    onChange = ({ value }) => {
-        if (value.document !== this.state.value.document) {
-            const content = JSON.stringify(value.toJSON());
-            localStorage.setItem('content', content)
-        }
-
-        this.setState({ value })
-    };
-
-    // start rich text toolbar part 2
     hasMark = (type) => {
         const { value } = this.state;
         return value.activeMarks.some(mark => mark.type === type)
@@ -61,6 +49,15 @@ class Notes extends Component {
     hasBlock = (type) => {
         const { value } = this.state;
         return value.blocks.some(node => node.type === type)
+    };
+
+    onChange = ({ value }) => {
+        if (value.document !== this.state.value.document) {
+            const content = JSON.stringify(value.toJSON());
+            localStorage.setItem('content', content)
+        }
+
+        this.setState({ value })
     };
 
     onKeyDown = (event, change) => {
@@ -99,6 +96,7 @@ class Notes extends Component {
         if (type !== 'bulleted-list' && type !== 'numbered-list') {
             const isActive = this.hasBlock(type);
             const isList = this.hasBlock('list-item');
+
             if (isList) {
                 change
                     .setBlock(isActive ? DEFAULT_NODE : type)
@@ -129,12 +127,62 @@ class Notes extends Component {
                     .wrapBlock(type)
             }
         }
+
         this.onChange(change)
     };
 
+    onInputChange = (event) => {
+        const { value } = this.state;
+        const string = event.target.value;
+        const texts = value.document.getTexts();
+        const decorations = [];
+
+        texts.forEach((node) => {
+            const { key, text } = node;
+            const parts = text.split(string);
+            let offset = 0;
+
+            parts.forEach((part, i) => {
+                if (i !== 0) {
+                    decorations.push({
+                        anchorKey: key,
+                        anchorOffset: offset - string.length,
+                        focusKey: key,
+                        focusOffset: offset,
+                        marks: [{ type: 'highlight' }],
+                    })
+                }
+
+                offset = offset + part.length + string.length
+            })
+        });
+
+        const change = value.change().setValue({ decorations });
+        this.onChange(change)
+    };
+
+    render() {
+        return (
+            <div className="notes-component">
+                <h1 className="notesTitle">Notes</h1>
+                {this.toolbar()}
+                <Editor
+                    className="editor"
+                    placeholder="Enter notes..."
+                    value={this.state.value}
+                    onChange={this.onChange}
+                    onKeyDown={this.onKeyDown}
+                    renderNode={this.renderNode}
+                    renderMark={this.renderMark}
+                    spellCheck
+                />
+            </div>
+        )
+    }
+
     toolbar = () => {
         return (
-            <div className="menu toolbar-menu">
+            <div className="toolbar">
                 {this.renderMarkButton('bold', 'format_bold')}
                 {this.renderMarkButton('italic', 'format_italic')}
                 {this.renderMarkButton('underlined', 'format_underlined')}
@@ -144,6 +192,11 @@ class Notes extends Component {
                 {this.renderBlockButton('block-quote', 'format_quote')}
                 {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                 {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
+                <input
+                    className="search-box"
+                    placeholder="Search keywords..."
+                    onChange={this.onInputChange}
+                />
             </div>
         )
     };
@@ -185,32 +238,13 @@ class Notes extends Component {
     renderMark = (props) => {
         const { children, mark } = props;
         switch (mark.type) {
+            case 'highlight': return <span style={{ backgroundColor: '#FFFF00' }}>{children}</span>;
             case 'bold': return <strong>{children}</strong>;
             case 'code': return <code>{children}</code>;
             case 'italic': return <em>{children}</em>;
             case 'underlined': return <u>{children}</u>
         }
-    };
-    // end rich text toolbar part 2
-
-    render() {
-        return (
-            <div className="notes-component">
-                <h1 className="notesTitle">Notes</h1>
-                {this.toolbar()}
-                <Editor
-                    placeholder="Enter some rich text..."
-                    value={this.state.value}
-                    onChange={this.onChange}
-                    onKeyDown={this.onKeyDown}
-                    renderNode={this.renderNode}
-                    renderMark={this.renderMark}
-                    spellCheck
-                />
-            </div>
-        )
     }
-
 }
 
 export default Notes;
