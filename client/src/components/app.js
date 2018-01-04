@@ -7,7 +7,6 @@ import * as actions from "../actions";
 import Login from './login';
 import Dashboard from './dashboard';
 import LandingPage from './LandingPage';
-import '../assets/css/app.css';
 
 class App extends Component {
     componentDidMount(){
