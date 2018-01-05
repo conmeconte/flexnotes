@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
-import { Editor } from 'slate-react';
-import { Value } from 'slate';
+import React, {Component} from 'react';
+import { Editor, getEventRange, getEventTransfer } from 'slate-react';
+import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
+
+import isImage from 'is-image'
+import isUrl from 'is-url'
 
 import '../assets/css/notes.css';
 
@@ -35,11 +38,75 @@ const initialValue = Value.fromJSON(existingValue || {
     }
 });
 
+// UNDO AND REDO
+
+const ToolbarButton = props => (
+    <span className="button" onMouseDown={props.onMouseDown}>
+    <span className="material-icons">{props.icon}</span>
+  </span>
+)
+
+// LINKS
+
+function wrapLink(change, href) {
+    change.wrapInline({
+        type: 'link',
+        data: { href }
+    });
+
+    change.collapseToEnd()
+}
+
+function unwrapLink(change) {
+    change.unwrapInline('link')
+}
+
+// IMAGES
+
+function insertImage(change, src, target) {
+    if (target) {
+        change.select(target)
+    }
+
+    change.insertBlock({
+        type: 'image',
+        isVoid: true,
+        data: { src }
+    })
+}
+
+const schema = {
+    document: {
+        last: { types: ['paragraph'] },
+        normalize: (change, reason, { node, child }) => {
+            switch (reason) {
+                case 'last_child_type_invalid': {
+                    const paragraph = Block.create('paragraph')
+                    return change.insertNodeByKey(node.key, node.nodes.size, paragraph)
+                }
+            }
+        }
+    }
+};
+
+// CLASS COMPONENT
+
 class Notes extends Component {
 
     state = {
         value: initialValue
     };
+
+    onChange = ({ value }) => {
+        if (value.document !== this.state.value.document) {
+            const content = JSON.stringify(value.toJSON());
+            localStorage.setItem('content', content)
+        }
+
+        this.setState({ value });
+    };
+
+    // RICH TEXT TOOLBAR
 
     hasMark = (type) => {
         const { value } = this.state;
@@ -49,15 +116,6 @@ class Notes extends Component {
     hasBlock = (type) => {
         const { value } = this.state;
         return value.blocks.some(node => node.type === type)
-    };
-
-    onChange = ({ value }) => {
-        if (value.document !== this.state.value.document) {
-            const content = JSON.stringify(value.toJSON());
-            localStorage.setItem('content', content)
-        }
-
-        this.setState({ value })
     };
 
     onKeyDown = (event, change) => {
@@ -131,6 +189,96 @@ class Notes extends Component {
         this.onChange(change)
     };
 
+    renderMarkButton = (type, icon) => {
+        const isActive = this.hasMark(type);
+        const onMouseDown = event => this.onClickMark(event, type);
+
+        return (
+            <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
+            <span className="material-icons">{icon}</span>
+            </span>
+        )
+    };
+
+    renderBlockButton = (type, icon) => {
+        const isActive = this.hasBlock(type);
+        const onMouseDown = event => this.onClickBlock(event, type);
+
+        return (
+            <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
+            <span className="material-icons">{icon}</span>
+            </span>
+        )
+    };
+
+    // UNDO AND REDO
+
+    onClickRedo = (event) => {
+        event.preventDefault()
+        const { value } = this.state
+        const change = value.change().redo()
+        this.onChange(change)
+    };
+
+    onClickUndo = (event) => {
+        event.preventDefault()
+        const { value } = this.state
+        const change = value.change().undo()
+        this.onChange(change)
+    };
+
+    // LINKS
+
+    hasLinks = () => {
+        const { value } = this.state;
+        return value.inlines.some(inline => inline.type === 'link')
+    };
+
+    onClickLink = (event) => {
+        event.preventDefault();
+        const { value } = this.state;
+        const hasLinks = this.hasLinks();
+        const change = value.change();
+
+        if (hasLinks) {
+            change.call(unwrapLink)
+        }
+
+        else if (value.isExpanded) {
+            const href = window.prompt('Enter the URL of the link:');
+            change.call(wrapLink, href)
+        }
+
+        else {
+            const href = window.prompt('Enter the URL of the link:');
+            const text = window.prompt('Enter the text for the link:');
+            change
+                .insertText(text)
+                .extend(0 - text.length)
+                .call(wrapLink, href)
+        }
+
+        this.onChange(change)
+    };
+
+    onLinkPaste = (event, change) => {
+        if (change.value.isCollapsed) return
+
+        const transfer = getEventTransfer(event)
+        const { type, text } = transfer
+        if (type != 'text' && type != 'html') return
+        if (!isUrl(text)) return
+
+        if (this.hasLinks()) {
+            change.call(unwrapLink)
+        }
+
+        change.call(wrapLink, text)
+        return true
+    };
+
+    // SEARCH HIGHLIGHTING
+
     onInputChange = (event) => {
         const { value } = this.state;
         const string = event.target.value;
@@ -161,79 +309,51 @@ class Notes extends Component {
         this.onChange(change)
     };
 
-    render() {
-        return (
-            <div className="notes-component">
-                <h1 className="notesTitle">Notes</h1>
-                {this.toolbar()}
-                <Editor
-                    className="editor"
-                    placeholder="Enter notes..."
-                    value={this.state.value}
-                    onChange={this.onChange}
-                    onKeyDown={this.onKeyDown}
-                    renderNode={this.renderNode}
-                    renderMark={this.renderMark}
-                    spellCheck
-                />
-            </div>
-        )
-    }
+    // IMAGES
 
-    toolbar = () => {
-        return (
-            <div className="toolbar">
-                {this.renderMarkButton('bold', 'format_bold')}
-                {this.renderMarkButton('italic', 'format_italic')}
-                {this.renderMarkButton('underlined', 'format_underlined')}
-                {this.renderMarkButton('code', 'code')}
-                {this.renderBlockButton('heading-one', 'looks_one')}
-                {this.renderBlockButton('heading-two', 'looks_two')}
-                {this.renderBlockButton('block-quote', 'format_quote')}
-                {this.renderBlockButton('numbered-list', 'format_list_numbered')}
-                {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
-                <input
-                    className="search-box"
-                    placeholder="Search keywords..."
-                    onChange={this.onInputChange}
-                />
-            </div>
-        )
+    onClickImage = (event) => {
+        event.preventDefault()
+        const src = window.prompt('Enter the URL of the image:')
+        if (!src) return
+
+        const change = this.state.value
+            .change()
+            .call(insertImage, src)
+
+        this.onChange(change)
     };
 
-    renderMarkButton = (type, icon) => {
-        const isActive = this.hasMark(type);
-        const onMouseDown = event => this.onClickMark(event, type);
+    onDropOrPaste = (event, change, editor) => {
+        const target = getEventRange(event, change.value)
+        if (!target && event.type === 'drop') return
 
-        return (
-            <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons">{icon}</span>
-            </span>
-        )
-    };
+        const transfer = getEventTransfer(event)
+        const { type, text, files } = transfer
 
-    renderBlockButton = (type, icon) => {
-        const isActive = this.hasBlock(type);
-        const onMouseDown = event => this.onClickBlock(event, type);
+        if (type === 'files') {
+            for (const file of files) {
+                const reader = new FileReader()
+                const [ mime ] = file.type.split('/')
+                if (mime !== 'image') continue
 
-        return (
-            <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons">{icon}</span>
-            </span>
-        )
-    };
+                reader.addEventListener('load', () => {
+                    editor.change((c) => {
+                        c.call(insertImage, reader.result, target)
+                    })
+                })
 
-    renderNode = (props) => {
-        const { attributes, children, node } = props;
-        switch (node.type) {
-            case 'block-quote': return <blockquote {...attributes}>{children}</blockquote>;
-            case 'bulleted-list': return <ul {...attributes}>{children}</ul>;
-            case 'heading-one': return <h1 {...attributes}>{children}</h1>;
-            case 'heading-two': return <h2 {...attributes}>{children}</h2>;
-            case 'list-item': return <li {...attributes}>{children}</li>;
-            case 'numbered-list': return <ol {...attributes}>{children}</ol>
+                reader.readAsDataURL(file)
+            }
+        }
+
+        if (type === 'text') {
+            if (!isUrl(text)) return
+            if (!isImage(text)) return
+            change.call(insertImage, text, target)
         }
     };
+
+    // ALL
 
     renderMark = (props) => {
         const { children, mark } = props;
@@ -244,6 +364,87 @@ class Notes extends Component {
             case 'italic': return <em>{children}</em>;
             case 'underlined': return <u>{children}</u>
         }
+    };
+
+    renderNode = (props) => {
+        const { attributes, children, node, isSelected } = props;
+        switch (node.type) {
+            case 'block-quote': return <blockquote {...attributes}>{children}</blockquote>;
+            case 'bulleted-list': return <ul {...attributes}>{children}</ul>;
+            case 'heading-one': return <h1 {...attributes}>{children}</h1>;
+            case 'heading-two': return <h2 {...attributes}>{children}</h2>;
+            case 'list-item': return <li {...attributes}>{children}</li>;
+            case 'numbered-list': return <ol {...attributes}>{children}</ol>;
+            case 'link': {
+                const { data } = node
+                const href = data.get('href')
+                return <a {...attributes} href={href}>{children}</a>
+            }
+            case 'image': {
+                const src = node.data.get('src');
+                const className = isSelected ? 'active' : null;
+                const style = { display: 'block' };
+                return (
+                    <img src={src} className={className} style={style} {...attributes} />
+                )
+            }
+        }
+    };
+
+    toolbar = () => {
+        return (
+            <div className="toolbar">
+                <ToolbarButton icon="undo" onMouseDown={this.onClickUndo} />
+                <ToolbarButton icon="redo" onMouseDown={this.onClickRedo} />
+                {this.renderMarkButton('bold', 'format_bold')}
+                {this.renderMarkButton('italic', 'format_italic')}
+                {this.renderMarkButton('underlined', 'format_underlined')}
+                {this.renderMarkButton('code', 'code')}
+                {this.renderBlockButton('heading-one', 'looks_one')}
+                {this.renderBlockButton('heading-two', 'looks_two')}
+                {this.renderBlockButton('block-quote', 'format_quote')}
+                {this.renderBlockButton('numbered-list', 'format_list_numbered')}
+                {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
+                <span className="button" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
+                    <span className="material-icons">link</span>
+                </span>
+                <span className="button" onMouseDown={this.onClickImage}>
+                    <span className="material-icons">image</span>
+                </span>
+                <div className="search-box">
+                    <input
+
+                        placeholder="Search keywords..."
+                        onChange={this.onInputChange}
+                    />
+                </div>
+
+            </div>
+        )
+    };
+
+    render() {
+        return (
+            <div className="notes-component">
+
+                {this.toolbar()}
+                <Editor
+                    className="editor"
+                    style="overflow: scroll"
+                    placeholder="Enter notes..."
+                    value={this.state.value}
+                    onChange={this.onChange}
+                    onKeyDown={this.onKeyDown}
+                    schema={schema}
+                    onDrop={this.onDropOrPaste}
+                    onPaste={this.onDropOrPaste}
+                    onLinkPaste={this.onPaste}
+                    renderNode={this.renderNode}
+                    renderMark={this.renderMark}
+                    spellCheck
+                />
+            </div>
+        );
     }
 }
 
