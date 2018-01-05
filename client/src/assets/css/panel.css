@@ -58,8 +58,8 @@ body {
 }
 
 .width-w-nav{
-    width: 80% !important;
-    left: 17.5% !important;
+    /* width: 80% !important; */
+    left: 1.5% !important;
 }
 
 .panel_div{
