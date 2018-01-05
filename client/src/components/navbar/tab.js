@@ -153,7 +153,7 @@ export default class Tab extends Component {
             page_link = page_arr_obj.map((item, index) => {
                 //console.log('map:', item);
                 return (
-                    <li key={item.page_id}><Link to={binderUrl + tab_url + item.page_url}>
+                    <li key={item.page_id}><Link to={'/main'+binderUrl + tab_url + item.page_url} style={{ textDecoration: 'none' }}>
                     <div className="pageDiv">
                         {item.page_name}
                     </div></Link></li>
@@ -164,7 +164,7 @@ export default class Tab extends Component {
     
         const page_route = page_arr_obj.map((item, index) => {
             return(
-                <Route key={item.page_id} path={binderUrl + tab_url + item.page_url} render={()=> 
+                <Route key={item.page_id} path={'/main'+binderUrl + tab_url + item.page_url} render={()=> 
                     <Page/>
                 }
                 />
@@ -173,11 +173,11 @@ export default class Tab extends Component {
             return(
     
                 <div className='nav_page'>
-                    <h5>Pages</h5>
-                    <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'hidden': 'visible'}`} onClick={this.editPages}>
+                    
+                    <button type="button" className={`nav_header btn btn-default btn-xs btn_edit_page ${editable ? 'hidden': 'visible'}`} onClick={this.editPages}>
                         <span className="glyphicon glyphicon-pencil"></span>
                     </button>
-                    <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'visible': 'hidden'}`} onClick={this.notEditPages}>
+                    <button type="button" className={`nav_header btn btn-default btn-xs btn_edit_page ${editable ? 'visible': 'hidden'}`} onClick={this.notEditPages}>
                         <span className="glyphicon glyphicon-ok"></span>
                     </button>
   
