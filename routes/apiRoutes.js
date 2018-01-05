@@ -8,46 +8,52 @@ module.exports = app => {
     app.get('/', (req,res)=>{
         res.send('Homepage')
     })
+
+    app.get('/main/:userId', requireLogin, async (req, res)=>{
+        //pull entire user obj
+    })
 // For Binder //
-    app.get('/:userId/:binderId/update', requireLogin, async (req,res)=>{
+    app
+    .get('/:userId/:binderId', requireLogin, async (req,res)=>{
         //give binder data
         //userId accessible via req.param.userId?
-    }); 
-    app.post('/:userId/:binderId/update', requireLogin, async (req,res)=>{
+    }) 
+    .post('/:userId/:binderId', requireLogin, async (req,res)=>{
         //create new binder in user
-    }); 
-    app.delete('/:userId/:binderId/update', requireLogin, async (req,res)=>{
+    }) 
+    .delete('/:userId/:binderId', requireLogin, async (req,res)=>{
         //delete binder
-    }); 
-    app.put('/:userId/:binderId/update', requireLogin, async (req,res)=>{
+    }) 
+    .put('/:userId/:binderId', requireLogin, async (req,res)=>{
         // update binder
-    }); 
+    }) 
 // For Tab//
-    app.get('/:userId/:binderId/:tabId/update', requireLogin, async (req,res)=>{
+    app.get('/user/:userId/:binderId/:tabId', requireLogin, async (req,res)=>{
         //give tab data
+        // www.chung.com/user/1/binder/4/tab/3
     }); 
-    app.post('/:userId/:binderId/:tabId/update', requireLogin, async (req,res)=>{
+    app.post('/:userId/:binderId/:tabId', requireLogin, async (req,res)=>{
         //create new tab in user
     }); 
-    app.delete('/:userId/:binderId/:tabId/update', requireLogin, async (req,res)=>{
+    app.delete('/:userId/:binderId/:tabId', requireLogin, async (req,res)=>{
         //delete tab
     }); 
-    app.put('/:userId/:binderId/:tabId/update', requireLogin, async (req,res)=>{
+    app.put('/:userId/:binderId/:tabId', requireLogin, async (req,res)=>{
         // update tab
     }); 
 
 // For Page //
 
-    app.get('/:userId/:binderId/:tabId/:pageId/update', requireLogin, async (req,res)=>{
+    app.get('/:userId/:binderId/:tabId/:pageId', requireLogin, async (req,res)=>{
         //give page data
     }); 
-    app.post('/:userId/:binderId/:tabId/:pageId/update', requireLogin, async (req,res)=>{
+    app.post('/:userId/:binderId/:tabId/:pageId', requireLogin, async (req,res)=>{
         //create new page in user
     }); 
-    app.delete('/:userId/:binderId/:tabId/:pageId/update', requireLogin, async (req,res)=>{
+    app.delete('/:userId/:binderId/:tabId/:pageId', requireLogin, async (req,res)=>{
         //delete page
     }); 
-    app.put('/:userId/:binderId/:tabId/:pageId/update', requireLogin, async (req,res)=>{
+    app.put('/:userId/:binderId/:tabId/:pageId', requireLogin, async (req,res)=>{
         // update page
     }); 
 
