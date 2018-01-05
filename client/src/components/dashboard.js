@@ -8,10 +8,8 @@ export default props => {
     return (
         <div>
             <Login />
-            <div style={{ display: 'inline-block' }}>
-                <NavBar />
-                <Panel />
-            </div>
+            <NavBar />
+            <Panel />
         </div>
     );
 }

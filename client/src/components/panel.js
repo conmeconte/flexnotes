@@ -64,7 +64,7 @@ class Panel extends Component {
                     <div>MeisterTask</div>
                 </SplitPane> */}
                 <button onClick={this.sendSize} className="btn btn-primary">Save</button>
-                <SplitPane onChange={size => this.logVWsize(size)} split="vertical" minSize={200} maxSize={-200} defaultSize={vertical_width}>
+                <SplitPane className="width-w-nav" onChange={size => this.logVWsize(size)} split="vertical" minSize={200} maxSize={-200} defaultSize={vertical_width}>
                     <SplitPane onChange={size => this.logHLsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_left}>
                         <div><Slides /></div>
                         <div><Video /></div>
