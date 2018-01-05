@@ -12,14 +12,21 @@ class App extends Component {
     componentDidMount() {
         this.props.fetchUser();
     }
-
     render() {
         return (
             <div>
+<<<<<<< HEAD
                 <BrowserRouter >
                     <div>
                         <Route exact path="/main" component={Dashboard} />
                         <Route exact path="/" component={LandingPage} />
+=======
+               <BrowserRouter >
+
+                <div className="container-fluid">
+                    <Route path="/main" component={Dashboard} />
+                    <Route exact path="/" component={LandingPage} />
+>>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
                         {/* // <NavBar/>
                         // <Panel/>
                         // <Login /> */}
@@ -31,4 +38,6 @@ class App extends Component {
     }
 }
 
+
 export default connect(null, actions)(App);
+

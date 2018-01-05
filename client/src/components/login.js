@@ -25,12 +25,20 @@ class Login extends Component {
                     {/* ternary expression  */}
                     {/* <Link to={this.props.auth ? '/main' : '/'} className="left brand-logo"> 
                 FlexNote</Link> */}
+<<<<<<< HEAD
                     <ul className="right">
                         {this.renderContent()}
                     </ul>
                 </div>
             </nav>
 
+=======
+                <ul className="right">
+                    {this.renderContent()}
+                </ul>
+            </div>
+        </nav>      
+>>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
         );
     }
 }

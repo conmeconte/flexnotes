@@ -51,6 +51,7 @@ class Panel extends Component {
         console.log('vertical_width: ', vertical_width);
         console.log('horizontal_right: ', horizontal_right);
         console.log('horizontal_left: ', horizontal_left);
+        //do an axios.post with these values ^
     }
     render() {
         const { vertical_width, horizontal_left, horizontal_right } = this.state;
@@ -68,7 +69,7 @@ class Panel extends Component {
                         <div><Slides /></div>
                         <div><Video /></div>
                     </SplitPane>
-                    <SplitPane onChange={size => this.logHRsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_right}>
+                    <SplitPane pane1Style onChange={size => this.logHRsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_right}>
                         <div className="notes-parent-panel"><Notes /></div>
                         <div>MeisterTask</div>
                     </SplitPane>
