@@ -7,7 +7,7 @@ import * as actions from "../actions";
 // import Login from './login';
 import LandingPage from './landingpage';
 import Dashboard from './dashboard';
-import '../assets/css/app.css';
+import LandingPage from './LandingPage';
 
 class App extends Component {
     componentDidMount(){
@@ -18,12 +18,19 @@ class App extends Component {
         return (
             <div>
                <BrowserRouter >
+<<<<<<< HEAD
                 <div>
                     <Route exact path="/main" component={Dashboard} />
                     <Route exact path="/" component={LandingPage} />
                         {/* // <NavBar/>
                         // <Panel/>
                         // <Login /> */}
+=======
+                <div className="container">
+                    <Route path="/main" component={Dashboard} />
+                    <Route exact path="/" component={LandingPage} />
+
+>>>>>>> 77db3e6285dd9def46a95aecf75286448852fe70
                 </div>
                 </BrowserRouter>
             </div>
