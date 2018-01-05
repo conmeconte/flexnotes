@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const keys = require('../config/keys');
 
 const User = mongoose.model('users');
+const Binder = mongoose.model('binders');
+const Tab = mongoose.model('tabs');
+const DataPage = mongoose.model('datapages');
 
 passport.serializeUser((user, done)=>{
     done(null, user.id);
@@ -33,8 +36,16 @@ passport.use(
             }
             //no user record in db make a new record
             console.log(profile);
-            const user= await new User({googleId: profile.id, userName: profile.displayName}).save()
+            const defaultBinder = new Binder();
+            defaultBinder.tab_arr_obj.push(new Tab());
+            defaultBinder.tab_arr_obj[0].page_arr_obj.push(new DataPage({page_color:'orange'}));
+            const user= await new User({
+                googleId: profile.id, 
+                userName: profile.displayName, 
+                binder_arr_obj: defaultBinder
+            }).save()
                 done(null, user);
+            
         
        }
     )
