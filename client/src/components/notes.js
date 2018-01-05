@@ -38,6 +38,14 @@ const initialValue = Value.fromJSON(existingValue || {
     }
 });
 
+// UNDO AND REDO
+
+const ToolbarButton = props => (
+    <span className="button" onMouseDown={props.onMouseDown}>
+    <span className="material-icons">{props.icon}</span>
+  </span>
+)
+
 // LINKS
 
 function wrapLink(change, href) {
@@ -81,7 +89,7 @@ const schema = {
     }
 };
 
-
+// CLASS COMPONENT
 
 class Notes extends Component {
 
@@ -201,6 +209,22 @@ class Notes extends Component {
             <span className="material-icons">{icon}</span>
             </span>
         )
+    };
+
+    // UNDO AND REDO
+
+    onClickRedo = (event) => {
+        event.preventDefault()
+        const { value } = this.state
+        const change = value.change().redo()
+        this.onChange(change)
+    };
+
+    onClickUndo = (event) => {
+        event.preventDefault()
+        const { value } = this.state
+        const change = value.change().undo()
+        this.onChange(change)
     };
 
     // LINKS
@@ -370,6 +394,8 @@ class Notes extends Component {
     toolbar = () => {
         return (
             <div className="toolbar">
+                <ToolbarButton icon="undo" onMouseDown={this.onClickUndo} />
+                <ToolbarButton icon="redo" onMouseDown={this.onClickRedo} />
                 {this.renderMarkButton('bold', 'format_bold')}
                 {this.renderMarkButton('italic', 'format_italic')}
                 {this.renderMarkButton('underlined', 'format_underlined')}
