@@ -56,3 +56,8 @@ body {
 .Resizer.disabled:hover {
   border-color: transparent;
 }
+
+.width-w-nav{
+    width: 80% !important;
+    left: 17.5% !important;
+}
