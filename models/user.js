@@ -1,32 +1,18 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose; //ES6 destructuring
 
-// const userSchema = new Schema({
-//     googleId: String, 
-//     userName: String
-    
-        
-    
-// });
 
-
+/* User Schema */
 const userSchema = new Schema({
     googleId: String, 
     userName: String,
-    something: {type: String, default: 'bumscruttle'},
-    test: [
-      {
-        name: {type:String, default:'moo'}, 
-        course: {type:String, default:'haha'}
-      }
-    ],
-    binder_arr_obj : [
-        
-    ]
+    binder_arr_obj : []
         
 });
 
 mongoose.model('users', userSchema);
+
+/* Binder Schema */
 
 const binderSchemaNew = new Schema({
   binder_id: { type:String, default:"B-01"},
@@ -39,6 +25,8 @@ const binderSchemaNew = new Schema({
 })
 mongoose.model('binders', binderSchemaNew);
 
+/* tab Schema */
+
 const tabSchemaNew = new Schema({
   tab_name : { type:String, default:"This is a tab"},   
   tab_color : String,
@@ -49,9 +37,12 @@ const tabSchemaNew = new Schema({
   ]
 })
 mongoose.model('tabs', tabSchemaNew);
+
+/* Page Schema */
+
 const pageSchemaNew = new Schema({
   page_color : String,
-  //page_date : {type: Date, default: 'today'/*Date.now*/},
+  page_date : {type: Date, default:Date.now},
   page_id : { type:String, default:"P-01"},
   page_name : { type:String, default:"Introduction to FlexNotes"},
   page_url : String,

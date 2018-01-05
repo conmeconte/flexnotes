@@ -13,12 +13,12 @@ mongoose.connect(keys.mongoURI);
 mongoose.Promise= global.Promise; 
 var db = mongoose.connection; 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-// db.once('open', function() {
-//   console.log('connected to mongodb through mongoose')
-// });
+db.once('open', function() {
+  console.log('connected to mongodb through mongoose')
+});
 // end of testing
 const app= express();
-const appRoute= express.Router();
+// const appRoute= express.Router();
 
 
 app.use(bodyParser.json());
@@ -32,8 +32,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
 require('./routes/authRoutes')(app);
-require('./routes/apiRoutes')(appRoute);
+require('./routes/apiRoutes')(app);
 
 
 
