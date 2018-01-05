@@ -223,7 +223,11 @@ export default class Nav extends Component {
                 //console.log('map:', item);
                 return (
                     <li key={item.binder_id}>
-                        <Link to={'/main'+item.binder_url}>{item.binder_name}</Link>
+                        <Link to={'/main'+item.binder_url} style={{ textDecoration: 'none' }}>
+                        <div className="binderDiv">
+                                {item.binder_name}
+                        </div>
+                        </Link>
                     </li>
                 );               
             });
@@ -242,22 +246,25 @@ export default class Nav extends Component {
         });
 
         return(
-            <div className="nav_binder col-xs-2">
+            <div className="nav_binder">
 
                 <h3 className="nav_header">Binder</h3>
-                <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'hidden': 'visible'}`} onClick={this.editable}>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden': 'visible'}`} onClick={this.editable}>
                         <span className="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'visible': 'hidden'}`} onClick={this.notEditable}>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible': 'hidden'}`} onClick={this.notEditable}>
                         <span className="glyphicon glyphicon-ok"></span>
                 </button>
 
 
 
-                <ul className="nav-binder-row">
+                <ul className="">
                     {binder_link}
                 </ul>
                 {binder_route}
+
+                
+
                 <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible': 'hidden'}`} onClick={this.addBinder}>
                     <span className="glyphicon glyphicon-plus"></span>
                 </button>  

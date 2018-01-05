@@ -18,7 +18,7 @@ class App extends Component {
         return (
             <div>
                <BrowserRouter >
-                <div className="container">
+                <div className="container-fluid">
                     <Route path="/main" component={Dashboard} />
                     <Route exact path="/" component={LandingPage} />
 

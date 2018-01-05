@@ -4,8 +4,16 @@
     padding: 0;
 }
 
+.navbar{
+    margin: 0;
+    padding: 0;
+}
 .nav_header{
-    display: inline-block;
+    margin-left: 10%;
+}
+
+h3.nav_header{
+    margin-left: 5%;
 }
 
 ul {
@@ -15,57 +23,155 @@ ul {
 
 ul > li {
     list-style: none;
+
+}
+
+.contain-tab, .contain-page{
+    #border: 1px solid #000080;
+    display: inline-block; 
+    margin: 0;
+    padding: 0;    
+    height: 75vh;
+    
+    background-color: #f2f2f2;
+}
+
+
+.contain-page{
+    #border-right: 3px solid #000080;
+    box-shadow: 2px 0px 1px #747474;
+    margin-left: 1%;
+    width: 49%;
+}
+
+.contain-tab{
+    border-left: 1px solid #747474;
+    border-right: #ff0000 3px solid;
+    box-shadow: 2px 0px 1px #747474;
+    #background-color: lightgrey;
+    width: 50%;
 }
 
 .nav_binder {
-    border: 1px solid red;
+    border: 2px solid #000080;
+    #border-bottom: 4px solid #000080;
+    padding-bottom: 10%;
+    #background-color: #f2f2f2;
     display: inline-block;
     position: relative;
-
+    width: 100%;
+    box-shadow: 1.5px 1.5px .5px #747474;
 }
 
 .nav_tab {
-    border-left: 1px solid blue;
+    #border-left: 2px solid red;
     display: inline-block;
     position: absolute;
-    top: 100%;
+    top: 110%;
     width: 50%;
 }
 
 .nav_page {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    #border-left: 2px solid lightgreen;
+    #border-right: 2px solid red;
     display: inline-block; 
     position: absolute;
-    top: 0%;
+    top: 1%;
     left: 100%;
     width: 100%;   
 }
 
-.pageDiv{
-    border-bottom: 1px solid black;
-    box-shadow: 0px 1px .5px #747474;
-    padding: 7% 3% 7% 0;
-    width: 100%;
-    text-align: right;
+.nav-tab-col, .nav-page-col{
+    margin-top: 25%;
+}
+
+.binderDiv{
+    #border: 2px solid #000080;
+    text-align: left;
+    padding-left: 5%;
+    #background-color: #ccccff;
+    font-weight: 600;
+    color: black;
+}
+
+a{
+    text-decoration: none;
+}
+
+.binderDiv:hover{
+    background-color: #000080;
+    color: white
+}
+
+.binderDiv:active{
+    background-color: #000080;
 }
 
 .tabDiv{
-    border: 1px solid lightgreen;
+    border: 2px solid #ff0000;
     text-align: center;
     padding-top: 10%;
     padding-bottom: 10%;
+    margin-bottom: 3%;
+    background-color: #ff4d4d;
+    width: 99%;
+    color: white;
+    font-weight: 800;
 }
 
-.btn_edit, .btn_add, .btn_delete {
+.tabDiv:hover{
+    background-color: #ff0000;
+    text-decoration: none;
+}
+
+.pageDiv{
+    border-bottom: 1px solid black;
+    box-shadow: 0px 1px 0px #747474;
+    padding: 7% 3% 7% 0;
+    width: 100%;
+    text-align: center;
+    margin-left: 2%;
+    color: black;
+    #background-color: #ffcccc;
+}
+
+.pageDiv:hover{
+    background-color: #ffcccc;
+    text-decoration: none;
+}
+
+.btn_edit_binder, .btn_add, .btn_delete, .btn_edit_tab, .btn_edit_page {
     border-radius: 50%;
-    border: 2px solid black;
+    #border: 2px solid black;
     margin-left: 2%;  
     margin-right: 2%;
 }
 
+.btn_edit_tab, .btn_edit_page {
+    position: absolute;
+}
+
+.btn_edit_binder, h3.nav_header {
+    display: inline-block;
+}
+
+.btn_edit_binder{
+    margin-left: 5%;
+    margin-bottom: 3%;
+}
+
+.btn_edit_tab {
+    right: 20%;
+}
+
+.btn_edit_page {
+    right: 10%;
+    top: -2%;
+}
+
 .edit_input{
-    width: 50%;
+    margin-left: 3%;
+    width: 70%;
 }
 
 .visible{
