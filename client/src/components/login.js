@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import googleButton from "../assets/images/google-login.png";
 
 class Login extends Component{
     renderContent(){
@@ -9,7 +10,7 @@ class Login extends Component{
                 return;
             case false:
                 return (
-                    <li><a href="/auth/google">Log in With Google</a></li>
+                    <li><a href="/auth/google"><img src={googleButton}/></a></li>
                 );
             default:
                 return <li><a href="/api/logout">Logout</a></li>;
@@ -22,8 +23,8 @@ class Login extends Component{
         <nav>
             <div className="nav-wrapper">
             {/* ternary expression  */}
-                <Link to={this.props.auth ? '/main' : '/'} className="left brand-logo"> 
-                FlexNote</Link>
+                {/* <Link to={this.props.auth ? '/main' : '/'} className="left brand-logo"> 
+                FlexNote</Link> */}
                 <ul className="right">
                     {this.renderContent()}
                 </ul>
@@ -32,7 +33,6 @@ class Login extends Component{
         
         );
     }
-
 }
 function mapStateToProps({ auth }){
     return {auth};
