@@ -4,23 +4,25 @@ import { connect} from 'react-redux';
 import * as actions from "../actions";
 //import Panel from './panel';
 //import NavBar from '../components/navbar/nav';
-import Login from './login';
+// import Login from './login';
+import LandingPage from './landingpage';
 import Dashboard from './dashboard';
-import LandingPage from './LandingPage';
-import '../assets/css/app.css';
 
 class App extends Component {
     componentDidMount(){
         this.props.fetchUser();
     }
-
     render() {
         return (
             <div>
                <BrowserRouter >
+
                 <div className="container-fluid">
                     <Route path="/main" component={Dashboard} />
                     <Route exact path="/" component={LandingPage} />
+                        {/* // <NavBar/>
+                        // <Panel/>
+                        // <Login /> */}
 
                 </div>
                 </BrowserRouter>
@@ -29,4 +31,6 @@ class App extends Component {
     }
 }
 
+
 export default connect(null, actions)(App);
+
