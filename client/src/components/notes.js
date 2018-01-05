@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
@@ -207,7 +207,7 @@ class Notes extends Component {
 
         return (
             <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
-            <span className="material-icons">{icon}</span>
+                <span className="material-icons">{icon}</span>
             </span>
         )
     };
@@ -218,7 +218,7 @@ class Notes extends Component {
 
         return (
             <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
-            <span className="material-icons">{icon}</span>
+                <span className="material-icons">{icon}</span>
             </span>
         )
     };
