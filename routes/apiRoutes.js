@@ -8,12 +8,37 @@ module.exports = app => {
     app.get('/', (req,res)=>{
         res.send('Homepage')
     })
-    app.get('/lala', (req,res)=>{
-        console.log('ahaha');
+    app.get('/userInfo', requireLogin, (req,res)=>{
+        
+        res.send(req.user);
+    })
+    app.get('/dummyData', requireLogin, (req,res)=>{
+        res.send(dummyData);
+
+    })
+    // app.get('/dummyData', (req,res)=>{
+    //     if(req.user.userName=== 'JOhn Hong'){
+    //         dummyData.binder_arr_obj.forEach(ele=>{
+    //             if(ele.binder_id === 1){
+    //                 console.log('if passed')
+    //                 ele.binder_name= "binder name changed";
+    //                 res.send(dummyData);
+    //             }
+    //         })
+
+    //     }
+
+
+    // })
+    app.post('/dummyData', (req,res)=>{
+        
+
+        res.send(dummyData);
     })
 
     app.get('/main/:userId', requireLogin, async (req, res)=>{
         //pull entire user obj
+        
     })
 // For Binder //
     app
