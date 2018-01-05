@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/conmeconte/c10.17_notes_for_you#readme",
   "dependencies": {
+
+    "body-parser": "^1.18.2",
     "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.2",
     "mongoose": "^5.0.0-rc0",
