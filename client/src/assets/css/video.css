@@ -45,7 +45,7 @@ button.close {
 .results-container.sidebar {
     position: absolute;
     top: 0;
-    right: 2vh;
+    right: 0;
     background-color: #000;
     width: 65%;
 }
