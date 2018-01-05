@@ -1,39 +1,33 @@
-const mongoose = require('mongoose');
-const {Schema} = mongoose; //ES6 destructuring
 
-// const userSchema = new Schema({
-//     googleId: String, 
-//     userName: String
-    
-        
-    
-// });
-const userSchema = new Schema({
+
+let fakeData= 
+{   
     googleId: String, 
     userName: String,
     binder_arr_obj : [
-        {binder_id: { type:String, default:"B-01"},
-        binder_name: { type:String, default:"FlexNotes!"}, 
-        binder_color : String,
-        binder_url : String,
-        tab_arr_obj:[
-            {
-            tab_name : { type:String, default:"This is a tab"},   
-            tab_color : String,
-            tab_id : { type:String, default:"T-01"},
-            tab_url : String,
-            page_arr_obj :[ 
-                {
-                    page_color : String,
-                    page_date : {type: Date, default: Date.now},
-                    page_id : { type:String, default:"P-01"},
-                    page_name : { type:String, default:"Introduction to FlexNotes"},
-                    page_url : String,
+        {
+            binder_id: 1,
+            binder_name: 'Binder1',
+            binder_color: 'red',
+            binder_url: '/binder1',
+            tab_arr_obj:[
+              {
+                tab_id: 1,
+                tab_color: 'blue',
+                tab_name: 'Tab1',
+                tab_url: '/tab1',
+                page_arr_obj :[ 
+                  {
+                    page_id: 1,
+                    page_color: 'white',
+                    page_name: 'Page1',
+                    page_date: '',
+                    page_url: '/page1',
                     calendar : {
                         cal_url : String
                     },
                     lecture_slides : {
-                        lec_id : String
+                       lec_id : '1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE'
                     },
                     notes : {
                         document: {
@@ -143,8 +137,8 @@ const userSchema = new Schema({
 
                     video :[ 
                         {
-                        vid_url : String,
-                        videoInfo: String
+                        vid_url : "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                        videoId: "Ukg_U3CnJWI"
                         }
                     ],
                     panel_dimensions: {
@@ -170,14 +164,5 @@ const userSchema = new Schema({
             }
         ],
         }
-    ]
-        
-});
-
-mongoose.model('users', userSchema);
-
-
-
-  
-  
-  
+      ]
+}

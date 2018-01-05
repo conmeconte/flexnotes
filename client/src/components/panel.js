@@ -16,6 +16,7 @@ class Panel extends Component {
             horizontal_left: 400,
             horizontal_right: 400,
         };
+        this.sendSize = this.sendSize.bind(this);
     }
 
     logVWsize(panelSize) {
@@ -44,6 +45,14 @@ class Panel extends Component {
             horizontal_right: panelSize
         });
     }
+
+    sendSize() {
+        const { vertical_width, horizontal_left, horizontal_right } = this.state;
+        console.log('vertical_width: ', vertical_width);
+        console.log('horizontal_right: ', horizontal_right);
+        console.log('horizontal_left: ', horizontal_left);
+        //do an axios.post with these values ^
+    }
     render() {
         const { vertical_width, horizontal_left, horizontal_right } = this.state;
         return (
@@ -54,7 +63,8 @@ class Panel extends Component {
                     <div><Slides/></div>
                     <div>MeisterTask</div>
                 </SplitPane> */}
-                <SplitPane onChange={size => this.logVWsize(size)} split="vertical" minSize={200} maxSize={-200} defaultSize={vertical_width}>
+                <button onClick={this.sendSize} className="btn btn-primary">Save</button>
+                <SplitPane className="width-w-nav" onChange={size => this.logVWsize(size)} split="vertical" minSize={200} maxSize={-200} defaultSize={vertical_width}>
                     <SplitPane onChange={size => this.logHLsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_left}>
                         <div><Slides /></div>
                         <div><Video /></div>

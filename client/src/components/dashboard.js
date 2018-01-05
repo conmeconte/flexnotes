@@ -5,11 +5,11 @@ import NavBar from './navbar/navbar';
 import Login from './login';
 
 export default props => {
-    return(
+    return (
         <div>
-            <Login/>
-            <NavBar/>
-            <Panel/>
+            <Login />
+            <NavBar />
+            <Panel />
         </div>
     );
 }
