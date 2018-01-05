@@ -56,7 +56,7 @@ class Panel extends Component {
     render() {
         const { vertical_width, horizontal_left, horizontal_right } = this.state;
         return (
-            <div>
+            <div className="panel_div col-xs-10">
                 {/* <SplitPane split="vertical" defaultSize={200}>
                     <div><Notes/></div>
                     <div><Video/></div>

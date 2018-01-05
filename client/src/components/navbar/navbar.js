@@ -6,12 +6,10 @@ export default props => {
         <div className="navbar col-xs-2">
             <Nav/>
             <div className="contain-tab">
-                <h4 className="nav_header">Tabs</h4>
-                <hr/>
+                <h4 className="nav_header"></h4>            
             </div>
             <div className="contain-page">
-                <h4 className="nav_header">Pages</h4>
-                <hr/>
+                <h4 className="nav_header"></h4>
             </div>   
         </div>
     );

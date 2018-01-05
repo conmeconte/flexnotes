@@ -246,12 +246,12 @@ export default class Nav extends Component {
         return (
             <div className="nav_binder">
 
-                <h3 className="nav_header">Binder</h3>
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
-                    <span className="glyphicon glyphicon-pencil"></span>
+                <h3 className="nav_header"></h3>
+                <button type="button" className={`btn btn-default btn-xs btn_edit ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
+                    Binders <span className="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
-                    <span className="glyphicon glyphicon-ok"></span>
+                <button type="button" className={`btn btn-default btn-xs btn_edit ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
+                    Binders <span className="glyphicon glyphicon-ok"></span>
                 </button>
 
 
