@@ -1,41 +1,59 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Route} from 'react-router-dom';
+import { connect} from 'react-redux';
+import * as actions from "../actions";
+import googleButton from '../assets/images/google-login.png';
+import backgroundImage from '../assets/images/landing-background.png';
+import Login from './login';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../assets/css/landing-page.css';
 
-class LandingPage extends Component{
-    renderContent(){
-        switch (this.props.auth){
-            case null:
-                return;
-            case false:
-                return (
-                    <li><a href="/auth/google">Log in With Google</a></li>
-                );
-            default:
-                return <li><a href="/api/logout">Logout</a></li>;
-        }
-    }
-    
-    render() {
-        // console.log(this.props);
+const backgroundImg = {
+    background: `url('${backgroundImage}')`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover'
+}
+
+class LandingPage extends Component {
+    render () {
         return(
-        <nav>
-            <div className="nav-wrapper">
-            {/* ternary expression  */}
-                <Link to={this.props.auth ? '/main' : '/'} className="left brand-logo"> 
-                FlexNote</Link>
-                <ul className="right">
-                    {this.renderContent()}
-                </ul>
+            <div className="main-login-container">
+                <div className="top-background-layer"></div>
+                <div style={backgroundImg} className="landing-page-container">
+                    <div className="title-container">
+                        <h1><span className="flex">Flex</span>Notes</h1>
+                        <h2>User-friendly Notes Web Application</h2>
+                    </div>
+                    <div className="login-container">
+                        <div className="blur"></div>
+                        <div className="info">
+                            <h3>Get Started</h3>
+                            <ul className="item-list">
+                                <li>
+                                    <span className="glyphicon glyphicon-thumbs-up"></span>
+                                    <div className="item-text">Easy to use</div>
+                                </li>
+                                <li>
+                                    <span className="glyphicon glyphicon-wrench"></span>
+                                    <div className="item-text">Customizable UI</div>
+                                </li>
+                                <li>
+                                    <span className="glyphicon glyphicon-pencil"></span>
+                                    <div className="item-text">Text editor, videos, slides, and more!</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="google-div">
+                            <div className="login-info">
+                                <h3>Sign In <span className="glyphicon glyphicon-user"></span></h3>
+                                <Login/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </nav>
-        
         );
     }
-
-}
-function mapStateToProps({ auth }){
-    return {auth};
 }
 
-export default connect(mapStateToProps)(LandingPage); 
+export default LandingPage;

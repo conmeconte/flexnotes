@@ -7,7 +7,6 @@ import * as actions from "../actions";
 // import Login from './login';
 import LandingPage from './landingpage';
 import Dashboard from './dashboard';
-import LandingPage from './LandingPage';
 
 class App extends Component {
     componentDidMount(){
