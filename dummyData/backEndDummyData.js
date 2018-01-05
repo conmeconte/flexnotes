@@ -10,14 +10,14 @@ let fakeData=
             binder_name: 'Binder1',
             binder_color: 'red',
             binder_url: '/binder1',
-        tab_arr_obj:[
-            {
+            tab_arr_obj:[
+              {
                 tab_id: 1,
                 tab_color: 'blue',
                 tab_name: 'Tab1',
                 tab_url: '/tab1',
-            page_arr_obj :[ 
-                {
+                page_arr_obj :[ 
+                  {
                     page_id: 1,
                     page_color: 'white',
                     page_name: 'Page1',
@@ -27,7 +27,7 @@ let fakeData=
                         cal_url : String
                     },
                     lecture_slides : {
-                       lec_id : “1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE”
+                       lec_id : '1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE'
                     },
                     notes : {
                         document: {
@@ -108,7 +108,7 @@ let fakeData=
                               type: String,
                               nodes: [
                                 {
-                                  kind: text,
+                                  kind: String,
                                   leaves: [
                                     {
                                       text: String
@@ -118,8 +118,8 @@ let fakeData=
                               ]
                             },
                             {
-                              kind: block,
-                              type: paragraph,
+                              kind: String,
+                              type: String,
                               nodes: [
                                 {
                                   kind: String,
@@ -137,8 +137,8 @@ let fakeData=
 
                     video :[ 
                         {
-                        vid_url : String,
-                        videoInfo: String
+                        vid_url : "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                        videoId: "Ukg_U3CnJWI"
                         }
                     ],
                     panel_dimensions: {
@@ -164,5 +164,5 @@ let fakeData=
             }
         ],
         }
-    ]
+      ]
 }

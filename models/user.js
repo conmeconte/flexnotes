@@ -114,7 +114,7 @@ const userSchema = new Schema({
                               type: String,
                               nodes: [
                                 {
-                                  kind: text,
+                                  kind: String,
                                   leaves: [
                                     {
                                       text: String
@@ -124,8 +124,8 @@ const userSchema = new Schema({
                               ]
                             },
                             {
-                              kind: block,
-                              type: paragraph,
+                              kind: String,
+                              type: String,
                               nodes: [
                                 {
                                   kind: String,

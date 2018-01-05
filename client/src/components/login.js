@@ -22,9 +22,7 @@ class Login extends Component{
         return(
         <nav>
             <div className="nav-wrapper">
-            {/* ternary expression  */}
-                {/* <Link to={this.props.auth ? '/main' : '/'} className="left brand-logo"> 
-                FlexNote</Link> */}
+
                 <ul className="right">
                     {this.renderContent()}
                 </ul>
