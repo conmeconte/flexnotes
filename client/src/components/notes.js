@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 
+import isImage from 'is-image'
 import isUrl from 'is-url'
 
 import '../assets/css/notes.css';
@@ -52,7 +53,35 @@ function unwrapLink(change) {
     change.unwrapInline('link')
 }
 
-// CLASS COMPONENT
+// IMAGES
+
+function insertImage(change, src, target) {
+    if (target) {
+        change.select(target)
+    }
+
+    change.insertBlock({
+        type: 'image',
+        isVoid: true,
+        data: { src }
+    })
+}
+
+const schema = {
+    document: {
+        last: { types: ['paragraph'] },
+        normalize: (change, reason, { node, child }) => {
+            switch (reason) {
+                case 'last_child_type_invalid': {
+                    const paragraph = Block.create('paragraph')
+                    return change.insertNodeByKey(node.key, node.nodes.size, paragraph)
+                }
+            }
+        }
+    }
+};
+
+
 
 class Notes extends Component {
 
@@ -208,7 +237,7 @@ class Notes extends Component {
         this.onChange(change)
     };
 
-    onPaste = (event, change) => {
+    onLinkPaste = (event, change) => {
         if (change.value.isCollapsed) return
 
         const transfer = getEventTransfer(event)
@@ -256,6 +285,50 @@ class Notes extends Component {
         this.onChange(change)
     };
 
+    // IMAGES
+
+    onClickImage = (event) => {
+        event.preventDefault()
+        const src = window.prompt('Enter the URL of the image:')
+        if (!src) return
+
+        const change = this.state.value
+            .change()
+            .call(insertImage, src)
+
+        this.onChange(change)
+    };
+
+    onDropOrPaste = (event, change, editor) => {
+        const target = getEventRange(event, change.value)
+        if (!target && event.type === 'drop') return
+
+        const transfer = getEventTransfer(event)
+        const { type, text, files } = transfer
+
+        if (type === 'files') {
+            for (const file of files) {
+                const reader = new FileReader()
+                const [ mime ] = file.type.split('/')
+                if (mime !== 'image') continue
+
+                reader.addEventListener('load', () => {
+                    editor.change((c) => {
+                        c.call(insertImage, reader.result, target)
+                    })
+                })
+
+                reader.readAsDataURL(file)
+            }
+        }
+
+        if (type === 'text') {
+            if (!isUrl(text)) return
+            if (!isImage(text)) return
+            change.call(insertImage, text, target)
+        }
+    };
+
     // ALL
 
     renderMark = (props) => {
@@ -282,6 +355,14 @@ class Notes extends Component {
                 const { data } = node
                 const href = data.get('href')
                 return <a {...attributes} href={href}>{children}</a>
+            };
+            case 'image': {
+                const src = node.data.get('src')
+                const className = isSelected ? 'active' : null
+                const style = { display: 'block' }
+                return (
+                    <img src={src} className={className} style={style} {...attributes} />
+                )
             }
         }
     };
@@ -300,6 +381,9 @@ class Notes extends Component {
                 {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
                 <span className="button" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
                     <span className="material-icons">link</span>
+                </span>
+                <span className="button" onMouseDown={this.onClickImage}>
+                    <span className="material-icons">image</span>
                 </span>
                 <input
                     className="search-box"
@@ -321,7 +405,10 @@ class Notes extends Component {
                     value={this.state.value}
                     onChange={this.onChange}
                     onKeyDown={this.onKeyDown}
-                    onPaste={this.onPaste}
+                    schema={schema}
+                    onDrop={this.onDropOrPaste}
+                    onPaste={this.onDropOrPaste}
+                    onLinkPaste={this.onPaste}
                     renderNode={this.renderNode}
                     renderMark={this.renderMark}
                     spellCheck
