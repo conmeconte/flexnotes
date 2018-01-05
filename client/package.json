@@ -37,6 +37,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "^1.0.17",
     "react-sortable-pane": "^0.6.8",
+    "react-split-pane": "^0.1.74",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "slate": "^0.31.8",
