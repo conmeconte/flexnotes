@@ -30,19 +30,19 @@ passport.use(
             const existingUser= await User.findOne({googleId:profile.id});
             if(existingUser){
                 //we already have
-                console.log("google provides this info ", profile);
-                console.log(existingUser);
+                // console.log("google provides this info ", profile);
+                // console.log(existingUser);
                 return done(null, existingUser); 
             }
             //no user record in db make a new record
-            console.log(profile);
+            // console.log(profile);
             const defaultBinder = new Binder();
             defaultBinder.tab_arr_obj.push(new Tab());
             defaultBinder.tab_arr_obj[0].page_arr_obj.push(new DataPage({page_color:'orange'}));
             const user= await new User({
                 googleId: profile.id, 
                 userName: profile.displayName, 
-                binder_arr_obj: defaultBinder
+                binder_arr_obj: defaultBinder   //how come this works even thought it's an array array: obj?
             }).save()
                 done(null, user);
             
