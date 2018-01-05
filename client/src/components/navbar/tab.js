@@ -153,7 +153,7 @@ export default class Tab extends Component {
             page_link = page_arr_obj.map((item, index) => {
                 //console.log('map:', item);
                 return (
-                    <li key={item.page_id}><Link to={'/main'+binderUrl + tab_url + item.page_url}>
+                    <li key={item.page_id}><Link to={'/main'+binderUrl + tab_url + item.page_url} style={{ textDecoration: 'none' }}>
                     <div className="pageDiv">
                         {item.page_name}
                     </div></Link></li>
@@ -173,12 +173,12 @@ export default class Tab extends Component {
             return(
     
                 <div className='nav_page'>
-                    <h5>Pages</h5>
+                    
                     <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'hidden': 'visible'}`} onClick={this.editPages}>
-                        <span className="glyphicon glyphicon-pencil"></span>
+                        Pages <span className="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'visible': 'hidden'}`} onClick={this.notEditPages}>
-                        <span className="glyphicon glyphicon-ok"></span>
+                        Pages <span className="glyphicon glyphicon-ok"></span>
                     </button>
   
                     <ul className="nav-page-col">

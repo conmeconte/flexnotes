@@ -4,8 +4,21 @@
     padding: 0;
 }
 
+.navbar{
+    margin: 0;
+    padding: 0;
+    #border: 2px red solid;
+    width: 10%;
+    height: 90vh;
+    #display: inline-block;
+
+}
 .nav_header{
-    display: inline-block;
+    margin-left: 10%;
+}
+
+h3.nav_header{
+    margin-left: 5%;
 }
 
 ul {
@@ -15,57 +28,137 @@ ul {
 
 ul > li {
     list-style: none;
+
+}
+
+.contain-tab, .contain-page{
+    #border: 1px solid #000080;
+    display: inline-block; 
+    margin: 0;
+    padding: 0;    
+    height: 75vh;
+    background-color: rgba(0, 0, 0, .38);
+}
+
+
+.contain-page{
+    #border-right: 3px solid #000080;
+    box-shadow: 2px 0px 1px #747474;
+    margin-left: 1%;
+    width: 54%;
+    background-color: #f9f9f9;
+    background-image: url("https://www.transparenttextures.com/patterns/paper.png");
+}
+
+.contain-tab{
+    border-left: 1px solid #747474;
+    #border-right: #ff0000 3px solid;
+    background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+    box-shadow: 2px 0px 1px #747474;
+    width: 45%;
+
 }
 
 .nav_binder {
-    border: 1px solid red;
+    border: 2px solid #000080;
+    #border-bottom: 4px solid #000080;
+    #background-color: #f2f2f2;
     display: inline-block;
     position: relative;
-
+    width: 100%;
+    box-shadow: 1.5px 1.5px .5px #747474;
+    padding-bottom: 5%;
 }
 
 .nav_tab {
-    border-left: 1px solid blue;
+    #border-left: 2px solid red;
     display: inline-block;
     position: absolute;
-    top: 100%;
-    width: 50%;
+    top: 130%;
+    width: 45%;
 }
 
 .nav_page {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    #border-left: 2px solid lightgreen;
+    #border-right: 2px solid red;
     display: inline-block; 
     position: absolute;
-    top: 0%;
+    top: 1%;
     left: 100%;
-    width: 100%;   
+    width: 120%;   
+}
+
+.nav-tab-col, .nav-page-col{
+    margin-top: 25%;
+}
+
+.binderDiv{
+    #border: 2px solid #000080;
+    text-align: left;
+    padding-left: 5%;
+    padding-top: 5%;
+    #background-color: #ccccff;
+    font-weight: 600;
+    color: black;
+}
+
+
+.binderDiv:hover{
+    background-color: #000080;
+    color: white
+}
+
+.binderDiv:active{
+    background-color: #000080;
+}
+
+.tabDiv{
+    border-left: 10px solid #ff0000;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    padding-top: 8%;
+    padding-bottom: 8%;
+    background-color: white;
+    margin-bottom: 5%;
+    width: 100%;
+    font-weight: 500;
+    color: black;
+    box-shadow: -2px 1px 1px #999999;
+}
+
+.tabDiv:hover{
+    background-color: #ffcccc;
+    text-decoration: none;
 }
 
 .pageDiv{
     border-bottom: 1px solid black;
-    box-shadow: 0px 1px .5px #747474;
+    box-shadow: 0px 1px 0px #747474;
     padding: 7% 3% 7% 0;
     width: 100%;
-    text-align: right;
+    text-align: center;
+    margin-left: 2%;
+    color: black;
+    #background-color: ##f2f2f2;
 }
 
-.tabDiv{
-    border: 1px solid lightgreen;
-    text-align: center;
-    padding-top: 10%;
-    padding-bottom: 10%;
+.pageDiv:hover{
+    background-color: #ffcccc;
+    text-decoration: none;
 }
 
 .btn_edit, .btn_add, .btn_delete {
-    border-radius: 50%;
-    border: 2px solid black;
+    border-radius: 5%;
+    #border: 2px solid black;
     margin-left: 2%;  
     margin-right: 2%;
 }
 
+
 .edit_input{
-    width: 50%;
+    margin-left: 3%;
+    width: 60%;
 }
 
 .visible{
