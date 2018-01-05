@@ -2,15 +2,15 @@ import React from 'react';
 import Nav from './nav';
 
 export default props => {
-    return(
+    return (
         <div className="navbar col-xs-2">
-            <Nav/>
+            <Nav />
             <div className="contain-tab">
-                <h4 className="nav_header"></h4>            
+                <h4 className="nav_header"></h4>
             </div>
             <div className="contain-page">
                 <h4 className="nav_header"></h4>
-            </div>   
+            </div>
         </div>
     );
 }
