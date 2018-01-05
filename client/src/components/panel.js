@@ -69,7 +69,7 @@ class Panel extends Component {
                         <div><Slides /></div>
                         <div><Video /></div>
                     </SplitPane>
-                    <SplitPane pane1Style onChange={size => this.logHRsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_right}>
+                    <SplitPane onChange={size => this.logHRsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_right}>
                         <div className="notes-parent-panel"><Notes /></div>
                         <div>MeisterTask</div>
                     </SplitPane>

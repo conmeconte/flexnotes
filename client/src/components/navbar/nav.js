@@ -88,17 +88,10 @@ export default class Nav extends Component {
 
     addBinder() {
         console.log('add Binder');
-<<<<<<< HEAD
-        const { binder_array, new_tab_arr } = this.state;
-
-        let length = binder_array.length;
-        if (length === 0) {
-=======
-        const {binder_arr_obj, new_tab_arr} = this.state;
+        const { binder_arr_obj, new_tab_arr } = this.state;
 
         let length = binder_arr_obj.length;
-        if(length === 0){
->>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
+        if (length === 0) {
             //new binder when there are no binders
             let new_binder_obj = {
                 binder_id: 1,
@@ -113,11 +106,7 @@ export default class Nav extends Component {
             });
 
         } else {
-<<<<<<< HEAD
-            let new_index = binder_array[length - 1].binder_id + 1;
-=======
-            let new_index = binder_arr_obj[length-1].binder_id + 1;
->>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
+            let new_index = binder_arr_obj[length - 1].binder_id + 1;
             let new_url = '/binder' + new_index;
 
             let new_binder_obj = {
@@ -139,21 +128,12 @@ export default class Nav extends Component {
     deleteBinder(delete_id) {
         console.log('delete button clicked, binder_id: ', delete_id);
 
-<<<<<<< HEAD
-        const { binder_array } = this.state;
-        console.log(binder_array);
-        let deleteIndex = 0;
-        for (deleteIndex; deleteIndex < binder_array.length; deleteIndex++) {
-            if (binder_array[deleteIndex].binder_id === delete_id) {
-                binder_array.splice(deleteIndex, 1);
-=======
-        const {binder_arr_obj} = this.state;
+        const { binder_arr_obj } = this.state;
         console.log(binder_arr_obj);
         let deleteIndex = 0;
-        for(deleteIndex; deleteIndex<binder_arr_obj.length; deleteIndex++){
-            if(binder_arr_obj[deleteIndex].binder_id === delete_id){
+        for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
+            if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
                 binder_arr_obj.splice(deleteIndex, 1);
->>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
             }
         }
 
@@ -182,23 +162,13 @@ export default class Nav extends Component {
     //   }
     // }
 
-<<<<<<< HEAD
     textChanged(e, id) {
-        const { binder_array } = this.state;
+        const { binder_arr_obj } = this.state;
         //console.log("text changed, id:", id);
         //console.log(e.target.value);
 
-        for (let i = 0; i < binder_array.length; i++) {
-            if (binder_array[i].binder_id === id) {
-=======
-    textChanged(e, id){
-        const {binder_arr_obj} = this.state;
-        //console.log("text changed, id:", id);
-        //console.log(e.target.value);
-
-        for(let i =0; i<binder_arr_obj.length; i++){
-            if(binder_arr_obj[i].binder_id===id ){
->>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
+        for (let i = 0; i < binder_arr_obj.length; i++) {
+            if (binder_arr_obj[i].binder_id === id) {
                 //console.log('binder_id and id match');
                 binder_arr_obj[i].binder_name = e.target.value;
             }
@@ -219,23 +189,13 @@ export default class Nav extends Component {
 
 
     */
-<<<<<<< HEAD
     render() {
-        const { binder_array, editable } = this.state;
+        const { binder_arr_obj, editable } = this.state;
         //console.log('Render binderArray:', binder_array);
         let binder_link = [];
         //map binders
         if (editable) {
-            binder_link = binder_array.map((item, index) => {
-=======
-    render(){
-        const {binder_arr_obj, editable} = this.state;
-        //console.log('Render binderArray:', binder_array);
-        let binder_link = [];
-        //map binders
-        if(editable){
             binder_link = binder_arr_obj.map((item, index) => {
->>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
                 //console.log('editable map:', item);
                 return (
                     <li key={item.binder_id}>
@@ -261,15 +221,11 @@ export default class Nav extends Component {
                 //console.log('map:', item);
                 return (
                     <li key={item.binder_id}>
-<<<<<<< HEAD
-                        <Link to={'/main' + item.binder_url}>{item.binder_name}</Link>
-=======
-                        <Link to={'/main'+item.binder_url} style={{ textDecoration: 'none' }}>
-                        <div className="binderDiv">
+                        <Link to={'/main' + item.binder_url} style={{ textDecoration: 'none' }}>
+                            <div className="binderDiv">
                                 {item.binder_name}
-                        </div>
+                            </div>
                         </Link>
->>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
                     </li>
                 );
             });
@@ -279,42 +235,23 @@ export default class Nav extends Component {
 
 
 
-<<<<<<< HEAD
-        const binder_route = binder_array.map((item, index) => {
+        const binder_route = binder_arr_obj.map((item, index) => {
             return (
                 <Route key={item.binder_id} path={'/main' + item.binder_url} render={() =>
                     <Binder binder_obj={item} />}
-=======
-        const binder_route = binder_arr_obj.map((item, index) => {
-            return(
-                <Route key={item.binder_id} path={'/main'+item.binder_url} render={()=> 
-                    <Binder binder_obj={item}/>}
->>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
                 />
             );
         });
 
-<<<<<<< HEAD
         return (
-            <div className="nav_binder col-xs-2">
-
-                <h3 className="nav_header">Binder</h3>
-                <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
-                    <span className="glyphicon glyphicon-pencil"></span>
-                </button>
-                <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
-                    <span className="glyphicon glyphicon-ok"></span>
-=======
-        return(
             <div className="nav_binder">
 
                 <h3 className="nav_header">Binder</h3>
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden': 'visible'}`} onClick={this.editable}>
-                        <span className="glyphicon glyphicon-pencil"></span>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
+                    <span className="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible': 'hidden'}`} onClick={this.notEditable}>
-                        <span className="glyphicon glyphicon-ok"></span>
->>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
+                    <span className="glyphicon glyphicon-ok"></span>
                 </button>
 
 
@@ -323,14 +260,10 @@ export default class Nav extends Component {
                     {binder_link}
                 </ul>
                 {binder_route}
-<<<<<<< HEAD
+
+
+
                 <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible' : 'hidden'}`} onClick={this.addBinder}>
-=======
-
-                
-
-                <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible': 'hidden'}`} onClick={this.addBinder}>
->>>>>>> 1286a345e8d19a375132d46c02a4513ef70ae5cd
                     <span className="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
