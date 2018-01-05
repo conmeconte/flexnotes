@@ -61,3 +61,7 @@ body {
     width: 80% !important;
     left: 17.5% !important;
 }
+
+.panel_div{
+    height: 90vh;
+}

@@ -3,7 +3,7 @@ import Nav from './nav';
 
 export default props => {
     return(
-        <div className="navbar">
+        <div className="navbar col-xs-2">
             <Nav/>
             <div className="contain-tab">
                 <h4 className="nav_header"></h4>            

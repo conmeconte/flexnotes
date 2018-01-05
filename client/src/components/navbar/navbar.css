@@ -10,6 +10,8 @@
     #border: 2px red solid;
     width: 10%;
     height: 90vh;
+    #display: inline-block;
+
 }
 .nav_header{
     margin-left: 10%;
