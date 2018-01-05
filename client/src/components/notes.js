@@ -103,7 +103,7 @@ class Notes extends Component {
             localStorage.setItem('content', content)
         }
 
-        this.setState({ value })
+        this.setState({ value });
     };
 
     // RICH TEXT TOOLBAR
@@ -379,11 +379,11 @@ class Notes extends Component {
                 const { data } = node
                 const href = data.get('href')
                 return <a {...attributes} href={href}>{children}</a>
-            };
+            }
             case 'image': {
-                const src = node.data.get('src')
-                const className = isSelected ? 'active' : null
-                const style = { display: 'block' }
+                const src = node.data.get('src');
+                const className = isSelected ? 'active' : null;
+                const style = { display: 'block' };
                 return (
                     <img src={src} className={className} style={style} {...attributes} />
                 )
@@ -411,11 +411,14 @@ class Notes extends Component {
                 <span className="button" onMouseDown={this.onClickImage}>
                     <span className="material-icons">image</span>
                 </span>
-                <input
-                    className="search-box"
-                    placeholder="Search keywords..."
-                    onChange={this.onInputChange}
-                />
+                <div className="search-box">
+                    <input
+
+                        placeholder="Search keywords..."
+                        onChange={this.onInputChange}
+                    />
+                </div>
+
             </div>
         )
     };
@@ -423,10 +426,11 @@ class Notes extends Component {
     render() {
         return (
             <div className="notes-component">
-                <h1 className="notesTitle">Notes</h1>
+
                 {this.toolbar()}
                 <Editor
                     className="editor"
+                    style="overflow: scroll"
                     placeholder="Enter notes..."
                     value={this.state.value}
                     onChange={this.onChange}
@@ -440,7 +444,7 @@ class Notes extends Component {
                     spellCheck
                 />
             </div>
-        )
+        );
     }
 }
 

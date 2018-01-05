@@ -56,3 +56,8 @@ body {
 .Resizer.disabled:hover {
   border-color: transparent;
 }
+
+.Pane1 {
+    overflow-y: scroll;
+    overflow-wrap: break-word;
+}
