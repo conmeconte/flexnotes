@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {Link, Route} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link, Route } from 'react-router-dom';
 
 import Binder from './binder';
 
 import './navbar.css';
 
 export default class Nav extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -18,12 +18,11 @@ export default class Nav extends Component {
                     binder_color: 'red',
                     binder_url: '/binder1',
                     tab_arr_obj: [{
-                        
-                            tab_id: 1,
-                            tab_color: 'blue',
-                            tab_name: 'Tab1',
-                            tab_url: '/tab1',
-                            page_arr_obj: [
+                        tab_id: 1,
+                        tab_color: 'blue',
+                        tab_name: 'Tab1',
+                        tab_url: '/tab1',
+                        page_arr_obj: [
                             {
                                 page_id: 1,
                                 page_color: 'white',
@@ -38,30 +37,29 @@ export default class Nav extends Component {
                                 page_date: '',
                                 page_url: '/page2'
                             }
-                            ]
-                            }, {
-                                               
-                            tab_id: 2,
-                            tab_color: 'red',
-                            tab_name: 'Tab2',
-                            tab_url: '/tab2',
-                            page_arr_obj: [
-                                {
+                        ]
+                    }, {
+                        tab_id: 2,
+                        tab_color: 'red',
+                        tab_name: 'Tab2',
+                        tab_url: '/tab2',
+                        page_arr_obj: [
+                            {
                                 page_id: 1,
                                 page_color: 'black',
                                 page_name: 'Page1',
                                 page_date: '',
                                 page_url: '/page1'
-                                },
-                                {
+                            },
+                            {
                                 page_id: 2,
                                 page_color: 'red',
                                 page_name: 'Page2',
                                 page_date: '',
                                 page_url: '/page2'
-                                }
-                            ]     
-                        }]
+                            }
+                        ]
+                    }]
                 }
             ],
 
@@ -88,12 +86,12 @@ export default class Nav extends Component {
         this.notEditable = this.notEditable.bind(this);
     }
 
-    addBinder(){
+    addBinder() {
         console.log('add Binder');
-        const {binder_arr_obj, new_tab_arr} = this.state;
+        const { binder_arr_obj, new_tab_arr } = this.state;
 
         let length = binder_arr_obj.length;
-        if(length === 0){
+        if (length === 0) {
             //new binder when there are no binders
             let new_binder_obj = {
                 binder_id: 1,
@@ -108,9 +106,9 @@ export default class Nav extends Component {
             });
 
         } else {
-            let new_index = binder_arr_obj[length-1].binder_id + 1;
+            let new_index = binder_arr_obj[length - 1].binder_id + 1;
             let new_url = '/binder' + new_index;
-    
+
             let new_binder_obj = {
                 binder_id: new_index,
                 binder_name: 'New Binder',
@@ -118,7 +116,7 @@ export default class Nav extends Component {
                 binder_url: new_url,
                 tab_arr_obj: new_tab_arr
             }
-    
+
             this.setState({
                 binder_arr_obj: [...binder_arr_obj, new_binder_obj]
             });
@@ -127,14 +125,14 @@ export default class Nav extends Component {
 
     }
 
-    deleteBinder(delete_id){
+    deleteBinder(delete_id) {
         console.log('delete button clicked, binder_id: ', delete_id);
 
-        const {binder_arr_obj} = this.state;
+        const { binder_arr_obj } = this.state;
         console.log(binder_arr_obj);
         let deleteIndex = 0;
-        for(deleteIndex; deleteIndex<binder_arr_obj.length; deleteIndex++){
-            if(binder_arr_obj[deleteIndex].binder_id === delete_id){
+        for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
+            if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
                 binder_arr_obj.splice(deleteIndex, 1);
             }
         }
@@ -144,7 +142,7 @@ export default class Nav extends Component {
         });
     }
 
-    editable(){
+    editable() {
         console.log("editable should be true");
         this.setState({
             editable: true
@@ -153,8 +151,8 @@ export default class Nav extends Component {
 
     notEditable() {
         console.log("editable should be false");
-        this.setState({ 
-            editable: false 
+        this.setState({
+            editable: false
         });
     }
 
@@ -164,13 +162,13 @@ export default class Nav extends Component {
     //   }
     // }
 
-    textChanged(e, id){
-        const {binder_arr_obj} = this.state;
+    textChanged(e, id) {
+        const { binder_arr_obj } = this.state;
         //console.log("text changed, id:", id);
         //console.log(e.target.value);
 
-        for(let i =0; i<binder_arr_obj.length; i++){
-            if(binder_arr_obj[i].binder_id===id ){
+        for (let i = 0; i < binder_arr_obj.length; i++) {
+            if (binder_arr_obj[i].binder_id === id) {
                 //console.log('binder_id and id match');
                 binder_arr_obj[i].binder_name = e.target.value;
             }
@@ -191,29 +189,29 @@ export default class Nav extends Component {
 
 
     */
-    render(){
-        const {binder_arr_obj, editable} = this.state;
+    render() {
+        const { binder_arr_obj, editable } = this.state;
         //console.log('Render binderArray:', binder_array);
         let binder_link = [];
         //map binders
-        if(editable){
+        if (editable) {
             binder_link = binder_arr_obj.map((item, index) => {
                 //console.log('editable map:', item);
                 return (
                     <li key={item.binder_id}>
-                        <input 
+                        <input
                             className="edit_input"
                             ref='textInput'
                             type='text'
-                            onChange={(e)=>this.textChanged(e, item.binder_id)}
+                            onChange={(e) => this.textChanged(e, item.binder_id)}
                             // onBlur={this.notEditable}
-                           // onKeyPress={this.keyPressed}
+                            // onKeyPress={this.keyPressed}
                             value={item.binder_name}
-                            />
+                        />
 
-                            <button type="button" className="btn btn-default btn-xs btn_delete"  onClick={()=>this.deleteBinder(item.binder_id)} >
-                                <span className="glyphicon glyphicon-minus"></span>
-                            </button>    
+                        <button type="button" className="btn btn-default btn-xs btn_delete" onClick={() => this.deleteBinder(item.binder_id)} >
+                            <span className="glyphicon glyphicon-minus"></span>
+                        </button>
                     </li>
                 );
             });
@@ -223,13 +221,13 @@ export default class Nav extends Component {
                 //console.log('map:', item);
                 return (
                     <li key={item.binder_id}>
-                        <Link to={'/main'+item.binder_url} style={{ textDecoration: 'none' }}>
-                        <div className="binderDiv">
+                        <Link to={'/main' + item.binder_url} style={{ textDecoration: 'none' }}>
+                            <div className="binderDiv">
                                 {item.binder_name}
-                        </div>
+                            </div>
                         </Link>
                     </li>
-                );               
+                );
             });
         }
 
@@ -238,22 +236,22 @@ export default class Nav extends Component {
 
 
         const binder_route = binder_arr_obj.map((item, index) => {
-            return(
-                <Route key={item.binder_id} path={'/main'+item.binder_url} render={()=> 
-                    <Binder binder_obj={item}/>}
+            return (
+                <Route key={item.binder_id} path={'/main' + item.binder_url} render={() =>
+                    <Binder binder_obj={item} />}
                 />
             );
         });
 
-        return(
+        return (
             <div className="nav_binder">
 
                 <h3 className="nav_header">Binder</h3>
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden': 'visible'}`} onClick={this.editable}>
-                        <span className="glyphicon glyphicon-pencil"></span>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
+                    <span className="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible': 'hidden'}`} onClick={this.notEditable}>
-                        <span className="glyphicon glyphicon-ok"></span>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
+                    <span className="glyphicon glyphicon-ok"></span>
                 </button>
 
 
@@ -263,11 +261,11 @@ export default class Nav extends Component {
                 </ul>
                 {binder_route}
 
-                
 
-                <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible': 'hidden'}`} onClick={this.addBinder}>
+
+                <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible' : 'hidden'}`} onClick={this.addBinder}>
                     <span className="glyphicon glyphicon-plus"></span>
-                </button>  
+                </button>
             </div>
         );
     }

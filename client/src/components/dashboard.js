@@ -5,11 +5,13 @@ import NavBar from './navbar/navbar';
 import Login from './login';
 
 export default props => {
-    return(
+    return (
         <div>
-            <Login/>
-            <NavBar/>
-            <Panel/>
+            <Login />
+            <div style={{ display: 'inline-block' }}>
+                <NavBar />
+                <Panel />
+            </div>
         </div>
     );
 }
