@@ -1,9 +1,25 @@
-.notesPanel {
-    width: 100%;
-    height: 100%;
-    margin-bottom: 2%;
+.notes-component {
+    margin: 0;
+    border: 0;
+    padding: 10px;
 }
-.quill {
-    height: 100%;
-    overflow: hidden;
+
+.notesTitle {
+    margin-top: 0;
+}
+
+.toolbar {
+    margin-left: -5px;
+    text-align: left;
+}
+
+.editor {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.search-box {
+    float: right;
+    font-size: 18px;
+    border-radius: 5px;
 }

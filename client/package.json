@@ -1,6 +1,14 @@
 {
   "name": "react_starter",
   "version": "1.0.0",
+  "proxy": {
+    "/auth/google": {
+      "target": "http://localhost:9000"
+    },
+    "/api/*": {
+      "target": "http://localhost:9000"
+    }
+  },
   "description": "Starting setup for react redux project",
   "main": "index.js",
   "scripts": {
@@ -19,16 +27,21 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^3.3.7",
     "google-client-api": "^1.0.4",
+    "immutable": "^3.8.2",
     "jquery": "^3.2.1",
+    "material-design-icons": "^3.0.1",
     "re-resizable": "^4.1.2",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-quill": "^1.2.2",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-scripts": "^1.0.17",
     "react-sortable-pane": "^0.6.8",
     "react-split-pane": "^0.1.74",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "slate": "^0.31.8",
+    "slate-react": "^0.10.23",
     "youtube-search-api-with-axios": "^2.0.0"
   },
   "devDependencies": {
