@@ -7,6 +7,9 @@
 .navbar{
     margin: 0;
     padding: 0;
+    #border: 2px red solid;
+    width: 10%;
+    height: 90vh;
 }
 .nav_header{
     margin-left: 10%;
@@ -32,8 +35,7 @@ ul > li {
     margin: 0;
     padding: 0;    
     height: 75vh;
-    
-    background-color: #f2f2f2;
+    background-color: rgba(0, 0, 0, .38);
 }
 
 
@@ -41,34 +43,37 @@ ul > li {
     #border-right: 3px solid #000080;
     box-shadow: 2px 0px 1px #747474;
     margin-left: 1%;
-    width: 49%;
+    width: 54%;
+    background-color: #f9f9f9;
+    background-image: url("https://www.transparenttextures.com/patterns/paper.png");
 }
 
 .contain-tab{
     border-left: 1px solid #747474;
-    border-right: #ff0000 3px solid;
+    #border-right: #ff0000 3px solid;
+    background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
     box-shadow: 2px 0px 1px #747474;
-    #background-color: lightgrey;
-    width: 50%;
+    width: 45%;
+
 }
 
 .nav_binder {
     border: 2px solid #000080;
     #border-bottom: 4px solid #000080;
-    padding-bottom: 10%;
     #background-color: #f2f2f2;
     display: inline-block;
     position: relative;
     width: 100%;
     box-shadow: 1.5px 1.5px .5px #747474;
+    padding-bottom: 5%;
 }
 
 .nav_tab {
     #border-left: 2px solid red;
     display: inline-block;
     position: absolute;
-    top: 110%;
-    width: 50%;
+    top: 130%;
+    width: 45%;
 }
 
 .nav_page {
@@ -78,7 +83,7 @@ ul > li {
     position: absolute;
     top: 1%;
     left: 100%;
-    width: 100%;   
+    width: 120%;   
 }
 
 .nav-tab-col, .nav-page-col{
@@ -89,6 +94,7 @@ ul > li {
     #border: 2px solid #000080;
     text-align: left;
     padding-left: 5%;
+    padding-top: 5%;
     #background-color: #ccccff;
     font-weight: 600;
     color: black;
@@ -105,19 +111,22 @@ ul > li {
 }
 
 .tabDiv{
-    border: 2px solid #ff0000;
+    border-left: 10px solid #ff0000;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
     text-align: center;
-    padding-top: 10%;
-    padding-bottom: 10%;
-    margin-bottom: 3%;
-    background-color: #ff4d4d;
-    width: 99%;
-    color: white;
-    font-weight: 800;
+    padding-top: 8%;
+    padding-bottom: 8%;
+    background-color: white;
+    margin-bottom: 5%;
+    width: 100%;
+    font-weight: 500;
+    color: black;
+    box-shadow: -2px 1px 1px #999999;
 }
 
 .tabDiv:hover{
-    background-color: #ff0000;
+    background-color: #ffcccc;
     text-decoration: none;
 }
 
@@ -129,7 +138,7 @@ ul > li {
     text-align: center;
     margin-left: 2%;
     color: black;
-    #background-color: #ffcccc;
+    #background-color: ##f2f2f2;
 }
 
 .pageDiv:hover{
@@ -137,38 +146,17 @@ ul > li {
     text-decoration: none;
 }
 
-.btn_edit_binder, .btn_add, .btn_delete, .btn_edit_tab, .btn_edit_page {
-    border-radius: 50%;
+.btn_edit, .btn_add, .btn_delete {
+    border-radius: 5%;
     #border: 2px solid black;
     margin-left: 2%;  
     margin-right: 2%;
 }
 
-.btn_edit_tab, .btn_edit_page {
-    position: absolute;
-}
-
-.btn_edit_binder, h3.nav_header {
-    display: inline-block;
-}
-
-.btn_edit_binder{
-    margin-left: 5%;
-    margin-bottom: 3%;
-}
-
-.btn_edit_tab {
-    right: 20%;
-}
-
-.btn_edit_page {
-    right: 10%;
-    top: -2%;
-}
 
 .edit_input{
     margin-left: 3%;
-    width: 70%;
+    width: 60%;
 }
 
 .visible{
