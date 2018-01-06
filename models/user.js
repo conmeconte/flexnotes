@@ -54,117 +54,11 @@ const pageSchemaNew = new Schema({
   },
   notes : {
       document: {
-        nodes: [],
-          /*
-          {
-            kind: String,
-            type: String,
-            nodes: [
-              {
-                kind: String,
-                leaves: [
-                  {
-                    text: String
-                  },
-                  {
-                    text: String,
-                    marks: [
-                      {
-                        type: String
-                      }
-                    ]
-                  },
-                  {
-                    text: String
-                  },
-                  {
-                    text: String,
-                    mark: [
-                      {
-                        type: String
-                      }
-                    ]
-                  },
-                  {
-                    text: String
-                  },
-                  {
-                    text: String,
-                    mark: [
-                      {
-                        type: String
-                      }
-                    ]
-                  },
-                  {
-                    text: String
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            kind:String,
-            type: String,
-            nodes: [
-              {
-                kind: String,
-                leaves: [
-                  {
-                    text: String
-                  },
-                  {
-                    text: String,
-                    marks: [
-                      {
-                        type: String
-                      }
-                    ]
-                  },{
-                    text: String
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            kind: String,
-            type: String,
-            nodes: [
-              {
-                kind: String,
-                leaves: [
-                  {
-                    text: String
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            kind: String,
-            type: String,
-            nodes: [
-              {
-                kind: String,
-                leaves: [
-                  {
-                    text: String
-                  }
-                ]
-              }
-            ]
-          }*/
-       // ]
+        nodes: []
       }
     },
 
-  video :[ 
-      {
-      vid_url : String,
-      videoInfo: String
-      }
-  ],
+  video :[],
   panel_dimensions: {
       lecture_Panel: {
           width: String,
@@ -188,5 +82,34 @@ const pageSchemaNew = new Schema({
 mongoose.model('datapages', pageSchemaNew);
 
   
-  
-  
+const videoSchema = new Schema(
+  {
+  vid_url : String,
+  videoInfo: String
+  }
+) ;
+
+mongoose.model('datavideos', videoSchema);
+
+
+const notesNode_arr= new Schema(
+  {
+    kind: {type: String, default: "block"},
+    type: {type: String, default: "paragraph"},
+    nodes: [
+        {
+            kind: {type: String, default: "text"},
+            leaves: [
+                {
+                    text: {type: String, default: "A line of text in a paragraph."}
+                }
+            ]
+        }
+    ]
+}
+
+);
+
+mongoose.model('notesNodeArr', notesNode_arr);
+
+
