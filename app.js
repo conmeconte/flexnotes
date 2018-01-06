@@ -11,7 +11,7 @@ const PORT  = process.env.PORT || 9000;
 /* Create connection to Mongo and Load in Auth Strategy */
 // require('./connection')(mongoose);
 /* Mongoose Connection */
-mongoose.connect('mongodb://andy:andy@ds041506.mlab.com:41506/yumyum');
+mongoose.connect(keys.mongoURI);
 mongoose.Promise= global.Promise; 
 
 var db = mongoose.connection; 
