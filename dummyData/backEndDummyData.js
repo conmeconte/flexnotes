@@ -1,11 +1,12 @@
 
 
 let fakeData= 
-{   
+{   _id:{$oid: 'someRandomNumberMongoDBAssings'},
     googleId: 103970352561814947806, 
     userName: 'JOhn Hong',
     binder_arr_obj : [
-        {
+        {   
+            _id:{$oid: 'someRandomNumberMongoDBAssings'},
             binder_id: 1,
             binder_name: 'Binder1',
             binder_color: 'red',
@@ -137,7 +138,8 @@ let fakeData=
 
                     video :[ 
                         {
-                        vid_url : "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                        _id:{$oid: 'someRandomNumberMongoDBAssings'},
+                        videoInfo : "No Info",
                         videoId: "Ukg_U3CnJWI"
                         }
                     ],

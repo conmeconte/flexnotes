@@ -1,27 +1,45 @@
-const mongoose= require('mongoose');
-const {Schema} = mongoose;
-const tabSchema = require('./Tabs');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const pageSchema= new Schema({
-    page_obj : {
-        page_color : String,
-        page_date : {type: Date, default: Date.now},
-        page_id : String,
-        page_name : String,
-        page_url : String,
-        calendar : {
-            cal_url : String
-        },
-        lecture_slides : {
-            lec_id : String
-        },
-        notes : {
-            notes_url : String
-        },
+/* Page Schema */
 
-        video : {
-            vid_url : String,
-            videoInfo: String
+const pageSchemaNew = new Schema({
+    page_color : String,
+    page_date : {type: Date, default:Date.now},
+    page_id : { type:String, default:"P-01"},
+    page_name : { type:String, default:"Introduction to FlexNotes"},
+    page_url : String,
+    calendar : {
+        cal_url : String
+    },
+    lecture_slides : {
+        lec_id : String
+    },
+    notes : {
+        document: {
+          nodes: []
+        }
+      },
+  
+    video :[],
+    panel_dimensions: {
+        lecture_Panel: {
+            width: String,
+            height: String
+        },
+        video_Panel: {
+            width: String,
+            height: String
+        },
+        note_Panel: {
+            width: String,
+            height: String
+        },
+        meister_Panel: {
+            width: String,
+            height: String
         }
     }
 });
+
+module.exports = pageSchemaNew;
