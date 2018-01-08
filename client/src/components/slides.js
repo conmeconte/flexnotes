@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../assets/css/slides.css';
-
+import axios from 'axios';
 
 class Slides extends Component {
     constructor(props) {
@@ -44,6 +44,12 @@ class Slides extends Component {
         this.setState({
             inputComplete: true
         })
+
+        const URL = "http://localhost:3000/api/page";
+
+        axios.get(URL).then((resp) => {
+            console.log(resp);
+        });
     }
 
     render() {

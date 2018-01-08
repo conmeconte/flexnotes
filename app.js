@@ -11,7 +11,7 @@ const PORT  = process.env.PORT || 9000;
 /* Create connection to Mongo and Load in Auth Strategy */
 // require('./connection')(mongoose);
 /* Mongoose Connection */
-mongoose.connect('mongodb://andy:andy@ds041506.mlab.com:41506/yumyum');
+mongoose.connect(keys.mongoURI);
 mongoose.Promise= global.Promise; 
 
 var db = mongoose.connection; 
@@ -23,7 +23,9 @@ db.once('open', function() {
 require('./services/passport');// user must be loaded first so that it creates the mongoose schema to be used in passport
 
 /* Consuming middleware throughout app */
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded());
 app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 1000,  //set up cookie life-time, might have to use express session if we want to store more data into a single session    })
