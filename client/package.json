@@ -5,6 +5,13 @@
     "/auth/google": {
       "target": "http://localhost:9000"
     },
+    "/userInfo": {
+      "target": "http://localhost:9000"
+    },
+    "/dummyData": {
+      "target": "http://localhost:9000"
+    },
+
     "/api/*": {
       "target": "http://localhost:9000"
     }
