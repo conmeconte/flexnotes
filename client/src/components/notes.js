@@ -107,6 +107,16 @@ class Notes extends Component {
         this.setState({ value });
     };
 
+    // AXIOS CALL
+
+    componentWillMount(){
+        const url = '/api/dummyData';
+
+        axios.get(url).then((resp) => {
+            console.log('Resp:', resp);
+        });
+    }
+
     // RICH TEXT TOOLBAR
 
     hasMark = (type) => {
