@@ -158,21 +158,31 @@ module.exports = (app, dummyData) => {
 
     // For Page //
 
+<<<<<<< HEAD
     app.get('/api/page', async (req,res)=>{
+=======
+    app.get('/api/page', async (req, res) => {
+        console.log(req.body);
+>>>>>>> 33b48274b79e3a99ef206b67668ae31a69cc3eea
         console.log(req.user);
         res.send(dummyData);
-    }); 
-    app.post('/api/page', async (req,res)=>{
+    });
+    app.post('/api/page', async (req, res) => {
         //create new page in user
-    }); 
-    app.delete('/api/page', async (req,res)=>{
+    });
+    app.delete('/api/page', async (req, res) => {
         //delete page
-    }); 
-    app.put('/api/page', async (req,res)=>{
+    });
+    app.put('/api/page', async (req, res) => {
         // update page
+<<<<<<< HEAD
         console.log(req.body);
         
         
+=======
+        let yes = req.body
+        res.send(yes);
+>>>>>>> 33b48274b79e3a99ef206b67668ae31a69cc3eea
     });
 
 
