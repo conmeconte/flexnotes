@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
