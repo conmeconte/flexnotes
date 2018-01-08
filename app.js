@@ -1,26 +1,28 @@
-const express = require('express');
-const mongoose=require('mongoose');
-const cookieSession= require('cookie-session');
-const passport = require('passport');
-const bodyParser = require('body-parser');
-const keys= require('./config/keys');
-require('./models/user');
-require('./services/passport');// user must be loaded first so that it creates the mongoose schema to be used in passport
+const express       = require('express');
+const mongoose      = require('mongoose');
+const cookieSession = require('cookie-session');
+const passport      = require('passport');
+const bodyParser    = require('body-parser');
+const keys          = require('./config/keys');
 
+const app   = express();
+const PORT  = process.env.PORT || 9000;
+
+/* Create connection to Mongo and Load in Auth Strategy */
+// require('./connection')(mongoose);
+/* Mongoose Connection */
 mongoose.connect(keys.mongoURI);
-
-// mongoose testing
 mongoose.Promise= global.Promise; 
+
 var db = mongoose.connection; 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', function() {
-  console.log('connected to mongodb through mongoose')
+    console.log('connected to mongodb through mongoose')
 });
 // end of testing
-const app= express();
-// const appRoute= express.Router();
+require('./services/passport');// user must be loaded first so that it creates the mongoose schema to be used in passport
 
-
+/* Consuming middleware throughout app */
 app.use(bodyParser.json());
 app.use(
     cookieSession({
@@ -28,18 +30,16 @@ app.use(
         keys: [keys.cookieKey]
     })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 
-
+/* Routing middleware */
 require('./routes/authRoutes')(app);
 require('./routes/apiRoutes')(app);
 
 
-
-const PORT = process.env.PORT || 9000;
+/* Start server and listen on PORT */
 app.listen(PORT, ()=>{
     console.log('Server is Running at localhost:' + PORT);
 });

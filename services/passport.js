@@ -3,12 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
 
-const User = mongoose.model('users');
-const Binder = mongoose.model('binders');
-const Tab = mongoose.model('tabs');
-const DataPage = mongoose.model('datapages');
-const VideoPage = mongoose.model('datavideos');
-const NotesNode= mongoose.model('notesNodeArr')
+const { User, Binder, Tab, Page, Note, Video } = require('../models');
 
 passport.serializeUser((user, done)=>{
     done(null, user.id);
@@ -40,9 +35,9 @@ passport.use(
             // console.log(profile);
             const defaultBinder = new Binder();
             defaultBinder.tab_arr_obj.push(new Tab());
-            defaultBinder.tab_arr_obj[0].page_arr_obj.push(new DataPage({page_color:'orange'}));
-            defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new VideoPage({videoInfo: 'No Info'}));
-            defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new NotesNode());
+            defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({page_color:'orange'}));
+            defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({videoInfo: 'No Info'}));
+            defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new Note());
             const user= await new User({
                 googleId: profile.id, 
                 userName: profile.displayName, 
