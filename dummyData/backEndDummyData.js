@@ -168,4 +168,4 @@ let fakeData=
       ]
 }
 
-module.exports= fakeData;
+module.exports= JSON.stringify(fakeData);

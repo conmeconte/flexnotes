@@ -5,6 +5,7 @@ const passport      = require('passport');
 const bodyParser    = require('body-parser');
 const keys          = require('./config/keys');
 
+let dummyData = require('./dummyData/backEndDummyData');
 const app   = express();
 const PORT  = process.env.PORT || 9000;
 
@@ -38,7 +39,7 @@ app.use(passport.session());
 
 /* Routing middleware */
 require('./routes/authRoutes')(app);
-require('./routes/apiRoutes')(app);
+require('./routes/apiRoutes')(app, dummyData);
 
 
 /* Start server and listen on PORT */
