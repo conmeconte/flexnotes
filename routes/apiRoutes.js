@@ -49,6 +49,7 @@ module.exports = app => {
     }) 
     .post('/api/binder', async (req,res)=>{
         //create new binder in user
+        console.log("inside api binder rout ", req.body);
         const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function(err, user) {
             //if no match .find return [], and .findOne returns null in document(in this case user)
             if (err) {res.send("Error did occurred")};
@@ -96,7 +97,7 @@ module.exports = app => {
             if(err){res.send("Error Occurred")}
             if(user){
                 // user.binder_arr_obj[0].binder_name=req.body.testing; //nothing on req.body...
-                user.binder_arr_obj[0].binder_name= "Hakuna Matata";
+                user.binder_arr_obj[0].binder_name= req.body.newBinderName;
                 user.save((err,data)=>{
                     if(err){console.log('failed to save', err)}
                     else{
@@ -131,8 +132,17 @@ module.exports = app => {
                 defaultTab.page_arr_obj[0].video.push(new Video({videoInfo: 'No Info'}));
                 defaultTab.page_arr_obj[0].notes.document.nodes.push(new Note());
                 user.binder_arr_obj[0].tab_arr_obj.push(defaultTab);  //binder_arr_obj[num] num should be whichever binder that called the method, might need to search for id number
-                user.save()
-                console.log("User has a new tab and is now saved");
+                user.save((err, data)=>{
+                    if(err){
+                        console.log('some error');
+                    }
+                    if(data){
+                        res.send(data);
+                        console.log("User has a new tab and is now saved");
+                    }else{
+                        console.log('user not found');
+                    }
+                })
             }else{
                 res.send("Error can't find user")
             }

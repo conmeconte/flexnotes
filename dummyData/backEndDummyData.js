@@ -10,7 +10,6 @@ let fakeData=
             binder_id: 1,
             binder_name: 'Binder1',
             binder_color: 'red',
-            binder_url: '/binder1',
             tab_arr_obj:[
               {
                 tab_id: 1,
