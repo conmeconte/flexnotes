@@ -54,6 +54,10 @@ module.exports = app => {
             //if no match .find return [], and .findOne returns null in document(in this case user)
             if (err) {res.send("Error did occurred")};
 
+            // if(!user){
+            //     console.log('no user found');
+            // }
+
             if(user){
                 const defaultBinder = new Binder();
                 // const prevBinderId= user.binder_arr_obj[binder_arr_obj.length-1].binder_id; 
