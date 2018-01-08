@@ -33,15 +33,19 @@ class Results extends Component {
         const list = results.map((item, index) => {
             console.log(item.url);
             return (
-                <div className="result-item col-xs-12" key={index}>
-                    <li className="video-items">{item.videoTitle}</li>
-                    <button className="btn-sm btn-success pull-right" onClick={ () => { this.addToPlayList(item) } }><span className="glyphicon glyphicon-plus"></span></button>
-                    <button className="btn-sm btn-primary pull-right" onClick={ () => { this.play(item.url) }}><span className="glyphicon glyphicon-play"></span></button>
-                </div>
+                <li className="result-item list-group-item col-xs-12" key={index}>
+                    <div className="col-xs-8">
+                        <li className="video-items">{item.videoTitle}</li>
+                    </div>
+                    <div className="col-xs-4">
+                        <button className="btn-sm btn-success pull-right" onClick={ () => { this.addToPlayList(item) } }><span className="glyphicon glyphicon-plus"></span></button>
+                        <button className="btn-sm btn-primary pull-right" onClick={ () => { this.play(item.url) }}><span className="glyphicon glyphicon-play"></span></button>
+                    </div>
+                </li>
             );
         });
         return (
-            <div className="results text-left">{list}</div>
+            <ul className="results text-left">{list}</ul>
         );
 
     }
