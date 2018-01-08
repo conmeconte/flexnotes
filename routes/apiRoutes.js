@@ -159,19 +159,21 @@ module.exports = app => {
 
     // For Page //
 
-    app.get('/api/page', async (req,res)=>{
+    app.get('/api/page', async (req, res) => {
         console.log(req.body);
         console.log(req.user);
         res.send(dummyData);
-    }); 
-    app.post('/api/page', async (req,res)=>{
+    });
+    app.post('/api/page', async (req, res) => {
         //create new page in user
-    }); 
-    app.delete('/api/page', async (req,res)=>{
+    });
+    app.delete('/api/page', async (req, res) => {
         //delete page
-    }); 
-    app.put('/api/page', async (req,res)=>{
+    });
+    app.put('/api/page', async (req, res) => {
         // update page
+        let yes = req.body
+        res.send(yes);
     });
 
 
