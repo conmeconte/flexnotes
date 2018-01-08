@@ -174,10 +174,10 @@ export default class Tab extends Component {
     
                 <div className='nav_page'>
                     
-                    <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'hidden': 'visible'}`} onClick={this.editPages}>
+                    <button type="button" className={`btn btn-default btn-xs btn_edit_page ${editable ? 'hidden': 'visible'}`} onClick={this.editPages}>
                         Pages <span className="glyphicon glyphicon-pencil"></span>
                     </button>
-                    <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'visible': 'hidden'}`} onClick={this.notEditPages}>
+                    <button type="button" className={`btn btn-default btn-xs btn_edit_page ${editable ? 'visible': 'hidden'}`} onClick={this.notEditPages}>
                         Pages <span className="glyphicon glyphicon-ok"></span>
                     </button>
   

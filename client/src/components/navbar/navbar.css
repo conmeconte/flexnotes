@@ -13,13 +13,6 @@
     #display: inline-block;
 
 }
-.nav_header{
-    margin-left: 10%;
-}
-
-h3.nav_header{
-    margin-left: 5%;
-}
 
 ul {
     margin: 0;
@@ -45,37 +38,52 @@ ul > li {
     #border-right: 3px solid #000080;
     box-shadow: 2px 0px 1px #747474;
     margin-left: 1%;
-    width: 54%;
-    background-color: #f9f9f9;
-    background-image: url("https://www.transparenttextures.com/patterns/paper.png");
+    width: 53%;
+    background-color: #f9f9f9; 
+    background-image: url("../../assets/images/paper.png");
 }
 
 .contain-tab{
     border-left: 1px solid #747474;
     #border-right: #ff0000 3px solid;
-    background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
-    box-shadow: 2px 0px 1px #747474;
+    background-color: #ccc;
+    background-image: url("../../assets/images/black-linen.png");
+    box-shadow: 2px 0px 1px #454545;
     width: 45%;
 
 }
 
 .nav_binder {
-    border: 2px solid #000080;
-    #border-bottom: 4px solid #000080;
-    #background-color: #f2f2f2;
-    display: inline-block;
+    border: 3px solid #000080;
+    border-radius: 3px;
+    #border-bottom: 4px ridge #000080;
+    background-color: #000080B3;
+    #background-image: url("../../assets/images/concrete-wall-3.png");    
     position: relative;
     width: 100%;
-    box-shadow: 1.5px 1.5px .5px #747474;
-    padding-bottom: 5%;
+    box-shadow: 1px 1.5px .5px #747474;
+    padding-bottom: 8%;
+}
+
+.binder_wrap{
+    border: 1px solid #747474;
+    border-radius: 3px;
+    background-color: white;
+    #background-image: url("../../assets/images/concrete-wall-3.png");   
+    width: 75%;
+    height: 80px;
+    margin-left: 10%;
+    margin-bottom: 2%;
+    overflow-y: scroll;
 }
 
 .nav_tab {
     #border-left: 2px solid red;
     display: inline-block;
     position: absolute;
-    top: 130%;
+    top: 110%;
     width: 45%;
+    left: -.5%;
 }
 
 .nav_page {
@@ -84,7 +92,7 @@ ul > li {
     display: inline-block; 
     position: absolute;
     top: 1%;
-    left: 100%;
+    left: 102%;
     width: 120%;   
 }
 
@@ -113,9 +121,9 @@ ul > li {
 }
 
 .tabDiv{
-    border-left: 10px solid #ff0000;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-left: 12px solid #ff0000;
+    border-top: 1px solid #747474;
+    border-bottom: 1px solid #747474;
     text-align: center;
     padding-top: 8%;
     padding-bottom: 8%;
@@ -124,7 +132,7 @@ ul > li {
     width: 100%;
     font-weight: 500;
     color: black;
-    box-shadow: -2px 1px 1px #999999;
+    box-shadow: -1px 1px 1px #333, .5px  0px .5px #333;
 }
 
 .tabDiv:hover{
@@ -148,17 +156,72 @@ ul > li {
     text-decoration: none;
 }
 
-.btn_edit, .btn_add, .btn_delete {
-    border-radius: 5%;
+.btn_add {
+    border-radius: 20%;
     #border: 2px solid black;
-    margin-left: 2%;  
+    margin-left: 10%;
+    margin-top: 0%;  
     margin-right: 2%;
+    margin-bottom: 0%;
 }
 
+.btn_delete {
+    padding: 2%;
+    padding-right: 3%;
+    padding-bottom: 3%;
+    margin-left: 2%;  
+    margin-right: 2%;
+    line-height: 1%;
+    border-radius: 50%;
+}
+
+.btn_delete > .glyphicon-minus {
+    top: 0px;
+}
+
+.btn_delete:hover{
+    background-color: red;
+    color: white;
+}
+
+.delete_btn{
+    font-size: 1.5em;
+    #border: solid 1px black;
+    background-color: white;
+    border-radius: 100%;
+}
+
+.delete_btn:hover{
+    color: red;
+}
+
+.btn_edit_binder{
+    margin-top: 8%;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    font-size: 1.3em;
+}
+
+.btn_edit_tab{
+    margin-left: 10%;
+    margin-top: 2%;
+    font-size: 1.1em;
+}
+
+.btn_edit_page{
+    margin-left: 15%;
+    font-size: 1em;
+    margin-top: 2%;
+}
 
 .edit_input{
     margin-left: 3%;
-    width: 60%;
+    width: 65%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px dashed black;
+    border-radius: none;
 }
 
 .visible{
