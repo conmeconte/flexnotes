@@ -158,12 +158,7 @@ module.exports = (app, dummyData) => {
 
     // For Page //
 
-<<<<<<< HEAD
     app.get('/api/page', async (req,res)=>{
-=======
-    app.get('/api/page', async (req, res) => {
-        console.log(req.body);
->>>>>>> 33b48274b79e3a99ef206b67668ae31a69cc3eea
         console.log(req.user);
         res.send(dummyData);
     });
@@ -175,14 +170,15 @@ module.exports = (app, dummyData) => {
     });
     app.put('/api/page', async (req, res) => {
         // update page
-<<<<<<< HEAD
         console.log(req.body);
-        
-        
-=======
-        let yes = req.body
-        res.send(yes);
->>>>>>> 33b48274b79e3a99ef206b67668ae31a69cc3eea
+
+        for(var ele in req.body){
+            if (ele === 'lecture_slides'){
+                console.log(req.body.lecture_slides.lec_id);
+                fakeData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].lecture_slides.lec_id = req.body.lecture_slides.lec_id;
+                res.send(fakeData);
+            }
+        }
     });
 
 

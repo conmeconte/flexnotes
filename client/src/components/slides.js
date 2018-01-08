@@ -53,8 +53,10 @@ class Slides extends Component {
         });
 
         axios.put(URL, {
-            lec_id: this.state.input
-        }).then((resp) => {
+            lecture_slides:{
+                lec_id: this.state.input
+            
+        }}).then((resp) => {
             console.log(resp);
         });
     }
