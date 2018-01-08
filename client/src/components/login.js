@@ -13,7 +13,7 @@ class Login extends Component {
                     <li><a href="/auth/google"><img src={googleButton} /></a></li>
                 );
             default:
-                return <li><a href="/api/logout">Logout</a></li>;
+                return <li><a href="/api/logout"><button className="btn btn-sm btn-danger">Logout</button></a></li>;
         }
     }
 

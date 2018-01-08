@@ -22,6 +22,7 @@ class Video extends Component {
         }
         this.close = this.close.bind(this);
         this.open = this.open.bind(this);
+        this.changeBackground = this.changeBackground.bind(this);
     }
     componentDidMount() {
         this.loadYouTubeApi();
@@ -113,42 +114,38 @@ class Video extends Component {
         console.log('Close was clicked');
         document.querySelector(".results-container.sidebar").style.width = "0";
         document.querySelector(".results-container.sidebar").classList.remove("col-xs-4");
+        document.querySelector(".opacity").style.display = "none";
     }
-    open () {
+    open() {
         console.log('Open was clicked');
         document.querySelector(".results-container.sidebar").style.width = "65%";
         document.querySelector(".results-container.sidebar").classList.add("col-xs-4");
+        this.changeBackground();
+    }
+    changeBackground () {
+        document.querySelector(".opacity").style.display = "block";
     }
     render() {
         const { videos } = this.state;
         console.log(videos);
         return (
             <div className="main">
-                <span onClick={this.open} className="hamburger glyphicon glyphicon-menu-hamburger pull-right"></span>
-                {/* <div className="results-input-container row"> */}
-                    <div className="results-container sidebar col-xs-4 pull-right">
-                        <div className="search-button-input input-group col-xs-10">
-                            <input id="query" className="form-control" type="text" placeholder="Search..." />
-                            <span className="input-group-btn">
-                                <button id="search-button" type="button" className="btn btn-primary"
-                                    onClick={this.search}><span className="glyphicon glyphicon-search"></span></button>
-                                {/* <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span className="caret"></span>
-                                </button> */}
-                                <button onClick={this.close} className="close">X</button>
-                                <ul className="dropdown-menu">
-                                    <li><a href="#">URL</a></li>
-                                    <li><a href="#">Keyword</a></li>
-                                </ul>
-                            </span>
-                        </div>
-                        <Results results={videos} />
+                <div className="opacity"></div>
+                <button id="search" className="btn btn-primary" onClick={this.open} ><span className="search glyphicon glyphicon-chevron-left"></span></button>
+                <div className="results-container sidebar col-xs-4 pull-right">
+                    <div id="search-input-container" className="search-button-input input-group col-xs-12">
+                        <input id="query" className="form-control" type="text" placeholder="Search..." />
+                        <span className="input-group-btn">
+                            <button id="search-button" type="button" className="btn btn-primary"
+                                onClick={this.search}><span className="glyphicon glyphicon-search"></span></button>
+                            <button className="btn btn-danger" onClick={this.close}><span className="glyphicon glyphicon-chevron-right"></span></button>
+                        </span>
                     </div>
-                    <div id="video-wrapper" className="video-wrapper col-xs-12">
-                        <VideoContainer/>
-                    </div>
-                {/* </div> */}
+                    <Results results={videos} />
+                </div>
+                <div id="video-wrapper" className="video-wrapper col-xs-11 pull-left">
+                    <VideoContainer />
+                </div>
             </div>
         );
     }
