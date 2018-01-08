@@ -50,13 +50,9 @@ module.exports = app => {
     }) 
     .post('/api/binder', async (req,res)=>{
         //create new binder in user
-        const existingUser = await User.findOne({ 'googleId': "103970352561814947806a" }, function(err, user) {
+        const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function(err, user) {
             //if no match .find return [], and .findOne returns null in document(in this case user)
             if (err) {res.send("Error did occurred")};
-
-            // if(!user){
-            //     console.log('no user found');
-            // }
 
             if(user){
                 const defaultBinder = new Binder();
@@ -67,7 +63,8 @@ module.exports = app => {
                 defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({videoInfo: 'No Info'}));
                 defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new Note());
                 user.binder_arr_obj.push(defaultBinder);
-                user.save()
+                res.send(user.save());
+
                 console.log("User has a new binder and is now saved");
             }else{
                 res.send("Error can't find user")
@@ -85,7 +82,7 @@ module.exports = app => {
             if(err){res.send("Error Occurred")}
             if(user){
                 user.binder_arr_obj.pop();
-                user.save();
+                res.send(user.save());
                 console.log('a binder has been deleted');
             } else{
                 res.status(404).end();
@@ -99,11 +96,18 @@ module.exports = app => {
         const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function(err, user) {
             if(err){res.send("Error Occurred")}
             if(user){
-                user.binder_arr_obj[0].binder_name=req.body.testing; 
-                user.save();
-                console.log('a binder has been updated');
+                // user.binder_arr_obj[0].binder_name=req.body.testing; //nothing on req.body...
+                user.binder_arr_obj[0].binder_name= "Hakuna Matata";
+                user.update((err,data)=>{
+                    if(err){console.log('failed to save', err)}
+                    else{
+                        res.send(data);
+                        console.log('saved')}; //data shows change, but database not changed...
+                    
+                });
             } else{
                 res.status(404).end();
+                console.log('user not found');
             }
           
         })  
@@ -114,9 +118,28 @@ module.exports = app => {
         //give tab data
         // www.chung.com/user/1/binder/4/tab/3
     }); 
-    app.post('/api/tab', requireLogin, async (req,res)=>{
+    app.post('/api/tab', async (req,res)=>{
         //create new tab in user
-    }); 
+        const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function(err, user) {
+
+            if(err){res.send("Error Occurred")}
+
+            if(user){
+                const defaultTab = new Tab();
+                // const prevBinderId= user.binder_arr_obj[binder_arr_obj.length-1].binder_id; 
+                // defaultBinder.binder_id= 
+                defaultTab.page_arr_obj.push(new Page());
+                defaultTab.page_arr_obj[0].video.push(new Video({videoInfo: 'No Info'}));
+                defaultTab.page_arr_obj[0].notes.document.nodes.push(new Note());
+                user.binder_arr_obj[0].tab_arr_obj.push(defaultTab);  //binder_arr_obj[num] num should be whichever binder that called the method, might need to search for id number
+                user.save()
+                console.log("User has a new tab and is now saved");
+            }else{
+                res.send("Error can't find user")
+            }
+        }); 
+
+    });   
     app.delete('/api/tab', requireLogin, async (req,res)=>{
         //delete tab
     }); 
