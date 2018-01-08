@@ -158,16 +158,17 @@ module.exports = app => {
 
 // For Page //
 
-    app.get('/api/page', requireLogin, async (req,res)=>{
-        //give page data
+    app.get('/api/page', async (req,res)=>{
+        console.log(req.body);
+        res.send('something');
     }); 
-    app.post('/api/page', requireLogin, async (req,res)=>{
+    app.post('/api/page', async (req,res)=>{
         //create new page in user
     }); 
-    app.delete('/api/page', requireLogin, async (req,res)=>{
+    app.delete('/api/page', async (req,res)=>{
         //delete page
     }); 
-    app.put('/api/page', requireLogin, async (req,res)=>{
+    app.put('/api/page', async (req,res)=>{
         // update page
     }); 
 
