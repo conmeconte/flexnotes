@@ -209,7 +209,7 @@ export default class Nav extends Component {
                             value={item.binder_name}
                         />
 
-                        <button type="button" className="btn btn-default btn-xs btn_delete" onClick={() => this.deleteBinder(item.binder_id)} >
+                        <button type="button" className="btn btn-default btn_delete" onClick={() => this.deleteBinder(item.binder_id)} >
                             <span className="glyphicon glyphicon-minus"></span>
                         </button>
                     </li>
@@ -246,17 +246,16 @@ export default class Nav extends Component {
         return (
             <div className="nav_binder">
 
-                <h3 className="nav_header"></h3>
-                <button type="button" className={`btn btn-default btn-xs btn_edit ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
                     Binders <span className="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button type="button" className={`btn btn-default btn-xs btn_edit ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
                     Binders <span className="glyphicon glyphicon-ok"></span>
                 </button>
 
 
 
-                <ul className="">
+                <ul className="binder_wrap">
                     {binder_link}
                 </ul>
                 {binder_route}
