@@ -424,7 +424,7 @@ class Notes extends Component {
                 </span>
                 <div className="search-box">
                     <input
-
+                        className="search-input"
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
