@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
-let dummyData = require('../dummyData/backEndDummyData');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
 
 //Restful/ CRUD operation 
 
-module.exports = app => {
+module.exports = (app, dummyData) => {
     app.get('/', (req, res) => {
         res.send('Homepage')
     })
@@ -159,8 +158,7 @@ module.exports = app => {
 
     // For Page //
 
-    app.get('/api/page', async (req, res) => {
-        console.log(req.body);
+    app.get('/api/page', async (req,res)=>{
         console.log(req.user);
         res.send(dummyData);
     });
@@ -172,8 +170,15 @@ module.exports = app => {
     });
     app.put('/api/page', async (req, res) => {
         // update page
-        let yes = req.body
-        res.send(yes);
+        console.log(req.body);
+
+        for(var ele in req.body){
+            if (ele === 'lecture_slides'){
+                console.log(req.body.lecture_slides.lec_id);
+                fakeData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].lecture_slides.lec_id = req.body.lecture_slides.lec_id;
+                res.send(fakeData);
+            }
+        }
     });
 
 
