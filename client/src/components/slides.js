@@ -44,10 +44,17 @@ class Slides extends Component {
         this.setState({
             inputComplete: true
         })
+        console.log(this.state.input);
 
         const URL = "http://localhost:3000/api/page";
 
         axios.get(URL).then((resp) => {
+            console.log(resp);
+        });
+
+        axios.put(URL, {
+            lec_id: this.state.input
+        }).then((resp) => {
             console.log(resp);
         });
     }
