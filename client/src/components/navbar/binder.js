@@ -150,9 +150,11 @@ export default class Binder extends Component {
                             value={item.tab_name}
                             />
 
-                            <button type="button" className="btn btn-default btn-xs btn_delete"  onClick={()=>this.deleteTab(item.tab_id)} >
-                                <span className="glyphicon glyphicon-minus"></span>
-                            </button>    
+                    <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(item.tab_id)} >
+                        <span className="glyphicon glyphicon-minus"></span>
+                    </button>
+                        
+                          
                     </li>
                 );
             });
@@ -183,10 +185,10 @@ export default class Binder extends Component {
 
             <div className='nav_tab'>
                 
-                <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'hidden': 'visible'}`} onClick={this.editTabs}>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_tab ${editable ? 'hidden': 'visible'}`} onClick={this.editTabs}>
                     Tabs <span className="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'visible': 'hidden'}`} onClick={this.notEditTabs}>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_tab ${editable ? 'visible': 'hidden'}`} onClick={this.notEditTabs}>
                     Tabs <span className="glyphicon glyphicon-ok"></span>
                 </button>
 
