@@ -12,6 +12,8 @@ export default class Binder extends Component {
             binder: this.props.binder_obj
         }
 
+
+
         this.addTab = this.addTab.bind(this);
         this.editTabs = this.editTabs.bind(this);
         this.notEditTabs = this.notEditTabs.bind(this);
@@ -28,7 +30,7 @@ export default class Binder extends Component {
         if(length === 0){
             let new_tab_obj = {
                 tab_id: 1,
-                tab_color: 'red',
+                tab_color: '#ff0000',
                 tab_name: 'Tab1',
                 tab_url: '/tab1',
                 page_arr_obj: [{
@@ -54,7 +56,7 @@ export default class Binder extends Component {
             //console.log('new_url:',new_url);
             let new_tab_obj = {
                 tab_id: new_index,
-                tab_color: 'red',
+                tab_color: 'green',
                 tab_name: 'NewTab',
                 tab_url: new_url,
                 page_arr_obj: [{
@@ -160,11 +162,16 @@ export default class Binder extends Component {
             });
 
         } else {
+
             tab_link = tab_arr_obj.map((item, index) => {
                 //console.log('map:', item);
+                var tabStyle ={
+                    borderLeft: '12px solid '+item.tab_color
+                }
+
                     return (
                         <li key={item.tab_id}><Link to={'/main'+binder_url + item.tab_url} style={{ textDecoration: 'none' }}>
-                            <div className="tabDiv">
+                            <div className="tabDiv" style={tabStyle}>
                                 {item.tab_name}
                             </div>
                         </Link></li>

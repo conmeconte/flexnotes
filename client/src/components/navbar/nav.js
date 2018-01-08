@@ -219,6 +219,7 @@ export default class Nav extends Component {
         } else {
             binder_link = binder_arr_obj.map((item, index) => {
                 //console.log('map:', item);
+                
                 return (
                     <li key={item.binder_id}>
                         <Link to={'/main' + item.binder_url} style={{ textDecoration: 'none' }}>

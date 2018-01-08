@@ -217,7 +217,7 @@ ul > li {
 .edit_input{
     margin-left: 3%;
     width: 65%;
-    background: transparent;
+    background: white;
     border: none;
     outline: none;
     border-bottom: 1px dashed black;
