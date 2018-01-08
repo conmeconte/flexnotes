@@ -1,36 +1,16 @@
-const mongoose= require('mongoose');
-const {Schema} = mongoose;
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const tabSchema = new Schema({
-    tab_obj:{
-        tab_name : String,   
-        tab_color : String,
-        tab_id : String,
-        tab_url : String,
-        page_obj : {
-            page_color : String,
-            page_date : {type: Date, default: Date.now},
-            page_id : String,
-            page_name : String,
-            page_url : String,
-            calendar : {
-                cal_url : String
-            },
-            lecture_slides : {
-                lec_id : String
-            },
-            notes : {
-                notes_url : String
-            },
+/* tab Schema */
 
-            video : {
-                vid_url : String,
-                videoInfo: String
-            }
-        }
-    }
+const tabSchemaNew = new Schema({
+    tab_name : { type:String, default:"This is a tab"},   
+    tab_color : String,
+    tab_id : { type:String, default:"T-01"},
+    tab_url : String,
+    page_arr_obj :[ 
+        
+    ]
+});
 
-})
-
-
-module.exports = tabSchema;
+module.exports = tabSchemaNew;
