@@ -1,15 +1,15 @@
 
 
 let fakeData= 
-{   
-    googleId: String, 
-    userName: String,
+{   _id:{$oid: 'someRandomNumberMongoDBAssings'},
+    googleId: 103970352561814947806, 
+    userName: 'JOhn Hong',
     binder_arr_obj : [
-        {
+        {   
+            _id:{$oid: 'someRandomNumberMongoDBAssings'},
             binder_id: 1,
             binder_name: 'Binder1',
             binder_color: 'red',
-            binder_url: '/binder1',
             tab_arr_obj:[
               {
                 tab_id: 1,
@@ -29,115 +29,116 @@ let fakeData=
                     lecture_slides : {
                        lec_id : '1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE'
                     },
-                    notes : {
-                        document: {
-                          nodes: [
-                            {
-                              kind: String,
-                              type: String,
-                              nodes: [
-                                {
-                                  kind: String,
-                                  leaves: [
-                                    {
-                                      text: String
-                                    },
-                                    {
-                                      text: String,
-                                      marks: [
-                                        {
-                                          type: String
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      text: String
-                                    },
-                                    {
-                                      text: String,
-                                      mark: [
-                                        {
-                                          type: String
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      text: String
-                                    },
-                                    {
-                                      text: String,
-                                      mark: [
-                                        {
-                                          type: String
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      text: String
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              kind:String,
-                              type: String,
-                              nodes: [
-                                {
-                                  kind: String,
-                                  leaves: [
-                                    {
-                                      text: String
-                                    },
-                                    {
-                                      text: String,
-                                      marks: [
-                                        {
-                                          type: String
-                                        }
-                                      ]
-                                    },{
-                                      text: String
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              kind: String,
-                              type: String,
-                              nodes: [
-                                {
-                                  kind: String,
-                                  leaves: [
-                                    {
-                                      text: String
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              kind: String,
-                              type: String,
-                              nodes: [
-                                {
-                                  kind: String,
-                                  leaves: [
-                                    {
-                                      text: String
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      },
+                    notes: {
+                      document: {
+                        nodes: [
+                          {
+                            kind: "block",
+                            type: "paragraph",
+                            nodes: [
+                              {
+                                kind: "text",
+                                leaves: [
+                                  {
+                                    text: "This is editable "
+                                  },
+                                  {
+                                    text: "rich",
+                                    marks: [
+                                      {
+                                        type: "bold"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    text: " text, "
+                                  },
+                                  {
+                                    text: "much",
+                                    marks: [
+                                      {
+                                        type: "italic"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    text: " better than a "
+                                  },
+                                  {
+                                    text: "<textarea>",
+                                    marks: [
+                                      {
+                                        type: "code"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    text: "!"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            kind: "block",
+                            type: "paragraph",
+                            nodes: [
+                              {
+                                kind: "text",
+                                leaves: [
+                                  {
+                                    text: "Since it's rich text, you can do things like turn a selection of text "
+                                  },
+                                  {
+                                    text: "bold",
+                                    marks: [
+                                      {
+                                        type: "bold"
+                                      }
+                                    ]
+                                  },{
+                                    text: ", or add a semantically rendered block quote in the middle of the page, like this:"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            kind: "block",
+                            type: "block-quote",
+                            nodes: [
+                              {
+                                kind: "text",
+                                leaves: [
+                                  {
+                                    text: "A wise quote."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            kind: "block",
+                            type: "paragraph",
+                            nodes: [
+                              {
+                                kind: "text",
+                                leaves: [
+                                  {
+                                    text: "Try it out for yourself!"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
 
                     video :[ 
                         {
-                        vid_url : "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                        _id:{$oid: 'someRandomNumberMongoDBAssings'},
+                        videoInfo : "No Info",
                         videoId: "Ukg_U3CnJWI"
                         }
                     ],
@@ -166,3 +167,5 @@ let fakeData=
         }
       ]
 }
+
+module.exports= fakeData;
