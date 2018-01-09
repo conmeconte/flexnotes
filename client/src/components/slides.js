@@ -86,7 +86,7 @@ class Slides extends Component {
 
         const { input, inputComplete, inputValid } = this.state;
         return (
-            <div>
+            <div className="slides-div">
                 <form onSubmit={this.handleSubmit}>
                     <input onChange={this.handleInputChange} value={input} type="text" />
                     <button className="btn btn-success btn-sm">Upload</button>

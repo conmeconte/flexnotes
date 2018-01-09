@@ -55,6 +55,7 @@ class Panel extends Component {
     }
     render() {
         const { vertical_width, horizontal_left, horizontal_right } = this.state;
+        // from below video-parent-panel
         return (
             <div>
                 <div className="col-xs-10">
@@ -64,11 +65,11 @@ class Panel extends Component {
                 <div className="panel_div col-xs-10">
                     <SplitPane className="width-w-nav" onChange={size => this.logVWsize(size)} split="vertical" minSize={200} maxSize={-200} defaultSize={vertical_width}>
                         <SplitPane onChange={size => this.logHLsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_left}>
-                            <div><Slides /></div>
-                            <div className="video-parent-panel"><Video /></div>
+                            <div className="slides-container"><Slides /></div>
+                            <div className="notes-parent-panel"><Notes /></div>
                         </SplitPane>
                         <SplitPane onChange={size => this.logHRsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_right}>
-                            <div className="notes-parent-panel"><Notes /></div>
+                            <div className="video-parent-panel"><Video /></div>
                             <div>MeisterTask</div>
                         </SplitPane>
                     </SplitPane>
