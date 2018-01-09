@@ -10,10 +10,10 @@ class Login extends Component {
                 return;
             case false:
                 return (
-                    <li><a href="/auth/google"><img src={googleButton} /></a></li>
+                    <a href="/auth/google"><img src={googleButton} /></a>
                 );
             default:
-                return <li><a href="/api/logout"><button className="btn btn-sm btn-danger">Logout</button></a></li>;
+                return <a href="/api/logout"><button className="btn btn-sm btn-danger">Logout <span className="glyphicon glyphicon-log-out"></span></button></a>
         }
     }
 
