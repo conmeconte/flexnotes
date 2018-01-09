@@ -10,16 +10,20 @@ export default class Nav extends Component {
         super(props);
 
         this.state = {
+            binder_color_arr: [
+                '#000080', '#808000', '#800000', '#a0522d', '#8a2be2'
+            ],
             editable: false,
+            active: false,
             binder_arr_obj: [
                 {
                     binder_id: 1,
                     binder_name: 'Binder1',
-                    binder_color: 'red',
+                    binder_color: '#000080',
                     binder_url: '/binder1',
                     tab_arr_obj: [{
                         tab_id: 1,
-                        tab_color: 'blue',
+                        tab_color: '#FF8C00',
                         tab_name: 'Tab1',
                         tab_url: '/tab1',
                         page_arr_obj: [
@@ -40,7 +44,7 @@ export default class Nav extends Component {
                         ]
                     }, {
                         tab_id: 2,
-                        tab_color: 'red',
+                        tab_color: '#008000',
                         tab_name: 'Tab2',
                         tab_url: '/tab2',
                         page_arr_obj: [
@@ -84,11 +88,15 @@ export default class Nav extends Component {
         this.deleteBinder = this.deleteBinder.bind(this);
         this.editable = this.editable.bind(this);
         this.notEditable = this.notEditable.bind(this);
+        this.binderLinkActive = this.binderLinkActive.bind(this);
+        this.binderLinkNotActive = this.binderLinkNotActive.bind(this);
     }
 
     addBinder() {
         console.log('add Binder');
-        const { binder_arr_obj, new_tab_arr } = this.state;
+        const { binder_arr_obj, new_tab_arr, binder_color_arr } = this.state;
+
+        //let binder_color_array = ['#000080', '#808000', '#800000', '#a0522d', '#8a2be2'];
 
         let length = binder_arr_obj.length;
         if (length === 0) {
@@ -96,7 +104,7 @@ export default class Nav extends Component {
             let new_binder_obj = {
                 binder_id: 1,
                 binder_name: 'Binder1',
-                binder_color: 'color',
+                binder_color: binder_color_arr[0],
                 binder_url: '/binder1',
                 tab_arr_obj: new_tab_arr
             }
@@ -109,10 +117,13 @@ export default class Nav extends Component {
             let new_index = binder_arr_obj[length - 1].binder_id + 1;
             let new_url = '/binder' + new_index;
 
+            let index_mod = new_index % 5;
+            //console.log('index_mod', index_mod);
+
             let new_binder_obj = {
                 binder_id: new_index,
                 binder_name: 'New Binder',
-                binder_color: 'color',
+                binder_color: binder_color_arr[index_mod],
                 binder_url: new_url,
                 tab_arr_obj: new_tab_arr
             }
@@ -178,6 +189,19 @@ export default class Nav extends Component {
         });
     }
 
+    binderLinkActive(){
+        //console.log('binderlinkactive color:', color);
+        this.setState({
+            active: true
+        });
+    }
+
+    binderLinkNotActive(){
+        //console.log('binderlinkactive color:', color);
+        this.setState({
+            active: false
+        });
+    }
     /*
     
     
@@ -190,7 +214,7 @@ export default class Nav extends Component {
 
     */
     render() {
-        const { binder_arr_obj, editable } = this.state;
+        const { binder_arr_obj, editable, active } = this.state;
         //console.log('Render binderArray:', binder_array);
         let binder_link = [];
         //map binders
@@ -219,10 +243,17 @@ export default class Nav extends Component {
         } else {
             binder_link = binder_arr_obj.map((item, index) => {
                 //console.log('map:', item);
+                var binderStyle = {
+                    backgroundColor: item.binder_color
+                }
+
+                var binderStyle2 = {
+                    backgroundColor: 'inherit'
+                }
                 return (
                     <li key={item.binder_id}>
                         <Link to={'/main' + item.binder_url} style={{ textDecoration: 'none' }}>
-                            <div className="binderDiv">
+                            <div className="binderDiv" style={active ? binderStyle : binderStyle2} onClick={this.binderLinkActive} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
                                 {item.binder_name}
                             </div>
                         </Link>
