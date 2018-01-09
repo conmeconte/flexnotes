@@ -98,7 +98,7 @@ module.exports = app => {
             if(user){
                 // user.binder_arr_obj[0].binder_name=req.body.testing; //nothing on req.body...
                 user.binder_arr_obj[0].binder_name= "Hakuna Matata";
-                user.update((err,data)=>{
+                user.save({upsert:false},(err,data)=>{
                     if(err){console.log('failed to save', err)}
                     else{
                         res.send(data);
@@ -125,6 +125,7 @@ module.exports = app => {
             if(err){res.send("Error Occurred")}
 
             if(user){
+               
                 const defaultTab = new Tab();
                 // const prevBinderId= user.binder_arr_obj[binder_arr_obj.length-1].binder_id; 
                 // defaultBinder.binder_id= 
@@ -132,12 +133,17 @@ module.exports = app => {
                 defaultTab.page_arr_obj[0].video.push(new Video({videoInfo: 'No Info'}));
                 defaultTab.page_arr_obj[0].notes.document.nodes.push(new Note());
                 user.binder_arr_obj[0].tab_arr_obj.push(defaultTab);  //binder_arr_obj[num] num should be whichever binder that called the method, might need to search for id number
-                user.save()
-                console.log("User has a new tab and is now saved");
+                user.save((err,data)=>{
+                    if(err){res.send('error')}
+                    else{res.send(data)};
+                    console.log("User has a new tab and is now saved");
+                
+                })
             }else{
                 res.send("Error can't find user")
             }
         }); 
+        res.end();
 
     });   
     app.delete('/api/tab', requireLogin, async (req,res)=>{
