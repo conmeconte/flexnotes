@@ -4,7 +4,7 @@ const { User, Binder, Tab, Page, Note, Video } = require('../models');
 
 //Restful/ CRUD operation 
 
-module.exports = (app, dummyData) => {
+module.exports = (app, db) => {
     app.get('/', (req, res) => {
         res.send('Homepage')
     })
@@ -90,29 +90,36 @@ module.exports = (app, dummyData) => {
             })
             res.end();
         })
-        .put('/api/binder', async (req, res) => {
-            // update binder
-            const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function (err, user) {
-                if (err) { res.send("Error Occurred") }
-                if (user) {
-                    // user.binder_arr_obj[0].binder_name=req.body.testing; //nothing on req.body...
-                    user.binder_arr_obj[0].binder_name = req.body.newBinderName;
-                    user.save((err, data) => {
-                        if (err) { console.log('failed to save', err) }
-                        else {
-                            res.send(data);
-                            console.log('saved')
-                        }; //data shows change, but database not changed...
+        // .put('/api/binder', async (req, res) => {
+        //     // update binder
 
-                    });
-                } else {
-                    res.status(404).end();
-                    console.log('user not found');
-                }
+        //     const existingUser = await User.findOneAndUpdate({ googleId: "103970352561814947806" }, {$set: {"binder_arr_obj.$[].binder_name": "Binder uno"}}, {multi:true},function (err, user) {
+        //     // const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function (err, user) {
+        //     // const existingUser = await User.findOne({ 'googleId': "103970352561814947806" },"googleId userName binder_arr_obj", function (err, user) {
+        //         // if (err) { res.send("Error Occurred") }
+        //         // if (user) {
+        //         //     // user.binder_arr_obj[0].binder_name=req.body.testing; //nothing on req.body... => installed two middlewares and problem solved
+        //         //     user.binder_arr_obj[0].binder_name = req.body.newBinderName || "untitled binder";
+        //         //     user.save((err, data) => {
+        //         //         if (err) { console.log('failed to save', err) }
+        //         //         else {x
+        //         //             res.send(data);
+        //         //             console.log('saved')
+        //         //         }; //data shows change, but database not changed...
 
-            })
-            res.end();
-        })
+        //         //     });
+        //         // } else {
+        //         //     res.status(404).end();
+        //         //     console.log('user not found');
+        //         // }
+        //         // if(user){console.log(user)};
+
+        //     })
+        //     res.end();
+        // })
+
+
+
     // For Tab//
     app.get('/api/tab', requireLogin, async (req, res) => {
         //give tab data

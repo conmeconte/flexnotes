@@ -5,7 +5,7 @@ const passport      = require('passport');
 const bodyParser    = require('body-parser');
 const keys          = require('./config/keys');
 
-let dummyData = require('./dummyData/backEndDummyData');
+// let dummyData = require('./dummyData/backEndDummyData');
 const app   = express();
 const PORT  = process.env.PORT || 9000;
 
@@ -37,9 +37,22 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
+app.put('/api/binder', async (req, res) => {
+    // update binder
+    console.log(db.collections);
+    db.collection('binders').updateOne({"googleId":"103970352561814947806"},{$set:{"binder_arr_obj.$.binder_name": "yolo"}}, (err, data)=>{
+        
+    })
+    res.end();
+})
+
+
+
 /* Routing middleware */
 require('./routes/authRoutes')(app);
-require('./routes/apiRoutes')(app, dummyData);
+// require('./routes/apiRoutes')(app, dummyData);
+require('./routes/realApiRoutes')(app, db);
 
 
 /* Start server and listen on PORT */
