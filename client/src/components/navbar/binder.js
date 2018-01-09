@@ -8,6 +8,7 @@ export default class Binder extends Component {
         super(props);
 
         this.state = {
+            tab_color_arr: ['#ff0000', '#0000ff', '#ff00ff', '#FF8C00', '#008000'],
             editable: false,
             binder: this.props.binder_obj
         }
@@ -21,7 +22,7 @@ export default class Binder extends Component {
 
     addTab(){
         console.log('addTab clicked');
-        const {binder} = this.state;
+        const {binder, tab_color_arr} = this.state;
         //console.log(binder);
         const {tab_arr_obj} = binder;
         //console.log('tab_arr_obj:',tab_arr_obj);
@@ -30,7 +31,7 @@ export default class Binder extends Component {
         if(length === 0){
             let new_tab_obj = {
                 tab_id: 1,
-                tab_color: '#ff0000',
+                tab_color: tab_color_arr[0],
                 tab_name: 'Tab1',
                 tab_url: '/tab1',
                 page_arr_obj: [{
@@ -54,9 +55,10 @@ export default class Binder extends Component {
             //console.log('tab_arr_obj',tab_arr_obj[length-1]);
             let new_url = '/tab' + new_index;
             //console.log('new_url:',new_url);
+            let mod_index = new_index % 5;
             let new_tab_obj = {
                 tab_id: new_index,
-                tab_color: 'green',
+                tab_color: tab_color_arr[mod_index],
                 tab_name: 'NewTab',
                 tab_url: new_url,
                 page_arr_obj: [{
