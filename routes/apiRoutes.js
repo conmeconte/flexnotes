@@ -158,7 +158,7 @@ module.exports = (app, dummyData) => {
 
     // For Page //
 
-    app.get('/api/page', async (req,res)=>{
+    app.get('/api/page', async (req, res) => {
         console.log(req.user);
         res.send(dummyData);
     });
@@ -172,11 +172,11 @@ module.exports = (app, dummyData) => {
         // update page
         console.log(req.body);
 
-        for(var ele in req.body){
-            if (ele === 'lecture_slides'){
+        for (var ele in req.body) {
+            if (ele === 'lecture_slides') {
                 console.log(req.body.lecture_slides.lec_id);
-                fakeData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].lecture_slides.lec_id = req.body.lecture_slides.lec_id;
-                res.send(fakeData);
+                // dummyData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].lecture_slides.lec_id = req.body.lecture_slides.lec_id;
+                res.send(dummyData);
             }
         }
     });
