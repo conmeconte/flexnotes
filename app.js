@@ -38,14 +38,8 @@ app.use(passport.session());
 
 
 
-app.put('/api/binder', async (req, res) => {
-    // update binder
-    console.log(db.collections);
-    db.collection('binders').updateOne({"googleId":"103970352561814947806"},{$set:{"binder_arr_obj.$.binder_name": "yolo"}}, (err, data)=>{
-        
-    })
-    res.end();
-})
+
+
 
 
 

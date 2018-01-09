@@ -90,6 +90,17 @@ module.exports = (app, db) => {
             })
             res.end();
         })
+        .put('/api/binder', async (req, res) => {
+            // update binder
+            User.update({"googleId": req.body.googleId,'binder_arr_obj.binder_id': req.body.binder_id }, {'$set':{"binder_arr_obj.$.binder_name": "Sparta"}
+            }, (err, data)=>{
+                console.log(err);
+                console.log(data);
+            })
+        
+        
+            res.end();
+        })
         // .put('/api/binder', async (req, res) => {
         //     // update binder
 
