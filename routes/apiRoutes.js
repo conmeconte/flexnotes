@@ -175,8 +175,8 @@ module.exports = (app, dummyData) => {
         for (var ele in req.body) {
             if (ele === 'lecture_slides') {
                 console.log(req.body.lecture_slides.lec_id);
-                fakeData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].lecture_slides.lec_id = req.body.lecture_slides.lec_id;
-                res.send(fakeData);
+                // dummyData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].lecture_slides.lec_id = req.body.lecture_slides.lec_id;
+                res.send(dummyData);
             }
         }
     });
