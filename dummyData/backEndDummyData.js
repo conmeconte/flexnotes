@@ -27,7 +27,7 @@ let fakeData=
                         cal_url : String
                     },
                     lecture_slides : {
-                       lec_id : '1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE'
+                       lec_id : ''
                     },
                     notes: {
                       document: {

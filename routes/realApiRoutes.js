@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const fs = require('fs');
 const requireLogin = require('../middlewares/requireLogin');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
 
@@ -39,18 +38,18 @@ module.exports = (app, dummyData) => {
     app.get('/api', requireLogin, async (req, res) => {
         //pull entire user obj
 
-
     })
     // For Binder //
     app
         .get('/api/binder', requireLogin, async (req, res) => {
             //give binder data
             //userId accessible via req.param.userId?
-            res.send(dummyData)
+            console.log('you reached here', req.user)
         })
         .post('/api/binder', async (req, res) => {
             //create new binder in user
-            const existingUser = await User.findOne({ 'googleId': req.user.googleId }, function (err, user) {
+            console.log("inside api binder rout ", req.body);
+            const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function (err, user) {
                 //if no match .find return [], and .findOne returns null in document(in this case user)
                 if (err) { res.send("Error did occurred") };
 
@@ -161,7 +160,7 @@ module.exports = (app, dummyData) => {
 
     app.get('/api/page', async (req,res)=>{
         console.log(req.user);
-        res.send(JSON.parse(dummyData));
+        res.send(dummyData);
     });
     app.post('/api/page', async (req, res) => {
         //create new page in user
@@ -169,15 +168,16 @@ module.exports = (app, dummyData) => {
     app.delete('/api/page', async (req, res) => {
         //delete page
     });
-    app.put('/api/page', (req, res) => {
+    app.put('/api/page', async (req, res) => {
         // update page
-        var fakeData = JSON.parse(dummyData)
+
         for(var ele in req.body){
             if (ele === 'lecture_slides'){
-                fakeData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].lecture_slides.lec_id=req.body.lecture_slides.lec_id
+                console.log(req.body.ele.lec_id);
+                fakeData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].ele.lec_id = req.body.lecture_slides.lec_id;
+                res.send(fakeData);
             }
         }
-        res.send(fakeData);
     });
 
 
