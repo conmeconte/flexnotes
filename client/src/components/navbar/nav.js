@@ -23,7 +23,7 @@ export default class Nav extends Component {
                     binder_url: '/binder1',
                     tab_arr_obj: [{
                         tab_id: 1,
-                        tab_color: '#FF8C00',
+                        tab_color: '#ff0000',
                         tab_name: 'Tab1',
                         tab_url: '/tab1',
                         page_arr_obj: [
@@ -44,7 +44,7 @@ export default class Nav extends Component {
                         ]
                     }, {
                         tab_id: 2,
-                        tab_color: '#008000',
+                        tab_color: '#0000ff',
                         tab_name: 'Tab2',
                         tab_url: '/tab2',
                         page_arr_obj: [
