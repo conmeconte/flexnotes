@@ -56,24 +56,23 @@ class Panel extends Component {
     render() {
         const { vertical_width, horizontal_left, horizontal_right } = this.state;
         return (
-            <div className="panel_div col-xs-10">
-                {/* <SplitPane split="vertical" defaultSize={200}>
-                    <div><Notes/></div>
-                    <div><Video/></div>
-                    <div><Slides/></div>
-                    <div>MeisterTask</div>
-                </SplitPane> */}
-                <button onClick={this.sendSize} className="btn btn-primary">Save</button>
-                <SplitPane className="width-w-nav" onChange={size => this.logVWsize(size)} split="vertical" minSize={200} maxSize={-200} defaultSize={vertical_width}>
-                    <SplitPane onChange={size => this.logHLsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_left}>
-                        <div><Slides /></div>
-                        <div><Video /></div>
+            <div>
+                <div className="col-xs-10">
+                    {/* <button onClick={this.sendSize} className="btn btn-primary">Save</button> */}
+                    <h1 className="app-title">FlexNote</h1>
+                </div>
+                <div className="panel_div col-xs-10">
+                    <SplitPane className="width-w-nav" onChange={size => this.logVWsize(size)} split="vertical" minSize={200} maxSize={-200} defaultSize={vertical_width}>
+                        <SplitPane onChange={size => this.logHLsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_left}>
+                            <div><Slides /></div>
+                            <div className="video-parent-panel"><Video /></div>
+                        </SplitPane>
+                        <SplitPane onChange={size => this.logHRsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_right}>
+                            <div className="notes-parent-panel"><Notes /></div>
+                            <div>MeisterTask</div>
+                        </SplitPane>
                     </SplitPane>
-                    <SplitPane onChange={size => this.logHRsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_right}>
-                        <div className="notes-parent-panel"><Notes /></div>
-                        <div>MeisterTask</div>
-                    </SplitPane>
-                </SplitPane>
+                </div>
             </div>
         );
     }

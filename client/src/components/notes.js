@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 
-import isImage from 'is-image'
+// import isImage from 'is-image'
 import isUrl from 'is-url'
 
 import '../assets/css/notes.css';
@@ -105,6 +106,16 @@ class Notes extends Component {
 
         this.setState({ value });
     };
+
+    // AXIOS CALL
+
+    componentWillMount(){
+        const url = '/api/dummyData';
+
+        axios.get(url).then((resp) => {
+            console.log('Resp:', resp);
+        });
+    }
 
     // RICH TEXT TOOLBAR
 
@@ -413,7 +424,7 @@ class Notes extends Component {
                 </span>
                 <div className="search-box">
                     <input
-
+                        className="search-input"
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />

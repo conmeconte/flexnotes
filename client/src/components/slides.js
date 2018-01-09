@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../assets/css/slides.css';
-
+import axios from 'axios';
 
 class Slides extends Component {
     constructor(props) {
@@ -14,8 +14,31 @@ class Slides extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
+    componentWillMount() {
+        const URL = '/api/page';
+        axios.get(URL).then((resp) => {
+            const slidesURL = resp.data.binder_arr_obj["0"].tab_arr_obj["0"].page_arr_obj["0"].lecture_slides.lec_id;
+            // console.log('SLIDES GET REQ: ', slidesURL);
+            //Make the check more valid? But if I PUT request valid data, is it necessary? I will be checking for empty str right?
+            if (!slidesURL) {
+                this.setState({
+                    input: ''
+                });
+                console.log("Inside !slidesURL if: ", this.state.input);
+            } else {
+                this.setState({
+                    input: slidesURL,
+                    inputComplete: true,
+                    inputValid: true
+                });
+                // console.log("Else of !slidesURL: ", this.state.input);
+                // console.log('State at end of compWillMount: ', this.state);
+            }
+        });
+    }
+
     handleInputChange(e) {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         const { value } = e.target;
         if (value.indexOf('/d/') !== -1) {
             const urlSplit1 = value.split("/d/");
@@ -44,6 +67,19 @@ class Slides extends Component {
         this.setState({
             inputComplete: true
         })
+        console.log(this.state.input);
+
+        const URL = "/api/page";
+
+        axios.put(URL, {
+            lecture_slides: {
+                lec_id: this.state.input
+
+            }
+        }).then((resp) => {
+            console.log(`SLIDES PUT REQ:`, resp);
+        });
+        // console.log('handleSubmit state ', this.state);
     }
 
     render() {

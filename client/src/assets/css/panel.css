@@ -71,3 +71,9 @@ body {
     overflow-y: scroll;
     overflow-wrap: break-word;
 }
+.app-title {
+    margin: 0;
+}
+.container-fluid {
+    padding: 0;
+}
