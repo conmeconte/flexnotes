@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const fs = require('fs');
 const requireLogin = require('../middlewares/requireLogin');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
 
@@ -39,44 +38,18 @@ module.exports = (app, dummyData) => {
     app.get('/api', requireLogin, async (req, res) => {
         //pull entire user obj
 
-
     })
-<<<<<<< HEAD
-    .put('/api/binder', async (req,res)=>{
-        // update binder
-        const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function(err, user) {
-            if(err){res.send("Error Occurred")}
-            if(user){
-                // user.binder_arr_obj[0].binder_name=req.body.testing; //nothing on req.body...
-                user.binder_arr_obj[0].binder_name= "Hakuna Matata";
-                user.save({upsert:false},(err,data)=>{
-                    if(err){console.log('failed to save', err)}
-                    else{
-                        res.send(data);
-                        console.log('saved')}; //data shows change, but database not changed...
-                    
-                });
-            } else{
-                res.status(404).end();
-                console.log('user not found');
-            }
-          
-        })  
-        res.end();
-    }) 
-// For Tab//
-    app.get('/api/tab', requireLogin, async (req,res)=>{
-=======
     // For Binder //
     app
         .get('/api/binder', requireLogin, async (req, res) => {
             //give binder data
             //userId accessible via req.param.userId?
-            res.send(dummyData)
+            console.log('you reached here', req.user)
         })
         .post('/api/binder', async (req, res) => {
             //create new binder in user
-            const existingUser = await User.findOne({ 'googleId': req.user.googleId }, function (err, user) {
+            console.log("inside api binder rout ", req.body);
+            const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function (err, user) {
                 //if no match .find return [], and .findOne returns null in document(in this case user)
                 if (err) { res.send("Error did occurred") };
 
@@ -142,7 +115,6 @@ module.exports = (app, dummyData) => {
         })
     // For Tab//
     app.get('/api/tab', requireLogin, async (req, res) => {
->>>>>>> 1d217a3abc2242fbca35d071a91cec49641924a7
         //give tab data
         // www.chung.com/user/1/binder/4/tab/3
     });
@@ -152,12 +124,7 @@ module.exports = (app, dummyData) => {
 
             if (err) { res.send("Error Occurred") }
 
-<<<<<<< HEAD
-            if(user){
-               
-=======
             if (user) {
->>>>>>> 1d217a3abc2242fbca35d071a91cec49641924a7
                 const defaultTab = new Tab();
                 // const prevBinderId= user.binder_arr_obj[binder_arr_obj.length-1].binder_id; 
                 // defaultBinder.binder_id= 
@@ -165,19 +132,6 @@ module.exports = (app, dummyData) => {
                 defaultTab.page_arr_obj[0].video.push(new Video({ videoInfo: 'No Info' }));
                 defaultTab.page_arr_obj[0].notes.document.nodes.push(new Note());
                 user.binder_arr_obj[0].tab_arr_obj.push(defaultTab);  //binder_arr_obj[num] num should be whichever binder that called the method, might need to search for id number
-<<<<<<< HEAD
-                user.save((err,data)=>{
-                    if(err){res.send('error')}
-                    else{res.send(data)};
-                    console.log("User has a new tab and is now saved");
-                
-                })
-            }else{
-                res.send("Error can't find user")
-            }
-        }); 
-        res.end();
-=======
                 user.save((err, data) => {
                     if (err) {
                         console.log('some error');
@@ -193,7 +147,6 @@ module.exports = (app, dummyData) => {
                 res.send("Error can't find user")
             }
         });
->>>>>>> 1d217a3abc2242fbca35d071a91cec49641924a7
 
     });
     app.delete('/api/tab', requireLogin, async (req, res) => {
@@ -205,9 +158,9 @@ module.exports = (app, dummyData) => {
 
     // For Page //
 
-    app.get('/api/page', async (req, res) => {
+    app.get('/api/page', async (req,res)=>{
         console.log(req.user);
-        res.send(JSON.parse(dummyData));
+        res.send(dummyData);
     });
     app.post('/api/page', async (req, res) => {
         //create new page in user
@@ -215,25 +168,16 @@ module.exports = (app, dummyData) => {
     app.delete('/api/page', async (req, res) => {
         //delete page
     });
-    app.put('/api/page', (req, res) => {
+    app.put('/api/page', async (req, res) => {
         // update page
-<<<<<<< HEAD
-        console.log(req.body);
 
-        for (var ele in req.body) {
-            if (ele === 'lecture_slides') {
-                console.log(req.body.lecture_slides.lec_id);
-                // dummyData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].lecture_slides.lec_id = req.body.lecture_slides.lec_id;
-                res.send(dummyData);
-=======
-        var fakeData = JSON.parse(dummyData)
         for(var ele in req.body){
             if (ele === 'lecture_slides'){
-                fakeData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].lecture_slides.lec_id=req.body.lecture_slides.lec_id
->>>>>>> 8bca18051ffac832c94e789636ff75e787646b2d
+                console.log(req.body.ele.lec_id);
+                fakeData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].ele.lec_id = req.body.lecture_slides.lec_id;
+                res.send(fakeData);
             }
         }
-        res.send(fakeData);
     });
 
 
