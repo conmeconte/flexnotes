@@ -65,7 +65,8 @@ module.exports = (app, db) => {
             res.end();
         })
         .delete('/api/binder', async (req, res) => {
-            const existingUser= await User.update({ 'googleId': "103970352561814947806",'binder_arr_obj.binder_id': req.body.binder_id  }, {'$pull':{'binder_arr_obj':{'binder_id': req.body.binder_id}}},(err,data)=>{
+            const existingUser= await User.update({ 'googleId': "103970352561814947806",'binder_arr_obj.binder_id': req.body.binder_id  },
+            {'$pull':{'binder_arr_obj':{'binder_id': req.body.binder_id}}},(err,data)=>{
                 console.log(data);
                 console.log(err);
             })
@@ -131,7 +132,7 @@ module.exports = (app, db) => {
     app.get('/api/tab', async (req, res) => {
         //give tab data
         // www.chung.com/user/1/binder/4/tab/3
-        const existingUser= await User.findOne({ 'googleId': "103970352561814947806" }, function (err, user){
+        const existingUser= await User.findOne({ 'googleId': "103970352561814947806",'binder_arr_obj.binder_id': "B-01", 'binder_arr_obj.tab_arr_obj.tab_id': "T-01" }, function (err, user){
             if (err) { res.send("Error did occurred") };
 
             if (user) {
@@ -145,7 +146,7 @@ module.exports = (app, db) => {
     })
     app.post('/api/tab', async (req, res) => {
         //create new tab in user
-        let idRandomizer= Math.floor((Math.random()* 99999999999) + 00000000000);
+        let idRandomizer= Math.floor((Math.random()* 99999999999) + 10000000000);
         const defaultTab = new Tab({tab_id: idRandomizer});
         defaultTab.page_arr_obj.push(new Page());
         defaultTab.page_arr_obj[0].video.push(new Video({ videoInfo: 'No Info' }));
@@ -159,44 +160,31 @@ module.exports = (app, db) => {
         })
 
         res.end();
-        
-        
-        
-        
-        
-        // const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function (err, user) {
-        //     if (err) { res.send("Error Occurred") }
-
-        //     if (user) {
-        //         const defaultTab = new Tab();
-        //         // const prevBinderId= user.binder_arr_obj[binder_arr_obj.length-1].binder_id; 
-        //         // defaultBinder.binder_id= 
-        //         defaultTab.page_arr_obj.push(new Page());
-        //         defaultTab.page_arr_obj[0].video.push(new Video({ videoInfo: 'No Info' }));
-        //         defaultTab.page_arr_obj[0].notes.document.nodes.push(new Note());
-        //         user.binder_arr_obj[0].tab_arr_obj.push(defaultTab);  //binder_arr_obj[num] num should be whichever binder that called the method, might need to search for id number
-        //         user.save((err, data) => {
-        //             if (err) {
-        //                 console.log('some error');
-        //             }
-        //             if (data) {
-        //                 res.send(data);
-        //                 console.log("User has a new tab and is now saved");
-        //             } else {
-        //                 console.log('user not found');
-        //             }
-        //         })
-        //     } else {
-        //         res.send("Error can't find user")
-        //     }
-        // });
-
     });
-    app.delete('/api/tab', requireLogin, async (req, res) => {
-        //delete tab
+    app.delete('/api/tab', async (req, res) => {
+        const existingUser= await User.update({ 'googleId': "103970352561814947806",'binder_arr_obj.binder_id': "B-01",'binder_arr_obj.tab_arr_obj.tab_id': "T-01"},
+        // {'$pull':{'binder_arr_obj':{'tab_arr_obj':{'tab_id':'T-01'}}}},
+        // {'$set':{"binder_arr_obj":{"tab_arr_obj":{'$elemMatch':{'tab_id':"44560363131"}}}}},
+        // {'$pull':{"binder_arr_obj.$[outer].tab_arr_obj[inner].tab_name"}},
+        (err,data)=>{
+            console.log(data);
+            console.log(err);
+        })
     });
-    app.put('/api/tab', requireLogin, async (req, res) => {
-        // update tab
+    app.put('/api/tab', async (req, res) => {
+        const updating= await User.update({"googleId": "103970352561814947806",'binder_arr_obj.binder_id': "B-01", 'binder_arr_obj.tab_arr_obj.tab_id': "T-01" }, 
+            // {'$set':{"binder_arr_obj":{"tab_arr_obj":{"tab_name": "Ninja"}}}},this overwrites tab arr into an obj
+            // {'$set':{"binder_arr_obj.tab_arr_obj.$.tab_name":"Ninja"}},
+            // {'$set':{"binder_arr_obj":{"tab_arr_obj":{$eleMatch:{'tab_id':"T-01"}}}}}
+            {'$set':{"binder_arr_obj.$[outer].tab_arr_obj[inner].tab_name":"Ninja"}},
+            {'arrayFilters':[{"outer.binder_id":"B-01"}, {"inner.tab_id":"T-01"}]},
+            (err, data)=>{
+                console.log(err);
+                console.log(data);
+            })
+
+
+    res.end();
     });
 
     // For Page //

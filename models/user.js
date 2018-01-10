@@ -7,7 +7,6 @@ const userSchemaNew = new Schema({
     googleId: String, 
     userName: String,
     binder_arr_obj : []
-        
 });
 
 module.exports = userSchemaNew;
