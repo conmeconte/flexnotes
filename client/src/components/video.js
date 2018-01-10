@@ -18,11 +18,17 @@ class Video extends Component {
         this.OAUTH2_CLIENT_ID = '921823203830-e91j7vj9gqr6ftkvcaot3iffhcii7vtp.apps.googleusercontent.com';
         this.OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
         this.state = {
-            videos: []
+            videos: [],
+            resultsStyles: {
+                width: '65%',
+                display: 'block'
+            },
+            opacityDisplay: {
+                display: 'block'
+            },
+            toggleResults: true
         }
-        this.close = this.close.bind(this);
-        this.open = this.open.bind(this);
-        this.changeBackground = this.changeBackground.bind(this);
+        this.toggleResultsMenu = this.toggleResultsMenu.bind(this);
     }
     componentDidMount() {
         this.loadYouTubeApi();
@@ -110,35 +116,43 @@ class Video extends Component {
             });
         });
     }
-    close() {
-        console.log('Close was clicked');
-        document.querySelector(".results-container.sidebar").style.width = "0";
-        document.querySelector(".results-container.sidebar").classList.remove("col-xs-4");
-        document.querySelector(".opacity").style.display = "none";
-    }
-    open() {
-        console.log('Open was clicked');
-        document.querySelector(".results-container.sidebar").style.width = "65%";
-        document.querySelector(".results-container.sidebar").classList.add("col-xs-4");
-        this.changeBackground();
-    }
-    changeBackground () {
-        document.querySelector(".opacity").style.display = "block";
+    toggleResultsMenu() {
+        const { toggleResults } = this.state; 
+        let { width, display } = this.state.resultsStyles;
+        let { opacityDisplay } = this.state.opacityDisplay
+        if (toggleResults) {
+            width = "0%";
+            display = "none";
+            opacityDisplay = "none";
+        } else {
+            width = "65%";
+            display = "block";
+            opacityDisplay = "block";
+        }
+        this.setState({
+            toggleResults: !toggleResults,
+            resultsStyles: {
+                width: width,
+                display: display,
+            },
+            opacityDisplay: {
+                display: opacityDisplay
+            }
+        });
     }
     render() {
-        const { videos } = this.state;
-        console.log(videos);
+        const { videos, resultsStyles, opacityDisplay } = this.state;
         return (
             <div className="main">
-                <div className="opacity"></div>
-                <button id="search" className="btn btn-primary" onClick={this.open} ><span className="search glyphicon glyphicon-chevron-left"></span></button>
-                <div className="results-container sidebar col-xs-4 pull-right">
+                <div style={opacityDisplay} className="opacity"></div>
+                <button id="search" className="btn btn-primary" onClick={this.toggleResultsMenu} ><span className="search glyphicon glyphicon-chevron-left"></span></button>
+                <div style={resultsStyles}  className="results-container sidebar col-xs-4 pull-right">
                     <div id="search-input-container" className="search-button-input input-group col-xs-12">
                         <input id="query" className="form-control" type="text" placeholder="Search..." />
                         <span className="input-group-btn">
                             <button id="search-button" type="button" className="btn btn-primary"
                                 onClick={this.search}><span className="glyphicon glyphicon-search"></span></button>
-                            <button className="btn btn-danger" onClick={this.close}><span className="glyphicon glyphicon-chevron-right"></span></button>
+                            <button className="btn btn-danger" onClick={this.toggleResultsMenu}><span className="glyphicon glyphicon-chevron-right"></span></button>
                         </span>
                     </div>
                     <Results results={videos} />
