@@ -14,8 +14,12 @@ module.exports = (app, db) => {
     });
 
 
-    app.get('/api', requireLogin, async (req, res) => {
+    app.get('/api', async (req, res) => {
         //pull entire user obj
+        var id= "5a55b435eb86910ec07e86f2"
+        User.findById(id, (err,user)=>{
+            res.send(user);
+        })
 
     })
     // For Binder //
@@ -67,20 +71,15 @@ module.exports = (app, db) => {
         .delete('/api/binder', async (req, res) => {
             const existingUser= await User.update({ 'googleId': "103970352561814947806",'binder_arr_obj.binder_id': req.body.binder_id  }, {'$pull':{'binder_arr_obj':{'binder_id': req.body.binder_id}}},(err,data)=>{
                 console.log(data);
-                console.log(err);
+                if (err) { res.send("Error Occurred") };
+                if (data) {
+                    res.send(data);
+                    console.log('a binder has been deleted');
+                } else {
+                    res.status(404).end();
+                }
             })
-            
             // const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function (err, user) {
-            //     if (err) { res.send("Error Occurred") };
-            //     if (user) {
-            //         user.binder_arr_obj.pop();
-            //         res.send(user.save());
-            //         console.log('a binder has been deleted');
-            //     } else {
-            //         res.status(404).end();
-            //     }
-
-            // })
             res.end();
         })
         .put('/api/binder', async (req, res) => {
@@ -106,7 +105,7 @@ module.exports = (app, db) => {
         //         //     user.binder_arr_obj[0].binder_name = req.body.newBinderName || "untitled binder";
         //         //     user.save((err, data) => {
         //         //         if (err) { console.log('failed to save', err) }
-        //         //         else {x
+        //         //         else {
         //         //             res.send(data);
         //         //             console.log('saved')
         //         //         }; //data shows change, but database not changed...
@@ -129,10 +128,8 @@ module.exports = (app, db) => {
     // For Tab//
     // For Tab//
     app.get('/api/tab', async (req, res) => {
-        //give tab data
-        // www.chung.com/user/1/binder/4/tab/3
         const existingUser= await User.findOne({ 'googleId': "103970352561814947806" }, function (err, user){
-            if (err) { res.send("Error did occurred") };
+            if (err) { res.send("Error did occurred")};
 
             if (user) {
                 res.send(user);
@@ -152,10 +149,15 @@ module.exports = (app, db) => {
         defaultTab.page_arr_obj[0].notes.document.nodes.push(new Note());
         
         
-        const existingUser= await User.update({ 'googleId': "103970352561814947806",'binder_arr_obj.binder_id': req.body.binder_id  }, 
-        {'$push':{'binder_arr_obj':{"tab_arr_obj":defaultTab}}},(err,data)=>{
-            console.log(data);
-            console.log(err);
+        const existingUser= await User.update({ 'googleId': req.body.googleId,'binder_arr_obj.binder_id': req.body.binder_id  }, 
+        {'$push':{'binder_arr_obj':{"tab_arr_obj":[defaultTab]}}},(err,data)=>{
+            if (err) { res.send("Error Occurred") };
+            if (data) {
+                res.send(data);
+                console.log('a binder has been deleted');
+            } else {
+                res.status(404).end();
+            }
         })
 
         res.end();
@@ -195,8 +197,36 @@ module.exports = (app, db) => {
     app.delete('/api/tab', requireLogin, async (req, res) => {
         //delete tab
     });
-    app.put('/api/tab', requireLogin, async (req, res) => {
-        // update tab
+    app.put('/api/tab', async (req, res) => {
+        /* Working Version
+        var temp= 0;
+        var set = {$set:{}};
+        set.$set["binder_arr_obj.$.tab_arr_obj."+temp+".tab_name"]= req.body.tab_name
+
+        User.update({"googleId": "103970352561814947806",'binder_arr_obj.binder_id': "B-01" },
+        // {'$set':{"binder_arr_obj.$.tab_arr_obj.0.tab_name": "Samurai"}},
+        set,
+        (err, data)=>{
+                console.log(err);
+                console.log(data);
+        })   
+        */     
+        var id= "5a55b435eb86910ec07e86f2"
+        var id1="5a55b435eb86910ec07e86ed"
+        var id2="5a55b435eb86910ec07e86ee"
+        const existingUser= await User.findById(id, function (err, user){
+            if (err) { res.send("Error did occurred")};
+
+            if (user) {
+                user.binder_arr_obj.id(id1).tab_arr_obj.id(id2).tab_name='Ninja';
+                // user.binder_arr_obj[0].tab_arr_obj[0].tab_name='Ninja';
+                res.send(user.save())
+            }else {
+            res.send("Error can't find user")
+            }
+            res.end();
+    
+        });
     });
 
     // For Page //
@@ -221,15 +251,17 @@ module.exports = (app, db) => {
         //delete page
     });
     app.put('/api/page', async (req, res) => {
-        // update page
+        var temp= 0;
+        var temp_page=0
+        var set = {$set:{}};
+        set.$set["binder_arr_obj.$.tab_arr_obj."+temp+".page_arr_obj."+temp_page+".page_name"]= req.body.page_name
 
-        for(var ele in req.body){
-            if (ele === 'lecture_slides'){
-                console.log(req.body.ele.lec_id);
-                fakeData.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0].ele.lec_id = req.body.lecture_slides.lec_id;
-                res.send(fakeData);
-            }
-        }
+        User.update({"googleId": "103970352561814947806",'binder_arr_obj.binder_id': "B-01" },
+        set,
+        (err, data)=>{
+                console.log(err);
+                console.log(data);
+        })  
     });
 
 
