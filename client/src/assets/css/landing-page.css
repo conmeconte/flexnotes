@@ -17,15 +17,15 @@ body {
     background-color: #222C3A;
 }
 .landing-page-container h1,
-.landing-page-container h2 {
+.landing-page-container h3 {
     margin: 0;
     color: #fff;
 }
 .landing-page-container h1 {
     line-height: 60px;
-    letter-spacing: 0.3vmin;
+    font-size: 7vmin;
 }
-.landing-page-container h2 {
+.landing-page-container h3 {
     font-weight: 100;
 }
 .login-container {
@@ -33,7 +33,7 @@ body {
     height: 56vh;
     margin: 0 auto;
     position: relative;
-    top: 7vh;
+    top: 13vh;
     box-shadow: 0 4px 2px -2px darkorange;
     border-radius: 5px;
 }
@@ -80,7 +80,7 @@ body {
     top: 30%;
 }
 .login-info h3 {
-    font-size: 3vmin
+    font-size: 4vmin
 }
 .login-info img {
     display: block;
@@ -116,8 +116,17 @@ body {
 }
 .title-container {
     position: relative;
-    top: 3vh;
+    top: 10vh;
 }
 .title-container {
     line-height: 9vh;
+}
+.login-logout-container {
+    position: relative;
+    top: 2vh;
+}
+.login-logout-container button {
+    width: 10vmin;
+    height: 4vmin;
+    font-size: 1.5vmin;
 }

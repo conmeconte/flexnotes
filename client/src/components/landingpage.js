@@ -22,12 +22,12 @@ class LandingPage extends Component {
                 <div style={backgroundImg} className="landing-page-container">
                     <div className="title-container">
                         <h1><span className="flex">Flex</span>Notes</h1>
-                        <h2>User-friendly Notes Web Application</h2>
                     </div>
                     <div className="login-container">
                         <div className="blur"></div>
                         <div className="info">
-                            <h3>Get Started</h3>
+                        <h3>User-friendly Notes</h3>
+                        <h3>Web Application</h3>
                             <ul className="item-list">
                                 <li>
                                     <span className="glyphicon glyphicon-thumbs-up"></span>
@@ -35,7 +35,7 @@ class LandingPage extends Component {
                                 </li>
                                 <li>
                                     <span className="glyphicon glyphicon-wrench"></span>
-                                    <div className="item-text">Customizable UI</div>
+                                    <div className="item-text">Customizable user interface</div>
                                 </li>
                                 <li>
                                     <span className="glyphicon glyphicon-pencil"></span>
@@ -45,8 +45,8 @@ class LandingPage extends Component {
                         </div>
                         <div className="google-div">
                             <div className="login-info">
-                                <h3>Sign In <span className="glyphicon glyphicon-user"></span></h3>
-                                <Login/>
+                                <h3>{ !this.props.auth  ? 'Sign In': 'Sign Out'} <span className={ !this.props.auth  ? 'glyphicon glyphicon-user': ''}></span></h3>
+                                <div className="login-logout-container"><Login/></div>
                             </div>
                         </div>
                     </div>
@@ -56,4 +56,8 @@ class LandingPage extends Component {
     }
 }
 
-export default LandingPage;
+function mapStateToProps({ auth }) {
+    return { auth };
+}
+
+export default connect(mapStateToProps)(LandingPage); 
