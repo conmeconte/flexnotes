@@ -1,15 +1,186 @@
 import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { binderArray, selectBinder } from '../../actions';
+
 
 import Binder from './binder';
 
 import './navbar.css';
 
-export default class Nav extends Component {
+class Nav extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            fake_data:  {
+                _id: { $oid: 'someRandomNumberMongoDBAssings' },
+                googleId: 103970352561814947806,
+                userName: 'JOhn Hong',
+                binder_arr_obj: [
+                  {
+                    _id: { $oid: 'someRandomNumberMongoDBAssings' },
+                    binder_id: 1,
+                    binder_name: 'Binder1',
+                    binder_color: 'red',
+                    tab_arr_obj: [
+                      {
+                        tab_id: 1,
+                        tab_color: 'blue',
+                        tab_name: 'Tab1',
+                        tab_url: '/tab1',
+                        page_arr_obj: [
+                          {
+                            page_id: 1,
+                            page_color: 'white',
+                            page_name: 'Page1',
+                            page_date: '',
+                            page_url: '/page1',
+                            calendar: {
+                              cal_url: String
+                            },
+                            lecture_slides: {
+                              lec_id: 'https://docs.google.com/presentation/d/1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE/embed'
+                            },
+                            notes: {
+                              document: {
+                                nodes: [
+                                  {
+                                    kind: "block",
+                                    type: "paragraph",
+                                    nodes: [
+                                      {
+                                        kind: "text",
+                                        leaves: [
+                                          {
+                                            text: "This is editable "
+                                          },
+                                          {
+                                            text: "rich",
+                                            marks: [
+                                              {
+                                                type: "bold"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            text: " text, "
+                                          },
+                                          {
+                                            text: "much",
+                                            marks: [
+                                              {
+                                                type: "italic"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            text: " better than a "
+                                          },
+                                          {
+                                            text: "<textarea>",
+                                            marks: [
+                                              {
+                                                type: "code"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            text: "!"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    kind: "block",
+                                    type: "paragraph",
+                                    nodes: [
+                                      {
+                                        kind: "text",
+                                        leaves: [
+                                          {
+                                            text: "Since it's rich text, you can do things like turn a selection of text "
+                                          },
+                                          {
+                                            text: "bold",
+                                            marks: [
+                                              {
+                                                type: "bold"
+                                              }
+                                            ]
+                                          }, {
+                                            text: ", or add a semantically rendered block quote in the middle of the page, like this:"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    kind: "block",
+                                    type: "block-quote",
+                                    nodes: [
+                                      {
+                                        kind: "text",
+                                        leaves: [
+                                          {
+                                            text: "A wise quote."
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    kind: "block",
+                                    type: "paragraph",
+                                    nodes: [
+                                      {
+                                        kind: "text",
+                                        leaves: [
+                                          {
+                                            text: "Try it out for yourself!"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+            
+                            video: [
+                              {
+                                _id: { $oid: 'someRandomNumberMongoDBAssings' },
+                                videoInfo: "No Info",
+                                videoId: "Ukg_U3CnJWI"
+                              }
+                            ],
+                            panel_dimensions: {
+                              lecture_Panel: {
+                                width: String,
+                                height: String
+                              },
+                              video_Panel: {
+                                width: String,
+                                height: String
+                              },
+                              note_Panel: {
+                                width: String,
+                                height: String
+                              },
+                              meister_Panel: {
+                                width: String,
+                                height: String
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                  }
+                ]
+              },
+
             binder_color_arr: [
                 '#000080', '#808000', '#800000', '#a0522d', '#8a2be2'
             ],
@@ -90,6 +261,15 @@ export default class Nav extends Component {
         this.notEditable = this.notEditable.bind(this);
         this.binderLinkActive = this.binderLinkActive.bind(this);
         this.binderLinkNotActive = this.binderLinkNotActive.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentDidMount(){
+        //this.state.fake_data;
+        console.log("Fake Data: ", this.state.fake_data.binder_arr_obj);
+        this.props.binderArray(this.state.fake_data.binder_arr_obj);
+        console.log('mstp', );
+
     }
 
     addBinder() {
@@ -202,6 +382,12 @@ export default class Nav extends Component {
             active: false
         });
     }
+
+    handleClick(binderObj){
+        this.props.selectBinder(binderObj);
+
+        //console.log("binderObj", binderObj);
+    }
     /*
     
     
@@ -215,11 +401,12 @@ export default class Nav extends Component {
     */
     render() {
         const { binder_arr_obj, editable, active } = this.state;
+        console.log("Nav props:", this.props);
         //console.log('Render binderArray:', binder_array);
         let binder_link = [];
         //map binders
         if (editable) {
-            binder_link = binder_arr_obj.map((item, index) => {
+            binder_link = this.props.binderArr.map((item, index) => {
                 //console.log('editable map:', item);
                 return (
                     <li key={item.binder_id}>
@@ -241,8 +428,9 @@ export default class Nav extends Component {
             });
 
         } else {
-            binder_link = binder_arr_obj.map((item, index) => {
-                //console.log('map:', item);
+            binder_link = this.props.binderArr.map((item, index) => {
+
+                console.log('Binder map:', item);
                 var binderStyle = {
                     backgroundColor: item.binder_color
                 }
@@ -250,10 +438,12 @@ export default class Nav extends Component {
                 var binderStyle2 = {
                     backgroundColor: 'inherit'
                 }
+
+                let binder_url = '/binder' + item.binder_id;
                 return (
                     <li key={item.binder_id}>
-                        <Link to={'/main' + item.binder_url} style={{ textDecoration: 'none' }}>
-                            <div className="binderDiv" style={active ? binderStyle : binderStyle2} onClick={this.binderLinkActive} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
+                        <Link to={'/main' + binder_url} style={{ textDecoration: 'none' }}>
+                            <div className="binderDiv" style={active ? binderStyle : binderStyle2} onClick={()=>this.handleClick(item)} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
                                 {item.binder_name}
                             </div>
                         </Link>
@@ -266,10 +456,14 @@ export default class Nav extends Component {
 
 
 
-        const binder_route = binder_arr_obj.map((item, index) => {
+        const binder_route = this.props.binderArr.map((item, index) => {
+            let binder_url = '/binder' + item.binder_id;
+            //console.log("binder_url", binder_url);
             return (
-                <Route key={item.binder_id} path={'/main' + item.binder_url} render={() =>
-                    <Binder binder_obj={item} />}
+                <Route key={item.binder_id} path={'/main' + binder_url} render={() =>
+                    //set binderReducer to which ever binder is clicked on
+                    //remove props
+                    <Binder binder_obj={item} binder_url={binder_url} />}
                 />
             );
         });
@@ -300,3 +494,13 @@ export default class Nav extends Component {
         );
     }
 }
+    function mapStateToProps(state){
+        console.log('mstp', state);
+        return{
+            binderArr: state.binderArray.binderArr
+        }
+    }
+
+    export default connect(mapStateToProps,{ binderArray, selectBinder })(Nav);
+
+

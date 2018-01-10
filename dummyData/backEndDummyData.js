@@ -1,5 +1,4 @@
 
-
 let fakeData =
   {
     _id: { $oid: 'someRandomNumberMongoDBAssings' },

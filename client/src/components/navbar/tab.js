@@ -152,8 +152,9 @@ export default class Tab extends Component {
         } else {
             page_link = page_arr_obj.map((item, index) => {
                 //console.log('map:', item);
+                let page_url = '/page' + item.page_id;
                 return (
-                    <li key={item.page_id}><Link to={'/main'+binderUrl + tab_url + item.page_url} style={{ textDecoration: 'none' }}>
+                    <li key={item.page_id}><Link to={'/main'+this.props.binder_url + this.props.tab_url + page_url} style={{ textDecoration: 'none' }}>
                     <div className="pageDiv">
                         {item.page_name}
                     </div></Link></li>
@@ -163,8 +164,9 @@ export default class Tab extends Component {
 
     
         const page_route = page_arr_obj.map((item, index) => {
+            let page_url = '/page' + item.page_id;
             return(
-                <Route key={item.page_id} path={'/main'+binderUrl + tab_url + item.page_url} render={()=> 
+                <Route key={item.page_id} path={'/main'+this.props.binder_url + this.props.tab_url + page_url} render={()=> 
                     <Page/>
                 }
                 />
@@ -195,3 +197,5 @@ export default class Tab extends Component {
 
     
 }
+
+//use binder reducer for logic

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-
 import {Link, Route} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { selectBinder } from '../../actions';
+
 import Tab from './tab';
 
-export default class Binder extends Component {
+class Binder extends Component {
     constructor(props){
         super(props);
 
@@ -18,6 +20,10 @@ export default class Binder extends Component {
         this.addTab = this.addTab.bind(this);
         this.editTabs = this.editTabs.bind(this);
         this.notEditTabs = this.notEditTabs.bind(this);
+    }
+
+    componentDidMount(){
+        this.props.selectBinder();
     }
 
     addTab(){
@@ -135,7 +141,7 @@ export default class Binder extends Component {
     render(){
 
         const {binder, editable} = this.state;
-        console.log('binderObj:',binder);
+        console.log('props in binder:', this.props);
         const{ tab_arr_obj, binder_url} = binder;
         
         let tab_link = [];
@@ -166,13 +172,14 @@ export default class Binder extends Component {
         } else {
 
             tab_link = tab_arr_obj.map((item, index) => {
+                let tab_url = '/tab' + item.tab_id;
                 //console.log('map:', item);
                 var tabStyle ={
                     borderLeft: '12px solid '+item.tab_color
                 }
 
                     return (
-                        <li key={item.tab_id}><Link to={'/main'+binder_url + item.tab_url} style={{ textDecoration: 'none' }}>
+                        <li key={item.tab_id}><Link to={'/main'+this.props.binder_url + tab_url} style={{ textDecoration: 'none' }}>
                             <div className="tabDiv" style={tabStyle}>
                                 {item.tab_name}
                             </div>
@@ -182,9 +189,10 @@ export default class Binder extends Component {
         }
     
         const tab_route = tab_arr_obj.map((item, index) => {
+            let tab_url = '/tab' + item.tab_id;
             return(
-                <Route key={item.tab_id} path={'/main'+binder_url + item.tab_url} render={()=> 
-                    <Tab tabObj={item} binderUrl={binder_url}/>
+                <Route key={item.tab_id} path={'/main'+this.props.binder_url + tab_url} render={()=> 
+                    <Tab tabObj={item} binder_url={this.props.binder_url} tab_url={tab_url}/>
                 }
                 />
             );
@@ -214,3 +222,10 @@ export default class Binder extends Component {
 
     
 }
+
+function mapStateToProps(state){
+    return {
+        binder: state.binder.binderObj
+    }
+}
+export default connect(mapStateToProps,{ selectBinder })(Binder);
