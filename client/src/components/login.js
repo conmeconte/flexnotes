@@ -22,7 +22,6 @@ class Login extends Component {
         return(
         <nav>
             <div className="nav-wrapper">
-
                 <ul className="right">
                     {this.renderContent()}
                 </ul>
