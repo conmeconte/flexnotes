@@ -1,231 +1,452 @@
-import React, {Component} from 'react';
-import {Link, Route} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectBinder } from '../../actions';
+import { binderArray, selectBinder } from '../../actions';
+
 
 import Tab from './tab';
 
+import './navbar.css';
+
 class Binder extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
-            tab_color_arr: ['#ff0000', '#0000ff', '#ff00ff', '#FF8C00', '#008000'],
+            fake_data:  {
+                _id: { $oid: 'someRandomNumberMongoDBAssings' },
+                googleId: 103970352561814947806,
+                userName: 'JOhn Hong',
+                binder_arr_obj: [
+                  {
+                    _id: { $oid: 'someRandomNumberMongoDBAssings' },
+                    binder_id: 1,
+                    binder_name: 'Binder1',
+                    binder_color: 'red',
+                    tab_arr_obj: [
+                      {
+                        tab_id: 1,
+                        tab_color: 'blue',
+                        tab_name: 'Tab1',
+                        tab_url: '/tab1',
+                        page_arr_obj: [
+                          {
+                            page_id: 1,
+                            page_color: 'white',
+                            page_name: 'Page1',
+                            page_date: '',
+                            page_url: '/page1',
+                            calendar: {
+                              cal_url: String
+                            },
+                            lecture_slides: {
+                              lec_id: 'https://docs.google.com/presentation/d/1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE/embed'
+                            },
+                            notes: {
+                              document: {
+                                nodes: [
+                                  {
+                                    kind: "block",
+                                    type: "paragraph",
+                                    nodes: [
+                                      {
+                                        kind: "text",
+                                        leaves: [
+                                          {
+                                            text: "This is editable "
+                                          },
+                                          {
+                                            text: "rich",
+                                            marks: [
+                                              {
+                                                type: "bold"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            text: " text, "
+                                          },
+                                          {
+                                            text: "much",
+                                            marks: [
+                                              {
+                                                type: "italic"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            text: " better than a "
+                                          },
+                                          {
+                                            text: "<textarea>",
+                                            marks: [
+                                              {
+                                                type: "code"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            text: "!"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    kind: "block",
+                                    type: "paragraph",
+                                    nodes: [
+                                      {
+                                        kind: "text",
+                                        leaves: [
+                                          {
+                                            text: "Since it's rich text, you can do things like turn a selection of text "
+                                          },
+                                          {
+                                            text: "bold",
+                                            marks: [
+                                              {
+                                                type: "bold"
+                                              }
+                                            ]
+                                          }, {
+                                            text: ", or add a semantically rendered block quote in the middle of the page, like this:"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    kind: "block",
+                                    type: "block-quote",
+                                    nodes: [
+                                      {
+                                        kind: "text",
+                                        leaves: [
+                                          {
+                                            text: "A wise quote."
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    kind: "block",
+                                    type: "paragraph",
+                                    nodes: [
+                                      {
+                                        kind: "text",
+                                        leaves: [
+                                          {
+                                            text: "Try it out for yourself!"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+            
+                            video: [
+                              {
+                                _id: { $oid: 'someRandomNumberMongoDBAssings' },
+                                videoInfo: "No Info",
+                                videoId: "Ukg_U3CnJWI"
+                              }
+                            ],
+                            panel_dimensions: {
+                              lecture_Panel: {
+                                width: String,
+                                height: String
+                              },
+                              video_Panel: {
+                                width: String,
+                                height: String
+                              },
+                              note_Panel: {
+                                width: String,
+                                height: String
+                              },
+                              meister_Panel: {
+                                width: String,
+                                height: String
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                  }
+                ]
+              },
+
+            binder_color_arr: [
+                '#000080', '#808000', '#800000', '#a0522d', '#8a2be2'
+            ],
             editable: false,
-            binder: this.props.binder_obj
+            active: false,
+            new_tab_arr: [{
+                tab_id: 1,
+                tab_color: 'blue',
+                tab_name: 'TabName',
+                tab_url: '/tab1',
+                page_arr_obj: [{
+
+                    page_id: 1,
+                    page_color: 'white',
+                    page_name: 'PageName',
+                    page_date: '',
+                    page_url: '/page1'
+                }]
+            }]
+
         }
 
-
-
-        this.addTab = this.addTab.bind(this);
-        this.editTabs = this.editTabs.bind(this);
-        this.notEditTabs = this.notEditTabs.bind(this);
+        this.addBinder = this.addBinder.bind(this);
+        this.deleteBinder = this.deleteBinder.bind(this);
+        this.editable = this.editable.bind(this);
+        this.notEditable = this.notEditable.bind(this);
+        this.binderLinkActive = this.binderLinkActive.bind(this);
+        this.binderLinkNotActive = this.binderLinkNotActive.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount(){
-        this.props.selectBinder();
+
+        //console.log("Fake Data: ", this.state.fake_data.binder_arr_obj);
+        this.props.binderArray(this.state.fake_data.binder_arr_obj);
+
     }
 
-    addTab(){
-        console.log('addTab clicked');
-        const {binder, tab_color_arr} = this.state;
-        //console.log(binder);
-        const {tab_arr_obj} = binder;
-        //console.log('tab_arr_obj:',tab_arr_obj);
+    addBinder() {
+        console.log('add Binder');
+        const { binder_arr_obj, new_tab_arr, binder_color_arr } = this.state;
 
-        let length = tab_arr_obj.length;
-        if(length === 0){
-            let new_tab_obj = {
-                tab_id: 1,
-                tab_color: tab_color_arr[0],
-                tab_name: 'Tab1',
-                tab_url: '/tab1',
-                page_arr_obj: [{
-    
-                    page_id: 1,
-                    page_color: 'green',
-                    page_name: 'Page1',
-                    page_date: '',
-                    page_url: '/page1'
-                }]
+        //let binder_color_array = ['#000080', '#808000', '#800000', '#a0522d', '#8a2be2'];
+
+        let length = binder_arr_obj.length;
+        if (length === 0) {
+            //new binder when there are no binders
+            let new_binder_obj = {
+                binder_id: 1,
+                binder_name: 'Binder1',
+                binder_color: binder_color_arr[0],
+                binder_url: '/binder1',
+                tab_arr_obj: new_tab_arr
             }
 
-            binder.tab_arr_obj = [new_tab_obj];
-
             this.setState({
-                binder: binder
+                binder_arr_obj: [new_binder_obj]
             });
-             
+
         } else {
-            let new_index = tab_arr_obj[length-1].tab_id + 1;
-            //console.log('tab_arr_obj',tab_arr_obj[length-1]);
-            let new_url = '/tab' + new_index;
-            //console.log('new_url:',new_url);
-            let mod_index = new_index % 5;
-            let new_tab_obj = {
-                tab_id: new_index,
-                tab_color: tab_color_arr[mod_index],
-                tab_name: 'NewTab',
-                tab_url: new_url,
-                page_arr_obj: [{
-    
-                    page_id: 1,
-                    page_color: 'green',
-                    page_name: 'Page1',
-                    page_date: '',
-                    page_url: '/page1'
-                }]
+            let new_index = binder_arr_obj[length - 1].binder_id + 1;
+            let new_url = '/binder' + new_index;
+
+            let index_mod = new_index % 5;
+            //console.log('index_mod', index_mod);
+
+            let new_binder_obj = {
+                binder_id: new_index,
+                binder_name: 'New Binder',
+                binder_color: binder_color_arr[index_mod],
+                binder_url: new_url,
+                tab_arr_obj: new_tab_arr
             }
-    
-            binder.tab_arr_obj = [...binder.tab_arr_obj, new_tab_obj];
-    
+
             this.setState({
-                binder: binder
+                binder_arr_obj: [...binder_arr_obj, new_binder_obj]
             });
+
         }
+
     }
 
-    editTabs(){
+    deleteBinder(delete_id) {
+        console.log('delete button clicked, binder_id: ', delete_id);
+
+        const { binder_arr_obj } = this.state;
+        console.log(binder_arr_obj);
+        let deleteIndex = 0;
+        for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
+            if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
+                binder_arr_obj.splice(deleteIndex, 1);
+            }
+        }
+
+        this.setState({
+            binder_arr_obj: binder_arr_obj
+        });
+    }
+
+    editable() {
         console.log("editable should be true");
         this.setState({
             editable: true
         });
     }
 
-    notEditTabs() {
+    notEditable() {
         console.log("editable should be false");
-        this.setState({ 
-            editable: false 
+        this.setState({
+            editable: false
         });
     }
 
-    tabTextChanged(e, id){
-        const {binder} = this.state;
-        const {tab_arr_obj} = binder;
+    // keyPressed(event) {
+    //     if(event.key == 'Enter') {
+    //       //this.notEditable();
+    //   }
+    // }
+
+    textChanged(e, id) {
+        const { binder_arr_obj } = this.state;
         //console.log("text changed, id:", id);
         //console.log(e.target.value);
 
-        for(let i =0; i<tab_arr_obj.length; i++){
-            if(tab_arr_obj[i].tab_id===id ){
+        for (let i = 0; i < binder_arr_obj.length; i++) {
+            if (binder_arr_obj[i].binder_id === id) {
                 //console.log('binder_id and id match');
-                tab_arr_obj[i].tab_name = e.target.value;
+                binder_arr_obj[i].binder_name = e.target.value;
             }
         }
-
-        binder.tab_arr_obj = tab_arr_obj;
-
         this.setState({
-            binder: binder
+            binder_arr_obj: binder_arr_obj
         });
     }
+
+    binderLinkActive(){
+        //console.log('binderlinkactive color:', color);
+        this.setState({
+            active: true
+        });
+    }
+
+    binderLinkNotActive(){
+        //console.log('binderlinkactive color:', color);
+        this.setState({
+            active: false
+        });
+    }
+
+    handleClick(binderObj){
+        this.props.selectBinder(binderObj);
+
+        console.log("binderObj", binderObj);
+    }
+    /*
     
-    deleteTab(delete_id){
+    
+    
+    
+    //keep data updated with database.
 
-        const {binder} = this.state;
-        const {tab_arr_obj} = binder;
-        //console.log(binder_array);
-        let deleteIndex = 0;
-        for(deleteIndex; deleteIndex<tab_arr_obj.length; deleteIndex++){
-            if(tab_arr_obj[deleteIndex].tab_id === delete_id){
-                tab_arr_obj.splice(deleteIndex, 1);
-            }
-        }
 
-        binder.tab_arr_obj = tab_arr_obj;
 
-        this.setState({
-            binder: binder
-        });
-    }
 
-    render(){
-
-        const {binder, editable} = this.state;
-        console.log('props in binder:', this.props);
-        const{ tab_arr_obj, binder_url} = binder;
-        
-        let tab_link = [];
-        if(editable){
-            tab_link = tab_arr_obj.map((item, index) => {
+    */
+    render() {
+        const { editable, active } = this.state;
+        console.log("Binder props:", this.props);
+        //console.log('Render binderArray:', binder_array);
+        let binder_link = [];
+        //map binders
+        if (editable) {
+            binder_link = this.props.binderArr.map((item, index) => {
                 //console.log('editable map:', item);
                 return (
-                    <li key={item.tab_id}>
-                        <input 
+                    <li key={item.binder_id}>
+                        <input
                             className="edit_input"
                             ref='textInput'
                             type='text'
-                            onChange={(e)=>this.tabTextChanged(e, item.tab_id)}
+                            onChange={(e) => this.textChanged(e, item.binder_id)}
                             // onBlur={this.notEditable}
-                           // onKeyPress={this.keyPressed}
-                            value={item.tab_name}
-                            />
+                            // onKeyPress={this.keyPressed}
+                            value={item.binder_name}
+                        />
 
-                    <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(item.tab_id)} >
-                        <span className="glyphicon glyphicon-minus"></span>
-                    </button>
-                        
-                          
+                        <button type="button" className="btn btn-default btn_delete" onClick={() => this.deleteBinder(item.binder_id)} >
+                            <span className="glyphicon glyphicon-minus"></span>
+                        </button>
                     </li>
                 );
             });
 
         } else {
+            binder_link = this.props.binderArr.map((item, index) => {
 
-            tab_link = tab_arr_obj.map((item, index) => {
-                let tab_url = '/tab' + item.tab_id;
-                //console.log('map:', item);
-                var tabStyle ={
-                    borderLeft: '12px solid '+item.tab_color
+                console.log('Binder map:', item);
+                var binderStyle = {
+                    backgroundColor: item.binder_color
                 }
 
-                    return (
-                        <li key={item.tab_id}><Link to={'/main'+this.props.binder_url + tab_url} style={{ textDecoration: 'none' }}>
-                            <div className="tabDiv" style={tabStyle}>
-                                {item.tab_name}
+                var binderStyle2 = {
+                    backgroundColor: 'inherit'
+                }
+
+                let binder_url = '/binder' + item.binder_id;
+                return (
+                    <li key={item.binder_id}>
+                        <Link to={'/main' + binder_url} style={{ textDecoration: 'none' }} >
+                            <div className="binderDiv" onClick={this.handleClick(item)} style={active ? binderStyle : binderStyle2} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
+                                {item.binder_name}
                             </div>
-                        </Link></li>
-                    );               
-                 });
+                        </Link>
+                    </li>
+                );
+            });
         }
-    
-        const tab_route = tab_arr_obj.map((item, index) => {
-            let tab_url = '/tab' + item.tab_id;
-            return(
-                <Route key={item.tab_id} path={'/main'+this.props.binder_url + tab_url} render={()=> 
-                    <Tab tabObj={item} binder_url={this.props.binder_url} tab_url={tab_url}/>
-                }
+
+
+
+
+
+        const binder_route = this.props.binderArr.map((item, index) => {
+            let binder_url = '/binder' + item.binder_id;
+
+            //console.log("binder_url", binder_url);
+            return (
+                <Route key={item.binder_id} path={'/main' + binder_url} render={() =>
+                    <Tab binder={item} binder_url={binder_url} />}
                 />
             );
         });
 
-        return(
+        return (
+            <div className="nav_binder">
 
-            <div className='nav_tab'>
-                
-                <button type="button" className={`btn btn-default btn-xs btn_edit_tab ${editable ? 'hidden': 'visible'}`} onClick={this.editTabs}>
-                    Tabs <span className="glyphicon glyphicon-pencil"></span>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
+                    Binders <span className="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button type="button" className={`btn btn-default btn-xs btn_edit_tab ${editable ? 'visible': 'hidden'}`} onClick={this.notEditTabs}>
-                    Tabs <span className="glyphicon glyphicon-ok"></span>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
+                    Binders <span className="glyphicon glyphicon-ok"></span>
                 </button>
 
-                <ul className="nav-tab-col">
-                    {tab_link}
+
+
+                <ul className="binder_wrap">
+                    {binder_link}
                 </ul>
-                {tab_route}
-                <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible': 'hidden'}`} onClick={this.addTab}>
+                {binder_route}
+
+
+
+                <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible' : 'hidden'}`} onClick={this.addBinder}>
                     <span className="glyphicon glyphicon-plus"></span>
-                </button>  
+                </button>
             </div>
         );
     }
-
-    
 }
-
-function mapStateToProps(state){
-    return {
-        binder: state.binder.binderObj
+    function mapStateToProps(state){
+        console.log('binder mstp', state);
+        return{
+            binderArr: state.binderArray.binderArr
+        }
     }
-}
-export default connect(mapStateToProps,{ selectBinder })(Binder);
+
+    export default withRouter(connect(mapStateToProps,{ binderArray, selectBinder })(Binder));
+
+

@@ -1,10 +1,10 @@
 import React from 'react';
-import Nav from './nav';
+import Binder from './binder';
 
 export default props => {
     return (
         <div className="navbar col-xs-2">
-            <Nav />
+            <Binder />
             <div className="contain-tab">
                 <h4 className="nav_header"></h4>
             </div>
