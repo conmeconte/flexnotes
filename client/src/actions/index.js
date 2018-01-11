@@ -65,6 +65,7 @@ export function playVideo () {
     }
 }
 
+
 export function grabVideoUrl () {
     
     return {
@@ -72,3 +73,19 @@ export function grabVideoUrl () {
         payload: videoLink
     }
 }
+
+export function binderArray(binderArray){
+    return{
+        type: types.BINDER_ARRAY,
+        payload: binderArray
+    }
+}
+
+export function selectBinder(binderObj){
+    return{
+        type: types.SELECT_BINDER,
+        payload: binderObj
+    }
+}
+
+

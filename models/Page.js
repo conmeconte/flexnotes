@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const notesNode = require('./NotesNode');
+const videoSchemaNew = require('./Video');
 
 /* Page Schema */
 
@@ -17,11 +19,11 @@ const pageSchemaNew = new Schema({
     },
     notes : {
         document: {
-          nodes: []
+          nodes: [notesNode]
         }
       },
   
-    video :[],
+    video :[videoSchemaNew],
     panel_dimensions: {
         lecture_Panel: {
             width: String,
