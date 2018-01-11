@@ -9,15 +9,14 @@ module.exports = (app, db) => {
         res.send('Homepage')
     })
     app.get('/api/userInfo', requireLogin, (req, res) => {
-
+        console.log(req.user.id)
         res.send(req.user);
     });
 
 
     app.get('/api', async (req, res) => {
         //pull entire user obj
-        var id= "5a55b435eb86910ec07e86f2"
-        User.findById(id, (err,user)=>{
+        User.findById(req.user.id, (err,user)=>{
             res.send(user);
         })
 
@@ -27,7 +26,7 @@ module.exports = (app, db) => {
         .get('/api/binder', async (req, res) => {
             //give binder data
             //userId accessible via req.param.userId?
-            const existingUser= await User.findOne({ 'googleId': "103970352561814947806" }, function (err, user){
+            const existingUser= await User.findOne({ 'googleId': req.user.googleId }, function (err, user){
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
@@ -39,7 +38,7 @@ module.exports = (app, db) => {
             })
         })
         .post('/api/binder', async (req, res) => {
-            const existingUser= await User.findById('5a56b2782962901f9c0fe102',function(err,user){
+            const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
     
                 if (user) {
@@ -60,38 +59,15 @@ module.exports = (app, db) => {
                 res.send("Error can't find user")
                 }
             })
-            //create new binder in user
-            // console.log("inside api binder rout ", req.body);
-            // const existingUser = await User.findOne({ 'googleId': "103970352561814947806" }, function (err, user) {
-            //     //if no match .find return [], and .findOne returns null in document(in this case user)
-            //     if (err) { res.send("Error did occurred") };
 
-            //     if (user) {
-            //         let idRandomizer= Math.floor((Math.random()* 99999999999) + 00000000000);
-            //         const defaultBinder = new Binder({binder_id: idRandomizer});
-            //         // const prevBinderId= user.binder_arr_obj[binder_arr_obj.length-1].binder_id; 
-            //         // defaultBinder.binder_id= 
-            //         defaultBinder.tab_arr_obj.push(new Tab());
-            //         defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({ page_color: 'orange' }));
-            //         defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ videoInfo: 'No Info' }));
-            //         defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new Note());
-            //         user.binder_arr_obj.push(defaultBinder);
-            //         res.send(user.save());
-
-            //         console.log("User has a new binder and is now saved");
-            //     } else {
-            //         res.send("Error can't find user")
-            //     }
-
-            // });
         })
         .delete('/api/binder', async (req, res) => {
-            const existingUser= await User.findById('5a569b34da2d998e141c38b2',function(err,user){
+            const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
     
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id('5a569b34da2d998e141c38ad') //req.body.binder_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binder_arr_obj_id
                     
                     binder.remove();
                     user.save();
@@ -104,12 +80,12 @@ module.exports = (app, db) => {
         })
         .put('/api/binder', async (req, res) => {
             // update binder
-            const existingUser= await User.findById('5a56b2782962901f9c0fe102', function (err, user){
+            const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) { res.send("Error did occurred")};
     
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id('5a56b2782962901f9c0fe0fd') //req.body.binder_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binder_arr_obj_id
                     
                     binder.binder_color = req.body.binder_color || binder.tab_color;
                     binder.binder_name = req.body.binder_name || binder.tab_name;
@@ -144,7 +120,7 @@ module.exports = (app, db) => {
         })
         .post('/api/tab', async (req, res) => {
             //create new tab in user
-            const existingUser= await User.findById('5a56b2782962901f9c0fe102',function(err,user){
+            const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
@@ -294,11 +270,11 @@ module.exports = (app, db) => {
         });
 
 //  video
-    app
-        .get()
-        .post()
-        .delete()
-        .put();
+    // app
+    //     .get()
+    //     .post()
+    //     .delete()
+    //     .put();
 
 
 }
