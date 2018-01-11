@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
-
+// const User = require('../controllers/user');
 //Restful/ CRUD operation 
 
 module.exports = (app, db) => {
@@ -174,29 +174,21 @@ module.exports = (app, db) => {
         })
     });
     app.put('/api/tab', async (req, res) => {
-        /* Working Version
-        var temp= 0;
-        var set = {$set:{}};
-        set.$set["binder_arr_obj.$.tab_arr_obj."+temp+".tab_name"]= req.body.tab_name
 
-        User.update({"googleId": "103970352561814947806",'binder_arr_obj.binder_id': "B-01" },
-        // {'$set':{"binder_arr_obj.$.tab_arr_obj.0.tab_name": "Samurai"}},
-        set,
-        (err, data)=>{
-                console.log(err);
-                console.log(data);
-        })   
-        */     
-        var id= "5a55b435eb86910ec07e86f2"
-        var id1="5a55b435eb86910ec07e86ed"
-        var id2="5a55b435eb86910ec07e86ee"
-        const existingUser= await User.findById(id, function (err, user){
+        const existingUser= await User.findById('5a569b34da2d998e141c38b2', function (err, user){
             if (err) { res.send("Error did occurred")};
 
             if (user) {
-                user.binder_arr_obj.id(id1).tab_arr_obj.id(id2).tab_name='Ninja';
-                // user.binder_arr_obj[0].tab_arr_obj[0].tab_name='Ninja';
-                res.send(user.save())
+                const tab = user
+                .binder_arr_obj.id('5a569b34da2d998e141c38ad') //req.body.binder_arr_obj_id
+                .tab_arr_obj.id('5a569b34da2d998e141c38ae')  //req.body.tab_arr_obj_id
+                
+                tab.tab_color = req.body.tab_color || tab.tab_color;
+                tab.tab_name = req.body.tab_name || tab.tab_name;
+                
+        
+                user.save();
+                res.send(user);
             }else {
             res.send("Error can't find user")
             }
@@ -222,22 +214,71 @@ module.exports = (app, db) => {
     });
     app.post('/api/page', async (req, res) => {
         //create new page in user
+        const existingUser= await User.findById('5a569b34da2d998e141c38b2',function(err,user){
+            if (err) { res.send("Error did occurred") };
+
+            if (user) {
+                const page = user
+                .binder_arr_obj.id('5a569b34da2d998e141c38ad') //req.body.binder_arr_obj_id
+                .tab_arr_obj.id('5a569b34da2d998e141c38ae')  //req.body.tab_arr_obj_id
+                if(page){
+                    page.page_arr_obj.push(new Page());
+                    page.page_arr_obj[0].video.push(new Video());
+                    page.page_arr_obj[0].notes.document.nodes.push(new Note());
+    
+                    user.save();
+                    res.send(user);
+                }
+                res.send('wrong path')
+                
+            }else {
+            res.send("Error can't find user")
+            }
+        })
     });
     app.delete('/api/page', async (req, res) => {
         //delete page
-    });
-    app.put('/api/page', async (req, res) => {
-        var temp= 0;
-        var temp_page=0
-        var set = {$set:{}};
-        set.$set["binder_arr_obj.$.tab_arr_obj."+temp+".page_arr_obj."+temp_page+".page_name"]= req.body.page_name
+        const existingUser= await User.findById('5a569b34da2d998e141c38b2',function(err,user){
+            if (err) { res.send("Error did occurred") };
 
-        User.update({"googleId": "103970352561814947806",'binder_arr_obj.binder_id': "B-01" },
-        set,
-        (err, data)=>{
-                console.log(err);
-                console.log(data);
-        })  
+            if (user) {
+                const page = user
+                .binder_arr_obj.id('5a569b34da2d998e141c38ad') //req.body.binder_arr_obj_id
+                .tab_arr_obj.id('5a569b34da2d998e141c38ae')  //req.body.tab_arr_obj_id
+                .page_arr_obj.id('5a56ac350fc70b12841bf53f'); //req.body.page_arr_obj_id
+                
+                page.remove();
+                user.save();
+                res.send(user);
+                
+            }else {
+            res.send("Error can't find user")
+            }
+        })
+    });
+    app.put('/api/page', async (req,res)=>{
+        const existingUser= await User.findById('5a569b34da2d998e141c38b2',function(err,user){
+            if (err) { res.send("Error did occurred") };
+
+            if (user) {
+                const page = user
+                .binder_arr_obj.id('5a569b34da2d998e141c38ad') //req.body.binder_arr_obj_id
+                .tab_arr_obj.id('5a569b34da2d998e141c38ae')  //req.body.tab_arr_obj_id
+                .page_arr_obj.id('5a569b34da2d998e141c38af'); //req.body.page_arr_obj_id
+                
+                page.page_color = req.body.page_color || page.page_color;
+                page.page_name = req.body.page_name || page.page_name;
+                
+        
+                user.save();
+                res.send(user);
+                
+            }else {
+            res.send("Error can't find user")
+            }
+            // res.end();
+        })
+
     });
 
 
