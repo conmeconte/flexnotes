@@ -5,6 +5,7 @@ const passport      = require('passport');
 const bodyParser    = require('body-parser');
 const keys          = require('./config/keys');
 
+
 // let dummyData = require('./dummyData/backEndDummyData');
 const app   = express();
 const PORT  = process.env.PORT || 9000;
@@ -15,11 +16,13 @@ const PORT  = process.env.PORT || 9000;
 mongoose.connect(keys.mongoURI);
 mongoose.Promise= global.Promise; 
 
+
 var db = mongoose.connection; 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', function() {
     console.log('connected to mongodb through mongoose')
 });
+
 // end of testing
 require('./services/passport');// user must be loaded first so that it creates the mongoose schema to be used in passport
 
