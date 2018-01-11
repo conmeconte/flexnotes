@@ -1,7 +1,12 @@
 export const FETCH_USER = 'fetch_user';
-
 export default {
-    FETCH_USER: 'fetch_user',
+    FETCH_USER : 'fetch_user',
     BINDER_ARRAY: 'binder_array',
-    SELECT_BINDER: 'select_binder'
+    SELECT_BINDER: 'select_binder',
+    GET_RESULT_STYLES: 'get_result_styles',
+    GET_OPACITY_DISPLAY: 'get_opacity_display',
+    TOGGLE_RESULTS: 'toggle_results',
+    ADD_TO_PLAYLIST : 'add_to_playlist',
+    PLAY_VIDEO: 'play_video',
+    GRAB_VIDEO_URL: 'grab_video_url'
 }
