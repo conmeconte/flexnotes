@@ -4,6 +4,7 @@ import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectBinder } from '../../actions';
 
+import Panel from '../panel';
 import PageOld from './page_old';
 
 class Page extends Component {
@@ -159,7 +160,7 @@ class Page extends Component {
                 //console.log('map:', item);
                 let page_url = '/page' + item.page_id;
                 return (
-                    <li key={item.page_id}><Link to={'/main'+this.props.binder_url + this.props.tab_url + page_url} style={{ textDecoration: 'none' }}>
+                    <li key={item.page_id}><Link to={this.props.match.path + page_url} style={{ textDecoration: 'none' }}>
                     <div className="pageDiv">
                         {item.page_name}
                     </div></Link></li>
@@ -171,7 +172,7 @@ class Page extends Component {
         const page_route = page_arr_obj.map((item, index) => {
             let page_url = '/page' + item.page_id;
             return(
-                <Route key={item.page_id} path={'/main'+this.props.binder_url + this.props.tab_url + page_url} render={()=> 
+                <Route key={item.page_id} path={this.props.match.path + page_url} render={()=> 
                     <PageOld/>
                 }
                 />
