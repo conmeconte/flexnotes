@@ -120,7 +120,7 @@ module.exports = (app, db) => {
         })
         .post('/api/tab', async (req, res) => {
             //create new tab in user
-            const existingUser= await User.findById('5a56b2782962901f9c0fe102',function(err,user){
+            const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
