@@ -41,7 +41,7 @@ passport.use(
             const user = await new User({
                 googleId: profile.id,
                 userName: profile.displayName,
-                binder_arr_obj: defaultBinder   //how come this works even thought it's an array array: obj?
+                binder_arr_obj: [defaultBinder]   //how come this works even thought it's an array array: obj?
             }).save()
             done(null, user);
 

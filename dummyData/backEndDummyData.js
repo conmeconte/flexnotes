@@ -18,23 +18,25 @@ let fakeData =
             tab_url: '/tab1',
             page_arr_obj: [
               {
-                page_id: 1,
-                page_color: 'white',
-                page_name: 'Page1',
-                page_date: '',
-                page_url: '/page1',
-                calendar: {
-                  cal_url: String
-                },
-                lecture_slides: {
-                  lec_id: 'https://docs.google.com/presentation/d/1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE/embed'
-                },
-                notes: {
-                  document: {
-                    nodes: [
-                      {
-                        kind: "block",
-                        type: "paragraph",
+                tab_id: 1,
+                tab_color: 'blue',
+                tab_name: 'Tab1',
+                tab_url: '/tab1',
+                page_arr_obj :[ 
+                  {
+                    page_id: 1,
+                    page_color: 'white',
+                    page_name: 'Page1',
+                    page_date: '',
+                    page_url: '/page1',
+                    calendar : {
+                        cal_url : String
+                    },
+                    lecture_slides : {
+                       lec_id : ''
+                    },
+                    notes: {
+                      document: {
                         nodes: [
                           {
                             kind: "text",
