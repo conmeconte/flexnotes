@@ -87,8 +87,8 @@ module.exports = (app, db) => {
                     const binder = user
                     .binder_arr_obj.id(req.body.binderID) //req.body.binder_arr_obj_id
                     
-                    binder.binder_color = req.body.binder_color || binder.tab_color;
-                    binder.binder_name = req.body.binder_name || binder.tab_name;
+                    binder.binder_color = req.body.binder_color || binder.binder_color;
+                    binder.binder_name = req.body.binder_name || binder.binder_name;
                     
             
                     user.save();
@@ -269,12 +269,74 @@ module.exports = (app, db) => {
 
         });
 
-//  video
-    // app
-    //     .get()
-    //     .post()
-    //     .delete()
-    //     .put();
+ //video//
+    app
+        .post('/api/video', async (req,res)=>{
+            const existingUser= await User.findById(req.user.id, (err,user)=>{
+                if(err){ res.send('Error')}
+                if (user) {
+                    const page = user
+                    .binder_arr_obj.id(req.body.binderID)
+                    .tab_arr_obj.id(req.body.tabID)  
+                    .page_arr_obj.id(req.body.pageID)
+                    if(page){
+                        let video = new Video()
+                        page.video.push(new Video({video_url: req.body.video_url, videoInfo: req.body.videoInfo}));
+                        page.notes.document.nodes.push(new Note());
+                        tab.page_arr_obj.push(page);
+
+                        user.save();
+                        res.send(user);
+                    }else{res.send('wrong path')}
+                    
+                }else {
+                res.send("Error can't find user")
+                }
+            })
+        })
+        .delete('/api/video', async (req,res)=>{
+            const existingUser= await User.findById(req.user.id, (err,user)=>{
+                if(err){ res.send('Error')}
+                if (user) {
+                    const video = user
+                    .binder_arr_obj.id(req.body.binderID)
+                    .tab_arr_obj.id(req.body.tabID)  
+                    .page_arr_obj.id(req.body.pageID)
+                    .video.id(req.body.videoID)
+                    if(video){
+                        video.remove();
+                        user.save();
+                        res.send(user);
+                    }else{res.send('wrong path')}
+                    
+                }else {
+                    res.status(500);
+                    res.render('error', {error: err}).send("Error can't find user")
+                }
+            })
+        })
+        .put('/api/video', async (req,res)=>{
+            const existingUser= await User.findById(req.body.id, (err,user)=>{
+                if(err){ res.send('Error')}
+                if (user) {
+                    const video = user
+                    .binder_arr_obj.id(req.body.binderID)
+                    .tab_arr_obj.id(req.body.tabID)  
+                    .page_arr_obj.id(req.body.pageID)
+                    .video.id(req.body.videoID)
+                    if(video){
+                        video.vid_url= req.body.vid_url || video.vid_url;
+                        video.videoInfo= req.body.videoInfo || video.videoInfo;
+                        user.save();
+                        res.send(user);
+                    }else{res.send('wrong path')}
+                    
+                }else {
+                    res.status(500);
+                    res.render('error', {error: err}).send("Error can't find user")
+                }
+            })
+        });
 
 
 }

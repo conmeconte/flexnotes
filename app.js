@@ -4,7 +4,6 @@ const cookieSession = require('cookie-session');
 const passport      = require('passport');
 const bodyParser    = require('body-parser');
 const keys          = require('./config/keys');
-const autoIncrement= require('mongoose-auto-increment');
 
 
 // let dummyData = require('./dummyData/backEndDummyData');
