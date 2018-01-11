@@ -3,6 +3,8 @@ import '../assets/css/video.css'
 import $ from 'jquery';
 import Results from './results';
 import VideoContainer from './video-container';
+import { getResultStyles, getOpacityDisplay, toggleResults } from '../actions';
+import { connect } from 'react-redux';
 
 // const BASE_URL = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true';
 const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
@@ -18,17 +20,8 @@ class Video extends Component {
         this.OAUTH2_CLIENT_ID = '921823203830-e91j7vj9gqr6ftkvcaot3iffhcii7vtp.apps.googleusercontent.com';
         this.OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
         this.state = {
-            videos: [],
-            resultsStyles: {
-                width: '65%',
-                display: 'block'
-            },
-            opacityDisplay: {
-                display: 'block'
-            },
-            toggleResults: true
+            videos: []
         }
-        this.toggleResultsMenu = this.toggleResultsMenu.bind(this);
     }
     componentDidMount() {
         this.loadYouTubeApi();
@@ -116,46 +109,28 @@ class Video extends Component {
             });
         });
     }
-    toggleResultsMenu() {
-        const { toggleResults } = this.state; 
-        let { width, display } = this.state.resultsStyles;
-        let { opacityDisplay } = this.state.opacityDisplay
-        if (toggleResults) {
-            width = "0%";
-            display = "none";
-            opacityDisplay = "none";
-        } else {
-            width = "65%";
-            display = "block";
-            opacityDisplay = "block";
-        }
-        this.setState({
-            toggleResults: !toggleResults,
-            resultsStyles: {
-                width: width,
-                display: display,
-            },
-            opacityDisplay: {
-                display: opacityDisplay
-            }
-        });
-    }
     render() {
-        const { videos, resultsStyles, opacityDisplay } = this.state;
+        const { videos } = this.state;
         return (
             <div className="main">
-                <div style={opacityDisplay} className="opacity"></div>
-                <button id="search" className="btn btn-primary" onClick={this.toggleResultsMenu} ><span className="search glyphicon glyphicon-chevron-left"></span></button>
-                <div style={resultsStyles}  className="results-container sidebar col-xs-4 pull-right">
+                <div style={this.props.opacityContainer} className="opacity"></div>
+                <button id="search" className="btn btn-primary" onClick={ () => {
+                    this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
+                    this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
+                }}><span className="search glyphicon glyphicon-chevron-left"></span></button>
+                <div style={this.props.resultsStyles}  className="results-container sidebar col-xs-4 pull-right">
                     <div id="search-input-container" className="search-button-input input-group col-xs-12">
                         <input id="query" className="form-control" type="text" placeholder="Search..." />
                         <span className="input-group-btn">
                             <button id="search-button" type="button" className="btn btn-primary"
                                 onClick={this.search}><span className="glyphicon glyphicon-search"></span></button>
-                            <button className="btn btn-danger" onClick={this.toggleResultsMenu}><span className="glyphicon glyphicon-chevron-right"></span></button>
+                            <button className="btn btn-danger" onClick={ () => {
+                    this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
+                    this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
+                }}><span className="glyphicon glyphicon-chevron-right"></span></button>
                         </span>
                     </div>
-                    <Results results={videos} />
+                    <Results results={ videos } />
                 </div>
                 <div id="video-wrapper" className="video-wrapper col-xs-11 pull-left">
                     <VideoContainer />
@@ -165,4 +140,13 @@ class Video extends Component {
     }
 }
 
-export default Video;
+function mapStateToProps (state) {
+    return {
+        playlist: state.video.videos,
+        resultsStyles: state.video.resultsStyles,
+        opacityContainer: state.video.opacityDisplay,
+        toggleResultsBool: state.video.toggleResults
+    }
+}
+
+export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults })(Video);
