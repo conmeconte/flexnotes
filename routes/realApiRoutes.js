@@ -245,14 +245,14 @@ module.exports = (app, db) => {
             })
         })
         .put('/api/page', async (req,res)=>{
-            const existingUser= await User.findById('5a569b34da2d998e141c38b2',function(err,user){
+            const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
                     const page = user
-                    .binder_arr_obj.id('5a569b34da2d998e141c38ad') //req.body.binder_arr_obj_id
-                    .tab_arr_obj.id('5a569b34da2d998e141c38ae')  //req.body.tab_arr_obj_id
-                    .page_arr_obj.id('5a569b34da2d998e141c38af'); //req.body.page_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binder_arr_obj_id
+                    .tab_arr_obj.id(req.body.tabID)  //req.body.tab_arr_obj_id
+                    .page_arr_obj.id(req.body.pageID); //req.body.page_arr_obj_id
                     
                     page.page_color = req.body.page_color || page.page_color;
                     page.page_name = req.body.page_name || page.page_name;
