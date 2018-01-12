@@ -7,25 +7,23 @@ let fakeData =
     binder_arr_obj: [
       {
         _id: { $oid: 'someRandomNumberMongoDBAssings' },
-        binder_id: 1,
+        binder_count: 1,
         binder_name: 'Binder1',
         binder_color: 'red',
         tab_arr_obj: [
           {
             _id: { $oid: 'someRandomNumberMongoDBAssings' },
-            tab_id: 1,
+            tab_count:1,
             tab_color: 'blue',
             tab_name: 'Tab1',
-            tab_url: '/tab1',
             page_arr_obj: [
               {
               page_arr_obj :[ 
                 {
-                  page_id: 1,
+                  page_count: 1,
                   page_color: 'white',
                   page_name: 'Page1',
                   page_date: '',
-                  page_url: '/page1',
                   calendar : {
                       cal_url : String
                   },

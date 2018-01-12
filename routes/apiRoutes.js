@@ -117,7 +117,6 @@ module.exports = (app, dummyData) => {
     // For Tab//
     app.get('/api/tab', requireLogin, async (req, res) => {
         //give tab data
-        // www.chung.com/user/1/binder/4/tab/3
     });
     app.post('/api/tab', async (req, res) => {
         //create new tab in user

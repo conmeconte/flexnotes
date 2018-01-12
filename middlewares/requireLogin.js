@@ -2,7 +2,7 @@ module.exports= (req, res, next) => {
  if(!req.user){
     //  return randomBytes.status(401).send({error: "you must log in!"});
     console.log('not logged in')
-    res.redirect('/')
+    res.redirect('/');
  }
 
  next();

@@ -8,9 +8,8 @@ const videoSchemaNew = require('./Video');
 const pageSchemaNew = new Schema({
     page_color : String,
     page_date : {type: Date, default:Date.now},
-    page_id : { type:String, default:"P-01"},
+    page_count : { type:Number, default:1},
     page_name : { type:String, default:"Introduction to FlexNotes"},
-    page_url : String,
     calendar : {
         cal_url : String
     },
