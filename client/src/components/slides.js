@@ -19,6 +19,7 @@ class Slides extends Component {
         axios.get(URL).then((resp) => {
             const slidesURL = resp.data.binder_arr_obj["0"].tab_arr_obj["0"].page_arr_obj["0"].lecture_slides.lec_id;
             // console.log('SLIDES GET REQ: ', slidesURL);
+            console.log("SLIDES GET REQ: ", )
             //Make the check more valid? But if I PUT request valid data, is it necessary? I will be checking for empty str right?
             if (!slidesURL) {
                 this.setState({
@@ -75,7 +76,10 @@ class Slides extends Component {
             lecture_slides: {
                 lec_id: this.state.input
 
-            }
+            },
+            binderID: 'sx',
+            tabID: 'some number',
+            pageID: 'some pageID number'
         }).then((resp) => {
             console.log(`SLIDES PUT REQ:`, resp);
         });
