@@ -16,7 +16,6 @@ const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
-
 const existingValue = JSON.parse(localStorage.getItem('content'));
 const initialValue = Value.fromJSON(existingValue || {
     document: {
@@ -109,13 +108,13 @@ class Notes extends Component {
 
     // AXIOS CALL
 
-    componentWillMount(){
-        const url = '/api/dummyData';
-
-        axios.get(url).then((resp) => {
-            console.log('Resp:', resp);
-        });
-    }
+    // componentWillMount(){
+    //     const url = '/api/dummyData';
+    //
+    //     axios.get(url).then((resp) => {
+    //         console.log('Danika:', resp);
+    //     });
+    // }
 
     // RICH TEXT TOOLBAR
 
@@ -433,7 +432,7 @@ class Notes extends Component {
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
-                    <button>Save</button>
+                    <button className="saveNotes">Save Changes</button>
                 </div>
 
             </div>
@@ -448,7 +447,7 @@ class Notes extends Component {
                 {this.toolbar()}
                 <Editor
                     className="editor"
-                    style="overflow: scroll"
+                    style={{overflowY: scroll}}
                     placeholder="Enter notes..."
                     value={this.state.value}
                     onChange={this.onChange}

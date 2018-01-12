@@ -31,15 +31,11 @@ module.exports = (app, dummyData) => {
 
     // })
     app.post('/api/dummyData', (req, res) => {
-
-
         res.send(dummyData);
     })
 
     app.get('/api', requireLogin, async (req, res) => {
         //pull entire user obj
-
-
     })
     // For Binder //
     app
