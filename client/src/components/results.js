@@ -1,28 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addToPlayList, playVideo } from '../actions/index';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const videoData = {
-    vidDimensions: {
-        width: "",
-        height: ""
-    },
-    items: []
-};
-
 class Results extends Component {
-    constructor (props) {
-        super(props);
-        this.play = this.play.bind(this);
-    }
-    play (link) {
-        console.log(link);
-        var iframe = document.createElement("iframe");
-        iframe.src = link;
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
-        document.querySelector(".video-container").innerText = "";
-        document.querySelector(".video-container").append(iframe);
-    }
     addToPlayList (obj) {
         videoData.items.push(obj);
         console.log(videoData);
@@ -38,8 +19,8 @@ class Results extends Component {
                         <li className="video-items">{item.videoTitle}</li>
                     </div>
                     <div className="col-xs-4">
-                        <button className="btn-sm btn-success pull-right" onClick={ () => { this.addToPlayList(item) } }><span className="glyphicon glyphicon-plus"></span></button>
-                        <button className="btn-sm btn-primary pull-right" onClick={ () => { this.play(item.url) }}><span className="glyphicon glyphicon-play"></span></button>
+                        <button className="btn-sm btn-success pull-right" onClick={ () => { this.props.addToPlayList(item) } }><span className="glyphicon glyphicon-plus"></span></button>
+                        <button className="btn-sm btn-primary pull-right" onClick={ () => { this.props.playVideo(item.url) }}><span className="glyphicon glyphicon-play"></span></button>
                     </div>
                 </li>
             );
@@ -50,4 +31,12 @@ class Results extends Component {
 
     }
 }
-export default Results;
+
+function mapStateToProps (state) {
+    return {
+        playlist: state.results.playlist,
+        url: state.results.url
+    }
+}
+
+export default connect(mapStateToProps, { addToPlayList, playVideo })(Results);
