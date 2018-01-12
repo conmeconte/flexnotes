@@ -4,6 +4,7 @@ import videoReducer from './videoReducer';
 import resultsReducer from './resultsReducer';
 import binderarrayReducer from './binderArrayReducer';
 import binderReducer from './binderReducer';
+import interfaceReducer from './interfaceReducer';
 
 
 
@@ -12,5 +13,6 @@ export default combineReducers({
     video: videoReducer,
     results: resultsReducer, 
     binderArray: binderarrayReducer,
-    binder: binderReducer
+    binder: binderReducer,
+    interface: interfaceReducer
 })
