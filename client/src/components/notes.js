@@ -16,7 +16,6 @@ const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
-
 const existingValue = JSON.parse(localStorage.getItem('content'));
 const initialValue = Value.fromJSON(existingValue || {
     document: {
@@ -109,13 +108,13 @@ class Notes extends Component {
 
     // AXIOS CALL
 
-    componentWillMount(){
-        const url = '/api/dummyData';
-
-        axios.get(url).then((resp) => {
-            console.log('Resp:', resp);
-        });
-    }
+    // componentWillMount(){
+    //     const url = '/api/dummyData';
+    //
+    //     axios.get(url).then((resp) => {
+    //         console.log('Danika:', resp);
+    //     });
+    // }
 
     // RICH TEXT TOOLBAR
 
@@ -162,6 +161,7 @@ class Notes extends Component {
         const change = value.change();
         const { document } = value;
 
+        // Handle everything but list buttons
         if (type !== 'bulleted-list' && type !== 'numbered-list') {
             const isActive = this.hasBlock(type);
             const isList = this.hasBlock('list-item');
@@ -175,7 +175,10 @@ class Notes extends Component {
                 change
                     .setBlock(isActive ? DEFAULT_NODE : type)
             }
-        } else {
+        }
+
+        // Handle the extra wrapping required for list buttons.
+        else {
             const isList = this.hasBlock('list-item');
             const isType = value.blocks.some((block) => {
                 return !!document.getClosest(block.key, parent => parent.type === type)
@@ -404,6 +407,7 @@ class Notes extends Component {
 
     toolbar = () => {
         return (
+
             <div className="toolbar">
                 <ToolbarButton icon="undo" onMouseDown={this.onClickUndo} />
                 <ToolbarButton icon="redo" onMouseDown={this.onClickRedo} />
@@ -428,9 +432,11 @@ class Notes extends Component {
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
+                    <button className="saveNotes">Save Changes</button>
                 </div>
 
             </div>
+
         )
     };
 
@@ -441,7 +447,7 @@ class Notes extends Component {
                 {this.toolbar()}
                 <Editor
                     className="editor"
-                    style="overflow: scroll"
+                    style={{overflowY: scroll}}
                     placeholder="Enter notes..."
                     value={this.state.value}
                     onChange={this.onChange}
