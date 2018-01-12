@@ -78,9 +78,11 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
+
+        console.log("dashboard did mount");
         this.props.binderArray(this.state.fake_data.binder_arr_obj);
         this.props.selectBinder(this.state.fake_data.binder_arr_obj[0]);
-        //console.log(this.state.fake_data.binder_arr_obj[0]);
+        
         this.props.binderUpdate(this.state.fake_data.binder_arr_obj[0]._id.$oid);
         this.props.tabUpdate(this.state.fake_data.binder_arr_obj[0].tab_arr_obj[0]._id.$oid);
         this.props.pageUpdate(this.state.fake_data.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0]._id.$oid);
