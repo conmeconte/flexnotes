@@ -145,7 +145,7 @@ function mapStateToProps (state) {
         playlist: state.video.videos,
         resultsStyles: state.video.resultsStyles,
         opacityContainer: state.video.opacityDisplay,
-        toggleResultsBool: state.video.toggleResults
+        toggleResultsBool: state.video.toggleResults,
     }
 }
 

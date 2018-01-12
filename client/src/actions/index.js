@@ -65,15 +65,13 @@ export function playVideo () {
     }
 }
 
-
 export function grabVideoUrl () {
-    
     return {
         type: types.GRAB_VIDEO_URL,
         payload: videoLink
     }
 }
-
+// END OF VIDEO ACTION CREATORS
 export function binderArray(binderArray){
     return{
         type: types.BINDER_ARRAY,
