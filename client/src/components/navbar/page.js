@@ -124,7 +124,7 @@ class Page extends Component {
     render(){
 
         const {tabObject, binderUrl, editable} = this.state;
-        console.log('Props in Page:',this.props);
+        //console.log('Props in Page:',this.props);
         const { page_arr_obj } = this.props.tabObj;
         
         //console.log('BinderUrl in Tab:',binderUrl);
@@ -137,12 +137,12 @@ class Page extends Component {
             page_link = page_arr_obj.map((item, index) => {
                 //console.log('editable map:', item);
                 return (
-                    <li key={item.page_id}>
+                    <li key={index}>
                         <input 
                             className="edit_input"
                             ref='textInput'
                             type='text'
-                            onChange={(e)=>this.pageTextChanged(e, item.page_id)}
+                            onChange={(e)=>this.pageTextChanged(e, item.page_count)}
                             // onBlur={this.notEditable}
                            // onKeyPress={this.keyPressed}
                             value={item.page_name}
@@ -156,10 +156,10 @@ class Page extends Component {
             });
         } else {
             page_link = page_arr_obj.map((item, index) => {
-                //console.log('map:', item);
-                let page_url = '/page' + item.page_id;
+                //console.log('page map:', item);
+                let page_url = '/' + item._id.$oid;
                 return (
-                    <li key={item.page_id}><Link to={'/main'+this.props.binder_url + this.props.tab_url + page_url} style={{ textDecoration: 'none' }}>
+                    <li key={index}><Link to={'/main'+this.props.binder_url + this.props.tab_url + page_url} style={{ textDecoration: 'none' }}>
                     <div className="pageDiv">
                         {item.page_name}
                     </div></Link></li>
@@ -169,9 +169,9 @@ class Page extends Component {
 
     
         const page_route = page_arr_obj.map((item, index) => {
-            let page_url = '/page' + item.page_id;
+            let page_url = '/' + item._id.$oid;
             return(
-                <Route key={item.page_id} path={'/main'+this.props.binder_url + this.props.tab_url + page_url} render={()=> 
+                <Route key={index} path={'/main'+this.props.binder_url + this.props.tab_url + page_url} render={()=> 
                     <PageOld/>
                 }
                 />
@@ -204,7 +204,7 @@ class Page extends Component {
 }
 
 function mapStateToProps(state){
-    console.log('page mstp', state);
+    //console.log('page mstp', state);
     return {
         binderObj: state.binder.binderObj
     }
