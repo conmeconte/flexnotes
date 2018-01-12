@@ -16,27 +16,8 @@ const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
-const existingValue = JSON.parse(localStorage.getItem('content'));
-const initialValue = Value.fromJSON(existingValue || {
-    document: {
-        nodes: [
-            {
-                kind: 'block',
-                type: 'paragraph',
-                nodes: [
-                    {
-                        kind: 'text',
-                        leaves: [
-                            {
-                                text: 'A line of text in a paragraph.'
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    }
-});
+const savedNotes = JSON.parse(localStorage.getItem('content'));
+const initialValue = Value.fromJSON(savedNotes);
 
 // UNDO AND REDO
 
