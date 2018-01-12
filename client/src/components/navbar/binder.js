@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { binderArray, selectBinder } from '../../actions';
+import { binderArray, selectBinder, binderUpdate } from '../../actions';
 
 
 import Tab from './tab';
@@ -14,172 +14,66 @@ class Binder extends Component {
 
         this.state = {
             fake_data:  {
-                _id: { $oid: 'someRandomNumberMongoDBAssings' },
-                googleId: 103970352561814947806,
-                userName: 'JOhn Hong',
-                binder_arr_obj: [
-                  {
-                    _id: { $oid: 'someRandomNumberMongoDBAssings' },
-                    binder_id: 1,
-                    binder_name: 'Binder1',
-                    binder_color: 'red',
-                    tab_arr_obj: [
-                      {
-                        tab_id: 1,
-                        tab_color: 'blue',
-                        tab_name: 'Tab1',
-                        tab_url: '/tab1',
-                        page_arr_obj: [
-                          {
-                            page_id: 1,
-                            page_color: 'white',
-                            page_name: 'Page1',
-                            page_date: '',
-                            page_url: '/page1',
-                            calendar: {
-                              cal_url: String
-                            },
-                            lecture_slides: {
-                              lec_id: 'https://docs.google.com/presentation/d/1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE/embed'
-                            },
-                            notes: {
-                              document: {
-                                nodes: [
-                                  {
-                                    kind: "block",
-                                    type: "paragraph",
-                                    nodes: [
-                                      {
-                                        kind: "text",
-                                        leaves: [
-                                          {
-                                            text: "This is editable "
-                                          },
-                                          {
-                                            text: "rich",
-                                            marks: [
-                                              {
-                                                type: "bold"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            text: " text, "
-                                          },
-                                          {
-                                            text: "much",
-                                            marks: [
-                                              {
-                                                type: "italic"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            text: " better than a "
-                                          },
-                                          {
-                                            text: "<textarea>",
-                                            marks: [
-                                              {
-                                                type: "code"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            text: "!"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    kind: "block",
-                                    type: "paragraph",
-                                    nodes: [
-                                      {
-                                        kind: "text",
-                                        leaves: [
-                                          {
-                                            text: "Since it's rich text, you can do things like turn a selection of text "
-                                          },
-                                          {
-                                            text: "bold",
-                                            marks: [
-                                              {
-                                                type: "bold"
-                                              }
-                                            ]
-                                          }, {
-                                            text: ", or add a semantically rendered block quote in the middle of the page, like this:"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    kind: "block",
-                                    type: "block-quote",
-                                    nodes: [
-                                      {
-                                        kind: "text",
-                                        leaves: [
-                                          {
-                                            text: "A wise quote."
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    kind: "block",
-                                    type: "paragraph",
-                                    nodes: [
-                                      {
-                                        kind: "text",
-                                        leaves: [
-                                          {
-                                            text: "Try it out for yourself!"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            },
-            
-                            video: [
-                              {
-                                _id: { $oid: 'someRandomNumberMongoDBAssings' },
-                                videoInfo: "No Info",
-                                videoId: "Ukg_U3CnJWI"
-                              }
-                            ],
-                            panel_dimensions: {
-                              lecture_Panel: {
-                                width: String,
-                                height: String
-                              },
-                              video_Panel: {
-                                width: String,
-                                height: String
-                              },
-                              note_Panel: {
-                                width: String,
-                                height: String
-                              },
-                              meister_Panel: {
-                                width: String,
-                                height: String
-                              }
-                            }
-                          }
-                        ]
-                      }
-                    ],
-                  }
-                ]
+              "_id": {
+                  "$oid": "5a57bd348b53621f100237eb"
               },
+              "binder_arr_obj": [
+                  {
+                      "binder_count": 1,
+                      "binder_name": "FlexNotes!",
+                      "tab_arr_obj": [
+                          {
+                              "tab_name": "This is a tab",
+                              "tab_count": 1,
+                              "page_arr_obj": [
+                                  {
+                                      "page_date": {
+                                          "$date": "2018-01-11T19:38:28.391Z"
+                                      },
+                                      "page_count": 1,
+                                      "page_name": "Introduction to FlexNotes",
+                                      "notes": {
+                                          "document": {
+                                              "nodes": [
+                                                  {
+                                                      "kind": "block",
+                                                      "type": "paragraph",
+                                                      "nodes": [],
+                                                      "_id": {
+                                                          "$oid": "5a57bd348b53621f100237ea"
+                                                      }
+                                                  }
+                                              ]
+                                          }
+                                      },
+                                      "video": [
+                                          {
+                                              "_id": {
+                                                  "$oid": "5a57bd348b53621f100237e9"
+                                              },
+                                              "videoInfo": "No Info"
+                                          }
+                                      ],
+                                      "_id": {
+                                          "$oid": "5a57bd348b53621f100237e8"
+                                      },
+                                      "page_color": "orange"
+                                  }
+                              ],
+                              "_id": {
+                                  "$oid": "5a57bd348b53621f100237e7"
+                              }
+                          }
+                      ],
+                      "_id": {
+                          "$oid": "5a57bd348b53621f100237e6"
+                      }
+                  }
+              ],
+              "googleId": "103970352561814947806",
+              "userName": "JOhn Hong",
+              "__v": 0
+          },
 
             binder_color_arr: [
                 '#000080', '#808000', '#800000', '#a0522d', '#8a2be2'
@@ -215,8 +109,8 @@ class Binder extends Component {
     componentDidMount(){
 
         //console.log("Fake Data: ", this.state.fake_data.binder_arr_obj);
-        this.props.binderArray(this.state.fake_data.binder_arr_obj);
-
+        //this.props.binderArray(this.state.fake_data.binder_arr_obj);
+        this.props.selectBinder(this.props.binderArr[0]);
     }
 
     addBinder() {
@@ -472,22 +366,22 @@ class Binder extends Component {
 
     binderLinkActive(){
         //console.log('binderlinkactive color:', color);
-        this.setState({
-            active: true
-        });
+        // this.setState({
+        //     active: true
+        // });
     }
 
     binderLinkNotActive(){
         //console.log('binderlinkactive color:', color);
-        this.setState({
-            active: false
-        });
+        // this.setState({
+        //     active: false
+        // });
     }
 
-    handleClick(binderObj){
-        this.props.selectBinder(binderObj);
-
-        console.log("binderObj", binderObj);
+    handleClick(binder_id){
+        //this.props.selectBinder(binderObj);
+        //this.props.binderUpdate(binder_id);
+        //console.log("binderObj", binderObj);
     }
     /*
     
@@ -502,7 +396,7 @@ class Binder extends Component {
     */
     render() {
         const { editable, active } = this.state;
-        console.log("Binder props:", this.props);
+        //console.log("Binder props:", this.props);
         //console.log('Render binderArray:', binder_array);
         let binder_link = [];
         //map binders
@@ -510,12 +404,12 @@ class Binder extends Component {
             binder_link = this.props.binderArr.map((item, index) => {
                 //console.log('editable map:', item);
                 return (
-                    <li key={item.binder_id}>
+                    <li key={index}>
                         <input
                             className="edit_input"
                             ref='textInput'
                             type='text'
-                            onChange={(e) => this.textChanged(e, item.binder_id)}
+                            onChange={(e) => this.textChanged(e, item.binder_count)}
                             // onBlur={this.notEditable}
                             // onKeyPress={this.keyPressed}
                             value={item.binder_name}
@@ -531,7 +425,7 @@ class Binder extends Component {
         } else {
             binder_link = this.props.binderArr.map((item, index) => {
 
-                console.log('Binder map:', item);
+                //console.log('Binder map:', item);
                 var binderStyle = {
                     backgroundColor: item.binder_color
                 }
@@ -540,11 +434,12 @@ class Binder extends Component {
                     backgroundColor: 'inherit'
                 }
 
-                let binder_url = '/binder' + item.binder_id;
+                let binder_url = '/' + item._id.$oid;
+                //console.log('binder id: ', item._id.$oid);
                 return (
-                    <li key={item.binder_id}>
-                        <Link to={this.props.match.path + binder_url} style={{ textDecoration: 'none' }} >
-                            <div className="binderDiv" onClick={this.handleClick(item)} style={active ? binderStyle : binderStyle2} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
+                    <li key={index}>
+                        <Link to={'/main' + binder_url} style={{ textDecoration: 'none' }} >
+                            <div className="binderDiv" onClick={this.handleClick(item._id.$oid)} style={active ? binderStyle : binderStyle2} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
                                 {item.binder_name}
                             </div>
                         </Link>
@@ -554,11 +449,12 @@ class Binder extends Component {
         }
 
         const binder_route = this.props.binderArr.map((item, index) => {
-            let binder_url = '/binder' + item.binder_id;
+            let binder_url = '/' + item._id.$oid;
+            //console.log('Route binder id: ', binder_url);
             //console.log("binder_url", binder_url);
             return (
-                <Route key={item.binder_id} path={this.props.match.path + binder_url} render={() =>
-                    <Tab binder={item} />}
+                <Route key={index} path={'/main'+ binder_url } render={() =>
+                    <Tab binder_url={binder_url} />}
                 />
             );
         });
@@ -590,12 +486,12 @@ class Binder extends Component {
     }
 }
     function mapStateToProps(state){
-        console.log('binder mstp', state);
+        //console.log('binder mstp', state);
         return{
             binderArr: state.binderArray.binderArr
         }
     }
 
-    export default withRouter(connect(mapStateToProps,{ binderArray, selectBinder })(Binder));
+    export default withRouter(connect(mapStateToProps,{ binderArray, selectBinder, binderUpdate })(Binder));
 
 

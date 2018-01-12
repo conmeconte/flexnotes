@@ -22,10 +22,10 @@ class Tab extends Component {
         this.notEditTabs = this.notEditTabs.bind(this);
     }
 
-    // componentWillMount(){
-    //     console.log("should component update");
-    //     this.props.selectBinder(this.props.binder);
-    // }
+    componentWillMount(){
+        //console.log("should component update");
+        //this.props.selectBinder(this.props.binder);
+    }
 
     addTab(){
         console.log('addTab clicked');
@@ -142,9 +142,10 @@ class Tab extends Component {
     render(){
         //this.props.selectBinder(this.props.binderObj);
         const {editable} = this.state;
-        console.log('props in tab:', this.props);
-        //const{ binder_url} = this.props;
-        const{ tab_arr_obj} = this.props.binder;
+
+        //console.log('props in tab:', this.props);
+        const{ binder_url} = this.props;
+        const{ tab_arr_obj} = this.props.binderObj;
         //console.log('binder tab_arr_obj', tab_arr_obj);
         //console.log('binder tab_arr_obj', binder_url);
         
@@ -153,12 +154,12 @@ class Tab extends Component {
             tab_link = tab_arr_obj.map((item, index) => {
                 //console.log('editable map:', item);
                 return (
-                    <li key={item.tab_id}>
+                    <li key={index}>
                         <input 
                             className="edit_input"
                             ref='textInput'
                             type='text'
-                            onChange={(e)=>this.tabTextChanged(e, item.tab_id)}
+                            onChange={(e)=>this.tabTextChanged(e, item.tab_count)}
                             // onBlur={this.notEditable}
                            // onKeyPress={this.keyPressed}
                             value={item.tab_name}
@@ -176,14 +177,15 @@ class Tab extends Component {
         } else {
 
             tab_link = tab_arr_obj.map((item, index) => {
-                let tab_url = '/tab' + item.tab_id;
-                //console.log('map:', item);
+                let tab_url = '/' + item._id.$oid;
+                //console.log('tab map:', item);
                 var tabStyle ={
                     borderLeft: '12px solid '+item.tab_color
                 }
 
                     return (
-                        <li key={item.tab_id}><Link to={this.props.match.path + tab_url} style={{ textDecoration: 'none' }}>
+                        <li key={index}><Link to={'/main'+this.props.binder_url + tab_url} style={{ textDecoration: 'none' }}>
+
                             <div className="tabDiv" style={tabStyle}>
                                 {item.tab_name}
                             </div>
@@ -193,10 +195,12 @@ class Tab extends Component {
         }
     
         const tab_route = tab_arr_obj.map((item, index) => {
-            let tab_url = '/tab' + item.tab_id;
+            let tab_url = '/' + item._id.$oid;
             return(
-                <Route key={item.tab_id} path={this.props.match.path + tab_url} render={()=> 
-                    <Page tabObj={item}/>
+
+                <Route key={index} path={'/main'+this.props.binder_url + tab_url} render={()=> 
+                    <Page tabObj={item} binder_url={this.props.binder_url} tab_url={tab_url}/>
+
                 }
                 />
             );

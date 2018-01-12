@@ -88,4 +88,24 @@ export function selectBinder(binderObj){
     }
 }
 
+export function binderUpdate(binder_id){
+    return{
+        type: types.BINDER_UPDATE,
+        payload: binder_id
+    }
+}
+
+export function tabUpdate(tab_id){
+    return{
+        type: types.TAB_UPDATE,
+        payload: tab_id
+    }
+}
+
+export function pageUpdate(page_id){
+    return{
+        type: types.PAGE_UPDATE,
+        payload: page_id
+    }
+}
 
