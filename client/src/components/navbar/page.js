@@ -4,6 +4,7 @@ import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectBinder } from '../../actions';
 
+import Panel from '../panel';
 import PageOld from './page_old';
 
 class Page extends Component {

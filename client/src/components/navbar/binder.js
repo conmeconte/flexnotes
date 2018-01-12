@@ -122,13 +122,167 @@ class Binder extends Component {
         let length = binder_arr_obj.length;
         if (length === 0) {
             //new binder when there are no binders
-            let new_binder_obj = {
+            let new_binder_obj =                  
+            {
+                _id: { $oid: 'someRandomNumberMongoDBAssings' },
                 binder_id: 1,
                 binder_name: 'Binder1',
-                binder_color: binder_color_arr[0],
-                binder_url: '/binder1',
-                tab_arr_obj: new_tab_arr
-            }
+                binder_color: 'red',
+                tab_arr_obj: [
+                  {
+                    tab_id: 1,
+                    tab_color: 'blue',
+                    tab_name: 'Tab1',
+                    tab_url: '/tab1',
+                    page_arr_obj: [
+                      {
+                        page_id: 1,
+                        page_color: 'white',
+                        page_name: 'Page1',
+                        page_date: '',
+                        page_url: '/page1',
+                        calendar: {
+                          cal_url: String
+                        },
+                        lecture_slides: {
+                          lec_id: 'https://docs.google.com/presentation/d/1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE/embed'
+                        },
+                        notes: {
+                          document: {
+                            nodes: [
+                              {
+                                kind: "block",
+                                type: "paragraph",
+                                nodes: [
+                                  {
+                                    kind: "text",
+                                    leaves: [
+                                      {
+                                        text: "This is editable "
+                                      },
+                                      {
+                                        text: "rich",
+                                        marks: [
+                                          {
+                                            type: "bold"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        text: " text, "
+                                      },
+                                      {
+                                        text: "much",
+                                        marks: [
+                                          {
+                                            type: "italic"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        text: " better than a "
+                                      },
+                                      {
+                                        text: "<textarea>",
+                                        marks: [
+                                          {
+                                            type: "code"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        text: "!"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                kind: "block",
+                                type: "paragraph",
+                                nodes: [
+                                  {
+                                    kind: "text",
+                                    leaves: [
+                                      {
+                                        text: "Since it's rich text, you can do things like turn a selection of text "
+                                      },
+                                      {
+                                        text: "bold",
+                                        marks: [
+                                          {
+                                            type: "bold"
+                                          }
+                                        ]
+                                      }, {
+                                        text: ", or add a semantically rendered block quote in the middle of the page, like this:"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                kind: "block",
+                                type: "block-quote",
+                                nodes: [
+                                  {
+                                    kind: "text",
+                                    leaves: [
+                                      {
+                                        text: "A wise quote."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                kind: "block",
+                                type: "paragraph",
+                                nodes: [
+                                  {
+                                    kind: "text",
+                                    leaves: [
+                                      {
+                                        text: "Try it out for yourself!"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+        
+                        video: [
+                          {
+                            _id: { $oid: 'someRandomNumberMongoDBAssings' },
+                            videoInfo: "No Info",
+                            videoId: "Ukg_U3CnJWI"
+                          }
+                        ],
+                        panel_dimensions: {
+                          lecture_Panel: {
+                            width: String,
+                            height: String
+                          },
+                          video_Panel: {
+                            width: String,
+                            height: String
+                          },
+                          note_Panel: {
+                            width: String,
+                            height: String
+                          },
+                          meister_Panel: {
+                            width: String,
+                            height: String
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+              }
 
             this.setState({
                 binder_arr_obj: [new_binder_obj]
@@ -293,10 +447,6 @@ class Binder extends Component {
                 );
             });
         }
-
-
-
-
 
         const binder_route = this.props.binderArr.map((item, index) => {
             let binder_url = '/' + item._id.$oid;

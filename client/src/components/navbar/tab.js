@@ -142,6 +142,7 @@ class Tab extends Component {
     render(){
         //this.props.selectBinder(this.props.binderObj);
         const {editable} = this.state;
+
         //console.log('props in tab:', this.props);
         const{ binder_url} = this.props;
         const{ tab_arr_obj} = this.props.binderObj;
@@ -184,6 +185,7 @@ class Tab extends Component {
 
                     return (
                         <li key={index}><Link to={'/main'+this.props.binder_url + tab_url} style={{ textDecoration: 'none' }}>
+
                             <div className="tabDiv" style={tabStyle}>
                                 {item.tab_name}
                             </div>
@@ -195,8 +197,10 @@ class Tab extends Component {
         const tab_route = tab_arr_obj.map((item, index) => {
             let tab_url = '/' + item._id.$oid;
             return(
+
                 <Route key={index} path={'/main'+this.props.binder_url + tab_url} render={()=> 
                     <Page tabObj={item} binder_url={this.props.binder_url} tab_url={tab_url}/>
+
                 }
                 />
             );
