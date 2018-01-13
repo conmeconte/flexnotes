@@ -74,7 +74,7 @@ body {
 .welcome {
     float: left;
     color: #31C3E7;
-    margin: 0 5px 0 0;
+    margin: 0 0 0 10px;
     padding: 0 10px;
     line-height: 40px;
 }
