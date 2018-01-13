@@ -15,16 +15,18 @@ module.exports = (app) => {
 
     app.get('/api', async (req, res) => {
         //pull entire user obj
-        User.findById(req.user.id, (err,user)=>{
-        // User.findById(req.user.id, (err,user)=>{
-            res.send(user);
+        const existingUser= await User.findById("5a5a63116f98c0bd996baad5",(err,user)=>{
+            if(err){console.log('error is ', err)};
+            const testingUserpageInfo=user.binder_arr_obj.id('5a5a63116f98c0bd996baad0').tab_arr_obj.id('5a5a63116f98c0bd996baad1')
+            .page_arr_obj.id('5a5a63116f98c0bd996baad2')
+            console.log('user is ', testingUserpageInfo);
         })
 
     })
     // For Binder //
     app
         .get('/api/binder', async (req, res) => {
-            //give binder data
+            //give binder data 
             //userId accessible via req.param.userId?
             const existingUser= await User.findById(req.user.id, function (err, user){
             // const existingUser= await User.findById(req.user.id, function (err, user){
@@ -290,12 +292,13 @@ module.exports = (app) => {
                     .tab_arr_obj.id(req.body.tabID)  
                     .page_arr_obj.id(req.body.pageID)
                     if(page){
-                        page.video.push(new Video({vid_url: req.body.vid_url, videoInfo: req.body.videoInfo}));
-
+                        
+                        page.video[0]=new Video({videoId: req.body.video.videoId, videoURL: req.body.video.videoUrl, videoTitle: req.body.video.videoTitle});
 
                         user.save();
+                        console.log(user);
                         res.send(user);
-                    }else{res.send('wrong path')}
+                    }else{res.send('wrong path')} 
                     
                 }else {
                 res.send("Error can't find user")

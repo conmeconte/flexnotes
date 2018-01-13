@@ -95,6 +95,8 @@ export function toggleResults(bool) {
     }
 }
 export function addToPlaylist(videoUrl, interfaceObj) {
+    console.log('hahahahaha ', videoUrl);
+
     axios.post('/api/video', {
         video: {
             videoTitle: 'ReactJS Crash Course',
@@ -105,7 +107,6 @@ export function addToPlaylist(videoUrl, interfaceObj) {
         tabID: interfaceObj.tab_id,
         pageID: interfaceObj.page_id
     });
-    console.log("ADD TO PLAYLIST FUNCTION: ", videoUrl);
     return {
         type: types.ADD_TO_PLAYLIST,
         payload: videoUrl
