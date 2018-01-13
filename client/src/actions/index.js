@@ -54,16 +54,16 @@ export function toggleResults (bool) {
         payload: toggleResults
     }
 }
-export function addToPlaylist (videoUrl) {
+export function addToPlaylist (videoUrl, interfaceObj) {
     axios.post('/api/video', {
         video: {
             videoTitle: 'ReactJS Crash Course',
             videoId: 'A71aqufiNtQ',
             videoUrl: videoUrl
         },
-        binderID: '5a57bd348b53621f100237e6',
-        tabID: '5a57bd348b53621f100237e7',
-        pageID: '5a57bd348b53621f100237e8'
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
     });
     console.log("ADD TO PLAYLIST FUNCTION: ", videoUrl );
     return {
