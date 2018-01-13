@@ -27,8 +27,6 @@ class Panel extends Component {
         const url = '/api/page';
 
         axios.get(url).then((resp) => {
-            console.log('Danika:', resp);
-
             this.setState({
                 userName: resp.data.userName
             })
@@ -92,11 +90,15 @@ class Panel extends Component {
         //     </SplitPane>
         return (
             <div>
-                <header style={{ display: "inline-flex" }}>
-                    <h1 className="app-title">Welcome {this.state.userName}!</h1>
-                    {/*<button onClick={}>2</button>*/}
-                    <button onClick={() => { this.panelLayout("3") }} >3</button>
-                    <button onClick={() => { this.panelLayout("4") }}>4</button>
+                <header>
+                    <div>
+                        <h3 className="welcome">Welcome {this.state.userName}!</h3>
+                    </div>
+                    <div className="panelOptions">
+                        <div><h3 className="optionsTitle">Panels:</h3></div>
+                        <div><button className="layoutBtn" onClick={() => { this.panelLayout("3") }}>3</button></div>
+                        <div><button className="layoutBtn" onClick={() => { this.panelLayout("4") }}>4</button></div>
+                    </div>
                 </header>
                 {/* <div className="col-xs-10">
                     <button onClick={this.sendSize} className="btn btn-primary">Save</button>
