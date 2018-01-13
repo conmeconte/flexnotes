@@ -54,7 +54,7 @@ export function toggleResults (bool) {
         payload: toggleResults
     }
 }
-export function addToPlaylist (videoUrl) {
+export function addToPlaylist (videoUrl, interfaceObj) {
     axios.post('/api/video', {
         video: {
             videoTitle: 'ReactJS Crash Course',
@@ -96,11 +96,11 @@ export function binderArray(){
     return (dispatch) => {
         const test = axios.get('/api/binder')
         .then((resp)=>{
-            console.log("get response: ", resp.data.binder_arr_obj);
+            console.log("get response: ", resp.data);
     
             dispatch({
                 type: types.BINDER_ARRAY,
-                payload: resp.data.binder_arr_obj
+                payload: resp.data
             });
         }).catch(err => {
             dispatch({
@@ -109,13 +109,6 @@ export function binderArray(){
             });
         });
     }
-    
-    
-    // });
-
-
-    
-
 }
 
 export function selectBinder(binderObj){
@@ -146,10 +139,22 @@ export function pageUpdate(page_id){
     }
 }
 
-export function addBinder(binderObj){
-    return{
-        type: types.ADD_BINDER,
-        payload: binderObj
+export function addBinder(){
+    return (dispatch) => {
+        const test = axios.post('/api/binder')
+        .then((resp)=>{
+            console.log("addBinder response: ", resp);
+    
+            dispatch({
+                type: types.ADD_BINDER,
+                payload: resp.data.binder_arr_obj
+            });
+        }).catch(err => {
+            dispatch({
+                type: 'error',
+                msg: 'Failed call in binderarray'
+            });
+        });
     }
 }
 
