@@ -55,6 +55,8 @@ export function toggleResults (bool) {
     }
 }
 export function addToPlaylist (videoUrl, interfaceObj) {
+    console.log('hahahahaha ', videoUrl);
+
     axios.post('/api/video', {
         video: {
             videoTitle: 'ReactJS Crash Course',
