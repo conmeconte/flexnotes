@@ -123,62 +123,40 @@ export function grabVideoUrl() {
         payload: videoLink
     }
 }
-export function binderArray() {
+
+export function getDataObject() {
 
     return (dispatch) => {
         const test = axios.get('/api/binder')
             .then((resp) => {
-                console.log("get response: ", resp.data);
+                console.log("get data object: ", resp.data);
 
                 dispatch({
-                    type: types.BINDER_ARRAY,
+                    type: types.GET_USER_DATA,
                     payload: resp.data
                 });
             }).catch(err => {
                 dispatch({
                     type: 'error',
-                    msg: 'Failed call in binderarray'
+                    msg: 'Failed call in get user data'
                 });
             });
     }
 }
 
-export function selectBinder(binderObj) {
-    return {
-        type: types.SELECT_BINDER,
-        payload: binderObj
-    }
-}
+export function binderArray() {
+    // return{
+    //     type: types.BINDER_ARRAY,
+    //     payload: binderArr
+    // }
 
-export function binderUpdate(binder_id) {
-    return {
-        type: types.BINDER_UPDATE,
-        payload: binder_id
-    }
-}
-
-export function tabUpdate(tab_id) {
-    return {
-        type: types.TAB_UPDATE,
-        payload: tab_id
-    }
-}
-
-export function pageUpdate(page_id) {
-    return {
-        type: types.PAGE_UPDATE,
-        payload: page_id
-    }
-}
-
-export function addBinder() {
     return (dispatch) => {
-        const test = axios.post('/api/binder')
+        const test = axios.get('/api/binder')
             .then((resp) => {
-                console.log("addBinder response: ", resp);
+                console.log("get response: ", resp.data.binder_arr_obj);
 
                 dispatch({
-                    type: types.ADD_BINDER,
+                    type: types.BINDER_ARRAY,
                     payload: resp.data.binder_arr_obj
                 });
             }).catch(err => {
@@ -186,7 +164,53 @@ export function addBinder() {
                     type: 'error',
                     msg: 'Failed call in binderarray'
                 });
-            });
-    }
+            }
 }
+
+    export function selectBinder(binderObj) {
+        return {
+            type: types.SELECT_BINDER,
+            payload: binderObj
+        }
+    }
+
+    export function binderUpdate(binder_id) {
+        return {
+            type: types.BINDER_UPDATE,
+            payload: binder_id
+        }
+    }
+
+    export function tabUpdate(tab_id) {
+        return {
+            type: types.TAB_UPDATE,
+            payload: tab_id
+        }
+    }
+
+    export function pageUpdate(page_id) {
+        return {
+            type: types.PAGE_UPDATE,
+            payload: page_id
+        }
+    }
+
+    export function addBinder() {
+        return (dispatch) => {
+            const test = axios.post('/api/binder')
+                .then((resp) => {
+                    console.log("addBinder response: ", resp);
+
+                    dispatch({
+                        type: types.ADD_BINDER,
+                        payload: resp.data.binder_arr_obj
+                    });
+                }).catch(err => {
+                    dispatch({
+                        type: 'error',
+                        msg: 'Failed call in binderarray'
+                    });
+                });
+        }
+    }
 
