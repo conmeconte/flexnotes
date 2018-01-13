@@ -96,11 +96,11 @@ export function binderArray(){
     return (dispatch) => {
         const test = axios.get('/api/binder')
         .then((resp)=>{
-            console.log("get response: ", resp.data.binder_arr_obj);
+            console.log("get response: ", resp.data);
     
             dispatch({
                 type: types.BINDER_ARRAY,
-                payload: resp.data.binder_arr_obj
+                payload: resp.data
             });
         }).catch(err => {
             dispatch({
@@ -109,13 +109,7 @@ export function binderArray(){
             });
         });
     }
-    
-    
     // });
-
-
-    
-
 }
 
 export function selectBinder(binderObj){
