@@ -74,16 +74,46 @@ export function grabVideoUrl () {
     }
 }
 
-export function binderArray(binderArray){
-    const URL = '/api/binder';
-    axios.get(URL).then((resp) => {
-    console.log('response is ', resp);
-    });
+// export const getBinderArr = () => async dispatch => {
+//     try {
+//         const resp = await fetch('/api/binder');
+//         console.log(resp);
+//         dispatch(binderArray(resp));
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
-    return{
-        type: types.BINDER_ARRAY,
-        payload: binderArray
+// export const binderArray = repos => ({  
+//     type: 'ADD_REPOS',
+//     repos,
+//   });
+
+export function binderArray(){
+
+    return (dispatch) => {
+        const test = axios.get('/api/binder')
+        .then((resp)=>{
+            console.log("get response: ", resp.data.binder_arr_obj);
+    
+            dispatch({
+                type: types.BINDER_ARRAY,
+                payload: resp.data.binder_arr_obj
+            });
+        }).catch(err => {
+            dispatch({
+                type: 'error',
+                msg: 'Failed call in binderarray'
+            });
+        });
     }
+    
+    
+    // });
+
+
+    
+
 }
 
 export function selectBinder(binderObj){
