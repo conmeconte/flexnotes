@@ -91,16 +91,41 @@ export function grabVideoUrl () {
         payload: videoLink
     }
 }
-export function binderArray(){
+
+export function getDataObject(){
 
     return (dispatch) => {
         const test = axios.get('/api/binder')
         .then((resp)=>{
-            console.log("get response: ", resp.data);
+            console.log("get data object: ", resp.data);
+    
+            dispatch({
+                type: types.GET_USER_DATA,
+                payload: resp.data
+            });
+        }).catch(err => {
+            dispatch({
+                type: 'error',
+                msg: 'Failed call in get user data'
+            });
+        });
+    }
+}
+
+export function binderArray(){
+    // return{
+    //     type: types.BINDER_ARRAY,
+    //     payload: binderArr
+    // }
+
+    return (dispatch) => {
+        const test = axios.get('/api/binder')
+        .then((resp)=>{
+            console.log("get response: ", resp.data.binder_arr_obj);
     
             dispatch({
                 type: types.BINDER_ARRAY,
-                payload: resp.data
+                payload: resp.data.binder_arr_obj
             });
         }).catch(err => {
             dispatch({
