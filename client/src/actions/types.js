@@ -6,6 +6,7 @@ export default {
     BINDER_UPDATE: 'binder_update',
     TAB_UPDATE: 'tab_update',
     PAGE_UPDATE: 'page_update',
+    GET_VIDEO_RESULTS: 'get_video_results',
     GET_RESULT_STYLES: 'get_result_styles',
     GET_OPACITY_DISPLAY: 'get_opacity_display',
     TOGGLE_RESULTS: 'toggle_results',

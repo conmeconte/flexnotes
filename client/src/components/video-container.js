@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { playVideo, grabVideoUrl, addVideoUrl } from '../actions';
+import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist } from '../actions';
 
 class VideoContainer extends Component {
     render () {
-        console.log("BINDER IDs from video container: ", this.props.binderTabPageIds);
     return ( 
             <div id="video-container" className="video-container">
-                <input className="pastedVideoInput form-control" type="text" placeholder="Please copy and paste URL"/><button className="btn btn-success" onClick={ () => {
-                    // this.props.grabVideoUrl(this.props.pastedVideoUrl);
+                <input className="pastedVideoInput form-control" type="text" placeholder="Please copy and paste URL"/>
+                <button className="btn btn-success" onClick={ () => {
+                    this.props.grabVideoUrl();
                     this.props.playVideo();
-                }}>Embed Video</button><button onClick={this.props.addVideoUrl(this.props.videoUrl)} className="btn btn-primary"><span className="glyphicon glyphicon-plus"></span></button>
+                }}>Embed Video</button>
+                <button onClick={ () => {this.props.addToPlaylist(this.props.pastedVideoUrl)}} className="btn btn-primary">
+                    <span className="glyphicon glyphicon-plus"></span>
+                </button>
                 <iframe style={ {width: '100%', height: '100%'} } className="currentVideo" src="null"></iframe>
             </div>
         )
@@ -19,10 +22,10 @@ class VideoContainer extends Component {
 
 function mapStateToProps (state) {
     return {
-        videoUrl: state.results.url,
-        pastedVideoUrl: state.results.pastedVideoUrl,
-        binderTabPageIds: state.interface
+        pastedVideoUrl: state.videoResults.videoLink,
+        binderTabPageIds: state.interface,
+        playlist: state.videoResults.playlist
     }
 }
 
-export default connect(mapStateToProps, { playVideo, grabVideoUrl, addVideoUrl })(VideoContainer)
+export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist })(VideoContainer)

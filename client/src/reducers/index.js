@@ -11,7 +11,7 @@ import interfaceReducer from './interfaceReducer';
 export default combineReducers({
     auth: authReducer,
     video: videoReducer,
-    results: resultsReducer, 
+    videoResults: resultsReducer, 
     binderArray: binderarrayReducer,
     binder: binderReducer,
     interface: interfaceReducer
