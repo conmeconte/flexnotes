@@ -4,13 +4,16 @@ import '../assets/css/panel.css';
 import axios from 'axios';
 // import { SortablePane, Pane } from 'react-sortable-pane';
 // import Resizable from 're-resizable';
+import {connect} from 'react-redux';
+import {binderArray} from '../actions/index';
 
 class Panel extends Component {
     constructor(props) {
         super(props);
+        this.props = props;
+        // console.log('props: ', props);
         this.state = {
-            panelNum: "",
-            userName: ""
+            panelNum: ""
         };
         // this.sendSize = this.sendSize.bind(this);
     }
@@ -21,16 +24,16 @@ class Panel extends Component {
         });
     }
 
-
-
     componentWillMount(){
-        const url = '/api/page';
+        this.props.getBinderArray();
 
-        axios.get(url).then((resp) => {
-            this.setState({
-                userName: resp.data.userName
-            })
-        });
+        // const url = '/api/page';
+        //
+        // axios.get(url).then((resp) => {
+        //     this.setState({
+        //         userName: resp.data.userName
+        //     })
+        // });
     }
 
 
@@ -92,7 +95,7 @@ class Panel extends Component {
             <div>
                 <header>
                     <div>
-                        <h3 className="welcome">Welcome {this.state.userName}!</h3>
+                        <h3 className="welcome">Welcome {this.props.binderArray.binderArr.userName}!</h3>
                     </div>
                     <div className="panelOptions">
                         <div><h3 className="optionsTitle">Panels:</h3></div>
@@ -112,4 +115,22 @@ class Panel extends Component {
     }
 }
 
-export default Panel;
+function mapStateToProps(state){
+    return {
+        binderArray: state.binderArray
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        getBinderArray: function(){
+            dispatch(binderArray())
+        }
+    }
+}
+
+const VisiblePanel = connect(mapStateToProps, mapDispatchToProps)(
+    Panel
+);
+
+export default VisiblePanel;
