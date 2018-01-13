@@ -15,9 +15,9 @@ module.exports = (app) => {
 
     app.get('/api', async (req, res) => {
         //pull entire user obj
-        User.findById(req.user.id, (err,user)=>{
-        // User.findById(req.user.id, (err,user)=>{
-            res.send(user);
+        const existingUser= await Note.findById("5a57c55472de391a0cc73a5f",(err,user)=>{
+            if(err){console.log('error is ', err)};
+            console.log('user is ',user);
         })
 
     })
@@ -290,7 +290,7 @@ module.exports = (app) => {
                     .tab_arr_obj.id(req.body.tabID)  
                     .page_arr_obj.id(req.body.pageID)
                     if(page){
-                        page.video.push(new Video({vid_url: req.body.vid_url, videoInfo: req.body.videoInfo}));
+                        page.video.push(new Video({videoId: req.body.videoId, videoURL: req.body.videoURL, videoTitle: req.body.videoTitle}));
 
 
                         user.save();

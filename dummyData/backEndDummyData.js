@@ -55,8 +55,9 @@ let fakeData =
                 video: [
                   {
                     _id: { $oid: 'someRandomNumberMongoDBAssings' },
-                    videoInfo: "No Info",
-                    videoId: "Ukg_U3CnJWI"
+                      videoTitle: "king of the hills",
+                      videoId: "Ukg_U3CnJWI",
+                      videoURL: "adfadsfa.com"
                   }
                 ],
                 panel_dimensions: {
