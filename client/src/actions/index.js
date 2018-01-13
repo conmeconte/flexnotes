@@ -75,6 +75,11 @@ export function grabVideoUrl () {
 }
 
 export function binderArray(binderArray){
+    const URL = '/api/binder';
+    axios.get(URL).then((resp) => {
+    console.log('response is ', resp);
+    });
+
     return{
         type: types.BINDER_ARRAY,
         payload: binderArray
@@ -106,6 +111,13 @@ export function pageUpdate(page_id){
     return{
         type: types.PAGE_UPDATE,
         payload: page_id
+    }
+}
+
+export function addBinder(binderObj){
+    return{
+        type: types.ADD_BINDER,
+        payload: binderObj
     }
 }
 

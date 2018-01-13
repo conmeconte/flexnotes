@@ -3,6 +3,7 @@ export const FETCH_USER = 'fetch_user';
 export default {
     FETCH_USER : 'fetch_user',
     BINDER_ARRAY: 'binder_array',
+    ADD_BINDER: 'add_binder',
     SELECT_BINDER: 'select_binder',
     BINDER_UPDATE: 'binder_update',
     TAB_UPDATE: 'tab_update',
