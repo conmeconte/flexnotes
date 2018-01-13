@@ -9,7 +9,6 @@ module.exports = (app) => {
         res.send('Homepage')
     })
     app.get('/api/userInfo', requireLogin, (req, res) => {
-        console.log(req.user.id)
         res.send(req.user);
     });
 
@@ -80,9 +79,9 @@ module.exports = (app) => {
         })
         .put('/api/binder', async (req, res) => {
             // update binder
+
             const existingUser= await User.findById(req.user.id, function (err, user){
             // const existingUser= await User.findById(req.user.id, function (err, user){
-            console.log('bruce haha ',req.user);    
             if (err) { res.send("Error did occurred")};
     
                 if (user) {

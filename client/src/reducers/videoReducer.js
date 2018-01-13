@@ -1,7 +1,8 @@
 import types from '../actions/types';
 
 const DEFAULT_STATE = { 
-    videos: [],
+    results: [],
+    videoList: [],
     resultsStyles: {
         width: '65%',
         display: 'block'
@@ -14,8 +15,10 @@ const DEFAULT_STATE = {
 
 export default function (state = DEFAULT_STATE, action) {
     switch (action.type) {
+        case types.GET_VIDEO_RESULTS:
+            return { ...state, results: action.payload}
         case types.ADD_TO_PLAYLIST:
-            return {...state, videos};
+            return {...state, videoList: [action.payload, ...state.videoList]};
         case types.GET_RESULT_STYLES:
             return {...state, resultsStyles: action.payload, toggleResults: !state.toggleResults}
         case types.TOGGLE_RESULTS:

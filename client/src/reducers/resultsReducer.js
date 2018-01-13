@@ -2,7 +2,7 @@ import types from '../actions/types';
 
 const DEFAULT_STATE = {
     playlist: [],
-    pastedVideoUrl: ''
+    videoLink: ''
 }
 
 export default function (state = DEFAULT_STATE, action) {
@@ -10,9 +10,11 @@ export default function (state = DEFAULT_STATE, action) {
         case types.PLAY_VIDEO:
             return {...state, url: action.payload};
         case types.ADD_TO_PLAYLIST:
-            return {...state, playlist: [...state.playlist, action.payload]};
+            if (!action.payload) {
+                return state;
+            }
+            return {...state, playlist: [action.payload, ...state.playlist]};
         case types.GRAB_VIDEO_URL: 
-            console.log("VIDEO URL: ", action.payload);
             return { ...state, pastedVideoUrl: action.payload }
         default:
             return state;

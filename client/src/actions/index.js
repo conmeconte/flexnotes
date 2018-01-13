@@ -38,7 +38,14 @@ export function setSlidesUrl(value) {
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
+export function getVideoResults(videos) {
+    return {
+        type: types.GET_VIDEO_RESULTS,
+        payload: videos
+    }
+}
 export function getResultStyles(styles, bool) {
+
     if (bool) {
         styles = {
             width: '0%',
@@ -50,6 +57,7 @@ export function getResultStyles(styles, bool) {
             display: 'block'
         }
     }
+    console.log("GET RESULTS STYLES: ", styles);
     return {
         type: types.GET_RESULT_STYLES,
         payload: styles
@@ -65,6 +73,7 @@ export function getOpacityDisplay(styles, bool) {
             display: 'block'
         }
     }
+    console.log("GET RESULTS STYLES: ", styles);
     return {
         type: types.GET_OPACITY_DISPLAY,
         payload: styles
@@ -77,10 +86,21 @@ export function toggleResults(bool) {
         payload: toggleResults
     }
 }
-export function addToPlaylist(currentVideoList, addedvideo) {
+export function addToPlaylist(videoUrl, interfaceObj) {
+    axios.post('/api/video', {
+        video: {
+            videoTitle: 'ReactJS Crash Course',
+            videoId: 'A71aqufiNtQ',
+            videoUrl: videoUrl
+        },
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
+    console.log("ADD TO PLAYLIST FUNCTION: ", videoUrl);
     return {
         type: types.ADD_TO_PLAYLIST,
-        payload: [addedVideo, ...currentVideoList]
+        payload: videoUrl
     }
 }
 export function playVideo() {
@@ -91,30 +111,35 @@ export function playVideo() {
     var videoId = document.querySelector(".pastedVideoInput").value;
     videoId = videoId.split('&')[0];
     videoId = videoId.split('=')[1];
-    document.querySelector(".currentVideo").src = `https://www.youtube.com/embed/${videoId}`;
+    videoId = document.querySelector(".currentVideo").src = `https://www.youtube.com/embed/${videoId}`;
     return {
         type: types.PLAY_VIDEO
     }
 }
-
-
 export function grabVideoUrl() {
-
+    var videoLink = document.querySelector(".pastedVideoInput").value;
     return {
         type: types.GRAB_VIDEO_URL,
         payload: videoLink
     }
 }
+export function binderArray() {
 
-export function binderArray(binderArray) {
-    const URL = '/api/binder';
-    axios.get(URL).then((resp) => {
-        console.log('response is ', resp);
-    });
+    return (dispatch) => {
+        const test = axios.get('/api/binder')
+            .then((resp) => {
+                console.log("get response: ", resp.data);
 
-    return {
-        type: types.BINDER_ARRAY,
-        payload: binderArray
+                dispatch({
+                    type: types.BINDER_ARRAY,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in binderarray'
+                });
+            });
     }
 }
 
@@ -146,10 +171,22 @@ export function pageUpdate(page_id) {
     }
 }
 
-export function addBinder(binderObj) {
-    return {
-        type: types.ADD_BINDER,
-        payload: binderObj
+export function addBinder() {
+    return (dispatch) => {
+        const test = axios.post('/api/binder')
+            .then((resp) => {
+                console.log("addBinder response: ", resp);
+
+                dispatch({
+                    type: types.ADD_BINDER,
+                    payload: resp.data.binder_arr_obj
+                });
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in binderarray'
+                });
+            });
     }
 }
 

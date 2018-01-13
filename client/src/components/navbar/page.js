@@ -164,7 +164,7 @@ class Page extends Component {
         } else {
             page_link = page_arr_obj.map((item, index) => {
                 //console.log('page map:', item);
-                let page_url = '/' + item._id.$oid;
+                let page_url = '/' + item._id;
                 return (
                     <li key={index}><Link to={'/main'+this.props.binder_url + this.props.tab_url + page_url} style={{ textDecoration: 'none' }}>
                     <div className="pageDiv" onClick={()=>{this.handleClick(item._id.$oid)}}>
@@ -176,7 +176,7 @@ class Page extends Component {
 
     
         const page_route = page_arr_obj.map((item, index) => {
-            let page_url = '/' + item._id.$oid;
+            let page_url = '/' + item._id;
             return(
                 <Route key={index} path={'/main'+this.props.binder_url + this.props.tab_url + page_url} render={()=> 
                     <PageOld/>

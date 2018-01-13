@@ -17,7 +17,7 @@ const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
 const savedNotes = JSON.parse(localStorage.getItem('content'));
-const initialValue = Value.fromJSON(savedNotes);
+const initialValue = Value.fromJSON(savedNotes || {"document":{}});
 
 // UNDO AND REDO
 
