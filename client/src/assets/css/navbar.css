@@ -7,11 +7,10 @@
 .navbar{
     margin: 0;
     padding: 0;
-    #border: 2px red solid;
     width: 10%;
     height: 100vh;
+    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);
     #display: inline-block;
-
 }
 
 ul {
@@ -30,25 +29,24 @@ ul > li {
     margin: 0;
     padding: 0;    
     height: 80vh;
-    background-color: rgba(0, 0, 0, .38);
+    /*background-color: rgba(0, 0, 0, .38);*/
 }
-
 
 .contain-page{
     #border-right: 3px solid #000080;
-    box-shadow: 2px 0px 1px #747474;
+    /*box-shadow: 2px 0px 1px #747474;*/
     margin-left: 1%;
     width: 53%;
-    background-color: #f9f9f9; 
-    background-image: url("../../assets/images/paper.png");
+    /*background-color: #f9f9f9; */
+    /*background-image: url("../../assets/images/paper.png");*/
 }
 
 .contain-tab{
-    border-left: 1px solid #747474;
+    /*border-left: 1px solid #747474;*/
     #border-right: #ff0000 3px solid;
-    background-color: #ccc;
-    background-image: url("../../assets/images/black-linen.png");
-    box-shadow: 2px 0px 1px #454545;
+    /*background-color: #ccc;*/
+    /*background-image: url("../../assets/images/black-linen.png");*/
+    /*box-shadow: 2px 0px 1px #454545;*/
     width: 45%;
 
 }

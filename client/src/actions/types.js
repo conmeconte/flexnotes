@@ -1,4 +1,5 @@
 export const FETCH_USER = 'fetch_user';
+
 export default {
     FETCH_USER : 'fetch_user',
     BINDER_ARRAY: 'binder_array',
@@ -12,5 +13,6 @@ export default {
     TOGGLE_RESULTS: 'toggle_results',
     ADD_TO_PLAYLIST : 'add_to_playlist',
     PLAY_VIDEO: 'play_video',
-    GRAB_VIDEO_URL: 'grab_video_url'
+    GRAB_VIDEO_URL: 'grab_video_url',
+    SAVE_NOTES: 'save_notes'
 }

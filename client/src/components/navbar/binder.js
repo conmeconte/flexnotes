@@ -6,7 +6,7 @@ import { binderArray, selectBinder, binderUpdate } from '../../actions';
 
 import Tab from './tab';
 
-import './navbar.css';
+import '../../assets/css/navbar.css';
 
 class Binder extends Component {
     constructor(props) {
