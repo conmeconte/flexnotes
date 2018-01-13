@@ -46,7 +46,8 @@ class Slides extends Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log('Slides HandleSubmit', document.querySelector('.slides-input').value);
-        this.props.setSlidesUrl(document.querySelector('.slides-input').value, this.props.interface);
+        console.log("slides.js hanldeSubmit", this.props);
+        this.props.setSlidesUrl(document.querySelector('.slides-input').value, this.props.interface_obj);
         // const URL = "/api/page";
 
         //     axios.put(URL, {
@@ -67,7 +68,7 @@ class Slides extends Component {
         // const { input, inputComplete, inputValid } = this.state;
         return (
             <div className="slides-div">
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit.bind(this)}>
                     <Field name="url" component={this.renderInput} />
                     <button className="btn btn-success btn-sm">Upload</button>
                 </form>
