@@ -74,21 +74,6 @@ export function grabVideoUrl () {
     }
 }
 
-// export const getBinderArr = () => async dispatch => {
-//     try {
-//         const resp = await fetch('/api/binder');
-//         console.log(resp);
-//         dispatch(binderArray(resp));
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// export const binderArray = repos => ({  
-//     type: 'ADD_REPOS',
-//     repos,
-//   });
-
 export function binderArray(){
 
     return (dispatch) => {
@@ -107,13 +92,6 @@ export function binderArray(){
             });
         });
     }
-    
-    
-    // });
-
-
-    
-
 }
 
 export function selectBinder(binderObj){
@@ -144,10 +122,22 @@ export function pageUpdate(page_id){
     }
 }
 
-export function addBinder(binderObj){
-    return{
-        type: types.ADD_BINDER,
-        payload: binderObj
+export function addBinder(){
+    return (dispatch) => {
+        const test = axios.post('/api/binder')
+        .then((resp)=>{
+            console.log("addBinder response: ", resp);
+    
+            dispatch({
+                type: types.ADD_BINDER,
+                payload: resp.data.binder_arr_obj
+            });
+        }).catch(err => {
+            dispatch({
+                type: 'error',
+                msg: 'Failed call in binderarray'
+            });
+        });
     }
 }
 
