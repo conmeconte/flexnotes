@@ -19,12 +19,8 @@ class Slides extends Component {
         axios.get(URL).then((resp) => {
             console.log('response is ', resp);
             const slidesURL = resp.data.binder_arr_obj["0"].tab_arr_obj["0"].page_arr_obj["0"].lecture_slides.lec_id;
-<<<<<<< HEAD
             // console.log('SLIDES GET REQ: ', slidesURL);
             console.log("SLIDES GET REQ: ", )
-=======
-            // console.log('SLIDES GET REQ: ', slidesURL); 
->>>>>>> 106de8615d5ba6191118c89475cbdacbe8d5572b
             //Make the check more valid? But if I PUT request valid data, is it necessary? I will be checking for empty str right?
             if (!slidesURL) {
                 this.setState({
@@ -82,16 +78,10 @@ class Slides extends Component {
                 lec_id: this.state.input
 
             },
-<<<<<<< HEAD
-            binderID: 'sx',
-            tabID: 'some number',
-            pageID: 'some pageID number'
-=======
             binderID: '5a57c55472de391a0cc73a5b',
             tabID: '5a57c55472de391a0cc73a5c',
             pageID: '5a57c55472de391a0cc73a5d'
 
->>>>>>> 106de8615d5ba6191118c89475cbdacbe8d5572b
         }).then((resp) => {
             console.log(`SLIDES PUT REQ:`, resp);
         });
