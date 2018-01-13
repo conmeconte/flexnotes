@@ -4,7 +4,7 @@ import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 
-// import isImage from 'is-image'
+import isImage from 'is-image'
 import isUrl from 'is-url'
 
 import '../assets/css/notes.css';

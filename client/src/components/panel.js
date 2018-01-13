@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PanelNum from './panel_num';
 import '../assets/css/panel.css';
+import axios from 'axios';
 // import { SortablePane, Pane } from 'react-sortable-pane';
 // import Resizable from 're-resizable';
 
@@ -9,6 +10,7 @@ class Panel extends Component {
         super(props);
         this.state = {
             panelNum: "",
+            userName: ""
         };
         // this.sendSize = this.sendSize.bind(this);
     }
@@ -18,6 +20,21 @@ class Panel extends Component {
             panelNum: val
         });
     }
+
+
+
+    componentWillMount(){
+        const url = '/api/page';
+
+        axios.get(url).then((resp) => {
+            console.log('Danika:', resp);
+
+            this.setState({
+                userName: resp.data.userName
+            })
+        });
+    }
+
 
     // logVWsize(panelSize) {
     //     console.log("vw size: ", panelSize);
@@ -76,7 +93,7 @@ class Panel extends Component {
         return (
             <div>
                 <header style={{ display: "inline-flex" }}>
-                    <h1 className="app-title">FlexNotes</h1>
+                    <h1 className="app-title">Welcome {this.state.userName}!</h1>
                     {/*<button onClick={}>2</button>*/}
                     <button onClick={() => { this.panelLayout("3") }} >3</button>
                     <button onClick={() => { this.panelLayout("4") }}>4</button>
