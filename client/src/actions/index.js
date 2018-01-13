@@ -61,9 +61,9 @@ export function addToPlaylist (videoUrl) {
             videoId: 'A71aqufiNtQ',
             videoUrl: videoUrl
         },
-        binderID: '5a57bd348b53621f100237e6',
-        tabID: '5a57bd348b53621f100237e7',
-        pageID: '5a57bd348b53621f100237e8'
+        binderID: '5a5a63116f98c0bd996baad0',
+        tabID: '5a5a63116f98c0bd996baad1',
+        pageID: '5a5a63116f98c0bd996baad2'
     });
     console.log("ADD TO PLAYLIST FUNCTION: ", videoUrl );
     return {

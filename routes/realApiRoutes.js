@@ -15,9 +15,11 @@ module.exports = (app) => {
 
     app.get('/api', async (req, res) => {
         //pull entire user obj
-        const existingUser= await Note.findById("5a57c55472de391a0cc73a5f",(err,user)=>{
+        const existingUser= await User.findById("5a5a63116f98c0bd996baad5",(err,user)=>{
             if(err){console.log('error is ', err)};
-            console.log('user is ',user);
+            const testingUserpageInfo=user.binder_arr_obj.id('5a5a63116f98c0bd996baad0').tab_arr_obj.id('5a5a63116f98c0bd996baad1')
+            .page_arr_obj.id('5a5a63116f98c0bd996baad2')
+            console.log('user is ', testingUserpageInfo);
         })
 
     })
@@ -289,7 +291,9 @@ module.exports = (app) => {
                     .binder_arr_obj.id(req.body.binderID)
                     .tab_arr_obj.id(req.body.tabID)  
                     .page_arr_obj.id(req.body.pageID)
+                    .videoID(req.body.videoID)
                     if(page){
+                        // videoObj= page.video[0];
                         page.video.push(new Video({videoId: req.body.videoId, videoURL: req.body.videoURL, videoTitle: req.body.videoTitle}));
 
 
