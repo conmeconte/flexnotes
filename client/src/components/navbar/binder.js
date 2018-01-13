@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { binderArray, selectBinder, binderUpdate } from '../../actions';
+import { binderArray, selectBinder, binderUpdate, addBinder, tabUpdate, pageUpdate } from '../../actions';
 
 
 import Tab from './tab';
@@ -112,9 +112,28 @@ class Binder extends Component {
         //this.props.binderArray(this.state.fake_data.binder_arr_obj);
         //this.props.selectBinder(this.props.binderArr[0]);
     }
+    componentWillReceiveProps(nextProps){
+        console.log("Binder Next props:", nextProps);
+        // if(this.props.binderArr != nextProps.binderArr){
+        //     //console.log('Next props is different');
+        //     let arrLength =  nextProps.binderArr.length;
+        //     let binderArr = nextProps.binderArr;
+        //     if(arrLength > 0){
+        //         console.log('binder arr:', binderArr);
+        //         this.props.selectBinder(binderArr[0]);
+        //     }
 
+        // }
+
+    }
+
+    
     addBinder() {
         console.log('add Binder');
+        this.props.addBinder();
+        console.log('binderaddprops', this.props);
+
+        
         //const { binder_arr_obj, new_tab_arr, binder_color_arr } = this.state;
 
         //let binder_color_array = ['#000080', '#808000', '#800000', '#a0522d', '#8a2be2'];
@@ -379,10 +398,13 @@ class Binder extends Component {
     }
 
     handleClick(binderObj){
+        console.log('binderObj:' ,binderObj);
         this.props.selectBinder(binderObj);
         this.props.binderUpdate(binderObj._id);
+        this.props.tabUpdate(binderObj.tab_arr_obj[0]._id);
+        this.props.pageUpdate(binderObj.tab_arr_obj[0].page_arr_obj[0]._id);
         //select first tab and page by default
-        console.log('binderObj:' ,binderObj);
+        
         //this.props.tabUpdate(binderObj.tab_arr_obj[0]._id);
         //this.props.pageUpdate(binderObj.tab_arr_obj[0].page_arr_obj[0]._id);
         console.log("binder id updated");
@@ -400,7 +422,7 @@ class Binder extends Component {
     */
     render() {
         const { editable, active } = this.state;
-        //console.log("Binder props:", this.props);
+        console.log("Binder props:", this.props);
         //console.log('Render binderArray:', binder_array);
         let binder_link = [];
         //map binders
@@ -490,12 +512,12 @@ class Binder extends Component {
     }
 }
     function mapStateToProps(state){
-        //console.log('binder mstp', state);
+        console.log('binder mstp', state);
         return{
             binderArr: state.binderArray.binderArr
         }
     }
 
-    export default withRouter(connect(mapStateToProps,{ binderArray, selectBinder, binderUpdate })(Binder));
+    export default withRouter(connect(mapStateToProps,{ binderArray, selectBinder, binderUpdate, addBinder, tabUpdate, pageUpdate })(Binder));
 
 
