@@ -78,12 +78,41 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        this.props.binderArray(this.state.fake_data.binder_arr_obj);
-        this.props.selectBinder(this.state.fake_data.binder_arr_obj[0]);
-        //console.log(this.state.fake_data.binder_arr_obj[0]);
-        this.props.binderUpdate(this.state.fake_data.binder_arr_obj[0]._id.$oid);
-        this.props.tabUpdate(this.state.fake_data.binder_arr_obj[0].tab_arr_obj[0]._id.$oid);
-        this.props.pageUpdate(this.state.fake_data.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0]._id.$oid);
+
+        //console.log("dashboard did mount");
+        this.props.binderArray();
+
+ 
+    }
+
+    componentWillReceiveProps(nextProps){
+        //console.log("Next props:", nextProps.binderArr.length);
+        if(this.props.binderArr != nextProps.binderArr){
+            //console.log('Next props is different');
+            let arrLength =  nextProps.binderArr.length;
+            let binderArr = nextProps.binderArr;
+            if(arrLength > 0){
+                console.log('binder arr:', binderArr);
+                this.props.selectBinder(binderArr[0]);
+            }
+
+        }
+
+        if(this.props.initBinder != nextProps.initBinder){
+            //console.log('initbinder');
+            let initBinder = nextProps.initBinder;
+            
+            if(initBinder){
+                //console.log('initbinder', initBinder);
+                this.props.binderUpdate(initBinder._id);
+                //console.log('tab_id',initBinder.tab_arr_obj[0]._id);
+                this.props.tabUpdate(initBinder.tab_arr_obj[0]._id);
+                this.props.pageUpdate(initBinder.tab_arr_obj[0].page_arr_obj[0]._id);
+            }
+            
+
+        }
+
     }
 
     render(){
@@ -92,7 +121,7 @@ class Dashboard extends Component {
 
         return(
             <div>
-                <div className="login">
+                <div className="logout">
                     <Login />
                 </div>
                 <NavBar />
@@ -103,7 +132,7 @@ class Dashboard extends Component {
 }
 
 function mapStateToProps(state){
-    
+    console.log('mstp dashboard:', state);
     return{
         binderArr: state.binderArray.binderArr,
         initBinder: state.binder.binderObj,

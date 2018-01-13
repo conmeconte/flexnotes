@@ -6,7 +6,7 @@ import { binderArray, selectBinder, binderUpdate } from '../../actions';
 
 import Tab from './tab';
 
-import './navbar.css';
+import '../../assets/css/navbar.css';
 
 class Binder extends Component {
     constructor(props) {
@@ -110,204 +110,204 @@ class Binder extends Component {
 
         //console.log("Fake Data: ", this.state.fake_data.binder_arr_obj);
         //this.props.binderArray(this.state.fake_data.binder_arr_obj);
-        this.props.selectBinder(this.props.binderArr[0]);
+        //this.props.selectBinder(this.props.binderArr[0]);
     }
 
     addBinder() {
         console.log('add Binder');
-        const { binder_arr_obj, new_tab_arr, binder_color_arr } = this.state;
+        //const { binder_arr_obj, new_tab_arr, binder_color_arr } = this.state;
 
         //let binder_color_array = ['#000080', '#808000', '#800000', '#a0522d', '#8a2be2'];
 
-        let length = binder_arr_obj.length;
-        if (length === 0) {
+        //let length = binder_arr_obj.length;
+        //if (length === 0) {
             //new binder when there are no binders
-            let new_binder_obj =                  
-            {
-                _id: { $oid: 'someRandomNumberMongoDBAssings' },
-                binder_id: 1,
-                binder_name: 'Binder1',
-                binder_color: 'red',
-                tab_arr_obj: [
-                  {
-                    tab_id: 1,
-                    tab_color: 'blue',
-                    tab_name: 'Tab1',
-                    tab_url: '/tab1',
-                    page_arr_obj: [
-                      {
-                        page_id: 1,
-                        page_color: 'white',
-                        page_name: 'Page1',
-                        page_date: '',
-                        page_url: '/page1',
-                        calendar: {
-                          cal_url: String
-                        },
-                        lecture_slides: {
-                          lec_id: 'https://docs.google.com/presentation/d/1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE/embed'
-                        },
-                        notes: {
-                          document: {
-                            nodes: [
-                              {
-                                kind: "block",
-                                type: "paragraph",
-                                nodes: [
-                                  {
-                                    kind: "text",
-                                    leaves: [
-                                      {
-                                        text: "This is editable "
-                                      },
-                                      {
-                                        text: "rich",
-                                        marks: [
-                                          {
-                                            type: "bold"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        text: " text, "
-                                      },
-                                      {
-                                        text: "much",
-                                        marks: [
-                                          {
-                                            type: "italic"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        text: " better than a "
-                                      },
-                                      {
-                                        text: "<textarea>",
-                                        marks: [
-                                          {
-                                            type: "code"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        text: "!"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              },
-                              {
-                                kind: "block",
-                                type: "paragraph",
-                                nodes: [
-                                  {
-                                    kind: "text",
-                                    leaves: [
-                                      {
-                                        text: "Since it's rich text, you can do things like turn a selection of text "
-                                      },
-                                      {
-                                        text: "bold",
-                                        marks: [
-                                          {
-                                            type: "bold"
-                                          }
-                                        ]
-                                      }, {
-                                        text: ", or add a semantically rendered block quote in the middle of the page, like this:"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              },
-                              {
-                                kind: "block",
-                                type: "block-quote",
-                                nodes: [
-                                  {
-                                    kind: "text",
-                                    leaves: [
-                                      {
-                                        text: "A wise quote."
-                                      }
-                                    ]
-                                  }
-                                ]
-                              },
-                              {
-                                kind: "block",
-                                type: "paragraph",
-                                nodes: [
-                                  {
-                                    kind: "text",
-                                    leaves: [
-                                      {
-                                        text: "Try it out for yourself!"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        },
+            // let new_binder_obj =                  
+            // {
+            //     _id: { $oid: 'someRandomNumberMongoDBAssings' },
+            //     binder_id: 1,
+            //     binder_name: 'Binder1',
+            //     binder_color: 'red',
+            //     tab_arr_obj: [
+            //       {
+            //         tab_id: 1,
+            //         tab_color: 'blue',
+            //         tab_name: 'Tab1',
+            //         tab_url: '/tab1',
+            //         page_arr_obj: [
+            //           {
+            //             page_id: 1,
+            //             page_color: 'white',
+            //             page_name: 'Page1',
+            //             page_date: '',
+            //             page_url: '/page1',
+            //             calendar: {
+            //               cal_url: String
+            //             },
+            //             lecture_slides: {
+            //               lec_id: 'https://docs.google.com/presentation/d/1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE/embed'
+            //             },
+            //             notes: {
+            //               document: {
+            //                 nodes: [
+            //                   {
+            //                     kind: "block",
+            //                     type: "paragraph",
+            //                     nodes: [
+            //                       {
+            //                         kind: "text",
+            //                         leaves: [
+            //                           {
+            //                             text: "This is editable "
+            //                           },
+            //                           {
+            //                             text: "rich",
+            //                             marks: [
+            //                               {
+            //                                 type: "bold"
+            //                               }
+            //                             ]
+            //                           },
+            //                           {
+            //                             text: " text, "
+            //                           },
+            //                           {
+            //                             text: "much",
+            //                             marks: [
+            //                               {
+            //                                 type: "italic"
+            //                               }
+            //                             ]
+            //                           },
+            //                           {
+            //                             text: " better than a "
+            //                           },
+            //                           {
+            //                             text: "<textarea>",
+            //                             marks: [
+            //                               {
+            //                                 type: "code"
+            //                               }
+            //                             ]
+            //                           },
+            //                           {
+            //                             text: "!"
+            //                           }
+            //                         ]
+            //                       }
+            //                     ]
+            //                   },
+            //                   {
+            //                     kind: "block",
+            //                     type: "paragraph",
+            //                     nodes: [
+            //                       {
+            //                         kind: "text",
+            //                         leaves: [
+            //                           {
+            //                             text: "Since it's rich text, you can do things like turn a selection of text "
+            //                           },
+            //                           {
+            //                             text: "bold",
+            //                             marks: [
+            //                               {
+            //                                 type: "bold"
+            //                               }
+            //                             ]
+            //                           }, {
+            //                             text: ", or add a semantically rendered block quote in the middle of the page, like this:"
+            //                           }
+            //                         ]
+            //                       }
+            //                     ]
+            //                   },
+            //                   {
+            //                     kind: "block",
+            //                     type: "block-quote",
+            //                     nodes: [
+            //                       {
+            //                         kind: "text",
+            //                         leaves: [
+            //                           {
+            //                             text: "A wise quote."
+            //                           }
+            //                         ]
+            //                       }
+            //                     ]
+            //                   },
+            //                   {
+            //                     kind: "block",
+            //                     type: "paragraph",
+            //                     nodes: [
+            //                       {
+            //                         kind: "text",
+            //                         leaves: [
+            //                           {
+            //                             text: "Try it out for yourself!"
+            //                           }
+            //                         ]
+            //                       }
+            //                     ]
+            //                   }
+            //                 ]
+            //               }
+            //             },
         
-                        video: [
-                          {
-                            _id: { $oid: 'someRandomNumberMongoDBAssings' },
-                            videoInfo: "No Info",
-                            videoId: "Ukg_U3CnJWI"
-                          }
-                        ],
-                        panel_dimensions: {
-                          lecture_Panel: {
-                            width: String,
-                            height: String
-                          },
-                          video_Panel: {
-                            width: String,
-                            height: String
-                          },
-                          note_Panel: {
-                            width: String,
-                            height: String
-                          },
-                          meister_Panel: {
-                            width: String,
-                            height: String
-                          }
-                        }
-                      }
-                    ]
-                  }
-                ],
-              }
+            //             video: [
+            //               {
+            //                 _id: { $oid: 'someRandomNumberMongoDBAssings' },
+            //                 videoInfo: "No Info",
+            //                 videoId: "Ukg_U3CnJWI"
+            //               }
+            //             ],
+            //             panel_dimensions: {
+            //               lecture_Panel: {
+            //                 width: String,
+            //                 height: String
+            //               },
+            //               video_Panel: {
+            //                 width: String,
+            //                 height: String
+            //               },
+            //               note_Panel: {
+            //                 width: String,
+            //                 height: String
+            //               },
+            //               meister_Panel: {
+            //                 width: String,
+            //                 height: String
+            //               }
+            //             }
+            //           }
+            //         ]
+            //       }
+            //     ],
+            //   }
 
-            this.setState({
-                binder_arr_obj: [new_binder_obj]
-            });
+            // this.setState({
+            //     binder_arr_obj: [new_binder_obj]
+            // });
 
-        } else {
-            let new_index = binder_arr_obj[length - 1].binder_id + 1;
-            let new_url = '/binder' + new_index;
+        // } else {
+        //     let new_index = binder_arr_obj[length - 1].binder_id + 1;
+        //     let new_url = '/binder' + new_index;
 
-            let index_mod = new_index % 5;
-            //console.log('index_mod', index_mod);
+        //     let index_mod = new_index % 5;
+        //     //console.log('index_mod', index_mod);
 
-            let new_binder_obj = {
-                binder_id: new_index,
-                binder_name: 'New Binder',
-                binder_color: binder_color_arr[index_mod],
-                binder_url: new_url,
-                tab_arr_obj: new_tab_arr
-            }
+        //     let new_binder_obj = {
+        //         binder_id: new_index,
+        //         binder_name: 'New Binder',
+        //         binder_color: binder_color_arr[index_mod],
+        //         binder_url: new_url,
+        //         tab_arr_obj: new_tab_arr
+        //     }
 
-            this.setState({
-                binder_arr_obj: [...binder_arr_obj, new_binder_obj]
-            });
+        //     this.setState({
+        //         binder_arr_obj: [...binder_arr_obj, new_binder_obj]
+        //     });
 
-        }
+        // }
 
     }
 
@@ -378,10 +378,14 @@ class Binder extends Component {
         // });
     }
 
-    handleClick(binder_id){
-        //this.props.selectBinder(binderObj);
-        //this.props.binderUpdate(binder_id);
-        //console.log("binderObj", binderObj);
+    handleClick(binderObj){
+        this.props.selectBinder(binderObj);
+        this.props.binderUpdate(binderObj._id);
+        //select first tab and page by default
+        console.log('binderObj:' ,binderObj);
+        //this.props.tabUpdate(binderObj.tab_arr_obj[0]._id);
+        //this.props.pageUpdate(binderObj.tab_arr_obj[0].page_arr_obj[0]._id);
+        console.log("binder id updated");
     }
     /*
     
@@ -434,12 +438,12 @@ class Binder extends Component {
                     backgroundColor: 'inherit'
                 }
 
-                let binder_url = '/' + item._id.$oid;
+                let binder_url = '/' + item._id;
                 //console.log('binder id: ', item._id.$oid);
                 return (
                     <li key={index}>
                         <Link to={'/main' + binder_url} style={{ textDecoration: 'none' }} >
-                            <div className="binderDiv" onClick={this.handleClick(item._id.$oid)} style={active ? binderStyle : binderStyle2} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
+                            <div className="binderDiv" onClick={()=>{this.handleClick(item)}} style={active ? binderStyle : binderStyle2} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
                                 {item.binder_name}
                             </div>
                         </Link>
@@ -449,7 +453,7 @@ class Binder extends Component {
         }
 
         const binder_route = this.props.binderArr.map((item, index) => {
-            let binder_url = '/' + item._id.$oid;
+            let binder_url = '/' + item._id;
             //console.log('Route binder id: ', binder_url);
             //console.log("binder_url", binder_url);
             return (
@@ -478,7 +482,7 @@ class Binder extends Component {
 
 
 
-                <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible' : 'hidden'}`} onClick={this.addBinder}>
+                <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
                     <span className="glyphicon glyphicon-plus"></span>
                 </button>
             </div>

@@ -34,7 +34,7 @@ body {
     margin: 0 auto;
     position: relative;
     top: 13vh;
-    box-shadow: 0 4px 2px -2px darkorange;
+    box-shadow: 0 4px 2px -2px #31C3E7;
     border-radius: 5px;
 }
 .blur {

@@ -91,12 +91,31 @@ export function grabVideoUrl () {
         payload: videoLink
     }
 }
-// END OF VIDEO ACTION CREATORS
-export function binderArray(binderArray){
-    return{
-        type: types.BINDER_ARRAY,
-        payload: binderArray
+export function binderArray(){
+
+    return (dispatch) => {
+        const test = axios.get('/api/binder')
+        .then((resp)=>{
+            console.log("get response: ", resp.data.binder_arr_obj);
+    
+            dispatch({
+                type: types.BINDER_ARRAY,
+                payload: resp.data.binder_arr_obj
+            });
+        }).catch(err => {
+            dispatch({
+                type: 'error',
+                msg: 'Failed call in binderarray'
+            });
+        });
     }
+    
+    
+    // });
+
+
+    
+
 }
 
 export function selectBinder(binderObj){
@@ -127,3 +146,16 @@ export function pageUpdate(page_id){
     }
 }
 
+export function addBinder(binderObj){
+    return{
+        type: types.ADD_BINDER,
+        payload: binderObj
+    }
+}
+
+//Notes Action Creator
+export function save_notes(){
+    return{
+        type: types.SAVE_NOTES,
+    }
+}
