@@ -10,7 +10,7 @@ class Results extends Component {
     }
     render() {
         const {results} = this.props;
-        console.log("Here is the results from the results comp: ", results);
+        console.log("video results: ", results)
         const list = results.map((item, index) => {
             console.log(item.url);
             return (
@@ -34,8 +34,8 @@ class Results extends Component {
 
 function mapStateToProps (state) {
     return {
-        playlist: state.results.playlist,
-        url: state.results.url
+        playlist: state.video.results,
+        // url: state.results.url
     }
 }
 
