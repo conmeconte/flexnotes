@@ -48,6 +48,7 @@
     "react-sortable-pane": "^0.6.8",
     "react-split-pane": "^0.1.74",
     "redux": "^3.7.2",
+    "redux-form": "^7.2.0",
     "redux-thunk": "^2.2.0",
     "slate": "^0.31.8",
     "slate-react": "^0.10.23",
