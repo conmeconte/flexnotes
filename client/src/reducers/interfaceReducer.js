@@ -4,7 +4,8 @@ const DEFAULT_STATE = {
     binder_id: '',
     tab_id: '',
     page_id: '',
-    navbar_min: false 
+    navbar_min: false,
+    user_data: {} 
 }
 
 export default function(state = DEFAULT_STATE, action){
@@ -15,6 +16,8 @@ export default function(state = DEFAULT_STATE, action){
             return {...state, tab_id: action.payload};
         case types.PAGE_UPDATE:
             return {...state, page_id: action.payload};
+        case types.GET_USER_DATA:
+            return {...state, user_data: action.payload};
         default:
             return state;
     }

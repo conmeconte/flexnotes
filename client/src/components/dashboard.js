@@ -5,7 +5,7 @@ import Login from './login';
 import '../assets/css/login.css';
 
 import { connect } from 'react-redux';
-import { binderArray, selectBinder, binderUpdate, tabUpdate, pageUpdate } from '../actions';
+import { getDataObject, binderArray, selectBinder, binderUpdate, tabUpdate, pageUpdate } from '../actions';
 
 
 class Dashboard extends Component {
@@ -81,14 +81,20 @@ class Dashboard extends Component {
 
         //console.log("dashboard did mount");
         this.props.binderArray();
+        //this.props.getDataObject();
 
  
     }
 
     componentWillReceiveProps(nextProps){
-        //console.log("Next props:", nextProps.binderArr.length);
+        console.log("Next props:", nextProps);
+       //let binderArr = nextProps.interface.user_data.binder_arr_obj;
+        //console.log("binderArr:", binderArr);
+        // if(binderArr){
+        //     this.props.binderArray(binderArr);
+        // }
         if(this.props.binderArr != nextProps.binderArr){
-            //console.log('Next props is different');
+            console.log('Next props is different');
             let arrLength =  nextProps.binderArr.length;
             let binderArr = nextProps.binderArr;
             if(arrLength > 0){
@@ -140,4 +146,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{ binderArray, selectBinder, binderUpdate, tabUpdate, pageUpdate })(Dashboard);
+export default connect(mapStateToProps,{ getDataObject, binderArray, selectBinder, binderUpdate, tabUpdate, pageUpdate })(Dashboard);
