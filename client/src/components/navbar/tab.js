@@ -184,7 +184,7 @@ class Tab extends Component {
         } else {
 
             tab_link = tab_arr_obj.map((item, index) => {
-                let tab_url = '/' + item._id.$oid;
+                let tab_url = '/' + item._id;
                 //console.log('tab map:', item);
                 var tabStyle ={
                     borderLeft: '12px solid '+item.tab_color
@@ -202,7 +202,7 @@ class Tab extends Component {
         }
     
         const tab_route = tab_arr_obj.map((item, index) => {
-            let tab_url = '/' + item._id.$oid;
+            let tab_url = '/' + item._id;
             return(
 
                 <Route key={index} path={'/main'+this.props.binder_url + tab_url} render={()=> 
