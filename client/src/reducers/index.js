@@ -5,14 +5,16 @@ import resultsReducer from './resultsReducer';
 import binderarrayReducer from './binderArrayReducer';
 import binderReducer from './binderReducer';
 import interfaceReducer from './interfaceReducer';
+import slideReducer from './slide_reducer';
 
 
 
 export default combineReducers({
     auth: authReducer,
     video: videoReducer,
-    results: resultsReducer, 
+    results: resultsReducer,
     binderArray: binderarrayReducer,
     binder: binderReducer,
-    interface: interfaceReducer
+    interface: interfaceReducer,
+    slides: slideReducer
 })
