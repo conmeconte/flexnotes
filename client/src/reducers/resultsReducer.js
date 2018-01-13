@@ -15,7 +15,7 @@ export default function (state = DEFAULT_STATE, action) {
             }
             return {...state, playlist: [action.payload, ...state.playlist]};
         case types.GRAB_VIDEO_URL: 
-            return { ...state, pastedVideoUrl: action.payload }
+            return { ...state, videoLink: action.payload }
         default:
             return state;
     }
