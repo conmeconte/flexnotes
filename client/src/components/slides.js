@@ -3,6 +3,7 @@ import '../assets/css/slides.css';
 import axios from 'axios';
 import { setSlidesUrl } from '../actions';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
 
 class Slides extends Component {
     constructor(props) {
@@ -15,6 +16,21 @@ class Slides extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
+
+    renderInput(props) {
+        const { input, meta: { touched, error } } = props;
+        console.log('renderInput slides:', props);
+        return (
+            <div>
+                <input className="slides-input" {...input} />
+                <p className="text-danger"><em>{touched && error}</em></p>
+            </div>
+        )
+    }
+
+    // renderIframe() {
+
+    // }
 
     componentWillMount() {
         // const URL = '/api/page';
@@ -42,8 +58,8 @@ class Slides extends Component {
     }
 
     handleInputChange(e) {
-        const { value } = e.target;
-        this.props.setSlidesUrl(value)
+        // const { value } = e.target;
+        // this.props.setSlidesUrl(value)
         // this.setState({
         //     input: slidesURL,
         //     inputValid: true,
@@ -61,7 +77,8 @@ class Slides extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        console.log('Slides HandleSubmit', e);
+        console.log('Slides HandleSubmit', document.querySelector('.slides-input').value);
+        this.props.setSlidesUrl(document.querySelector('.slides-input').value);
         // this.setState({
         //     inputComplete: true
         // })
@@ -89,23 +106,42 @@ class Slides extends Component {
         return (
             <div className="slides-div">
                 <form onSubmit={this.handleSubmit}>
-                    <input onChange={this.handleInputChange} value={this.props.input} type="text" />
+                    <Field name="url" component={this.renderInput} />
                     <button className="btn btn-success btn-sm">Upload</button>
                 </form>
                 {
-                    // inputComplete && inputValid
-                    true ?
-                        <iframe src={this.props.input} frameBorder="0" className="slides-iframe"></iframe>
-                        : <p><em>Please paste a valid Google Slides URL</em></p>
+                    this.props.slide_input ?
+                        <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe"></iframe>
+                        : ""
                 }
             </div>
         )
     }
 }
 
+function validate(values) {
+    console.log('from slides.js validate:', values.url);
+    console.log('again from slides.js validate', typeof (values.url));
+    const errors = {};
+    const valuesStr = values.url;
+    if (valuesStr) {
+        if (valuesStr.indexOf('presentation/d/') === -1) {
+            console.log("Dat's not a url, yo");
+            errors.url = "Please paste a valid Google Slides URL";
+        }
+    }
+    return errors;
+}
+
+Slides = reduxForm({
+    form: 'add-slides-url',
+    validate: validate
+})(Slides);
+
 function mapStateToProps(state) {
+    console.log("mSTP slides.js ln:139", state.slides.input);
     return {
-        input: state.slides.setSlidesUrl
+        slide_input: state.slides.input
     }
 };
 

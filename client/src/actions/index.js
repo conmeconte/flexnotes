@@ -9,18 +9,31 @@ export const fetchUser = () => async dispatch => {
 //Lecture Slides Action Creators
 
 export function setSlidesUrl(value) {
-    if (value.indexOf('/d/') !== -1) {
-        const urlSplit1 = value.split("/d/");
-        const urlSplit2 = urlSplit1[1].split('/');
-        let presentationID = urlSplit2[0];
-        const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
-        console.log('setSlidesUrl action: ', slidesURL);
-        return {
-            type: types.SET_SLIDES_URL,
-            payload: slidesURL
+    console.log("setSlides url action 1:", value);
+    if (value) {
+        if (value.indexOf('presentation/d/') !== -1) {
+            const urlSplit1 = value.split("presentation/d/");
+            const urlSplit2 = urlSplit1[1].split('/');
+            let presentationID = urlSplit2[0];
+            const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
+            return {
+                type: types.SET_SLIDES_URL,
+                payload: slidesURL
+            }
+        }
+        else {
+            return {
+                type: types.SET_SLIDES_URL,
+                payload: ''
+            };
         }
     }
-
+    else {
+        return {
+            type: types.SET_SLIDES_URL,
+            payload: ''
+        };
+    }
 }
 // End of Lecture Slides Action Creators
 
@@ -140,9 +153,3 @@ export function addBinder(binderObj) {
     }
 }
 
-//Notes Action Creator
-export function save_notes(){
-    return{
-        type: types.SAVE_NOTES,
-    }
-}

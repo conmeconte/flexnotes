@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import authReducer from './authReducer';
 import videoReducer from './videoReducer';
 import resultsReducer from './resultsReducer';
@@ -17,6 +18,7 @@ export default combineReducers({
     binderArray: binderarrayReducer,
     binder: binderReducer,
     interface: interfaceReducer,
-    slides: slideReducer
-    notes: notesReducer
+    slides: slideReducer,
+    notes: notesReducer,
+    form: formReducer
 })
