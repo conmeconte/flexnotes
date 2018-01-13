@@ -67,10 +67,6 @@ body {
     height: 90vh;
 }
 
-.Pane1 {
-    overflow-y: scroll;
-    overflow-wrap: break-word;
-}
 .app-title {
     margin: 0;
 }
