@@ -11,7 +11,7 @@ class VideoContainer extends Component {
                     this.props.grabVideoUrl();
                     this.props.playVideo();
                 }}>Embed Video</button>
-                <button onClick={ () => {this.props.addToPlaylist(this.props.pastedVideoUrl)}} className="btn btn-primary">
+                <button onClick={ () => {this.props.addToPlaylist(this.props.pastedVideoUrl, this.props.binderTabPageIds)}} className="btn btn-primary">
                     <span className="glyphicon glyphicon-plus"></span>
                 </button>
                 <iframe style={ {width: '100%', height: '100%'} } className="currentVideo" src="null"></iframe>
