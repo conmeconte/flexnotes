@@ -9,7 +9,6 @@ module.exports = (app) => {
         res.send('Homepage')
     })
     app.get('/api/userInfo', requireLogin, (req, res) => {
-        console.log(req.user.id)
         res.send(req.user);
     });
 
