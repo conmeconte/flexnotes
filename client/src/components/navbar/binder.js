@@ -110,7 +110,7 @@ class Binder extends Component {
 
         //console.log("Fake Data: ", this.state.fake_data.binder_arr_obj);
         //this.props.binderArray(this.state.fake_data.binder_arr_obj);
-        this.props.selectBinder(this.props.binderArr[0]);
+        //this.props.selectBinder(this.props.binderArr[0]);
     }
 
     addBinder() {
@@ -378,9 +378,13 @@ class Binder extends Component {
         // });
     }
 
-    handleClick(binder_id){
-        //this.props.selectBinder(binderObj);
-        this.props.binderUpdate(binder_id);
+    handleClick(binderObj){
+        this.props.selectBinder(binderObj);
+        this.props.binderUpdate(binderObj._id);
+        //select first tab and page by default
+        console.log('binderObj:' ,binderObj);
+        //this.props.tabUpdate(binderObj.tab_arr_obj[0]._id);
+        //this.props.pageUpdate(binderObj.tab_arr_obj[0].page_arr_obj[0]._id);
         console.log("binder id updated");
     }
     /*
@@ -434,12 +438,12 @@ class Binder extends Component {
                     backgroundColor: 'inherit'
                 }
 
-                let binder_url = '/' + item._id.$oid;
+                let binder_url = '/' + item._id;
                 //console.log('binder id: ', item._id.$oid);
                 return (
                     <li key={index}>
                         <Link to={'/main' + binder_url} style={{ textDecoration: 'none' }} >
-                            <div className="binderDiv" onClick={()=>{this.handleClick(item._id.$oid)}} style={active ? binderStyle : binderStyle2} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
+                            <div className="binderDiv" onClick={()=>{this.handleClick(item)}} style={active ? binderStyle : binderStyle2} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
                                 {item.binder_name}
                             </div>
                         </Link>
@@ -449,7 +453,7 @@ class Binder extends Component {
         }
 
         const binder_route = this.props.binderArr.map((item, index) => {
-            let binder_url = '/' + item._id.$oid;
+            let binder_url = '/' + item._id;
             //console.log('Route binder id: ', binder_url);
             //console.log("binder_url", binder_url);
             return (

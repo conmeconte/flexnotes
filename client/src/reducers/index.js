@@ -12,7 +12,7 @@ import notesReducer from './notesReducer';
 export default combineReducers({
     auth: authReducer,
     video: videoReducer,
-    results: resultsReducer, 
+    videoResults: resultsReducer, 
     binderArray: binderarrayReducer,
     binder: binderReducer,
     interface: interfaceReducer,

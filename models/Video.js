@@ -4,8 +4,8 @@ const { Schema } = mongoose;
 /* Video Schema */
 
 const videoSchemaNew = new Schema({
-    vid_url : String,
-    videoInfo: String
+    playlist : [],
+    videoLink: String
 });
 
 module.exports = videoSchemaNew;

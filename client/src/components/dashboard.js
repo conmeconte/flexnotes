@@ -132,7 +132,7 @@ class Dashboard extends Component {
 }
 
 function mapStateToProps(state){
-    
+    console.log('mstp dashboard:', state);
     return{
         binderArr: state.binderArray.binderArr,
         initBinder: state.binder.binderObj,

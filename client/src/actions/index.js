@@ -6,7 +6,14 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: types.FETCH_USER, payload: res.data });
 };
 //Video Action Creators
+export function getVideoResults (videos) {
+      return {
+        type: types.GET_VIDEO_RESULTS,
+        payload: videos
+    }
+}
 export function getResultStyles (styles, bool) {
+    
     if (bool) {
         styles = {
             width : '0%',
@@ -18,6 +25,7 @@ export function getResultStyles (styles, bool) {
             display : 'block'
         }
     }
+    console.log("GET RESULTS STYLES: ", styles);
     return {
         type: types.GET_RESULT_STYLES,
         payload: styles
@@ -33,6 +41,7 @@ export function getOpacityDisplay (styles, bool) {
             display: 'block'
         }
     }
+    console.log("GET RESULTS STYLES: ", styles);
     return {
         type: types.GET_OPACITY_DISPLAY,
         payload: styles
@@ -45,10 +54,21 @@ export function toggleResults (bool) {
         payload: toggleResults
     }
 }
-export function addToPlaylist (currentVideoList, addedvideo) {
+export function addToPlaylist (videoUrl) {
+    axios.post('/api/video', {
+        video: {
+            videoTitle: 'ReactJS Crash Course',
+            videoId: 'A71aqufiNtQ',
+            videoUrl: videoUrl
+        },
+        binderID: '5a57bd348b53621f100237e6',
+        tabID: '5a57bd348b53621f100237e7',
+        pageID: '5a57bd348b53621f100237e8'
+    });
+    console.log("ADD TO PLAYLIST FUNCTION: ", videoUrl );
     return {
         type: types.ADD_TO_PLAYLIST,
-        payload: [addedVideo, ...currentVideoList]
+        payload: videoUrl
     }
 }
 export function playVideo () {
@@ -59,36 +79,18 @@ export function playVideo () {
     var videoId = document.querySelector(".pastedVideoInput").value;
     videoId = videoId.split('&')[0];
     videoId = videoId.split('=')[1];
-    document.querySelector(".currentVideo").src = `https://www.youtube.com/embed/${videoId}`;
+    videoId = document.querySelector(".currentVideo").src = `https://www.youtube.com/embed/${videoId}`;
     return {
         type: types.PLAY_VIDEO
     }
 }
-
-
 export function grabVideoUrl () {
-    
+    var videoLink = document.querySelector(".pastedVideoInput").value;
     return {
         type: types.GRAB_VIDEO_URL,
         payload: videoLink
     }
 }
-
-// export const getBinderArr = () => async dispatch => {
-//     try {
-//         const resp = await fetch('/api/binder');
-//         console.log(resp);
-//         dispatch(binderArray(resp));
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// export const binderArray = repos => ({  
-//     type: 'ADD_REPOS',
-//     repos,
-//   });
-
 export function binderArray(){
 
     return (dispatch) => {
