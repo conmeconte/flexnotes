@@ -67,13 +67,47 @@ body {
     height: 90vh;
 }
 
-.Pane1 {
-    overflow-y: scroll;
-    overflow-wrap: break-word;
-}
-.app-title {
-    margin: 0;
-}
 .container-fluid {
     padding: 0;
+}
+
+.welcome {
+    float: left;
+    color: #31C3E7;
+    margin: 0 5px 0 0;
+    padding: 0 10px;
+    line-height: 40px;
+}
+
+.panelOptions {
+    float: right;
+    display: flex;
+    flex-direction: row;
+}
+
+.panelOptions:last-child {
+    margin-right: 20px;
+}
+
+.optionsTitle {
+    color: #31C3E7;
+    margin: 6px 10px 0 0;
+}
+
+.layoutBtn {
+    color: #ffffff;
+    background-color: #31C3E7;
+    border: 1px solid #31C3E7;
+    border-radius: 3px;
+    margin-right: 5px;
+    height: 30px;
+    width: 30px;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.layoutBtn:hover {
+    background-color: #ffffff;
+    border: 2px solid #31C3E7;
+    color: #31C3E7;
 }

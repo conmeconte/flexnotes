@@ -1,7 +1,21 @@
-.login {
-    right: 5px;
-    top: 5px;
+.logout {
+    position: absolute;
+    left: -28px;
+    bottom: 10px;
     text-align: right;
     width: 10%;
-    position: absolute;
+    z-index: 1;
+}
+
+.btn-sm {
+    background-color: #31C3E7;
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.btn-sm:hover {
+    background-color: #ffffff;
+    border: 2px solid #31C3E7;
+    color: #31C3E7;
+    font-size: 15px;
 }
