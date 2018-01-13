@@ -94,7 +94,7 @@ class Dashboard extends Component {
 
         return(
             <div>
-                <div className="login">
+                <div className="logout">
                     <Login />
                 </div>
                 <NavBar />
