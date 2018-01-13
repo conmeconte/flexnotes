@@ -6,16 +6,6 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
 class Slides extends Component {
-    constructor(props) {
-        super(props);
-        // this.state = {
-        //     input: '',
-        //     inputValid: false,
-        //     inputComplete: false
-        // };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
-    }
 
     renderInput(props) {
         const { input, meta: { touched, error } } = props;
@@ -27,10 +17,6 @@ class Slides extends Component {
             </div>
         )
     }
-
-    // renderIframe() {
-
-    // }
 
     componentWillMount() {
         // const URL = '/api/page';
@@ -57,48 +43,24 @@ class Slides extends Component {
         // });
     }
 
-    handleInputChange(e) {
-        // const { value } = e.target;
-        // this.props.setSlidesUrl(value)
-        // this.setState({
-        //     input: slidesURL,
-        //     inputValid: true,
-        //     inputComplete: false
-        //     })
-        // } else {
-        //     this.setState({
-        //         input: '',
-        //         inputValid: false,
-        //         inputComplete: false
-        //     })
-        // }
-
-    }
-
     handleSubmit(e) {
         e.preventDefault();
         console.log('Slides HandleSubmit', document.querySelector('.slides-input').value);
-        this.props.setSlidesUrl(document.querySelector('.slides-input').value);
-        // this.setState({
-        //     inputComplete: true
-        // })
-        // console.log(this.state.input);
-
+        this.props.setSlidesUrl(document.querySelector('.slides-input').value, this.props.interface);
         // const URL = "/api/page";
 
-        // axios.put(URL, {
-        //     lecture_slides: {
-        //         lec_id: this.state.input
+        //     axios.put(URL, {
+        //         lecture_slides: {
+        //             lec_id: this.props.slide_input
 
-        //     },
-        //     binderID: "5a57bd348b53621f100237e6",
-        //     tabID: "5a57bd348b53621f100237e7",
-        //     pageID: "5a57bd348b53621f100237e8"
+        //         },
+        //         binderID: this.props.interface.binder_id,
+        //         tabID: this.props.interface.tab_id,
+        //         pageID: this.props.interface.page_id
 
-        // }).then((resp) => {
-        //     console.log(`SLIDES PUT REQ:`, resp);
-        // });
-        // console.log('handleSubmit state ', this.state);
+        //     }).then((resp) => {
+        //         console.log(`(slides.js ln:94) SLIDES PUT REQ:`, resp);
+        //     });
     }
 
     render() {
@@ -141,7 +103,8 @@ Slides = reduxForm({
 function mapStateToProps(state) {
     console.log("mSTP slides.js ln:139", state.slides.input);
     return {
-        slide_input: state.slides.input
+        slide_input: state.slides.input,
+        interface_obj: state.interface
     }
 };
 

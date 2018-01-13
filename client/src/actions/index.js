@@ -8,7 +8,7 @@ export const fetchUser = () => async dispatch => {
 
 //Lecture Slides Action Creators
 
-export function setSlidesUrl(value) {
+export function setSlidesUrl(value, interfaceObj) {
     console.log("setSlides url action 1:", value);
     if (value) {
         if (value.indexOf('presentation/d/') !== -1) {
@@ -16,6 +16,14 @@ export function setSlidesUrl(value) {
             const urlSplit2 = urlSplit1[1].split('/');
             let presentationID = urlSplit2[0];
             const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
+            axios.put('/api/page', {
+                lecture_slides: {
+                    lec_id: slidesURL
+                },
+                binderID: interfaceObj.binder_id,
+                tabID: interfaceObj.tab_id,
+                pageID: interfaceObj.page_id
+            });
             return {
                 type: types.SET_SLIDES_URL,
                 payload: slidesURL
@@ -164,53 +172,54 @@ export function binderArray() {
                     type: 'error',
                     msg: 'Failed call in binderarray'
                 });
-            }
+            });
+    }
 }
 
-    export function selectBinder(binderObj) {
-        return {
-            type: types.SELECT_BINDER,
-            payload: binderObj
-        }
+export function selectBinder(binderObj) {
+    return {
+        type: types.SELECT_BINDER,
+        payload: binderObj
     }
+}
 
-    export function binderUpdate(binder_id) {
-        return {
-            type: types.BINDER_UPDATE,
-            payload: binder_id
-        }
+export function binderUpdate(binder_id) {
+    return {
+        type: types.BINDER_UPDATE,
+        payload: binder_id
     }
+}
 
-    export function tabUpdate(tab_id) {
-        return {
-            type: types.TAB_UPDATE,
-            payload: tab_id
-        }
+export function tabUpdate(tab_id) {
+    return {
+        type: types.TAB_UPDATE,
+        payload: tab_id
     }
+}
 
-    export function pageUpdate(page_id) {
-        return {
-            type: types.PAGE_UPDATE,
-            payload: page_id
-        }
+export function pageUpdate(page_id) {
+    return {
+        type: types.PAGE_UPDATE,
+        payload: page_id
     }
+}
 
-    export function addBinder() {
-        return (dispatch) => {
-            const test = axios.post('/api/binder')
-                .then((resp) => {
-                    console.log("addBinder response: ", resp);
+export function addBinder() {
+    return (dispatch) => {
+        const test = axios.post('/api/binder')
+            .then((resp) => {
+                console.log("addBinder response: ", resp);
 
-                    dispatch({
-                        type: types.ADD_BINDER,
-                        payload: resp.data.binder_arr_obj
-                    });
-                }).catch(err => {
-                    dispatch({
-                        type: 'error',
-                        msg: 'Failed call in binderarray'
-                    });
+                dispatch({
+                    type: types.ADD_BINDER,
+                    payload: resp.data.binder_arr_obj
                 });
-        }
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in binderarray'
+                });
+            });
     }
+}
 
