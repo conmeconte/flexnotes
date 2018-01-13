@@ -65,7 +65,6 @@ export function addToPlaylist (videoUrl, interfaceObj) {
         tabID: interfaceObj.tab_id,
         pageID: interfaceObj.page_id
     });
-    console.log("ADD TO PLAYLIST FUNCTION: ", videoUrl );
     return {
         type: types.ADD_TO_PLAYLIST,
         payload: videoUrl
