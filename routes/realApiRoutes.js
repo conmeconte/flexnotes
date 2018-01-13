@@ -26,7 +26,7 @@ module.exports = (app) => {
     // For Binder //
     app
         .get('/api/binder', async (req, res) => {
-            //give binder data
+            //give binder data 
             //userId accessible via req.param.userId?
             const existingUser= await User.findById(req.user.id, function (err, user){
             // const existingUser= await User.findById(req.user.id, function (err, user){
@@ -291,15 +291,13 @@ module.exports = (app) => {
                     .binder_arr_obj.id(req.body.binderID)
                     .tab_arr_obj.id(req.body.tabID)  
                     .page_arr_obj.id(req.body.pageID)
-                    .videoID(req.body.videoID)
                     if(page){
-                        // videoObj= page.video[0];
-                        page.video.push(new Video({videoId: req.body.videoId, videoURL: req.body.videoURL, videoTitle: req.body.videoTitle}));
-
+                        videoObj= page.video[0];
+                        videoObj= new Video({videoId: req.body.video.videoId, videoURL: req.body.video.videoUrl, videoTitle: req.body.video.videoTitle});
 
                         user.save();
-                        res.send(user);
-                    }else{res.send('wrong path')}
+                        res.send(videoObj);
+                    }else{res.send('wrong path')} 
                     
                 }else {
                 res.send("Error can't find user")

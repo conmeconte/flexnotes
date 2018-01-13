@@ -55,7 +55,7 @@ export function toggleResults (bool) {
     }
 }
 export function addToPlaylist (videoUrl, interfaceObj) {
-    console.log('hahahahaha ', interfaceObj);
+    console.log('hahahahaha ', videoUrl);
 
     axios.post('/api/video', {
         video: {
