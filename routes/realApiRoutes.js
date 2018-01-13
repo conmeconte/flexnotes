@@ -27,7 +27,7 @@ module.exports = (app) => {
         .get('/api/binder', async (req, res) => {
             //give binder data
             //userId accessible via req.param.userId?
-            const existingUser= await User.findById(req.body.id, function (err, user){
+            const existingUser= await User.findById(req.user.id, function (err, user){
             // const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) { res.send("Error did occurred") };
 
@@ -80,9 +80,9 @@ module.exports = (app) => {
         })
         .put('/api/binder', async (req, res) => {
             // update binder
+
             const existingUser= await User.findById(req.user.id, function (err, user){
             // const existingUser= await User.findById(req.user.id, function (err, user){
-            console.log('bruce haha ',req.user);    
             if (err) { res.send("Error did occurred")};
     
                 if (user) {
