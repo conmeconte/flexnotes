@@ -55,6 +55,16 @@ export function toggleResults (bool) {
     }
 }
 export function addToPlaylist (videoUrl) {
+    axios.post('/api/video', {
+        video: {
+            videoTitle: 'ReactJS Crash Course',
+            videoId: 'A71aqufiNtQ',
+            videoUrl: videoUrl
+        },
+        binderID: '5a57bd348b53621f100237e6',
+        tabID: '5a57bd348b53621f100237e7',
+        pageID: '5a57bd348b53621f100237e8'
+    });
     console.log("ADD TO PLAYLIST FUNCTION: ", videoUrl );
     return {
         type: types.ADD_TO_PLAYLIST,
