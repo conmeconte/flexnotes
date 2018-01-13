@@ -292,11 +292,12 @@ module.exports = (app) => {
                     .tab_arr_obj.id(req.body.tabID)  
                     .page_arr_obj.id(req.body.pageID)
                     if(page){
-                        videoObj= page.video[0];
-                        videoObj= new Video({videoId: req.body.video.videoId, videoURL: req.body.video.videoUrl, videoTitle: req.body.video.videoTitle});
+                        
+                        page.video[0]=new Video({videoId: req.body.video.videoId, videoURL: req.body.video.videoUrl, videoTitle: req.body.video.videoTitle});
 
                         user.save();
-                        res.send(videoObj);
+                        console.log(user);
+                        res.send(user);
                     }else{res.send('wrong path')} 
                     
                 }else {
