@@ -7,7 +7,7 @@ const DEFAULT_STATE = {
     numberPanels: 0
 }
 
-export function (state = DEFAULT_STATE, action) {
+export function(state = DEFAULT_STATE, action) {
     switch (action.type) {
         case types.NUM_OF_PANELS:
             return { ...state, numberPanels: action.payload }

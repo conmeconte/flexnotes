@@ -58,25 +58,25 @@ class Panel extends Component {
                     <h1 className="app-title">FlexNote</h1>
                 </div> */}
                 <div className="panel_div col-xs-10">
-                    <PanelNum num={/* wait for Scott's answer on mapDS for setNumOfPanels in Redux store*/}> />
+                    <PanelNum num={/* wait for Scott's answer on mapDS for setNumOfPanels in Redux store*/} />
                 </div>
-                </div>
-                );
+            </div>
+        );
     }
 }
 
 function mapStateToProps(state) {
     return {
-                    binderArray: state.binderArray
+        binderArray: state.binderArray
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-                    getBinderArray: function () {
-                    dispatch(binderArray())
-                }
-                }
+        getBinderArray: function () {
+            dispatch(binderArray())
+        }
+    }
 }
 
 const VisiblePanel = connect(mapStateToProps, mapDispatchToProps)(Panel);
