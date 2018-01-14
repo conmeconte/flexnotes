@@ -6,7 +6,55 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: types.FETCH_USER, payload: res.data });
 };
 
-//Lecture Slides Action Creators
+//PANEL SPECs Action Creator
+
+export function setPanelSpecs(top_left_height, top_left_width, top_right_height) {
+    if (top_right_height) {
+        return {
+            type: types.PANEL_SPECS,
+            payload_tlh: top_left_height,
+            payload_tlw: top_left_width,
+            payload_trh: top_right_height,
+        }
+    } else {
+        return {
+            type: types.PANEL_SPECS,
+            payload_tlh: top_left_height,
+            payload_tlw: top_left_width,
+            payload_trh: 0,
+        }
+    }
+}
+
+export function setTopLeftHeight(num) {
+    return {
+        type: types.PANEL_TOP_LEFT_HEIGHT,
+        payload: num
+    }
+}
+
+export function setTopLeftWidth(num) {
+    return {
+        type: types.PANEL_TOP_LEFT_WIDTH,
+        payload: num
+    }
+}
+
+export function setTopRightHeight(num) {
+    return {
+        type: types.PANEL_RIGHT_HEIGHT,
+        payload: num
+    }
+}
+
+export function setNumOfPanels(num) {
+    return {
+        type: types.NUM_OF_PANELS,
+        payload: num
+    }
+}
+
+//Lecture Slides Action Creator
 
 export function setSlidesUrl(value, interfaceObj) {
     console.log("setSlides url action 1:", value);

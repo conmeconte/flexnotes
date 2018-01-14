@@ -17,5 +17,9 @@ export default {
     PLAY_VIDEO: 'play_video',
     GRAB_VIDEO_URL: 'grab_video_url',
     SET_SLIDES_URL: 'set_slides_url',
-    SAVE_NOTES: 'save_notes'
+    SAVE_NOTES: 'save_notes',
+    PANEL_TOP_LEFT_HEIGHT: 'panel_top_left_height',
+    PANEL_TOP_LEFT_WIDTH: 'panel_top_left_width',
+    PANEL_TOP_RIGHT_HEIGHT: 'panel_top_right_height',
+    NUM_OF_PANELS: 'num_of_panels'
 }
