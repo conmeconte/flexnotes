@@ -156,8 +156,8 @@ module.exports = (app) => {
 
                 if (user) {
                     const tab = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
-                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID;
+                    .binder_arr_obj.id(req.query.binderID) //req.body.binderID
+                    .tab_arr_obj.id(req.query.tabID)  //req.body.tabID;
 
                     const binder = user
                     .binder_arr_obj.id(req.body.binderID)
@@ -251,9 +251,9 @@ module.exports = (app) => {
 
                 if (user) {
                     const page = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
-                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID
-                    .page_arr_obj.id(req.body.pageID); //req.body.pageID
+                    .binder_arr_obj.id(req.query.binderID) //req.body.binderID
+                    .tab_arr_obj.id(req.query.tabID)  //req.body.tabID
+                    .page_arr_obj.id(req.query.pageID); //req.body.pageID
                     
                     page.remove();
                     user.save();
@@ -322,10 +322,10 @@ module.exports = (app) => {
                 if(err){ res.send('Error')}
                 if (user) {
                     const video = user
-                    .binder_arr_obj.id(req.body.binderID)
-                    .tab_arr_obj.id(req.body.tabID)  
-                    .page_arr_obj.id(req.body.pageID)
-                    .video.id(req.body.videoID)
+                    .binder_arr_obj.id(req.query.binderID)
+                    .tab_arr_obj.id(req.query.tabID)  
+                    .page_arr_obj.id(req.query.pageID)
+                    .video.id(req.query.videoID)
                     if(video){
                         video.remove();
                         user.save();
