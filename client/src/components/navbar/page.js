@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 
 import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectBinder, pageUpdate } from '../../actions';
+import { selectPage } from '../../actions';
 
-import Panel from '../panel';
 import PageOld from './page_old';
 
 class Page extends Component {
@@ -122,10 +121,10 @@ class Page extends Component {
         });
     }   
 
-    handleClick(page_id){
+    handleClick(pageObj){
         //this.props.selectBinder(binderObj);
-        this.props.pageUpdate(page_id);
-        console.log("page id updated");
+        this.props.selectPage(pageObj);
+        //console.log("page id updated");
     }
 
     render(){
@@ -163,11 +162,11 @@ class Page extends Component {
             });
         } else {
             page_link = page_arr_obj.map((item, index) => {
-                //console.log('page map:', item);
+                console.log('page map:', item);
                 let page_url = '/' + item._id;
                 return (
                     <li key={index}><Link to={'/main'+this.props.binder_url + this.props.tab_url + page_url} style={{ textDecoration: 'none' }}>
-                    <div className="pageDiv" onClick={()=>{this.handleClick(item._id.$oid)}}>
+                    <div className="pageDiv" onClick={()=>{this.handleClick(item)}}>
                         {item.page_name}
                     </div></Link></li>
                 );               
@@ -216,5 +215,5 @@ function mapStateToProps(state){
         binderObj: state.binder.binderObj
     }
 }
-export default withRouter(connect(mapStateToProps,{ selectBinder, pageUpdate })(Page));
+export default withRouter(connect(mapStateToProps,{ selectPage })(Page));
 //use binder reducer for logic
