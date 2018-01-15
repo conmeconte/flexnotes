@@ -138,7 +138,7 @@ export function getDataObject() {
     return (dispatch) => {
         const test = axios.get('/api/binder')
             .then((resp) => {
-                console.log("get data object: ", resp.data);
+                //console.log("get data object: ", resp.data);
 
                 dispatch({
                     type: types.GET_USER_DATA,
@@ -153,11 +153,7 @@ export function getDataObject() {
     }
 }
 
-export function binderArray() {
-    // return{
-    //     type: types.BINDER_ARRAY,
-    //     payload: binderArr
-    // }
+export function updateBinderArray() {
 
     return (dispatch) => {
         const test = axios.get('/api/binder')
@@ -165,7 +161,7 @@ export function binderArray() {
                 console.log("get response: ", resp.data.binder_arr_obj);
 
                 dispatch({
-                    type: types.BINDER_ARRAY,
+                    type: types.UPDATE_BINDER_ARRAY,
                     payload: resp.data.binder_arr_obj
                 });
             }).catch(err => {
@@ -184,24 +180,17 @@ export function selectBinder(binderObj) {
     }
 }
 
-export function binderUpdate(binder_id) {
+export function selectTab(tabObj) {
     return {
-        type: types.BINDER_UPDATE,
-        payload: binder_id
+        type: types.SELECT_TAB,
+        payload: tabObj
     }
 }
 
-export function tabUpdate(tab_id) {
+export function selectPage(pageObj) {
     return {
-        type: types.TAB_UPDATE,
-        payload: tab_id
-    }
-}
-
-export function pageUpdate(page_id) {
-    return {
-        type: types.PAGE_UPDATE,
-        payload: page_id
+        type: types.SELECT_PAGE,
+        payload: pageObj
     }
 }
 
@@ -224,3 +213,10 @@ export function addBinder() {
     }
 }
 
+//Notes Action Creator
+
+export function save_notes(){
+    return{
+        type: types.SAVE_NOTES
+    }
+}

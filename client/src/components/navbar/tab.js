@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectBinder, tabUpdate } from '../../actions';
+import { selectTab } from '../../actions';
 
 import Page from './page';
 
@@ -23,10 +23,6 @@ class Tab extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentWillMount(){
-        //console.log("should component update");
-        //this.props.selectBinder(this.props.binder);
-    }
 
     addTab(){
         console.log('addTab clicked');
@@ -140,10 +136,10 @@ class Tab extends Component {
         });
     }
 
-    handleClick(tab_id){
+    handleClick(tabObj){
         //this.props.selectBinder(binderObj);
-        this.props.tabUpdate(tab_id);
-        console.log("tab id updated");
+        this.props.selectTab(tabObj);
+        //console.log("tab id updated");
     }
 
     render(){
@@ -193,7 +189,7 @@ class Tab extends Component {
                     return (
                         <li key={index}><Link to={'/main'+this.props.binder_url + tab_url} style={{ textDecoration: 'none' }}>
 
-                            <div className="tabDiv" onClick={()=>{this.handleClick(item._id.$oid)}} style={tabStyle}>
+                            <div className="tabDiv" onClick={()=>{this.handleClick(item)}} style={tabStyle}>
                                 {item.tab_name}
                             </div>
                         </Link></li>
@@ -239,9 +235,9 @@ class Tab extends Component {
 }
 
 function mapStateToProps(state){
-    console.log('tab mstp', state);
+    //console.log('tab mstp', state);
     return {
         binderObj: state.binder.binderObj
     }
 }
-export default withRouter(connect(mapStateToProps,{ selectBinder, tabUpdate })(Tab));
+export default withRouter(connect(mapStateToProps,{ selectTab })(Tab));

@@ -6,10 +6,12 @@ const DEFAULT_STATE = {
 
 export default function(state = DEFAULT_STATE, action){
     switch(action.type){
-        case types.BINDER_ARRAY:
-            return{ binderArr: [...state.binderArr , ...action.payload]}
+        case types.GET_USER_DATA:
+        return{ binderArr: [...action.payload.binder_arr_obj]}
+        case types.UPDATE_BINDER_ARRAY:
+            return{ binderArr: [action.payload]}
         case types.ADD_BINDER:
-            return{ binderArr: [...state.binderArr, ...action.payload]}
+            return{ binderArr: [...action.payload]}
         default:
             return state;
     }
