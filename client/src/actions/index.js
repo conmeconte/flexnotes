@@ -139,7 +139,7 @@ export function getDataObject() {
         const test = axios.get('/api/binder')
             .then((resp) => {
                 //console.log("get data object: ", resp.data);
-
+                
                 dispatch({
                     type: types.GET_USER_DATA,
                     payload: resp.data
@@ -255,8 +255,7 @@ export function addPage(binder_id, tab_id) {
 
 export function deleteBinder(binder_id) {
     return (dispatch) => {
-        const test = axios.delete('/api/binder', {
-            binderID: binder_id
+        const test = axios.delete(`/api/binder?binderID=${binder_id}`, {
         })
             .then((resp) => {
                 console.log("delete binder response: ", resp);
