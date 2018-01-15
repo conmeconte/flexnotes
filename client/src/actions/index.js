@@ -213,3 +213,10 @@ export function addBinder() {
     }
 }
 
+//Notes Action Creator
+
+export function save_notes(){
+    return{
+        type: types.SAVE_NOTES
+    }
+}
