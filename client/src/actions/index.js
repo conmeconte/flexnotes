@@ -255,8 +255,7 @@ export function addPage(binder_id, tab_id) {
 
 export function deleteBinder(binder_id) {
     return (dispatch) => {
-        const test = axios.delete('/api/binder', {
-            binderID: binder_id
+        const test = axios.delete(`/api/binder?binderID=${binder_id}`, {
         })
             .then((resp) => {
                 console.log("delete binder response: ", resp);

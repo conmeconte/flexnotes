@@ -68,8 +68,7 @@ module.exports = (app) => {
     
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
-                    console.log('halal ', req.body.binderID);
+                    .binder_arr_obj.id(req.query.binderID) //req.body.binderID
                     binder.remove();
                     user.save();
                     res.send(user.binder_arr_obj);
