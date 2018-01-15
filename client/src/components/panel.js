@@ -21,7 +21,7 @@ class Panel extends Component {
     }
 
     componentWillMount() {
-        this.props.getBinderArray();
+        //this.props.getBinderArray();
 
         // const url = '/api/page';
         //
