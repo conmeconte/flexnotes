@@ -12,6 +12,8 @@ export default function(state = DEFAULT_STATE, action){
             return{ binderArr: [action.payload]}
         case types.ADD_BINDER:
             return{ binderArr: [...action.payload]}
+        case types.DELETE_BINDER:
+            return {binderArr: [...action.payload]}
         default:
             return state;
     }

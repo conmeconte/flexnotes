@@ -213,6 +213,48 @@ export function addBinder() {
     }
 }
 
+export function addTab(binder_id) {
+    return (dispatch) => {
+        const test = axios.post('/api/tab', {
+            binderID: binder_id
+        })
+            .then((resp) => {
+                console.log("addBinder tab: ", resp);
+
+                dispatch({
+                    type: types.ADD_TAB,
+                    payload: resp
+                });
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in binderarray'
+                });
+            });
+    }
+}
+
+export function deleteBinder(binder_id) {
+    return (dispatch) => {
+        const test = axios.delete('/api/binder', {
+            binderID: biinder_id
+        })
+            .then((resp) => {
+                console.log("addBinder response: ", resp);
+
+                dispatch({
+                    type: types.ADD_BINDER,
+                    payload: resp.data.binder_arr_obj
+                });
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in binderarray'
+                });
+            });
+    }
+}
+
 //Notes Action Creator
 
 export function save_notes(){
@@ -220,3 +262,4 @@ export function save_notes(){
         type: types.SAVE_NOTES
     }
 }
+
