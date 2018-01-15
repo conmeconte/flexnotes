@@ -19,7 +19,7 @@ class Results extends Component {
                         <li className="video-items">{item.videoTitle}</li>
                     </div>
                     <div className="col-xs-4">
-                        <button className="btn-sm btn-success pull-right" onClick={ () => { this.props.addToPlayList(item) } }><span className="glyphicon glyphicon-plus"></span></button>
+                        {/* <button className="btn-sm btn-success pull-right" onClick={ () => { this.props.addToPlayList(item) } }><span className="glyphicon glyphicon-plus"></span></button> */}
                         <button className="btn-sm btn-primary pull-right" onClick={ () => { this.props.playVideo(item.url) }}><span className="glyphicon glyphicon-play"></span></button>
                     </div>
                 </li>

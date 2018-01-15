@@ -5,15 +5,17 @@ import { connect } from 'react-redux';
 import Results from './results';
 import VideoContainer from './video-container';
 import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults } from '../actions';
+import { Field, reduxForm } from 'redux-form';
 
 const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
 class Video extends Component {
-    search () {
+    search (values) {
+        console.log("VALUES FROM SEARCH: ", values);
         var ROOT_URL = 'https://www.googleapis.com/youtube/v3/search';
         var params = {
           part: 'snippet',
           key: API_KEY,
-          q: 'javascript',
+          q: values.video,
           type: 'video',
           maxResults: 50
         };
@@ -35,12 +37,16 @@ class Video extends Component {
                   };
                   videos.push(vidObject);
               }
-              console.log("VIDEO RESULTS: ", response);
               self.props.getVideoResults(videos);
           })
           .catch(function(error) {
             console.error(error);
           });
+    }
+    renderInput ({input}) {
+        return (    
+            <input {...input} id="query" placeholder="Search..." className="form-control"/>
+        )
     }
     render() {
         return (
@@ -51,17 +57,18 @@ class Video extends Component {
                     this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool);
                 }}><span className="search glyphicon glyphicon-chevron-left"></span></button>
                 <div style={this.props.resultsStyles} className="results-container sidebar col-xs-4 pull-right">
-                    <div id="search-input-container" className="search-button-input input-group col-xs-12">
-                        <input id="query" className="form-control" type="text" placeholder="Search..." />
+                    <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input input-group col-xs-12">
+                        <Field name="video" component={this.renderInput} />
                         <span className="input-group-btn">
-                            <button id="search-button" type="button" className="btn btn-primary"
-                                onClick={ () => { this.search() }}><span className="glyphicon glyphicon-search"></span></button>
+                            <button id="search-button" className="btn btn-primary">
+                                <span className="glyphicon glyphicon-search"></span>
+                            </button>
                             <button className="btn btn-danger" onClick={ () => {
                     this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                     this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                 }}><span className="glyphicon glyphicon-chevron-right"></span></button>
                         </span>
-                    </div>
+                    </form>
                     <Results results={this.props.videoResults} />
                 </div>
                 <div id="video-wrapper" className="video-wrapper col-xs-11 pull-left">
@@ -71,6 +78,10 @@ class Video extends Component {
         );
     }
 }
+
+Video = reduxForm({
+    form: 'search-item'
+})(Video);
 
 function mapStateToProps (state) {
     return {
