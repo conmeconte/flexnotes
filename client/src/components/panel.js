@@ -49,8 +49,8 @@ class Panel extends Component {
                     </div>
                     <div className="panelOptions">
                         <div><h3 className="optionsTitle">Panels:</h3></div>
-                        <div><button className="layoutBtn" onClick={() => { this.panelLayout(3) }}>3</button></div>
-                        <div><button className="layoutBtn" onClick={() => { this.panelLayout(4) }}>4</button></div>
+                        <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(3) }}>3</button></div>
+                        <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(4) }}>4</button></div>
                     </div>
                 </header>
                 {/* <div className="col-xs-10">
@@ -58,7 +58,7 @@ class Panel extends Component {
                     <h1 className="app-title">FlexNote</h1>
                 </div> */}
                 <div className="panel_div col-xs-10">
-                    <PanelNum num={/* wait for Scott's answer on mapDS for setNumOfPanels in Redux store*/} />
+                    <PanelNum num={this.props.panel_num} />
                 </div>
             </div>
         );
@@ -67,7 +67,8 @@ class Panel extends Component {
 
 function mapStateToProps(state) {
     return {
-        binderArray: state.binderArray
+        binderArray: state.binderArray,
+        panel_num: state.panelSpecs.numberPanels
     }
 }
 
@@ -75,6 +76,9 @@ function mapDispatchToProps(dispatch) {
     return {
         getBinderArray: function () {
             dispatch(binderArray())
+        },
+        setNumOfPanels: function (num) {
+            dispatch(setNumOfPanels(num))
         }
     }
 }
