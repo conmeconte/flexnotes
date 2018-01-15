@@ -89,17 +89,17 @@ class Page extends Component {
     render(){
 
         const {tabObject, binderUrl, editable} = this.state;
-        console.log('Props in Page:',this.props);
+        //console.log('Props in Page:',this.props);
         let tabArrLength = this.props.binderObj.tab_arr_obj.length;
         let tabIndex = null;
         for(let i=0; i <tabArrLength; i++){
             if(this.props.interface.tab_id === this.props.binderObj.tab_arr_obj[i]._id){
-                console.log('tabid = interface id at index:', i);
+                //console.log('tabid = interface id at index:', i);
                 tabIndex = i;
             }
         }
         const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
-        console.log('page arr obj in page:', page_arr_obj);
+        //console.log('page arr obj in page:', page_arr_obj);
 
         let page_link = [];
 

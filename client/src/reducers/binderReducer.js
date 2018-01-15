@@ -13,7 +13,6 @@ export default function(state = DEFAULT_STATE, action){
         case types.ADD_TAB:
             return {binderObj: action.payload.data};
         case types.ADD_PAGE:
-        console.log("add page reducer", action.payload.data);
             return {binderObj: action.payload.data};
         default:
             return state;

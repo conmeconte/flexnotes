@@ -51,15 +51,15 @@ class Binder extends Component {
 
     deleteBinder(delete_id) {
         console.log('delete button clicked, binder_id: ', delete_id);
-
-        const { binder_arr_obj } = this.state;
-        console.log(binder_arr_obj);
-        let deleteIndex = 0;
-        for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
-            if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
-                binder_arr_obj.splice(deleteIndex, 1);
-            }
-        }
+        this.props.deleteBinder(delete_id);
+        // const { binder_arr_obj } = this.state;
+        // console.log(binder_arr_obj);
+        // let deleteIndex = 0;
+        // for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
+        //     if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
+        //         binder_arr_obj.splice(deleteIndex, 1);
+        //     }
+        // }
     }
 
     editable() {
@@ -116,17 +116,7 @@ class Binder extends Component {
         //console.log('binderObj:' ,binderObj);
         this.props.selectBinder(binderObj);
     }
-    /*
-    
-    
-    
-    
-    //keep data updated with database.
 
-
-
-
-    */
     render() {
         const { editable, active } = this.state;
         //console.log("Binder props:", this.props);
@@ -148,7 +138,7 @@ class Binder extends Component {
                             value={item.binder_name}
                         />
 
-                        <button type="button" className="btn btn-default btn_delete" onClick={() => this.deleteBinder(item.binder_id)} >
+                        <button type="button" className="btn btn-default btn_delete" onClick={() => this.deleteBinder(item._id)} >
                             <span className="glyphicon glyphicon-minus"></span>
                         </button>
                     </li>
