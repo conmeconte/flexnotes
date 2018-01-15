@@ -5,12 +5,15 @@ import Login from './login';
 import '../assets/css/login.css';
 
 import { connect } from 'react-redux';
-//import { getDataObject, binderArray, selectBinder, binderUpdate, tabUpdate, pageUpdate } from '../actions';
+import { getDataObject } from '../actions';
 
 
 class Dashboard extends Component {
+    componentWillMount(){
+        this.props.getDataObject();
+    }
 
-render(){
+    render(){
         console.log('dashboard props', this.props);
 
         return(
@@ -28,10 +31,11 @@ render(){
 function mapStateToProps(state){
     //console.log('mstp dashboard:', state);
     return{
+        //data: state.auth,
         binderArr: state.binderArray.binderArr,
         initBinder: state.binder.binderObj,
         interface: state.interface
     }
 }
 
-export default connect(mapStateToProps, null)(Dashboard);
+export default connect(mapStateToProps, { getDataObject })(Dashboard);

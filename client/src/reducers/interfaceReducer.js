@@ -16,12 +16,12 @@ export default function (state = DEFAULT_STATE, action) {
             return { ...state, tab_id: action.payload };
         case types.PAGE_UPDATE:
             return { ...state, page_id: action.payload };
-        case types.FETCH_USER:
-            let userName = action.payload.userName;
-            let initBinderID = action.payload.binder_arr_obj[0]._id;
-            let initTabID = action.payload.binder_arr_obj[0].tab_arr_obj[0]._id;
-            let initpageID = action.payload.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0]._id;
-            return { ...state, user_name: userName,  };
+        case types.GET_USER_DATA:
+             let userName = action.payload.userName;
+             let initBinderID = action.payload.binder_arr_obj[0]._id;
+             let initTabID = action.payload.binder_arr_obj[0].tab_arr_obj[0]._id;
+             let initpageID = action.payload.binder_arr_obj[0].tab_arr_obj[0].page_arr_obj[0]._id;
+             return { ...state, user_name: userName, binder_id: initBinderID, tab_id: initTabID, page_id: initpageID };
         case types.SELECT_BINDER:
             let binderID = action.payload._id;
             let tabID = action.payload.tab_arr_obj[0]._id;

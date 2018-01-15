@@ -235,7 +235,7 @@ class Tab extends Component {
 }
 
 function mapStateToProps(state){
-    console.log('tab mstp', state);
+    //console.log('tab mstp', state);
     return {
         binderObj: state.binder.binderObj
     }

@@ -162,7 +162,7 @@ class Page extends Component {
             });
         } else {
             page_link = page_arr_obj.map((item, index) => {
-                console.log('page map:', item);
+                //console.log('page map:', item);
                 let page_url = '/' + item._id;
                 return (
                     <li key={index}><Link to={'/main'+this.props.binder_url + this.props.tab_url + page_url} style={{ textDecoration: 'none' }}>
