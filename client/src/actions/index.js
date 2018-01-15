@@ -139,7 +139,7 @@ export function getDataObject() {
         const test = axios.get('/api/binder')
             .then((resp) => {
                 //console.log("get data object: ", resp.data);
-
+                
                 dispatch({
                     type: types.GET_USER_DATA,
                     payload: resp.data
