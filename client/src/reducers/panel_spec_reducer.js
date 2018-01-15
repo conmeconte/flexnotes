@@ -5,9 +5,9 @@ const DEFAULT_STATE = {
     topLeftWidth: 0,
     topRightHeight: 0,
     numberPanels: 0
-}
+};
 
-export function(state = DEFAULT_STATE, action) {
+export default function (state = DEFAULT_STATE, action) {
     switch (action.type) {
         case types.NUM_OF_PANELS:
             return { ...state, numberPanels: action.payload }

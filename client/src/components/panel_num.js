@@ -35,7 +35,7 @@ class PanelNum extends Component {
         // onChange={size => this.logHRsize(size)}
         console.log("panel_num stuff: ", this.props.num);
         switch (this.props.num) {
-            case '3':
+            case 3:
                 return (
                     <SplitPane onChange={size => { this.logTopLeftHeight(size) }} className="width-w-nav" split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
                         <SplitPane onChange={size => { this.logTopLeftWidth(size) }} split="vertical" minSize={200} maxSize={-200} defaultSize={400}>
@@ -45,7 +45,7 @@ class PanelNum extends Component {
                         <div className="notes-parent-panel"><Notes /></div>
                     </SplitPane>
                 )
-            case '4':
+            case 4:
                 return (
                     <SplitPane onChange={size => { this.logTopLeftWidth(size) }} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={400}>
                         <SplitPane onChange={size => { this.logTopLeftHeight(size) }} split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
