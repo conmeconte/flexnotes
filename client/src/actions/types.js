@@ -5,6 +5,8 @@ export default {
     GET_USER_DATA: 'get_user_data',
     UPDATE_BINDER_ARRAY: 'update_binder_array',
     ADD_BINDER: 'add_binder',
+    ADD_TAB: 'add_tab',
+    DELETE_BINDER: 'delete_binder',
     SELECT_BINDER: 'select_binder',
     SELECT_TAB: 'select_tab',
     SELECT_PAGE: 'select_page',
