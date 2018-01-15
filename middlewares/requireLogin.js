@@ -1,11 +1,14 @@
-module.exports= (req, res, next) => {
+module.exports=   (req, res, next) => {
  if(!req.user){
-    //  return randomBytes.status(401).send({error: "you must log in!"});
-    console.log('not logged in')
     res.redirect('/');
+    // return res.redirect(401, 'http://google.com');
+    console.log('works');
+    // return res.status(401).send({error: "you must log in!"});
+    
+ } else {
+    next();
  }
 
- next();
 };
 
 //next called after function finishes running. runs next middleware. 

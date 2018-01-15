@@ -6,6 +6,7 @@ export default {
     UPDATE_BINDER_ARRAY: 'update_binder_array',
     ADD_BINDER: 'add_binder',
     ADD_TAB: 'add_tab',
+    ADD_PAGE: 'add_page',
     DELETE_BINDER: 'delete_binder',
     SELECT_BINDER: 'select_binder',
     SELECT_TAB: 'select_tab',

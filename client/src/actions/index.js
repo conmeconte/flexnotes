@@ -187,7 +187,7 @@ export function getDataObject() {
         const test = axios.get('/api/binder')
             .then((resp) => {
                 //console.log("get data object: ", resp.data);
-
+                
                 dispatch({
                     type: types.GET_USER_DATA,
                     payload: resp.data
@@ -246,8 +246,7 @@ export function addBinder() {
     return (dispatch) => {
         const test = axios.post('/api/binder')
             .then((resp) => {
-                console.log("addBinder response: ", resp);
-
+                //console.log("addBinder response: ", resp);
                 dispatch({
                     type: types.ADD_BINDER,
                     payload: resp.data.binder_arr_obj
@@ -267,8 +266,7 @@ export function addTab(binder_id) {
             binderID: binder_id
         })
             .then((resp) => {
-                console.log("addBinder tab: ", resp);
-
+                //console.log("add tab: ", resp);
                 dispatch({
                     type: types.ADD_TAB,
                     payload: resp
@@ -282,16 +280,36 @@ export function addTab(binder_id) {
     }
 }
 
-export function deleteBinder(binder_id) {
+export function addPage(binder_id, tab_id) {
     return (dispatch) => {
-        const test = axios.delete('/api/binder', {
-            binderID: biinder_id
+        const test = axios.post('/api/page', {
+            binderID: binder_id,
+            tabID: tab_id
         })
             .then((resp) => {
-                console.log("addBinder response: ", resp);
+                //console.log("addPage response: ", resp);
+                dispatch({
+                    type: types.ADD_PAGE,
+                    payload: resp
+                });
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in binderarray'
+                });
+            });
+    }
+}
+
+export function deleteBinder(binder_id) {
+    return (dispatch) => {
+        const test = axios.delete(`/api/binder?binderID=${binder_id}`, {
+        })
+            .then((resp) => {
+                console.log("delete binder response: ", resp);
 
                 dispatch({
-                    type: types.ADD_BINDER,
+                    type: types.DELETE_BINDER,
                     payload: resp.data.binder_arr_obj
                 });
             }).catch(err => {
