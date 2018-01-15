@@ -219,10 +219,32 @@ export function addTab(binder_id) {
             binderID: binder_id
         })
             .then((resp) => {
-                console.log("addBinder tab: ", resp);
+                //console.log("add tab: ", resp);
 
                 dispatch({
                     type: types.ADD_TAB,
+                    payload: resp
+                });
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in binderarray'
+                });
+            });
+    }
+}
+
+export function addPage(binder_id, tab_id) {
+    return (dispatch) => {
+        const test = axios.post('/api/page', {
+            binderID: binder_id,
+            tabID: tab_id
+        })
+            .then((resp) => {
+                console.log("addPage response: ", resp);
+
+                dispatch({
+                    type: types.ADD_PAGE,
                     payload: resp
                 });
             }).catch(err => {

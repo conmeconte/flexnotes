@@ -11,8 +11,10 @@ export default function(state = DEFAULT_STATE, action){
         case types.GET_USER_DATA:
             return {binderObj: action.payload.binder_arr_obj[0]};
         case types.ADD_TAB:
-            console.log('add tab reducer: ', action.payload);
-            return state;
+            return {binderObj: action.payload.data};
+        case types.ADD_PAGE:
+        console.log("add page reducer", action.payload.data);
+            return {binderObj: action.payload.data};
         default:
             return state;
     }

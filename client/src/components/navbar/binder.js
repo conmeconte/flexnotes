@@ -60,10 +60,6 @@ class Binder extends Component {
                 binder_arr_obj.splice(deleteIndex, 1);
             }
         }
-
-        this.setState({
-            binder_arr_obj: binder_arr_obj
-        });
     }
 
     editable() {

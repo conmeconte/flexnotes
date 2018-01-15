@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectPage } from '../../actions';
+import { selectPage, addPage } from '../../actions';
 
 import PageOld from './page_old';
 
@@ -23,49 +23,8 @@ class Page extends Component {
     }
 
     addPage(){
-        console.log('addTab clicked');
-        const {tabObject} = this.state;
-        //console.log("addPage: ", tabObject);
-        const {page_arr_obj} = tabObject;
-        console.log('page_arr_obj:',page_arr_obj);
-
-        let length = page_arr_obj.length;
-         
-        if(length === 0) {
-            let new_page_obj = {
-                page_id: 1,
-                page_color: 'green',
-                page_name: 'Page 1',
-                page_date: '',
-                page_url: '/page1'
-            };
-
-            tabObject.page_arr_obj = [new_page_obj];
-
-            this.setState({
-                tabObject: tabObject
-            });
-
-        } else {
-            let new_index = page_arr_obj[length-1].page_id + 1;
-            //console.log('tab_arr_obj',tab_arr_obj[length-1]);
-            let new_url = '/page' + new_index;
-            //console.log('new_url:',new_url);
-            let new_page_obj = {
-                    page_id: new_index,
-                    page_color: 'green',
-                    page_name: 'NewPage',
-                    page_date: '',
-                    page_url: new_url
-                };
-            
-    
-            tabObject.page_arr_obj = [...tabObject.page_arr_obj, new_page_obj];
-    
-            this.setState({
-                tabObject: tabObject
-            });
-        }
+        console.log('addPage clicked');
+        this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
     }
 
     editPages(){
@@ -130,13 +89,18 @@ class Page extends Component {
     render(){
 
         const {tabObject, binderUrl, editable} = this.state;
-        //console.log('Props in Page:',this.props);
-        const { page_arr_obj } = this.props.tabObj;
-        
-        //console.log('BinderUrl in Tab:',binderUrl);
-        //const{ page_arr_obj, tab_url} = tabObject;
-        //console.log('page_arr_obj:', page_arr_obj);
-        //console.log('tab_url:', tab_url);
+        console.log('Props in Page:',this.props);
+        let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+        let tabIndex = null;
+        for(let i=0; i <tabArrLength; i++){
+            if(this.props.interface.tab_id === this.props.binderObj.tab_arr_obj[i]._id){
+                console.log('tabid = interface id at index:', i);
+                tabIndex = i;
+            }
+        }
+        const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+        console.log('page arr obj in page:', page_arr_obj);
+
         let page_link = [];
 
         if(editable){
@@ -199,7 +163,7 @@ class Page extends Component {
                     </ul>
         
                     {page_route}
-                    <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible': 'hidden'}`} onClick={this.addPage}>
+                    <button className="btn btn-default btn-xs btn_add" onClick={this.addPage}>
                         <span className="glyphicon glyphicon-plus"></span>
                     </button>                     
                 </div>
@@ -212,8 +176,9 @@ class Page extends Component {
 function mapStateToProps(state){
     //console.log('page mstp', state);
     return {
-        binderObj: state.binder.binderObj
+        binderObj: state.binder.binderObj,
+        interface: state.interface
     }
 }
-export default withRouter(connect(mapStateToProps,{ selectPage })(Page));
+export default withRouter(connect(mapStateToProps,{ selectPage, addPage })(Page));
 //use binder reducer for logic
