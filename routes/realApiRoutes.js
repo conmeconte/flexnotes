@@ -130,7 +130,7 @@ module.exports = (app) => {
 
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id(req.body.binder_arr_obj_id) //req.body.binder_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binder_arr_obj_id
                     if(binder){
                         tab= new Tab();
                         tab.page_arr_obj.push(new Page());

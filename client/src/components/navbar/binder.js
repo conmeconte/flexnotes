@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, selectBinder, addBinder } from '../../actions';
+import { updateBinderArray, selectBinder, addBinder, deleteBinder } from '../../actions';
 
 
 import Tab from './tab';
@@ -230,6 +230,6 @@ class Binder extends Component {
         }
     }
 
-    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addBinder})(Binder));
+    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addBinder, deleteBinder})(Binder));
 
 
