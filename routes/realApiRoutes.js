@@ -69,10 +69,10 @@ module.exports = (app) => {
                 if (user) {
                     const binder = user
                     .binder_arr_obj.id(req.body.binderID) //req.body.binderID
-                    
+                    console.log('halal ', req.body.binderID);
                     binder.remove();
                     user.save();
-                    res.send(user);
+                    res.send(user.binder_arr_obj);
                     
                 }else {
                 res.send("Error can't find user")
