@@ -48,7 +48,7 @@ module.exports = (app) => {
                 if (user) {
                     const defaultBinder = new Binder();
                     defaultBinder.tab_arr_obj.push(new Tab());
-                    defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({ page_color: 'orange' }));
+                    defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({ page_date: new Date().toLocaleString() }));
                     defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ videoInfo: 'No Info' }));
                     defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new Note());
                     user.binder_arr_obj.push(defaultBinder);
@@ -68,7 +68,7 @@ module.exports = (app) => {
     
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binder_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
                     
                     binder.remove();
                     user.save();
@@ -88,7 +88,7 @@ module.exports = (app) => {
     
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binder_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
                     
                     binder.binder_color = req.body.binder_color || binder.binder_color;
                     binder.binder_name = req.body.binder_name || binder.binder_name;
@@ -114,7 +114,10 @@ module.exports = (app) => {
                 if (err) { res.send("Error did occurred")};
 
                 if (user) {
-                    res.send(user);
+                    const tab = user
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
+                    .tab_arr_obj.id(req.body.tabID)
+                    res.send(tab);
                 }else {
                 res.send("Error can't find user")
                 }
@@ -130,7 +133,7 @@ module.exports = (app) => {
 
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binder_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
                     if(binder){
                         tab= new Tab();
                         tab.page_arr_obj.push(new Page());
@@ -139,7 +142,7 @@ module.exports = (app) => {
                         binder.tab_arr_obj.push(tab);
 
                         user.save();
-                        res.send(user);
+                        res.send(binder);
                     }else{res.send('wrong path')}
                     
                 }else {
@@ -154,12 +157,16 @@ module.exports = (app) => {
 
                 if (user) {
                     const tab = user
-                    .binder_arr_obj.id(req.body.binder_arr_obj_id) //req.body.binder_arr_obj_id
-                    .tab_arr_obj.id(req.body.tab_arr_obj_id)  //req.body.tab_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
+                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID;
+
+                    const binder = user
+                    .binder_arr_obj.id(req.body.binderID)
+
                     
                     tab.remove();
                     user.save();
-                    res.send(user);
+                    res.send(binder);
                     
                 }else {
                 res.send("Error can't find user")
@@ -174,15 +181,17 @@ module.exports = (app) => {
 
                 if (user) {
                     const tab = user
-                    .binder_arr_obj.id(req.body.binder_arr_obj_id) //req.body.binder_arr_obj_id
-                    .tab_arr_obj.id(req.body.tab_arr_obj_id)  //req.body.tab_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
+                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID
                     
                     tab.tab_color = req.body.tab_color || tab.tab_color;
                     tab.tab_name = req.body.tab_name || tab.tab_name;
                     
-            
+                    const binder = user
+                    .binder_arr_obj.id(req.body.binderID);
+
                     user.save();
-                    res.send(user);
+                    res.send(binder);
                 }else {
                 res.send("Error can't find user")
                 }
@@ -216,16 +225,19 @@ module.exports = (app) => {
 
                 if (user) {
                     const tab = user
-                    .binder_arr_obj.id(req.body.binder_arr_obj_id) //req.body.binder_arr_obj_id
-                    .tab_arr_obj.id(req.body.tab_arr_obj_id)  //req.body.tab_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
+                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID
                     if(tab){
                         let page = new Page()
                         page.video.push(new Video());
                         page.notes.document.nodes.push(new Note());
                         tab.page_arr_obj.push(page);
 
+                        const binder = user
+                        .binder_arr_obj.id(req.body.binderID);
+
                         user.save();
-                        res.send(user);
+                        res.send(binder);
                     }else{res.send('wrong path')}
                     
                 }else {
@@ -240,9 +252,9 @@ module.exports = (app) => {
 
                 if (user) {
                     const page = user
-                    .binder_arr_obj.id(req.body.binder_arr_obj_id) //req.body.binder_arr_obj_id
-                    .tab_arr_obj.id(req.body.tab_arr_obj_id)  //req.body.tab_arr_obj_id
-                    .page_arr_obj.id(req.body.page_arr_obj_id); //req.body.page_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
+                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID
+                    .page_arr_obj.id(req.body.pageID); //req.body.pageID
                     
                     page.remove();
                     user.save();
@@ -260,9 +272,9 @@ module.exports = (app) => {
 
                 if (user) {
                     const page = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binder_arr_obj_id
-                    .tab_arr_obj.id(req.body.tabID)  //req.body.tab_arr_obj_id
-                    .page_arr_obj.id(req.body.pageID); //req.body.page_arr_obj_id
+                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
+                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID
+                    .page_arr_obj.id(req.body.pageID); //req.body.pageID
                     
                     page.page_color = req.body.page_color || page.page_color;
                     page.page_name = req.body.page_name || page.page_name;
@@ -297,7 +309,7 @@ module.exports = (app) => {
 
                         user.save();
                         console.log(user);
-                        res.send(user);
+                        res.send(page);
                     }else{res.send('wrong path')} 
                     
                 }else {
@@ -367,7 +379,7 @@ app
 
 
                     user.save();
-                    res.send(user);
+                    res.send(notes);
                 }else{res.send('wrong path')}
                 
             }else {
