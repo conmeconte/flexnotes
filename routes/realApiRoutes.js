@@ -355,7 +355,7 @@ module.exports = (app) => {
 
 //note//
 app
-    .post('/api/note', requireLogin,  async (req,res)=>{
+    .put('/api/note', requireLogin,  async (req,res)=>{
         const existingUser= await User.findById(req.user.id, (err,user)=>{
             if(err){ res.send('Error')}
             if (user) {
@@ -364,10 +364,11 @@ app
                 .tab_arr_obj.id(req.body.tabID)  
                 .page_arr_obj.id(req.body.pageID)
                 if(notes){
-                    page.notes= req.body.notesObj; 
+                    page.notes.document= req.body.document || page.notes.document;
 
-                    user.save(user
-                        .binder_arr_obj.id(req.body.binderID));
+                    user.save();
+                    // user.save(user
+                    //     .binder_arr_obj.id(req.body.binderID));
                     res.send(notes);
                 }else{res.send('wrong path')}
                 

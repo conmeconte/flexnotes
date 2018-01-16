@@ -336,9 +336,9 @@ export function deleteBinder(binder_id) {
 //Notes Action Creator
 
 export function save_notes(value, interfaceObj) {
-    axios.put('/api/page', {
+    axios.put('/api/note', {
         document: value,
-        binderID: interfaceObj.binder_id,F
+        binderID: interfaceObj.binder_id,
         tabID: interfaceObj.tab_id,
         pageID: interfaceObj.page_id
     });
