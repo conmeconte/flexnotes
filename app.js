@@ -19,10 +19,9 @@ mongoose.Promise= global.Promise;
 var db = mongoose.connection; 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', function() {
-    console.log('connected to mongodb through mongoose')
+    console.log('connected to mongodb through mongoose');
 });
 
-// end of testing
 require('./services/passport');// user must be loaded first so that it creates the mongoose schema to be used in passport
 
 /* Consuming middleware throughout app */
@@ -37,13 +36,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
-
-
-
-
 
 /* Routing middleware */
 require('./routes/authRoutes')(app);
