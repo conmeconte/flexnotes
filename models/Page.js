@@ -17,9 +17,7 @@ const pageSchemaNew = new Schema({
         lec_id : String
     },
     notes : {
-        document: {
-          nodes: [notesNode]
-        }
+        document: {}
       },
   
     video :[videoSchemaNew],
@@ -29,6 +27,6 @@ const pageSchemaNew = new Schema({
         top_right_panel_height: Number,
         number_of_panels: Number
     }
-});
+},{minimize: false});
 
 module.exports = pageSchemaNew;

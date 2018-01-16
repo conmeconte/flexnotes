@@ -42,23 +42,8 @@ let fakeData =
                       }
                     ],
                     panel_dimensions: {
-                      lecture_Panel: {
-                        width: String,
-                        height: String
-                      },
-                      video_Panel: {
-                        width: String,
-                        height: String
-                      },
-                      note_Panel: {
-                        width: String,
-                        height: String
-                      },
-                      meister_Panel: {
-                        width: String,
-                        height: String
-                      }
-                    }
+                      //         top_left_panel_height: num
+                      //     }
                   }
                 ]
               }
