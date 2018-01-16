@@ -6,7 +6,74 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: types.FETCH_USER, payload: res.data });
 };
 
-//Lecture Slides Action Creators
+//PANEL SPECs Action Creator
+
+// Yo hyung, if I set PUT request individually in each of these functions, they will overwrite each other right????
+export function setTopLeftHeight(num) {
+    // axios.put('/api/page', {
+    //     panel_dimensions: {
+    //         top_left_panel_height: num
+    //     },
+    //     binderID: interfaceObj.binder_id,
+    //     tabID: interfaceObj.tab_id,
+    //     pageID: interfaceObj.page_id
+    // });
+
+    return {
+        type: types.PANEL_TOP_LEFT_HEIGHT,
+        payload: num
+    }
+}
+
+export function setTopLeftWidth(num) {
+    // axios.put('/api/page', {
+    //     panel_dimensions: {
+    //         top_left_panel_width: num
+    //     },
+    //     binderID: interfaceObj.binder_id,
+    //     tabID: interfaceObj.tab_id,
+    //     pageID: interfaceObj.page_id
+    // });
+
+    return {
+        type: types.PANEL_TOP_LEFT_WIDTH,
+        payload: num
+    }
+}
+
+export function setTopRightHeight(num) {
+    // axios.put('/api/page', {
+    //     panel_dimensions: {
+    //         top_right_panel_height: num
+    //     },
+    //     binderID: interfaceObj.binder_id,
+    //     tabID: interfaceObj.tab_id,
+    //     pageID: interfaceObj.page_id
+    // });
+
+    return {
+        type: types.PANEL_TOP_RIGHT_HEIGHT,
+        payload: num
+    }
+}
+
+export function setNumOfPanels(num) {
+    // axios.put('/api/page', {
+    //     panel_dimensions: {
+    //         number_of_panels: num
+    //     },
+    //     binderID: interfaceObj.binder_id,
+    //     tabID: interfaceObj.tab_id,
+    //     pageID: interfaceObj.page_id
+    // });
+
+    return {
+        type: types.NUM_OF_PANELS,
+        payload: num
+    }
+}
+
+//Lecture Slides Action Creator
 
 export function setSlidesUrl(value, interfaceObj) {
     console.log("setSlides url action 1:", value);
@@ -139,7 +206,7 @@ export function getDataObject() {
         const test = axios.get('/api/binder')
             .then((resp) => {
                 //console.log("get data object: ", resp.data);
-                
+
                 dispatch({
                     type: types.GET_USER_DATA,
                     payload: resp.data
@@ -275,8 +342,8 @@ export function deleteBinder(binder_id) {
 
 //Notes Action Creator
 
-export function save_notes(){
-    return{
+export function save_notes() {
+    return {
         type: types.SAVE_NOTES
     }
 }
