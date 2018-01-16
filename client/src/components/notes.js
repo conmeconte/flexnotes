@@ -94,7 +94,6 @@ class Notes extends Component {
     };
 
     submitNotes(){
-        console.log('submitNotes', savedNotes);
         this.props.save_notes(savedNotes.document, this.props.interface_obj);
     }
 
@@ -424,7 +423,7 @@ class Notes extends Component {
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
-                    <button className="saveNotes" onClick={this.submitNotes}>Save Changes</button>
+                    <button className="saveNotes" onClick={this.submitNotes.bind(this)}>Save Changes</button>
                 </div>
 
             </div>
@@ -460,7 +459,8 @@ class Notes extends Component {
 function mapStateToProps(state) {
 
     return {
-        interface_obj: state.interface
+        interface_obj: state.interface,
+        notes_document: state.notes.document
     }
 }
 
