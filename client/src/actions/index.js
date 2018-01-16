@@ -257,9 +257,16 @@ export function deleteBinder(binder_id) {
 
 //Notes Action Creator
 
-export function save_notes(){
+export function save_notes(value, interfaceObj){
+    axios.put('/api/page', {
+        document: value,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
+
     return{
-        type: types.SAVE_NOTES
+        type: types.SAVE_NOTES,
+        payload: value
     }
 }
-

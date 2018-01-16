@@ -1,8 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
+import { save_notes } from "../actions";
+import { connect } from 'react-redux';
 
 import isImage from 'is-image'
 import isUrl from 'is-url'
@@ -17,17 +19,18 @@ const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
 const savedNotes = JSON.parse(localStorage.getItem('content'));
-const initialValue = Value.fromJSON(savedNotes || {document: {nodes: [{kind: "block", type: "paragraph", nodes: [{kind: "text", leaves: [{text: "This is editable", marks: [{type: "bold"}]}]}]}]}});
+const initialValue = Value.fromJSON(savedNotes || {document: {nodes: [{kind: "block", type: "paragraph", nodes: [{kind: "text", leaves: [{text: "", marks: [{type: "bold"}]}]}]}]}});
+console.log("notes.js oc", savedNotes);
 
-// UNDO AND REDO
+// --------------------------- UNDO AND REDO  ---------------------------
 
 const ToolbarButton = props => (
     <span className="button" onMouseDown={props.onMouseDown}>
-    <span className="material-icons">{props.icon}</span>
-  </span>
+        <span className="material-icons">{props.icon}</span>
+    </span>
 )
 
-// LINKS
+// --------------------------- LINKS  ---------------------------
 
 function wrapLink(change, href) {
     change.wrapInline({
@@ -42,7 +45,7 @@ function unwrapLink(change) {
     change.unwrapInline('link')
 }
 
-// IMAGES
+// --------------------------- IMAGES  ---------------------------
 
 function insertImage(change, src, target) {
     if (target) {
@@ -70,7 +73,7 @@ const schema = {
     }
 };
 
-// CLASS COMPONENT
+// --------------------------- CLASS COMPONENT  ---------------------------
 
 class Notes extends Component {
 
@@ -78,14 +81,22 @@ class Notes extends Component {
         value: initialValue
     };
 
-    onChange = ({ value }) => {
+    onChange = ({value}) => {
+
+
         if (value.document !== this.state.value.document) {
             const content = JSON.stringify(value.toJSON());
-            localStorage.setItem('content', content)
+            localStorage.setItem('content', content);
+            // this.props.save_items(content);
         }
 
         this.setState({ value });
     };
+
+    submitNotes(){
+        console.log('submitNotes', savedNotes);
+        this.props.save_notes(savedNotes.document, this.props.interface_obj);
+    }
 
     // AXIOS CALL
 
@@ -97,7 +108,7 @@ class Notes extends Component {
     //     });
     // }
 
-    // RICH TEXT TOOLBAR
+    // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
     hasMark = (type) => {
         const { value } = this.state;
@@ -206,7 +217,7 @@ class Notes extends Component {
         )
     };
 
-    // UNDO AND REDO
+    // --------------------------- UNDO AND REDO  ---------------------------
 
     onClickRedo = (event) => {
         event.preventDefault()
@@ -222,7 +233,7 @@ class Notes extends Component {
         this.onChange(change)
     };
 
-    // LINKS
+    // --------------------------- LINKS  ---------------------------
 
     hasLinks = () => {
         const { value } = this.state;
@@ -272,7 +283,7 @@ class Notes extends Component {
         return true
     };
 
-    // SEARCH HIGHLIGHTING
+    // --------------------------- SEARCH HIGHLIGHTING  ---------------------------
 
     onInputChange = (event) => {
         const { value } = this.state;
@@ -304,7 +315,7 @@ class Notes extends Component {
         this.onChange(change)
     };
 
-    // IMAGES
+    // --------------------------- IMAGES  ---------------------------
 
     onClickImage = (event) => {
         event.preventDefault()
@@ -348,7 +359,7 @@ class Notes extends Component {
         }
     };
 
-    // ALL
+    // --------------------------- ALL  ---------------------------
 
     renderMark = (props) => {
         const { children, mark } = props;
@@ -413,7 +424,7 @@ class Notes extends Component {
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
-                    <button className="saveNotes">Save Changes</button>
+                    <button className="saveNotes" onClick={this.submitNotes}>Save Changes</button>
                 </div>
 
             </div>
@@ -446,4 +457,12 @@ class Notes extends Component {
     }
 }
 
-export default Notes;
+function mapStateToProps(state) {
+
+    return {
+        interface_obj: state.interface
+    }
+}
+
+export default connect(mapStateToProps, { save_notes })(Notes);
+

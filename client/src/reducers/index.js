@@ -7,9 +7,7 @@ import binderarrayReducer from './binderArrayReducer';
 import binderReducer from './binderReducer';
 import interfaceReducer from './interfaceReducer';
 import slideReducer from './slide_reducer';
-import notesReducer from './notesReducer';
-
-
+import notesReducer from './notes_reducer';
 
 export default combineReducers({
     auth: authReducer,

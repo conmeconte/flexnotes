@@ -24,17 +24,17 @@ class Panel extends Component {
         });
     }
 
-    componentWillMount(){
-        //this.props.getBinderArray();
-
-        // const url = '/api/page';
-        //
-        // axios.get(url).then((resp) => {
-        //     this.setState({
-        //         userName: resp.data.userName
-        //     })
-        // });
-    }
+    // componentWillMount(){
+    //     this.props.getBinderArray();
+    //
+    //     const url = '/api/page';
+    //
+    //     axios.get(url).then((resp) => {
+    //         this.setState({
+    //             userName: resp.data.userName
+    //         })
+    //     });
+    // }
 
 
     // logVWsize(panelSize) {
