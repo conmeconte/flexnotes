@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectBinder, tabUpdate } from '../../actions';
+import { selectTab, addTab } from '../../actions';
 
 import Page from './page';
 
@@ -23,68 +23,10 @@ class Tab extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentWillMount(){
-        //console.log("should component update");
-        //this.props.selectBinder(this.props.binder);
-    }
 
     addTab(){
         console.log('addTab clicked');
-        const {binder, tab_color_arr} = this.state;
-        //console.log(binder);
-        const {tab_arr_obj} = binder;
-        //console.log('tab_arr_obj:',tab_arr_obj);
-
-        let length = tab_arr_obj.length;
-        if(length === 0){
-            let new_tab_obj = {
-                tab_id: 1,
-                tab_color: tab_color_arr[0],
-                tab_name: 'Tab1',
-                tab_url: '/tab1',
-                page_arr_obj: [{
-    
-                    page_id: 1,
-                    page_color: 'green',
-                    page_name: 'Page1',
-                    page_date: '',
-                    page_url: '/page1'
-                }]
-            }
-
-            binder.tab_arr_obj = [new_tab_obj];
-
-            this.setState({
-                binder: binder
-            });
-             
-        } else {
-            let new_index = tab_arr_obj[length-1].tab_id + 1;
-            //console.log('tab_arr_obj',tab_arr_obj[length-1]);
-            let new_url = '/tab' + new_index;
-            //console.log('new_url:',new_url);
-            let mod_index = new_index % 5;
-            let new_tab_obj = {
-                tab_id: new_index,
-                tab_color: tab_color_arr[mod_index],
-                tab_name: 'NewTab',
-                tab_url: new_url,
-                page_arr_obj: [{
-    
-                    page_id: 1,
-                    page_color: 'green',
-                    page_name: 'Page1',
-                    page_date: '',
-                    page_url: '/page1'
-                }]
-            }
-    
-            binder.tab_arr_obj = [...binder.tab_arr_obj, new_tab_obj];
-    
-            this.setState({
-                binder: binder
-            });
-        }
+        this.props.addTab(this.props.binderObj._id);
     }
 
     editTabs(){
@@ -140,10 +82,10 @@ class Tab extends Component {
         });
     }
 
-    handleClick(tab_id){
+    handleClick(tabObj){
         //this.props.selectBinder(binderObj);
-        this.props.tabUpdate(tab_id);
-        console.log("tab id updated");
+        this.props.selectTab(tabObj);
+        //console.log("tab id updated");
     }
 
     render(){
@@ -193,7 +135,7 @@ class Tab extends Component {
                     return (
                         <li key={index}><Link to={'/main'+this.props.binder_url + tab_url} style={{ textDecoration: 'none' }}>
 
-                            <div className="tabDiv" onClick={()=>{this.handleClick(item._id.$oid)}} style={tabStyle}>
+                            <div className="tabDiv" onClick={()=>{this.handleClick(item)}} style={tabStyle}>
                                 {item.tab_name}
                             </div>
                         </Link></li>
@@ -228,7 +170,7 @@ class Tab extends Component {
                     {tab_link}
                 </ul>
                 {tab_route}
-                <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible': 'hidden'}`} onClick={this.addTab}>
+                <button className="btn btn-default btn-xs btn_add" onClick={this.addTab}>
                     <span className="glyphicon glyphicon-plus"></span>
                 </button>  
             </div>
@@ -244,4 +186,4 @@ function mapStateToProps(state){
         binderObj: state.binder.binderObj
     }
 }
-export default withRouter(connect(mapStateToProps,{ selectBinder, tabUpdate })(Tab));
+export default withRouter(connect(mapStateToProps,{ selectTab, addTab })(Tab));

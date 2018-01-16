@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { binderArray, selectBinder, binderUpdate, addBinder, tabUpdate, pageUpdate } from '../../actions';
+import { updateBinderArray, selectBinder, addBinder, deleteBinder } from '../../actions';
 
 
 import Tab from './tab';
@@ -13,68 +13,6 @@ class Binder extends Component {
         super(props);
 
         this.state = {
-            fake_data:  {
-              "_id": {
-                  "$oid": "5a57bd348b53621f100237eb"
-              },
-              "binder_arr_obj": [
-                  {
-                      "binder_count": 1,
-                      "binder_name": "FlexNotes!",
-                      "tab_arr_obj": [
-                          {
-                              "tab_name": "This is a tab",
-                              "tab_count": 1,
-                              "page_arr_obj": [
-                                  {
-                                      "page_date": {
-                                          "$date": "2018-01-11T19:38:28.391Z"
-                                      },
-                                      "page_count": 1,
-                                      "page_name": "Introduction to FlexNotes",
-                                      "notes": {
-                                          "document": {
-                                              "nodes": [
-                                                  {
-                                                      "kind": "block",
-                                                      "type": "paragraph",
-                                                      "nodes": [],
-                                                      "_id": {
-                                                          "$oid": "5a57bd348b53621f100237ea"
-                                                      }
-                                                  }
-                                              ]
-                                          }
-                                      },
-                                      "video": [
-                                          {
-                                              "_id": {
-                                                  "$oid": "5a57bd348b53621f100237e9"
-                                              },
-                                              "videoInfo": "No Info"
-                                          }
-                                      ],
-                                      "_id": {
-                                          "$oid": "5a57bd348b53621f100237e8"
-                                      },
-                                      "page_color": "orange"
-                                  }
-                              ],
-                              "_id": {
-                                  "$oid": "5a57bd348b53621f100237e7"
-                              }
-                          }
-                      ],
-                      "_id": {
-                          "$oid": "5a57bd348b53621f100237e6"
-                      }
-                  }
-              ],
-              "googleId": "103970352561814947806",
-              "userName": "JOhn Hong",
-              "__v": 0
-          },
-
             binder_color_arr: [
                 '#000080', '#808000', '#800000', '#a0522d', '#8a2be2'
             ],
@@ -106,245 +44,22 @@ class Binder extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount(){
-
-        //console.log("Fake Data: ", this.state.fake_data.binder_arr_obj);
-        //this.props.binderArray(this.state.fake_data.binder_arr_obj);
-        //this.props.selectBinder(this.props.binderArr[0]);
-    }
-    componentWillReceiveProps(nextProps){
-        console.log("Binder Next props:", nextProps);
-        // if(this.props.binderArr != nextProps.binderArr){
-        //     //console.log('Next props is different');
-        //     let arrLength =  nextProps.binderArr.length;
-        //     let binderArr = nextProps.binderArr;
-        //     if(arrLength > 0){
-        //         console.log('binder arr:', binderArr);
-        //         this.props.selectBinder(binderArr[0]);
-        //     }
-
-        // }
-
-    }
-
-    
     addBinder() {
-        console.log('add Binder');
+        //console.log('add Binder');
         this.props.addBinder();
-        console.log('binderaddprops', this.props);
-
-        
-        //const { binder_arr_obj, new_tab_arr, binder_color_arr } = this.state;
-
-        //let binder_color_array = ['#000080', '#808000', '#800000', '#a0522d', '#8a2be2'];
-
-        //let length = binder_arr_obj.length;
-        //if (length === 0) {
-            //new binder when there are no binders
-            // let new_binder_obj =                  
-            // {
-            //     _id: { $oid: 'someRandomNumberMongoDBAssings' },
-            //     binder_id: 1,
-            //     binder_name: 'Binder1',
-            //     binder_color: 'red',
-            //     tab_arr_obj: [
-            //       {
-            //         tab_id: 1,
-            //         tab_color: 'blue',
-            //         tab_name: 'Tab1',
-            //         tab_url: '/tab1',
-            //         page_arr_obj: [
-            //           {
-            //             page_id: 1,
-            //             page_color: 'white',
-            //             page_name: 'Page1',
-            //             page_date: '',
-            //             page_url: '/page1',
-            //             calendar: {
-            //               cal_url: String
-            //             },
-            //             lecture_slides: {
-            //               lec_id: 'https://docs.google.com/presentation/d/1kRrOFawfxsEOPd4PlXlceQq2L355XA6pcYWRcq5v4xE/embed'
-            //             },
-            //             notes: {
-            //               document: {
-            //                 nodes: [
-            //                   {
-            //                     kind: "block",
-            //                     type: "paragraph",
-            //                     nodes: [
-            //                       {
-            //                         kind: "text",
-            //                         leaves: [
-            //                           {
-            //                             text: "This is editable "
-            //                           },
-            //                           {
-            //                             text: "rich",
-            //                             marks: [
-            //                               {
-            //                                 type: "bold"
-            //                               }
-            //                             ]
-            //                           },
-            //                           {
-            //                             text: " text, "
-            //                           },
-            //                           {
-            //                             text: "much",
-            //                             marks: [
-            //                               {
-            //                                 type: "italic"
-            //                               }
-            //                             ]
-            //                           },
-            //                           {
-            //                             text: " better than a "
-            //                           },
-            //                           {
-            //                             text: "<textarea>",
-            //                             marks: [
-            //                               {
-            //                                 type: "code"
-            //                               }
-            //                             ]
-            //                           },
-            //                           {
-            //                             text: "!"
-            //                           }
-            //                         ]
-            //                       }
-            //                     ]
-            //                   },
-            //                   {
-            //                     kind: "block",
-            //                     type: "paragraph",
-            //                     nodes: [
-            //                       {
-            //                         kind: "text",
-            //                         leaves: [
-            //                           {
-            //                             text: "Since it's rich text, you can do things like turn a selection of text "
-            //                           },
-            //                           {
-            //                             text: "bold",
-            //                             marks: [
-            //                               {
-            //                                 type: "bold"
-            //                               }
-            //                             ]
-            //                           }, {
-            //                             text: ", or add a semantically rendered block quote in the middle of the page, like this:"
-            //                           }
-            //                         ]
-            //                       }
-            //                     ]
-            //                   },
-            //                   {
-            //                     kind: "block",
-            //                     type: "block-quote",
-            //                     nodes: [
-            //                       {
-            //                         kind: "text",
-            //                         leaves: [
-            //                           {
-            //                             text: "A wise quote."
-            //                           }
-            //                         ]
-            //                       }
-            //                     ]
-            //                   },
-            //                   {
-            //                     kind: "block",
-            //                     type: "paragraph",
-            //                     nodes: [
-            //                       {
-            //                         kind: "text",
-            //                         leaves: [
-            //                           {
-            //                             text: "Try it out for yourself!"
-            //                           }
-            //                         ]
-            //                       }
-            //                     ]
-            //                   }
-            //                 ]
-            //               }
-            //             },
-        
-            //             video: [
-            //               {
-            //                 _id: { $oid: 'someRandomNumberMongoDBAssings' },
-            //                 videoInfo: "No Info",
-            //                 videoId: "Ukg_U3CnJWI"
-            //               }
-            //             ],
-            //             panel_dimensions: {
-            //               lecture_Panel: {
-            //                 width: String,
-            //                 height: String
-            //               },
-            //               video_Panel: {
-            //                 width: String,
-            //                 height: String
-            //               },
-            //               note_Panel: {
-            //                 width: String,
-            //                 height: String
-            //               },
-            //               meister_Panel: {
-            //                 width: String,
-            //                 height: String
-            //               }
-            //             }
-            //           }
-            //         ]
-            //       }
-            //     ],
-            //   }
-
-            // this.setState({
-            //     binder_arr_obj: [new_binder_obj]
-            // });
-
-        // } else {
-        //     let new_index = binder_arr_obj[length - 1].binder_id + 1;
-        //     let new_url = '/binder' + new_index;
-
-        //     let index_mod = new_index % 5;
-        //     //console.log('index_mod', index_mod);
-
-        //     let new_binder_obj = {
-        //         binder_id: new_index,
-        //         binder_name: 'New Binder',
-        //         binder_color: binder_color_arr[index_mod],
-        //         binder_url: new_url,
-        //         tab_arr_obj: new_tab_arr
-        //     }
-
-        //     this.setState({
-        //         binder_arr_obj: [...binder_arr_obj, new_binder_obj]
-        //     });
-
-        // }
-
     }
 
     deleteBinder(delete_id) {
         console.log('delete button clicked, binder_id: ', delete_id);
-
-        const { binder_arr_obj } = this.state;
-        console.log(binder_arr_obj);
-        let deleteIndex = 0;
-        for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
-            if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
-                binder_arr_obj.splice(deleteIndex, 1);
-            }
-        }
-
-        this.setState({
-            binder_arr_obj: binder_arr_obj
-        });
+        this.props.deleteBinder(delete_id);
+        // const { binder_arr_obj } = this.state;
+        // console.log(binder_arr_obj);
+        // let deleteIndex = 0;
+        // for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
+        //     if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
+        //         binder_arr_obj.splice(deleteIndex, 1);
+        //     }
+        // }
     }
 
     editable() {
@@ -398,31 +113,13 @@ class Binder extends Component {
     }
 
     handleClick(binderObj){
-        console.log('binderObj:' ,binderObj);
+        //console.log('binderObj:' ,binderObj);
         this.props.selectBinder(binderObj);
-        this.props.binderUpdate(binderObj._id);
-        this.props.tabUpdate(binderObj.tab_arr_obj[0]._id);
-        this.props.pageUpdate(binderObj.tab_arr_obj[0].page_arr_obj[0]._id);
-        //select first tab and page by default
-        
-        //this.props.tabUpdate(binderObj.tab_arr_obj[0]._id);
-        //this.props.pageUpdate(binderObj.tab_arr_obj[0].page_arr_obj[0]._id);
-        console.log("binder id updated");
     }
-    /*
-    
-    
-    
-    
-    //keep data updated with database.
 
-
-
-
-    */
     render() {
         const { editable, active } = this.state;
-        console.log("Binder props:", this.props);
+        //console.log("Binder props:", this.props);
         //console.log('Render binderArray:', binder_array);
         let binder_link = [];
         //map binders
@@ -441,7 +138,7 @@ class Binder extends Component {
                             value={item.binder_name}
                         />
 
-                        <button type="button" className="btn btn-default btn_delete" onClick={() => this.deleteBinder(item.binder_id)} >
+                        <button type="button" className="btn btn-default btn_delete" onClick={() => this.deleteBinder(item._id)} >
                             <span className="glyphicon glyphicon-minus"></span>
                         </button>
                     </li>
@@ -512,12 +209,13 @@ class Binder extends Component {
     }
 }
     function mapStateToProps(state){
-        console.log('binder mstp', state);
+        //console.log('binder mstp', state);
         return{
-            binderArr: state.binderArray.binderArr
+            binderArr: state.binderArray.binderArr,
+            binder: state.binder.binderObj
         }
     }
 
-    export default withRouter(connect(mapStateToProps,{ binderArray, selectBinder, binderUpdate, addBinder, tabUpdate, pageUpdate })(Binder));
+    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addBinder, deleteBinder})(Binder));
 
 

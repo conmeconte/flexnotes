@@ -7,7 +7,13 @@ const DEFAULT_STATE = {
 export default function(state = DEFAULT_STATE, action){
     switch(action.type){
         case types.SELECT_BINDER:
-            return{ binderObj: action.payload}
+            return{ binderObj: action.payload};
+        case types.GET_USER_DATA:
+            return {binderObj: action.payload.binder_arr_obj[0]};
+        case types.ADD_TAB:
+            return {binderObj: action.payload.data};
+        case types.ADD_PAGE:
+            return {binderObj: action.payload.data};
         default:
             return state;
     }
