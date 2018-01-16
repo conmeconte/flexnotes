@@ -27,22 +27,19 @@ module.exports = (app) => {
     app
         .get('/api/binder', requireLogin, async (req, res) => {
             //give binder data 
-            //userId accessible via req.param.userId?
             const existingUser= await User.findById(req.user.id, function (err, user){
-            // const existingUser= await User.findById(req.user.id, function (err, user){
-                if (err) { res.send("Error did occurred") };
+                if (err) {res.send("Error did occurred")};
 
                 if (user) {
                     res.send(user);
                 }else {
-                res.send("Error can't find user")
+                res.send("Error can't find user");
                 }
                 res.end();
-            })
+            });
         })
         .post('/api/binder', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
-            // const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
     
                 if (user) {
@@ -63,12 +60,11 @@ module.exports = (app) => {
         })
         .delete('/api/binder', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
-            // const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
     
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id(req.query.binderID) //req.body.binderID
+                    .binder_arr_obj.id(req.query.binderID) 
                     binder.remove();
                     user.save();
                     res.send(user.binder_arr_obj);
@@ -82,12 +78,11 @@ module.exports = (app) => {
             // update binder
 
             const existingUser= await User.findById(req.user.id, function (err, user){
-            // const existingUser= await User.findById(req.user.id, function (err, user){
             if (err) { res.send("Error did occurred")};
     
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
+                    .binder_arr_obj.id(req.body.binderID)
                     
                     binder.binder_color = req.body.binder_color || binder.binder_color;
                     binder.binder_name = req.body.binder_name || binder.binder_name;
@@ -109,12 +104,11 @@ module.exports = (app) => {
     app
         .get('/api/tab', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id, function (err, user){
-            // const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) { res.send("Error did occurred")};
 
                 if (user) {
                     const tab = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
+                    .binder_arr_obj.id(req.body.binderID) 
                     .tab_arr_obj.id(req.body.tabID)
                     res.send(tab);
                 }else {
@@ -127,12 +121,11 @@ module.exports = (app) => {
         .post('/api/tab', requireLogin,  async (req, res) => {
             //create new tab in user
             const existingUser= await User.findById(req.user.id,function(err,user){
-            // const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
+                    .binder_arr_obj.id(req.body.binderID)
                     if(binder){
                         tab= new Tab();
                         tab.page_arr_obj.push(new Page());
@@ -151,13 +144,12 @@ module.exports = (app) => {
         })
         .delete('/api/tab', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
-            // const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
                     const tab = user
-                    .binder_arr_obj.id(req.query.binderID) //req.body.binderID
-                    .tab_arr_obj.id(req.query.tabID)  //req.body.tabID;
+                    .binder_arr_obj.id(req.query.binderID) 
+                    .tab_arr_obj.id(req.query.tabID) 
 
                     const binder = user
                     .binder_arr_obj.id(req.body.binderID)
@@ -175,7 +167,6 @@ module.exports = (app) => {
         .put('/api/tab', requireLogin,  async (req, res) => {
 
             const existingUser= await User.findById(req.user.id, function (err, user){
-            // const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) { res.send("Error did occurred")};
 
                 if (user) {
@@ -220,7 +211,6 @@ module.exports = (app) => {
         .post('/api/page', requireLogin,  async (req, res) => {
             //create new page in user
             const existingUser= await User.findById(req.user.id,function(err,user){
-            // const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
@@ -272,9 +262,9 @@ module.exports = (app) => {
 
                 if (user) {
                     const page = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
-                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID
-                    .page_arr_obj.id(req.body.pageID); //req.body.pageID
+                    .binder_arr_obj.id(req.body.binderID)
+                    .tab_arr_obj.id(req.body.tabID)
+                    .page_arr_obj.id(req.body.pageID); 
                     
                     page.page_color = req.body.page_color || page.page_color;
                     page.page_name = req.body.page_name || page.page_name;
@@ -291,7 +281,6 @@ module.exports = (app) => {
                 }else {
                 res.send("Error can't find user")
                 }
-                // res.end();
             })
 
         });
@@ -300,7 +289,6 @@ module.exports = (app) => {
     app
         .post('/api/video', requireLogin,  async (req,res)=>{
             const existingUser= await User.findById(req.user.id, (err,user)=>{
-            // const existingUser= await User.findById(req.user.id, (err,user)=>{
                 if(err){ res.send('Error')}
                 if (user) {
                     const page = user
@@ -323,7 +311,6 @@ module.exports = (app) => {
         })
         .delete('/api/video', requireLogin,  async (req,res)=>{
             const existingUser= await User.findById(req.user.id, (err,user)=>{
-            // const existingUser= await User.findById(req.user.id, (err,user)=>{
                 if(err){ res.send('Error')}
                 if (user) {
                     const video = user
@@ -345,7 +332,6 @@ module.exports = (app) => {
         })
         .put('/api/video', requireLogin,  async (req,res)=>{
             const existingUser= await User.findById(req.user.id, (err,user)=>{
-            // const existingUser= await User.findById(req.user.id, (err,user)=>{
                 if(err){ res.send('Error')}
                 if (user) {
                     const video = user
@@ -369,22 +355,21 @@ module.exports = (app) => {
 
 //note//
 app
-    .post('/api/note', requireLogin,  async (req,res)=>{
+    .put('/api/note', requireLogin,  async (req,res)=>{
         const existingUser= await User.findById(req.user.id, (err,user)=>{
-        // const existingUser= await User.findById(req.user.id, (err,user)=>{
             if(err){ res.send('Error')}
             if (user) {
-                const notes = user
+                const page = user
                 .binder_arr_obj.id(req.body.binderID)
                 .tab_arr_obj.id(req.body.tabID)  
                 .page_arr_obj.id(req.body.pageID)
-                if(notes){
-                    // page.notes.nodes.push(req.body.notesNode);
-                    page.notes= req.body.notesObj; 
+                if(page){
+                    page.notes.document= req.body.document || page.notes.document;
 
-                    user.save(user
-                        .binder_arr_obj.id(req.body.binderID));
-                    res.send(notes);
+                    user.save();
+                    // user.save(user
+                    //     .binder_arr_obj.id(req.body.binderID));
+                    res.send(page);
                 }else{res.send('wrong path')}
                 
             }else {

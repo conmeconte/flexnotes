@@ -37,9 +37,9 @@ passport.use(
             // console.log(profile);
             const defaultBinder = new Binder();
             defaultBinder.tab_arr_obj.push(new Tab());
-            defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({ page_color: 'orange' }));
+            defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({ page_color: 'orange', notes:{document:{}} }));
             defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ videoInfo: 'No Info' }));
-            defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new Note());
+            // defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new Note());
             const user = await new User({
                 googleId: profile.id,
                 userName: profile.displayName,
