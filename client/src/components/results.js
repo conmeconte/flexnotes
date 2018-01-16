@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToPlayList, playVideo } from '../actions/index';
+import { addToPlayList, playPastedLinkVideo } from '../actions/index';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Results extends Component {
@@ -19,8 +19,8 @@ class Results extends Component {
                         <li className="video-items">{item.videoTitle}</li>
                     </div>
                     <div className="col-xs-4">
-                        <button className="btn-sm btn-success pull-right" onClick={ () => { this.props.addToPlayList(item) } }><span className="glyphicon glyphicon-plus"></span></button>
-                        <button className="btn-sm btn-primary pull-right" onClick={ () => { this.props.playVideo(item.url) }}><span className="glyphicon glyphicon-play"></span></button>
+                        {/* <button className="btn-sm btn-success pull-right" onClick={ () => { this.props.addToPlayList(item) } }><span className="glyphicon glyphicon-plus"></span></button> */}
+                        <button className="btn-sm btn-primary pull-right" onClick={ () => { this.props.playPastedLinkVideo(item.url) }}><span className="glyphicon glyphicon-play"></span></button>
                     </div>
                 </li>
             );
@@ -34,9 +34,8 @@ class Results extends Component {
 
 function mapStateToProps (state) {
     return {
-        playlist: state.video.results,
-        // url: state.results.url
+        url: state.url
     }
 }
 
-export default connect(mapStateToProps, { addToPlayList, playVideo })(Results);
+export default connect(mapStateToProps, { addToPlayList, playPastedLinkVideo })(Results);

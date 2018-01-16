@@ -17,15 +17,15 @@ class FourPanel extends Component {
     }
 
     logTopLeftHeight(size) {
-        this.props.setTopLeftHeight(size);
+        this.props.setTopLeftHeight(size, this.props.interface_obj);
     }
 
     logTopLeftWidth(size) {
-        this.props.setTopLeftWidth(size);
+        this.props.setTopLeftWidth(size, this.props.interface_obj);
     }
 
     logTopRightHeight(size) {
-        this.props.setTopRightHeight(size);
+        this.props.setTopRightHeight(size, this.props.interface_obj);
     }
 
     render() {
@@ -62,6 +62,7 @@ function mapStateToProps(state) {
         tlh: state.panelSpecs.topLeftHeight,
         tlw: state.panelSpecs.topLeftWidth,
         trh: state.panelSpecs.topRightHeight,
+        interface_obj: state.interface
     }
 }
 

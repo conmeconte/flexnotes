@@ -17,30 +17,16 @@ const pageSchemaNew = new Schema({
         lec_id : String
     },
     notes : {
-        document: {
-          nodes: [notesNode]
-        }
+        document: {}
       },
   
     video :[videoSchemaNew],
     panel_dimensions: {
-        lecture_Panel: {
-            width: String,
-            height: String
-        },
-        video_Panel: {
-            width: String,
-            height: String
-        },
-        note_Panel: {
-            width: String,
-            height: String
-        },
-        meister_Panel: {
-            width: String,
-            height: String
-        }
+        top_left_panel_height: Number,
+        top_left_panel_width: Number,
+        top_right_panel_height: Number,
+        number_of_panels: Number
     }
-});
+},{minimize: false});
 
 module.exports = pageSchemaNew;

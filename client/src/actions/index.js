@@ -9,15 +9,14 @@ export const fetchUser = () => async dispatch => {
 //PANEL SPECs Action Creator
 
 // Yo hyung, if I set PUT request individually in each of these functions, they will overwrite each other right????
-export function setTopLeftHeight(num) {
-    // axios.put('/api/page', {
-    //     panel_dimensions: {
-    //         top_left_panel_height: num
-    //     },
-    //     binderID: interfaceObj.binder_id,
-    //     tabID: interfaceObj.tab_id,
-    //     pageID: interfaceObj.page_id
-    // });
+export function setTopLeftHeight(num, interfaceObj) {
+    axios.put('/api/page', {
+
+        top_left_panel_height: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
 
     return {
         type: types.PANEL_TOP_LEFT_HEIGHT,
@@ -25,15 +24,13 @@ export function setTopLeftHeight(num) {
     }
 }
 
-export function setTopLeftWidth(num) {
-    // axios.put('/api/page', {
-    //     panel_dimensions: {
-    //         top_left_panel_width: num
-    //     },
-    //     binderID: interfaceObj.binder_id,
-    //     tabID: interfaceObj.tab_id,
-    //     pageID: interfaceObj.page_id
-    // });
+export function setTopLeftWidth(num, interfaceObj) {
+    axios.put('/api/page', {
+        top_left_panel_width: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
 
     return {
         type: types.PANEL_TOP_LEFT_WIDTH,
@@ -41,15 +38,13 @@ export function setTopLeftWidth(num) {
     }
 }
 
-export function setTopRightHeight(num) {
-    // axios.put('/api/page', {
-    //     panel_dimensions: {
-    //         top_right_panel_height: num
-    //     },
-    //     binderID: interfaceObj.binder_id,
-    //     tabID: interfaceObj.tab_id,
-    //     pageID: interfaceObj.page_id
-    // });
+export function setTopRightHeight(num, interfaceObj) {
+    axios.put('/api/page', {
+        top_right_panel_height: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
 
     return {
         type: types.PANEL_TOP_RIGHT_HEIGHT,
@@ -57,15 +52,13 @@ export function setTopRightHeight(num) {
     }
 }
 
-export function setNumOfPanels(num) {
-    // axios.put('/api/page', {
-    //     panel_dimensions: {
-    //         number_of_panels: num
-    //     },
-    //     binderID: interfaceObj.binder_id,
-    //     tabID: interfaceObj.tab_id,
-    //     pageID: interfaceObj.page_id
-    // });
+export function setNumOfPanels(num, interfaceObj) {
+    axios.put('/api/page', {
+        number_of_panels: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
 
     return {
         type: types.NUM_OF_PANELS,
@@ -113,6 +106,19 @@ export function setSlidesUrl(value, interfaceObj) {
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
+export function toggleModal ({ display }) {
+    console.log("TOGGLE DELETE VALUE: ", display)
+    let displayValue = display;
+    if (displayValue === 'none') {
+        displayValue = 'block';
+    } else {
+        displayValue = 'none';
+    }
+    return {
+        type: types.TOGGLE_MODAL,
+        payload: displayValue
+    }
+}
 export function getVideoResults(videos) {
     return {
         type: types.GET_VIDEO_RESULTS,
@@ -161,13 +167,15 @@ export function toggleResults(bool) {
         payload: toggleResults
     }
 }
-export function addToPlaylist(videoUrl, interfaceObj) {
-    console.log('hahahahaha ', videoUrl);
-
+export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
+    console.log('HERE IS THE SENT VIDEO LINK ', videoUrl);
+    let videoId = videoUrl.split("=");
+    videoId = videoId[1];
+    console.log("VIDEO ID: ", videoId);
     axios.post('/api/video', {
         video: {
-            videoTitle: 'ReactJS Crash Course',
-            videoId: 'A71aqufiNtQ',
+            videoTitle: videoTitle,
+            videoId: videoId,
             videoUrl: videoUrl
         },
         binderID: interfaceObj.binder_id,
@@ -180,14 +188,27 @@ export function addToPlaylist(videoUrl, interfaceObj) {
     }
 }
 export function playVideo() {
-    // Change this link to
-    // https://www.youtube.com/embed/Ukg_U3CnJWI
-    // this VVVVVVVV
-    // https://www.youtube.com/watch?v=Ukg_U3CnJWI&t=1s
-    var videoId = document.querySelector(".pastedVideoInput").value;
+    let videoId = document.querySelector(".pastedVideoInput").value;
     videoId = videoId.split('&')[0];
     videoId = videoId.split('=')[1];
-    videoId = document.querySelector(".currentVideo").src = `https://www.youtube.com/embed/${videoId}`;
+    videoId = `https://www.youtube.com/embed/${videoId}`;
+    let iframe = document.createElement("iframe");
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.src = videoId;
+    document.querySelector(".video-embed-wrapper").innerText = "";
+    document.querySelector(".video-embed-wrapper").appendChild(iframe);
+    return {
+        type: types.PLAY_VIDEO
+    }
+}
+export function playPastedLinkVideo(url) {
+    let iframe = document.createElement("iframe");
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.src = url
+    document.querySelector(".video-embed-wrapper").innerText = "";
+    document.querySelector(".video-embed-wrapper").appendChild(iframe);
     return {
         type: types.PLAY_VIDEO
     }
@@ -199,7 +220,12 @@ export function grabVideoUrl() {
         payload: videoLink
     }
 }
-
+export function getVideoTitle(videoTitle) {
+    return {
+        type: types.GET_VIDEO_TITLE,
+        payload: videoTitle
+    }
+}
 export function getDataObject() {
 
     return (dispatch) => {
@@ -342,9 +368,16 @@ export function deleteBinder(binder_id) {
 
 //Notes Action Creator
 
-export function save_notes() {
+export function save_notes(value, interfaceObj) {
+    axios.put('/api/note', {
+        document: value,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
+
     return {
-        type: types.SAVE_NOTES
+        type: types.SAVE_NOTES,
+        payload: value
     }
 }
-
