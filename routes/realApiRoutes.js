@@ -279,6 +279,10 @@ module.exports = (app) => {
                     page.page_color = req.body.page_color || page.page_color;
                     page.page_name = req.body.page_name || page.page_name;
                     page.lecture_slides= req.body.lecture_slides || page.lecture_slides; 
+                    page.panel_dimensions.top_left_panel_height= req.body.top_left_panel_height || page.panel_dimensions.top_left_panel_height;
+                    page.panel_dimensions.top_left_panel_width= req.body.top_left_panel_width || page.panel_dimensions.top_left_panel_width;
+                    page.panel_dimensions.top_right_panel_height= req.body.top_right_panel_height || page.panel_dimensions.top_right_panel_height;
+                    page.panel_dimensions.number_of_panels= req.body.number_of_panels || page.panel_dimensions.number_of_panels;
                     
             
                     user.save();
