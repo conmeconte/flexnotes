@@ -19,19 +19,23 @@ class Slides extends Component {
     }
 
     componentWillMount() {
-        // grab loop to get tab index from /navbar/page.js
-
         let tabArrLength = this.props.binderObj.tab_arr_obj.length;
         let tabIndex = null;
         for (let i = 0; i < tabArrLength; i++) {
             if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
                 //console.log('tabid = interface id at index:', i);
                 tabIndex = i;
-                const checkSlides = 
-                if ()
+                break;
             }
         }
         const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+        console.log('c will mount after const { page_arr_obj }', page_arr_obj);
+        if (!page_arr_obj[0].lecture_slides) {
+            return;
+        } else {
+            console.log(`cWm`, page_arr_obj[0].lecture_slides.lec_id);
+            this.props.setSlidesUrl(page_arr_obj[0].lecture_slides.lec_id, this.props.interface_obj);
+        }
     }
 
     handleSubmit(e) {

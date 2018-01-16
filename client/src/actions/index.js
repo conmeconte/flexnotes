@@ -75,6 +75,7 @@ export function setSlidesUrl(value, interfaceObj) {
             const urlSplit1 = value.split("presentation/d/");
             const urlSplit2 = urlSplit1[1].split('/');
             let presentationID = urlSplit2[0];
+            debugger;
             const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
             axios.put('/api/page', {
                 lecture_slides: {
@@ -106,7 +107,7 @@ export function setSlidesUrl(value, interfaceObj) {
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
-export function toggleModal ({ display }) {
+export function toggleModal({ display }) {
     console.log("TOGGLE DELETE VALUE: ", display)
     let displayValue = display;
     if (displayValue === 'none') {
