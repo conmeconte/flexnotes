@@ -4,7 +4,7 @@
 }
 
 .slides-div {
-  height: 85%
+  height: 90%
 }
 
 .slides-iframe
@@ -16,7 +16,7 @@
   right: 0;
   z-index: 1;
   width: 100%;
-  height: 100%;
+  height: 75%;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
