@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setTopLeftHeight, setTopLeftWidth } from '../actions';
 import SplitPane from 'react-split-pane';
+import _ from 'lodash';
 
 import Video from './video';
 import Notes from './notes';
@@ -24,6 +25,12 @@ class ThreePanel extends Component {
     }
 
     render() {
+        const loTLHsave = _.debounce((size) => {
+            console.log('loTLHsave invoked');
+            // this.logTopLeftHeight(size);
+        }, 3000);
+
+
         return (
             <SplitPane onChange={size => { this.logTopLeftHeight(size) }} className="width-w-nav" split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
                 <SplitPane onChange={size => { this.logTopLeftWidth(size) }} split="vertical" minSize={200} maxSize={-200} defaultSize={400}>
