@@ -6,6 +6,7 @@ import Results from './results';
 import VideoContainer from './video-container';
 import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults } from '../actions';
 import { Field, reduxForm } from 'redux-form';
+import VideoModal from './video-modal';
 
 const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
 class Video extends Component {
@@ -51,6 +52,7 @@ class Video extends Component {
     render() {
         return (
             <div className="main">
+                <VideoModal/>
                 <div style={this.props.opacityContainer} className="opacity"></div>
                 <button id="search" className="btn btn-primary" onClick={ () => {
                     this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool);

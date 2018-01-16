@@ -46,6 +46,20 @@ export function setSlidesUrl(value, interfaceObj) {
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
+export function toggleModal ({ display }) {
+    console.log("TOGGLE DELETE VALUE: ", display)
+    let displayValue = display;
+    debugger;
+    if (displayValue === 'none') {
+        displayValue = 'block';
+    } else {
+        displayValue = 'none';
+    }
+    return {
+        type: types.TOGGLE_MODAL,
+        payload: displayValue
+    }
+}
 export function getVideoResults(videos) {
     return {
         type: types.GET_VIDEO_RESULTS,
@@ -94,13 +108,15 @@ export function toggleResults(bool) {
         payload: toggleResults
     }
 }
-export function addToPlaylist(videoUrl, interfaceObj) {
-    console.log('hahahahaha ', videoUrl);
-
+export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
+    console.log('HERE IS THE SENT VIDEO LINK ', videoUrl);
+    let videoId = videoUrl.split("=");
+    videoId = videoId[1];
+    console.log("VIDEO ID: ", videoId);
     axios.post('/api/video', {
         video: {
-            videoTitle: 'ReactJS Crash Course',
-            videoId: 'A71aqufiNtQ',
+            videoTitle: 'Test',
+            videoId: videoId,
             videoUrl: videoUrl
         },
         binderID: interfaceObj.binder_id,
@@ -113,14 +129,27 @@ export function addToPlaylist(videoUrl, interfaceObj) {
     }
 }
 export function playVideo() {
-    // Change this link to
-    // https://www.youtube.com/embed/Ukg_U3CnJWI
-    // this VVVVVVVV
-    // https://www.youtube.com/watch?v=Ukg_U3CnJWI&t=1s
-    var videoId = document.querySelector(".pastedVideoInput").value;
+    let videoId = document.querySelector(".pastedVideoInput").value;
     videoId = videoId.split('&')[0];
     videoId = videoId.split('=')[1];
-    videoId = document.querySelector(".currentVideo").src = `https://www.youtube.com/embed/${videoId}`;
+    videoId = `https://www.youtube.com/embed/${videoId}`;
+    let iframe = document.createElement("iframe");
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.src = videoId;
+    document.querySelector(".video-embed-wrapper").innerText = "";
+    document.querySelector(".video-embed-wrapper").appendChild(iframe);
+    return {
+        type: types.PLAY_VIDEO
+    }
+}
+export function playPastedLinkVideo(url) {
+    let iframe = document.createElement("iframe");
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.src = url
+    document.querySelector(".video-embed-wrapper").innerText = "";
+    document.querySelector(".video-embed-wrapper").appendChild(iframe);
     return {
         type: types.PLAY_VIDEO
     }

@@ -14,6 +14,7 @@ export default {
     TOGGLE_RESULTS: 'toggle_results',
     ADD_TO_PLAYLIST: 'add_to_playlist',
     PLAY_VIDEO: 'play_video',
+    TOGGLE_MODAL: 'toggle_modal',
     GRAB_VIDEO_URL: 'grab_video_url',
     SET_SLIDES_URL: 'set_slides_url',
     SAVE_NOTES: 'save_notes'
