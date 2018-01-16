@@ -17,11 +17,11 @@ class ThreePanel extends Component {
     }
 
     logTopLeftHeight(size) {
-        this.props.setTopLeftHeight(size);
+        this.props.setTopLeftHeight(size, this.props.interface_obj);
     }
 
     logTopLeftWidth(size) {
-        this.props.setTopLeftWidth(size);
+        this.props.setTopLeftWidth(size, this.props.interface_obj);
     }
 
     render() {
@@ -49,6 +49,7 @@ function mapStateToProps(state) {
     return {
         tlh: state.panelSpecs.topLeftHeight,
         tlw: state.panelSpecs.topLeftWidth,
+        interface_obj: state.interface
     }
 }
 
