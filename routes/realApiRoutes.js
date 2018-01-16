@@ -375,10 +375,11 @@ app
                 .tab_arr_obj.id(req.body.tabID)  
                 .page_arr_obj.id(req.body.pageID)
                 if(notes){
-                    page.notes.nodes.push(req.body.notesNode);
+                    // page.notes.nodes.push(req.body.notesNode);
+                    page.notes= req.body.notesObj; 
 
-
-                    user.save();
+                    user.save(user
+                        .binder_arr_obj.id(req.body.binderID));
                     res.send(notes);
                 }else{res.send('wrong path')}
                 
