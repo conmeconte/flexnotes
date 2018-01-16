@@ -25,7 +25,6 @@ class Login extends Component {
                     <ul className="right">
                         {this.renderContent()}
                     </ul>
-                    <a href="/api/binder">DO THE THING!!!!</a>
                 </div>
             </nav>
         );
