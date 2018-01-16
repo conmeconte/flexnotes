@@ -11,13 +11,6 @@ class Panel extends Component {
     constructor(props) {
         super(props);
         this.props = props;
-        // console.log('props: ', props);
-
-        // this.sendSize = this.sendSize.bind(this);
-    }
-
-    panelLayout(val) {
-        // wait for Scott's answer on mapDispatchToProps for passing setNumOfPanels(val) to Action
     }
 
     componentWillMount() {
@@ -31,14 +24,6 @@ class Panel extends Component {
         //     })
         // });
     }
-
-    // sendSize() {
-    //     const { vertical_width, horizontal_left, horizontal_right } = this.state;
-    //     console.log('vertical_width: ', vertical_width);
-    //     console.log('horizontal_right: ', horizontal_right);
-    //     console.log('horizontal_left: ', horizontal_left);
-    //     //do an axios.post with these values ^
-    // }
 
     render() {
         return (

@@ -17,12 +17,10 @@ class FourPanel extends Component {
     }
 
     logTopLeftHeight(size) {
-        console.log(`lTLH invoked:`, size);
-        // this.props.setTopLeftHeight(size);
+        this.props.setTopLeftHeight(size);
     }
 
     logTopLeftWidth(size) {
-        console.log('On Mouse up');
         this.props.setTopLeftWidth(size);
     }
 
@@ -31,13 +29,26 @@ class FourPanel extends Component {
     }
 
     render() {
+        const loTLHsave = _.debounce((size) => {
+            this.logTopLeftHeight(size);
+        }, 300);
+
+        const loTLWsave = _.debounce((size) => {
+            this.logTopLeftWidth(size);
+        }, 300);
+
+        const loTRHsave = _.debounce((size) => {
+            this.logTopRightHeight(size);
+        }, 300);
+
+
         return (
-            <SplitPane onChange={size => { this.logTopLeftWidth(size) }} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={400}>
-                <SplitPane onChange={size => { this.logTopLeftHeight(size) }} split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
+            <SplitPane onChange={loTLWsave} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={400}>
+                <SplitPane onChange={loTLHsave} split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
                     <div className="slides-container"><Slides /></div>
                     <div className="notes-parent-panel"><Notes /></div>
                 </SplitPane>
-                <SplitPane onChange={size => { this.logTopRightHeight(size) }} split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
+                <SplitPane onChange={loTRHsave} split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
                     <div className="video-parent-panel"><Video /></div>
                     <div>MeisterTask</div>
                 </SplitPane>

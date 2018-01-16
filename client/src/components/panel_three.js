@@ -26,14 +26,16 @@ class ThreePanel extends Component {
 
     render() {
         const loTLHsave = _.debounce((size) => {
-            console.log('loTLHsave invoked');
-            // this.logTopLeftHeight(size);
-        }, 3000);
+            this.logTopLeftHeight(size);
+        }, 300);
 
+        const loTLWsave = _.debounce((size) => {
+            this.logTopLeftWidth(size);
+        }, 300);
 
         return (
-            <SplitPane onChange={size => { this.logTopLeftHeight(size) }} className="width-w-nav" split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
-                <SplitPane onChange={size => { this.logTopLeftWidth(size) }} split="vertical" minSize={200} maxSize={-200} defaultSize={400}>
+            <SplitPane onChange={loTLHsave} className="width-w-nav" split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
+                <SplitPane onChange={loTLWsave} split="vertical" minSize={200} maxSize={-200} defaultSize={400}>
                     <div className="slides-container"><Slides /></div>
                     <div className="video-parent-panel"><Video /></div>
                 </SplitPane>

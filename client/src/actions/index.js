@@ -8,25 +8,17 @@ export const fetchUser = () => async dispatch => {
 
 //PANEL SPECs Action Creator
 
-export function setPanelSpecs(top_left_height, top_left_width, top_right_height) {
-    if (top_right_height) {
-        return {
-            type: types.PANEL_SPECS,
-            payload_tlh: top_left_height,
-            payload_tlw: top_left_width,
-            payload_trh: top_right_height,
-        }
-    } else {
-        return {
-            type: types.PANEL_SPECS,
-            payload_tlh: top_left_height,
-            payload_tlw: top_left_width,
-            payload_trh: 0,
-        }
-    }
-}
-
+// Yo hyung, if I set PUT request individually in each of these functions, they will overwrite each other right????
 export function setTopLeftHeight(num) {
+    // axios.put('/api/page', {
+    //     panel_dimensions: {
+    //         top_left_panel_height: num
+    //     },
+    //     binderID: interfaceObj.binder_id,
+    //     tabID: interfaceObj.tab_id,
+    //     pageID: interfaceObj.page_id
+    // });
+
     return {
         type: types.PANEL_TOP_LEFT_HEIGHT,
         payload: num
@@ -34,6 +26,15 @@ export function setTopLeftHeight(num) {
 }
 
 export function setTopLeftWidth(num) {
+    // axios.put('/api/page', {
+    //     panel_dimensions: {
+    //         top_left_panel_width: num
+    //     },
+    //     binderID: interfaceObj.binder_id,
+    //     tabID: interfaceObj.tab_id,
+    //     pageID: interfaceObj.page_id
+    // });
+
     return {
         type: types.PANEL_TOP_LEFT_WIDTH,
         payload: num
@@ -41,13 +42,31 @@ export function setTopLeftWidth(num) {
 }
 
 export function setTopRightHeight(num) {
+    // axios.put('/api/page', {
+    //     panel_dimensions: {
+    //         top_right_panel_height: num
+    //     },
+    //     binderID: interfaceObj.binder_id,
+    //     tabID: interfaceObj.tab_id,
+    //     pageID: interfaceObj.page_id
+    // });
+
     return {
-        type: types.PANEL_RIGHT_HEIGHT,
+        type: types.PANEL_TOP_RIGHT_HEIGHT,
         payload: num
     }
 }
 
 export function setNumOfPanels(num) {
+    // axios.put('/api/page', {
+    //     panel_dimensions: {
+    //         number_of_panels: num
+    //     },
+    //     binderID: interfaceObj.binder_id,
+    //     tabID: interfaceObj.tab_id,
+    //     pageID: interfaceObj.page_id
+    // });
+
     return {
         type: types.NUM_OF_PANELS,
         payload: num
@@ -187,7 +206,7 @@ export function getDataObject() {
         const test = axios.get('/api/binder')
             .then((resp) => {
                 //console.log("get data object: ", resp.data);
-                
+
                 dispatch({
                     type: types.GET_USER_DATA,
                     payload: resp.data
@@ -323,8 +342,8 @@ export function deleteBinder(binder_id) {
 
 //Notes Action Creator
 
-export function save_notes(){
-    return{
+export function save_notes() {
+    return {
         type: types.SAVE_NOTES
     }
 }
