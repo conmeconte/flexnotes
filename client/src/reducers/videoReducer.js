@@ -3,12 +3,13 @@ import types from '../actions/types';
 const DEFAULT_STATE = { 
     results: [],
     videoList: [],
+    videoTitle: '',
     toggleResults: true,
     deleteModal: {
         display: 'none'
     },
     resultsStyles: {
-        width: '65%',
+        width: '50%',
         display: 'block'
     },
     opacityDisplay: {
@@ -30,6 +31,8 @@ export default function (state = DEFAULT_STATE, action) {
             return { ...state, opacityDisplay: action.payload }
         case types.TOGGLE_MODAL:
             return { ...state, deleteModal: { display: action.payload } }
+        case types.GET_VIDEO_TITLE: 
+            return {...state, videoTitle: action.payload}
         default:
             return state;
     }

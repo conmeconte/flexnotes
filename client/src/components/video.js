@@ -45,6 +45,7 @@ class Video extends Component {
           });
     }
     renderInput ({input}) {
+        console.log(input);
         return (    
             <input {...input} id="query" placeholder="Search..." className="form-control"/>
         )

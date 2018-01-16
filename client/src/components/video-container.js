@@ -14,12 +14,11 @@ class VideoContainer extends Component {
                         this.props.grabVideoUrl();
                         this.props.playVideo();
                     }}>Embed Video</button>
-                    <button onClick={ () => { this.props.toggleModal(this.props.deleteModalStyle) } } className="btn btn-primary">
+                    <button type="button" onClick={ () => { this.props.toggleModal(this.props.deleteModalStyle) } } className="btn btn-primary">
                         <span className="glyphicon glyphicon-plus"></span>
                     </button>
                 </div>
-                <div className="video-embed-wrapper">
-                </div>
+                <div className="video-embed-wrapper"></div>
                 {/* <iframe style={ {width: '100%', height: '100%'} } className="currentVideo" src="null"></iframe> */}
             </div>
         )

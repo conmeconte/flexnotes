@@ -49,7 +49,6 @@ export function setSlidesUrl(value, interfaceObj) {
 export function toggleModal ({ display }) {
     console.log("TOGGLE DELETE VALUE: ", display)
     let displayValue = display;
-    debugger;
     if (displayValue === 'none') {
         displayValue = 'block';
     } else {
@@ -115,7 +114,7 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
     console.log("VIDEO ID: ", videoId);
     axios.post('/api/video', {
         video: {
-            videoTitle: 'Test',
+            videoTitle: videoTitle,
             videoId: videoId,
             videoUrl: videoUrl
         },
@@ -161,7 +160,12 @@ export function grabVideoUrl() {
         payload: videoLink
     }
 }
-
+export function getVideoTitle(videoTitle) {
+    return {
+        type: types.GET_VIDEO_TITLE,
+        payload: videoTitle
+    }
+}
 export function getDataObject() {
 
     return (dispatch) => {
