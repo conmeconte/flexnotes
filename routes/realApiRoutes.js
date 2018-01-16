@@ -359,17 +359,17 @@ app
         const existingUser= await User.findById(req.user.id, (err,user)=>{
             if(err){ res.send('Error')}
             if (user) {
-                const notes = user
+                const page = user
                 .binder_arr_obj.id(req.body.binderID)
                 .tab_arr_obj.id(req.body.tabID)  
                 .page_arr_obj.id(req.body.pageID)
-                if(notes){
+                if(page){
                     page.notes.document= req.body.document || page.notes.document;
 
                     user.save();
                     // user.save(user
                     //     .binder_arr_obj.id(req.body.binderID));
-                    res.send(notes);
+                    res.send(page);
                 }else{res.send('wrong path')}
                 
             }else {
