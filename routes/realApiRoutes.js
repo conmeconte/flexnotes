@@ -13,16 +13,16 @@ module.exports = (app) => {
     });
 
 
-    app.get('/api', requireLogin, async (req, res) => {
-        //pull entire user obj
-        const existingUser= await User.findById("5a5a63116f98c0bd996baad5",(err,user)=>{
-            if(err){console.log('error is ', err)};
-            const testingUserpageInfo=user.binder_arr_obj.id('5a5a63116f98c0bd996baad0').tab_arr_obj.id('5a5a63116f98c0bd996baad1')
-            .page_arr_obj.id('5a5a63116f98c0bd996baad2')
-            console.log('user is ', testingUserpageInfo);
-        })
+    // app.get('/api', requireLogin, async (req, res) => {
+    //     //pull entire user obj
+    //     const existingUser= await User.findById("5a5a63116f98c0bd996baad5",(err,user)=>{
+    //         if(err){console.log('error is ', err)};
+    //         const testingUserpageInfo=user.binder_arr_obj.id('5a5a63116f98c0bd996baad0').tab_arr_obj.id('5a5a63116f98c0bd996baad1')
+    //         .page_arr_obj.id('5a5a63116f98c0bd996baad2');
+    //         console.log('user is ', testingUserpageInfo);
+    //     })
 
-    })
+    // })
     // For Binder //
     app
         .get('/api/binder', requireLogin, async (req, res) => {
@@ -208,6 +208,7 @@ module.exports = (app) => {
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
+
                     res.send(user);
                 }else {
                 res.send("Error can't find user")
@@ -374,10 +375,11 @@ app
                 .tab_arr_obj.id(req.body.tabID)  
                 .page_arr_obj.id(req.body.pageID)
                 if(notes){
-                    page.notes.nodes.push(req.body.notesNode);
+                    // page.notes.nodes.push(req.body.notesNode);
+                    page.notes= req.body.notesObj; 
 
-
-                    user.save();
+                    user.save(user
+                        .binder_arr_obj.id(req.body.binderID));
                     res.send(notes);
                 }else{res.send('wrong path')}
                 
