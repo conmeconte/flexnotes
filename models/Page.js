@@ -25,8 +25,10 @@ const pageSchemaNew = new Schema({
     video :[videoSchemaNew],
     panel_dimensions: {
         lecture_Panel: {
-            width: String,
-            height: String
+            top_left_panel_height: Number,
+            top_left_panel_width: Number,
+            top_right_panel_height: Number,
+            number_of_panels: Number
         },
         video_Panel: {
             width: String,
