@@ -20,8 +20,8 @@ module.exports = app => {
     });
 
     app.get('/api/current_user', (req, res) => {
-        console.log(req.user);
-        console.log(req.session);
+        // console.log(req.user);
+        // console.log(req.session);
         res.send(req.user); //req.session has what cookie has saved
     })
 }

@@ -13,19 +13,19 @@ module.exports = (app) => {
     });
 
 
-    app.get('/api', async (req, res) => {
-        //pull entire user obj
-        const existingUser= await User.findById("5a5a63116f98c0bd996baad5",(err,user)=>{
-            if(err){console.log('error is ', err)};
-            const testingUserpageInfo=user.binder_arr_obj.id('5a5a63116f98c0bd996baad0').tab_arr_obj.id('5a5a63116f98c0bd996baad1')
-            .page_arr_obj.id('5a5a63116f98c0bd996baad2')
-            console.log('user is ', testingUserpageInfo);
-        })
+    // app.get('/api', requireLogin, async (req, res) => {
+    //     //pull entire user obj
+    //     const existingUser= await User.findById("5a5a63116f98c0bd996baad5",(err,user)=>{
+    //         if(err){console.log('error is ', err)};
+    //         const testingUserpageInfo=user.binder_arr_obj.id('5a5a63116f98c0bd996baad0').tab_arr_obj.id('5a5a63116f98c0bd996baad1')
+    //         .page_arr_obj.id('5a5a63116f98c0bd996baad2');
+    //         console.log('user is ', testingUserpageInfo);
+    //     })
 
-    })
+    // })
     // For Binder //
     app
-        .get('/api/binder', async (req, res) => {
+        .get('/api/binder', requireLogin, async (req, res) => {
             //give binder data 
             //userId accessible via req.param.userId?
             const existingUser= await User.findById(req.user.id, function (err, user){
@@ -40,7 +40,7 @@ module.exports = (app) => {
                 res.end();
             })
         })
-        .post('/api/binder', async (req, res) => {
+        .post('/api/binder', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
             // const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
@@ -61,25 +61,24 @@ module.exports = (app) => {
             })
 
         })
-        .delete('/api/binder', async (req, res) => {
+        .delete('/api/binder', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
             // const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
     
                 if (user) {
                     const binder = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
-                    
+                    .binder_arr_obj.id(req.query.binderID) //req.body.binderID
                     binder.remove();
                     user.save();
-                    res.send(user);
+                    res.send(user.binder_arr_obj);
                     
                 }else {
                 res.send("Error can't find user")
                 }
             })
         })
-        .put('/api/binder', async (req, res) => {
+        .put('/api/binder', requireLogin,  async (req, res) => {
             // update binder
 
             const existingUser= await User.findById(req.user.id, function (err, user){
@@ -108,7 +107,7 @@ module.exports = (app) => {
     // For Tab//
     // For Tab//
     app
-        .get('/api/tab', async (req, res) => {
+        .get('/api/tab', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id, function (err, user){
             // const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) { res.send("Error did occurred")};
@@ -125,7 +124,7 @@ module.exports = (app) => {
         
             });
         })
-        .post('/api/tab', async (req, res) => {
+        .post('/api/tab', requireLogin,  async (req, res) => {
             //create new tab in user
             const existingUser= await User.findById(req.user.id,function(err,user){
             // const existingUser= await User.findById(req.user.id,function(err,user){
@@ -150,15 +149,15 @@ module.exports = (app) => {
                 }
             })
         })
-        .delete('/api/tab', async (req, res) => {
+        .delete('/api/tab', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
             // const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
                     const tab = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
-                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID;
+                    .binder_arr_obj.id(req.query.binderID) //req.body.binderID
+                    .tab_arr_obj.id(req.query.tabID)  //req.body.tabID;
 
                     const binder = user
                     .binder_arr_obj.id(req.body.binderID)
@@ -173,7 +172,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .put('/api/tab', async (req, res) => {
+        .put('/api/tab', requireLogin,  async (req, res) => {
 
             const existingUser= await User.findById(req.user.id, function (err, user){
             // const existingUser= await User.findById(req.user.id, function (err, user){
@@ -203,12 +202,13 @@ module.exports = (app) => {
     // For Page //
 
     app
-        .get('/api/page', async (req,res)=>{
+        .get('/api/page', requireLogin,  async (req,res)=>{
             const existingUser= await User.findById(req.user.id, function (err, user){
             // const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
+
                     res.send(user);
                 }else {
                 res.send("Error can't find user")
@@ -217,7 +217,7 @@ module.exports = (app) => {
         
             });
         })
-        .post('/api/page', async (req, res) => {
+        .post('/api/page', requireLogin,  async (req, res) => {
             //create new page in user
             const existingUser= await User.findById(req.user.id,function(err,user){
             // const existingUser= await User.findById(req.user.id,function(err,user){
@@ -245,16 +245,16 @@ module.exports = (app) => {
                 }
             })
         })
-        .delete('/api/page', async (req, res) => {
+        .delete('/api/page', requireLogin,  async (req, res) => {
             //delete page
             const existingUser= await User.findById('5a569b34da2d998e141c38b2',function(err,user){
                 if (err) { res.send("Error did occurred") };
 
                 if (user) {
                     const page = user
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
-                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID
-                    .page_arr_obj.id(req.body.pageID); //req.body.pageID
+                    .binder_arr_obj.id(req.query.binderID) //req.body.binderID
+                    .tab_arr_obj.id(req.query.tabID)  //req.body.tabID
+                    .page_arr_obj.id(req.query.pageID); //req.body.pageID
                     
                     page.remove();
                     user.save();
@@ -265,7 +265,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .put('/api/page', async (req,res)=>{
+        .put('/api/page', requireLogin,  async (req,res)=>{
             const existingUser= await User.findById(req.user.id,function(err,user){
 
                 if (err) { res.send("Error did occurred") };
@@ -279,6 +279,10 @@ module.exports = (app) => {
                     page.page_color = req.body.page_color || page.page_color;
                     page.page_name = req.body.page_name || page.page_name;
                     page.lecture_slides= req.body.lecture_slides || page.lecture_slides; 
+                    page.panel_dimensions.top_left_panel_height= req.body.top_left_panel_height || page.panel_dimensions.top_left_panel_height;
+                    page.panel_dimensions.top_left_panel_width= req.body.top_left_panel_width || page.panel_dimensions.top_left_panel_width;
+                    page.panel_dimensions.top_right_panel_height= req.body.top_right_panel_height || page.panel_dimensions.top_right_panel_height;
+                    page.panel_dimensions.number_of_panels= req.body.number_of_panels || page.panel_dimensions.number_of_panels;
                     
             
                     user.save();
@@ -294,7 +298,7 @@ module.exports = (app) => {
 
  //video//
     app
-        .post('/api/video', async (req,res)=>{
+        .post('/api/video', requireLogin,  async (req,res)=>{
             const existingUser= await User.findById(req.user.id, (err,user)=>{
             // const existingUser= await User.findById(req.user.id, (err,user)=>{
                 if(err){ res.send('Error')}
@@ -317,16 +321,16 @@ module.exports = (app) => {
                 }
             })
         })
-        .delete('/api/video', async (req,res)=>{
+        .delete('/api/video', requireLogin,  async (req,res)=>{
             const existingUser= await User.findById(req.user.id, (err,user)=>{
             // const existingUser= await User.findById(req.user.id, (err,user)=>{
                 if(err){ res.send('Error')}
                 if (user) {
                     const video = user
-                    .binder_arr_obj.id(req.body.binderID)
-                    .tab_arr_obj.id(req.body.tabID)  
-                    .page_arr_obj.id(req.body.pageID)
-                    .video.id(req.body.videoID)
+                    .binder_arr_obj.id(req.query.binderID)
+                    .tab_arr_obj.id(req.query.tabID)  
+                    .page_arr_obj.id(req.query.pageID)
+                    .video.id(req.query.videoID)
                     if(video){
                         video.remove();
                         user.save();
@@ -339,7 +343,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .put('/api/video', async (req,res)=>{
+        .put('/api/video', requireLogin,  async (req,res)=>{
             const existingUser= await User.findById(req.user.id, (err,user)=>{
             // const existingUser= await User.findById(req.user.id, (err,user)=>{
                 if(err){ res.send('Error')}
@@ -365,7 +369,7 @@ module.exports = (app) => {
 
 //note//
 app
-    .post('/api/note', async (req,res)=>{
+    .post('/api/note', requireLogin,  async (req,res)=>{
         const existingUser= await User.findById(req.user.id, (err,user)=>{
         // const existingUser= await User.findById(req.user.id, (err,user)=>{
             if(err){ res.send('Error')}
@@ -375,10 +379,11 @@ app
                 .tab_arr_obj.id(req.body.tabID)  
                 .page_arr_obj.id(req.body.pageID)
                 if(notes){
-                    page.notes.nodes.push(req.body.notesNode);
+                    // page.notes.nodes.push(req.body.notesNode);
+                    page.notes= req.body.notesObj; 
 
-
-                    user.save();
+                    user.save(user
+                        .binder_arr_obj.id(req.body.binderID));
                     res.send(notes);
                 }else{res.send('wrong path')}
                 

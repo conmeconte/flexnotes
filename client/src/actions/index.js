@@ -6,7 +6,67 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: types.FETCH_USER, payload: res.data });
 };
 
-//Lecture Slides Action Creators
+//PANEL SPECs Action Creator
+
+// Yo hyung, if I set PUT request individually in each of these functions, they will overwrite each other right????
+export function setTopLeftHeight(num, interfaceObj) {
+    axios.put('/api/page', {
+
+        top_left_panel_height: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
+
+    return {
+        type: types.PANEL_TOP_LEFT_HEIGHT,
+        payload: num
+    }
+}
+
+export function setTopLeftWidth(num, interfaceObj) {
+    axios.put('/api/page', {
+        top_left_panel_width: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
+
+    return {
+        type: types.PANEL_TOP_LEFT_WIDTH,
+        payload: num
+    }
+}
+
+export function setTopRightHeight(num, interfaceObj) {
+    axios.put('/api/page', {
+        top_right_panel_height: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
+
+    return {
+        type: types.PANEL_TOP_RIGHT_HEIGHT,
+        payload: num
+    }
+}
+
+export function setNumOfPanels(num, interfaceObj) {
+    axios.put('/api/page', {
+        number_of_panels: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
+
+    return {
+        type: types.NUM_OF_PANELS,
+        payload: num
+    }
+}
+
+//Lecture Slides Action Creator
 
 export function setSlidesUrl(value, interfaceObj) {
     console.log("setSlides url action 1:", value);
@@ -198,8 +258,7 @@ export function addBinder() {
     return (dispatch) => {
         const test = axios.post('/api/binder')
             .then((resp) => {
-                console.log("addBinder response: ", resp);
-
+                //console.log("addBinder response: ", resp);
                 dispatch({
                     type: types.ADD_BINDER,
                     payload: resp.data.binder_arr_obj
@@ -219,8 +278,7 @@ export function addTab(binder_id) {
             binderID: binder_id
         })
             .then((resp) => {
-                console.log("addBinder tab: ", resp);
-
+                //console.log("add tab: ", resp);
                 dispatch({
                     type: types.ADD_TAB,
                     payload: resp
@@ -234,16 +292,36 @@ export function addTab(binder_id) {
     }
 }
 
-export function deleteBinder(binder_id) {
+export function addPage(binder_id, tab_id) {
     return (dispatch) => {
-        const test = axios.delete('/api/binder', {
-            binderID: biinder_id
+        const test = axios.post('/api/page', {
+            binderID: binder_id,
+            tabID: tab_id
         })
             .then((resp) => {
-                console.log("addBinder response: ", resp);
+                //console.log("addPage response: ", resp);
+                dispatch({
+                    type: types.ADD_PAGE,
+                    payload: resp
+                });
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in binderarray'
+                });
+            });
+    }
+}
+
+export function deleteBinder(binder_id) {
+    return (dispatch) => {
+        const test = axios.delete(`/api/binder?binderID=${binder_id}`, {
+        })
+            .then((resp) => {
+                console.log("delete binder response: ", resp);
 
                 dispatch({
-                    type: types.ADD_BINDER,
+                    type: types.DELETE_BINDER,
                     payload: resp.data.binder_arr_obj
                 });
             }).catch(err => {
@@ -257,15 +335,15 @@ export function deleteBinder(binder_id) {
 
 //Notes Action Creator
 
-export function save_notes(value, interfaceObj){
+export function save_notes(value, interfaceObj) {
     axios.put('/api/page', {
         document: value,
-        binderID: interfaceObj.binder_id,
+        binderID: interfaceObj.binder_id,F
         tabID: interfaceObj.tab_id,
         pageID: interfaceObj.page_id
     });
 
-    return{
+    return {
         type: types.SAVE_NOTES,
         payload: value
     }
