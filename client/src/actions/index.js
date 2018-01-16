@@ -71,7 +71,25 @@ export function setNumOfPanels(num, interfaceObj) {
 export function setSlidesUrl(value, interfaceObj) {
     console.log("setSlides url action 1:", value);
     if (value) {
-        if (value.indexOf('presentation/d/') !== -1) {
+        if (value.indexOf('presentation/d/') !== -1 || value.indexOf('presentation/d/e') !== -1) {
+            if (value.indexOf('presentation/d/e') !== -1) {
+                const urlSplit1 = value.split("presentation/d/e/");
+                const urlSplit2 = urlSplit1[1].split('/');
+                let presentationID = urlSplit2[0];
+                const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
+                axios.put('/api/page', {
+                    lecture_slides: {
+                        lec_id: slidesURL
+                    },
+                    binderID: interfaceObj.binder_id,
+                    tabID: interfaceObj.tab_id,
+                    pageID: interfaceObj.page_id
+                });
+                return {
+                    type: types.SET_SLIDES_URL,
+                    payload: slidesURL
+                }
+            }
             const urlSplit1 = value.split("presentation/d/");
             const urlSplit2 = urlSplit1[1].split('/');
             let presentationID = urlSplit2[0];
@@ -106,7 +124,7 @@ export function setSlidesUrl(value, interfaceObj) {
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
-export function toggleModal ({ display }) {
+export function toggleModal({ display }) {
     console.log("TOGGLE DELETE VALUE: ", display)
     let displayValue = display;
     if (displayValue === 'none') {
