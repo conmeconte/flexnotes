@@ -20,12 +20,22 @@ class Slides extends Component {
 
     componentWillMount() {
         // grab loop to get tab index from /navbar/page.js
+
+        let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+        let tabIndex = null;
+        for (let i = 0; i < tabArrLength; i++) {
+            if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+                //console.log('tabid = interface id at index:', i);
+                tabIndex = i;
+                const checkSlides = 
+                if ()
+            }
+        }
+        const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        console.log('Slides HandleSubmit', document.querySelector('.slides-input').value);
-        console.log("slides.js hanldeSubmit", this.props);
         this.props.setSlidesUrl(document.querySelector('.slides-input').value, this.props.interface_obj);
     }
 
@@ -68,7 +78,8 @@ Slides = reduxForm({
 function mapStateToProps(state) {
     return {
         slide_input: state.slides.input,
-        interface_obj: state.interface
+        interface_obj: state.interface,
+        binderObj: state.binder.binderObj,
     }
 };
 
