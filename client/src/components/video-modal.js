@@ -5,31 +5,36 @@ import { toggleModal, addToPlaylist, getVideoTitle } from '../actions';
 import { Field, reduxForm } from 'redux-form';
 
 class VideoModal extends Component {
-    renderInput({input}) {
-        console.log("VALUES FROM TITLE INPUT: ", input.value);
+    renderInput(props) {
+        const { label, input, meta: { touched, error }  } = props;
+        console.log('INPUT: ', input);
+
         return (
-            <input {...input} className="save-title-input form-control"/>
+                <input {...input} className="save-title-input form-control"/>
         );
     }
     render () {
+        
         return(
             <div style={this.props.deleteModalStyle} className="add-modal-container row">
                 <div className="add-modal">
-                        <h4>Save video name: </h4>
+                        <h4>Enter video name: </h4>
                         <form>
-                            <Field name="title" component={this.renderInput}/>
+                            <Field name="title" onChange={ () => {
+                                this.props.getVideoTitle()
+                            }} component={this.renderInput}/>
+                            <button type="button" onClick={
+                    () => {
+                        this.props.addToPlaylist(this.props.pastedVideoUrl, this.props.videoTitle, this.props.binderTabPageIds);
+                        this.props.toggleModal(this.props.deleteModalStyle);
+                    }
+                } className="save btn btn-success">Save Video</button>
+                <button type="button" onClick={ 
+                    () => { 
+                        this.props.toggleModal(this.props.deleteModalStyle)
+                    }
+                    } className="btn btn-primary">Go back</button>
                         </form>
-                        <button onClick={
-                            () => {
-                                this.props.addToPlaylist(this.props.pastedVideoUrl, this.props.videoTitle, this.props.binderTabPageIds);
-                                this.props.toggleModal(this.props.deleteModalStyle);
-                            }
-                        } className="save btn btn-success">Save Video</button>
-                        <button type="button" onClick={ 
-                            () => { 
-                                this.props.toggleModal(this.props.deleteModalStyle)
-                            }
-                            } className="btn btn-primary">Go back</button>
                 </div>
             </div>
         );
@@ -49,5 +54,6 @@ function mapStateToProps(state) {
 VideoModal = reduxForm({
     form: 'add-video'
 })(VideoModal);
+
 
 export default connect(mapStateToProps, { toggleModal, addToPlaylist, getVideoTitle })(VideoModal);
