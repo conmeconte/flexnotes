@@ -36,12 +36,12 @@ class Panel extends Component {
             <div>
                 <header>
                     <div>
-                        <h3 className="welcome">Welcome {/*this.props.binderArray.binderArr.userName */}!</h3>
+                        <h3 className="welcome">FlexNotes{/*this.props.binderArray.binderArr.userName */}</h3>
                     </div>
                     <div className="panelOptions">
-                        <div><h3 className="optionsTitle">Panels:</h3></div>
-                        <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(3, this.props.interface_obj) }}>3</button></div>
-                        <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(4, this.props.interface_obj) }}>4</button></div>
+                        {/* <div><h3 className="optionsTitle">Panels:</h3></div> */}
+                        <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(3, this.props.interface_obj) }}>View Dashboard</button></div>
+                        {/* <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(4, this.props.interface_obj) }}>4</button></div> */}
                     </div>
                 </header>
                 {/* <div className="col-xs-10">
