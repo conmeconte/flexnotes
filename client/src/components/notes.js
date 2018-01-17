@@ -3,9 +3,7 @@ import axios from 'axios';
 import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
-import { save_notes } from "../actions";
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 import isImage from 'is-image'
 import isUrl from 'is-url'
@@ -103,51 +101,26 @@ class Notes extends Component {
 
 
     onChange = ({value}) => {
-        if (value.document !== this.state.value.document) {
-
-            _.debounce( () => {
-                const content = JSON.stringify(value.toJSON());
-                this.sendToDB(content);
-            }, 500);
-            // localStorage.setItem('content', content);
-        }
+        // if (value.document !== this.state.value.document) {
+        //     const content = JSON.stringify(value.toJSON());
+        //     // localStorage.setItem('content', content);
+        // }
 
         this.setState({ value });
     };
 
-    sendToDB(content) {
-        console.log('sending these notes to DB:', content);
-        // axios.put('/api/note', {
-        //     document: content,
-        //     binderID: interfaceObj.binder_id,
-        //     tabID: interfaceObj.tab_id,
-        //     pageID: interfaceObj.page_id
-        // });
+
+    submitNotes(){
+        const { value } = this.state;
+        const content = JSON.stringify(value.toJSON());
+        axios.put('/api/note', {
+            document: {content},
+            binderID: this.props.interface_obj.binder_id,
+            tabID: this.props.interface_obj.tab_id,
+            pageID: this.props.interface_obj.page_id
+        });
     }
 
-    submitNotes({value}){
-        console.log('is save changes grabbing value?', value);
-        // if (value.document != this.state.value.document) {
-        //     const content = JSON.stringify(value.toJSON());
-        //     axios.put('/api/note', {
-        //         document: content,
-        //         binderID: interfaceObj.binder_id,
-        //         tabID: interfaceObj.tab_id,
-        //         pageID: interfaceObj.page_id
-        //     });
-        // }
-        // this.props.save_notes(savedNotes.document, this.props.interface_obj);
-    }
-
-    // AXIOS CALL
-
-    // componentWillMount(){
-    //     const url = '/api/dummyData';
-    //
-    //     axios.get(url).then((resp) => {
-    //         console.log('Danika:', resp);
-    //     });
-    // }
 
     componentWillMount() {
         let tabArrLength = this.props.binderObj.tab_arr_obj.length;
@@ -155,7 +128,6 @@ class Notes extends Component {
         let pageIndex = null;
         for (let i = 0; i < tabArrLength; i++) {
             if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
-                //console.log('tabid = interface id at index:', i);
                 tabIndex = i;
                 break;
             }
@@ -170,11 +142,11 @@ class Notes extends Component {
         if (!page_arr_obj[pageIndex].notes) {
             return;
         } else {
-            console.log('notes cwm:', page_arr_obj[pageIndex].notes.document.nodes);
-            // this.props.save_notes(page_arr_obj[pageIndex].notes.document.nodes, this.props.interface_obj);
-            // this.setState({
-            //     value: page_arr_obj[pageIndex].notes.document
-            // })
+            const lastContent = JSON.parse( page_arr_obj[pageIndex].notes.document.content);
+
+            this.setState({
+                value: Value.fromJSON(lastContent),
+            })
         }
     }
 
@@ -532,7 +504,6 @@ function mapStateToProps(state) {
     return {
         interface_obj: state.interface,
         binderObj: state.binder.binderObj,
-        notes_document: state.notes.document
     }
 }
 
