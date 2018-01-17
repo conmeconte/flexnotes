@@ -35,7 +35,7 @@ class ThreePanel extends Component {
 
         return (
             <SplitPane onChange={loTLHsave} className="width-w-nav" split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
-                <SplitPane onChange={loTLWsave} split="vertical" minSize={200} maxSize={-200} defaultSize={400}>
+                <SplitPane onChange={loTLWsave} split="vertical" minSize={200} maxSize={-200} defaultSize={725}>
                     <div className="slides-container"><Slides /></div>
                     <div className="video-parent-panel"><Video /></div>
                 </SplitPane>

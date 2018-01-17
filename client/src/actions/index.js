@@ -125,7 +125,6 @@ export function setSlidesUrl(value, interfaceObj) {
 
 //Video Action Creators
 export function toggleModal({ display }) {
-    console.log("TOGGLE DELETE VALUE: ", display)
     let displayValue = display;
     if (displayValue === 'none') {
         displayValue = 'block';
