@@ -47,7 +47,7 @@ module.exports = (app) => {
                     defaultBinder.tab_arr_obj.push(new Tab());
                     defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({ page_date: new Date().toLocaleString() }));
                     defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ videoInfo: 'No Info' }));
-                    defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new Note());
+                    // defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new Note());
                     user.binder_arr_obj.push(defaultBinder);
                     user.save()
                     res.send(user);
@@ -130,7 +130,7 @@ module.exports = (app) => {
                         tab= new Tab();
                         tab.page_arr_obj.push(new Page());
                         tab.page_arr_obj[0].video.push(new Video());
-                        tab.page_arr_obj[0].notes.document.nodes.push(new Note());
+                        // tab.page_arr_obj[0].notes.document.nodes.push(new Note());
                         binder.tab_arr_obj.push(tab);
 
                         user.save();
@@ -220,7 +220,7 @@ module.exports = (app) => {
                     if(tab){
                         let page = new Page()
                         page.video.push(new Video());
-                        page.notes.document.nodes.push(new Note());
+                        // page.notes.document.nodes.push(new Note());
                         tab.page_arr_obj.push(page);
 
                         const binder = user
