@@ -28,7 +28,7 @@ class VideoModal extends Component {
                         this.props.addToPlaylist(this.props.pastedVideoUrl, this.props.videoTitle, this.props.binderTabPageIds);
                         this.props.toggleModal(this.props.deleteModalStyle);
                     }
-                } className="save btn btn-success">Save Video</button>
+                } className="save btn btn-success">Continue</button>
                 <button type="button" onClick={ 
                     () => { 
                         this.props.toggleModal(this.props.deleteModalStyle)

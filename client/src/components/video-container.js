@@ -6,15 +6,15 @@ class VideoContainer extends Component {
     render () {
     return ( 
             <div id="video-container" className="video-container">
-                <div className="row mb-2">
-                    <div className="col-xs-8">
-                        <input className="pastedVideoInput form-control" type="text" placeholder="Please copy and paste YouTube URL..."/>
+                <div className="row">
+                    <div className="col-xs-10">
+                        <input className="pastedVideoInput form-control col-xs-12" type="text" placeholder="Please copy and paste YouTube URL..."/>
                     </div>
-                    <button className="btn btn-success mr-1" onClick={ () => {
+                    <button className="btn btn-success col-xs-2" onClick={ () => {
                         this.props.grabVideoUrl();
                         this.props.playVideo();
                         this.props.toggleModal(this.props.deleteModalStyle)
-                    }}>Save Video</button>
+                    }}><span className="glyphicon glyphicon-save"></span></button>
                 </div>
                 <div className="video-embed-wrapper"></div>
             </div>
