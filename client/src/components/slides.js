@@ -56,7 +56,7 @@ class Slides extends Component {
                 </form>
                 {
                     this.props.slide_input ?
-                        <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe"></iframe>
+                        <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe" allowFullScreen></iframe>
                         : <p className="text-danger"><em>Please paste a valid Google Slides URL</em></p>
                 }
             </div>
