@@ -11,9 +11,8 @@ class Slides extends Component {
         const { input, meta: { touched, error } } = props;
         console.log('renderInput slides:', props);
         return (
-            <div>
-                <input className="slides-input" {...input} />
-                <p className="text-danger"><em>{touched && error}</em></p>
+            <div className="col-sm-9">
+                <input className="slides-input form-control" {...input} placeholder="Paste a Google Slides URL" />
             </div>
         )
     }
@@ -51,14 +50,14 @@ class Slides extends Component {
     render() {
         return (
             <div className="slides-div">
-                <form onSubmit={this.handleSubmit.bind(this)}>
+                <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
                     <Field name="url" component={this.renderInput} />
-                    <button className="btn btn-success btn-sm">Upload</button>
+                    <button className="btn btn-success">Save</button>
                 </form>
                 {
                     this.props.slide_input ?
-                        <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe" allowFullScreen></iframe>
-                        : ""
+                        <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe"></iframe>
+                        : <p className="text-danger"><em>Please paste a valid Google Slides URL</em></p>
                 }
             </div>
         )
@@ -72,7 +71,6 @@ function validate(values) {
     const valuesStr = values.url;
     if (valuesStr) {
         if (valuesStr.indexOf('presentation/d/') === -1) {
-            console.log("Dat's not a url, yo");
             errors.url = "Please paste a valid Google Slides URL";
         }
     }
