@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
-import { save_notes } from "../actions";
 import { connect } from 'react-redux';
 
 import isImage from 'is-image'
@@ -18,9 +17,27 @@ const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
-const savedNotes = JSON.parse(localStorage.getItem('content'));
-const initialValue = Value.fromJSON(savedNotes || {document: {nodes: [{kind: "block", type: "paragraph", nodes: [{kind: "text", leaves: [{text: "", marks: [{type: "bold"}]}]}]}]}});
-console.log("notes.js oc", savedNotes);
+// const savedNotes = JSON.parse(localStorage.getItem('content'));
+const initialValue = Value.fromJSON({
+    document: {
+        nodes: [
+            {
+                kind: 'block',
+                type: 'paragraph',
+                nodes: [
+                    {
+                        kind: 'text',
+                        leaves: [
+                            {
+                                text: 'A line of text in a paragraph.'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+});
 
 // --------------------------- UNDO AND REDO  ---------------------------
 
@@ -77,35 +94,61 @@ const schema = {
 
 class Notes extends Component {
 
+
     state = {
         value: initialValue
     };
 
+
     onChange = ({value}) => {
-
-
-        if (value.document !== this.state.value.document) {
-            const content = JSON.stringify(value.toJSON());
-            localStorage.setItem('content', content);
-            // this.props.save_items(content);
-        }
+        // if (value.document !== this.state.value.document) {
+        //     const content = JSON.stringify(value.toJSON());
+        //     // localStorage.setItem('content', content);
+        // }
 
         this.setState({ value });
     };
 
+
     submitNotes(){
-        this.props.save_notes(savedNotes.document, this.props.interface_obj);
+        const { value } = this.state;
+        const content = JSON.stringify(value.toJSON());
+        axios.put('/api/note', {
+            document: {content},
+            binderID: this.props.interface_obj.binder_id,
+            tabID: this.props.interface_obj.tab_id,
+            pageID: this.props.interface_obj.page_id
+        });
     }
 
-    // AXIOS CALL
 
-    // componentWillMount(){
-    //     const url = '/api/dummyData';
-    //
-    //     axios.get(url).then((resp) => {
-    //         console.log('Danika:', resp);
-    //     });
-    // }
+    componentWillMount() {
+        let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+        let tabIndex = null;
+        let pageIndex = null;
+        for (let i = 0; i < tabArrLength; i++) {
+            if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+                tabIndex = i;
+                break;
+            }
+        }
+        const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+        for (let i = 0; i < tabArrLength; i++) {
+            if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+                pageIndex = i;
+                break;
+            }
+        }
+        if (!page_arr_obj[pageIndex].notes) {
+            return;
+        } else {
+            const lastContent = JSON.parse( page_arr_obj[pageIndex].notes.document.content);
+
+            this.setState({
+                value: Value.fromJSON(lastContent),
+            })
+        }
+    }
 
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
@@ -423,7 +466,7 @@ class Notes extends Component {
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
-                    <button className="saveNotes" onClick={this.submitNotes.bind(this)}>Save Changes</button>
+                    <button onClick={this.submitNotes.bind(this)}>Save Changes</button>
                 </div>
 
             </div>
@@ -460,9 +503,9 @@ function mapStateToProps(state) {
 
     return {
         interface_obj: state.interface,
-        notes_document: state.notes.document
+        binderObj: state.binder.binderObj,
     }
 }
 
-export default connect(mapStateToProps, { save_notes })(Notes);
+export default connect(mapStateToProps)(Notes);
 
