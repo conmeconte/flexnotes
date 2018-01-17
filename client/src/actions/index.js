@@ -146,13 +146,11 @@ export function getVideoResults(videos) {
 export function getResultStyles(styles, bool) {
     if (!bool) {
         styles = {
-            width: '0%',
-            display: 'none'
+            transform: 'translateX(100%)'
         }
     } else {
         styles = {
-            width: '65%',
-            display: 'block'
+            transform: 'translateX(0%)'
         }
     }
     console.log("GET RESULTS STYLES: ", styles);

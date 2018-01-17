@@ -9,8 +9,7 @@ const DEFAULT_STATE = {
         display: 'none'
     },
     resultsStyles: {
-        width: '0%',
-        display: 'none'
+        transform: 'translateX(100%)'
     },
     opacityDisplay: {
         display: 'none'
