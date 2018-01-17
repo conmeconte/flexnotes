@@ -30,9 +30,7 @@ let fakeData =
                     lecture_slides: {
                       lec_id: ''
                     },
-                    notes: {
-
-                    },
+                    notes: {},
                     video: [
                       {
                         _id: { $oid: 'someRandomNumberMongoDBAssings' },

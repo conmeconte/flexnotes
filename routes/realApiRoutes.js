@@ -12,17 +12,6 @@ module.exports = (app) => {
         res.send(req.user);
     });
 
-
-    // app.get('/api', requireLogin, async (req, res) => {
-    //     //pull entire user obj
-    //     const existingUser= await User.findById("5a5a63116f98c0bd996baad5",(err,user)=>{
-    //         if(err){console.log('error is ', err)};
-    //         const testingUserpageInfo=user.binder_arr_obj.id('5a5a63116f98c0bd996baad0').tab_arr_obj.id('5a5a63116f98c0bd996baad1')
-    //         .page_arr_obj.id('5a5a63116f98c0bd996baad2');
-    //         console.log('user is ', testingUserpageInfo);
-    //     })
-
-    // })
     // For Binder //
     app
         .get('/api/binder', requireLogin, async (req, res) => {
@@ -50,13 +39,11 @@ module.exports = (app) => {
                     // defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new Note());
                     user.binder_arr_obj.push(defaultBinder);
                     user.save()
-                    res.send(user);
-                    
+                    res.send(user);    
                 }else {
                 res.send("Error can't find user")
                 }
             })
-
         })
         .delete('/api/binder', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
@@ -197,15 +184,11 @@ module.exports = (app) => {
             const existingUser= await User.findById(req.user.id, function (err, user){
             // const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) { res.send("Error did occurred") };
-
                 if (user) {
-
                     res.send(user);
-                }else {
+                } else {
                 res.send("Error can't find user")
                 }
-                res.end();
-        
             });
         })
         .post('/api/page', requireLogin,  async (req, res) => {
@@ -220,9 +203,7 @@ module.exports = (app) => {
                     if(tab){
                         let page = new Page()
                         page.video.push(new Video());
-                        // page.notes.document.nodes.push(new Note());
                         tab.page_arr_obj.push(page);
-
                         const binder = user
                         .binder_arr_obj.id(req.body.binderID);
 
@@ -239,7 +220,6 @@ module.exports = (app) => {
             //delete page
             const existingUser= await User.findById('5a569b34da2d998e141c38b2',function(err,user){
                 if (err) { res.send("Error did occurred") };
-
                 if (user) {
                     const page = user
                     .binder_arr_obj.id(req.query.binderID) //req.body.binderID
@@ -249,7 +229,6 @@ module.exports = (app) => {
                     page.remove();
                     user.save();
                     res.send(user);
-                    
                 }else {
                 res.send("Error can't find user")
                 }
@@ -257,9 +236,7 @@ module.exports = (app) => {
         })
         .put('/api/page', requireLogin,  async (req,res)=>{
             const existingUser= await User.findById(req.user.id,function(err,user){
-
                 if (err) { res.send("Error did occurred") };
-
                 if (user) {
                     const page = user
                     .binder_arr_obj.id(req.body.binderID)
@@ -274,7 +251,6 @@ module.exports = (app) => {
                     page.panel_dimensions.top_right_panel_height= req.body.top_right_panel_height || page.panel_dimensions.top_right_panel_height;
                     page.panel_dimensions.number_of_panels= req.body.number_of_panels || page.panel_dimensions.number_of_panels;
                     
-            
                     user.save();
                     res.send(user);
                     
@@ -367,8 +343,6 @@ app
                     page.notes.document= req.body.document || page.notes.document;
 
                     user.save();
-                    // user.save(user
-                    //     .binder_arr_obj.id(req.body.binderID));
                     res.send(page);
                 }else{res.send('wrong path')}
                 
@@ -377,53 +351,6 @@ app
             }
         })
     })
-    // .delete('/api/note', async (req,res)=>{
-    //     const existingUser= await User.findById(req.body.id, (err,user)=>{
-    //     // const existingUser= await User.findById(req.user.id, (err,user)=>{
-    //         if(err){ res.send('Error')}
-    //         if (user) {
-    //             const video = user
-    //             .binder_arr_obj.id(req.body.binderID)
-    //             .tab_arr_obj.id(req.body.tabID)  
-    //             .page_arr_obj.id(req.body.pageID)
-    //             .video.id(req.body.videoID)
-    //             if(video){
-    //                 video.remove();
-    //                 user.save();
-    //                 res.send(user);
-    //             }else{res.send('wrong path')}
-                
-    //         }else {
-    //             res.status(500);
-    //             res.render('error', {error: err}).send("Error can't find user")
-    //         }
-    //     })
-    // })
-    // .put('/api/note', async (req,res)=>{
-    //     const existingUser= await User.findById(req.body.id, (err,user)=>{
-    //     // const existingUser= await User.findById(req.user.id, (err,user)=>{
-    //         if(err){ res.send('Error')}
-    //         if (user) {
-    //             const video = user
-    //             .binder_arr_obj.id(req.body.binderID)
-    //             .tab_arr_obj.id(req.body.tabID)  
-    //             .page_arr_obj.id(req.body.pageID)
-    //             .video.id(req.body.videoID)
-    //             if(video){
-    //                 video.vid_url= req.body.vid_url || video.vid_url;
-    //                 video.videoInfo= req.body.videoInfo || video.videoInfo;
-    //                 user.save();
-    //                 res.send(user);
-    //             }else{res.send('wrong path')}
-                
-    //         }else {
-    //             res.status(500);
-    //             res.render('error', {error: err}).send("Error can't find user")
-    //         }
-    //     })
-    // });
-
-
 
 
 }
