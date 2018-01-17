@@ -52,7 +52,7 @@ class Slides extends Component {
             <div className="slides-div">
                 <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
                     <Field name="url" component={this.renderInput} />
-                    <button className="btn btn-success">Save</button>
+                    <button className="btn btn-success"><span className="glyphicon glyphicon-save"></span></button>
                 </form>
                 {
                     this.props.slide_input ?
