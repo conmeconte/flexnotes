@@ -11,9 +11,8 @@ class Slides extends Component {
         const { input, meta: { touched, error } } = props;
         console.log('renderInput slides:', props);
         return (
-            <div>
-                <input className="slides-input" {...input} />
-                <p className="text-danger"><em>{touched && error}</em></p>
+            <div className="col-sm-9">
+                <input className="slides-input form-control" {...input} placeholder="Paste a Google Slides URL" />
             </div>
         )
     }
@@ -21,6 +20,7 @@ class Slides extends Component {
     componentWillMount() {
         let tabArrLength = this.props.binderObj.tab_arr_obj.length;
         let tabIndex = null;
+        let pageIndex = null;
         for (let i = 0; i < tabArrLength; i++) {
             if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
                 //console.log('tabid = interface id at index:', i);
@@ -29,12 +29,16 @@ class Slides extends Component {
             }
         }
         const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
-        console.log('c will mount after const { page_arr_obj }', page_arr_obj);
-        if (!page_arr_obj[0].lecture_slides) {
+        for (let i = 0; i < tabArrLength; i++) {
+            if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+                pageIndex = i;
+                break;
+            }
+        }
+        if (!page_arr_obj[pageIndex].lecture_slides) {
             return;
         } else {
-            console.log(`cWm`, page_arr_obj[0].lecture_slides.lec_id);
-            this.props.setSlidesUrl(page_arr_obj[0].lecture_slides.lec_id, this.props.interface_obj);
+            this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, this.props.interface_obj);
         }
     }
 
@@ -46,14 +50,14 @@ class Slides extends Component {
     render() {
         return (
             <div className="slides-div">
-                <form onSubmit={this.handleSubmit.bind(this)}>
+                <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
                     <Field name="url" component={this.renderInput} />
-                    <button className="btn btn-success btn-sm">Upload</button>
+                    <button className="btn btn-success"><span className="glyphicon glyphicon-save"></span></button>
                 </form>
                 {
                     this.props.slide_input ?
                         <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe" allowFullScreen></iframe>
-                        : ""
+                        : <p className="text-danger"><em>Please paste a valid Google Slides URL</em></p>
                 }
             </div>
         )
@@ -67,7 +71,6 @@ function validate(values) {
     const valuesStr = values.url;
     if (valuesStr) {
         if (valuesStr.indexOf('presentation/d/') === -1) {
-            console.log("Dat's not a url, yo");
             errors.url = "Please paste a valid Google Slides URL";
         }
     }

@@ -9,11 +9,10 @@ const DEFAULT_STATE = {
         display: 'none'
     },
     resultsStyles: {
-        width: '50%',
-        display: 'block'
+        transform: 'translateX(100%)'
     },
     opacityDisplay: {
-        display: 'block'
+        display: 'none'
     },
  };
 

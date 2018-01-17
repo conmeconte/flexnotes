@@ -15,9 +15,22 @@ const backgroundImg = {
 }
 
 class LandingPage extends Component {
+    renderContent() {
+        switch (this.props.auth) {
+            case null:
+                return;
+            case false:
+                return (
+                    <div></div>
+                );
+            default:
+                return <div className="dashboard-button"><a href="/main#"><button className="btn btn-sm logoutBtn">Back to Dashboard</button></a></div>
+        }
+    }
     render () {
         return(
             <div className="main-login-container">
+                {this.renderContent()}
                 <div className="top-background-layer"></div>
                 <div style={backgroundImg} className="landing-page-container">
                     <div className="title-container">

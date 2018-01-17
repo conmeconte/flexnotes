@@ -144,16 +144,13 @@ export function getVideoResults(videos) {
     }
 }
 export function getResultStyles(styles, bool) {
-
-    if (bool) {
+    if (!bool) {
         styles = {
-            width: '0%',
-            display: 'none'
+            transform: 'translateX(100%)'
         }
     } else {
         styles = {
-            width: '65%',
-            display: 'block'
+            transform: 'translateX(0%)'
         }
     }
     console.log("GET RESULTS STYLES: ", styles);
@@ -163,7 +160,7 @@ export function getResultStyles(styles, bool) {
     }
 }
 export function getOpacityDisplay(styles, bool) {
-    if (bool) {
+    if (!bool) {
         styles = {
             display: 'none'
         }
@@ -186,7 +183,7 @@ export function toggleResults(bool) {
     }
 }
 export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
-    console.log('HERE IS THE SENT VIDEO LINK ', videoUrl);
+    console.log("VIDEO TITLE: ", videoTitle);
     let videoId = videoUrl.split("=");
     videoId = videoId[1];
     console.log("VIDEO ID: ", videoId);
@@ -238,7 +235,8 @@ export function grabVideoUrl() {
         payload: videoLink
     }
 }
-export function getVideoTitle(videoTitle) {
+export function getVideoTitle() {
+    const videoTitle = document.querySelector(".save-title-input").value;
     return {
         type: types.GET_VIDEO_TITLE,
         payload: videoTitle
