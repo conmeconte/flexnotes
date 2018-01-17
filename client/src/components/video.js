@@ -11,6 +11,9 @@ import VideoModal from './video-modal';
 const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
 class Video extends Component {
     search (values) {
+        if (!values.video) {
+            return;
+        }
         console.log("VALUES FROM SEARCH: ", values);
         var ROOT_URL = 'https://www.googleapis.com/youtube/v3/search';
         var params = {
@@ -47,7 +50,7 @@ class Video extends Component {
     renderInput ({input}) {
         console.log(input);
         return (    
-            <input {...input} id="query" placeholder="Search..." className="form-control"/>
+            <input {...input} id="query" placeholder="Search on Youtube..." className="form-control"/>
         )
     }
     render() {
@@ -88,6 +91,7 @@ Video = reduxForm({
 
 function mapStateToProps (state) {
     return {
+        pastedVideoUrl: state.videoResults.videoLink,
         videoResults: state.video.results,
         playlist: state.video.videoList,
         resultsStyles: state.video.resultsStyles,
