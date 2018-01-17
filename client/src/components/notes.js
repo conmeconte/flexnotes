@@ -5,6 +5,7 @@ import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import { save_notes } from "../actions";
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import isImage from 'is-image'
 import isUrl from 'is-url'
@@ -18,9 +19,27 @@ const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
-const savedNotes = JSON.parse(localStorage.getItem('content'));
-const initialValue = Value.fromJSON(savedNotes || {document: {nodes: [{kind: "block", type: "paragraph", nodes: [{kind: "text", leaves: [{text: "", marks: [{type: "bold"}]}]}]}]}});
-console.log("notes.js oc", savedNotes);
+// const savedNotes = JSON.parse(localStorage.getItem('content'));
+const initialValue = Value.fromJSON({
+    document: {
+        nodes: [
+            {
+                kind: 'block',
+                type: 'paragraph',
+                nodes: [
+                    {
+                        kind: 'text',
+                        leaves: [
+                            {
+                                text: 'A line of text in a paragraph.'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+});
 
 // --------------------------- UNDO AND REDO  ---------------------------
 
@@ -77,24 +96,47 @@ const schema = {
 
 class Notes extends Component {
 
+
     state = {
         value: initialValue
     };
 
+
     onChange = ({value}) => {
-
-
         if (value.document !== this.state.value.document) {
-            const content = JSON.stringify(value.toJSON());
-            localStorage.setItem('content', content);
-            // this.props.save_items(content);
+
+            _.debounce( () => {
+                const content = JSON.stringify(value.toJSON());
+                this.sendToDB(content);
+            }, 500);
+            // localStorage.setItem('content', content);
         }
 
         this.setState({ value });
     };
 
-    submitNotes(){
-        this.props.save_notes(savedNotes.document, this.props.interface_obj);
+    sendToDB(content) {
+        console.log('sending these notes to DB:', content);
+        // axios.put('/api/note', {
+        //     document: content,
+        //     binderID: interfaceObj.binder_id,
+        //     tabID: interfaceObj.tab_id,
+        //     pageID: interfaceObj.page_id
+        // });
+    }
+
+    submitNotes({value}){
+        console.log('is save changes grabbing value?', value);
+        // if (value.document != this.state.value.document) {
+        //     const content = JSON.stringify(value.toJSON());
+        //     axios.put('/api/note', {
+        //         document: content,
+        //         binderID: interfaceObj.binder_id,
+        //         tabID: interfaceObj.tab_id,
+        //         pageID: interfaceObj.page_id
+        //     });
+        // }
+        // this.props.save_notes(savedNotes.document, this.props.interface_obj);
     }
 
     // AXIOS CALL
@@ -106,6 +148,35 @@ class Notes extends Component {
     //         console.log('Danika:', resp);
     //     });
     // }
+
+    componentWillMount() {
+        let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+        let tabIndex = null;
+        let pageIndex = null;
+        for (let i = 0; i < tabArrLength; i++) {
+            if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+                //console.log('tabid = interface id at index:', i);
+                tabIndex = i;
+                break;
+            }
+        }
+        const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+        for (let i = 0; i < tabArrLength; i++) {
+            if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+                pageIndex = i;
+                break;
+            }
+        }
+        if (!page_arr_obj[pageIndex].notes) {
+            return;
+        } else {
+            console.log('notes cwm:', page_arr_obj[pageIndex].notes.document.nodes);
+            // this.props.save_notes(page_arr_obj[pageIndex].notes.document.nodes, this.props.interface_obj);
+            // this.setState({
+            //     value: page_arr_obj[pageIndex].notes.document
+            // })
+        }
+    }
 
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
@@ -423,7 +494,7 @@ class Notes extends Component {
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
-                    <button className="saveNotes" onClick={this.submitNotes.bind(this)}>Save Changes</button>
+                    <button onClick={this.submitNotes.bind(this)}>Save Changes</button>
                 </div>
 
             </div>
@@ -460,9 +531,10 @@ function mapStateToProps(state) {
 
     return {
         interface_obj: state.interface,
+        binderObj: state.binder.binderObj,
         notes_document: state.notes.document
     }
 }
 
-export default connect(mapStateToProps, { save_notes })(Notes);
+export default connect(mapStateToProps)(Notes);
 
