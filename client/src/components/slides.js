@@ -21,6 +21,7 @@ class Slides extends Component {
     componentWillMount() {
         let tabArrLength = this.props.binderObj.tab_arr_obj.length;
         let tabIndex = null;
+        let pageIndex = null;
         for (let i = 0; i < tabArrLength; i++) {
             if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
                 //console.log('tabid = interface id at index:', i);
@@ -29,12 +30,16 @@ class Slides extends Component {
             }
         }
         const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
-        console.log('c will mount after const { page_arr_obj }', page_arr_obj);
-        if (!page_arr_obj[0].lecture_slides) {
+        for (let i = 0; i < tabArrLength; i++) {
+            if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+                pageIndex = i;
+                break;
+            }
+        }
+        if (!page_arr_obj[pageIndex].lecture_slides) {
             return;
         } else {
-            console.log(`cWm`, page_arr_obj[0].lecture_slides.lec_id);
-            this.props.setSlidesUrl(page_arr_obj[0].lecture_slides.lec_id, this.props.interface_obj);
+            this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, this.props.interface_obj);
         }
     }
 
