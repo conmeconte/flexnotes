@@ -58,10 +58,6 @@ class Video extends Component {
             <div className="main">
                 <VideoModal/>
                 <div style={this.props.opacityContainer} className="opacity"></div>
-                <button id="search" className="btn btn-primary" onClick={ () => {
-                    this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool);
-                    this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool);
-                }}><span className="search glyphicon glyphicon-chevron-left"></span></button>
                 <div style={this.props.resultsStyles} className="results-container sidebar col-xs-4 pull-right">
                     <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input input-group col-xs-12">
                         <Field name="video" component={this.renderInput} />

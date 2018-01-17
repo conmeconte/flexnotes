@@ -5,7 +5,7 @@ const DEFAULT_STATE = {
     videoList: [],
     videoTitle: '',
     toggleResults: true,
-    deleteModal: {
+    addVideoModal: {
         display: 'none'
     },
     resultsStyles: {

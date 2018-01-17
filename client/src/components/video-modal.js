@@ -16,7 +16,7 @@ class VideoModal extends Component {
     render () {
         
         return(
-            <div style={this.props.deleteModalStyle} className="add-modal-container row">
+            <div style={this.props.addVideoModalStyle} className="add-modal-container row">
                 <div className="add-modal">
                         <h4>Enter video name: </h4>
                         <form>
@@ -26,12 +26,12 @@ class VideoModal extends Component {
                             <button type="button" onClick={
                     () => {
                         this.props.addToPlaylist(this.props.pastedVideoUrl, this.props.videoTitle, this.props.binderTabPageIds);
-                        this.props.toggleModal(this.props.deleteModalStyle);
+                        this.props.toggleModal(this.props.addVideoModalStyle);
                     }
                 } className="save btn btn-success">Continue</button>
                 <button type="button" onClick={ 
                     () => { 
-                        this.props.toggleModal(this.props.deleteModalStyle)
+                        this.props.toggleModal(this.props.addVideoModalStyle)
                     }
                     } className="btn btn-primary">Go back</button>
                         </form>
@@ -44,7 +44,7 @@ class VideoModal extends Component {
 function mapStateToProps(state) {
     return {
         url: state.url,
-        deleteModalStyle: state.video.deleteModal,
+        addVideoModalStyle: state.video.addVideoModal,
         binderTabPageIds: state.interface,
         pastedVideoUrl: state.videoResults.videoLink,
         videoTitle: state.video.videoTitle
