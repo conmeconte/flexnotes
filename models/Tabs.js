@@ -6,7 +6,7 @@ const pageSchemaNew = require('./Page');
 /* tab Schema */
 
 const tabSchemaNew = new Schema({
-    tab_name : { type:String, default:"This is a tab"},   
+    tab_name : { type:String, default:"untitled"},   
     tab_color : String,
     tab_count : { type:Number, default:1},
     page_arr_obj :[pageSchemaNew]
