@@ -3,6 +3,7 @@ const mongoose      = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport      = require('passport');
 const keys          = require('./config/keys');
+const path          = require('path');
 
 
 // let dummyData = require('./dummyData/backEndDummyData');
@@ -36,12 +37,15 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
 /* Routing middleware */
 require('./routes/authRoutes')(app);
 // require('./routes/apiRoutes')(app, dummyData);
 require('./routes/realApiRoutes')(app, db);
-
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
 
 /* Start server and listen on PORT */
 app.listen(PORT, ()=>{
