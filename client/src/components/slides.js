@@ -42,15 +42,14 @@ class Slides extends Component {
         }
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
-        this.props.setSlidesUrl(document.querySelector('.slides-input').value, this.props.interface_obj);
+    setURLinReduxForm(values) {
+        this.props.setSlidesUrl(values.url, this.props.interface_obj);
     }
 
     render() {
         return (
             <div className="slides-div">
-                <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
+                <form className="form-horizontal" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
                     <Field name="url" component={this.renderInput} />
                     <button className="btn btn-success"><span className="glyphicon glyphicon-save"></span></button>
                 </form>
