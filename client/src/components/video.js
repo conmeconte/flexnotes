@@ -73,7 +73,7 @@ class Video extends Component {
                     </form>
                     <Results results={this.props.videoResults} />
                 </div>
-                <div id="video-wrapper" className="video-wrapper col-xs-11 pull-left">
+                <div id="video-wrapper" className="video-wrapper">
                     <VideoContainer />
                 </div>
             </div>

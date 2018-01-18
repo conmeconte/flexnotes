@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../assets/css/video-add-modal.css';
 import { connect } from 'react-redux';
-import { toggleModal, addToPlaylist, getVideoTitle } from '../actions';
+import { toggleModal, addToPlaylist } from '../actions';
 import { Field, reduxForm } from 'redux-form';
 
 class VideoModal extends Component {
@@ -13,22 +13,21 @@ class VideoModal extends Component {
                 <input {...input} className="save-title-input form-control"/>
         );
     }
+
+    setName(values){
+        console.log('Values:', values);
+        this.props.addToPlaylist(this.props.videoLink, values.title, this.props.binderTabPageIds);
+        this.props.toggleModal(this.props.addVideoModalStyle);
+    }
+
     render () {
-        
         return(
-            <div style={this.props.addVideoModalStyle} className="add-modal-container row">
+            <div style={this.props.addVideoModalStyle} className="add-modal-container">
                 <div className="add-modal">
                         <h4>Enter video name: </h4>
-                        <form>
-                            <Field name="title" onChange={ () => {
-                                this.props.getVideoTitle()
-                            }} component={this.renderInput}/>
-                            <button type="button" onClick={
-                    () => {
-                        this.props.addToPlaylist(this.props.pastedVideoUrl, this.props.videoTitle, this.props.binderTabPageIds);
-                        this.props.toggleModal(this.props.addVideoModalStyle);
-                    }
-                } className="save btn btn-success">Continue</button>
+                        <form onSubmit={this.props.handleSubmit(this.setName.bind(this))}>
+                            <Field name="title" component={this.renderInput}/>
+                            <button className="save btn btn-success">Continue</button>
                 <button type="button" onClick={ 
                     () => { 
                         this.props.toggleModal(this.props.addVideoModalStyle)
@@ -46,8 +45,8 @@ function mapStateToProps(state) {
         url: state.url,
         addVideoModalStyle: state.video.addVideoModal,
         binderTabPageIds: state.interface,
-        pastedVideoUrl: state.videoResults.videoLink,
-        videoTitle: state.video.videoTitle
+        // pastedVideoUrl: state.videoResults.videoLink,
+        videoLink: state.video.videoLink
     }
 }
 
@@ -56,4 +55,4 @@ VideoModal = reduxForm({
 })(VideoModal);
 
 
-export default connect(mapStateToProps, { toggleModal, addToPlaylist, getVideoTitle })(VideoModal);
+export default connect(mapStateToProps, { toggleModal, addToPlaylist })(VideoModal);

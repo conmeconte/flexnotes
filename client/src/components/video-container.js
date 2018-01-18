@@ -1,27 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay } from '../actions';
+import { Field, reduxForm } from 'redux-form';
+import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo } from '../actions';
 
 class VideoContainer extends Component {
+    renderInput ({input}) {
+        console.log({input});
+        return (
+            <div className="col-xs-8">
+            <input {...input} className="pastedVideoInput form-control col-xs-12" type="text" placeholder="Paste a YouTube video URL..."/>
+            </div>
+        );
+    }
+    handleYouTubeUrl (values) {
+        console.log("VALUES: ", values)
+        // this.props.grabVideoUrl(values.input);
+        this.props.playPastedLinkVideo(values["youtube-url"]);
+        this.props.toggleModal(this.props.addVideoModalStyle);
+    }
     render () {
     return ( 
             <div id="video-container" className="video-container">
                 <div className="row">
-                    <div className="col-xs-8">
-                        <input className="pastedVideoInput form-control col-xs-12" type="text" placeholder="Please copy and paste YouTube URL..."/>
-                    </div>
-                    <button className="btn btn-success col-xs-1" onClick={ () => {
-                        this.props.grabVideoUrl();
-                        this.props.playVideo();
-                        this.props.toggleModal(this.props.addVideoModalStyle)
-                    }}><span className="glyphicon glyphicon-save"></span></button>
-                    <button className="btn btn-primary col-xs-1" onClick={ () => {
+                    <form onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}>
+                        <Field name="youtube-url" component={this.renderInput} />
+                    <button className="btn btn-success"><span className="glyphicon glyphicon-save"></span></button>
+                </form>
+                <button className="btn btn-primary col-offset-xs-1 left-menu-button" onClick={ () => {
                     this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                     this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                 }}><span className="glyphicon glyphicon-chevron-left"></span></button>
                 </div>
-                
-                <div className="video-embed-wrapper"></div>
+                <div className="video-embed-wrapper">
+                    <iframe src={this.props.videoLink} className="video-iframe"></iframe>
+                </div>
             </div>
         )
     }
@@ -30,6 +42,7 @@ class VideoContainer extends Component {
 function mapStateToProps (state) {
     return {
         pastedVideoUrl: state.videoResults.videoLink,
+        videoLink: state.video.videoLink,
         binderTabPageIds: state.interface,
         playlist: state.videoResults.playlist,
         addVideoModalStyle: state.video.addVideoModal,
@@ -40,4 +53,8 @@ function mapStateToProps (state) {
     }
 }
 
-export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay })(VideoContainer)
+VideoContainer = reduxForm({
+    form: 'youtube-url'
+})(VideoContainer)
+
+export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo })(VideoContainer)

@@ -10,13 +10,18 @@
 .slides-iframe
 {
   position: relative;
-  top: 0;
+  top: 1vh;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 1;
-  width: 100%;
+  width: 97%;
   height: 93%;
+  margin: 0 auto;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+.text-danger {
+  position: relative;
+  left: 1vw;
 }
