@@ -24,6 +24,11 @@ class ThreePanel extends Component {
         this.props.setTopLeftWidth(size, this.props.interface_obj);
     }
 
+    getSize() {
+        console.log('Get size works!');
+        return 500;
+    }
+
     render() {
         const loTLHsave = _.debounce((size) => {
             this.logTopLeftHeight(size);
@@ -34,7 +39,7 @@ class ThreePanel extends Component {
         }, 300);
 
         return (
-            <SplitPane onChange={loTLHsave} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={500}>
+            <SplitPane onChange={loTLHsave} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={ () => this.getSize}>
                 <SplitPane onChange={loTLWsave} split="horizontal" minSize={200} maxSize={-200} defaultSize={425}>
                     <div className="video-parent-panel"><Video /></div>
                 <div className="slides-container"><Slides /></div>

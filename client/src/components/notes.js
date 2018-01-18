@@ -99,16 +99,16 @@ class Notes extends Component {
     };
 
 
-    onChange = ({value}) => {
+    onChange = ({ value }) => {
         this.setState({ value });
     };
 
 
-    submitNotes(){
+    submitNotes() {
         const { value } = this.state;
         const content = JSON.stringify(value.toJSON());
         axios.put('/api/note', {
-            document: {content},
+            document: { content },
             binderID: this.props.interface_obj.binder_id,
             tabID: this.props.interface_obj.tab_id,
             pageID: this.props.interface_obj.page_id
@@ -136,13 +136,14 @@ class Notes extends Component {
         if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
             console.log("does not work");
         } else {
-            const lastContent = JSON.parse( page_arr_obj[pageIndex].notes.document.content);
+            const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
             this.setState({
                 value: Value.fromJSON(lastContent),
             })
-        
+        }
     }
-    }
+
+
 
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
@@ -377,7 +378,7 @@ class Notes extends Component {
         if (type === 'files') {
             for (const file of files) {
                 const reader = new FileReader();
-                const [ mime ] = file.type.split('/');
+                const [mime] = file.type.split('/');
                 if (mime !== 'image') continue;
 
                 reader.addEventListener('load', () => {
@@ -481,7 +482,7 @@ class Notes extends Component {
                 {this.toolbar()}
                 <Editor
                     className="editor"
-                    style={{overflowY: scroll}}
+                    style={{ overflowY: scroll }}
                     placeholder="Enter notes..."
                     value={this.state.value}
                     onChange={this.onChange}
