@@ -9,6 +9,7 @@ import isImage from 'is-image'
 import isUrl from 'is-url'
 
 import '../assets/css/notes.css';
+// import linedPaper from '../assets/images/lined-paper.png';
 
 const DEFAULT_NODE = 'paragraph';
 
@@ -29,7 +30,7 @@ const initialValue = Value.fromJSON({
                         kind: 'text',
                         leaves: [
                             {
-                                text: 'A line of text in a paragraph.'
+                                text: 'This is text'
                             }
                         ]
                     }
@@ -139,10 +140,11 @@ class Notes extends Component {
                 break;
             }
         }
-        if (!page_arr_obj[pageIndex].notes) {
+        if (!page_arr_obj[pageIndex].notes.document.content) {
             return;
         } else {
             const lastContent = JSON.parse( page_arr_obj[pageIndex].notes.document.content);
+
 
             this.setState({
                 value: Value.fromJSON(lastContent),
@@ -242,7 +244,7 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
+            <span className="toolbarButton" onMouseDown={onMouseDown} data-active={isActive}>
             <span className="material-icons">{icon}</span>
             </span>
         )
@@ -253,7 +255,7 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickBlock(event, type);
 
         return (
-            <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
+            <span className="toolbarButton" onMouseDown={onMouseDown} data-active={isActive}>
             <span className="material-icons">{icon}</span>
             </span>
         )
@@ -443,30 +445,34 @@ class Notes extends Component {
         return (
 
             <div className="toolbar">
-                <ToolbarButton icon="undo" onMouseDown={this.onClickUndo} />
-                <ToolbarButton icon="redo" onMouseDown={this.onClickRedo} />
-                {this.renderMarkButton('bold', 'format_bold')}
-                {this.renderMarkButton('italic', 'format_italic')}
-                {this.renderMarkButton('underlined', 'format_underlined')}
-                {this.renderMarkButton('code', 'code')}
-                {this.renderBlockButton('heading-one', 'looks_one')}
-                {this.renderBlockButton('heading-two', 'looks_two')}
-                {this.renderBlockButton('block-quote', 'format_quote')}
-                {this.renderBlockButton('numbered-list', 'format_list_numbered')}
-                {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
-                <span className="button" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
-                    <span className="material-icons">link</span>
-                </span>
-                <span className="button" onMouseDown={this.onClickImage}>
-                    <span className="material-icons">image</span>
-                </span>
-                <div className="search-box">
-                    <input
-                        className="search-input"
-                        placeholder="Search keywords..."
-                        onChange={this.onInputChange}
-                    />
-                    <button onClick={this.submitNotes.bind(this)}>Save Changes</button>
+                <div className="stylingButtons">
+                    <ToolbarButton className="toolbarButton" icon="undo" onMouseDown={this.onClickUndo} />
+                    <ToolbarButton className="toolbarButton" icon="redo" onMouseDown={this.onClickRedo} />
+                    {this.renderMarkButton('bold', 'format_bold')}
+                    {this.renderMarkButton('italic', 'format_italic')}
+                    {this.renderMarkButton('underlined', 'format_underlined')}
+                    {this.renderMarkButton('code', 'code')}
+                    {this.renderBlockButton('heading-one', 'looks_one')}
+                    {this.renderBlockButton('heading-two', 'looks_two')}
+                    {this.renderBlockButton('block-quote', 'format_quote')}
+                    {this.renderBlockButton('numbered-list', 'format_list_numbered')}
+                    {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
+                    <span className="toolbarButton" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
+                        <span className="material-icons">link</span>
+                    </span>
+                    <span className="toolbarButton" onMouseDown={this.onClickImage}>
+                        <span className="material-icons">image</span>
+                    </span>
+                </div>
+                <div>
+                    <div className="search-box toolbarButton">
+                        <input
+                            className="search-input"
+                            placeholder="Search keywords..."
+                            onChange={this.onInputChange}
+                        />
+                        <button className="saveNotes toolbarButton" onClick={this.submitNotes.bind(this)}>Save Changes</button>
+                    </div>
                 </div>
 
             </div>
