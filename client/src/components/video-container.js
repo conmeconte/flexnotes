@@ -7,8 +7,8 @@ class VideoContainer extends Component {
     renderInput ({input}) {
         console.log({input});
         return (
-            <div className="col-xs-8">
-            <input {...input} className="pastedVideoInput form-control col-xs-12" type="text" placeholder="Paste a YouTube video URL..."/>
+            <div className="col-xs-10">
+                <input {...input} className="pastedVideoInput form-control col-xs-12" type="text" placeholder="Paste a YouTube video URL..."/>
             </div>
         );
     }
