@@ -14,6 +14,7 @@ const DEFAULT_STATE = {
     opacityDisplay: {
         display: 'none'
     },
+    videoLink: ''
  };
 
 export default function (state = DEFAULT_STATE, action) {
@@ -24,14 +25,21 @@ export default function (state = DEFAULT_STATE, action) {
             return {...state, videoList: [action.payload, ...state.videoList]};
         case types.GET_RESULT_STYLES:
             return {...state, resultsStyles: action.payload, toggleResults: !state.toggleResults}
+        case types.GRAB_VIDEO_URL:
+            return {...state, videoLink: action.payload}
         case types.TOGGLE_RESULTS:
         return {...state, toggleResults: !state.toggleResults}
         case types.GET_OPACITY_DISPLAY:
             return { ...state, opacityDisplay: action.payload }
         case types.TOGGLE_MODAL:
-            return { ...state, deleteModal: { display: action.payload } }
+            return { ...state, addVideoModal: { display: action.payload } }
         case types.GET_VIDEO_TITLE: 
+            if (!action.payload) {
+                return state;
+            }
             return {...state, videoTitle: action.payload}
+        case types.PLAY_PASTED_VIDEO_LINK: 
+            return { ...state, videoLink: action.payload }
         default:
             return state;
     }
