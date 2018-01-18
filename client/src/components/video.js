@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import Results from './results';
 import VideoContainer from './video-container';
-import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults } from '../actions';
+import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl } from '../actions';
 import { Field, reduxForm } from 'redux-form';
 import VideoModal from './video-modal';
 
@@ -46,6 +46,30 @@ class Video extends Component {
           .catch(function(error) {
             console.error(error);
           });
+    }
+    componentWillMount() {
+        let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+        let tabIndex = null;
+        let pageIndex = null;
+        for (let i = 0; i < tabArrLength; i++) {
+            if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+                //console.log('tabid = interface id at index:', i);
+                tabIndex = i;
+                break;
+            }
+        }
+        const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+        for (let i = 0; i < tabArrLength; i++) {
+            if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+                pageIndex = i;
+                break;
+            }
+        }
+        if (!page_arr_obj[pageIndex].video) {
+            return;
+        } else {
+            this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, this.props.interface_obj);
+        }
     }
     renderInput ({input}) {
         console.log(input);
@@ -93,7 +117,9 @@ function mapStateToProps (state) {
         resultsStyles: state.video.resultsStyles,
         opacityContainer: state.video.opacityDisplay,
         toggleResultsBool: state.video.toggleResults,
+        interface_obj: state.interface,
+        binderObj: state.binder.binderObj,
     }
 }
 
-export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults })(Video);
+export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl })(Video);

@@ -225,6 +225,14 @@ export function grabVideoUrl(videoLink) {
         payload: videoLink
     }
 }
+export function setVideoUrl (value, interfaceObj) {
+    console.log("VIDEO URL FROM ACTION CREATOR: ", value);
+    return {
+        type: types.SET_VIDEO_URL,
+        payload: value
+    }
+}
+// END OF VIDEO ACTION CREATORS
 export function getDataObject() {
 
     return (dispatch) => {
