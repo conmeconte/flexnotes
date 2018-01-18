@@ -32,7 +32,7 @@ class VideoContainer extends Component {
                 }}><span className="glyphicon glyphicon-chevron-left"></span></button>
                 </div>
                 <div className="video-embed-wrapper">
-                    <iframe src={this.props.videoLink} className="video-iframe"></iframe>
+                    <iframe allowFullScreen src={this.props.videoLink} className="video-iframe"></iframe>
                 </div>
             </div>
         )

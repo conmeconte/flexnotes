@@ -21,7 +21,8 @@ class Video extends Component {
           key: API_KEY,
           q: values.video,
           type: 'video',
-          maxResults: 50
+          maxResults: 50,
+          playerVars: {rel: 0}
         };
         var self = this;
         var videos = [];

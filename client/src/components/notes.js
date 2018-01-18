@@ -28,7 +28,7 @@ const initialValue = Value.fromJSON({
                         kind: 'text',
                         leaves: [
                             {
-                                text: 'This is text'
+                                text: ''
                             }
                         ]
                     }
@@ -133,16 +133,15 @@ class Notes extends Component {
                 break;
             }
         }
-        if (!page_arr_obj[pageIndex].notes.document.content) {
-
+        if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
+            console.log("does not work");
         } else {
             const lastContent = JSON.parse( page_arr_obj[pageIndex].notes.document.content);
-
-
             this.setState({
                 value: Value.fromJSON(lastContent),
             })
-        }
+        
+    }
     }
 
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
