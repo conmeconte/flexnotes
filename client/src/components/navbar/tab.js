@@ -105,7 +105,7 @@ class Tab extends Component {
             // }
 
                 return (
-                    <div key={index} className="pageWrap">
+                    <div key={index}>
                         <Page pageObj={item}/>
                     </div>
                     // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
@@ -178,15 +178,20 @@ class Tab extends Component {
 
         return(
 
-            <div className='tabWrap'>
+            <div>
+            <div className="tabTitle">
                 <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
-                <div className=""  onClick={()=>this.handleClick()}>
-                    {this.props.tabObj.tab_name}
-                </div>
-                </Link>
+                    <div className=""  onClick={()=>this.handleClick()}>
+                        {this.props.tabObj.tab_name}
+                    </div>
+                </Link>           
+            </div>
+            <div className="tabBody">
                 <ul>
                     {page_list}
-                </ul>
+                </ul>    
+            
+
                 
                 {/* <button type="button" className={`btn btn-default btn-xs btn_edit_tab ${editable ? 'hidden': 'visible'}`} onClick={this.editTabs}>
                     Tabs <span className="glyphicon glyphicon-pencil"></span>
@@ -206,6 +211,7 @@ class Tab extends Component {
                     <span className="glyphicon glyphicon-plus"></span>Add Page
                 </button>   
                 <Route path={`/main/${url}`+"/:page"} component={Page}/>
+                </div>
             </div>
         );
     }

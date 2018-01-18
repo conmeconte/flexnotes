@@ -49,11 +49,38 @@ class Binder extends Component {
     //     this.props.addBinder();
     // }
 
+    componentDidMount(){
+        //console.log('binderMount: ',nextProps);
+        // if(this.props.interface.binder_id === this.props.binderObj._id){
+        //     this.setState({
+        //         active: true
+        //     });
+        // } else {
+        //     this.setState({
+        //         active: false
+        //     });
+        // }
+    }
+
     componentWillUpdate(nextProps){
-        //console.log('nextProps: ',nextProps);
-        if(this.props.binderObj.tab_arr_obj.length != nextProps.binder.tab_arr_obj.length){
-            //console.log("i should update binderArr")
-        }
+        // console.log('nextProps: ',nextProps);
+        // if(this.props.binderObj.tab_arr_obj.length != nextProps.binder.tab_arr_obj.length){
+        //     console.log("i should update binderArr")
+        // }   
+    }
+
+    componentWillReceiveProps(nextProps){
+        // console.log('willreceiveProps: ',nextProps);
+        // if(nextProps.interface.binder_id === this.props.binderObj._id){
+        //     this.setState({
+        //         active: true
+        //     });
+        // } else {
+        //     this.setState({
+        //         active: false
+        //     });
+        // }
+
     }
 
     addTab(){
@@ -127,13 +154,18 @@ class Binder extends Component {
 
     handleClick(){
         //console.log('binderObj:' ,binderObj);
-        this.props.selectBinder(this.props.binder);
+        this.props.selectBinder(this.props.binderObj);
     }
 
     render() {
         const { editable, active } = this.state;
         //console.log("Binder props:", this.props);
-        const { tab_arr_obj } = this.props.binder;
+
+        if(!this.props.binderObj){
+            return null;
+        }
+        const { tab_arr_obj } = this.props.binderObj;
+
         //let currentTabArr = [];
 
         // if(this.props.binder._id === this.props.binderObj._id){
@@ -156,7 +188,7 @@ class Binder extends Component {
             }
 
                 return (
-                    <div key={index} className="tabSingle">
+                    <div key={index}>
                         <Tab tabObj={item}/>
                     </div>
                     // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
@@ -169,15 +201,19 @@ class Binder extends Component {
              });
 
         return (
-            <div className="binderWrap">
-                <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }} >
-                            <div className=""  onClick={()=>this.handleClick()}  onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
-                                {this.props.binderObj.binder_name}
-                            </div>
-                </Link>
+            <div>
+                <div className="binderTitle">
+                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }} >
+                                <div className=""  onClick={()=>this.handleClick()}  onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
+                                    {this.props.binderObj.binder_name}
+                                </div>
+                    </Link>
+                </div>
 
-
-                {tab_link}
+                <div className={`binderBody ${active ? 'hidden' : 'visible'}`}>
+                    {tab_link}
+                
+                
                 {/* <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
                     Binders <span className="glyphicon glyphicon-pencil"></span>
                 </button>
@@ -200,6 +236,7 @@ class Binder extends Component {
                     <span className="glyphicon glyphicon-plus"></span>Add Tab
                 </button>
                 <Route path={`/main/${binder_url}`+"/:tab"} component={Tab}/>
+                </div>
             </div>
         );
     }
@@ -208,7 +245,8 @@ class Binder extends Component {
         //console.log('binder mstp', state);
         return{
             binderArr: state.binderArray.binderArr,
-            binder: state.binder.binderObj
+            binder: state.binder.binderObj,
+            interface: state.interface
         }
     }
 

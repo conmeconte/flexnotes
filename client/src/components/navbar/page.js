@@ -148,7 +148,7 @@ class Page extends Component {
         // });
             return(
     
-                <li className='pageWrap'>
+                <li className='pageBody'>
             <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
                 <div className=""  onClick={()=>this.handleClick()}>
                     {this.props.pageObj.page_name}

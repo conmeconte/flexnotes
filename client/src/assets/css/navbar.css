@@ -10,7 +10,7 @@
     width: 10%;
     height: 100vh;
     box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);
-    #display: inline-block;
+    #border: solid 2px black;
 }
 
 ul {
@@ -230,18 +230,18 @@ ul > li {
     visibility: hidden;
 }
 
-.binderWrap{
-    border: solid 1px green;
+.binderTitle{
+    border: solid 1px red;
 }
 
-.tabSingle{
-    border: green solid 1px;
+.binderBody{
+    border: solid 1px teal;
 }
 
-.tabWrap{
-    border: solid 1px blue;
+.tabTitle{
+    border: solid 1px orange;
 }
 
-.pageWrap{
-    border: red solid 1px;
+.tabBody{
+    border: solid 1px magenta;
 }
