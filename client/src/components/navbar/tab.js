@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectTab, addTab } from '../../actions';
+import { selectTab, addPage } from '../../actions';
 
 import Page from './page';
 
@@ -17,16 +17,17 @@ class Tab extends Component {
 
 
 
-        this.addTab = this.addTab.bind(this);
+        this.addPage = this.addPage.bind(this);
         this.editTabs = this.editTabs.bind(this);
         this.notEditTabs = this.notEditTabs.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
 
-    addTab(){
-        console.log('addTab clicked');
-        this.props.addTab(this.props.binderObj._id);
+    addPage(){
+        console.log('addPage clicked');
+        //this.props.addTab(this.props.binderObj._id);
+        this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
     }
 
     editTabs(){
@@ -82,9 +83,9 @@ class Tab extends Component {
         });
     }
 
-    handleClick(tabObj){
+    handleClick(){
         //this.props.selectBinder(binderObj);
-        this.props.selectTab(tabObj);
+        this.props.selectTab(this.props.tabObj);
         //console.log("tab id updated");
     }
 
@@ -92,74 +93,102 @@ class Tab extends Component {
         //this.props.selectBinder(this.props.binderObj);
         const {editable} = this.state;
 
-        //console.log('props in tab:', this.props);
-        const{ binder_url} = this.props;
-        const{ tab_arr_obj} = this.props.binderObj;
+        console.log('props in tab:', this.props);
+        let url = this.props.binderObj._id + "/" + this.props.tabObj._id;
+        const{ page_arr_obj} = this.props.tabObj;
+
+        let page_list = page_arr_obj.map((item, index) => {
+            //let tab_url = '/' + item._id;
+            //console.log('tab map:', item);
+            // var tabStyle ={
+            //     borderLeft: '12px solid '+item.tab_color
+            // }
+
+                return (
+                    <div key={index} className="pageWrap">
+                        <Page pageObj={item}/>
+                    </div>
+                    // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
+
+                    //     <div className=""style={tabStyle}>
+                    //         {item.tab_name}
+                    //     </div>
+                    // </Link>
+                );               
+             });
         //console.log('binder tab_arr_obj', tab_arr_obj);
         //console.log('binder tab_arr_obj', binder_url);
         
-        let tab_link = [];
-        if(editable){
-            tab_link = tab_arr_obj.map((item, index) => {
-                //console.log('editable map:', item);
-                return (
-                    <li key={index}>
-                        <input 
-                            className="edit_input"
-                            ref='textInput'
-                            type='text'
-                            onChange={(e)=>this.tabTextChanged(e, item.tab_count)}
-                            // onBlur={this.notEditable}
-                           // onKeyPress={this.keyPressed}
-                            value={item.tab_name}
-                            />
+        // let tab_link = [];
+        // if(editable){
+        //     tab_link = tab_arr_obj.map((item, index) => {
+        //         //console.log('editable map:', item);
+        //         return (
+        //             <li key={index}>
+        //                 <input 
+        //                     className="edit_input"
+        //                     ref='textInput'
+        //                     type='text'
+        //                     onChange={(e)=>this.tabTextChanged(e, item.tab_count)}
+        //                     // onBlur={this.notEditable}
+        //                    // onKeyPress={this.keyPressed}
+        //                     value={item.tab_name}
+        //                     />
 
-                    <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(item.tab_id)} >
-                        <span className="glyphicon glyphicon-minus"></span>
-                    </button>
+        //             <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(item.tab_id)} >
+        //                 <span className="glyphicon glyphicon-minus"></span>
+        //             </button>
                         
                           
-                    </li>
-                );
-            });
+        //             </li>
+        //         );
+        //     });
 
-        } else {
+        // } else {
 
-            tab_link = tab_arr_obj.map((item, index) => {
-                let tab_url = '/' + item._id;
-                //console.log('tab map:', item);
-                var tabStyle ={
-                    borderLeft: '12px solid '+item.tab_color
-                }
+        //     tab_link = tab_arr_obj.map((item, index) => {
+        //         let tab_url = '/' + item._id;
+        //         //console.log('tab map:', item);
+        //         var tabStyle ={
+        //             borderLeft: '12px solid '+item.tab_color
+        //         }
 
-                    return (
-                        <li key={index}><Link to={'/main'+this.props.binder_url + tab_url} style={{ textDecoration: 'none' }}>
+        //             return (
+        //                 <li key={index}><Link to={'/main'+this.props.binder_url + tab_url} style={{ textDecoration: 'none' }}>
 
-                            <div className="tabDiv" onClick={()=>{this.handleClick(item)}} style={tabStyle}>
-                                {item.tab_name}
-                            </div>
-                        </Link></li>
-                    );               
-                 });
-        }
+        //                     <div className="tabDiv" onClick={()=>{this.handleClick(item)}} style={tabStyle}>
+        //                         {item.tab_name}
+        //                     </div>
+        //                 </Link></li>
+        //             );               
+        //          });
+        // }
     
-        const tab_route = tab_arr_obj.map((item, index) => {
-            let tab_url = '/' + item._id;
-            return(
+        // const tab_route = tab_arr_obj.map((item, index) => {
+        //     let tab_url = '/' + item._id;
+        //     return(
 
-                <Route key={index} path={'/main'+this.props.binder_url + tab_url} render={()=> 
-                    <Page tabObj={item} binder_url={this.props.binder_url} tab_url={tab_url}/>
+        //         <Route key={index} path={'/main'+this.props.binder_url + tab_url} render={()=> 
+        //             <Page tabObj={item} binder_url={this.props.binder_url} tab_url={tab_url}/>
 
-                }
-                />
-            );
-        });
+        //         }
+        //         />
+        //     );
+        // });
 
         return(
 
-            <div className='nav_tab'>
+            <div className='tabWrap'>
+                <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
+                <div className=""  onClick={()=>this.handleClick()}>
+                    {this.props.tabObj.tab_name}
+                </div>
+                </Link>
+                <ul>
+                    {page_list}
+                </ul>
                 
-                <button type="button" className={`btn btn-default btn-xs btn_edit_tab ${editable ? 'hidden': 'visible'}`} onClick={this.editTabs}>
+                {/* <button type="button" className={`btn btn-default btn-xs btn_edit_tab ${editable ? 'hidden': 'visible'}`} onClick={this.editTabs}>
                     Tabs <span className="glyphicon glyphicon-pencil"></span>
                 </button>
                 <button type="button" className={`btn btn-default btn-xs btn_edit_tab ${editable ? 'visible': 'hidden'}`} onClick={this.notEditTabs}>
@@ -172,7 +201,11 @@ class Tab extends Component {
                 {tab_route}
                 <button className="btn btn-default btn-xs btn_add" onClick={this.addTab}>
                     <span className="glyphicon glyphicon-plus"></span>
-                </button>  
+                </button>   */}
+                <button className="btn btn-default btn-xs btn_add" onClick={this.addPage}>
+                    <span className="glyphicon glyphicon-plus"></span>Add Page
+                </button>   
+                <Route path={`/main/${url}`+"/:page"} component={Page}/>
             </div>
         );
     }
@@ -181,9 +214,10 @@ class Tab extends Component {
 }
 
 function mapStateToProps(state){
-    console.log('tab mstp', state);
+    //console.log('tab mstp', state);
     return {
-        binderObj: state.binder.binderObj
+        binderObj: state.binder.binderObj,
+        interface: state.interface
     }
 }
-export default withRouter(connect(mapStateToProps,{ selectTab, addTab })(Tab));
+export default withRouter(connect(mapStateToProps,{ selectTab, addPage })(Tab));
