@@ -80,10 +80,11 @@ class Binder extends Component {
         //         active: false
         //     });
         // }
+
     }
 
     addTab(){
-        console.log('addTab clicked');
+        //console.log('addTab clicked');
         this.props.addTab(this.props.binderObj._id);
 
     }
@@ -159,10 +160,12 @@ class Binder extends Component {
     render() {
         const { editable, active } = this.state;
         //console.log("Binder props:", this.props);
+
         if(!this.props.binderObj){
             return null;
         }
         const { tab_arr_obj } = this.props.binderObj;
+
         //let currentTabArr = [];
 
         // if(this.props.binder._id === this.props.binderObj._id){

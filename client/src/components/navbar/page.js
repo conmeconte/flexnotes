@@ -21,7 +21,7 @@ class Page extends Component {
     }
 
     addPage(){
-        console.log('addPage clicked');
+        //console.log('addPage clicked');
         this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
     }
 
