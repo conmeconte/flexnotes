@@ -182,10 +182,8 @@ export function toggleResults(bool) {
     }
 }
 export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
-    console.log("VIDEO TITLE: ", videoTitle);
-    let videoId = videoUrl.split("=");
-    videoId = videoId[1];
-    console.log("VIDEO ID: ", videoId);
+    let videoId = videoUrl.split("/");
+    videoId = videoId[4];
     axios.post('/api/video', {
         video: {
             videoTitle: videoTitle,
@@ -196,49 +194,35 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
         tabID: interfaceObj.tab_id,
         pageID: interfaceObj.page_id
     });
+    console.log("DATA HAS BEEN SENT");
     return {
         type: types.ADD_TO_PLAYLIST,
         payload: videoUrl
     }
 }
-export function playVideo() {
-    let videoId = document.querySelector(".pastedVideoInput").value;
-    videoId = videoId.split('&')[0];
-    videoId = videoId.split('=')[1];
-    videoId = `https://www.youtube.com/embed/${videoId}`;
-    let iframe = document.createElement("iframe");
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.src = videoId;
-    document.querySelector(".video-embed-wrapper").innerText = "";
-    document.querySelector(".video-embed-wrapper").appendChild(iframe);
+export function playVideo(url) {
+    let videoId = url;
+    document.querySelector(".video-iframe").src = url
     return {
-        type: types.PLAY_VIDEO
+        type: types.PLAY_VIDEO,
+        payload: videoId
     }
 }
 export function playPastedLinkVideo(url) {
-    let iframe = document.createElement("iframe");
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.src = url
-    document.querySelector(".video-embed-wrapper").innerText = "";
-    document.querySelector(".video-embed-wrapper").appendChild(iframe);
+    let videoId = url
+    videoId = videoId.split('&')[0];
+    videoId = videoId.split('=')[1];
+    videoId = `https://www.youtube.com/embed/${videoId}`;
+    console.log("PLAY PASTED LINK VIDEO: ", videoId)
     return {
-        type: types.PLAY_VIDEO
+        type: types.PLAY_PASTED_VIDEO_LINK,
+        payload: videoId
     }
 }
-export function grabVideoUrl() {
-    var videoLink = document.querySelector(".pastedVideoInput").value;
+export function grabVideoUrl(videoLink) {
     return {
         type: types.GRAB_VIDEO_URL,
         payload: videoLink
-    }
-}
-export function getVideoTitle() {
-    const videoTitle = document.querySelector(".save-title-input").value;
-    return {
-        type: types.GET_VIDEO_TITLE,
-        payload: videoTitle
     }
 }
 export function getDataObject() {

@@ -2,13 +2,14 @@ import types from '../actions/types';
 
 const DEFAULT_STATE = {
     playlist: [],
+    youtubeLink: '',
     videoLink: ''
 }
 
 export default function (state = DEFAULT_STATE, action) {
     switch (action.type) {
         case types.PLAY_VIDEO:
-            return {...state, url: action.payload};
+            return {...state, youtubeLink: action.payload};
         case types.ADD_TO_PLAYLIST:
             if (!action.payload) {
                 return state;

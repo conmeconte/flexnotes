@@ -12,7 +12,7 @@ class Slides extends Component {
         console.log('renderInput slides:', props);
         return (
             <div className="col-sm-9">
-                <input className="slides-input form-control" {...input} placeholder="Paste a Google Slides URL" />
+                <input className="slides-input form-control" {...input} placeholder="Paste a Google Slides URL..." />
             </div>
         )
     }
