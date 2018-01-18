@@ -13,16 +13,16 @@ class NavBar extends Component{
         this.props.addBinder();
     }
     render(){
-        console.log("navbar props:", this.props);
+        //console.log("navbar props:", this.props);
 
         const binder = this.props.binderArr.map((item, index) => {
             //let binder_url = '/' + item._id;
             //console.log('Route binder id: ', binder_url);
             //console.log("binder_url", binder_url);
-            console.log('navbar item', item);
+            //console.log('navbar item', item);
             
             return (
-                <div key={index} className="binderSingle">
+                <div key={index}>
                     <Binder binderObj={item}/>
                 </div>
             );

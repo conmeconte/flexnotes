@@ -9,15 +9,15 @@ import { getDataObject } from '../actions';
 
 
 class Dashboard extends Component {
-    componentWillMount(){
-        this.props.getDataObject();
-    }
+    // componentWillMount(){
+    //     this.props.getDataObject();
+    // }
 
     render(){
         console.log('dashboard props', this.props);
-        // if(this.props.binderArr.length === 0){
-        //     return null;
-        // } else{
+        if(!this.props.binderArr){
+            return null;
+        } 
         return(
             <div>
                 <div className="logout">
@@ -36,7 +36,7 @@ function mapStateToProps(state){
     return{
         //data: state.auth,
         binderArr: state.binderArray.binderArr,
-        initBinder: state.binder.binderObj,
+        //initBinder: state.binder.binderObj,
         interface: state.interface
     }
 }
