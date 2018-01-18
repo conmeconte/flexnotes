@@ -12,6 +12,7 @@ export default {
     SELECT_TAB: 'select_tab',
     SELECT_PAGE: 'select_page',
     GET_VIDEO_RESULTS: 'get_video_results',
+    SET_VIDEO_URL: 'set_video_url',
     PLAY_PASTED_VIDEO_LINK: 'play_pasted_video',
     PLAY_VIDEO: 'play_video',
     ADD_TO_PLAYLIST: 'add_to_playlist',
