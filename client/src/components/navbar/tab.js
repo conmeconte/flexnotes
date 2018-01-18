@@ -23,7 +23,12 @@ class Tab extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-
+    componentWillReceiveProps(nextProps){
+        //console.log('nextProps: ',nextProps);
+         if(this.props.binder != nextProps.binder){
+             this.props.updateBinderArray();
+         }
+    }
     addPage(){
         //console.log('addPage clicked');
         //this.props.addTab(this.props.binderObj._id);
