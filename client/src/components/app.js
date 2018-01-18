@@ -6,10 +6,12 @@ import * as actions from "../actions";
 import LandingPage from './landingpage';
 import Dashboard from './dashboard';
 
+
 class App extends Component {
     componentDidMount() {
         this.props.fetchUser();
     }
+
     render() {
         return (
             <div>
@@ -25,7 +27,6 @@ class App extends Component {
         );
     }
 }
-
 
 export default connect(null, actions)(App);
 
