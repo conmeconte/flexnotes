@@ -15,7 +15,9 @@ class Dashboard extends Component {
 
     render(){
         console.log('dashboard props', this.props);
-
+        // if(this.props.binderArr.length === 0){
+        //     return null;
+        // } else{
         return(
             <div>
                 <div className="logout">
@@ -25,6 +27,7 @@ class Dashboard extends Component {
                 <Panel />
             </div>
         );
+           // }
     }
 }
 

@@ -229,3 +229,19 @@ ul > li {
 .hidden{
     visibility: hidden;
 }
+
+.binderWrap{
+    border: solid 1px green;
+}
+
+.tabSingle{
+    border: green solid 1px;
+}
+
+.tabWrap{
+    border: solid 1px blue;
+}
+
+.pageWrap{
+    border: red solid 1px;
+}
