@@ -25,7 +25,7 @@ class Tab extends Component {
 
 
     addPage(){
-        console.log('addPage clicked');
+        //console.log('addPage clicked');
         //this.props.addTab(this.props.binderObj._id);
         this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
     }
@@ -93,7 +93,7 @@ class Tab extends Component {
         //this.props.selectBinder(this.props.binderObj);
         const {editable} = this.state;
 
-        console.log('props in tab:', this.props);
+        //console.log('props in tab:', this.props);
         let url = this.props.binderObj._id + "/" + this.props.tabObj._id;
         const{ page_arr_obj} = this.props.tabObj;
 

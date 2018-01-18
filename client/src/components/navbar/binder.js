@@ -50,14 +50,14 @@ class Binder extends Component {
     // }
 
     componentWillUpdate(nextProps){
-        console.log('nextProps: ',nextProps);
+        //console.log('nextProps: ',nextProps);
         if(this.props.binderObj.tab_arr_obj.length != nextProps.binder.tab_arr_obj.length){
-            console.log("i should update binderArr")
+            //console.log("i should update binderArr")
         }
     }
 
     addTab(){
-        console.log('addTab clicked');
+        //console.log('addTab clicked');
         this.props.addTab(this.props.binderObj._id);
 
     }
@@ -132,7 +132,7 @@ class Binder extends Component {
 
     render() {
         const { editable, active } = this.state;
-        console.log("Binder props:", this.props);
+        //console.log("Binder props:", this.props);
         const { tab_arr_obj } = this.props.binder;
         //let currentTabArr = [];
 
