@@ -44,49 +44,17 @@ class Binder extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    // addBinder() {
-    //     //console.log('add Binder');
-    //     this.props.addBinder();
-    // }
-
-    componentDidMount(){
-        //console.log('binderMount: ',nextProps);
-        // if(this.props.interface.binder_id === this.props.binderObj._id){
-        //     this.setState({
-        //         active: true
-        //     });
-        // } else {
-        //     this.setState({
-        //         active: false
-        //     });
-        // }
-    }
-
-    componentWillUpdate(nextProps){
-        // console.log('nextProps: ',nextProps);
-        // if(this.props.binderObj.tab_arr_obj.length != nextProps.binder.tab_arr_obj.length){
-        //     console.log("i should update binderArr")
-        // }   
-    }
-
     componentWillReceiveProps(nextProps){
-        // console.log('willreceiveProps: ',nextProps);
-        // if(nextProps.interface.binder_id === this.props.binderObj._id){
-        //     this.setState({
-        //         active: true
-        //     });
-        // } else {
-        //     this.setState({
-        //         active: false
-        //     });
-        // }
-
+        //console.log('nextProps: ',nextProps);
+         if(this.props.binder != nextProps.binder){
+             this.props.updateBinderArray();
+         }
     }
 
     addTab(){
         //console.log('addTab clicked');
         this.props.addTab(this.props.binderObj._id);
-
+        //this.props.updateBinderArray();
     }
 
     deleteBinder(delete_id) {
@@ -159,7 +127,7 @@ class Binder extends Component {
 
     render() {
         const { editable, active } = this.state;
-        //console.log("Binder props:", this.props);
+        console.log("Binder props:", this.props);
 
         if(!this.props.binderObj){
             return null;
