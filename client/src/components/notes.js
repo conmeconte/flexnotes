@@ -9,7 +9,6 @@ import isImage from 'is-image'
 import isUrl from 'is-url'
 
 import '../assets/css/notes.css';
-// import linedPaper from '../assets/images/lined-paper.png';
 
 const DEFAULT_NODE = 'paragraph';
 
@@ -18,7 +17,6 @@ const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
-// const savedNotes = JSON.parse(localStorage.getItem('content'));
 const initialValue = Value.fromJSON({
     document: {
         nodes: [
@@ -43,10 +41,10 @@ const initialValue = Value.fromJSON({
 // --------------------------- UNDO AND REDO  ---------------------------
 
 const ToolbarButton = props => (
-    <span className="button" onMouseDown={props.onMouseDown}>
+    <span title={props.icon} className="button" onMouseDown={props.onMouseDown}>
         <span className="material-icons">{props.icon}</span>
     </span>
-)
+);
 
 // --------------------------- LINKS  ---------------------------
 
@@ -83,7 +81,7 @@ const schema = {
         normalize: (change, reason, { node, child }) => {
             switch (reason) {
                 case 'last_child_type_invalid': {
-                    const paragraph = Block.create('paragraph')
+                    const paragraph = Block.create('paragraph');
                     return change.insertNodeByKey(node.key, node.nodes.size, paragraph)
                 }
             }
@@ -102,11 +100,6 @@ class Notes extends Component {
 
 
     onChange = ({value}) => {
-        // if (value.document !== this.state.value.document) {
-        //     const content = JSON.stringify(value.toJSON());
-        //     // localStorage.setItem('content', content);
-        // }
-
         this.setState({ value });
     };
 
@@ -141,7 +134,7 @@ class Notes extends Component {
             }
         }
         if (!page_arr_obj[pageIndex].notes.document.content) {
-            return;
+
         } else {
             const lastContent = JSON.parse( page_arr_obj[pageIndex].notes.document.content);
 
@@ -197,7 +190,7 @@ class Notes extends Component {
         const change = value.change();
         const { document } = value;
 
-        // Handle everything but list buttons
+        // Handle everything but list buttons.
         if (type !== 'bulleted-list' && type !== 'numbered-list') {
             const isActive = this.hasBlock(type);
             const isList = this.hasBlock('list-item');
@@ -207,7 +200,9 @@ class Notes extends Component {
                     .setBlock(isActive ? DEFAULT_NODE : type)
                     .unwrapBlock('bulleted-list')
                     .unwrapBlock('numbered-list')
-            } else {
+            }
+
+            else {
                 change
                     .setBlock(isActive ? DEFAULT_NODE : type)
             }
@@ -244,8 +239,8 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span className="toolbarButton" onMouseDown={onMouseDown} data-active={isActive}>
-            <span className="material-icons">{icon}</span>
+            <span title={type} className="toolbarButton" onMouseDown={onMouseDown} data-active={isActive}>
+                <span className="material-icons">{icon}</span>
             </span>
         )
     };
@@ -255,8 +250,8 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickBlock(event, type);
 
         return (
-            <span className="toolbarButton" onMouseDown={onMouseDown} data-active={isActive}>
-            <span className="material-icons">{icon}</span>
+            <span title={type} className="toolbarButton" onMouseDown={onMouseDown} data-active={isActive}>
+                <span className="material-icons">{icon}</span>
             </span>
         )
     };
@@ -264,16 +259,16 @@ class Notes extends Component {
     // --------------------------- UNDO AND REDO  ---------------------------
 
     onClickRedo = (event) => {
-        event.preventDefault()
-        const { value } = this.state
-        const change = value.change().redo()
+        event.preventDefault();
+        const { value } = this.state;
+        const change = value.change().redo();
         this.onChange(change)
     };
 
     onClickUndo = (event) => {
-        event.preventDefault()
-        const { value } = this.state
-        const change = value.change().undo()
+        event.preventDefault();
+        const { value } = this.state;
+        const change = value.change().undo();
         this.onChange(change)
     };
 
@@ -311,19 +306,19 @@ class Notes extends Component {
         this.onChange(change)
     };
 
-    onLinkPaste = (event, change) => {
-        if (change.value.isCollapsed) return
+    onPaste = (event, change) => {
+        if (change.value.isCollapsed) return;
 
-        const transfer = getEventTransfer(event)
-        const { type, text } = transfer
-        if (type != 'text' && type != 'html') return
-        if (!isUrl(text)) return
+        const transfer = getEventTransfer(event);
+        const { type, text } = transfer;
+        if (type !== 'text' && type !== 'html') return;
+        if (!isUrl(text)) return;
 
         if (this.hasLinks()) {
             change.call(unwrapLink)
         }
 
-        change.call(wrapLink, text)
+        change.call(wrapLink, text);
         return true
     };
 
@@ -362,29 +357,29 @@ class Notes extends Component {
     // --------------------------- IMAGES  ---------------------------
 
     onClickImage = (event) => {
-        event.preventDefault()
-        const src = window.prompt('Enter the URL of the image:')
-        if (!src) return
+        event.preventDefault();
+        const src = window.prompt('Enter the URL of the image:');
+        if (!src) return;
 
         const change = this.state.value
             .change()
-            .call(insertImage, src)
+            .call(insertImage, src);
 
         this.onChange(change)
     };
 
     onDropOrPaste = (event, change, editor) => {
-        const target = getEventRange(event, change.value)
-        if (!target && event.type === 'drop') return
+        const target = getEventRange(event, change.value);
+        if (!target && event.type === 'drop') return;
 
-        const transfer = getEventTransfer(event)
-        const { type, text, files } = transfer
+        const transfer = getEventTransfer(event);
+        const { type, text, files } = transfer;
 
         if (type === 'files') {
             for (const file of files) {
-                const reader = new FileReader()
-                const [ mime ] = file.type.split('/')
-                if (mime !== 'image') continue
+                const reader = new FileReader();
+                const [ mime ] = file.type.split('/');
+                if (mime !== 'image') continue;
 
                 reader.addEventListener('load', () => {
                     editor.change((c) => {
@@ -397,8 +392,8 @@ class Notes extends Component {
         }
 
         if (type === 'text') {
-            if (!isUrl(text)) return
-            if (!isImage(text)) return
+            if (!isUrl(text)) return;
+            if (!isImage(text)) return;
             change.call(insertImage, text, target)
         }
     };
@@ -426,8 +421,8 @@ class Notes extends Component {
             case 'list-item': return <li {...attributes}>{children}</li>;
             case 'numbered-list': return <ol {...attributes}>{children}</ol>;
             case 'link': {
-                const { data } = node
-                const href = data.get('href')
+                const { data } = node;
+                const href = data.get('href');
                 return <a {...attributes} href={href}>{children}</a>
             }
             case 'image': {
@@ -456,11 +451,11 @@ class Notes extends Component {
                     {this.renderBlockButton('heading-two', 'looks_two')}
                     {this.renderBlockButton('block-quote', 'format_quote')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
-                    {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
-                    <span className="toolbarButton" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
+                    {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
+                    <span title="link" className="toolbarButton" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
                         <span className="material-icons">link</span>
                     </span>
-                    <span className="toolbarButton" onMouseDown={this.onClickImage}>
+                    <span title="image" className="toolbarButton" onMouseDown={this.onClickImage}>
                         <span className="material-icons">image</span>
                     </span>
                 </div>
@@ -495,7 +490,7 @@ class Notes extends Component {
                     schema={schema}
                     onDrop={this.onDropOrPaste}
                     onPaste={this.onDropOrPaste}
-                    onLinkPaste={this.onPaste}
+                    onPaste={this.onPaste}
                     renderNode={this.renderNode}
                     renderMark={this.renderMark}
                     spellCheck
