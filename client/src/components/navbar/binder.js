@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, selectBinder, addBinder, deleteBinder } from '../../actions';
+import { updateBinderArray, selectBinder, addTab, deleteBinder } from '../../actions';
 
 
 import Tab from './tab';
@@ -35,7 +35,7 @@ class Binder extends Component {
 
         }
 
-        this.addBinder = this.addBinder.bind(this);
+        //this.addBinder = this.addBinder.bind(this);
         this.deleteBinder = this.deleteBinder.bind(this);
         this.editable = this.editable.bind(this);
         this.notEditable = this.notEditable.bind(this);
@@ -44,9 +44,49 @@ class Binder extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    addBinder() {
-        //console.log('add Binder');
-        this.props.addBinder();
+    // addBinder() {
+    //     //console.log('add Binder');
+    //     this.props.addBinder();
+    // }
+
+    componentDidMount(){
+        //console.log('binderMount: ',nextProps);
+        // if(this.props.interface.binder_id === this.props.binderObj._id){
+        //     this.setState({
+        //         active: true
+        //     });
+        // } else {
+        //     this.setState({
+        //         active: false
+        //     });
+        // }
+    }
+
+    componentWillUpdate(nextProps){
+        // console.log('nextProps: ',nextProps);
+        // if(this.props.binderObj.tab_arr_obj.length != nextProps.binder.tab_arr_obj.length){
+        //     console.log("i should update binderArr")
+        // }   
+    }
+
+    componentWillReceiveProps(nextProps){
+        // console.log('willreceiveProps: ',nextProps);
+        // if(nextProps.interface.binder_id === this.props.binderObj._id){
+        //     this.setState({
+        //         active: true
+        //     });
+        // } else {
+        //     this.setState({
+        //         active: false
+        //     });
+        // }
+
+    }
+
+    addTab(){
+        //console.log('addTab clicked');
+        this.props.addTab(this.props.binderObj._id);
+
     }
 
     deleteBinder(delete_id) {
@@ -112,80 +152,69 @@ class Binder extends Component {
         // });
     }
 
-    handleClick(binderObj){
+    handleClick(){
         //console.log('binderObj:' ,binderObj);
-        this.props.selectBinder(binderObj);
+        this.props.selectBinder(this.props.binderObj);
     }
 
     render() {
         const { editable, active } = this.state;
         //console.log("Binder props:", this.props);
-        //console.log('Render binderArray:', binder_array);
-        let binder_link = [];
-        //map binders
-        if (editable) {
-            binder_link = this.props.binderArr.map((item, index) => {
-                //console.log('editable map:', item);
-                return (
-                    <li key={index}>
-                        <input
-                            className="edit_input"
-                            ref='textInput'
-                            type='text'
-                            onChange={(e) => this.textChanged(e, item.binder_count)}
-                            // onBlur={this.notEditable}
-                            // onKeyPress={this.keyPressed}
-                            value={item.binder_name}
-                        />
 
-                        <button type="button" className="btn btn-default btn_delete" onClick={() => this.deleteBinder(item._id)} >
-                            <span className="glyphicon glyphicon-minus"></span>
-                        </button>
-                    </li>
-                );
-            });
-
-        } else {
-            binder_link = this.props.binderArr.map((item, index) => {
-
-                //console.log('Binder map:', item);
-                var binderStyle = {
-                    backgroundColor: item.binder_color
-                }
-
-                var binderStyle2 = {
-                    backgroundColor: 'inherit'
-                }
-
-                let binder_url = '/' + item._id;
-                //console.log('binder id: ', item._id.$oid);
-                return (
-                    <li key={index}>
-                        <Link to={'/main' + binder_url} style={{ textDecoration: 'none' }} >
-                            <div className="binderDiv" onClick={()=>{this.handleClick(item)}} style={active ? binderStyle : binderStyle2} onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
-                                {item.binder_name}
-                            </div>
-                        </Link>
-                    </li>
-                );
-            });
+        if(!this.props.binderObj){
+            return null;
         }
+        const { tab_arr_obj } = this.props.binderObj;
 
-        const binder_route = this.props.binderArr.map((item, index) => {
-            let binder_url = '/' + item._id;
-            //console.log('Route binder id: ', binder_url);
-            //console.log("binder_url", binder_url);
-            return (
-                <Route key={index} path={'/main'+ binder_url } render={() =>
-                    <Tab binder_url={binder_url} />}
-                />
-            );
-        });
+        //let currentTabArr = [];
+
+        // if(this.props.binder._id === this.props.binderObj._id){
+        //     currentTabArr = this.props.binder.tab_arr_obj;
+        // } else {
+        //     console.log('binder and binderObj are not the same');
+        //     currentTabArr = this.props.binderObj.tab_arr_obj;
+        // }
+        
+        let binder_url = this.props.binderObj._id;
+
+
+        
+
+        let tab_link = tab_arr_obj.map((item, index) => {
+            let tab_url = '/' + item._id;
+            //console.log('tab map:', item);
+            var tabStyle ={
+                borderLeft: '12px solid '+item.tab_color
+            }
+
+                return (
+                    <div key={index}>
+                        <Tab tabObj={item}/>
+                    </div>
+                    // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
+
+                    //     <div className=""style={tabStyle}>
+                    //         {item.tab_name}
+                    //     </div>
+                    // </Link>
+                );               
+             });
 
         return (
-            <div className="nav_binder">
+            <div>
+                <div className="binderTitle">
+                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }} >
+                                <div className=""  onClick={()=>this.handleClick()}  onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
+                                    {this.props.binderObj.binder_name}
+                                </div>
+                    </Link>
+                </div>
 
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
+                <div className={`binderBody ${active ? 'hidden' : 'visible'}`}>
+                    {tab_link}
+                
+                
+                {/* <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
                     Binders <span className="glyphicon glyphicon-pencil"></span>
                 </button>
                 <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
@@ -195,15 +224,19 @@ class Binder extends Component {
 
 
                 <ul className="binder_wrap">
-                    {binder_link}
-                </ul>
-                {binder_route}
+                    {/* {binder_link} 
+
 
 
 
                 <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
                     <span className="glyphicon glyphicon-plus"></span>
+                </button> */}
+                <button className="btn btn-default btn-xs btn_add" onClick={this.addTab.bind(this)}>
+                    <span className="glyphicon glyphicon-plus"></span>Add Tab
                 </button>
+                <Route path={`/main/${binder_url}`+"/:tab"} component={Tab}/>
+                </div>
             </div>
         );
     }
@@ -212,10 +245,11 @@ class Binder extends Component {
         //console.log('binder mstp', state);
         return{
             binderArr: state.binderArray.binderArr,
-            binder: state.binder.binderObj
+            binder: state.binder.binderObj,
+            interface: state.interface
         }
     }
 
-    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addBinder, deleteBinder})(Binder));
+    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addTab, deleteBinder})(Binder));
 
 

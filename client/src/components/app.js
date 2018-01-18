@@ -5,11 +5,17 @@ import * as actions from "../actions";
 
 import LandingPage from './landingpage';
 import Dashboard from './dashboard';
+//import { getDataObject } from './../actions/index';
 
 
 class App extends Component {
-    componentDidMount() {
+    componentWillMount() {
         this.props.fetchUser();
+        this.props.getDataObject();
+    }
+
+    componentDidMount(){
+        
     }
 
     render() {
