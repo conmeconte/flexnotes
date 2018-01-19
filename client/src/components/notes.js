@@ -124,7 +124,6 @@ class Notes extends Component {
         let tabIndex = null;
         let pageIndex = null;
         for (let i = 0; i < tabArrLength; i++) {
-            debugger
             if (interface_obj.tab_id === tab_arr_obj[i]._id) {
                 //console.log('tabid = interface id at index:', i);
                 tabIndex = i;
@@ -157,7 +156,6 @@ class Notes extends Component {
         let tabIndex = null;
         let pageIndex = null;
         for (let i = 0; i < tabArrLength; i++) {
-            debugger
             if (interface_obj.tab_id === tab_arr_obj[i]._id) {
                 //console.log('tabid = interface id at index:', i);
                 tabIndex = i;
@@ -540,7 +538,6 @@ class Notes extends Component {
 }
 
 function mapStateToProps(state) {
-    debugger;
     return {
         interface_obj: state.interface,
         binderObj: state.binder.binderObj
