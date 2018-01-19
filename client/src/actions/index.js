@@ -84,11 +84,18 @@ export function setSlidesUrl(value, interfaceObj) {
                     binderID: interfaceObj.binder_id,
                     tabID: interfaceObj.tab_id,
                     pageID: interfaceObj.page_id
+                }).then((resp) => {
+                    console.log("setSlidesUrl response: ", resp);
+                    debugger;
+                    // dispatch({
+                    //     type: types.ADD_BINDER,
+                    //     payload: resp.data.binder_arr_obj
+                    // });
                 });
-                return {
-                    type: types.SET_SLIDES_URL,
-                    payload: slidesURL
-                }
+                // return {
+                //     type: types.SET_SLIDES_URL,
+                //     payload: slidesURL
+                // }
             }
             const urlSplit1 = value.split("presentation/d/");
             const urlSplit2 = urlSplit1[1].split('/');
