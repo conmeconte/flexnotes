@@ -4,7 +4,6 @@ import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import { connect } from 'react-redux';
-
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
@@ -150,8 +149,8 @@ class Notes extends Component {
         }
     }
 }
-    componentWillReceiveProps () {
-let { tab_arr_obj } = nextProps.binderObj;
+    componentWillReceiveProps (nextProps) {
+        let { tab_arr_obj } = nextProps.binderObj;
         let { interface_obj } = nextProps;
         
         if (tab_arr_obj) {
@@ -516,6 +515,7 @@ let { tab_arr_obj } = nextProps.binderObj;
     };
 
     render() {
+        console.log('NOETS PROPS:', this.props);
         return (
             <div className="notes-component">
 
@@ -544,7 +544,7 @@ function mapStateToProps(state) {
     debugger;
     return {
         interface_obj: state.interface,
-        binderObj: state.binder.binderObj,
+        binderObj: state.binder.binderObj
     }
 }
 
