@@ -19,19 +19,30 @@
 .Pane1.vertical.Pane {
     width: 100% !important;
     display: block !important; 
-    height: 30vh; 
+    height: 45vh; 
     overflow: scroll;
+}
+.Pane1.horizontal.Pane{
+    height: 50% !important;
+}
+.Pane2.horizontal.Pane{
+    height: 40% !important;
 }
 .Pane2.vertical.Pane {
     width: 100% !important;
     display: block !important; 
-    height: 49vh; 
+    height: 45vh; 
 }
 .Resizer.vertical {
     display:none; 
 }
 
+.navbar.col-xs-2{
+    
 }
+
+}
+
 
 
 /* Small phones: from 0 to 480px */

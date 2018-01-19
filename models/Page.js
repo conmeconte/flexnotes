@@ -22,31 +22,10 @@ const pageSchemaNew = new Schema({
   
     video :[videoSchemaNew],
     panel_dimensions: {
-<<<<<<< HEAD
-        lecture_Panel: {
-            top_left_panel_height: Number,
-            top_left_panel_width: Number,
-            top_right_panel_height: Number,
-            number_of_panels: Number
-        },
-        video_Panel: {
-            width: String,
-            height: String
-        },
-        note_Panel: {
-            width: String,
-            height: String
-        },
-        meister_Panel: {
-            width: String,
-            height: String
-        }
-=======
         top_left_panel_height: Number,
         top_left_panel_width: Number,
         top_right_panel_height: Number,
         number_of_panels: Number
->>>>>>> f3cbcbe80d8fedd7b051c08691ae17f38af33246
     }
 },{minimize: false});
 
