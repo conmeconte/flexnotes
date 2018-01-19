@@ -8,13 +8,13 @@ module.exports = (app) => {
     app.get('/', (req, res) => {
         res.send('Homepage')
     })
-    app.get('/api/userInfo', requireLogin, (req, res) => {
+    app.get('/api/userInfo',  (req, res) => {
         res.send(req.user);
     });
 
     // For Binder //
     app
-        .get('/api/binder', requireLogin, async (req, res) => {
+        .get('/api/binder',  async (req, res) => {
             //give binder data 
             const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) {res.send("Error did occurred")};
@@ -27,7 +27,7 @@ module.exports = (app) => {
                 res.end();
             });
         })
-        .post('/api/binder', requireLogin,  async (req, res) => {
+        .post('/api/binder',   async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
     
@@ -45,7 +45,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .delete('/api/binder', requireLogin,  async (req, res) => {
+        .delete('/api/binder',   async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
     
@@ -61,7 +61,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .put('/api/binder', requireLogin,  async (req, res) => {
+        .put('/api/binder',   async (req, res) => {
             // update binder
 
             const existingUser= await User.findById(req.user.id, function (err, user){
@@ -89,7 +89,7 @@ module.exports = (app) => {
     // For Tab//
     // For Tab//
     app
-        .get('/api/tab', requireLogin,  async (req, res) => {
+        .get('/api/tab',   async (req, res) => {
             const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) { res.send("Error did occurred")};
 
@@ -105,7 +105,7 @@ module.exports = (app) => {
         
             });
         })
-        .post('/api/tab', requireLogin,  async (req, res) => {
+        .post('/api/tab',   async (req, res) => {
             //create new tab in user
             const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
@@ -129,7 +129,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .delete('/api/tab', requireLogin,  async (req, res) => {
+        .delete('/api/tab',   async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
 
@@ -141,6 +141,7 @@ module.exports = (app) => {
                     const binder = user
                     .binder_arr_obj.id(req.body.binderID)
 
+                    console.log(binder);
                     
                     tab.remove();
                     user.save();
@@ -151,7 +152,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .put('/api/tab', requireLogin,  async (req, res) => {
+        .put('/api/tab',   async (req, res) => {
 
             const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) { res.send("Error did occurred")};
@@ -180,7 +181,7 @@ module.exports = (app) => {
     // For Page //
 
     app
-        .get('/api/page', requireLogin,  async (req,res)=>{
+        .get('/api/page',   async (req,res)=>{
             const existingUser= await User.findById(req.user.id, function (err, user){
             // const existingUser= await User.findById(req.user.id, function (err, user){
                 if (err) { res.send("Error did occurred") };
@@ -191,7 +192,7 @@ module.exports = (app) => {
                 }
             });
         })
-        .post('/api/page', requireLogin,  async (req, res) => {
+        .post('/api/page',   async (req, res) => {
             //create new page in user
             const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
@@ -216,7 +217,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .delete('/api/page', requireLogin,  async (req, res) => {
+        .delete('/api/page',   async (req, res) => {
             //delete page
             const existingUser= await User.findById('5a569b34da2d998e141c38b2',function(err,user){
                 if (err) { res.send("Error did occurred") };
@@ -234,7 +235,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .put('/api/page', requireLogin,  async (req,res)=>{
+        .put('/api/page',   async (req,res)=>{
             const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
                 if (user) {
@@ -263,7 +264,7 @@ module.exports = (app) => {
 
  //video//
     app
-        .post('/api/video', requireLogin,  async (req,res)=>{
+        .post('/api/video',   async (req,res)=>{
             const existingUser= await User.findById(req.user.id, (err,user)=>{
                 if(err){ res.send('Error')}
                 if (user) {
@@ -285,7 +286,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .delete('/api/video', requireLogin,  async (req,res)=>{
+        .delete('/api/video',   async (req,res)=>{
             const existingUser= await User.findById(req.user.id, (err,user)=>{
                 if(err){ res.send('Error')}
                 if (user) {
@@ -306,7 +307,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .put('/api/video', requireLogin,  async (req,res)=>{
+        .put('/api/video',   async (req,res)=>{
             const existingUser= await User.findById(req.user.id, (err,user)=>{
                 if(err){ res.send('Error')}
                 if (user) {
@@ -331,7 +332,7 @@ module.exports = (app) => {
 
 //note//
 app
-    .put('/api/note', requireLogin,  async (req,res)=>{
+    .put('/api/note',   async (req,res)=>{
         const existingUser= await User.findById(req.user.id, (err,user)=>{
             if(err){ res.send('Error')}
             if (user) {

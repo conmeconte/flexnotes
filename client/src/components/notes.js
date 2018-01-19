@@ -99,10 +99,9 @@ class Notes extends Component {
     };
 
 
-    onChange = ({value}) => {
+    onChange = ({ value }) => {
         this.setState({ value });
     };
-
 
     submitNotes(){
         debugger;
@@ -419,7 +418,7 @@ let { tab_arr_obj } = nextProps.binderObj;
         if (type === 'files') {
             for (const file of files) {
                 const reader = new FileReader();
-                const [ mime ] = file.type.split('/');
+                const [mime] = file.type.split('/');
                 if (mime !== 'image') continue;
 
                 reader.addEventListener('load', () => {
@@ -523,7 +522,7 @@ let { tab_arr_obj } = nextProps.binderObj;
                 {this.toolbar()}
                 <Editor
                     className="editor"
-                    style={{overflowY: scroll}}
+                    style={{ overflowY: scroll }}
                     placeholder="Enter notes..."
                     value={this.state.value}
                     onChange={this.onChange}
