@@ -7,7 +7,8 @@ const DEFAULT_STATE = {
     navbar_min: false,
     user_name: {},
     pull_from_db: false,
-    sent_to_db: false
+    sent_to_db: false,
+    axios_error_response: ''
 }
 
 export default function (state = DEFAULT_STATE, action) {
@@ -52,6 +53,8 @@ export default function (state = DEFAULT_STATE, action) {
         case types.ADD_TO_PLAYLIST: 
             debugger;
             return {...state, sent_to_db: true};
+        case types.AXIOS_ERROR:
+            return {...state, axios_error_response: action.msg};
         default:
             return state;
     }

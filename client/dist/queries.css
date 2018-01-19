@@ -1,43 +1,82 @@
-.welcome{
+/* .welcome{
     background-image: url('/paperimages/Book+top+view2.jpg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     width: 87.5%;
     padding-left: 5%;
-    box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
-}
+    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+} */
 .panel_div.col-xs-10{
-    background-image: url('http://www.photos-public-domain.com/wp-content/uploads/2012/05/ivory-off-white-paper-texture.jpg');
+    /* background-image: url('http://www.photos-public-domain.com/wp-content/uploads/2012/05/ivory-off-white-paper-texture.jpg'); */
+    background-image: url('https://images.freecreatives.com/wp-content/uploads/2015/04/white-paper-texture-with-flecks.jpg');
+    background-size: cover;
+
 }
 .Pane.vertical.Pane1{
     /* box-shadow: 5px 1px #8888886e; */
 }
 .Pane.vertical.Pane2{
-    background-image: url('http://www.photos-public-domain.com/wp-content/uploads/2011/11/light-blue-paper-texture-with-flecks.jpg');
-    box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+    /* background-image: url('https://pre00.deviantart.net/6668/th/pre/i/2011/319/7/4/color_paper_texture_by_spidergypsy-d4g9vsj.jpg'); */
+    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
 }
 .Resizer.vertical{
     background: none;
-    width: 3%; 
+    /* width: 3%;  */
 }
 .Resizer.horizontal{
     background: none;
-    height: 2%;
+    /* height: 2%; */
 }
 .video-iframe{
     /* box-shadow: 8px 12px #8888886e; */
-    box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
-    width: 98%;
+    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+    /* width: 98%; */
 }
 .slides-iframe{
     /* box-shadow: 8px 12px #8888886e; */
-    box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
-    width: 98%;
+    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+    /* width: 98%; */
 
 }
+
+/* Notes Component*/
 .notes-component{
     height: auto !important; 
+
 }
+
+
+/* .notes-parent-panel::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+.notes-parent-panel::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.notes-parent-panel::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+} */
+
+/* .notes-parent-panel{
+    overflow-x: unset;
+    overflow-y: scroll;
+} */
+/* .notes-parent-panel{
+    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+    width: 99%; 
+} */
+/* .toolbar{
+    width: 97.8%;
+} */
+
 /* Big tablet to 1200px (width smaller than the 1140px row) */
 @media only screen and (max-width: 1200px) {
 

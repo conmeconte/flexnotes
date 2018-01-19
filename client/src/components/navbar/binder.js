@@ -44,15 +44,33 @@ class Binder extends Component {
         this.binderSelect = this.binderSelect.bind(this);
     }
 
-    // componentWillReceiveProps(nextProps){
-    //     console.log('nextProps: ',nextProps);
-    //     if(!this.props.binder || !nextProps.binder){
-    //         return;
-    //     }
-    //      if(this.props.binder != nextProps.binder){
-    //          this.props.updateBinderArray();
-    //      }
-    // }
+    componentDidMount(){
+
+    }
+
+    componentWillReceiveProps(nextProps){
+        //console.log('nextProps: ',nextProps);
+        //console.log('this.props in CWRP: ', this.props);
+        // if(!this.props.binder || !nextProps.binder){
+        //     return;
+        // }
+        //  if(this.props.binder != nextProps.binder){
+        //      this.props.updateBinderArray();
+        //  }
+        if(this.props.hasOwnProperty("binderObj")){
+            if(nextProps.interface.binder_id === this.props.binderObj._id){
+                console.log('setting active to true');
+                this.setState({
+                    active: true
+                });
+            } else {
+                this.setState({
+                    active: false
+                });
+            }
+        }
+
+    }
 
     addTab(){
         //console.log('addTab clicked');
@@ -131,8 +149,8 @@ class Binder extends Component {
 
     render() {
         const { editable, active } = this.state;
-        //console.log("Binder props:", this.props);
-
+        console.log("Binder props:", this.props);
+        console.log("Binder active state:", active);
         if(!this.props.binderObj){
             return null;
         }
@@ -185,7 +203,7 @@ class Binder extends Component {
                     </Link>
                 </div>
 
-                <div className={`binderBody ${active ? 'hidden' : 'visible'}`}>
+                <div className={`binderBody ${active ? 'visible' : 'hidden'}`}>
                     {tab_link}
                 
                 
@@ -220,8 +238,8 @@ class Binder extends Component {
         //console.log('binder mstp', state);
         return{
             //binderArr: state.binderArray.binderArr,
-            binder: state.binder.binderObj
-            //interface: state.interface
+            binder: state.binder.binderObj,
+            interface: state.interface
         }
     }
 

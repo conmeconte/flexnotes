@@ -11,7 +11,8 @@ class Tab extends Component {
 
         this.state = {
             tab_color_arr: ['#ff0000', '#0000ff', '#ff00ff', '#FF8C00', '#008000'],
-            editable: false
+            editable: false,
+            active: false
             //binder: this.props.binder_obj
         }
 
