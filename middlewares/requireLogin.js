@@ -1,6 +1,6 @@
 module.exports=   (req, res, next) => {
  if(!req.user){
-    res.redirect('/');
+    // res.redirect('/');
     // return res.redirect(401, 'http://google.com');
     return res.status(401).send({error: "you must log in!"});
     
