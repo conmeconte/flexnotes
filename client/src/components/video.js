@@ -4,18 +4,25 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import Results from './results';
 import VideoContainer from './video-container';
-import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults } from '../actions';
+import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl } from '../actions';
+import { Field, reduxForm } from 'redux-form';
+import VideoModal from './video-modal';
 
 const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
 class Video extends Component {
-    search () {
+    search (values) {
+        if (!values.video) {
+            return;
+        }
+        console.log("VALUES FROM SEARCH: ", values);
         var ROOT_URL = 'https://www.googleapis.com/youtube/v3/search';
         var params = {
           part: 'snippet',
           key: API_KEY,
-          q: 'javascript',
+          q: values.video,
           type: 'video',
-          maxResults: 50
+          maxResults: 50,
+          playerVars: {rel: 0}
         };
         var self = this;
         var videos = [];
@@ -35,36 +42,101 @@ class Video extends Component {
                   };
                   videos.push(vidObject);
               }
-              console.log("VIDEO RESULTS: ", response);
               self.props.getVideoResults(videos);
           })
           .catch(function(error) {
             console.error(error);
           });
     }
+     componentWillMount() {
+        let { tab_arr_obj } = this.props.binderObj;
+        let { interface_obj } = this.props;
+        
+        if (tab_arr_obj) {
+        let tabArrLength = tab_arr_obj.length;
+        let tabIndex = null;
+        let pageIndex = null;
+        for (let i = 0; i < tabArrLength; i++) {
+            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                //console.log('tabid = interface id at index:', i);
+                tabIndex = i;
+                break;
+            }
+        }
+        const { page_arr_obj } = tab_arr_obj[tabIndex];
+        for (let i = 0; i < tabArrLength; i++) {
+            if (interface_obj.page_id === page_arr_obj[i]._id) {
+                pageIndex = i;
+                break;
+            }
+        }
+        if (!page_arr_obj[pageIndex].video) {
+            return;
+        } else {
+            this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
+        }
+    } else {
+        console.log("DOES NOT WORK");
+    }
+    }
+    componentWillReceiveProps(nextProps) {
+        let { tab_arr_obj } = nextProps.binderObj;
+        let { interface_obj } = nextProps;
+        
+        if (tab_arr_obj) {
+        let tabArrLength = tab_arr_obj.length;
+        let tabIndex = null;
+        let pageIndex = null;
+        for (let i = 0; i < tabArrLength; i++) {
+            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                //console.log('tabid = interface id at index:', i);
+                tabIndex = i;
+                break;
+            }
+        }
+        const { page_arr_obj } = tab_arr_obj[tabIndex];
+        for (let i = 0; i < tabArrLength; i++) {
+            if (interface_obj.page_id === page_arr_obj[i]._id) {
+                pageIndex = i;
+                break;
+            }
+        }
+        if (!page_arr_obj[pageIndex].video) {
+            return;
+        } else {
+            this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
+        }
+    } else {
+        console.log("DOES NOT WORK");
+    }
+    }
+    renderInput ({input}) {
+        console.log(input);
+        return (    
+            <input {...input} id="query" placeholder="Search on Youtube..." className="form-control"/>
+        )
+    }
     render() {
         return (
             <div className="main">
+                <VideoModal/>
                 <div style={this.props.opacityContainer} className="opacity"></div>
-                <button id="search" className="btn btn-primary" onClick={ () => {
-                    this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool);
-                    this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool);
-                }}><span className="search glyphicon glyphicon-chevron-left"></span></button>
                 <div style={this.props.resultsStyles} className="results-container sidebar col-xs-4 pull-right">
-                    <div id="search-input-container" className="search-button-input input-group col-xs-12">
-                        <input id="query" className="form-control" type="text" placeholder="Search..." />
+                    <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input input-group col-xs-12">
+                        <Field name="video" component={this.renderInput} />
                         <span className="input-group-btn">
-                            <button id="search-button" type="button" className="btn btn-primary"
-                                onClick={ () => { this.search() }}><span className="glyphicon glyphicon-search"></span></button>
+                            <button id="search-button" className="btn btn-primary">
+                                <span className="glyphicon glyphicon-search"></span>
+                            </button>
                             <button className="btn btn-danger" onClick={ () => {
                     this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                     this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                 }}><span className="glyphicon glyphicon-chevron-right"></span></button>
                         </span>
-                    </div>
+                    </form>
                     <Results results={this.props.videoResults} />
                 </div>
-                <div id="video-wrapper" className="video-wrapper col-xs-11 pull-left">
+                <div id="video-wrapper" className="video-wrapper">
                     <VideoContainer />
                 </div>
             </div>
@@ -72,14 +144,21 @@ class Video extends Component {
     }
 }
 
+Video = reduxForm({
+    form: 'search-item'
+})(Video);
+
 function mapStateToProps (state) {
     return {
+        pastedVideoUrl: state.videoResults.videoLink,
         videoResults: state.video.results,
         playlist: state.video.videoList,
         resultsStyles: state.video.resultsStyles,
         opacityContainer: state.video.opacityDisplay,
         toggleResultsBool: state.video.toggleResults,
+        interface_obj: state.interface,
+        binderObj: state.binder.binderObj,
     }
 }
 
-export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults })(Video);
+export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl })(Video);

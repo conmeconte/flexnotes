@@ -130,3 +130,9 @@ body {
     height: 4vmin;
     font-size: 1.5vmin;
 }
+.dashboard-button {
+    position: absolute;
+    z-index: 5000;
+    right: 1%;
+    top: 2%;
+}

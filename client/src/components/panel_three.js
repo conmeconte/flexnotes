@@ -17,11 +17,11 @@ class ThreePanel extends Component {
     }
 
     logTopLeftHeight(size) {
-        this.props.setTopLeftHeight(size);
+        this.props.setTopLeftHeight(size, this.props.interface_obj);
     }
 
     logTopLeftWidth(size) {
-        this.props.setTopLeftWidth(size);
+        this.props.setTopLeftWidth(size, this.props.interface_obj);
     }
 
     render() {
@@ -33,11 +33,36 @@ class ThreePanel extends Component {
             this.logTopLeftWidth(size);
         }, 300);
 
+        // let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+        // let tabIndex = null;
+        // let pageIndex = null;
+        // let topLeftPanelHeight;
+        // let topLeftPanelWidth;
+        // for (let i = 0; i < tabArrLength; i++) {
+        //     if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+        //         tabIndex = i;
+        //         break;
+        //     }
+        // }
+        // const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+        // for (let i = 0; i < tabArrLength; i++) {
+        //     if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+        //         pageIndex = i;
+        //         break;
+        //     }
+        // }
+        // if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
+        //     topLeftPanelHeight = 500;
+        //     topLeftPanelWidth = 425;
+        // } else {
+        //     topLeftPanelHeight = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height;
+        //     topLeftPanelWidth = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width;
+        // }
         return (
-            <SplitPane onChange={loTLHsave} className="width-w-nav" split="horizontal" minSize={200} maxSize={-200} defaultSize={400}>
-                <SplitPane onChange={loTLWsave} split="vertical" minSize={200} maxSize={-200} defaultSize={400}>
-                    <div className="slides-container"><Slides /></div>
+            <SplitPane onChange={loTLHsave} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={500}>
+                <SplitPane onChange={loTLWsave} split="horizontal" minSize={200} maxSize={-200} defaultSize={425}>
                     <div className="video-parent-panel"><Video /></div>
+                <div className="slides-container"><Slides /></div>
                 </SplitPane>
                 <div className="notes-parent-panel"><Notes /></div>
             </SplitPane>
@@ -49,6 +74,8 @@ function mapStateToProps(state) {
     return {
         tlh: state.panelSpecs.topLeftHeight,
         tlw: state.panelSpecs.topLeftWidth,
+        interface_obj: state.interface,
+        binderObj: state.binder.binderObj,
     }
 }
 

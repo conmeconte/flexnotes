@@ -9,15 +9,14 @@ export const fetchUser = () => async dispatch => {
 //PANEL SPECs Action Creator
 
 // Yo hyung, if I set PUT request individually in each of these functions, they will overwrite each other right????
-export function setTopLeftHeight(num) {
-    // axios.put('/api/page', {
-    //     panel_dimensions: {
-    //         top_left_panel_height: num
-    //     },
-    //     binderID: interfaceObj.binder_id,
-    //     tabID: interfaceObj.tab_id,
-    //     pageID: interfaceObj.page_id
-    // });
+export function setTopLeftHeight(num, interfaceObj) {
+    axios.put('/api/page', {
+
+        top_left_panel_height: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
 
     return {
         type: types.PANEL_TOP_LEFT_HEIGHT,
@@ -25,15 +24,13 @@ export function setTopLeftHeight(num) {
     }
 }
 
-export function setTopLeftWidth(num) {
-    // axios.put('/api/page', {
-    //     panel_dimensions: {
-    //         top_left_panel_width: num
-    //     },
-    //     binderID: interfaceObj.binder_id,
-    //     tabID: interfaceObj.tab_id,
-    //     pageID: interfaceObj.page_id
-    // });
+export function setTopLeftWidth(num, interfaceObj) {
+    axios.put('/api/page', {
+        top_left_panel_width: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
 
     return {
         type: types.PANEL_TOP_LEFT_WIDTH,
@@ -41,15 +38,13 @@ export function setTopLeftWidth(num) {
     }
 }
 
-export function setTopRightHeight(num) {
-    // axios.put('/api/page', {
-    //     panel_dimensions: {
-    //         top_right_panel_height: num
-    //     },
-    //     binderID: interfaceObj.binder_id,
-    //     tabID: interfaceObj.tab_id,
-    //     pageID: interfaceObj.page_id
-    // });
+export function setTopRightHeight(num, interfaceObj) {
+    axios.put('/api/page', {
+        top_right_panel_height: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
 
     return {
         type: types.PANEL_TOP_RIGHT_HEIGHT,
@@ -57,15 +52,13 @@ export function setTopRightHeight(num) {
     }
 }
 
-export function setNumOfPanels(num) {
-    // axios.put('/api/page', {
-    //     panel_dimensions: {
-    //         number_of_panels: num
-    //     },
-    //     binderID: interfaceObj.binder_id,
-    //     tabID: interfaceObj.tab_id,
-    //     pageID: interfaceObj.page_id
-    // });
+export function setNumOfPanels(num, interfaceObj) {
+    axios.put('/api/page', {
+        number_of_panels: num,
+        binderID: interfaceObj.binder_id,
+        tabID: interfaceObj.tab_id,
+        pageID: interfaceObj.page_id
+    });
 
     return {
         type: types.NUM_OF_PANELS,
@@ -78,7 +71,25 @@ export function setNumOfPanels(num) {
 export function setSlidesUrl(value, interfaceObj) {
     console.log("setSlides url action 1:", value);
     if (value) {
-        if (value.indexOf('presentation/d/') !== -1) {
+        if (value.indexOf('presentation/d/') !== -1 || value.indexOf('presentation/d/e') !== -1) {
+            if (value.indexOf('presentation/d/e') !== -1) {
+                const urlSplit1 = value.split("presentation/d/e/");
+                const urlSplit2 = urlSplit1[1].split('/');
+                let presentationID = urlSplit2[0];
+                const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
+                axios.put('/api/page', {
+                    lecture_slides: {
+                        lec_id: slidesURL
+                    },
+                    binderID: interfaceObj.binder_id,
+                    tabID: interfaceObj.tab_id,
+                    pageID: interfaceObj.page_id
+                });
+                return {
+                    type: types.SET_SLIDES_URL,
+                    payload: slidesURL
+                }
+            }
             const urlSplit1 = value.split("presentation/d/");
             const urlSplit2 = urlSplit1[1].split('/');
             let presentationID = urlSplit2[0];
@@ -113,6 +124,18 @@ export function setSlidesUrl(value, interfaceObj) {
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
+export function toggleModal({ display }) {
+    let displayValue = display;
+    if (displayValue === 'none') {
+        displayValue = 'block';
+    } else {
+        displayValue = 'none';
+    }
+    return {
+        type: types.TOGGLE_MODAL,
+        payload: displayValue
+    }
+}
 export function getVideoResults(videos) {
     return {
         type: types.GET_VIDEO_RESULTS,
@@ -120,16 +143,13 @@ export function getVideoResults(videos) {
     }
 }
 export function getResultStyles(styles, bool) {
-
-    if (bool) {
+    if (!bool) {
         styles = {
-            width: '0%',
-            display: 'none'
+            transform: 'translateX(100%)'
         }
     } else {
         styles = {
-            width: '65%',
-            display: 'block'
+            transform: 'translateX(0%)'
         }
     }
     console.log("GET RESULTS STYLES: ", styles);
@@ -139,7 +159,7 @@ export function getResultStyles(styles, bool) {
     }
 }
 export function getOpacityDisplay(styles, bool) {
-    if (bool) {
+    if (!bool) {
         styles = {
             display: 'none'
         }
@@ -161,45 +181,58 @@ export function toggleResults(bool) {
         payload: toggleResults
     }
 }
-export function addToPlaylist(videoUrl, interfaceObj) {
-    console.log('hahahahaha ', videoUrl);
-
+export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
+    let videoId = videoUrl.split("/");
+    videoId = videoId[4];
     axios.post('/api/video', {
         video: {
-            videoTitle: 'ReactJS Crash Course',
-            videoId: 'A71aqufiNtQ',
+            videoTitle: videoTitle,
+            videoId: videoId,
             videoUrl: videoUrl
         },
         binderID: interfaceObj.binder_id,
         tabID: interfaceObj.tab_id,
         pageID: interfaceObj.page_id
     });
+    console.log("DATA HAS BEEN SENT");
     return {
         type: types.ADD_TO_PLAYLIST,
         payload: videoUrl
     }
 }
-export function playVideo() {
-    // Change this link to
-    // https://www.youtube.com/embed/Ukg_U3CnJWI
-    // this VVVVVVVV
-    // https://www.youtube.com/watch?v=Ukg_U3CnJWI&t=1s
-    var videoId = document.querySelector(".pastedVideoInput").value;
-    videoId = videoId.split('&')[0];
-    videoId = videoId.split('=')[1];
-    videoId = document.querySelector(".currentVideo").src = `https://www.youtube.com/embed/${videoId}`;
+export function playVideo(url) {
+    let videoId = url;
+    document.querySelector(".video-iframe").src = url
     return {
-        type: types.PLAY_VIDEO
+        type: types.PLAY_VIDEO,
+        payload: videoId
     }
 }
-export function grabVideoUrl() {
-    var videoLink = document.querySelector(".pastedVideoInput").value;
+export function playPastedLinkVideo(url) {
+    let videoId = url
+    videoId = videoId.split('&')[0];
+    videoId = videoId.split('=')[1];
+    videoId = `https://www.youtube.com/embed/${videoId}`;
+    console.log("PLAY PASTED LINK VIDEO: ", videoId)
+    return {
+        type: types.PLAY_PASTED_VIDEO_LINK,
+        payload: videoId
+    }
+}
+export function grabVideoUrl(videoLink) {
     return {
         type: types.GRAB_VIDEO_URL,
         payload: videoLink
     }
 }
-
+export function setVideoUrl (value, interfaceObj) {
+    console.log("VIDEO URL FROM ACTION CREATOR: ", value);
+    return {
+        type: types.SET_VIDEO_URL,
+        payload: value
+    }
+}
+// END OF VIDEO ACTION CREATORS
 export function getDataObject() {
 
     return (dispatch) => {
@@ -265,7 +298,7 @@ export function addBinder() {
     return (dispatch) => {
         const test = axios.post('/api/binder')
             .then((resp) => {
-                //console.log("addBinder response: ", resp);
+                console.log("addBinder response: ", resp);
                 dispatch({
                     type: types.ADD_BINDER,
                     payload: resp.data.binder_arr_obj
@@ -285,7 +318,7 @@ export function addTab(binder_id) {
             binderID: binder_id
         })
             .then((resp) => {
-                //console.log("add tab: ", resp);
+                console.log("add tab: ", resp);
                 dispatch({
                     type: types.ADD_TAB,
                     payload: resp
@@ -306,7 +339,7 @@ export function addPage(binder_id, tab_id) {
             tabID: tab_id
         })
             .then((resp) => {
-                //console.log("addPage response: ", resp);
+                console.log("addPage response: ", resp);
                 dispatch({
                     type: types.ADD_PAGE,
                     payload: resp
@@ -325,11 +358,11 @@ export function deleteBinder(binder_id) {
         const test = axios.delete(`/api/binder?binderID=${binder_id}`, {
         })
             .then((resp) => {
-                console.log("delete binder response: ", resp);
+                console.log("delete binder response: ", resp.data);
 
                 dispatch({
                     type: types.DELETE_BINDER,
-                    payload: resp.data.binder_arr_obj
+                    payload: resp.data
                 });
             }).catch(err => {
                 dispatch({
@@ -340,11 +373,22 @@ export function deleteBinder(binder_id) {
     }
 }
 
-//Notes Action Creator
+export function deleteTab(binder_id, tab_id) {
+    return (dispatch) => {
+        const test = axios.delete(`/api/tab?binderID=${binder_id}&tabID=${tab_id}`, {
+        })
+            .then((resp) => {
+                console.log("delete tab response: ", resp);
 
-export function save_notes() {
-    return {
-        type: types.SAVE_NOTES
+                dispatch({
+                    type: types.DELETE_TAB,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in binderarray'
+                });
+            });
     }
 }
-

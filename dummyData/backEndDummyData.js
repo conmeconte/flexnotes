@@ -20,6 +20,7 @@ let fakeData =
               {
                 page_arr_obj: [
                   {
+<<<<<<< HEAD
                     _id: { $oid: 'someRandomNumberMongoDBAssings' },
                       videoTitle: "king of the hills",
                       videoId: "Ukg_U3CnJWI",
@@ -44,6 +45,30 @@ let fakeData =
                   meister_Panel: {
                     width: String,
                     height: String
+=======
+                    page_count: 1,
+                    page_color: 'white',
+                    page_name: 'Page1',
+                    page_date: '',
+                    calendar: {
+                      cal_url: String
+                    },
+                    lecture_slides: {
+                      lec_id: ''
+                    },
+                    notes: {},
+                    video: [
+                      {
+                        _id: { $oid: 'someRandomNumberMongoDBAssings' },
+                        videoTitle: "king of the hills",
+                        videoId: "Ukg_U3CnJWI",
+                        videoURL: "adfadsfa.com"
+                      }
+                    ],
+                    panel_dimensions: {
+                      //         top_left_panel_height: num
+                      //     }
+>>>>>>> f3cbcbe80d8fedd7b051c08691ae17f38af33246
                   }
                 ]
               }

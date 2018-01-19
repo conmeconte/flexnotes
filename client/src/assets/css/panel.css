@@ -1,6 +1,9 @@
 * {
     box-sizing: border-box;
 }
+button {
+    outline: none;
+}
 body {
     margin: 0;
     padding: 0;
@@ -63,9 +66,9 @@ body {
     left: 1.5% !important;
 }
 
-.panel_div{
+/* .panel_div{
     height: 90vh;
-}
+} */
 
 .container-fluid {
     padding: 0;
@@ -100,14 +103,17 @@ body {
     border: 1px solid #31C3E7;
     border-radius: 3px;
     margin-right: 5px;
-    height: 30px;
-    width: 30px;
     font-size: 18px;
     margin-top: 5px;
+    transition: 0.2s;
 }
 
 .layoutBtn:hover {
     background-color: #ffffff;
     border: 2px solid #31C3E7;
     color: #31C3E7;
+}
+.panel_div {
+    width: 88.5%;
+    height: 95vh;
 }

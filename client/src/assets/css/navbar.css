@@ -10,7 +10,7 @@
     width: 10%;
     height: 100vh;
     box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);
-    #display: inline-block;
+    #border: solid 2px black;
 }
 
 ul {
@@ -28,7 +28,7 @@ ul > li {
     display: inline-block; 
     margin: 0;
     padding: 0;    
-    height: 80vh;
+    height: 75vh;
     /*background-color: rgba(0, 0, 0, .38);*/
 }
 
@@ -228,4 +228,20 @@ ul > li {
 
 .hidden{
     visibility: hidden;
+}
+
+.binderTitle{
+    border: solid 1px red;
+}
+
+.binderBody{
+    border: solid 1px teal;
+}
+
+.tabTitle{
+    border: solid 1px orange;
+}
+
+.tabBody{
+    border: solid 1px magenta;
 }
