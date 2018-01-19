@@ -103,6 +103,7 @@ class Notes extends Component {
     };
 
     submitNotes(){
+        console.log("it saved!")
         let { interface_obj } = this.props;
         const { value } = this.state;
         const content = JSON.stringify(value.toJSON());
@@ -495,7 +496,7 @@ class Notes extends Component {
                         <span className="material-icons">image</span>
                     </span>
                 </div>
-                <div>
+                <div className="searchSave">
                     <div className="search-box toolbarButton">
                         <input
                             className="search-input"
