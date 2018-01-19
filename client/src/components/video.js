@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import Results from './results';
 import VideoContainer from './video-container';
-import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl } from '../actions';
+import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray } from '../actions';
 import { Field, reduxForm } from 'redux-form';
 import VideoModal from './video-modal';
 
@@ -80,6 +80,10 @@ class Video extends Component {
     }
     }
     componentWillReceiveProps(nextProps) {
+        debugger;
+        if(nextProps.interface_obj.sent_to_db) {
+            this.props.updateBinderArray();
+        } else {
         let { tab_arr_obj } = nextProps.binderObj;
         let { interface_obj } = nextProps;
         
@@ -109,6 +113,7 @@ class Video extends Component {
     } else {
         console.log("DOES NOT WORK");
     }
+}
     }
     renderInput ({input}) {
         console.log(input);
@@ -161,4 +166,4 @@ function mapStateToProps (state) {
     }
 }
 
-export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl })(Video);
+export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray })(Video);

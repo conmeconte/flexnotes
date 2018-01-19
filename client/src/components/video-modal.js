@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../assets/css/video-add-modal.css';
 import { connect } from 'react-redux';
-import { toggleModal, addToPlaylist } from '../actions';
+import { toggleModal, addToPlaylist, updateBinderArray } from '../actions';
 import { Field, reduxForm } from 'redux-form';
 
 class VideoModal extends Component {
@@ -17,6 +17,7 @@ class VideoModal extends Component {
     setName(values){
         console.log('Values:', values);
         this.props.addToPlaylist(this.props.videoLink, values.title, this.props.binderTabPageIds);
+        debugger;
         this.props.toggleModal(this.props.addVideoModalStyle);
     }
 
@@ -55,4 +56,4 @@ VideoModal = reduxForm({
 })(VideoModal);
 
 
-export default connect(mapStateToProps, { toggleModal, addToPlaylist })(VideoModal);
+export default connect(mapStateToProps, { toggleModal, addToPlaylist, updateBinderArray })(VideoModal);
