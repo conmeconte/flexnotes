@@ -41,7 +41,7 @@ class Tab extends Component {
     }
 
     deletePage(page_id){
-        console.log('delete page id:', page_id);
+        //console.log('delete page id:', page_id);
         this.props.deletePage(this.props.interface.binder_id, this.props.interface.tab_id, page_id);
     }
 
@@ -91,7 +91,7 @@ class Tab extends Component {
         //this.props.selectBinder(this.props.binderObj);
         const {editable} = this.state;
 
-        console.log('props in tab:', this.props);
+        //console.log('props in tab:', this.props);
         if(!this.props.binder|| !this.props.tabObj){
             return null;
         }

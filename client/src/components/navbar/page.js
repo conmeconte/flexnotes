@@ -155,7 +155,7 @@ class Page extends Component {
         //         />
         //     );
         // });
-        console.log('Props in Page:',this.props);
+        //console.log('Props in Page:',this.props);
             return(
     
                 <li className='pageBody'>

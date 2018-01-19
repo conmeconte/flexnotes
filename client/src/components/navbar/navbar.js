@@ -30,7 +30,7 @@ class NavBar extends Component{
     }
 
     deleteBinder(delete_id) {
-        console.log('delete button clicked, binder_id: ', delete_id);
+        //console.log('delete button clicked, binder_id: ', delete_id);
         this.props.deleteBinder(delete_id);
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
@@ -61,7 +61,7 @@ class NavBar extends Component{
         });
     }
     render(){
-        console.log("navbar props:", this.props);
+        //console.log("navbar props:", this.props);
         const { editable } = this.state;
         let binder = [];
         if(editable){
@@ -85,7 +85,7 @@ class NavBar extends Component{
                 //let binder_url = '/' + item._id;
                 //console.log('Route binder id: ', binder_url);
                 //console.log("binder_url", binder_url);
-                console.log('navbar item', item);
+                //console.log('navbar item', item);
                 
                 return (
                     <div key={index}>
