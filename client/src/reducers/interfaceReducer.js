@@ -50,7 +50,8 @@ export default function (state = DEFAULT_STATE, action) {
         case types.UPDATE_BINDER_ARRAY:
             return {...state, pull_from_db: false};
         case types.ADD_TO_PLAYLIST: 
-            return {...state, sent_to_db: true, pull_from_db: true};
+            debugger;
+            return {...state, sent_to_db: true};
         default:
             return state;
     }

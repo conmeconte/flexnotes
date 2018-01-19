@@ -81,7 +81,7 @@ class Video extends Component {
     }
     componentWillReceiveProps(nextProps) {
         debugger;
-        if(this.props.interface_obj.pull_from_db && this.props.interface_obj.sent_to_db) {
+        if(nextProps.interface_obj.sent_to_db) {
             this.props.updateBinderArray();
         } else {
         let { tab_arr_obj } = nextProps.binderObj;

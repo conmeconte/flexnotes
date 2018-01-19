@@ -184,7 +184,8 @@ export function toggleResults(bool) {
 export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
     let videoId = videoUrl.split("/");
     videoId = videoId[4];
-    axios.post('/api/video', {
+    return (dispatch) => {
+    const videoTest = axios.post('/api/video', {
         video: {
             videoTitle: videoTitle,
             videoId: videoId,
@@ -195,12 +196,19 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
         pageID: interfaceObj.page_id
     }).then( (response) => {
         console.log("DATA HAS BEEN SENT", response);
-    });
-    return {
-        type: types.ADD_TO_PLAYLIST,
-        payload: videoUrl
-    }
+        dispatch({
+            type: types.ADD_TO_PLAYLIST,
+            payload: videoUrl
+        });
+        }).catch(error => {
+            dispatch({
+                type: 'error',
+                message: 'Failed call in add binder.'
+            })
+        })
+    };
 }
+
 export function playVideo(url) {
     let videoId = url;
     document.querySelector(".video-iframe").src = url
