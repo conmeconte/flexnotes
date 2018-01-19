@@ -23,7 +23,6 @@ class NavBar extends Component{
             this.props.updateBinderArray();
         }
     }
-
     addBinder() {
         //console.log('add Binder');
         this.props.addBinder();

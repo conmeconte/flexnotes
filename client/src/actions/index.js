@@ -193,8 +193,9 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
         binderID: interfaceObj.binder_id,
         tabID: interfaceObj.tab_id,
         pageID: interfaceObj.page_id
+    }).then( (response) => {
+        console.log("DATA HAS BEEN SENT", response);
     });
-    console.log("DATA HAS BEEN SENT");
     return {
         type: types.ADD_TO_PLAYLIST,
         payload: videoUrl
