@@ -358,11 +358,31 @@ export function deleteBinder(binder_id) {
         const test = axios.delete(`/api/binder?binderID=${binder_id}`, {
         })
             .then((resp) => {
-                console.log("delete binder response: ", resp);
+                //console.log("delete binder response: ", resp.data);
 
                 dispatch({
                     type: types.DELETE_BINDER,
-                    payload: resp.data.binder_arr_obj
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in binderarray'
+                });
+            });
+    }
+}
+
+export function deleteTab(binder_id, tab_id) {
+    return (dispatch) => {
+        const test = axios.delete(`/api/binder?binderID=${binder_id}&tabID=${tab_id}`, {
+        })
+            .then((resp) => {
+                console.log("delete tab response: ", resp.data);
+
+                dispatch({
+                    type: types.DELETE_TAB,
+                    payload: resp.data
                 });
             }).catch(err => {
                 dispatch({

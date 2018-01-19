@@ -87,7 +87,7 @@ class Page extends Component {
     render(){
 
         const {tabObject, binderUrl, editable} = this.state;
-        //console.log('Props in Page:',this.props);
+        console.log('Props in Page:',this.props);
         let url = this.props.interface.binder_id + "/"+this.props.interface.tab_id+"/"+this.props.pageObj._id;
         // let tabArrLength = this.props.binderObj.tab_arr_obj.length;
         // let tabIndex = null;
