@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectTab, addPage } from '../../actions';
+import { selectTab, addPage, deletePage, updateBinderArray } from '../../actions';
 
 import Page from './page';
 
@@ -18,75 +18,68 @@ class Tab extends Component {
 
 
         this.addPage = this.addPage.bind(this);
-        this.editTabs = this.editTabs.bind(this);
-        this.notEditTabs = this.notEditTabs.bind(this);
+        this.deletePage = this.deletePage.bind(this);
+        // this.editTabs = this.editTabs.bind(this);
+        // this.notEditTabs = this.notEditTabs.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentWillReceiveProps(nextProps){
-        //console.log('nextProps: ',nextProps);
-         if(this.props.binder != nextProps.binder){
-             this.props.updateBinderArray();
-         }
-    }
+    // componentWillReceiveProps(nextProps){
+    //     //console.log('nextProps: ',nextProps);
+    //     if(!this.props.binder || !nextProps.binder){
+    //         return;
+    //     }
+    //      if(this.props.binder != nextProps.binder){
+    //          this.props.updateBinderArray();
+    //      }
+    // }
     addPage(){
         //console.log('addPage clicked');
         //this.props.addTab(this.props.binderObj._id);
+        
         this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
     }
 
-    editTabs(){
-        console.log("editable should be true");
-        this.setState({
-            editable: true
-        });
+    deletePage(page_id){
+        console.log('delete page id:', page_id);
+        this.props.deletePage(this.props.interface.binder_id, this.props.interface.tab_id, page_id);
     }
 
-    notEditTabs() {
-        console.log("editable should be false");
-        this.setState({ 
-            editable: false 
-        });
-    }
+    // editTabs(){
+    //     console.log("editable should be true");
+    //     this.setState({
+    //         editable: true
+    //     });
+    // }
 
-    tabTextChanged(e, id){
-        const {binder} = this.state;
-        const {tab_arr_obj} = binder;
-        //console.log("text changed, id:", id);
-        //console.log(e.target.value);
+    // notEditTabs() {
+    //     console.log("editable should be false");
+    //     this.setState({ 
+    //         editable: false 
+    //     });
+    // }
 
-        for(let i =0; i<tab_arr_obj.length; i++){
-            if(tab_arr_obj[i].tab_id===id ){
-                //console.log('binder_id and id match');
-                tab_arr_obj[i].tab_name = e.target.value;
-            }
-        }
+    // tabTextChanged(e, id){
+    //     const {binder} = this.state;
+    //     const {tab_arr_obj} = binder;
+    //     //console.log("text changed, id:", id);
+    //     //console.log(e.target.value);
 
-        binder.tab_arr_obj = tab_arr_obj;
+    //     for(let i =0; i<tab_arr_obj.length; i++){
+    //         if(tab_arr_obj[i].tab_id===id ){
+    //             //console.log('binder_id and id match');
+    //             tab_arr_obj[i].tab_name = e.target.value;
+    //         }
+    //     }
 
-        this.setState({
-            binder: binder
-        });
-    }
+    //     binder.tab_arr_obj = tab_arr_obj;
+
+    //     this.setState({
+    //         binder: binder
+    //     });
+    // }
     
-    deleteTab(delete_id){
 
-        const {binder} = this.state;
-        const {tab_arr_obj} = binder;
-        //console.log(binder_array);
-        let deleteIndex = 0;
-        for(deleteIndex; deleteIndex<tab_arr_obj.length; deleteIndex++){
-            if(tab_arr_obj[deleteIndex].tab_id === delete_id){
-                tab_arr_obj.splice(deleteIndex, 1);
-            }
-        }
-
-        binder.tab_arr_obj = tab_arr_obj;
-
-        this.setState({
-            binder: binder
-        });
-    }
 
     handleClick(){
         //this.props.selectBinder(binderObj);
@@ -99,10 +92,10 @@ class Tab extends Component {
         const {editable} = this.state;
 
         console.log('props in tab:', this.props);
-        if(!this.props.binderObj){
+        if(!this.props.binder|| !this.props.tabObj){
             return null;
         }
-        let url = this.props.binderObj._id + "/" + this.props.tabObj._id;
+        let url = this.props.binder._id + "/" + this.props.tabObj._id;
         const{ page_arr_obj} = this.props.tabObj;
 
         let page_list = page_arr_obj.map((item, index) => {
@@ -115,6 +108,9 @@ class Tab extends Component {
                 return (
                     <div key={index}>
                         <Page pageObj={item}/>
+                        <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deletePage(item._id)} >
+                            <span className="glyphicon glyphicon-minus"></span>Delete Page
+                        </button>
                     </div>
                     // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
 
@@ -230,8 +226,8 @@ class Tab extends Component {
 function mapStateToProps(state){
     //console.log('tab mstp', state);
     return {
-        binderObj: state.binder.binderObj,
+        binder: state.binder.binderObj,
         interface: state.interface
     }
 }
-export default withRouter(connect(mapStateToProps,{ selectTab, addPage })(Tab));
+export default withRouter(connect(mapStateToProps,{ selectTab, addPage, deletePage, updateBinderArray })(Tab));

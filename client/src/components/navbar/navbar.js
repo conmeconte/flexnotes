@@ -12,9 +12,16 @@ class NavBar extends Component{
         this.state = {
             editable: false
         }
+        this.addBinder = this.addBinder.bind(this);
         this.editable = this.editable.bind(this);
         this.notEditable = this.notEditable.bind(this);
         this.deleteBinder = this.deleteBinder.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.interface.pull_from_db){
+            this.props.updateBinderArray();
+        }
     }
 
     addBinder() {
@@ -78,7 +85,7 @@ class NavBar extends Component{
                 //let binder_url = '/' + item._id;
                 //console.log('Route binder id: ', binder_url);
                 //console.log("binder_url", binder_url);
-                //console.log('navbar item', item);
+                console.log('navbar item', item);
                 
                 return (
                     <div key={index}>
@@ -122,7 +129,7 @@ class NavBar extends Component{
                 </div> */}
                 {/* {binder_route} */}
                 
-                <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder.bind(this)}>
+                <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
                     <span className="glyphicon glyphicon-plus"></span>Add Binder
                 </button>
                 <Route path={'/main/:binder'} component={Binder}/>
@@ -135,6 +142,8 @@ function mapStateToProps(state){
     //console.log('binder mstp', state);
     return{
         binderArr: state.binderArray.binderArr,
+        binder: state.binder.binderObj,
+        interface: state.interface
     }
 }
 

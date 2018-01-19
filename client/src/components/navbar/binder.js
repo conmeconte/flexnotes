@@ -35,21 +35,24 @@ class Binder extends Component {
 
         }
 
-        //this.addBinder = this.addBinder.bind(this);
+        this.addTab = this.addTab.bind(this);
         this.deleteTab = this.deleteTab.bind(this);
-        this.editable = this.editable.bind(this);
-        this.notEditable = this.notEditable.bind(this);
-        this.binderLinkActive = this.binderLinkActive.bind(this);
-        this.binderLinkNotActive = this.binderLinkNotActive.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        // this.editable = this.editable.bind(this);
+        // this.notEditable = this.notEditable.bind(this);
+        // this.binderLinkActive = this.binderLinkActive.bind(this);
+        // this.binderLinkNotActive = this.binderLinkNotActive.bind(this);
+        this.binderSelect = this.binderSelect.bind(this);
     }
 
-    componentWillReceiveProps(nextProps){
-        //console.log('nextProps: ',nextProps);
-         if(this.props.binder != nextProps.binder){
-             this.props.updateBinderArray();
-         }
-    }
+    // componentWillReceiveProps(nextProps){
+    //     console.log('nextProps: ',nextProps);
+    //     if(!this.props.binder || !nextProps.binder){
+    //         return;
+    //     }
+    //      if(this.props.binder != nextProps.binder){
+    //          this.props.updateBinderArray();
+    //      }
+    // }
 
     addTab(){
         //console.log('addTab clicked');
@@ -71,19 +74,19 @@ class Binder extends Component {
         // }
     }
 
-    editable() {
-        console.log("editable should be true");
-        this.setState({
-            editable: true
-        });
-    }
+    // editable() {
+    //     console.log("editable should be true");
+    //     this.setState({
+    //         editable: true
+    //     });
+    // }
 
-    notEditable() {
-        console.log("editable should be false");
-        this.setState({
-            editable: false
-        });
-    }
+    // notEditable() {
+    //     console.log("editable should be false");
+    //     this.setState({
+    //         editable: false
+    //     });
+    // }
 
     // keyPressed(event) {
     //     if(event.key == 'Enter') {
@@ -91,37 +94,37 @@ class Binder extends Component {
     //   }
     // }
 
-    textChanged(e, id) {
-        const { binder_arr_obj } = this.state;
-        //console.log("text changed, id:", id);
-        //console.log(e.target.value);
+    // textChanged(e, id) {
+    //     const { binder_arr_obj } = this.state;
+    //     //console.log("text changed, id:", id);
+    //     //console.log(e.target.value);
 
-        for (let i = 0; i < binder_arr_obj.length; i++) {
-            if (binder_arr_obj[i].binder_id === id) {
-                //console.log('binder_id and id match');
-                binder_arr_obj[i].binder_name = e.target.value;
-            }
-        }
-        this.setState({
-            binder_arr_obj: binder_arr_obj
-        });
-    }
+    //     for (let i = 0; i < binder_arr_obj.length; i++) {
+    //         if (binder_arr_obj[i].binder_id === id) {
+    //             //console.log('binder_id and id match');
+    //             binder_arr_obj[i].binder_name = e.target.value;
+    //         }
+    //     }
+    //     this.setState({
+    //         binder_arr_obj: binder_arr_obj
+    //     });
+    // }
 
-    binderLinkActive(){
-        //console.log('binderlinkactive color:', color);
-        // this.setState({
-        //     active: true
-        // });
-    }
+    // binderLinkActive(){
+    //     //console.log('binderlinkactive color:', color);
+    //     // this.setState({
+    //     //     active: true
+    //     // });
+    // }
 
-    binderLinkNotActive(){
-        //console.log('binderlinkactive color:', color);
-        // this.setState({
-        //     active: false
-        // });
-    }
+    // binderLinkNotActive(){
+    //     //console.log('binderlinkactive color:', color);
+    //     // this.setState({
+    //     //     active: false
+    //     // });
+    // }
 
-    handleClick(){
+    binderSelect(){
         //console.log('binderObj:' ,binderObj);
         this.props.selectBinder(this.props.binderObj);
     }
@@ -176,7 +179,7 @@ class Binder extends Component {
             <div>
                 <div className="binderTitle">
                     <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }} >
-                                <div className=""  onClick={()=>this.handleClick()}  onMouseEnter={this.binderLinkActive} onMouseLeave={this.binderLinkNotActive}>
+                                <div className=""  onClick={()=>this.binderSelect()}>
                                     {this.props.binderObj.binder_name}
                                 </div>
                     </Link>
@@ -204,7 +207,7 @@ class Binder extends Component {
                 <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
                     <span className="glyphicon glyphicon-plus"></span>
                 </button> */}
-                <button className="btn btn-default btn-xs btn_add" onClick={this.addTab.bind(this)}>
+                <button className="btn btn-default btn-xs btn_add" onClick={this.addTab}>
                     <span className="glyphicon glyphicon-plus"></span>Add Tab
                 </button>
                 <Route path={`/main/${binder_url}`+"/:tab"} component={Tab}/>
@@ -216,9 +219,9 @@ class Binder extends Component {
     function mapStateToProps(state){
         //console.log('binder mstp', state);
         return{
-            binderArr: state.binderArray.binderArr,
-            binder: state.binder.binderObj,
-            interface: state.interface
+            //binderArr: state.binderArray.binderArr,
+            binder: state.binder.binderObj
+            //interface: state.interface
         }
     }
 

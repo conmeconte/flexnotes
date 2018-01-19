@@ -9,9 +9,9 @@ import { getDataObject } from '../actions';
 
 
 class Dashboard extends Component {
-    // componentWillMount(){
-    //     this.props.getDataObject();
-    // }
+    componentWillMount(){
+        this.props.getDataObject();
+    }
 
     render(){
         console.log('dashboard props', this.props);
@@ -37,7 +37,7 @@ function mapStateToProps(state){
         //data: state.auth,
         binderArr: state.binderArray.binderArr,
         //initBinder: state.binder.binderObj,
-        interface: state.interface
+        //interface: state.interface
     }
 }
 

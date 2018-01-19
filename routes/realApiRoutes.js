@@ -226,10 +226,13 @@ module.exports = (app) => {
                     .binder_arr_obj.id(req.query.binderID) //req.body.binderID
                     .tab_arr_obj.id(req.query.tabID)  //req.body.tabID
                     .page_arr_obj.id(req.query.pageID); //req.body.pageID
+
+                    const binder= user
+                    .binder_arr_obj.id(req.query.binderID)
                     
                     page.remove();
                     user.save();
-                    res.send(user);
+                    res.send(binder);
                 }else {
                 res.send("Error can't find user")
                 }

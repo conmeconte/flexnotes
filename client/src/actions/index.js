@@ -298,7 +298,7 @@ export function addBinder() {
     return (dispatch) => {
         const test = axios.post('/api/binder')
             .then((resp) => {
-                console.log("addBinder response: ", resp);
+                //console.log("addBinder response: ", resp);
                 dispatch({
                     type: types.ADD_BINDER,
                     payload: resp.data.binder_arr_obj
@@ -306,7 +306,7 @@ export function addBinder() {
             }).catch(err => {
                 dispatch({
                     type: 'error',
-                    msg: 'Failed call in binderarray'
+                    msg: 'Failed call in add binder'
                 });
             });
     }
@@ -318,7 +318,7 @@ export function addTab(binder_id) {
             binderID: binder_id
         })
             .then((resp) => {
-                console.log("add tab: ", resp);
+                //console.log("add tab: ", resp);
                 dispatch({
                     type: types.ADD_TAB,
                     payload: resp
@@ -326,7 +326,7 @@ export function addTab(binder_id) {
             }).catch(err => {
                 dispatch({
                     type: 'error',
-                    msg: 'Failed call in binderarray'
+                    msg: 'Failed call in add tab'
                 });
             });
     }
@@ -339,7 +339,7 @@ export function addPage(binder_id, tab_id) {
             tabID: tab_id
         })
             .then((resp) => {
-                console.log("addPage response: ", resp);
+                //console.log("addPage response: ", resp);
                 dispatch({
                     type: types.ADD_PAGE,
                     payload: resp
@@ -347,7 +347,7 @@ export function addPage(binder_id, tab_id) {
             }).catch(err => {
                 dispatch({
                     type: 'error',
-                    msg: 'Failed call in binderarray'
+                    msg: 'Failed call in add page'
                 });
             });
     }
@@ -358,7 +358,7 @@ export function deleteBinder(binder_id) {
         const test = axios.delete(`/api/binder?binderID=${binder_id}`, {
         })
             .then((resp) => {
-                console.log("delete binder response: ", resp.data);
+                //console.log("delete binder response: ", resp.data);
 
                 dispatch({
                     type: types.DELETE_BINDER,
@@ -367,7 +367,7 @@ export function deleteBinder(binder_id) {
             }).catch(err => {
                 dispatch({
                     type: 'error',
-                    msg: 'Failed call in binderarray'
+                    msg: 'Failed call in delete binder'
                 });
             });
     }
@@ -378,7 +378,7 @@ export function deleteTab(binder_id, tab_id) {
         const test = axios.delete(`/api/tab?binderID=${binder_id}&tabID=${tab_id}`, {
         })
             .then((resp) => {
-                console.log("delete tab response: ", resp);
+                //console.log("delete tab response: ", resp);
 
                 dispatch({
                     type: types.DELETE_TAB,
@@ -387,7 +387,27 @@ export function deleteTab(binder_id, tab_id) {
             }).catch(err => {
                 dispatch({
                     type: 'error',
-                    msg: 'Failed call in binderarray'
+                    msg: 'Failed call in delete tab'
+                });
+            });
+    }
+}
+
+export function deletePage(binder_id, tab_id, page_id) {
+    return (dispatch) => {
+        const test = axios.delete(`/api/page?binderID=${binder_id}&tabID=${tab_id}&pageID=${page_id}`, {
+        })
+            .then((resp) => {
+                console.log("delete page response: ", resp);
+
+                dispatch({
+                    type: types.DELETE_PAGE,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: 'error',
+                    msg: 'Failed call in delete page'
                 });
             });
     }
