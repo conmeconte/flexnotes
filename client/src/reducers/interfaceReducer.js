@@ -7,6 +7,7 @@ const DEFAULT_STATE = {
     navbar_min: false,
     user_name: {},
     pull_from_db: false,
+    axios_error_response: ''
 }
 
 export default function (state = DEFAULT_STATE, action) {
@@ -48,6 +49,8 @@ export default function (state = DEFAULT_STATE, action) {
             return {...state, pull_from_db: true};
         case types.UPDATE_BINDER_ARRAY:
             return {...state, pull_from_db: false};
+        case types.AXIOS_ERROR:
+            return {...state, axios_error_response: action.msg};
         default:
             return state;
     }

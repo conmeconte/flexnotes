@@ -4,6 +4,7 @@ export default {
     FETCH_USER: 'fetch_user',
     GET_USER_DATA: 'get_user_data',
     UPDATE_BINDER_ARRAY: 'update_binder_array',
+    AXIOS_ERROR: 'axios_error',
     ADD_BINDER: 'add_binder',
     ADD_TAB: 'add_tab',
     ADD_PAGE: 'add_page',

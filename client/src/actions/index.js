@@ -246,7 +246,7 @@ export function getDataObject() {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
+                    type: types.AXIOS_ERROR,
                     msg: 'Failed call in get user data'
                 });
             });
@@ -266,8 +266,8 @@ export function updateBinderArray() {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
-                    msg: 'Failed call in binderarray'
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in update binder array'
                 });
             });
     }
@@ -305,7 +305,7 @@ export function addBinder() {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
+                    type: types.AXIOS_ERROR,
                     msg: 'Failed call in add binder'
                 });
             });
@@ -325,7 +325,7 @@ export function addTab(binder_id) {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
+                    type: types.AXIOS_ERROR,
                     msg: 'Failed call in add tab'
                 });
             });
@@ -346,7 +346,7 @@ export function addPage(binder_id, tab_id) {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
+                    type: types.AXIOS_ERROR,
                     msg: 'Failed call in add page'
                 });
             });
@@ -366,7 +366,7 @@ export function deleteBinder(binder_id) {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
+                    type: types.AXIOS_ERROR,
                     msg: 'Failed call in delete binder'
                 });
             });
@@ -386,7 +386,7 @@ export function deleteTab(binder_id, tab_id) {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
+                    type: types.AXIOS_ERROR,
                     msg: 'Failed call in delete tab'
                 });
             });
@@ -406,7 +406,7 @@ export function deletePage(binder_id, tab_id, page_id) {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
+                    type: types.AXIOS_ERROR,
                     msg: 'Failed call in delete page'
                 });
             });
