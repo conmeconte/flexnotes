@@ -51,7 +51,6 @@ export default function (state = DEFAULT_STATE, action) {
         case types.UPDATE_BINDER_ARRAY:
             return {...state, pull_from_db: false};
         case types.ADD_TO_PLAYLIST: 
-            debugger;
             return {...state, sent_to_db: true};
         case types.AXIOS_ERROR:
             return {...state, axios_error_response: action.msg};

@@ -80,7 +80,6 @@ class Video extends Component {
     }
     }
     componentWillReceiveProps(nextProps) {
-        debugger;
         if(nextProps.interface_obj.sent_to_db) {
             this.props.updateBinderArray();
         } else {
