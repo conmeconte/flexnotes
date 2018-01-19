@@ -141,6 +141,7 @@ module.exports = (app) => {
                     const binder = user
                     .binder_arr_obj.id(req.body.binderID)
 
+                    console.log(binder);
                     
                     tab.remove();
                     user.save();

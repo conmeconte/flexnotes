@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, selectBinder, addTab, deleteBinder } from '../../actions';
+import { updateBinderArray, selectBinder, addTab, deleteTab } from '../../actions';
 
 
 import Tab from './tab';
@@ -36,7 +36,7 @@ class Binder extends Component {
         }
 
         //this.addBinder = this.addBinder.bind(this);
-        this.deleteBinder = this.deleteBinder.bind(this);
+        this.deleteTab = this.deleteTab.bind(this);
         this.editable = this.editable.bind(this);
         this.notEditable = this.notEditable.bind(this);
         this.binderLinkActive = this.binderLinkActive.bind(this);
@@ -57,9 +57,9 @@ class Binder extends Component {
         //this.props.updateBinderArray();
     }
 
-    deleteBinder(delete_id) {
-        console.log('delete button clicked, binder_id: ', delete_id);
-        this.props.deleteBinder(delete_id);
+    deleteTab(tab_id) {
+        console.log('delete tab btn clicked, tab_id: ', tab_id);
+        this.props.deleteTab(this.props.binderObj._id, tab_id);
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
         // let deleteIndex = 0;
@@ -158,6 +158,9 @@ class Binder extends Component {
                 return (
                     <div key={index}>
                         <Tab tabObj={item}/>
+                        <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(item._id)} >
+                            <span className="glyphicon glyphicon-minus"></span>Delete Tab
+                        </button>
                     </div>
                     // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
 
@@ -218,6 +221,6 @@ class Binder extends Component {
         }
     }
 
-    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addTab, deleteBinder})(Binder));
+    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addTab, deleteTab})(Binder));
 
 
