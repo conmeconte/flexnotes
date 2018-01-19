@@ -11,7 +11,7 @@ import Dashboard from './dashboard';
 class App extends Component {
     componentWillMount() {
         this.props.fetchUser();
-        this.props.getDataObject();
+        //this.props.getDataObject();
     }
 
     componentDidMount(){

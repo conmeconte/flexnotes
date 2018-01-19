@@ -5,7 +5,8 @@ const DEFAULT_STATE = {
     tab_id: '',
     page_id: '',
     navbar_min: false,
-    user_name: {}
+    user_name: {},
+    pull_from_db: false,
 }
 
 export default function (state = DEFAULT_STATE, action) {
@@ -33,6 +34,20 @@ export default function (state = DEFAULT_STATE, action) {
             return {...state, tab_id: selectTabID, page_id: firstPageID };
         case types.SELECT_PAGE:
             return {...state, page_id: action.payload._id };
+        case types.ADD_BINDER:
+            return {...state, pull_from_db: true};
+        case types.DELETE_BINDER:
+            return {...state, pull_from_db: true};
+        case types.ADD_TAB:
+            return {...state, pull_from_db: true};
+        case types.DELETE_TAB:
+            return {...state, pull_from_db: true};
+        case types.ADD_PAGE:
+            return {...state, pull_from_db: true};
+        case types.DELETE_PAGE:
+            return {...state, pull_from_db: true};
+        case types.UPDATE_BINDER_ARRAY:
+            return {...state, pull_from_db: false};
         default:
             return state;
     }
