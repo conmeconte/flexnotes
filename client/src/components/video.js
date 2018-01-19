@@ -48,20 +48,24 @@ class Video extends Component {
             console.error(error);
           });
     }
-    componentWillMount() {
-        let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+     componentWillMount() {
+        let { tab_arr_obj } = this.props.binderObj;
+        let { interface_obj } = this.props;
+        
+        if (tab_arr_obj) {
+        let tabArrLength = tab_arr_obj.length;
         let tabIndex = null;
         let pageIndex = null;
         for (let i = 0; i < tabArrLength; i++) {
-            if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
                 //console.log('tabid = interface id at index:', i);
                 tabIndex = i;
                 break;
             }
         }
-        const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+        const { page_arr_obj } = tab_arr_obj[tabIndex];
         for (let i = 0; i < tabArrLength; i++) {
-            if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+            if (interface_obj.page_id === page_arr_obj[i]._id) {
                 pageIndex = i;
                 break;
             }
@@ -69,8 +73,42 @@ class Video extends Component {
         if (!page_arr_obj[pageIndex].video) {
             return;
         } else {
-            this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, this.props.interface_obj);
+            this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
         }
+    } else {
+        console.log("DOES NOT WORK");
+    }
+    }
+    componentWillReceiveProps(nextProps) {
+        let { tab_arr_obj } = nextProps.binderObj;
+        let { interface_obj } = nextProps;
+        
+        if (tab_arr_obj) {
+        let tabArrLength = tab_arr_obj.length;
+        let tabIndex = null;
+        let pageIndex = null;
+        for (let i = 0; i < tabArrLength; i++) {
+            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                //console.log('tabid = interface id at index:', i);
+                tabIndex = i;
+                break;
+            }
+        }
+        const { page_arr_obj } = tab_arr_obj[tabIndex];
+        for (let i = 0; i < tabArrLength; i++) {
+            if (interface_obj.page_id === page_arr_obj[i]._id) {
+                pageIndex = i;
+                break;
+            }
+        }
+        if (!page_arr_obj[pageIndex].video) {
+            return;
+        } else {
+            this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
+        }
+    } else {
+        console.log("DOES NOT WORK");
+    }
     }
     renderInput ({input}) {
         console.log(input);

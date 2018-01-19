@@ -105,45 +105,87 @@ class Notes extends Component {
 
 
     submitNotes(){
+        debugger;
+        let { interface_obj } = this.props;
         const { value } = this.state;
         const content = JSON.stringify(value.toJSON());
         axios.put('/api/note', {
             document: {content},
-            binderID: this.props.interface_obj.binder_id,
-            tabID: this.props.interface_obj.tab_id,
-            pageID: this.props.interface_obj.page_id
+            binderID: interface_obj.binder_id,
+            tabID: interface_obj.tab_id,
+            pageID: interface_obj.page_id
         });
     }
 
 
     componentWillMount() {
-        let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+        let { tab_arr_obj } = this.props.binderObj;
+        let { interface_obj } = this.props;
+        
+        if (tab_arr_obj) {
+        let tabArrLength = tab_arr_obj.length;
         let tabIndex = null;
         let pageIndex = null;
         for (let i = 0; i < tabArrLength; i++) {
-            if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+            debugger
+            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                //console.log('tabid = interface id at index:', i);
                 tabIndex = i;
                 break;
             }
         }
-        const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+        const { page_arr_obj } = tab_arr_obj[tabIndex];
         for (let i = 0; i < tabArrLength; i++) {
-            if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+            if (interface_obj.page_id === page_arr_obj[i]._id) {
                 pageIndex = i;
                 break;
             }
         }
-        if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
-            console.log("does not work");
+        if (!page_arr_obj[pageIndex].notes) {
+            return;
         } else {
             const lastContent = JSON.parse( page_arr_obj[pageIndex].notes.document.content);
-            this.setState({
-                value: Value.fromJSON(lastContent),
-            })
+                        this.setState({
+                            value: Value.fromJSON(lastContent),
+                        })
+        }
+    }
+}
+    componentWillReceiveProps () {
+let { tab_arr_obj } = nextProps.binderObj;
+        let { interface_obj } = nextProps;
         
+        if (tab_arr_obj) {
+        let tabArrLength = tab_arr_obj.length;
+        let tabIndex = null;
+        let pageIndex = null;
+        for (let i = 0; i < tabArrLength; i++) {
+            debugger
+            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                //console.log('tabid = interface id at index:', i);
+                tabIndex = i;
+                break;
+            }
+        }
+        const { page_arr_obj } = tab_arr_obj[tabIndex];
+        for (let i = 0; i < tabArrLength; i++) {
+            if (interface_obj.page_id === page_arr_obj[i]._id) {
+                pageIndex = i;
+                break;
+            }
+        }
+        if (!page_arr_obj[pageIndex].notes) {
+            return;
+        } else {
+            const lastContent = JSON.parse( page_arr_obj[pageIndex].notes.document.content);
+                        this.setState({
+                            value: Value.fromJSON(lastContent),
+                        })
+        }
+    } else {
+        console.log("DOES NOT WORK");
     }
     }
-
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
     hasMark = (type) => {
@@ -500,7 +542,7 @@ class Notes extends Component {
 }
 
 function mapStateToProps(state) {
-
+    debugger;
     return {
         interface_obj: state.interface,
         binderObj: state.binder.binderObj,
