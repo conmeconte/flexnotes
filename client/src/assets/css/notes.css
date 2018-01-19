@@ -1,10 +1,32 @@
 .notes-parent-panel {
     height: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
     background-image: linear-gradient(0deg, transparent 24%, rgba(177, 235, 249, 1) 25%, rgba(177, 235, 249, 1) 26%, transparent 27%, transparent 74%, rgba(177, 235, 249, 1) 75%, rgba(177, 235, 249, 1) 76%, transparent 77%, transparent);
     background-size:50px 50px;
     background-attachment: local;
+    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+
 }
+
+.notes-parent-panel::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+.notes-parent-panel::-webkit-scrollbar
+{
+	width: 2%;
+	background-color: #F5F5F5;
+}
+
+.notes-parent-panel::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
 
 .notes-component {
     width: 100%;
@@ -14,7 +36,7 @@
 }
 
 .toolbar {
-    width: 100%;
+    width: 98%;
     height: 75px;
     top: 0;
     bottom: 0;
