@@ -5,6 +5,9 @@
 .Pane.vertical.Pane1{
     /* box-shadow: 5px 1px #8888886e; */
 }
+.Pane.vertical.Pane2{
+    background-image: url('http://www.photos-public-domain.com/wp-content/uploads/2011/11/light-blue-paper-texture-with-flecks.jpg');
+}
 .Resizer.vertical{
     background: none;
     width: 3%; 
