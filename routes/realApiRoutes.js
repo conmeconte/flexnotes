@@ -139,7 +139,7 @@ module.exports = (app) => {
                     .tab_arr_obj.id(req.query.tabID) 
 
                     const binder = user
-                    .binder_arr_obj.id(req.body.binderID)
+                    .binder_arr_obj.id(req.query.binderID)
 
                     console.log(binder);
                     
@@ -219,7 +219,7 @@ module.exports = (app) => {
         })
         .delete('/api/page',   async (req, res) => {
             //delete page
-            const existingUser= await User.findById('5a569b34da2d998e141c38b2',function(err,user){
+            const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
                 if (user) {
                     const page = user
