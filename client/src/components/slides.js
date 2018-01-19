@@ -17,20 +17,24 @@ class Slides extends Component {
         )
     }
 
-    componentWillMount() {
-        let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+    componentWillReceiveProps(nextProps) {
+        let { tab_arr_obj } = nextProps.binderObj;
+        let { interface_obj } = nextProps;
+        
+        if (tab_arr_obj) {
+        let tabArrLength = tab_arr_obj.length;
         let tabIndex = null;
         let pageIndex = null;
         for (let i = 0; i < tabArrLength; i++) {
-            if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
                 //console.log('tabid = interface id at index:', i);
                 tabIndex = i;
                 break;
             }
         }
-        const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+        const { page_arr_obj } = tab_arr_obj[tabIndex];
         for (let i = 0; i < tabArrLength; i++) {
-            if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+            if (interface_obj.page_id === page_arr_obj[i]._id) {
                 pageIndex = i;
                 break;
             }
@@ -38,10 +42,43 @@ class Slides extends Component {
         if (!page_arr_obj[pageIndex].lecture_slides) {
             return;
         } else {
-            this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, this.props.interface_obj);
+            this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
         }
+    } else {
+        console.log("DOES NOT WORK");
     }
-
+    }
+    componentWillMount() {
+        let { tab_arr_obj } = this.props.binderObj;
+        let { interface_obj } = this.props;
+        
+        if (tab_arr_obj) {
+        let tabArrLength = tab_arr_obj.length;
+        let tabIndex = null;
+        let pageIndex = null;
+        for (let i = 0; i < tabArrLength; i++) {
+            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                //console.log('tabid = interface id at index:', i);
+                tabIndex = i;
+                break;
+            }
+        }
+        const { page_arr_obj } = tab_arr_obj[tabIndex];
+        for (let i = 0; i < tabArrLength; i++) {
+            if (interface_obj.page_id === page_arr_obj[i]._id) {
+                pageIndex = i;
+                break;
+            }
+        }
+        if (!page_arr_obj[pageIndex].lecture_slides) {
+            return;
+        } else {
+            this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
+        }
+    } else {
+        console.log("DOES NOT WORK");
+    }
+    }
     setURLinReduxForm(values) {
         this.props.setSlidesUrl(values.url, this.props.interface_obj);
     }

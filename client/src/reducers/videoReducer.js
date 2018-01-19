@@ -26,6 +26,7 @@ export default function (state = DEFAULT_STATE, action) {
         case types.GET_RESULT_STYLES:
             return {...state, resultsStyles: action.payload, toggleResults: !state.toggleResults}
         case types.GRAB_VIDEO_URL:
+            debugger
             return {...state, videoLink: action.payload}
         case types.TOGGLE_RESULTS:
         return {...state, toggleResults: !state.toggleResults}

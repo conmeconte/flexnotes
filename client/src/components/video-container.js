@@ -18,7 +18,11 @@ class VideoContainer extends Component {
         this.props.playPastedLinkVideo(values["youtube-url"]);
         this.props.toggleModal(this.props.addVideoModalStyle);
     }
+    // componentWillReceiveProps(nextProps){
+    //     debugger
+    // }
     render () {
+        
     return ( 
             <div id="video-container" className="video-container">
                 <div className="row">

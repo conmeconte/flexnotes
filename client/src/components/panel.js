@@ -40,7 +40,7 @@ class Panel extends Component {
                     </div>
                     <div className="panelOptions">
                         {/* <div><h3 className="optionsTitle">Panels:</h3></div> */}
-                        <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(3, this.props.interface_obj) }}>View Dashboard</button></div>
+                        {/* <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(3, this.props.interface_obj) }}>View Dashboard</button></div> */}
                         {/* <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(4, this.props.interface_obj) }}>4</button></div> */}
                     </div>
                 </header>
@@ -49,7 +49,7 @@ class Panel extends Component {
                     <h1 className="app-title">FlexNote</h1>
                 </div> */}
                 <div className="panel_div col-xs-10">
-                    <PanelNum num={this.props.panel_num} />
+                    <PanelNum num={3} />
                 </div>
             </div>
         );
