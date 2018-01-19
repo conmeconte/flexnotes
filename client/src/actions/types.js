@@ -8,6 +8,7 @@ export default {
     ADD_TAB: 'add_tab',
     ADD_PAGE: 'add_page',
     DELETE_BINDER: 'delete_binder',
+    DELETE_TAB: 'delete_tab',
     SELECT_BINDER: 'select_binder',
     SELECT_TAB: 'select_tab',
     SELECT_PAGE: 'select_page',
