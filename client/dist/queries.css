@@ -1,4 +1,11 @@
-
+.welcome{
+    background-image: url('/paperimages/Book+top+view2.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 87.5%;
+    padding-left: 5%;
+    box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+}
 .panel_div.col-xs-10{
     background-image: url('http://www.photos-public-domain.com/wp-content/uploads/2012/05/ivory-off-white-paper-texture.jpg');
 }
@@ -7,6 +14,7 @@
 }
 .Pane.vertical.Pane2{
     background-image: url('http://www.photos-public-domain.com/wp-content/uploads/2011/11/light-blue-paper-texture-with-flecks.jpg');
+    box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
 }
 .Resizer.vertical{
     background: none;
@@ -17,13 +25,18 @@
     height: 2%;
 }
 .video-iframe{
-    box-shadow: 8px 12px #8888886e;
+    /* box-shadow: 8px 12px #8888886e; */
+    box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
     width: 98%;
 }
 .slides-iframe{
-    box-shadow: 8px 12px #8888886e;
+    /* box-shadow: 8px 12px #8888886e; */
+    box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
     width: 98%;
 
+}
+.notes-component{
+    height: auto !important; 
 }
 /* Big tablet to 1200px (width smaller than the 1140px row) */
 @media only screen and (max-width: 1200px) {
@@ -48,7 +61,7 @@
     width: 100% !important;
     display: block !important; 
     height: 45vh; 
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 .Pane1.horizontal.Pane{
     height: 50% !important;
