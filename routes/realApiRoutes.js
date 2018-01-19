@@ -4,7 +4,7 @@ const { User, Binder, Tab, Page, Note, Video } = require('../models');
 // const User = require('../controllers/user');
 //Restful/ CRUD operation 
 
-module.exports = (app) => {
+module.exports = (app) => {     
     app.get('/', (req, res) => {
         res.send('Homepage')
     })
@@ -140,8 +140,6 @@ module.exports = (app) => {
 
                     const binder = user
                     .binder_arr_obj.id(req.query.binderID)
-
-                    console.log(binder);
                     
                     tab.remove();
                     user.save();

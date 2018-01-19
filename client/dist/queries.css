@@ -1,3 +1,27 @@
+
+.panel_div.col-xs-10{
+    background-image: url('http://www.photos-public-domain.com/wp-content/uploads/2012/05/ivory-off-white-paper-texture.jpg');
+}
+.Pane.vertical.Pane1{
+    /* box-shadow: 5px 1px #8888886e; */
+}
+.Resizer.vertical{
+    background: none;
+    width: 3%; 
+}
+.Resizer.horizontal{
+    background: none;
+    height: 2%;
+}
+.video-iframe{
+    box-shadow: 8px 12px #8888886e;
+    width: 98%;
+}
+.slides-iframe{
+    box-shadow: 8px 12px #8888886e;
+    width: 98%;
+
+}
 /* Big tablet to 1200px (width smaller than the 1140px row) */
 @media only screen and (max-width: 1200px) {
 
@@ -11,6 +35,7 @@
 
 /* Small phones to small tablets  from 481px to 767px*/ 
 @media only screen and (max-width: 767px) {
+
 .SplitPane.width-w-nav{
     flex-flow: column wrap !important;
     overflow: scroll !important;
@@ -38,7 +63,7 @@
 }
 
 .navbar.col-xs-2{
-    
+
 }
 
 }
