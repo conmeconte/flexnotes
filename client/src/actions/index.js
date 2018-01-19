@@ -225,7 +225,7 @@ export function grabVideoUrl(videoLink) {
         payload: videoLink
     }
 }
-export function setVideoUrl (value, interfaceObj) {
+export function setVideoUrl(value, interfaceObj) {
     console.log("VIDEO URL FROM ACTION CREATOR: ", value);
     return {
         type: types.SET_VIDEO_URL,
@@ -306,7 +306,7 @@ export function addBinder() {
             }).catch(err => {
                 dispatch({
                     type: 'error',
-                    msg: 'Failed call in add binder'
+                    msg: 'Failed call in binderarray'
                 });
             });
     }
@@ -326,7 +326,7 @@ export function addTab(binder_id) {
             }).catch(err => {
                 dispatch({
                     type: 'error',
-                    msg: 'Failed call in add tab'
+                    msg: 'Failed call in binderarray'
                 });
             });
     }
@@ -347,7 +347,7 @@ export function addPage(binder_id, tab_id) {
             }).catch(err => {
                 dispatch({
                     type: 'error',
-                    msg: 'Failed call in add page'
+                    msg: 'Failed call in binderarray'
                 });
             });
     }
@@ -358,56 +358,16 @@ export function deleteBinder(binder_id) {
         const test = axios.delete(`/api/binder?binderID=${binder_id}`, {
         })
             .then((resp) => {
-                //console.log("delete binder response: ", resp.data);
+                console.log("delete binder response: ", resp);
 
                 dispatch({
                     type: types.DELETE_BINDER,
-                    payload: resp.data
+                    payload: resp.data.binder_arr_obj
                 });
             }).catch(err => {
                 dispatch({
                     type: 'error',
-                    msg: 'Failed call in delete binder'
-                });
-            });
-    }
-}
-
-export function deleteTab(binder_id, tab_id) {
-    return (dispatch) => {
-        const test = axios.delete(`/api/tab?binderID=${binder_id}&tabID=${tab_id}`, {
-        })
-            .then((resp) => {
-                //console.log("delete tab response: ", resp);
-
-                dispatch({
-                    type: types.DELETE_TAB,
-                    payload: resp.data
-                });
-            }).catch(err => {
-                dispatch({
-                    type: 'error',
-                    msg: 'Failed call in delete tab'
-                });
-            });
-    }
-}
-
-export function deletePage(binder_id, tab_id, page_id) {
-    return (dispatch) => {
-        const test = axios.delete(`/api/page?binderID=${binder_id}&tabID=${tab_id}&pageID=${page_id}`, {
-        })
-            .then((resp) => {
-                console.log("delete page response: ", resp);
-
-                dispatch({
-                    type: types.DELETE_PAGE,
-                    payload: resp.data
-                });
-            }).catch(err => {
-                dispatch({
-                    type: 'error',
-                    msg: 'Failed call in delete page'
+                    msg: 'Failed call in binderarray'
                 });
             });
     }
