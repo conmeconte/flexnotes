@@ -11,8 +11,24 @@
 
 /* Small phones to small tablets  from 481px to 767px*/ 
 @media only screen and (max-width: 767px) {
-.Pane1 {
-    width: 100%;
+.SplitPane.width-w-nav{
+    flex-flow: column wrap !important;
+    overflow: scroll !important;
+    /* flex-wrap: wrap; */
+}
+.Pane1.vertical.Pane {
+    width: 100% !important;
+    display: block !important; 
+    height: 30vh; 
+    overflow: scroll;
+}
+.Pane2.vertical.Pane {
+    width: 100% !important;
+    display: block !important; 
+    height: 49vh; 
+}
+.Resizer.vertical {
+    display:none; 
 }
 
 }
