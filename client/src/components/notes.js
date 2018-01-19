@@ -103,7 +103,6 @@ class Notes extends Component {
     };
 
     submitNotes(){
-        debugger;
         let { interface_obj } = this.props;
         const { value } = this.state;
         const content = JSON.stringify(value.toJSON());
