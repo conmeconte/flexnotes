@@ -15,7 +15,7 @@ export default function(state = DEFAULT_STATE, action){
         case types.ADD_PAGE:
             return {binderObj: action.payload.data};
         case types.DELETE_TAB:
-            return {binderObj: action.payload.data};
+            return {binderObj: action.payload};
         default:
             return state;
     }

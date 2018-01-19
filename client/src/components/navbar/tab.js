@@ -99,6 +99,9 @@ class Tab extends Component {
         const {editable} = this.state;
 
         console.log('props in tab:', this.props);
+        if(!this.props.binderObj){
+            return null;
+        }
         let url = this.props.binderObj._id + "/" + this.props.tabObj._id;
         const{ page_arr_obj} = this.props.tabObj;
 

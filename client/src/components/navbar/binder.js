@@ -59,6 +59,7 @@ class Binder extends Component {
 
     deleteTab(tab_id) {
         console.log('delete tab btn clicked, tab_id: ', tab_id);
+        console.log('delete tab btn clicked, binder_id: ', this.props.binderObj._id);
         this.props.deleteTab(this.props.binderObj._id, tab_id);
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
