@@ -12,12 +12,18 @@ module.exports = (app) => {
     app.get('/api/userInfo',  (req, res) => {
         res.send(req.user);
     });
+    //Front Error Handler//
+    app.post('/api/errors', requireLogin, async(req, res)=>{
+        const existingUser= await User.findById(req.user.id);
+    })
 
     // For Binder //
     app
         .get('/api/binder', requireLogin,  async (req, res) => {
             //give binder data 
-            const existingUser= await User.findById(req.user.id, function (err, user){
+            const existingUser= await User.findById(req.user.id, (err)=>{res.send('error')});
+            console.log(existingUser);
+            if(existingUser){
                 if (err) {res.send("Error did occurred")};
 
                 if (user) {
@@ -26,7 +32,9 @@ module.exports = (app) => {
                 res.send("Error can't find user");
                 }
                 res.end();
-            });
+            }else{
+                res.send("Error can't find user")
+            }
         })
         .post('/api/binder', requireLogin, async (req, res) => {
             const existingUser= await User.findById(req.user.id, function(err,user){
@@ -46,7 +54,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .delete('/api/binder', requireLogin, async (req, res) => {
+        .delete('/api/binder', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
     

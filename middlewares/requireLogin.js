@@ -1,6 +1,6 @@
 const fs            = require('fs');
 
-module.exports= function(req, res, next) {
+module.exports=  function(req, res, next) {
  if(!req.user){
     // res.redirect('/');
     // return res.redirect('http://google.com');
