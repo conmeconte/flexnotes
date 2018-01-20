@@ -258,7 +258,7 @@ export function updateBinderArray() {
     return (dispatch) => {
         const test = axios.get('/api/binder')
             .then((resp) => {
-                console.log("get response: ", resp.data.binder_arr_obj);
+                //console.log("get response: ", resp.data.binder_arr_obj);
 
                 dispatch({
                     type: types.UPDATE_BINDER_ARRAY,

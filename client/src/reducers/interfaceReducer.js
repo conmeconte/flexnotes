@@ -12,12 +12,6 @@ const DEFAULT_STATE = {
 
 export default function (state = DEFAULT_STATE, action) {
     switch (action.type) {
-        case types.BINDER_UPDATE:
-            return { ...state, binder_id: action.payload };
-        case types.TAB_UPDATE:
-            return { ...state, tab_id: action.payload };
-        case types.PAGE_UPDATE:
-            return { ...state, page_id: action.payload };
         case types.GET_USER_DATA:
              let userName = action.payload.userName;
              let initBinderID = action.payload.binder_arr_obj[0]._id;
