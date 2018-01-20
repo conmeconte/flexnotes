@@ -1,9 +1,9 @@
-module.exports=   (req, res, next) => {
+module.exports= function(err,req, res, next) {
  if(!req.user){
     // res.redirect('/');
     // return res.redirect('http://google.com');
-    // return res.status(401).send({error: "you must log in!"});
-    
+    res.status(401).redirect('/');
+    next(err);
  } else {
     next();
  }
