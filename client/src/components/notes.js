@@ -8,7 +8,7 @@ import { updateBinderArray } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
-import '../assets/css/notes.css';
+// import '../assets/css/notes.css';
 
 const DEFAULT_NODE = 'paragraph';
 

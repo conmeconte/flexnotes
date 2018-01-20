@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { setTopLeftHeight, setTopLeftWidth, updateBinderArray } from '../actions';
 import SplitPane from 'react-split-pane';
 import _ from 'lodash';
-
 import Video from './video';
 import Notes from './notes';
 import Slides from './slides';
@@ -24,37 +23,38 @@ class ThreePanel extends Component {
         this.props.setTopLeftWidth(size, this.props.interface_obj);
     }
 
-    // componentWillMount() {
-    //     let { tab_arr_obj } = this.props.binderObj;
-    //     let { interface_obj } = this.props;
+    componentWillMount() {
+        //     let { tab_arr_obj } = this.props.binderObj;
+        //     let { interface_obj } = this.props;
 
-    //     if (tab_arr_obj) {
-    //         let tabArrLength = tab_arr_obj.length;
-    //         let tabIndex = null;
-    //         let pageIndex = null;
-    //         for (let i = 0; i < tabArrLength; i++) {
-    //             if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-    //                 tabIndex = i;
-    //                 break;
-    //             }
-    //         }
-    //         const { page_arr_obj } = tab_arr_obj[tabIndex];
-    //         for (let i = 0; i < tabArrLength; i++) {
-    //             if (interface_obj.page_id === page_arr_obj[i]._id) {
-    //                 pageIndex = i;
-    //                 break;
-    //             }
-    //         }
-    //         if (!page_arr_obj[pageIndex].panel_dimensions) {
-    //             return;
-    //         } else {
-    //             this.props.setTopLeftHeight(page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height, interface_obj);
-    //             this.props.setTopLeftWidth(page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width, interface_obj);
-    //         }
-    //     } else {
-    //         console.log("DOES NOT WORK");
-    //     }
-    // }
+        //     if (tab_arr_obj) {
+        //         let tabArrLength = tab_arr_obj.length;
+        //         let tabIndex = null;
+        //         let pageIndex = null;
+        //         for (let i = 0; i < tabArrLength; i++) {
+        //             if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+        //                 tabIndex = i;
+        //                 break;
+        //             }
+        //         }
+        //         const { page_arr_obj } = tab_arr_obj[tabIndex];
+        //         for (let i = 0; i < tabArrLength; i++) {
+        //             if (interface_obj.page_id === page_arr_obj[i]._id) {
+        //                 pageIndex = i;
+        //                 break;
+        //             }
+        //         }
+        //         if (!page_arr_obj[pageIndex].panel_dimensions) {
+        //             return;
+        //         } else {
+        //             this.props.setTopLeftHeight(page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height, interface_obj);
+        //             this.props.setTopLeftWidth(page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width, interface_obj);
+        //         }
+        //     } else {
+        //         console.log("DOES NOT WORK");
+        //     }
+        this.props.updateBinderArray();
+    }
 
     // componentWillReceiveProps(nextProps) {
     //     let tabArrLength = this.props.binderObj.tab_arr_obj.length;

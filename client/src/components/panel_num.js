@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import ThreePanel from './panel_three';
 import FourPanel from './panel_four';
 
