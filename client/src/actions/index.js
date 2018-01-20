@@ -77,6 +77,33 @@ export function setSlidesUrl(value, interfaceObj) {
                 const urlSplit2 = urlSplit1[1].split('/');
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
+                return (dispatch) => {
+                    axios.put('/api/page', {
+                        lecture_slides: {
+                            lec_id: slidesURL
+                        },
+                        binderID: interfaceObj.binder_id,
+                        tabID: interfaceObj.tab_id,
+                        pageID: interfaceObj.page_id
+                    }).then((resp) => {
+                        console.log("setSlidesUrl response: ", resp);
+                        dispatch({
+                            type: types.SET_SLIDES_URL,
+                            payload: slidesURL
+                        });
+                    }).catch(error => {
+                        dispatch({
+                            type: types.AXIOS_ERROR,
+                            msg: 'Failed to update Google Slides URL'
+                        })
+                    });
+                }
+            }
+            const urlSplit1 = value.split("presentation/d/");
+            const urlSplit2 = urlSplit1[1].split('/');
+            let presentationID = urlSplit2[0];
+            const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
+            return (dispatch) => {
                 axios.put('/api/page', {
                     lecture_slides: {
                         lec_id: slidesURL
@@ -86,32 +113,16 @@ export function setSlidesUrl(value, interfaceObj) {
                     pageID: interfaceObj.page_id
                 }).then((resp) => {
                     console.log("setSlidesUrl response: ", resp);
-                    debugger;
-                    // dispatch({
-                    //     type: types.ADD_BINDER,
-                    //     payload: resp.data.binder_arr_obj
-                    // });
+                    dispatch({
+                        type: types.SET_SLIDES_URL,
+                        payload: slidesURL
+                    });
+                }).catch(error => {
+                    dispatch({
+                        type: types.AXIOS_ERROR,
+                        msg: 'Failed to update Google Slides URL'
+                    })
                 });
-                // return {
-                //     type: types.SET_SLIDES_URL,
-                //     payload: slidesURL
-                // }
-            }
-            const urlSplit1 = value.split("presentation/d/");
-            const urlSplit2 = urlSplit1[1].split('/');
-            let presentationID = urlSplit2[0];
-            const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
-            axios.put('/api/page', {
-                lecture_slides: {
-                    lec_id: slidesURL
-                },
-                binderID: interfaceObj.binder_id,
-                tabID: interfaceObj.tab_id,
-                pageID: interfaceObj.page_id
-            });
-            return {
-                type: types.SET_SLIDES_URL,
-                payload: slidesURL
             }
         }
         else {
@@ -192,25 +203,25 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
     let videoId = videoUrl.split("/");
     videoId = videoId[4];
     return (dispatch) => {
-    const videoTest = axios.post('/api/video', {
-        video: {
-            videoTitle: videoTitle,
-            videoId: videoId,
-            videoUrl: videoUrl
-        },
-        binderID: interfaceObj.binder_id,
-        tabID: interfaceObj.tab_id,
-        pageID: interfaceObj.page_id
-    }).then( (response) => {
-        console.log("DATA HAS BEEN SENT", response);
-        dispatch({
-            type: types.ADD_TO_PLAYLIST,
-            payload: videoUrl
-        });
+        const videoTest = axios.post('/api/video', {
+            video: {
+                videoTitle: videoTitle,
+                videoId: videoId,
+                videoUrl: videoUrl
+            },
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then((response) => {
+            console.log("DATA HAS BEEN SENT", response);
+            dispatch({
+                type: types.ADD_TO_PLAYLIST,
+                payload: videoUrl
+            });
         }).catch(error => {
             dispatch({
-                type: 'error',
-                message: 'Failed call in add binder.'
+                type: types.AXIOS_ERROR,
+                msg: 'Add to Playlist Failed.'
             })
         })
     };
