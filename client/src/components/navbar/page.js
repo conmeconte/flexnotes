@@ -105,7 +105,7 @@ class Page extends Component {
     notEditPage() {
         //console.log("editable should be false");
         const { pageName } = this.state;
-        this.props.editPage(this.props.interface.binder_id, this.props.tabID, pageName);
+        this.props.editPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id, pageName);
         this.setState({ 
             editable: false 
         });
