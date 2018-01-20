@@ -4,7 +4,7 @@ const DEFAULT_STATE = {
     topLeftHeight: 0,
     topLeftWidth: 0,
     topRightHeight: 0,
-    numberPanels: 0
+    numberPanels: 3
 };
 
 export default function (state = DEFAULT_STATE, action) {
