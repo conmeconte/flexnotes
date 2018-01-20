@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Panel from './panel';
 import NavBar from './navbar/navbar';
 import Login from './login';
+// import '../assets/css/login.css';
 import '../assets/css/login.css';
 
 import logo from '../assets/images/flexnotes_logo.gif';
@@ -21,7 +22,7 @@ class Dashboard extends Component {
             return null;
         } 
         return(
-            <div>
+            <div id="dashboard-container" className="row">
                 <div className="logout">
                     <img className="logoImage" src={logo} />
                     <Login />

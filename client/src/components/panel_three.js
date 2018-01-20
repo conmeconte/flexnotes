@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { setTopLeftHeight, setTopLeftWidth } from '../actions';
 import SplitPane from 'react-split-pane';
 import _ from 'lodash';
-
 import Video from './video';
 import Notes from './notes';
 import Slides from './slides';
@@ -59,7 +58,7 @@ class ThreePanel extends Component {
         //     topLeftPanelWidth = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width;
         // }
         return (
-            <SplitPane onChange={loTLHsave} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={500}>
+            <SplitPane className="col s10" onChange={loTLHsave} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={500}>
                 <SplitPane onChange={loTLWsave} split="horizontal" minSize={200} maxSize={-200} defaultSize={425}>
                     <div className="video-parent-panel"><Video /></div>
                 <div className="slides-container"><Slides /></div>

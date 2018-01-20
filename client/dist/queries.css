@@ -1,15 +1,18 @@
-/* .welcome{
+.welcome{
     background-image: url('/paperimages/Book+top+view2.jpg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     width: 87.5%;
     padding-left: 5%;
     box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
-} */
+}
+.width-w-nav {
+    
+}
 .btn{
     padding: 0.6vh 1vw;
-}
-#video-container .row{
+} 
+#video-container .row {
     margin: 0 0 0 0; 
 }
 #video-container form{
@@ -23,7 +26,7 @@
 }
 
 .panel_div.col-xs-10{
-    /* background-image: url('http://www.photos-public-domain.com/wp-content/uploads/2012/05/ivory-off-white-paper-texture.jpg'); */
+    background-image: url('http://www.photos-public-domain.com/wp-content/uploads/2012/05/ivory-off-white-paper-texture.jpg'); 
     background-image: url('https://images.freecreatives.com/wp-content/uploads/2015/04/white-paper-texture-with-flecks.jpg');
     background-size: cover;
 
