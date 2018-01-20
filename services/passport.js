@@ -33,7 +33,7 @@ passport.use(
                 let loginLog= {Date: new Date().toLocaleString(),user: `user ${existingUser.userName} has logged in`};
                 fs.appendFile('./errorLogs/logins.log', JSON.stringify(loginLog) + '\n', function (err) {
                     if (err) throw err; 
-                    console.log('Updated!');
+                    console.log('User Login Updated!');
                 });
                 return done(null, existingUser);
             }

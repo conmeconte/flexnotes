@@ -15,23 +15,25 @@ module.exports = (app) => {
     //Front Error Handler//
     app.post('/api/errors', requireLogin, async(req, res)=>{
         const existingUser= await User.findById(req.user.id);
-    })
+        if(!existingUser){
+            res.send("Error can't find user");
+        }else{
+            const frontErrorLog= {Date: new Date().toLocaleString, Error: req.body.errorLog};
+            fs.appendFile('./errorLogs/frontEnd.log', JSON.stringify(frontErrorLog) + '\n', function (err) {
+                if (err) throw err; 
+                console.log('Front End Log Updated!');
+             });
+
+        }
+    });
 
     // For Binder //
     app
         .get('/api/binder', requireLogin,  async (req, res) => {
             //give binder data 
-            const existingUser= await User.findById(req.user.id, (err)=>{res.send('error')});
-            console.log(existingUser);
+            const existingUser= await User.findById(req.user.id, function(err){if(err){return res.send('error')}});
             if(existingUser){
-                if (err) {res.send("Error did occurred")};
-
-                if (user) {
-                    res.send(user);
-                }else {
-                res.send("Error can't find user");
-                }
-                res.end();
+                res.send(existingUser.binder_arr_obj);
             }else{
                 res.send("Error can't find user")
             }
@@ -103,10 +105,8 @@ module.exports = (app) => {
                 if (err) { res.send("Error did occurred")};
 
                 if (user) {
-                    const tab = user
-                    .binder_arr_obj.id(req.body.binderID) 
-                    .tab_arr_obj.id(req.body.tabID)
-                    res.send(tab);
+
+                    res.send(user.binder_arr_obj);
                 }else {
                 res.send("Error can't find user")
                 }

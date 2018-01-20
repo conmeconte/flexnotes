@@ -7,7 +7,7 @@ module.exports=  function(req, res, next) {
     let errorData= {Date: new Date().toLocaleString(),errorMessage: 'Illegal Login Attempt'};
     fs.appendFile('./errorLogs/serverError.log', JSON.stringify(errorData) + '\n', function (err) {
         if (err) throw err; 
-        console.log('Updated!');
+        console.log('Illegal Login Attempt Updated!');
      });
     res.status(401).redirect('/');
  
