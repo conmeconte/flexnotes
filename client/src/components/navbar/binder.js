@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, selectBinder, addTab, deleteTab } from '../../actions';
+import { updateBinderArray, selectBinder, addTab, deleteTab, deleteBinder, editBinder } from '../../actions';
 
 
 import Tab from './tab';
@@ -17,6 +17,7 @@ class Binder extends Component {
                 '#000080', '#808000', '#800000', '#a0522d', '#8a2be2'
             ],
             editable: false,
+            binderName : '',
             active: false,
             new_tab_arr: [{
                 tab_id: 1,
@@ -37,11 +38,12 @@ class Binder extends Component {
 
         this.addTab = this.addTab.bind(this);
         this.deleteTab = this.deleteTab.bind(this);
-        // this.editable = this.editable.bind(this);
-        // this.notEditable = this.notEditable.bind(this);
+        this.editable = this.editable.bind(this);
+        this.notEditable = this.notEditable.bind(this);
         // this.binderLinkActive = this.binderLinkActive.bind(this);
         // this.binderLinkNotActive = this.binderLinkNotActive.bind(this);
         this.binderSelect = this.binderSelect.bind(this);
+        this.deleteBinder = this.deleteBinder.bind(this);
     }
 
     componentDidMount(){
@@ -53,6 +55,11 @@ class Binder extends Component {
     }
 
     componentWillReceiveProps(nextProps){
+        // if(nextProps.hasOwnProperty("binderObj")){
+        //     this.setState({
+        //         binderName: nextProps.binderObj.binder_name
+        //     });
+        // }
         //console.log('nextProps: ',nextProps);
         //console.log('this.props in CWRP: ', this.props);
         // if(!this.props.binder || !nextProps.binder){
@@ -62,14 +69,19 @@ class Binder extends Component {
         //      this.props.updateBinderArray();
         //  }
         if(this.props.hasOwnProperty("binderObj")){
+            // this.setState({
+            //     binderName: this.props.binderObj.binder_name
+            // });
             if(nextProps.interface.binder_id === this.props.binderObj._id){
-                console.log('setting active to true');
+                //console.log('setting active to true');
                 this.setState({
                     active: true
+
                 });
             } else {
                 this.setState({
                     active: false
+
                 });
             }
         }
@@ -101,55 +113,48 @@ class Binder extends Component {
         // }
     }
 
-    // editable() {
-    //     console.log("editable should be true");
-    //     this.setState({
-    //         editable: true
-    //     });
-    // }
+    deleteBinder(delete_id) {
+        //console.log('delete button clicked, binder_id: ', delete_id);
+        if(this.props.binderArr.length === 1){
+            console.log('can not delete last binder');
+            return;
+        }
+        this.props.deleteBinder(delete_id);
+        // const { binder_arr_obj } = this.state;
+        // console.log(binder_arr_obj);
+        // let deleteIndex = 0;
+        // for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
+        //     if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
+        //         binder_arr_obj.splice(deleteIndex, 1);
+        //     }
+        // }
+    }
 
-    // notEditable() {
-    //     console.log("editable should be false");
-    //     this.setState({
-    //         editable: false
-    //     });
-    // }
+    editable() {
+        //console.log("editable should be true");
+        this.setState({
+            editable: true,
+            binderName: this.props.binderObj.binder_name
+        });
+    }
 
-    // keyPressed(event) {
-    //     if(event.key == 'Enter') {
-    //       //this.notEditable();
-    //   }
-    // }
+    notEditable() {
+        //console.log("editable should be false");
+        const { binderName } = this.state;
+        this.props.editBinder(this.props.binderObj._id, binderName);
+        this.setState({
+            editable: false
+        });
+        
 
-    // textChanged(e, id) {
-    //     const { binder_arr_obj } = this.state;
-    //     //console.log("text changed, id:", id);
-    //     //console.log(e.target.value);
+    }
+    editBinderName(e){
 
-    //     for (let i = 0; i < binder_arr_obj.length; i++) {
-    //         if (binder_arr_obj[i].binder_id === id) {
-    //             //console.log('binder_id and id match');
-    //             binder_arr_obj[i].binder_name = e.target.value;
-    //         }
-    //     }
-    //     this.setState({
-    //         binder_arr_obj: binder_arr_obj
-    //     });
-    // }
 
-    // binderLinkActive(){
-    //     //console.log('binderlinkactive color:', color);
-    //     // this.setState({
-    //     //     active: true
-    //     // });
-    // }
-
-    // binderLinkNotActive(){
-    //     //console.log('binderlinkactive color:', color);
-    //     // this.setState({
-    //     //     active: false
-    //     // });
-    // }
+        this.setState({
+            binderName: e.target.value
+        });
+    }
 
     binderSelect(){
         //console.log('binderObj:' ,binderObj);
@@ -157,27 +162,54 @@ class Binder extends Component {
     }
 
     render() {
-        const { active, editable } = this.state;
+        const { active, editable, binderName } = this.state;
         //console.log("Binder props:", this.props);
-        //console.log("Binder active state:", active);
+        //console.log("Binder state:", this.state);
         if(!this.props.binderObj){
             return null;
         }
         const { tab_arr_obj } = this.props.binderObj;
 
-        //let currentTabArr = [];
-
-        // if(this.props.binder._id === this.props.binderObj._id){
-        //     currentTabArr = this.props.binder.tab_arr_obj;
-        // } else {
-        //     console.log('binder and binderObj are not the same');
-        //     currentTabArr = this.props.binderObj.tab_arr_obj;
-        // }
-        
         let binder_url = this.props.binderObj._id;
 
+        let binder_title = [];
 
-        
+        if(editable){
+            //let editName = this.props.binderObj.binder_name;
+            binder_title = (
+                <div className="binderTitle">
+                         <input 
+                             className="edit_input"
+                             ref='textInput'
+                             type='text'
+                             onChange={(e)=>this.editBinderName(e)}
+                             // onBlur={this.notEditable}
+                            // onKeyPress={this.keyPressed}
+                             value={binderName}
+                             />
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
+                    Done <span className="glyphicon glyphicon-ok"></span>
+                </button>
+            </div>              
+            );
+        } else {
+            binder_title = (
+                <div className="binderTitle">
+                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }} >
+                                <div className=""  onClick={()=>this.binderSelect()}>
+                                    {this.props.binderObj.binder_name}
+                                </div>
+                    </Link>
+                    <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
+                        Binder <span className="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteBinder(this.props.binderObj._id)} >
+                            <span className="glyphicon glyphicon-minus"></span>Binder
+                    </button>
+                </div>
+            );
+        }
+
 
         let tab_link = tab_arr_obj.map((item, index) => {
             let tab_url = '/' + item._id;
@@ -189,9 +221,6 @@ class Binder extends Component {
                 return (
                     <div key={index}>
                         <Tab index={index} tabObj={item}/>
-                        <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(item._id)} >
-                            <span className="glyphicon glyphicon-minus"></span>Tab
-                        </button>
                     </div>
                     // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
 
@@ -200,19 +229,14 @@ class Binder extends Component {
                     //     </div>
                     // </Link>
                 );               
-             });
+                });
 
         return (
             <div>
-                <div className="binderTitle">
-                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }} >
-                                <div className=""  onClick={()=>this.binderSelect()}>
-                                    {this.props.binderObj.binder_name}
-                                </div>
-                    </Link>
-                </div>
+                {binder_title}
 
                 <div className={`binderBody ${active ? 'visible' : 'hidden'}`}>
+
                     {tab_link}
                 
                 
@@ -246,12 +270,12 @@ class Binder extends Component {
     function mapStateToProps(state){
         //console.log('binder mstp', state);
         return{
-            //binderArr: state.binderArray.binderArr,
+            binderArr: state.binderArray.binderArr,
             binder: state.binder.binderObj,
             interface: state.interface
         }
     }
 
-    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addTab, deleteTab})(Binder));
+    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addTab, deleteTab, deleteBinder, editBinder})(Binder));
 
 

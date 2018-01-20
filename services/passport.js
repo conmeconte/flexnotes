@@ -2,6 +2,8 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
+const fs            = require('fs');
+
 
 
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
@@ -28,9 +30,11 @@ passport.use(
         async (accessToken, refreshToken, profile, done) => {
             const existingUser = await User.findOne({ googleId: profile.id });
             if (existingUser) {
-                //we already have
-                // console.log("google provides this info ", profile);
-                // console.log(existingUser);
+                let loginLog= {Date: new Date().toLocaleString(),user: `user ${existingUser.userName} has logged in`};
+                fs.appendFile('./errorLogs/logins.log', JSON.stringify(loginLog) + '\n', function (err) {
+                    if (err) throw err; 
+                    console.log('User Login Updated!');
+                });
                 return done(null, existingUser);
             }
             //no user record in db make a new record

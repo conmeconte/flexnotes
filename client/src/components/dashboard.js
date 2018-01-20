@@ -3,6 +3,10 @@ import Panel from './panel';
 import NavBar from './navbar/navbar';
 import Login from './login';
 // import '../assets/css/login.css';
+import '../assets/css/login.css';
+
+import logo from '../assets/images/flexnotes_logo.gif';
+
 import { connect } from 'react-redux';
 import { getDataObject } from '../actions';
 
@@ -20,6 +24,7 @@ class Dashboard extends Component {
         return(
             <div id="dashboard-container" className="row">
                 <div className="logout">
+                    <img className="logoImage" src={logo} />
                     <Login />
                 </div>
                 <NavBar />
@@ -34,7 +39,7 @@ function mapStateToProps(state){
     //console.log('mstp dashboard:', state);
     return{
         //data: state.auth,
-        binderArr: state.binderArray.binderArr,
+        binderArr: state.binderArray.binderArr
         //initBinder: state.binder.binderObj,
         //interface: state.interface
     }

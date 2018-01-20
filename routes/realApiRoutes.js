@@ -12,21 +12,31 @@ module.exports = (app) => {
     app.get('/api/userInfo',  (req, res) => {
         res.send(req.user);
     });
+    //Front Error Handler//
+    app.post('/api/errors', requireLogin, async(req, res)=>{
+        const existingUser= await User.findById(req.user.id);
+        if(!existingUser){
+            res.send("Error can't find user");
+        }else{
+            const frontErrorLog= {Date: new Date().toLocaleString, Error: req.body.errorLog};
+            fs.appendFile('./errorLogs/frontEnd.log', JSON.stringify(frontErrorLog) + '\n', function (err) {
+                if (err) throw err; 
+                console.log('Front End Log Updated!');
+             });
+
+        }
+    });
 
     // For Binder //
     app
         .get('/api/binder', requireLogin,  async (req, res) => {
             //give binder data 
-            const existingUser= await User.findById(req.user.id, function (err, user){
-                if (err) {res.send("Error did occurred")};
-
-                if (user) {
-                    res.send(user);
-                }else {
-                res.send("Error can't find user");
-                }
-                res.end();
-            });
+            const existingUser= await User.findById(req.user.id, function(err){if(err){return res.send('error')}});
+            if(existingUser){
+                res.send(existingUser);
+            }else{
+                res.send("Error can't find user")
+            }
         })
         .post('/api/binder', requireLogin, async (req, res) => {
             const existingUser= await User.findById(req.user.id, function(err,user){
@@ -46,7 +56,7 @@ module.exports = (app) => {
                 }
             })
         })
-        .delete('/api/binder', requireLogin, async (req, res) => {
+        .delete('/api/binder', requireLogin,  async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){
                 if (err) { res.send("Error did occurred") };
     
@@ -77,7 +87,7 @@ module.exports = (app) => {
                     
             
                     user.save();
-                    res.send(user);
+                    res.send(user.binder_arr_obj);
                 }else {
                 res.send("Error can't find user")
                 }
@@ -95,10 +105,8 @@ module.exports = (app) => {
                 if (err) { res.send("Error did occurred")};
 
                 if (user) {
-                    const tab = user
-                    .binder_arr_obj.id(req.body.binderID) 
-                    .tab_arr_obj.id(req.body.tabID)
-                    res.send(tab);
+
+                    res.send(user.binder_arr_obj);
                 }else {
                 res.send("Error can't find user")
                 }
@@ -168,7 +176,7 @@ module.exports = (app) => {
                     .binder_arr_obj.id(req.body.binderID);
 
                     user.save();
-                    res.send(binder);
+                    res.send(user.binder_arr_obj);
                 }else {
                 res.send("Error can't find user")
                 }
@@ -255,7 +263,7 @@ module.exports = (app) => {
                     page.panel_dimensions.number_of_panels= req.body.number_of_panels || page.panel_dimensions.number_of_panels;
                     
                     user.save();
-                    res.send(user);
+                    res.send(user.binder_arr_obj);
                     
                 }else {
                 res.send("Error can't find user")

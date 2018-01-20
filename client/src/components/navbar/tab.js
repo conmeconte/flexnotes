@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectTab, addPage, deletePage, updateBinderArray } from '../../actions';
+import { selectTab, addPage, deletePage, updateBinderArray, editTab, deleteTab } from '../../actions';
 
 import Page from './page';
 
@@ -11,7 +11,9 @@ class Tab extends Component {
 
         this.state = {
             tab_color_arr: ['#ff0000', '#0000ff', '#ff00ff', '#FF8C00', '#008000'],
-            open: false
+            editable: false,
+            open: false,
+            tabName: ''
             //binder: this.props.binder_obj
         }
 
@@ -19,8 +21,10 @@ class Tab extends Component {
 
         this.addPage = this.addPage.bind(this);
         this.deletePage = this.deletePage.bind(this);
-        // this.editTabs = this.editTabs.bind(this);
-        // this.notEditTabs = this.notEditTabs.bind(this);
+        this.editTabs = this.editTabs.bind(this);
+        this.notEditTabs = this.notEditTabs.bind(this);
+        // this.editable = this.editable.bind(this);
+        // this.notEditable = this.notEditable.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -31,15 +35,19 @@ class Tab extends Component {
             });
         }
     }
-
     // componentWillReceiveProps(nextProps){
-    //     //console.log('nextProps: ',nextProps);
-    //     if(!this.props.binder || !nextProps.binder){
-    //         return;
+
+    //     if(this.props.hasOwnProperty("binder")){
+    //         // this.setState({
+    //         //     binderName: this.props.binderObj.binder_name
+    //         // });
+    //         if(nextProps.binder.binder_name !== this.props.binder.binder_name){
+
+    //         } else {
+
+    //         }
     //     }
-    //      if(this.props.binder != nextProps.binder){
-    //          this.props.updateBinderArray();
-    //      }
+
     // }
     addPage(){
         //console.log('addPage clicked');
@@ -57,20 +65,49 @@ class Tab extends Component {
         this.props.deletePage(this.props.interface.binder_id, this.props.interface.tab_id, page_id);
     }
 
-    // editTabs(){
-    //     console.log("editable should be true");
-    //     this.setState({
-    //         editable: true
-    //     });
-    // }
+    editTabs(){
+        //console.log("editable should be true");
+        this.setState({
+            editable: true,
+            tabName: this.props.tabObj.tab_name
+        });
+    }
 
-    // notEditTabs() {
-    //     console.log("editable should be false");
-    //     this.setState({ 
-    //         editable: false 
-    //     });
-    // }
+    notEditTabs() {
+        //console.log("editable should be false");
+        const { tabName } = this.state;
+        this.props.editTab(this.props.binder._id, this.props.tabObj._id, tabName);
+        this.setState({ 
+            editable: false 
+        });
+    }
 
+    editTabName(e){
+
+
+        this.setState({
+            tabName: e.target.value
+        });
+    }
+
+    deleteTab(tab_id) {
+        //console.log('delete tab btn clicked, tab_id: ', tab_id);
+        //console.log('delete tab btn clicked, binder_id: ', this.props.binderObj._id);
+        if(this.props.binder.tab_arr_obj.length === 1){
+            console.log('can not delete last tab');
+            return;
+        }
+
+        this.props.deleteTab(this.props.interface.binder_id, this.props.tabObj._id);
+        // const { binder_arr_obj } = this.state;
+        // console.log(binder_arr_obj);
+        // let deleteIndex = 0;
+        // for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
+        //     if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
+        //         binder_arr_obj.splice(deleteIndex, 1);
+        //     }
+        // }
+    }
     // tabTextChanged(e, id){
     //     const {binder} = this.state;
     //     const {tab_arr_obj} = binder;
@@ -104,16 +141,56 @@ class Tab extends Component {
         //console.log("tab id updated");
     }
 
+
     render(){
         //this.props.selectBinder(this.props.binderObj);
-        const {open} = this.state;
+        const {open, editable, tabName} = this.state;
 
-        //console.log('props in tab:', this.props);
+        console.log('props in tab:', this.props);
+        //console.log('state in tab:', this.state);
         if(!this.props.binder|| !this.props.tabObj){
             return null;
         }
         let url = this.props.binder._id + "/" + this.props.tabObj._id;
         const{ page_arr_obj} = this.props.tabObj;
+        let tab_title = [];
+
+        if(editable){
+            //let editName = this.props.binderObj.binder_name;
+            tab_title = (
+                <div className="tabTitle">
+                         <input 
+                             className="edit_input"
+                             ref='textInput'
+                             type='text'
+                             onChange={(e)=>this.editTabName(e)}
+                             // onBlur={this.notEditable}
+                            // onKeyPress={this.keyPressed}
+                             value={tabName}
+                             />
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditTabs}>
+                    Done <span className="glyphicon glyphicon-ok"></span>
+                </button>
+            </div>              
+            );
+        } else {
+            tab_title = (
+                <div className="tabTitle">
+                    <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
+                        <div className=""  onClick={()=>this.handleClick()}>
+                            {this.props.tabObj.tab_name}
+                        </div>
+                    </Link>
+                    <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editTabs}>
+                        Tab <span className="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
+                            <span className="glyphicon glyphicon-minus"></span>Tab
+                    </button>
+                </div>
+            );
+        }
+
 
         let page_list = page_arr_obj.map((item, index) => {
             //let tab_url = '/' + item._id;
@@ -124,10 +201,7 @@ class Tab extends Component {
 
                 return (
                     <div key={index}>
-                        <Page pageObj={item}/>
-                        <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deletePage(item._id)} >
-                            <span className="glyphicon glyphicon-minus"></span>Page
-                        </button>
+                        <Page pageObj={item} tabID={this.props.tabObj._id}/>
                     </div>
                     // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
 
@@ -200,13 +274,7 @@ class Tab extends Component {
         return(
 
             <div>
-            <div className="tabTitle">
-                <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
-                    <div className=""  onClick={()=>this.handleClick()}>
-                        {this.props.tabObj.tab_name}
-                    </div>
-                </Link>           
-            </div>
+                {tab_title}
             <div className={`tabBody ${open ? 'visible' : 'hidden'}`}>
                 <ul>
                     {page_list}
@@ -243,8 +311,9 @@ class Tab extends Component {
 function mapStateToProps(state){
     //console.log('tab mstp', state);
     return {
+        binderArr: state.binderArray.binderArr,
         binder: state.binder.binderObj,
         interface: state.interface
     }
 }
-export default withRouter(connect(mapStateToProps,{ selectTab, addPage, deletePage, updateBinderArray })(Tab));
+export default withRouter(connect(mapStateToProps,{ selectTab, addPage, deleteTab, editTab, deletePage, updateBinderArray })(Tab));

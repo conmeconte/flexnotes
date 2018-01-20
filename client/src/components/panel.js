@@ -7,6 +7,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { binderArray, setNumOfPanels } from '../actions/index';
 
+
 class Panel extends Component {
     constructor(props) {
         super(props);

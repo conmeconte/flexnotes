@@ -93,9 +93,7 @@ class NavBar extends Component{
                 return (
                     <div key={index}>
                         <Binder index={index} binderObj={item}/>
-                        <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteBinder(item._id)} >
-                            <span className="glyphicon glyphicon-minus"></span>Binder
-                        </button>
+
                     </div>
                 );
             });
