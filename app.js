@@ -4,6 +4,7 @@ const cookieSession = require('cookie-session');
 const passport      = require('passport');
 const keys          = require('./config/keys');
 const { logError, errorHandler, clientErrorHandler } = require('./middlewares/handleError');
+const fs            = require('fs');
 
 // let dummyData = require('./dummyData/backEndDummyData');
 const app   = express();
