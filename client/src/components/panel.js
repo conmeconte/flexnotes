@@ -49,7 +49,7 @@ class Panel extends Component {
                     <button onClick={this.sendSize} className="btn btn-primary">Save</button>
                     <h1 className="app-title">FlexNote</h1>
                 </div> */}
-                <div className="panel_div col-xs-10">
+                <div className="panel_div col s10">
                     <PanelNum num={3} />
                 </div>
             </div>

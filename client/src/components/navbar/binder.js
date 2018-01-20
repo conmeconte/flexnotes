@@ -45,7 +45,11 @@ class Binder extends Component {
     }
 
     componentDidMount(){
-
+        if(this.props.index===0){
+            this.setState({
+                active: true
+            });
+        }
     }
 
     componentWillReceiveProps(nextProps){
@@ -81,6 +85,11 @@ class Binder extends Component {
     deleteTab(tab_id) {
         //console.log('delete tab btn clicked, tab_id: ', tab_id);
         //console.log('delete tab btn clicked, binder_id: ', this.props.binderObj._id);
+        if(this.props.binderObj.tab_arr_obj.length === 1){
+            console.log('can not delete last tab');
+            return;
+        }
+
         this.props.deleteTab(this.props.binderObj._id, tab_id);
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
@@ -148,9 +157,9 @@ class Binder extends Component {
     }
 
     render() {
-        const { editable, active } = this.state;
-        console.log("Binder props:", this.props);
-        console.log("Binder active state:", active);
+        const { active, editable } = this.state;
+        //console.log("Binder props:", this.props);
+        //console.log("Binder active state:", active);
         if(!this.props.binderObj){
             return null;
         }
@@ -179,9 +188,9 @@ class Binder extends Component {
 
                 return (
                     <div key={index}>
-                        <Tab tabObj={item}/>
+                        <Tab index={index} tabObj={item}/>
                         <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(item._id)} >
-                            <span className="glyphicon glyphicon-minus"></span>Delete Tab
+                            <span className="glyphicon glyphicon-minus"></span>Tab
                         </button>
                     </div>
                     // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
@@ -226,7 +235,7 @@ class Binder extends Component {
                     <span className="glyphicon glyphicon-plus"></span>
                 </button> */}
                 <button className="btn btn-default btn-xs btn_add" onClick={this.addTab}>
-                    <span className="glyphicon glyphicon-plus"></span>Add Tab
+                    <span className="glyphicon glyphicon-plus"></span>Tab
                 </button>
                 <Route path={`/main/${binder_url}`+"/:tab"} component={Tab}/>
                 </div>

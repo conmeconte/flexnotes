@@ -6,6 +6,22 @@
     padding-left: 5%;
     box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
 } */
+.btn{
+    padding: 0.6vh 1vw;
+}
+#video-container .row{
+    margin: 0 0 0 0; 
+}
+#video-container form{
+    width:100%
+}
+#video-container form div{
+    width:70%
+}
+.btn.vidList{
+    margin-left:1%;
+}
+
 .panel_div.col-xs-10{
     /* background-image: url('http://www.photos-public-domain.com/wp-content/uploads/2012/05/ivory-off-white-paper-texture.jpg'); */
     background-image: url('https://images.freecreatives.com/wp-content/uploads/2015/04/white-paper-texture-with-flecks.jpg');
@@ -35,6 +51,7 @@
 .slides-iframe{
     /* box-shadow: 8px 12px #8888886e; */
     box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+    left:2.5%;
     /* width: 98%; */
 
 }
@@ -46,24 +63,24 @@
 }
 
 
-/* .notes-parent-panel::-webkit-scrollbar-track
+::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
 	background-color: #F5F5F5;
 }
-.notes-parent-panel::-webkit-scrollbar
+::-webkit-scrollbar
 {
 	width: 12px;
 	background-color: #F5F5F5;
 }
 
-.notes-parent-panel::-webkit-scrollbar-thumb
+::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #555;
-} */
+}
 
 /* .notes-parent-panel{
     overflow-x: unset;

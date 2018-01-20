@@ -23,7 +23,6 @@ class NavBar extends Component{
             this.props.updateBinderArray();
         }
     }
-
     addBinder() {
         //console.log('add Binder');
         this.props.addBinder();
@@ -31,6 +30,10 @@ class NavBar extends Component{
 
     deleteBinder(delete_id) {
         //console.log('delete button clicked, binder_id: ', delete_id);
+        if(this.props.binderArr.length === 1){
+            console.log('can not delete last binder');
+            return;
+        }
         this.props.deleteBinder(delete_id);
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
@@ -89,9 +92,9 @@ class NavBar extends Component{
                 
                 return (
                     <div key={index}>
-                        <Binder binderObj={item}/>
+                        <Binder index={index} binderObj={item}/>
                         <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteBinder(item._id)} >
-                            <span className="glyphicon glyphicon-minus"></span>Delete Binder
+                            <span className="glyphicon glyphicon-minus"></span>Binder
                         </button>
                     </div>
                 );
@@ -113,7 +116,7 @@ class NavBar extends Component{
         //     );
         // });
         return (
-            <div className="navbar col-xs-2">
+            <div className="navbar col s2">
             {/* <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
                     Binders <span className="glyphicon glyphicon-pencil"></span>
             </button>
@@ -130,7 +133,7 @@ class NavBar extends Component{
                 {/* {binder_route} */}
                 
                 <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
-                    <span className="glyphicon glyphicon-plus"></span>Add Binder
+                    <span className="glyphicon glyphicon-plus"></span>Binder
                 </button>
                 <Route path={'/main/:binder'} component={Binder}/>
             </div>

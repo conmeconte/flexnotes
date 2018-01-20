@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo } from '../actions';
+import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray } from '../actions';
 
 class VideoContainer extends Component {
     renderInput ({input}) {
@@ -13,8 +13,9 @@ class VideoContainer extends Component {
         );
     }
     handleYouTubeUrl (values) {
+        debugger;
         console.log("VALUES: ", values)
-        // this.props.grabVideoUrl(values.input);
+        this.props.grabVideoUrl(values.input);
         this.props.playPastedLinkVideo(values["youtube-url"]);
         this.props.toggleModal(this.props.addVideoModalStyle);
     }
@@ -29,11 +30,12 @@ class VideoContainer extends Component {
                     <form onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}>
                         <Field name="youtube-url" component={this.renderInput} />
                     <button className="btn btn-success"><span className="glyphicon glyphicon-save"></span></button>
-                </form>
-                <button className="btn btn-primary col-offset-xs-1 left-menu-button" onClick={ () => {
+                    <button className="btn btn-primary col-offset-xs-1 left-menu-button vidList" onClick={ () => {
                     this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                     this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
-                }}><span className="glyphicon glyphicon-chevron-left"></span></button>
+                    }}><span className="glyphicon glyphicon-chevron-left"></span></button>
+                </form>
+                
                 </div>
                 <div className="video-embed-wrapper">
                     <iframe allowFullScreen src={this.props.videoLink} className="video-iframe"></iframe>
@@ -53,7 +55,8 @@ function mapStateToProps (state) {
         videoTitle: state.video.videoTitle,
         resultsStyles: state.video.resultsStyles,
         toggleResultsBool: state.video.toggleResults,
-        opacityContainer: state.video.opacityDisplay
+        opacityContainer: state.video.opacityDisplay,
+        interface_obj: state.interface
     }
 }
 
@@ -61,4 +64,4 @@ VideoContainer = reduxForm({
     form: 'youtube-url'
 })(VideoContainer)
 
-export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo })(VideoContainer)
+export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray })(VideoContainer)

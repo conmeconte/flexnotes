@@ -3,7 +3,7 @@ const mongoose      = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport      = require('passport');
 const keys          = require('./config/keys');
-
+const { logError, errorHandler, clientErrorHandler } = require('./middlewares/handleError');
 
 // let dummyData = require('./dummyData/backEndDummyData');
 const app   = express();
@@ -27,7 +27,7 @@ require('./services/passport');// user must be loaded first so that it creates t
 /* Consuming middleware throughout app */
 // app.use(bodyParser.json());
 app.use(express.json());
-app.use(express.urlencoded());
+// app.use(express.urlencoded());
 app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 1000,  //set up cookie life-time, might have to use express session if we want to store more data into a single session    })
@@ -37,11 +37,13 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 /* Routing middleware */
 require('./routes/authRoutes')(app);
-// require('./routes/apiRoutes')(app, dummyData);
 require('./routes/realApiRoutes')(app, db);
-
+app.use(logError);
+app.use(errorHandler);
+app.use(clientErrorHandler);
 
 /* Start server and listen on PORT */
 app.listen(PORT, ()=>{
