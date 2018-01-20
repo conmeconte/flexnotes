@@ -101,14 +101,9 @@ body {
     display: inline-block;
     margin-right: 10px;
 }
-.item-list li:nth-child(3) {
-    font-size: 2.5vmin;
-}
-.item-text {
-    display: inline-block;
-}
+
 .flex {
-    color: #31C3E7;
+    color: #40c4ff; 
 }
 .user-circle {
     border: 3px solid #fff;
@@ -126,7 +121,6 @@ body {
     top: 2vh;
 }
 .login-logout-container button {
-    width: 10vmin;
     height: 4vmin;
     font-size: 1.5vmin;
 }
@@ -135,4 +129,17 @@ body {
     z-index: 5000;
     right: 1%;
     top: 2%;
+}
+a.landing-login-text {
+    color: #fff;
+}
+.item-text {
+    display: inline-block;
+}
+.material-icons {
+    display: inline-block;
+    margin-right: 8px;
+}
+.material-icons.landing {
+    color: #40c4ff; 
 }
