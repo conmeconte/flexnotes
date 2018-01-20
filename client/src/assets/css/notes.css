@@ -2,11 +2,17 @@
     height: 100%;
     margin-top: 75px;
     overflow-y: scroll;
-    background-image: linear-gradient(0deg, transparent 24%, rgba(177, 235, 249, 1) 25%, rgba(177, 235, 249, 1) 26%, transparent 27%, transparent 74%, rgba(177, 235, 249, 1) 75%, rgba(177, 235, 249, 1) 76%, transparent 77%, transparent);
-    background-size:50px 50px;
-    background-attachment: local;
-    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
 
+
+    /*background-image: linear-gradient(0deg, transparent 24%, rgba(177, 235, 249, 1) 25%, rgba(177, 235, 249, 1) 26%, transparent 27%, transparent 74%, rgba(177, 235, 249, 1) 75%, rgba(177, 235, 249, 1) 76%, transparent 77%, transparent);*/
+    /*background-size:50px 50px;*/
+    /*background-attachment: local;*/
+    /*box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);*/
+
+    border: 1px solid black;
+    box-sizing: border-box;
+    background-color: ghostwhite;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(0, 0, 0, 0.3);
 }
 
 /*.notes-parent-panel::-webkit-scrollbar-track {*/
@@ -31,21 +37,28 @@
     height: 100%;
     top: 0;
     left: 0;
+
+    /*width: 45%;*/
+    /*height: 100%;*/
+
 }
 
 .toolbar {
     width: 100%;
-    height: 75px;
-    top: 0;
-    bottom: 0;
-    padding: 5px 0 0 15px;
-    background-color: #31C3E7;
-    text-align: left;
-    line-height: 45px;
-    z-index: 1;
+    height: 12%;
     position: absolute;
+    top: 0;
     right: 0;
+    bottom: 0;
     left: 0;
+    padding: 2%;
+    /*border-bottom: 1px solid black;*/
+    background-color: #96858F;
+    /*padding: 5px 0 0 15px;*/
+    /*background-color: #96858F;*/
+    /*text-align: left;*/
+    /*line-height: 45px;*/
+    /*z-index: 1;*/
     box-shadow: 0 5px 5px #999;
 }
 
@@ -53,6 +66,29 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    /*justify-content: space-around;*/
+    height: 50%;
+
+    border: 1px solid black;
+    margin: -5px 0 10px 10px;
+}
+
+.styleSquare {
+    /*width: 40px;*/
+    /*height: 30px;*/
+    width: 9%;
+    height: 100%;
+    border: 1px solid black;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #d5d5d5;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
+}
+
+.styleSquare:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
+    background-color: ghostwhite;
 }
 
 .editor {
@@ -62,36 +98,52 @@
     line-height: 25px;
 }
 
-.search-box {
-    margin-top: -12px;
-    margin-left: -5px;
-    line-height: 23px;
-}
+/*.search-box {*/
+    /*margin-top: -12px;*/
+    /*margin-left: -5px;*/
+    /*line-height: 23px;*/
+/*}*/
 
 .search-input {
-    border-radius: 5px;
+    width: 250px;
+    height: 30px;
     padding-left: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    float: left;
+    margin: 0 1% 0 .5%;
+
+    /*border-radius: 5px;*/
+
+
 }
 
 .material-icons {
-    color: white;
+    color: #96858F;
+    font-size: 3vmin;
 }
 
 .saveNotes {
-    width: 125px;
-    float: right;
-    margin-right: 10px;
+    /*width: 125px;*/
+    /*margin-right: 10px;*/
     font-weight: 600;
-    border-radius: 5px;
-    box-shadow: 3px 3px #999;
+    /*border-radius: 5px;*/
+    /*box-shadow: 3px 3px #999;*/
+
+    float: right;
+    margin-right: 1%;
+    height: 45%;
+    width: 15%;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.saveNotes:active {
-    box-shadow: 2px 2px #999;
-    border: none;
-    transform: translateY(4px);
+.saveNotes:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
+    background-color: ghostwhite;
 }
 
 .searchSave {
     min-width: 275px;
 }
+

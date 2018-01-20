@@ -39,12 +39,12 @@ const initialValue = Value.fromJSON({
 
 const saveStyle = {
     true: {
-        backgroundColor: "#ffffff",
+        // backgroundColor: "#ffffff",
         color: "#00cc00"
     },
     false: {
-        backgroundColor: "#ffffff",
-        color: "#31C3E7"
+        // backgroundColor: "#ffffff",
+        color: "#96858F"
     }
 }
 
@@ -289,7 +289,7 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span title={type} onMouseDown={onMouseDown} data-active={isActive}>
+            <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
                 <span className="material-icons">{icon}</span>
             </span>
         )
@@ -300,7 +300,7 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickBlock(event, type);
 
         return (
-            <span title={type} onMouseDown={onMouseDown} data-active={isActive}>
+            <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
                 <span className="material-icons">{icon}</span>
             </span>
         )
@@ -502,24 +502,23 @@ class Notes extends Component {
                     {this.renderBlockButton('block-quote', 'format_quote')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
-                    <span title="link" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
+                    <span className="styleSquare" title="link" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
                         <span className="material-icons">link</span>
                     </span>
-                    <span title="image" onMouseDown={this.onClickImage}>
+                    <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
                         <span className="material-icons">image</span>
                     </span>
                 </div>
-                <div className="searchSave">
-                    <div className="search-box">
+                {/*<div className="searchSave">*/}
+                    {/*<div className="search-box">*/}
                         <input
                             className="search-input"
                             placeholder="Search keywords..."
                             onChange={this.onInputChange}
                         />
-                        <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved!" : "Save Changes"}</button>
-                    </div>
-                </div>
-
+                        <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved" : "Save Changes"}</button>
+                    {/*</div>*/}
+                {/*</div>*/}
             </div>
 
         )
