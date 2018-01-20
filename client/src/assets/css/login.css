@@ -8,7 +8,7 @@
 }
 
 .logoutBtn {
-    background-color: #31C3E7;
+    background-color: #d5d5d5;;
     color: #ffffff;
     font-size: 15px;
 }
@@ -17,4 +17,9 @@
     background-color: #ffffff;
     border: 2px solid #31C3E7;
     color: #31C3E7;
+}
+
+.logoImage {
+    height: 100px;
+    padding: 0 0 10px 35px;
 }

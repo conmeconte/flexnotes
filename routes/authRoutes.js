@@ -1,4 +1,5 @@
 const passport = require('passport');
+const fs = require('fs');
 
 
 module.exports = app => {
@@ -15,6 +16,12 @@ module.exports = app => {
     });
 
     app.get('/api/logout', (req, res) => {
+        let loginLog= {Date: new Date().toLocaleString(),user: `user ${req.user.userName} has logged out`};
+        fs.appendFile('./errorLogs/logins.log', JSON.stringify(loginLog) + '\n', function (err) {
+            if (err) throw err; 
+            console.log('Updated!');
+        });
+    
         req.logout();
         res.redirect('/'); //nothing will be sent out since logged out
     });

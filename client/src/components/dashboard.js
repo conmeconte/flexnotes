@@ -4,6 +4,8 @@ import NavBar from './navbar/navbar';
 import Login from './login';
 import '../assets/css/login.css';
 
+import logo from '../assets/images/flexnotes_logo.gif';
+
 import { connect } from 'react-redux';
 import { getDataObject } from '../actions';
 
@@ -21,6 +23,7 @@ class Dashboard extends Component {
         return(
             <div>
                 <div className="logout">
+                    <img className="logoImage" src={logo} />
                     <Login />
                 </div>
                 <NavBar />
