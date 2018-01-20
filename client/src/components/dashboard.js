@@ -38,7 +38,7 @@ function mapStateToProps(state){
     //console.log('mstp dashboard:', state);
     return{
         //data: state.auth,
-        binderArr: state.binderArray.binderArr,
+        binderArr: state.binderArray.binderArr
         //initBinder: state.binder.binderObj,
         //interface: state.interface
     }
