@@ -37,6 +37,17 @@ const initialValue = Value.fromJSON({
     }
 });
 
+const saveStyle = {
+    true: {
+        backgroundColor: "#ffffff",
+        color: "#00cc00"
+    },
+    false: {
+        backgroundColor: "#ffffff",
+        color: "#31C3E7"
+    }
+}
+
 // --------------------------- UNDO AND REDO  ---------------------------
 
 const ToolbarButton = props => (
@@ -94,12 +105,13 @@ class Notes extends Component {
 
 
     state = {
-        value: initialValue
+        value: initialValue,
+        save: false
     };
 
 
     onChange = ({ value }) => {
-        this.setState({ value });
+        this.setState({ value, save: false });
     };
 
     submitNotes(){
@@ -113,6 +125,7 @@ class Notes extends Component {
             tabID: interface_obj.tab_id,
             pageID: interface_obj.page_id
         });
+        this.setState({ save: true })
     }
 
 
@@ -276,7 +289,7 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span title={type} className="toolbarButton" onMouseDown={onMouseDown} data-active={isActive}>
+            <span title={type} onMouseDown={onMouseDown} data-active={isActive}>
                 <span className="material-icons">{icon}</span>
             </span>
         )
@@ -287,7 +300,7 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickBlock(event, type);
 
         return (
-            <span title={type} className="toolbarButton" onMouseDown={onMouseDown} data-active={isActive}>
+            <span title={type} onMouseDown={onMouseDown} data-active={isActive}>
                 <span className="material-icons">{icon}</span>
             </span>
         )
@@ -478,8 +491,8 @@ class Notes extends Component {
 
             <div className="toolbar">
                 <div className="stylingButtons">
-                    <ToolbarButton className="toolbarButton" icon="undo" onMouseDown={this.onClickUndo} />
-                    <ToolbarButton className="toolbarButton" icon="redo" onMouseDown={this.onClickRedo} />
+                    <ToolbarButton icon="undo" onMouseDown={this.onClickUndo} />
+                    <ToolbarButton icon="redo" onMouseDown={this.onClickRedo} />
                     {this.renderMarkButton('bold', 'format_bold')}
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
@@ -489,21 +502,21 @@ class Notes extends Component {
                     {this.renderBlockButton('block-quote', 'format_quote')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
-                    <span title="link" className="toolbarButton" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
+                    <span title="link" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
                         <span className="material-icons">link</span>
                     </span>
-                    <span title="image" className="toolbarButton" onMouseDown={this.onClickImage}>
+                    <span title="image" onMouseDown={this.onClickImage}>
                         <span className="material-icons">image</span>
                     </span>
                 </div>
                 <div className="searchSave">
-                    <div className="search-box toolbarButton">
+                    <div className="search-box">
                         <input
                             className="search-input"
                             placeholder="Search keywords..."
                             onChange={this.onInputChange}
                         />
-                        <button className="saveNotes toolbarButton" onClick={this.submitNotes.bind(this)}>Save Changes</button>
+                        <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved!" : "Save Changes"}</button>
                     </div>
                 </div>
 

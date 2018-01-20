@@ -46,6 +46,7 @@
     position: absolute;
     right: 0;
     left: 0;
+    box-shadow: 0 5px 5px #999;
 }
 
 .stylingButtons {
@@ -77,10 +78,9 @@
 }
 
 .saveNotes {
+    width: 125px;
     float: right;
     margin-right: 10px;
-    background-color: #fff;
-    color: #31C3E7;
     font-weight: 600;
     border-radius: 5px;
     box-shadow: 3px 3px #999;
