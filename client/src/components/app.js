@@ -5,23 +5,20 @@ import * as actions from "../actions";
 
 import LandingPage from './landingpage';
 import Dashboard from './dashboard';
-import 'materialize-css/dist/css/materialize.min.css';
+
+// import 'materialize-css/dist/css/materialize.min.css';
 //import { getDataObject } from './../actions/index';
 
-
 class App extends Component {
+
     componentWillMount() {
         this.props.fetchUser();
         //this.props.getDataObject();
     }
 
-    componentDidMount(){
-        
-    }
-
     render() {
         return (
-            <div>
+            <div className="app">
                 <BrowserRouter >
 
                     <div>

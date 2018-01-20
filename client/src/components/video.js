@@ -129,13 +129,17 @@ class Video extends Component {
                     <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input input-group col-xs-12">
                         <Field name="video" component={this.renderInput} />
                         <span className="input-group-btn">
-                            <button id="search-button" className="btn btn-primary">
+                            <button id="search-button" className="btn">
                                 <span className="glyphicon glyphicon-search"></span>
                             </button>
-                            <button className="btn btn-danger" onClick={() => {
-                                this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
-                                this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
-                            }}><span className="glyphicon glyphicon-chevron-right"></span></button>
+
+                            <button className="btn" onClick={ () => {
+                            this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
+                            this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
+                            }}>
+                                <span className="glyphicon glyphicon-chevron-right"></span>
+                            </button>
+
                         </span>
                     </form>
                     <Results results={this.props.videoResults} />
