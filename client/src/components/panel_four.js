@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setTopLeftHeight, setTopLeftWidth, setTopRightHeight } from '../actions';
 import SplitPane from 'react-split-pane';
-
 import Video from './video';
 import Notes from './notes';
 import Slides from './slides';

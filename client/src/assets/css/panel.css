@@ -61,9 +61,9 @@ body {
 .Resizer.disabled:hover {
   border-color: transparent;
 }
-
-.width-w-nav{
-    left: 1.5% !important;
+.SplitPane.width-w-nav.vertical {
+    left: auto !important;
+    width: 83%
 }
 
 /* .panel_div{
@@ -122,4 +122,7 @@ body {
 .panel_div {
     width: 88.5%;
     height: 95vh;
+}
+#dashboard-container {
+    margin-bottom: 0;
 }

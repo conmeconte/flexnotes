@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import Panel from './panel';
 import NavBar from './navbar/navbar';
 import Login from './login';
-import '../assets/css/login.css';
-
+// import '../assets/css/login.css';
 import { connect } from 'react-redux';
 import { getDataObject } from '../actions';
 
@@ -19,7 +18,7 @@ class Dashboard extends Component {
             return null;
         } 
         return(
-            <div>
+            <div id="dashboard-container" className="row">
                 <div className="logout">
                     <Login />
                 </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../assets/css/slides.css';
+// import '../assets/css/slides.css';
 import axios from 'axios';
 import { setSlidesUrl } from '../actions';
 import { connect } from 'react-redux';

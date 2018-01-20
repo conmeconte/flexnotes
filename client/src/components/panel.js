@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PanelNum from './panel_num';
-import '../assets/css/panel.css';
+// import '../assets/css/panel.css';
 import axios from 'axios';
 // import { SortablePane, Pane } from 'react-sortable-pane';
 // import Resizable from 're-resizable';
@@ -33,22 +33,22 @@ class Panel extends Component {
 
     render() {
         return (
-            <div>
-                <header>
+            <div className="col s10">
+                {/* <header>
                     <div>
-                        <h3 className="welcome">FlexNotes{/*this.props.binderArray.binderArr.userName */}</h3>
+                        <h3 className="welcome">FlexNotes{this.props.binderArray.binderArr.userName}</h3>
                     </div>
                     <div className="panelOptions">
-                        {/* <div><h3 className="optionsTitle">Panels:</h3></div> */}
-                        {/* <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(3, this.props.interface_obj) }}>View Dashboard</button></div> */}
-                        {/* <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(4, this.props.interface_obj) }}>4</button></div> */}
+                        <div><h3 className="optionsTitle">Panels:</h3></div>
+                        <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(3, this.props.interface_obj) }}>View Dashboard</button></div>
+                        <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(4, this.props.interface_obj) }}>4</button></div>
                     </div>
-                </header>
+                </header> */}
                 {/* <div className="col-xs-10">
                     <button onClick={this.sendSize} className="btn btn-primary">Save</button>
                     <h1 className="app-title">FlexNote</h1>
                 </div> */}
-                <div className="panel_div col s10">
+                <div className="panel_div">
                     <PanelNum num={3} />
                 </div>
             </div>

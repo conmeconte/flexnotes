@@ -6,7 +6,7 @@ import {createStore, applyMiddleware} from 'redux';
 import reduxThunk from 'redux-thunk';
 import App from './components/app';
 import reducers from './reducers';
-import './assets/css/queries.css';
+// import './assets/css/queries.css';
 
 const store= createStore(reducers, {}, applyMiddleware(reduxThunk));
 
