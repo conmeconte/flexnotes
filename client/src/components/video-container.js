@@ -25,8 +25,8 @@ class VideoContainer extends Component {
     render () {
         
     return ( 
-            <div id="video-container" className="video-container">
-                <div className="row">
+        <div>
+            <div className="row">
                     <form onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}>
                         <Field name="youtube-url" component={this.renderInput} />
                     <button className="btn btn-success"><span className="glyphicon glyphicon-save"></span></button>
@@ -35,12 +35,13 @@ class VideoContainer extends Component {
                     this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                     }}><span className="glyphicon glyphicon-chevron-left"></span></button>
                 </form>
-                
-                </div>
+            </div>
+            <div id="video-container" className="video-container">
                 <div className="video-embed-wrapper">
-                    <iframe allowFullScreen src={this.props.videoLink} className="video-iframe"></iframe>
+                    <iframe allowFullScreen id="video-iframe" src={this.props.videoLink} className="video-iframe"></iframe>
                 </div>
             </div>
+        </div>
         )
     }
 }

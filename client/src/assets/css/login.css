@@ -7,8 +7,8 @@
     z-index: 1;
 }
 
-.logoutBtn {
-    background-color: #d5d5d5;;
+/* .logoutBtn {
+    background-color: #31C3E7;
     color: #ffffff;
     font-size: 15px;
 }
@@ -17,7 +17,7 @@
     background-color: #ffffff;
     border: 2px solid #31C3E7;
     color: #31C3E7;
-}
+} */
 
 .logoImage {
     height: 100px;

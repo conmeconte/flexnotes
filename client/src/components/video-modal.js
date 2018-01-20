@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../assets/css/video-add-modal.css';
+// import '../assets/css/video-add-modal.css';
 import { connect } from 'react-redux';
 import { toggleModal, addToPlaylist, updateBinderArray } from '../actions';
 import { Field, reduxForm } from 'redux-form';
