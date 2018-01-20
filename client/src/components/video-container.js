@@ -29,11 +29,12 @@ class VideoContainer extends Component {
                     <form onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}>
                         <Field name="youtube-url" component={this.renderInput} />
                     <button className="btn btn-success"><span className="glyphicon glyphicon-save"></span></button>
-                </form>
-                <button className="btn btn-primary col-offset-xs-1 left-menu-button" onClick={ () => {
+                    <button className="btn btn-primary col-offset-xs-1 left-menu-button vidList" onClick={ () => {
                     this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                     this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
-                }}><span className="glyphicon glyphicon-chevron-left"></span></button>
+                    }}><span className="glyphicon glyphicon-chevron-left"></span></button>
+                </form>
+                
                 </div>
                 <div className="video-embed-wrapper">
                     <iframe allowFullScreen src={this.props.videoLink} className="video-iframe"></iframe>
