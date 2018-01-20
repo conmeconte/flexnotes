@@ -7,17 +7,12 @@ const DEFAULT_STATE = {
     navbar_min: false,
     user_name: {},
     pull_from_db: false,
+    sent_to_db: false,
     axios_error_response: ''
 }
 
 export default function (state = DEFAULT_STATE, action) {
     switch (action.type) {
-        case types.BINDER_UPDATE:
-            return { ...state, binder_id: action.payload };
-        case types.TAB_UPDATE:
-            return { ...state, tab_id: action.payload };
-        case types.PAGE_UPDATE:
-            return { ...state, page_id: action.payload };
         case types.GET_USER_DATA:
              let userName = action.payload.userName;
              let initBinderID = action.payload.binder_arr_obj[0]._id;
@@ -49,6 +44,8 @@ export default function (state = DEFAULT_STATE, action) {
             return {...state, pull_from_db: true};
         case types.UPDATE_BINDER_ARRAY:
             return {...state, pull_from_db: false};
+        case types.ADD_TO_PLAYLIST: 
+            return {...state, sent_to_db: true};
         case types.AXIOS_ERROR:
             return {...state, axios_error_response: action.msg};
         default:
