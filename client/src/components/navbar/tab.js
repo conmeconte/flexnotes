@@ -11,8 +11,7 @@ class Tab extends Component {
 
         this.state = {
             tab_color_arr: ['#ff0000', '#0000ff', '#ff00ff', '#FF8C00', '#008000'],
-            editable: false,
-            active: false
+            open: false
             //binder: this.props.binder_obj
         }
 
@@ -23,6 +22,14 @@ class Tab extends Component {
         // this.editTabs = this.editTabs.bind(this);
         // this.notEditTabs = this.notEditTabs.bind(this);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentDidMount(){
+        if(this.props.index===0){
+            this.setState({
+                open: true
+            });
+        }
     }
 
     // componentWillReceiveProps(nextProps){
@@ -43,6 +50,10 @@ class Tab extends Component {
 
     deletePage(page_id){
         //console.log('delete page id:', page_id);
+        if(this.props.tabObj.page_arr_obj.length === 1){
+            console.log('can not delete last page');
+            return;
+        }
         this.props.deletePage(this.props.interface.binder_id, this.props.interface.tab_id, page_id);
     }
 
@@ -83,14 +94,19 @@ class Tab extends Component {
 
 
     handleClick(){
+        const {open} = this.state;
+        let toggle = !open;
         //this.props.selectBinder(binderObj);
         this.props.selectTab(this.props.tabObj);
+        this.setState({
+            open: toggle
+        });
         //console.log("tab id updated");
     }
 
     render(){
         //this.props.selectBinder(this.props.binderObj);
-        const {editable} = this.state;
+        const {open} = this.state;
 
         //console.log('props in tab:', this.props);
         if(!this.props.binder|| !this.props.tabObj){
@@ -191,7 +207,7 @@ class Tab extends Component {
                     </div>
                 </Link>           
             </div>
-            <div className="tabBody">
+            <div className={`tabBody ${open ? 'visible' : 'hidden'}`}>
                 <ul>
                     {page_list}
                 </ul>    
