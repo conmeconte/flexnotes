@@ -190,7 +190,7 @@ class Binder extends Component {
                     <div key={index}>
                         <Tab index={index} tabObj={item}/>
                         <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(item._id)} >
-                            <span className="glyphicon glyphicon-minus"></span>Delete Tab
+                            <span className="glyphicon glyphicon-minus"></span>Tab
                         </button>
                     </div>
                     // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
@@ -235,7 +235,7 @@ class Binder extends Component {
                     <span className="glyphicon glyphicon-plus"></span>
                 </button> */}
                 <button className="btn btn-default btn-xs btn_add" onClick={this.addTab}>
-                    <span className="glyphicon glyphicon-plus"></span>Add Tab
+                    <span className="glyphicon glyphicon-plus"></span>Tab
                 </button>
                 <Route path={`/main/${binder_url}`+"/:tab"} component={Tab}/>
                 </div>

@@ -94,7 +94,7 @@ class NavBar extends Component{
                     <div key={index}>
                         <Binder index={index} binderObj={item}/>
                         <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteBinder(item._id)} >
-                            <span className="glyphicon glyphicon-minus"></span>Delete Binder
+                            <span className="glyphicon glyphicon-minus"></span>Binder
                         </button>
                     </div>
                 );
@@ -133,7 +133,7 @@ class NavBar extends Component{
                 {/* {binder_route} */}
                 
                 <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
-                    <span className="glyphicon glyphicon-plus"></span>Add Binder
+                    <span className="glyphicon glyphicon-plus"></span>Binder
                 </button>
                 <Route path={'/main/:binder'} component={Binder}/>
             </div>
