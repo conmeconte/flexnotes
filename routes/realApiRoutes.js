@@ -33,7 +33,7 @@ module.exports = (app) => {
             //give binder data 
             const existingUser= await User.findById(req.user.id, function(err){if(err){return res.send('error')}});
             if(existingUser){
-                res.send(existingUser.binder_arr_obj);
+                res.send(existingUser);
             }else{
                 res.send("Error can't find user")
             }
