@@ -267,7 +267,7 @@ export function updateBinderArray() {
     return (dispatch) => {
         const test = axios.get('/api/binder')
             .then((resp) => {
-                //console.log("get response: ", resp.data.binder_arr_obj);
+                console.log("update binder array: ", resp.data.binder_arr_obj);
 
                 dispatch({
                     type: types.UPDATE_BINDER_ARRAY,
@@ -296,10 +296,16 @@ export function selectTab(tabObj) {
     }
 }
 
-export function selectPage(pageObj) {
+export function selectPage(binder_id, tab_id, page_id) {
+    //console.log('select page action idObj:', idObj);
+    let idObject = {
+        binder_id: binder_id,
+        tab_id: tab_id,
+        page_id: page_id
+    }
     return {
         type: types.SELECT_PAGE,
-        payload: pageObj
+        payload: idObject
     }
 }
 
@@ -407,7 +413,7 @@ export function deletePage(binder_id, tab_id, page_id) {
         const test = axios.delete(`/api/page?binderID=${binder_id}&tabID=${tab_id}&pageID=${page_id}`, {
         })
             .then((resp) => {
-                console.log("delete page response: ", resp);
+                //console.log("delete page response: ", resp);
 
                 dispatch({
                     type: types.DELETE_PAGE,
@@ -417,6 +423,72 @@ export function deletePage(binder_id, tab_id, page_id) {
                 dispatch({
                     type: types.AXIOS_ERROR,
                     msg: 'Failed call in delete page'
+                });
+            });
+    }
+}
+
+export function editBinder(binder_id, binder_name){
+    return (dispatch) => {
+        const test = axios.put('/api/binder', {
+            binderID: binder_id,
+            binder_name: binder_name
+        })
+            .then((resp) => {
+                //console.log("edit binder: ", resp);
+                dispatch({
+                    type: types.EDIT_BINDER,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in edit binder'
+                });
+            });
+    }
+}
+
+export function editTab(binder_id, tab_id, tab_name){
+    return (dispatch) => {
+        const test = axios.put('/api/tab', {
+            binderID: binder_id,
+            tabID: tab_id,
+            tab_name: tab_name
+        })
+            .then((resp) => {
+                //console.log("edit tab resp: ", resp);
+                dispatch({
+                    type: types.EDIT_TAB,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in edit tab'
+                });
+            });
+    }
+}
+
+export function editPage(binder_id, tab_id, page_id, page_name){
+    return (dispatch) => {
+        const test = axios.put('/api/page', {
+            binderID: binder_id,
+            tabID: tab_id, 
+            pageID: page_id,
+            page_name: page_name
+        })
+            .then((resp) => {
+                console.log("edit page resp: ", resp);
+                dispatch({
+                    type: types.EDIT_PAGE,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in edit page'
                 });
             });
     }

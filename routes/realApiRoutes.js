@@ -77,7 +77,7 @@ module.exports = (app) => {
                     
             
                     user.save();
-                    res.send(user);
+                    res.send(user.binder_arr_obj);
                 }else {
                 res.send("Error can't find user")
                 }
@@ -168,7 +168,7 @@ module.exports = (app) => {
                     .binder_arr_obj.id(req.body.binderID);
 
                     user.save();
-                    res.send(binder);
+                    res.send(user.binder_arr_obj);
                 }else {
                 res.send("Error can't find user")
                 }
@@ -255,7 +255,7 @@ module.exports = (app) => {
                     page.panel_dimensions.number_of_panels= req.body.number_of_panels || page.panel_dimensions.number_of_panels;
                     
                     user.save();
-                    res.send(user);
+                    res.send(user.binder_arr_obj);
                     
                 }else {
                 res.send("Error can't find user")
