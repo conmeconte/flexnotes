@@ -13,24 +13,6 @@ class Panel extends Component {
         this.props = props;
     }
 
-    panelLayout(val) {
-        this.setState({
-            panelNum: val
-        });
-    }
-
-    // componentWillMount(){
-    //     this.props.getBinderArray();
-    //
-    //     const url = '/api/page';
-    //
-    //     axios.get(url).then((resp) => {
-    //         this.setState({
-    //             userName: resp.data.userName
-    //         })
-    //     });
-    // }
-
     render() {
         return (
             <div>
