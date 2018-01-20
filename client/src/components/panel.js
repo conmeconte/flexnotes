@@ -7,6 +7,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { setNumOfPanels, updateBinderArray } from '../actions/index';
 
+
 class Panel extends Component {
     constructor(props) {
         super(props);
@@ -86,7 +87,7 @@ class Panel extends Component {
             <div>
                 <header>
                     <div>
-                        <h3 className="welcome">FlexNotes{/*this.props.binderArray.binderArr.userName */}</h3>
+                        <h3 className="welcome">{/*this.props.binderArray.binderArr.userName */}</h3>
                     </div>
                     <div className="panelOptions">
                         {/* <div><h3 className="optionsTitle">Panels:</h3></div> */}
