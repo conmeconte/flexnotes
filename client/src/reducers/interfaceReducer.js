@@ -29,7 +29,7 @@ export default function (state = DEFAULT_STATE, action) {
             let firstPageID = action.payload.page_arr_obj[0]._id;
             return { ...state, tab_id: selectTabID, page_id: firstPageID };
         case types.SELECT_PAGE:
-            return { ...state, page_id: action.payload._id };
+            return {...state, binder_id: action.payload.binder_id, tab_id: action.payload.tab_id, page_id: action.payload.page_id };
         case types.ADD_BINDER:
             return { ...state, pull_from_db: true };
         case types.DELETE_BINDER:
