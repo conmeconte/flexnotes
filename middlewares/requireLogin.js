@@ -1,9 +1,16 @@
-module.exports=   (req, res, next) => {
+const fs            = require('fs');
+
+module.exports=  function(req, res, next) {
  if(!req.user){
     // res.redirect('/');
     // return res.redirect('http://google.com');
-    // return res.status(401).send({error: "you must log in!"});
-    
+    let errorData= {Date: new Date().toLocaleString(),errorMessage: 'Illegal Login Attempt'};
+    fs.appendFile('./errorLogs/serverError.log', JSON.stringify(errorData) + '\n', function (err) {
+        if (err) throw err; 
+        console.log('Illegal Login Attempt Updated!');
+     });
+    res.status(401).redirect('/');
+ 
  } else {
     next();
  }
