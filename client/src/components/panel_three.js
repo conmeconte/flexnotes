@@ -91,7 +91,7 @@ class ThreePanel extends Component {
                         </SplitPane>
                         <div className="notes-parent-panel"><Notes /></div>
                     </SplitPane>
-                );
+                )
             } else {
                 return (
                     <SplitPane onChange={loTLHsave} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height}>
