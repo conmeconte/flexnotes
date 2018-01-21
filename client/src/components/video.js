@@ -71,6 +71,7 @@ class Video extends Component {
                 }
             }
             if (!page_arr_obj[pageIndex].video) {
+                this.props.setVideoUrl('', interface_obj);
                 return;
             } else {
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
@@ -105,6 +106,7 @@ class Video extends Component {
                     }
                 }
                 if (!page_arr_obj[pageIndex].video) {
+                    this.props.setVideoUrl('', interface_obj);
                     return;
                 } else {
                     this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
@@ -125,19 +127,19 @@ class Video extends Component {
             <div className="main">
                 <VideoModal />
                 <div style={this.props.opacityContainer} className="opacity"></div>
-                <div style={this.props.resultsStyles} className="results-container sidebar col-xs-4 pull-right">
-                    <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input input-group col-xs-12">
+                <div style={this.props.resultsStyles} className="results-container sidebar">
+                    <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input">
                         <Field name="video" component={this.renderInput} />
                         <span className="input-group-btn">
                             <button id="search-button" className="btn">
-                                <span className="glyphicon glyphicon-search"></span>
+                            <i className="material-icons landing">search</i>
                             </button>
 
                             <button className="btn" onClick={ () => {
                             this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                             this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                             }}>
-                                <span className="glyphicon glyphicon-chevron-right"></span>
+                                <i className="material-icons">keyboard_arrow_right</i>
                             </button>
 
                         </span>
