@@ -40,7 +40,7 @@ class Slides extends Component {
                         break;
                     }
                 }
-                if (typeof(page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof(page_arr_obj[pageIndex].video[0].videoURL) === '') {
+                if (typeof(page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof(page_arr_obj[pageIndex].lecture_slides) === '') {
                     // return;
                     this.props.setSlidesUrl('', interface_obj);
                 } else {
