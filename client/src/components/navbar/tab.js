@@ -146,7 +146,7 @@ class Tab extends Component {
         //this.props.selectBinder(this.props.binderObj);
         const {open, editable, tabName} = this.state;
 
-        console.log('props in tab:', this.props);
+        //console.log('props in tab:', this.props);
         //console.log('state in tab:', this.state);
         if(!this.props.binder|| !this.props.tabObj){
             return null;
@@ -272,10 +272,10 @@ class Tab extends Component {
                 {tab_title}
             <div className={`tabBody ${open ? 'visibleTab' : 'hiddenTab'}`}>
             <button type="button" className={`btn btn-default btn-xs btn_edit_binder`} onClick={this.editTabs}>
-                        Edit Tab
+                        E Tab
                     </button>
                     <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
-                    Delete Tab
+                    D Tab
                     </button>
                     <ul>
                         {page_list}
@@ -300,7 +300,7 @@ class Tab extends Component {
                     <span className="glyphicon glyphicon-plus"></span>
                 </button>   */}
                 <button className="btn btn-default btn-xs btn_add" onClick={this.addPage}>
-                    Add Page
+                    A Page
                 </button>   
                 <Route path={`/main/${url}`+"/:page"} component={Page}/>
                 </div>

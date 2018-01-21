@@ -172,10 +172,10 @@ class Page extends Component {
                 </div>
                 </Link>
                 <button type="button" className={`btn btn-default btn-xs btn_edit_binder`} onClick={this.editPage}>
-                        Edit Page
+                        E Page
                 </button>
                 <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deletePage()} >
-                   Delete Page
+                   D Page
                 </button>
                 </div>
             );

@@ -131,7 +131,7 @@ class NavBar extends Component{
                 {/* {binder_route} */}
                 
                 <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
-                    Add Binder
+                    A Binder
                 </button>
                 <Route path={'/main/:binder'} component={Binder}/>
             </div>
