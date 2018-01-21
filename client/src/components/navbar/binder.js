@@ -232,9 +232,9 @@ class Binder extends Component {
 
                 <div className={`binderBody ${active ? 'visibleBinder' : 'hiddenBinder'}`}>
                 <button type="button" className='btn' onClick={this.editable}>
-                       Edit Binder
+                       E Binder
                     </button>
-                    <button type="button" className="btn" onClick={()=>this.deleteBinder(this.props.binderObj._id)}>Del Binder
+                    <button type="button" className="btn" onClick={()=>this.deleteBinder(this.props.binderObj._id)}>D Binder
                     </button>
                     {tab_link}
                 
@@ -258,7 +258,7 @@ class Binder extends Component {
                     <span className="glyphicon glyphicon-plus"></span>
                 </button> */}
                 <button className="btn btn-default btn-xs btn_add" onClick={this.addTab}>
-                    Add Tab
+                    A Tab
                 </button>
                 <Route path={`/main/${binder_url}`+"/:tab"} component={Tab}/>
                 </div>
