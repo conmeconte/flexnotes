@@ -230,11 +230,19 @@ ul > li {
     border-radius: none;
 }
 
-.visible{
+.visibleBinder{
+    display: inline;
+}
+
+.hiddenBinder{
+    display: none;
+}
+
+.visibleTab{
     visibility: visible;
 }
 
-.hidden{
+.hiddenTab{
     visibility: hidden;
 }
 

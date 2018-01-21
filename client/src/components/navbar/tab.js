@@ -169,7 +169,7 @@ class Tab extends Component {
                              value={tabName}
                              />
                 <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditTabs}>
-                    Done <span className="glyphicon glyphicon-ok"></span>
+                    Done Tab
                 </button>
             </div>              
             );
@@ -181,12 +181,7 @@ class Tab extends Component {
                             {this.props.tabObj.tab_name}
                         </div>
                     </Link>
-                    <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editTabs}>
-                        Tab <span className="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
-                            <span className="glyphicon glyphicon-minus"></span>Tab
-                    </button>
+
                 </div>
             );
         }
@@ -275,10 +270,18 @@ class Tab extends Component {
 
             <div>
                 {tab_title}
-            <div className={`tabBody ${open ? 'visible' : 'hidden'}`}>
-                <ul>
-                    {page_list}
-                </ul>    
+            <div className={`tabBody ${open ? 'visibleTab' : 'hiddenTab'}`}>
+            <button type="button" className={`btn btn-default btn-xs btn_edit_binder`} onClick={this.editTabs}>
+                        Edit Tab
+                    </button>
+                    <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
+                    Delete Tab
+                    </button>
+                    <ul>
+                        {page_list}
+                    </ul>
+                    
+   
             
 
                 
@@ -297,7 +300,7 @@ class Tab extends Component {
                     <span className="glyphicon glyphicon-plus"></span>
                 </button>   */}
                 <button className="btn btn-default btn-xs btn_add" onClick={this.addPage}>
-                    <span className="glyphicon glyphicon-plus"></span>Page
+                    Add Page
                 </button>   
                 <Route path={`/main/${url}`+"/:page"} component={Page}/>
                 </div>
