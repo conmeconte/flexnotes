@@ -13,7 +13,6 @@ class VideoContainer extends Component {
         );
     }
     handleYouTubeUrl (values) {
-        debugger;
         console.log("VALUES: ", values)
         this.props.grabVideoUrl(values.input);
         this.props.playPastedLinkVideo(values["youtube-url"]);

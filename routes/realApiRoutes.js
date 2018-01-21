@@ -182,7 +182,7 @@ module.exports = (app) => {
                     .tab_arr_obj.id(req.body.tabID)  //req.body.tabID
                     if(tab){
                         let page = new Page()
-                        page.video.push(new Video({videoURL: "https://www.youtube.com/watch?v=j0yLSsE1vrY"}));
+                        page.video.push(new Video());
                         tab.page_arr_obj.push(page);
                         const binder = existingUser
                         .binder_arr_obj.id(req.body.binderID);

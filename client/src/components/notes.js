@@ -130,70 +130,74 @@ class Notes extends Component {
     }
 
 
-    componentWillMount() {
-        let { tab_arr_obj } = this.props.binderObj;
-        let { interface_obj } = this.props;
+    // componentWillMount() {
+    //     let { tab_arr_obj } = this.props.binderObj;
+    //     let { interface_obj } = this.props;
 
-        if (tab_arr_obj) {
-            let tabArrLength = tab_arr_obj.length;
-            let tabIndex = null;
-            let pageIndex = null;
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    //console.log('tabid = interface id at index:', i);
-                    tabIndex = i;
-                    break;
-                }
-            }
-            const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < page_arr_obj; i++) {
-                if (interface_obj.page_id === page_arr_obj[i]._id) {
-                    pageIndex = i;
-                    break;
-                }
-            }
-            if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
-                return;
-            } else {
-                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
-                this.setState({
-                    value: Value.fromJSON(lastContent),
-                })
-            }
-        }
-    }
+    //     if (tab_arr_obj) {
+    //         let tabArrLength = tab_arr_obj.length;
+    //         let tabIndex = null;
+    //         let pageIndex = null;
+    //         for (let i = 0; i < tabArrLength; i++) {
+    //             if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+    //                 //console.log('tabid = interface id at index:', i);
+    //                 tabIndex = i;
+    //                 break;
+    //             }
+    //         }
+    //         const { page_arr_obj } = tab_arr_obj[tabIndex];
+    //         for (let i = 0; i < page_arr_obj; i++) {
+    //             if (interface_obj.page_id === page_arr_obj[i]._id) {
+    //                 pageIndex = i;
+    //                 break;
+    //             }
+    //         }
+    //         if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
+    //             return;
+    //         } else {
+    //             const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+    //             this.setState({
+    //                 value: Value.fromJSON(lastContent),
+    //             })
+    //         }
+    //     }
+    // }
     componentWillReceiveProps(nextProps) {
-        let { tab_arr_obj } = nextProps.binderObj;
-        let { interface_obj } = nextProps;
+        if (!nextProps.interface_obj.sent_to_db) {
+            this.props.updateBinderArray();
+        }else{
+            let { tab_arr_obj } = nextProps.binderObj;
+            let { interface_obj } = nextProps;
 
-        if (tab_arr_obj) {
-            let tabArrLength = tab_arr_obj.length;
-            let tabIndex = null;
-            let pageIndex = null;
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    //console.log('tabid = interface id at index:', i);
-                    tabIndex = i;
-                    break;
+            if (tab_arr_obj) {
+                let tabArrLength = tab_arr_obj.length;
+                let tabIndex = null;
+                let pageIndex = null;
+                for (let i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        //console.log('tabid = interface id at index:', i);
+                        tabIndex = i;
+                        break;
+                    }
                 }
-            }
-            const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < page_arr_obj.length; i++) {
-                if (interface_obj.page_id === page_arr_obj[i]._id) {
-                    pageIndex = i;
-                    break;
+                const { page_arr_obj } = tab_arr_obj[tabIndex];
+                for (let i = 0; i < page_arr_obj.length; i++) {
+                    if (interface_obj.page_id === page_arr_obj[i]._id) {
+                        pageIndex = i;
+                        break;
+                    }
                 }
-            }
-            if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
-                return;
+                if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
+                    return;
+                } else {
+                    const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                    this.setState({
+                        value: Value.fromJSON(lastContent),
+                    })
+                }
             } else {
-                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
-                this.setState({
-                    value: Value.fromJSON(lastContent),
-                })
+                console.log("DOES NOT WORK");
             }
-        } else {
-            console.log("DOES NOT WORK");
         }
     }
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
