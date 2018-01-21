@@ -142,8 +142,8 @@ class Page extends Component {
         
         let url = this.props.interface.binder_id + "/"+this.props.interface.tab_id+"/"+this.props.pageObj._id;
 
-        console.log('Props in Page:',this.props);
-        console.log('State in Page:',this.state);
+        //console.log('Props in Page:',this.props);
+        //console.log('State in Page:',this.state);
         let page_list = [];
         if(editable){
             //let editName = this.props.binderObj.binder_name;
@@ -171,11 +171,11 @@ class Page extends Component {
                     {this.props.pageObj.page_name}
                 </div>
                 </Link>
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editPage}>
-                        Page <span className="glyphicon glyphicon-pencil"></span>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_binder`} onClick={this.editPage}>
+                        Edit Page
                 </button>
                 <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deletePage()} >
-                    <span className="glyphicon glyphicon-minus"></span>Page
+                   Delete Page
                 </button>
                 </div>
             );
