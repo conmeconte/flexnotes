@@ -5,11 +5,22 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--Required for Google Login-->
+    <meta name="google-signin-scope" content="profile email">
+    <!--Look into entering credentials-->
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <title>FlexNotes</title>
 </head>
 <body>
     <div id="root"></div>
     <script src="/bundle.js"></script>
+    <link rel="stylesheet" href="/queries.css" type='text/css'>
 </body>
 
 </html>

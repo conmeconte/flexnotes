@@ -1,158 +1,174 @@
 import React, { Component } from 'react';
-import '../assets/css/video.css'
-import $ from 'jquery';
+// import '../assets/css/video.css'
+import axios from 'axios';
+import { connect } from 'react-redux';
 import Results from './results';
 import VideoContainer from './video-container';
+import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray } from '../actions';
+import { Field, reduxForm } from 'redux-form';
+import VideoModal from './video-modal';
 
-// const BASE_URL = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true';
 const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
-
 class Video extends Component {
-    constructor(props) {
-        super(props);
-        this.googleApiClientReady = this.googleApiClientReady.bind(this);
-        this.checkAuth = this.checkAuth.bind(this);
-        this.handleAuthResult = this.handleAuthResult.bind(this);
-        this.loadAPIClientInterfaces = this.loadAPIClientInterfaces.bind(this);
-        this.search = this.search.bind(this);
-        this.OAUTH2_CLIENT_ID = '921823203830-e91j7vj9gqr6ftkvcaot3iffhcii7vtp.apps.googleusercontent.com';
-        this.OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
-        this.state = {
-            videos: []
-        }
-        this.close = this.close.bind(this);
-        this.open = this.open.bind(this);
-    }
-    componentDidMount() {
-        this.loadYouTubeApi();
-    }
-    loadYouTubeApi() {
-        const script = document.createElement("script");
-        script.src = 'https://apis.google.com/js/client.js?onload=googleApiClientReady';
-        script.onload = () => {
-            gapi.load('client', () => {
-                gapi.client.setApiKey(API_KEY);
-                gapi.client.load('youtube', 'v3', () => {
-                    this.setState({ gapiReady: true });
-                });
-            });
-        }
-        document.body.appendChild(script);
-    }
-    googleApiClientReady() {
-        gapi.auth.init(function () {
-            window.setTimeout(checkAuth, 1);
-        });
-    }
-    checkAuth() {
-        gapi.auth.authorize({
-            client_id: this.OAUTH2_CLIENT_ID,
-            scope: this.OAUTH2_SCOPES,
-            immediate: true
-        }, this.handleAuthResult);
-    }
-    handleAuthResult(authResult) {
-        if (authResult && !authResult.error) {
-            // Authorization was successful. Hide authorization prompts and show
-            // content that should be visible after authorization succeeds.
-            $('.pre-auth').hide();
-            $('.post-auth').show();
-            this.loadAPIClientInterfaces();
-        } else {
-            // Make the #login-link clickable. Attempt a non-immediate OAuth 2.0
-            // client flow. The current function is called when that flow completes.
-            //            $('#login-link').click(function() {
-            gapi.auth.authorize({
-                client_id: this.OAUTH2_CLIENT_ID,
-                scope: this.OAUTH2_SCOPES,
-                immediate: false
-            }, this.handleAuthResult);
-            //            });
-        }
-    }
-    loadAPIClientInterfaces() {
-        gapi.client.load('youtube', 'v3', function () {
-            console.log('API Loaded. Ready for search.')
-        });
-    }
-    search() {
-        this.checkAuth();
-        this.loadAPIClientInterfaces();
-        var q = $('#query').val();
-        if (q === '') {
-            document.getElementById("query").setAttribute("placeholder", "Please enter a search keyword.");
-            console.log("Search can\'t be completed.")
+    search(values) {
+        if (!values.video) {
             return;
         }
-        var request = gapi.client.youtube.search.list({
-            q: q,
-            part: 'snippet'
-        });
-        request.execute((response) => {
-            const videos = [];
-            const listOfVideoInfo = response.result.items;
-            for (var listOfVideoInfoIndex = 0; listOfVideoInfoIndex < listOfVideoInfo.length; listOfVideoInfoIndex++) {
-                const vidObject = {
-                    videoTitle: listOfVideoInfo[listOfVideoInfoIndex].snippet.title,
-                    videoId: listOfVideoInfo[listOfVideoInfoIndex].id.videoId,
-                    url: 'https://www.youtube.com/embed/' + listOfVideoInfo[listOfVideoInfoIndex].id.videoId,
-                    description: listOfVideoInfo[listOfVideoInfoIndex].snippet.description,
-                    channelTitle: listOfVideoInfo[listOfVideoInfoIndex].snippet.channelTitle,
-                    channelId: listOfVideoInfo[listOfVideoInfoIndex].snippet.channelId,
-                    thumbnails: listOfVideoInfo[listOfVideoInfoIndex].snippet.thumbnails
-                };
-                videos.push(vidObject);
-            }
-            console.log("List of video objects: ", videos);
-            this.setState({
-                videos: videos
+        console.log("VALUES FROM SEARCH: ", values);
+        var ROOT_URL = 'https://www.googleapis.com/youtube/v3/search';
+        var params = {
+            part: 'snippet',
+            key: API_KEY,
+            q: values.video,
+            type: 'video',
+            maxResults: 50,
+            playerVars: { rel: 0 }
+        };
+        var self = this;
+        var videos = [];
+        axios.get(ROOT_URL, { params: params })
+            .then(function (response) {
+                videos = [];
+                const listOfVideoInfo = response.data.items;
+                for (var listOfVideoInfoIndex = 0; listOfVideoInfoIndex < listOfVideoInfo.length; listOfVideoInfoIndex++) {
+                    const vidObject = {
+                        videoTitle: listOfVideoInfo[listOfVideoInfoIndex].snippet.title,
+                        videoId: listOfVideoInfo[listOfVideoInfoIndex].id.videoId,
+                        url: 'https://www.youtube.com/embed/' + listOfVideoInfo[listOfVideoInfoIndex].id.videoId,
+                        description: listOfVideoInfo[listOfVideoInfoIndex].snippet.description,
+                        channelTitle: listOfVideoInfo[listOfVideoInfoIndex].snippet.channelTitle,
+                        channelId: listOfVideoInfo[listOfVideoInfoIndex].snippet.channelId,
+                        thumbnails: listOfVideoInfo[listOfVideoInfoIndex].snippet.thumbnails
+                    };
+                    videos.push(vidObject);
+                }
+                self.props.getVideoResults(videos);
+            })
+            .catch(function (error) {
+                console.error(error);
             });
-        });
     }
-    close() {
-        console.log('Close was clicked');
-        document.querySelector(".results-container.sidebar").style.width = "0";
-        document.querySelector(".results-container.sidebar").classList.remove("col-xs-4");
+    componentWillMount() {
+        let { tab_arr_obj } = this.props.binderObj;
+        let { interface_obj } = this.props;
+
+        if (tab_arr_obj) {
+            let tabArrLength = tab_arr_obj.length;
+            let tabIndex = null;
+            let pageIndex = null;
+            for (let i = 0; i < tabArrLength; i++) {
+                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                    //console.log('tabid = interface id at index:', i);
+                    tabIndex = i;
+                    break;
+                }
+            }
+            const { page_arr_obj } = tab_arr_obj[tabIndex];
+            for (let i = 0; i < page_arr_obj.length; i++) {
+                if (interface_obj.page_id === page_arr_obj[i]._id) {
+                    pageIndex = i;
+                    break;
+                }
+            }
+            if (typeof(page_arr_obj[pageIndex].video[0].videoURL) === 'undefined' || typeof(page_arr_obj[pageIndex].video[0].videoURL) === '') {
+                return;
+            } else {
+                this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
+            }
+        } else {
+            console.log("DOES NOT WORK");
+        }
     }
-    open () {
-        console.log('Open was clicked');
-        document.querySelector(".results-container.sidebar").style.width = "65%";
-        document.querySelector(".results-container.sidebar").classList.add("col-xs-4");
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.interface_obj.sent_to_db) {
+            this.props.updateBinderArray();
+        } else {
+            let { tab_arr_obj } = nextProps.binderObj;
+            let { interface_obj } = nextProps;
+
+            if (tab_arr_obj) {
+                let tabArrLength = tab_arr_obj.length;
+                let tabIndex = null;
+                let pageIndex = null;
+                for (let i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        //console.log('tabid = interface id at index:', i);
+                        tabIndex = i;
+                        break;
+                    }
+                }
+                const { page_arr_obj } = tab_arr_obj[tabIndex];
+                for (let i = 0; i < page_arr_obj.length; i++) {
+                    if (interface_obj.page_id === page_arr_obj[i]._id) {
+                        pageIndex = i;
+                        break;
+                    }
+                }
+                if (typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined') {
+                    // return;
+                    this.props.setVideoUrl('', interface_obj);
+
+                } else {
+                    this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
+                }
+            } else {
+                console.log("DOES NOT WORK");
+            }
+        }
+    }
+    renderInput({ input }) {
+        console.log(input);
+        return (
+            <input {...input} id="query" placeholder="Search on Youtube..." className="form-control" />
+        )
     }
     render() {
-        const { videos } = this.state;
-        console.log(videos);
         return (
             <div className="main">
-                <span onClick={this.open} className="hamburger glyphicon glyphicon-menu-hamburger pull-right"></span>
-                {/* <div className="results-input-container row"> */}
-                    <div className="results-container sidebar col-xs-4 pull-right">
-                        <div className="search-button-input input-group col-xs-10">
-                            <input id="query" className="form-control" type="text" placeholder="Search..." />
-                            <span className="input-group-btn">
-                                <button id="search-button" type="button" className="btn btn-primary"
-                                    onClick={this.search}><span className="glyphicon glyphicon-search"></span></button>
-                                {/* <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span className="caret"></span>
-                                </button> */}
-                                <button onClick={this.close} className="close">X</button>
-                                <ul className="dropdown-menu">
-                                    <li><a href="#">URL</a></li>
-                                    <li><a href="#">Keyword</a></li>
-                                </ul>
-                            </span>
-                        </div>
-                        <Results results={videos} />
-                    </div>
-                    <div id="video-wrapper" className="video-wrapper col-xs-12">
-                        <VideoContainer/>
-                    </div>
-                {/* </div> */}
-            </div>
+                <VideoModal />
+                <div style={this.props.opacityContainer} className="opacity"></div>
+                <div style={this.props.resultsStyles} className="results-container sidebar col-xs-4 pull-right">
+                    <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input input-group col-xs-12">
+                        <Field name="video" component={this.renderInput} />
+                        <span className="input-group-btn">
+                            <button id="search-button" className="btn">
+                                <span className="glyphicon glyphicon-search"></span>
+                            </button>
 
+                            <button className="btn" onClick={ () => {
+                            this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
+                            this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
+                            }}>
+                                <span className="glyphicon glyphicon-chevron-right"></span>
+                            </button>
+
+                        </span>
+                    </form>
+                    <Results results={this.props.videoResults} />
+                </div>
+                <div id="video-wrapper" className="video-wrapper">
+                    <VideoContainer />
+                </div>
+            </div>
         );
     }
 }
 
-export default Video;
+Video = reduxForm({
+    form: 'search-item'
+})(Video);
+
+function mapStateToProps(state) {
+    return {
+        pastedVideoUrl: state.videoResults.videoLink,
+        videoResults: state.video.results,
+        playlist: state.video.videoList,
+        resultsStyles: state.video.resultsStyles,
+        opacityContainer: state.video.opacityDisplay,
+        toggleResultsBool: state.video.toggleResults,
+        interface_obj: state.interface,
+        binderObj: state.binder.binderObj,
+    }
+}
+
+export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray })(Video);
