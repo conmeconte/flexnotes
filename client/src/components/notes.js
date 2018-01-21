@@ -146,13 +146,13 @@ class Notes extends Component {
                 }
             }
             const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < tabArrLength; i++) {
+            for (let i = 0; i < page_arr_obj; i++) {
                 if (interface_obj.page_id === page_arr_obj[i]._id) {
                     pageIndex = i;
                     break;
                 }
             }
-            if (!page_arr_obj[pageIndex].notes) {
+            if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
                 return;
             } else {
                 const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
@@ -178,13 +178,13 @@ class Notes extends Component {
                 }
             }
             const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < tabArrLength; i++) {
+            for (let i = 0; i < page_arr_obj.length; i++) {
                 if (interface_obj.page_id === page_arr_obj[i]._id) {
                     pageIndex = i;
                     break;
                 }
             }
-            if (!page_arr_obj[pageIndex].notes) {
+            if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
                 return;
             } else {
                 const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);

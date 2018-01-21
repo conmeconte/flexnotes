@@ -70,7 +70,7 @@ class Video extends Component {
                     break;
                 }
             }
-            if (!page_arr_obj[pageIndex].video) {
+            if (typeof(page_arr_obj[pageIndex].video[0].videoURL) === 'undefined') {
                 return;
             } else {
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
@@ -98,13 +98,13 @@ class Video extends Component {
                     }
                 }
                 const { page_arr_obj } = tab_arr_obj[tabIndex];
-                for (let i = 0; i < tabArrLength; i++) {
+                for (let i = 0; i < page_arr_obj.length; i++) {
                     if (interface_obj.page_id === page_arr_obj[i]._id) {
                         pageIndex = i;
                         break;
                     }
                 }
-                if (!page_arr_obj[pageIndex].video) {
+                if (typeof page_arr_obj[pageIndex].video === 'undefined') {
                     return;
                 } else {
                     this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
