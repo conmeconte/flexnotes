@@ -1,0 +1,263 @@
+a {
+    color: white;
+}
+
+.nav_binder, .nav_tab, .nav_page {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar{
+    margin: 0;
+    padding: 0;
+    width: 10%;
+    height: 100vh;
+    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);
+    /* #border: solid 2px black; */
+    overflow-y:scroll;
+    #border: solid 2px black;
+
+    background-color: #6d7993;
+}
+
+ul {
+    margin: 0;
+    padding: 0;    
+}
+
+ul > li {
+    list-style: none;
+
+}
+
+.contain-tab, .contain-page{
+    /* #border: 1px solid #000080; */
+    display: inline-block; 
+    margin: 0;
+    padding: 0;    
+    height: 75vh;
+    /*background-color: rgba(0, 0, 0, .38);*/
+}
+
+.contain-page{
+    /* #border-right: 3px solid #000080; */
+    /*box-shadow: 2px 0px 1px #747474;*/
+    margin-left: 1%;
+    width: 53%;
+    /*background-color: #f9f9f9; */
+    /*background-image: url("../../assets/images/paper.png");*/
+}
+
+.contain-tab{
+    /*border-left: 1px solid #747474;*/
+    /* #border-right: #ff0000 3px solid; */
+    /*background-color: #ccc;*/
+    /*background-image: url("../../assets/images/black-linen.png");*/
+    /*box-shadow: 2px 0px 1px #454545;*/
+    width: 45%;
+
+}
+
+.nav_binder {
+    border: 3px solid #000080;
+    border-radius: 3px;
+    /* #border-bottom: 4px ridge #000080; */
+    background-color: #000080B3;
+    /* #background-image: url("../../assets/images/concrete-wall-3.png");     */
+    position: relative;
+    width: 100%;
+    box-shadow: 1px 1.5px .5px #747474;
+    padding-bottom: 8%;
+}
+
+.binder_wrap{
+    border: 1px solid #747474;
+    border-radius: 3px;
+    background-color: white;
+    /* #background-image: url("../../assets/images/concrete-wall-3.png");    */
+    width: 75%;
+    height: 80px;
+    margin-left: 10%;
+    margin-bottom: 2%;
+    overflow-y: scroll;
+}
+
+.nav_tab {
+    /* #border-left: 2px solid red; */
+    display: inline-block;
+    position: absolute;
+    top: 110%;
+    width: 45%;
+    left: -.5%;
+}
+
+.nav_page {
+    /* #border-left: 2px solid lightgreen; */
+    /* #border-right: 2px solid red; */
+    display: inline-block; 
+    position: absolute;
+    top: 1%;
+    left: 102%;
+    width: 120%;   
+}
+
+.nav-tab-col, .nav-page-col{
+    margin-top: 25%;
+}
+
+.binderDiv{
+    /* #border: 2px solid #000080; */
+    text-align: left;
+    padding-left: 5%;
+    padding-top: 5%;
+    /* #background-color: #ccccff; */
+    font-weight: 600;
+    color: black;
+}
+
+
+.binderDiv:hover{
+    background-color: #000080;
+    color: white
+}
+
+.binderDiv:active{
+    background-color: #000080;
+}
+
+.tabDiv{
+    border-left: 12px solid #ff0000;
+    border-top: 1px solid #747474;
+    border-bottom: 1px solid #747474;
+    text-align: center;
+    padding-top: 8%;
+    padding-bottom: 8%;
+    background-color: white;
+    margin-bottom: 5%;
+    width: 100%;
+    font-weight: 500;
+    color: black;
+    box-shadow: -1px 1px 1px #333, .5px  0px .5px #333;
+}
+
+.tabDiv:hover{
+    background-color: #ffcccc;
+    text-decoration: none;
+}
+
+.pageDiv{
+    border-bottom: 1px solid black;
+    box-shadow: 0px 1px 0px #747474;
+    padding: 7% 3% 7% 0;
+    width: 100%;
+    text-align: center;
+    margin-left: 2%;
+    color: black;
+    #background-color: ##f2f2f2;
+}
+
+.pageDiv:hover{
+    background-color: #ffcccc;
+    text-decoration: none;
+}
+
+.btn_add {
+    border-radius: 20%;
+    /* #border: 2px solid black; */
+    margin-left: 10%;
+    margin-top: 0%;  
+    margin-right: 2%;
+    margin-bottom: 0%;
+}
+
+.btn_delete {
+    padding: 2%;
+    padding-right: 3%;
+    padding-bottom: 3%;
+    margin-left: 2%;  
+    margin-right: 2%;
+    line-height: 1%;
+    border-radius: 50%;
+}
+
+.btn_delete > .glyphicon-minus {
+    top: 0px;
+}
+
+.btn_delete:hover{
+    background-color: red;
+    color: white;
+}
+
+.delete_btn{
+    font-size: 1.5em;
+    /* #border: solid 1px black; */
+    background-color: white;
+    border-radius: 100%;
+}
+
+.delete_btn:hover{
+    color: red;
+}
+
+.btn_edit_binder{
+    margin-top: 8%;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    font-size: 1.3em;
+}
+
+.btn_edit_tab{
+    margin-left: 10%;
+    margin-top: 2%;
+    font-size: 1.1em;
+}
+
+.btn_edit_page{
+    margin-left: 15%;
+    font-size: 1em;
+    margin-top: 2%;
+}
+
+.edit_input{
+    margin-left: 3%;
+    width: 65%;
+    background: white;
+    border: none;
+    outline: none;
+    border-bottom: 1px dashed black;
+    border-radius: none;
+}
+
+.visibleBinder{
+    display: inline;
+}
+
+.hiddenBinder{
+    display: none;
+}
+
+.visibleTab{
+    visibility: visible;
+}
+
+.hiddenTab{
+    visibility: hidden;
+}
+
+.binderTitle{
+    border: solid 1px red;
+}
+
+.binderBody{
+    border: solid 1px teal;
+}
+
+.tabTitle{
+    border: solid 1px orange;
+}
+
+.tabBody{
+    border: solid 1px magenta;
+}

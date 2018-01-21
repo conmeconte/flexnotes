@@ -1,0 +1,145 @@
+body {
+    box-sizing: border-box;
+}
+.top-background-layer {
+    background-color: #000;
+    opacity: 0.4;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+}
+.main-login-container {
+    position: relative;
+}
+.landing-page-container {
+    text-align: center;
+    height: 100vh;
+    background-color: #222C3A;
+}
+.landing-page-container h1,
+.landing-page-container h3 {
+    margin: 0;
+    color: #fff;
+}
+.landing-page-container h1 {
+    line-height: 60px;
+    font-size: 7vmin;
+}
+.landing-page-container h3 {
+    font-weight: 100;
+}
+.login-container {
+    width: 80%;
+    height: 56vh;
+    margin: 0 auto;
+    position: relative;
+    top: 13vh;
+    box-shadow: 0 4px 2px -2px #31C3E7;
+    border-radius: 5px;
+}
+.blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.38);
+    z-index: 0;
+}
+.title-container h1 {
+    line-height: 8vh;
+}
+.google-div,
+.info {
+    width: 50%;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+    color: #fff;
+}
+.google-div {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.info {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.info h3 {
+    position: relative;
+    top: 5vh;
+    font-size: 4vmin;
+}
+.google-div {
+    color: #fff;
+}
+.login-info {
+    position: relative;
+    top: 30%;
+}
+.login-info h3 {
+    font-size: 4vmin
+}
+.login-info img {
+    display: block;
+    margin: 0 auto;
+}
+.item-list {
+    position: relative;
+    top: 17%;
+    text-align: left;
+    line-height: 5.5vh;
+    width: 70%;
+    margin: 0 auto;
+    font-size: 3vmin;
+}
+.item-list .glyphicon {
+    color: #31C3E7;
+    font-size: 2.8vmin;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.flex {
+    color: #40c4ff; 
+}
+.user-circle {
+    border: 3px solid #fff;
+    border-radius: 50%;
+}
+.title-container {
+    position: relative;
+    top: 10vh;
+}
+.title-container {
+    line-height: 9vh;
+}
+.login-logout-container {
+    position: relative;
+    top: 2vh;
+}
+.login-logout-container button {
+    height: 4vmin;
+    font-size: 1.5vmin;
+}
+.dashboard-button {
+    position: absolute;
+    z-index: 5000;
+    right: 1%;
+    top: 2%;
+}
+a.landing-login-text {
+    color: #fff;
+}
+.item-text {
+    display: inline-block;
+}
+.material-icons {
+    display: inline-block;
+    margin-right: 8px;
+}
+.material-icons.landing {
+    color: #40c4ff; 
+}
