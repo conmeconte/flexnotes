@@ -13,7 +13,6 @@ class VideoContainer extends Component {
         );
     }
     handleYouTubeUrl (values) {
-        debugger;
         console.log("VALUES: ", values)
         this.props.grabVideoUrl(values.input);
         this.props.playPastedLinkVideo(values["youtube-url"]);
@@ -29,11 +28,12 @@ class VideoContainer extends Component {
             <div className="row">
                     <form onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}>
                         <Field name="youtube-url" component={this.renderInput} />
-                    <button className="btn btn-success"><span className="glyphicon glyphicon-save"></span></button>
+                    <button className="btn btn-success"><i className="material-icons">save</i></button>
                     <button className="btn btn-primary col-offset-xs-1 left-menu-button vidList" onClick={ () => {
                     this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                     this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
-                    }}><span className="glyphicon glyphicon-chevron-left"></span></button>
+                    }}><i className="material-icons">keyboard_arrow_left</i>
+                    </button>
                 </form>
             </div>
             <div id="video-container" className="video-container">
