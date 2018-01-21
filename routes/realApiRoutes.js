@@ -45,9 +45,9 @@ module.exports = (app) => {
                     defaultBinder.tab_arr_obj.push(new Tab());
                     defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({ page_date: new Date().toLocaleString() }));
                     defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ videoInfo: 'No Info' }));
-                    user.binder_arr_obj.push(defaultBinder);
+                    existingUser.binder_arr_obj.push(defaultBinder);
                     existingUser.save()
-                    res.send(existingUser.binder_arr_obj);    
+                    res.send(existingUser);    
 
             }else{
                 res.send("Error did occurred");
@@ -70,7 +70,7 @@ module.exports = (app) => {
         .put('/api/binder', requireLogin, async (req, res) => {
             // update binder
 
-            const existingUser= await User.findById(req.user.id, function (err, user){if(err){return res.send('error')}});    
+            const existingUser= await User.findById(req.user.id, function (err){if(err){return res.send('error')}});    
             if (existingUser) {
                 const binder = existingUser
                 .binder_arr_obj.id(req.body.binderID)
@@ -92,7 +92,7 @@ module.exports = (app) => {
     // For Tab//
     app
         .get('/api/tab', requireLogin, async (req, res) => {
-            const existingUser= await User.findById(req.user.id, function (err, user){if(err){return res.send('error')}});
+            const existingUser= await User.findById(req.user.id, function (err){if(err){return res.send('error')}});
                 if (existingUser) {
                     res.send(existingUser.binder_arr_obj);
                 }else {
@@ -114,7 +114,7 @@ module.exports = (app) => {
                         binder.tab_arr_obj.push(tab);
 
                         existingUser.save();
-                        res.send(existingUser.binder_arr_obj);
+                        res.send(binder);
                     }else{res.send('Binder Array does not exist')}
                     
                 }else {
@@ -134,7 +134,7 @@ module.exports = (app) => {
                     
                     tab.remove();
                     existingUser.save();
-                    res.send(existingUser.binder_arr_obj);
+                    res.send(binder);
                     
                 }else {
                 res.send("Error can't find user")
@@ -142,7 +142,7 @@ module.exports = (app) => {
         })
         .put('/api/tab', requireLogin, async (req, res) => {
 
-            const existingUser= await User.findById(req.user.id, function (err, user){if(err){return res.send('error')}});
+            const existingUser= await User.findById(req.user.id, function (err){if(err){return res.send('error')}});
                 if (existingUser) {
                     const tab = existingUser
                     .binder_arr_obj.id(req.body.binderID) //req.body.binderID
@@ -166,9 +166,9 @@ module.exports = (app) => {
 
     app
         .get('/api/page', requireLogin, async (req,res)=>{
-            const existingUser= await User.findById(req.user.id, function (err, user){if(err){return res.send('error')}});
+            const existingUser= await User.findById(req.user.id, function (err){if(err){return res.send('error')}});
                 if (existingUser) {
-                    res.send(existingUser.binder_arr_obj);
+                    res.send(existingUser);
                 } else {
                 res.send("Error can't find user")
                 }
@@ -184,11 +184,11 @@ module.exports = (app) => {
                         let page = new Page()
                         page.video.push(new Video({videoURL: "https://www.youtube.com/watch?v=j0yLSsE1vrY"}));
                         tab.page_arr_obj.push(page);
-                        const binder = user
+                        const binder = existingUser
                         .binder_arr_obj.id(req.body.binderID);
 
                         existingUser.save();
-                        res.send(existingUser.binder_arr_obj);
+                        res.send(binder);
                     }else{res.send('Binder/tab id does not exist')}
                     
                 }else {
@@ -209,13 +209,13 @@ module.exports = (app) => {
                     
                     page.remove();
                     existingUser.save();
-                    res.send(existingUser.binder_arr_obj);
+                    res.send(binder);
                 }else {
                 res.send("Error can't find user")
                 }
         })
         .put('/api/page', requireLogin, async (req,res)=>{
-            const existingUser= await User.findById(req.user.id,function(err,user){if(err){return res.send('error')}});
+            const existingUser= await User.findById(req.user.id,function(err){if(err){return res.send('error')}});
                 if (existingUser) {
                     const page = existingUser
                     .binder_arr_obj.id(req.body.binderID)
@@ -241,7 +241,7 @@ module.exports = (app) => {
  //video//
     app
         .post('/api/video', requireLogin, async (req,res)=>{
-            const existingUser= await User.findById(req.user.id, (err,user)=>{if(err){return res.send('error')}});
+            const existingUser= await User.findById(req.user.id, (err)=>{if(err){return res.send('error')}});
                 if (existingUser) {
                     const page = existingUser
                     .binder_arr_obj.id(req.body.binderID)
@@ -252,7 +252,7 @@ module.exports = (app) => {
                         page.video[0]=new Video({videoId: req.body.video.videoId, videoURL: req.body.video.videoUrl, videoTitle: req.body.video.videoTitle});
 
                         existingUser.save();
-                        res.send(existingUser.binder_arr_obj);
+                        res.send(page);
                     }else{res.send('wrong path')} 
                     
                 }else {
@@ -270,7 +270,7 @@ module.exports = (app) => {
                     if(video){
                         video.remove();
                         existingUser.save();
-                        res.send(existingUser.binder_arr_obj);
+                        res.send(existingUser);
                     }else{res.send('binder/tab/page id does not exist')}
                     
                 }else {
@@ -290,7 +290,7 @@ module.exports = (app) => {
                         video.vid_url= req.body.vid_url || video.vid_url;
                         video.videoInfo= req.body.videoInfo || video.videoInfo;
                         existingUser.save();
-                        res.send(existingUser.binder_arr_obj);
+                        res.send(existingUser);
                     }else{res.send('path ids provided does not work')}
                     
                 }else {
@@ -311,7 +311,7 @@ app.put('/api/note', requireLogin, async (req,res)=>{
                     page.notes.document= req.body.document || page.notes.document;
 
                     existingUser.save();
-                    res.send(existingUser.binder_arr_obj);
+                    res.send(page);
                 }else{res.send('wrong path')}
                 
             }else {
