@@ -19,4 +19,4 @@ export default combineReducers({
     slides: slideReducer,
     form: formReducer,
     panelSpecs: panelSpecReducer
-})
+});

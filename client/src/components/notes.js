@@ -4,6 +4,7 @@ import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import { connect } from 'react-redux';
+import { updateBinderArray } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
@@ -114,13 +115,13 @@ class Notes extends Component {
         this.setState({ value, save: false });
     };
 
-    submitNotes(){
+    submitNotes() {
         console.log("it saved!")
         let { interface_obj } = this.props;
         const { value } = this.state;
         const content = JSON.stringify(value.toJSON());
         axios.put('/api/note', {
-            document: {content},
+            document: { content },
             binderID: interface_obj.binder_id,
             tabID: interface_obj.tab_id,
             pageID: interface_obj.page_id
@@ -132,68 +133,68 @@ class Notes extends Component {
     componentWillMount() {
         let { tab_arr_obj } = this.props.binderObj;
         let { interface_obj } = this.props;
-        
+
         if (tab_arr_obj) {
-        let tabArrLength = tab_arr_obj.length;
-        let tabIndex = null;
-        let pageIndex = null;
-        for (let i = 0; i < tabArrLength; i++) {
-            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                //console.log('tabid = interface id at index:', i);
-                tabIndex = i;
-                break;
+            let tabArrLength = tab_arr_obj.length;
+            let tabIndex = null;
+            let pageIndex = null;
+            for (let i = 0; i < tabArrLength; i++) {
+                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                    //console.log('tabid = interface id at index:', i);
+                    tabIndex = i;
+                    break;
+                }
             }
-        }
-        const { page_arr_obj } = tab_arr_obj[tabIndex];
-        for (let i = 0; i < tabArrLength; i++) {
-            if (interface_obj.page_id === page_arr_obj[i]._id) {
-                pageIndex = i;
-                break;
+            const { page_arr_obj } = tab_arr_obj[tabIndex];
+            for (let i = 0; i < tabArrLength; i++) {
+                if (interface_obj.page_id === page_arr_obj[i]._id) {
+                    pageIndex = i;
+                    break;
+                }
             }
-        }
-        if (!page_arr_obj[pageIndex].notes) {
-            return;
-        } else {
-            const lastContent = JSON.parse( page_arr_obj[pageIndex].notes.document.content);
-                        this.setState({
-                            value: Value.fromJSON(lastContent),
-                        })
+            if (!page_arr_obj[pageIndex].notes) {
+                return;
+            } else {
+                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                this.setState({
+                    value: Value.fromJSON(lastContent),
+                })
+            }
         }
     }
-}
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         let { tab_arr_obj } = nextProps.binderObj;
         let { interface_obj } = nextProps;
-        
+
         if (tab_arr_obj) {
-        let tabArrLength = tab_arr_obj.length;
-        let tabIndex = null;
-        let pageIndex = null;
-        for (let i = 0; i < tabArrLength; i++) {
-            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                //console.log('tabid = interface id at index:', i);
-                tabIndex = i;
-                break;
+            let tabArrLength = tab_arr_obj.length;
+            let tabIndex = null;
+            let pageIndex = null;
+            for (let i = 0; i < tabArrLength; i++) {
+                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                    //console.log('tabid = interface id at index:', i);
+                    tabIndex = i;
+                    break;
+                }
             }
-        }
-        const { page_arr_obj } = tab_arr_obj[tabIndex];
-        for (let i = 0; i < tabArrLength; i++) {
-            if (interface_obj.page_id === page_arr_obj[i]._id) {
-                pageIndex = i;
-                break;
+            const { page_arr_obj } = tab_arr_obj[tabIndex];
+            for (let i = 0; i < tabArrLength; i++) {
+                if (interface_obj.page_id === page_arr_obj[i]._id) {
+                    pageIndex = i;
+                    break;
+                }
             }
-        }
-        if (!page_arr_obj[pageIndex].notes) {
-            return;
+            if (!page_arr_obj[pageIndex].notes) {
+                return;
+            } else {
+                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                this.setState({
+                    value: Value.fromJSON(lastContent),
+                })
+            }
         } else {
-            const lastContent = JSON.parse( page_arr_obj[pageIndex].notes.document.content);
-                        this.setState({
-                            value: Value.fromJSON(lastContent),
-                        })
+            console.log("DOES NOT WORK");
         }
-    } else {
-        console.log("DOES NOT WORK");
-    }
     }
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
@@ -510,14 +511,14 @@ class Notes extends Component {
                     </span>
                 </div>
                 {/*<div className="searchSave">*/}
-                    {/*<div className="search-box">*/}
-                        <input
-                            className="search-input"
-                            placeholder="Search keywords..."
-                            onChange={this.onInputChange}
-                        />
-                        <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved" : "Save Changes"}</button>
-                    {/*</div>*/}
+                {/*<div className="search-box">*/}
+                <input
+                    className="search-input"
+                    placeholder="Search keywords..."
+                    onChange={this.onInputChange}
+                />
+                <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved" : "Save Changes"}</button>
+                {/*</div>*/}
                 {/*</div>*/}
             </div>
 
@@ -525,7 +526,6 @@ class Notes extends Component {
     };
 
     render() {
-        console.log('NOETS PROPS:', this.props);
         return (
             <div className="notes-component">
 
@@ -557,5 +557,5 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Notes);
+export default connect(mapStateToProps, { updateBinderArray })(Notes);
 

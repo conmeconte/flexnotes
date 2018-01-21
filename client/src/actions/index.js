@@ -8,61 +8,89 @@ export const fetchUser = () => async dispatch => {
 
 //PANEL SPECs Action Creator
 
-// Yo hyung, if I set PUT request individually in each of these functions, they will overwrite each other right????
 export function setTopLeftHeight(num, interfaceObj) {
-    axios.put('/api/page', {
-
-        top_left_panel_height: num,
-        binderID: interfaceObj.binder_id,
-        tabID: interfaceObj.tab_id,
-        pageID: interfaceObj.page_id
-    });
-
-    return {
-        type: types.PANEL_TOP_LEFT_HEIGHT,
-        payload: num
+    return (dispatch) => {
+        axios.put('/api/page', {
+            top_left_panel_height: num,
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        })
+            .then((resp) => {
+                dispatch({
+                    type: types.PANEL_TOP_LEFT_HEIGHT,
+                    payload: num
+                })
+            })
+            .catch(error => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed to update Top Left Panel Height'
+                })
+            });
     }
 }
 
 export function setTopLeftWidth(num, interfaceObj) {
-    axios.put('/api/page', {
-        top_left_panel_width: num,
-        binderID: interfaceObj.binder_id,
-        tabID: interfaceObj.tab_id,
-        pageID: interfaceObj.page_id
-    });
-
-    return {
-        type: types.PANEL_TOP_LEFT_WIDTH,
-        payload: num
+    return (dispatch) => {
+        axios.put('/api/page', {
+            top_left_panel_width: num,
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then((resp) => {
+            dispatch({
+                type: types.PANEL_TOP_LEFT_WIDTH,
+                payload: num
+            })
+        }).catch(error => {
+            dispatch({
+                type: types.AXIOS_ERROR,
+                msg: 'Failed to update Top Left Panel Width'
+            })
+        });
     }
 }
 
 export function setTopRightHeight(num, interfaceObj) {
-    axios.put('/api/page', {
-        top_right_panel_height: num,
-        binderID: interfaceObj.binder_id,
-        tabID: interfaceObj.tab_id,
-        pageID: interfaceObj.page_id
-    });
-
-    return {
-        type: types.PANEL_TOP_RIGHT_HEIGHT,
-        payload: num
+    return (dispatch) => {
+        axios.put('/api/page', {
+            top_right_panel_height: num,
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then((resp) => {
+            dispatch({
+                type: types.PANEL_TOP_RIGHT_HEIGHT,
+                payload: num
+            })
+        }).catch(error => {
+            dispatch({
+                type: types.AXIOS_ERROR,
+                msg: 'Failed to update Top Right Panel Height'
+            })
+        });
     }
 }
 
 export function setNumOfPanels(num, interfaceObj) {
-    axios.put('/api/page', {
-        number_of_panels: num,
-        binderID: interfaceObj.binder_id,
-        tabID: interfaceObj.tab_id,
-        pageID: interfaceObj.page_id
-    });
-
-    return {
-        type: types.NUM_OF_PANELS,
-        payload: num
+    return (dispatch) => {
+        axios.put('/api/page', {
+            number_of_panels: num,
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then((resp) => {
+            dispatch({
+                type: types.NUM_OF_PANELS,
+                payload: num
+            })
+        }).catch(error => {
+            dispatch({
+                type: types.AXIOS_ERROR,
+                msg: 'Failed to update Number of Panels'
+            })
+        });
     }
 }
 
