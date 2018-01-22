@@ -60,7 +60,7 @@ button.close {
     top: 0;
     right: 0;
     background-color: #fff;
-    width: 65%;
+    width: 100%;
     border-left: 1px solid #e4e4e4;
 }
 .row.results-input-container {
@@ -107,9 +107,6 @@ button.close {
     margin: 1vmin;
     line-height: 0;
 }
-.btn-success, .btn-primary {
-    padding: 0.1vh 0.5vw;
-}
 .btn:hover{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
     background-color: ghostwhite;
@@ -121,7 +118,7 @@ button.close {
     padding: 10px 5px;
 }
 .results-btn {
-    padding: 0.1vw 0.2vw;
+    padding: 0 1vmin;
 }
 .collection {
     border: none;
@@ -138,4 +135,7 @@ button.close {
 }
 .btn-wrapper {
     white-space: nowrap;
+}
+.btn-wrapper button {
+    padding: 0 1vmin;
 }

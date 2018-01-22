@@ -25,15 +25,15 @@ class VideoModal extends Component {
         return(
             <div style={this.props.addVideoModalStyle} className="add-modal-container">
                 <div className="add-modal">
-                        <h4>Enter video name: </h4>
+                        <h6>Enter video name: </h6>
                         <form onSubmit={this.props.handleSubmit(this.setName.bind(this))}>
                             <Field name="title" component={this.renderInput}/>
-                            <button className="save btn btn-success">Continue</button>
+                            <button className="save btn green darken-3">Save</button>
                 <button type="button" onClick={ 
                     () => { 
                         this.props.toggleModal(this.props.addVideoModalStyle)
                     }
-                    } className="btn btn-primary">Go back</button>
+                    } className="btn blue darken-1">Go back</button>
                         </form>
                 </div>
             </div>
