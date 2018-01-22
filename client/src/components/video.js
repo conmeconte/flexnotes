@@ -64,15 +64,15 @@ class Video extends Component {
                 }
             }
             const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < tabArrLength; i++) {
+            for (let i = 0; i < page_arr_obj.length; i++) {
                 if (interface_obj.page_id === page_arr_obj[i]._id) {
                     pageIndex = i;
                     break;
                 }
             }
-            if (!page_arr_obj[pageIndex].video) {
+            if (typeof(page_arr_obj[pageIndex].video[0].videoURL) === 'undefined' || typeof(page_arr_obj[pageIndex].video[0].videoURL) === '') {
+                // return;
                 this.props.setVideoUrl('', interface_obj);
-                return;
             } else {
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
             }
@@ -81,7 +81,7 @@ class Video extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.interface_obj.sent_to_db) {
+        if (!nextProps.interface_obj.sent_to_db) {
             this.props.updateBinderArray();
         } else {
             let { tab_arr_obj } = nextProps.binderObj;
@@ -99,15 +99,16 @@ class Video extends Component {
                     }
                 }
                 const { page_arr_obj } = tab_arr_obj[tabIndex];
-                for (let i = 0; i < tabArrLength; i++) {
+                for (let i = 0; i < page_arr_obj.length; i++) {
                     if (interface_obj.page_id === page_arr_obj[i]._id) {
                         pageIndex = i;
                         break;
                     }
                 }
-                if (!page_arr_obj[pageIndex].video) {
+                if (typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined') {
+                    // return;
                     this.props.setVideoUrl('', interface_obj);
-                    return;
+
                 } else {
                     this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
                 }

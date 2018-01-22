@@ -76,13 +76,14 @@ class ThreePanel extends Component {
                 }
             }
             const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < tabArrLength; i++) {
+            for (let i = 0; i < page_arr_obj.length; i++) {
+            // for (let i = 0; i < tabArrLength; i++) {
                 if (interface_obj.page_id === page_arr_obj[i]._id) {
                     pageIndex = i;
                     break;
                 }
             }
-            if (!page_arr_obj[pageIndex].panel_dimensions) {
+            if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
                 return (
                     <SplitPane onChange={loTLHsave} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={425}>
                         <SplitPane onChange={loTLWsave} split="horizontal" minSize={200} maxSize={-200} defaultSize={500}>

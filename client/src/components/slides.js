@@ -17,7 +17,7 @@ class Slides extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.interface_obj.sent_to_db) {
+        if (!nextProps.interface_obj.sent_to_db) {
             this.props.updateBinderArray();
         } else {
             let { tab_arr_obj } = nextProps.binderObj;
@@ -34,14 +34,15 @@ class Slides extends Component {
                     }
                 }
                 const { page_arr_obj } = tab_arr_obj[tabIndex];
-                for (let i = 0; i < tabArrLength; i++) {
+                for (let i = 0; i < page_arr_obj.length; i++) {
                     if (interface_obj.page_id === page_arr_obj[i]._id) {
                         pageIndex = i;
                         break;
                     }
                 }
-                if (!page_arr_obj[pageIndex].lecture_slides) {
-                    return;
+                if (typeof(page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof(page_arr_obj[pageIndex].lecture_slides) === '') {
+                    // return;
+                    this.props.setSlidesUrl('', interface_obj);
                 } else {
                     this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
                 }
