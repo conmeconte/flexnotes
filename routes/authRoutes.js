@@ -1,5 +1,6 @@
 const passport = require('passport');
 const fs = require('fs');
+const path= require('path');
 
 
 module.exports = app => {
@@ -17,7 +18,7 @@ module.exports = app => {
 
     app.get('/api/logout', (req, res, next) => {
         let loginLog= {Date: new Date().toLocaleString(),user: `user ${req.user.userName} has logged out`};
-        fs.appendFile('./errorLogs/logins.log', JSON.stringify(loginLog) + '\n', function (err) {
+        fs.appendFile(path.join(__dirname, '..', 'errorLogs', 'logins.log'), JSON.stringify(loginLog) + '\n', function (err) {
             // if (err) throw err; 
             if (err) next(err); 
             console.log('Updated!');

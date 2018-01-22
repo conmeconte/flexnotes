@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
 const fs            = require('fs');
+const path = require('path');
 
 
 
@@ -31,9 +32,10 @@ passport.use(
             const existingUser = await User.findOne({ googleId: profile.id });
             if (existingUser) {
                 let loginLog= {Date: new Date().toLocaleString(),user: `user ${existingUser.userName} has logged in`};
-                fs.appendFile('./errorLogs/logins.log', JSON.stringify(loginLog) + '\n', function (err) {
+                // fs.appendFile('./errorLogs/logins.log', JSON.stringify(loginLog) + '\n', function (err) {
+                fs.appendFile(path.join(__dirname, '..', 'errorLogs', 'logins.log'), JSON.stringify(loginLog) + '\n', function (err) {
                     // if (err) throw err; 
-                    if (err) next(err); 
+                    if (err) console.log('writing log failed'); 
                     console.log('User Login Updated!');
                 });
                 return done(null, existingUser);
