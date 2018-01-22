@@ -79,39 +79,16 @@ class Video extends Component {
         } 
     }
     componentWillReceiveProps(nextProps) {
-        debugger;
-        if (!nextProps.interface_obj.sent_to_db) {
+        console.log("NEXT PROPS: ", nextProps);
+        if (this.props.interface_obj.page_id !== nextProps.interface_obj.page_id){
+            this.updateVideoComponent(nextProps);
+        }
+
+        if (nextProps.interface_obj.sent_to_db) {
             this.props.updateBinderArray();
+            console.log("BINDER HAS BEEN UPDATED");
         } else {
-            let { tab_arr_obj } = nextProps.binderObj;
-            let { interface_obj } = nextProps;
-
-            if (tab_arr_obj) {
-                let tabArrLength = tab_arr_obj.length;
-                let tabIndex = null;
-                let pageIndex = null;
-                for (let i = 0; i < tabArrLength; i++) {
-                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                        //console.log('tabid = interface id at index:', i);
-                        tabIndex = i;
-                        break;
-                    }
-                }
-                const { page_arr_obj } = tab_arr_obj[tabIndex];
-                for (let i = 0; i < page_arr_obj.length; i++) {
-                    if (interface_obj.page_id === page_arr_obj[i]._id) {
-                        pageIndex = i;
-                        break;
-                    }
-                }
-                if (typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined') {
-                    // return;
-                    this.props.setVideoUrl('', interface_obj);
-
-                } else {
-                    this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
-                }
-            } 
+            this.updateVideoComponent(nextProps);
         }
     }
     renderInput({ input }) {
@@ -122,6 +99,37 @@ class Video extends Component {
             </div>
         )
     }
+
+    updateVideoComponent(nextProps) {
+        let { tab_arr_obj } = nextProps.binderObj;
+        let { interface_obj } = nextProps;
+        if (tab_arr_obj) {
+            let tabArrLength = tab_arr_obj.length;
+            let tabIndex = null;
+            let pageIndex = null;
+            for (let i = 0; i < tabArrLength; i++) {
+                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                    //console.log('tabid = interface id at index:', i);
+                    tabIndex = i;
+                    break;
+                }
+            }
+            const { page_arr_obj } = tab_arr_obj[tabIndex];
+            for (let i = 0; i < page_arr_obj.length; i++) {
+                if (interface_obj.page_id === page_arr_obj[i]._id) {
+                    pageIndex = i;
+                    break;
+                }
+            }
+            if (typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined') {
+                // return;
+                this.props.setVideoUrl('', interface_obj);
+            } else {
+                this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
+            }
+        } 
+    }
+
     render() {
         return (
             <div className="main">
@@ -163,7 +171,6 @@ Video = reduxForm({
 })(Video);
 
 function mapStateToProps(state) {
-    debugger;
     return {
         pastedVideoUrl: state.videoResults.videoLink,
         videoResults: state.video.results,
