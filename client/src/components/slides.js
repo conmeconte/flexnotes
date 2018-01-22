@@ -89,16 +89,14 @@ class Slides extends Component {
                 const urlSplit2 = urlSplit1[1].split('/');
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
-                console.log('presentation/d/e', slidesURL);
-                // this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
+                this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
             }
             else if (values.url.indexOf('presentation/d/') !== -1) {
                 const urlSplit1 = values.url.split("presentation/d/");
                 const urlSplit2 = urlSplit1[1].split('/');
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
-                console.log('presentation/d/', slidesURL);
-                // this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
+                this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
             }
         } else {
             return;
@@ -106,6 +104,7 @@ class Slides extends Component {
     }
 
     render() {
+        console.log('slides props:', this.props);
         return (
             <div className="slides-div">
                 <form className="form-horizontal" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
