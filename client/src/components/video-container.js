@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray } from '../actions';
+import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray, getDataObject } from '../actions';
 
 class VideoContainer extends Component {
     renderInput ({input}) {
@@ -17,6 +17,8 @@ class VideoContainer extends Component {
         this.props.grabVideoUrl(values.input);
         this.props.playPastedLinkVideo(values["youtube-url"]);
         this.props.toggleModal(this.props.addVideoModalStyle);
+        this.props.getDataObject();
+        this.props.updateBinderArray();
     }
     // componentWillReceiveProps(nextProps){
     //     debugger
@@ -71,4 +73,4 @@ VideoContainer = reduxForm({
     form: 'youtube-url'
 })(VideoContainer)
 
-export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray })(VideoContainer)
+export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray, getDataObject })(VideoContainer)
