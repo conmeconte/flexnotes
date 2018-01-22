@@ -15,11 +15,12 @@ class Results extends Component {
             console.log(item.url);
             return (
                 <li className="result-item collection-item col s12" key={index}>
-                    <p className="video-items">{item.videoTitle}</p>
-                    <button className="btn" onClick={ () => { this.props.playVideo(item.url) }}>
-                    <i className="material-icons">play_arrow</i>
-
-                    </button>
+                    <div className="row list-item-wrapper">
+                        <span className="video-items col s8">{item.videoTitle}</span>
+                        <button className="btn red darken-3 right col s3" onClick={ () => { this.props.playVideo(item.url) }}>
+                            <i className="material-icons">play_arrow</i>
+                        </button>
+                    </div>
                 </li>
             );
         });

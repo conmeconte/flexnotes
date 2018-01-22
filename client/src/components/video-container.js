@@ -7,8 +7,8 @@ class VideoContainer extends Component {
     renderInput ({input}) {
         console.log({input});
         return (
-            <div className="col-xs-10">
-                <input {...input} className="pastedVideoInput form-control col-xs-12" type="text" placeholder="Paste a YouTube video URL..."/>
+            <div className="col s8">
+                <input {...input} className="pastedVideoInput" type="text" placeholder="Paste a YouTube video URL..."/>
             </div>
         );
     }
@@ -24,16 +24,22 @@ class VideoContainer extends Component {
     render () {
         
     return ( 
-        <div>
+        <div className="iframe-wrapper">
             <div className="row">
-                    <form onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}>
-                        <Field name="youtube-url" component={this.renderInput} />
-                    <button className="btn btn-success"><i className="material-icons">save</i></button>
-                    <button className="btn btn-primary col-offset-xs-1 left-menu-button vidList" onClick={ () => {
-                    this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
-                    this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
-                    }}><i className="material-icons">keyboard_arrow_left</i>
-                    </button>
+                <form onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}>
+                    <div className="row">
+                    <Field name="youtube-url" component={this.renderInput} />
+                        <div className="col s3">
+                            <div className="row btn-wrapper">
+                                <button className="btn btn-success green darken-1"><i className="material-icons">save</i></button>
+                                <button type="button" className="btn btn-primary vidList vid-left-arrow" onClick={ () => {
+                                this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
+                                this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
+                                }}><i className="material-icons">keyboard_arrow_left</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div id="video-container" className="video-container">

@@ -68,8 +68,6 @@
     flex-wrap: nowrap;
     /*justify-content: space-around;*/
     height: 50%;
-
-    border: 1px solid black;
     margin: -5px 0 10px 10px;
 }
 
@@ -119,7 +117,6 @@
 }
 
 .material-icons {
-    color: #96858F;
     font-size: 3vmin;
 }
 
