@@ -50,9 +50,11 @@ export default function (state = DEFAULT_STATE, action) {
         case types.PANEL_TOP_LEFT_WIDTH:
         case types.PANEL_TOP_RIGHT_HEIGHT:
         case types.NUM_OF_PANELS:
-            return { ...state, sent_to_db: true };
+            return { ...state, pull_from_db: true, sent_to_db: true };
         case types.AXIOS_ERROR:
             return { ...state, axios_error_response: action.msg };
+        case types.UPDATE_BINDER_OBJ:
+            return {...state, sent_to_db: false};
         default:
             return state;
     }

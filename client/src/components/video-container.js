@@ -17,14 +17,14 @@ class VideoContainer extends Component {
         this.props.grabVideoUrl(values.input);
         this.props.playPastedLinkVideo(values["youtube-url"]);
         this.props.toggleModal(this.props.addVideoModalStyle);
-        this.props.getDataObject();
-        this.props.updateBinderArray();
+        //this.props.getDataObject();
+        //this.props.updateBinderArray();
     }
     // componentWillReceiveProps(nextProps){
     //     debugger
     // }
     render () {
-        
+        console.log('video-container props ', this.props);
     return ( 
         <div className="iframe-wrapper">
             <div className="row">

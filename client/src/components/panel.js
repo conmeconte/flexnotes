@@ -53,8 +53,8 @@ class Panel extends Component {
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
             if (tab_arr_obj) {
-                console.log('cwrp panel.js tab arr obj:', tab_arr_obj);
-                console.log('cwro panel.js interface obj:', interface_obj);
+                //console.log('cwrp panel.js tab arr obj:', tab_arr_obj);
+                //console.log('cwro panel.js interface obj:', interface_obj);
                 let tabArrLength = tab_arr_obj.length;
                 let tabIndex = null;
                 let pageIndex = null;
@@ -88,7 +88,7 @@ class Panel extends Component {
     }
 
     render() {
-        console.log("panel props", this.props);
+        //console.log("panel props", this.props);
         return (
             <div className="col s10">
                 {/* <header>
