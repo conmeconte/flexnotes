@@ -20,35 +20,35 @@ class Slides extends Component {
         // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
         //     this.props.updateBinderArray();
         // } else {
-            let { tab_arr_obj } = nextProps.binderObj;
-            let { interface_obj } = nextProps;
+        let { tab_arr_obj } = nextProps.binderObj;
+        let { interface_obj } = nextProps;
 
-            if (tab_arr_obj) {
-                let tabArrLength = tab_arr_obj.length;
-                let tabIndex = null;
-                let pageIndex = null;
-                for (let i = 0; i < tabArrLength; i++) {
-                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                        tabIndex = i;
-                        break;
-                    }
+        if (tab_arr_obj) {
+            let tabArrLength = tab_arr_obj.length;
+            let tabIndex = null;
+            let pageIndex = null;
+            for (let i = 0; i < tabArrLength; i++) {
+                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                    tabIndex = i;
+                    break;
                 }
-                const { page_arr_obj } = tab_arr_obj[tabIndex];
-                for (let i = 0; i < page_arr_obj.length; i++) {
-                    if (interface_obj.page_id === page_arr_obj[i]._id) {
-                        pageIndex = i;
-                        break;
-                    }
-                }
-                if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
-                    // return;
-                    this.props.setSlidesUrl('', interface_obj);
-                } else {
-                    this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
-                }
-            } else {
-                console.log("DOES NOT WORK");
             }
+            const { page_arr_obj } = tab_arr_obj[tabIndex];
+            for (let i = 0; i < page_arr_obj.length; i++) {
+                if (interface_obj.page_id === page_arr_obj[i]._id) {
+                    pageIndex = i;
+                    break;
+                }
+            }
+            if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
+                // return;
+                this.props.setSlidesUrl('', interface_obj);
+            } else {
+                this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
+            }
+        } else {
+            console.log("DOES NOT WORK");
+        }
         //}
     }
     componentWillMount() {
@@ -83,7 +83,26 @@ class Slides extends Component {
         }
     }
     setURLinReduxForm(values) {
-        this.props.setSlidesUrl(values.url, this.props.interface_obj);
+        if (values.url.indexOf('presentation/d/') !== -1 || values.url.indexOf('presentation/d/e') !== -1) {
+            if (values.url.indexOf('presentation/d/e/') !== -1) {
+                const urlSplit1 = values.url.split("presentation/d/e/");
+                const urlSplit2 = urlSplit1[1].split('/');
+                let presentationID = urlSplit2[0];
+                const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
+                console.log('presentation/d/e', slidesURL);
+                // this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
+            }
+            else if (values.url.indexOf('presentation/d/') !== -1) {
+                const urlSplit1 = values.url.split("presentation/d/");
+                const urlSplit2 = urlSplit1[1].split('/');
+                let presentationID = urlSplit2[0];
+                const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
+                console.log('presentation/d/', slidesURL);
+                // this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
+            }
+        } else {
+            return;
+        }
     }
 
     render() {
