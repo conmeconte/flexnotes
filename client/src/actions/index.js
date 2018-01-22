@@ -228,6 +228,11 @@ export function toggleResults(bool) {
     }
 }
 export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
+    if (!videoUrl) {
+        return {
+            type: types.NO_VIDEO_LINK
+        }
+    }
     let videoId = videoUrl.split("/");
     videoId = videoId[4];
     return (dispatch) => {
@@ -264,6 +269,11 @@ export function playVideo(url) {
     }
 }
 export function playPastedLinkVideo(url) {
+    if (!url) {
+        return {
+            type: types.NO_VIDEO_LINK
+        };
+    }
     let videoId = url
     videoId = videoId.split('&')[0];
     videoId = videoId.split('=')[1];

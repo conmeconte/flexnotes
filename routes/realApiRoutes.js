@@ -303,7 +303,7 @@ module.exports = (app) => {
 app.put('/api/note', requireLogin, async (req,res)=>{
         const existingUser= await User.findById(req.user.id, (err,user)=>{if(err){return res.send('error')}});
             if (existingUser) {
-                const page = user
+                const page = existingUser
                 .binder_arr_obj.id(req.body.binderID)
                 .tab_arr_obj.id(req.body.tabID)  
                 .page_arr_obj.id(req.body.pageID)

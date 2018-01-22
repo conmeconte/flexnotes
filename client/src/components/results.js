@@ -14,19 +14,18 @@ class Results extends Component {
         const list = results.map((item, index) => {
             console.log(item.url);
             return (
-                <li className="result-item list-group-item col-xs-12" key={index}>
-                    <div className="col-xs-8">
-                        <li className="video-items">{item.videoTitle}</li>
-                    </div>
-                    <div className="col-xs-4">
-                        {/* <button className="btn-sm btn-success pull-right" onClick={ () => { this.props.addToPlayList(item) } }><span className="glyphicon glyphicon-plus"></span></button> */}
-                        <button className="btn-sm btn-primary pull-right" onClick={ () => { this.props.playVideo(item.url) }}><span className="glyphicon glyphicon-play"></span></button>
+                <li className="result-item collection-item col s12" key={index}>
+                    <div className="row list-item-wrapper">
+                        <span className="video-items col s8">{item.videoTitle}</span>
+                        <button className="btn red darken-3 right col s3" onClick={ () => { this.props.playVideo(item.url) }}>
+                            <i className="material-icons">play_arrow</i>
+                        </button>
                     </div>
                 </li>
             );
         });
         return (
-            <ul className="results text-left">{list}</ul>
+            <ul className="results collection">{list}</ul>
         );
 
     }
