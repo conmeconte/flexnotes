@@ -38,6 +38,7 @@ class Slides extends Component {
                         break;
                     }
                 }
+
                 this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
             }
             else {
@@ -66,12 +67,12 @@ class Slides extends Component {
                     break;
                 }
             }
-            if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
-                this.props.setSlidesUrl('', interface_obj);
-                return;
-            } else {
-                this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
-            }
+            // if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
+            //     this.props.setSlidesUrl('', interface_obj);
+            //     return;
+            // } else {
+            //     this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
+            // }
         } else {
             console.log("DOES NOT WORK");
         }
@@ -83,6 +84,7 @@ class Slides extends Component {
                 const urlSplit2 = urlSplit1[1].split('/');
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
+                //console.log('slidesUrl', slidesURL);
                 this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
             }
             else if (values.url.indexOf('presentation/d/') !== -1) {
@@ -90,6 +92,7 @@ class Slides extends Component {
                 const urlSplit2 = urlSplit1[1].split('/');
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
+                //console.log('slidesUrl', slidesURL);
                 this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
             }
         } else {

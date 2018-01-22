@@ -9,6 +9,7 @@ export const fetchUser = () => async dispatch => {
 //PANEL SPECs Action Creator
 
 export function setTopLeftHeight(num, interfaceObj) {
+    console.log('panel 3 settopleft: ', num)
     return (dispatch) => {
         axios.put('/api/page', {
             top_left_panel_height: num,
