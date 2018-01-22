@@ -43,7 +43,7 @@ export default function (state = DEFAULT_STATE, action) {
         case types.DELETE_PAGE:
             return { ...state, pull_from_db: true };
         case types.UPDATE_BINDER_ARRAY:
-            return { ...state, pull_from_db: false };
+            return { ...state, pull_from_db: false, sent_to_db: false };
         case types.ADD_TO_PLAYLIST:
         case types.SET_SLIDES_URL:
         case types.PANEL_TOP_LEFT_HEIGHT:

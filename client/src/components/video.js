@@ -81,9 +81,9 @@ class Video extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        if (!nextProps.interface_obj.sent_to_db) {
-            this.props.updateBinderArray();
-        } else {
+        // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+        //     this.props.updateBinderArray();
+        // } else {
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
 
@@ -115,7 +115,7 @@ class Video extends Component {
             } else {
                 console.log("DOES NOT WORK");
             }
-        }
+        //}
     }
     renderInput({ input }) {
         console.log(input);

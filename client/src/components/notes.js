@@ -168,9 +168,9 @@ class Notes extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        if (!nextProps.interface_obj.sent_to_db) {
-            this.props.updateBinderArray();
-        }else{
+        // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+        //     this.props.updateBinderArray();
+        // }else{
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
 
@@ -208,7 +208,7 @@ class Notes extends Component {
             } else {
                 console.log("DOES NOT WORK");
             }
-        }
+        //}
     }
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
