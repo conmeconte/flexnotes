@@ -17,35 +17,37 @@ class Slides extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-        //     this.props.updateBinderArray();
-        // } else {
-        let { tab_arr_obj } = nextProps.binderObj;
-        let { interface_obj } = nextProps;
+        if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+            let { tab_arr_obj } = nextProps.binderObj;
+            let { interface_obj } = nextProps;
+    
+            if (tab_arr_obj) {
+                let tabArrLength = tab_arr_obj.length;
+                let tabIndex = null;
+                let pageIndex = null;
+                for (let i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        tabIndex = i;
+                        break;
+                    }
+                }
+                const { page_arr_obj } = tab_arr_obj[tabIndex];
+                for (let i = 0; i < page_arr_obj.length; i++) {
+                    if (interface_obj.page_id === page_arr_obj[i]._id) {
+                        pageIndex = i;
+                        break;
+                    }
+                }
+                //add get slides url call here
 
-        if (tab_arr_obj) {
-            let tabArrLength = tab_arr_obj.length;
-            let tabIndex = null;
-            let pageIndex = null;
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    tabIndex = i;
-                    break;
-                }
-            }
-            const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < page_arr_obj.length; i++) {
-                if (interface_obj.page_id === page_arr_obj[i]._id) {
-                    pageIndex = i;
-                    break;
-                }
-            }
-            if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
-                // return;
-                this.props.setSlidesUrl('', interface_obj);
-            } else {
-                this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
-            }
+            } 
+
+            // if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
+            //     // return;
+            //     //this.props.setSlidesUrl('', interface_obj);
+            // } else {
+            //     this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
+            // }
         } else {
             console.log("DOES NOT WORK");
         }
@@ -72,12 +74,12 @@ class Slides extends Component {
                     break;
                 }
             }
-            if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
-                this.props.setSlidesUrl('', interface_obj);
-                return;
-            } else {
-                this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
-            }
+            // if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
+            //     this.props.setSlidesUrl('', interface_obj);
+            //     return;
+            // } else {
+            //     this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
+            // }
         } else {
             console.log("DOES NOT WORK");
         }
@@ -89,6 +91,7 @@ class Slides extends Component {
                 const urlSplit2 = urlSplit1[1].split('/');
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
+                //console.log('slidesUrl', slidesURL);
                 this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
             }
             else if (values.url.indexOf('presentation/d/') !== -1) {
@@ -96,6 +99,7 @@ class Slides extends Component {
                 const urlSplit2 = urlSplit1[1].split('/');
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
+                //console.log('slidesUrl', slidesURL);
                 this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
             }
         } else {

@@ -131,6 +131,7 @@ class Page extends Component {
         //this.props.selectBinder(binderObj);
         this.props.selectPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id);
         //console.log("page id updated");
+        //this.props.
     }
 
     render(){
