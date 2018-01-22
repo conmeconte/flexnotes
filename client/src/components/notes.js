@@ -52,7 +52,7 @@ const saveStyle = {
 // --------------------------- UNDO AND REDO  ---------------------------
 
 const ToolbarButton = props => (
-    <span title={props.icon} className="button" onMouseDown={props.onMouseDown}>
+    <span title={props.icon} className="styleSquare" onMouseDown={props.onMouseDown}>
         <span className="material-icons">{props.icon}</span>
     </span>
 );
@@ -154,7 +154,7 @@ class Notes extends Component {
             }
             if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
                 // return;
-                const noteText="{\"kind\":\"value\",\"document\":{\"kind\":\"document\",\"data\":{},\"nodes\":[{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Write Something\",\"marks\":[]}]}]}]}}"
+                const noteText="{\"kind\":\"value\",\"document\":{\"kind\":\"document\",\"data\":{},\"nodes\":[{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]}]}}"
                 const lastContent = JSON.parse(noteText);
                 this.setState({
                     value: Value.fromJSON(lastContent)
@@ -194,7 +194,7 @@ class Notes extends Component {
                 }
                 if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
                     // return;
-                    const noteText="{\"kind\":\"value\",\"document\":{\"kind\":\"document\",\"data\":{},\"nodes\":[{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Write Something\",\"marks\":[]}]}]}]}}"
+                    const noteText="{\"kind\":\"value\",\"document\":{\"kind\":\"document\",\"data\":{},\"nodes\":[{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]}]}}"
                     const lastContent = JSON.parse(noteText);
                     this.setState({
                         value: Value.fromJSON(lastContent)
@@ -481,8 +481,8 @@ class Notes extends Component {
         switch (node.type) {
             case 'block-quote': return <blockquote {...attributes}>{children}</blockquote>;
             case 'bulleted-list': return <ul {...attributes}>{children}</ul>;
-            case 'heading-one': return <h1 {...attributes}>{children}</h1>;
-            case 'heading-two': return <h2 {...attributes}>{children}</h2>;
+            case 'heading-one': return <h5 {...attributes}>{children}</h5>;
+            // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
             case 'list-item': return <li {...attributes}>{children}</li>;
             case 'numbered-list': return <ol {...attributes}>{children}</ol>;
             case 'link': {
@@ -512,8 +512,8 @@ class Notes extends Component {
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
                     {this.renderMarkButton('code', 'code')}
-                    {this.renderBlockButton('heading-one', 'looks_one')}
-                    {this.renderBlockButton('heading-two', 'looks_two')}
+                    {this.renderBlockButton('heading-one', 'title')}
+                    {/*{this.renderBlockButton('heading-two', 'title')}*/}
                     {this.renderBlockButton('block-quote', 'format_quote')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
@@ -525,14 +525,14 @@ class Notes extends Component {
                     </span>
                 </div>
                 {/*<div className="searchSave">*/}
-                {/*<div className="search-box">*/}
-                <input
-                    className="search-input"
-                    placeholder="Search keywords..."
-                    onChange={this.onInputChange}
-                />
-                <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved" : "Save Changes"}</button>
-                {/*</div>*/}
+                    <div className="search-box">
+                        <input
+                            className="search-input"
+                            placeholder="Search keywords..."
+                            onChange={this.onInputChange}
+                        />
+                        <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved" : "Save Changes"}</button>
+                    </div>
                 {/*</div>*/}
             </div>
 
