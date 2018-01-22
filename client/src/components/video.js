@@ -151,7 +151,7 @@ class Video extends Component {
                                 this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                                 this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                                 }}>
-                                    <i className="material-icons">keyboard_arrow_right</i>
+                                    <i className="material-icons">close</i>
                                 </button>
 
                             </span>

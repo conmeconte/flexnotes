@@ -27,8 +27,9 @@ class NavBar extends Component{
         if(nextProps.interface.sent_to_db){
             console.log("sent to db = true");
             for (let i = 0; i < this.props.binderArr.length; i++) {
-                if (this.props.binderArr[i].binder_id === nextProps.interface.binder_id) {
+                if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
                     let binderObj = this.props.binderArr[i];
+                    console.log("binder object: ", binderObj);
                     this.props.updateBinderObj(binderObj);
                 }
             }
