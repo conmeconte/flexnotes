@@ -5,7 +5,7 @@ import axios from 'axios';
 // import { SortablePane, Pane } from 'react-sortable-pane';
 // import Resizable from 're-resizable';
 import { connect } from 'react-redux';
-import { setNumOfPanels, updateBinderArray } from '../actions/index';
+import { setNumOfPanels, getPanelNum, updateBinderArray } from '../actions/index';
 
 
 class Panel extends Component {
@@ -14,43 +14,38 @@ class Panel extends Component {
         //this.props = props;
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     console.log('cw r p panel.js', nextProps.interface_obj.sent_to_db)
-    //     if (nextProps.interface_obj.sent_to_db) {
-    //         this.props.updateBinderArray();
-    //     } else {
-    //         let { tab_arr_obj } = nextProps.binderObj;
-    //         let { interface_obj } = nextProps;
+    componentWillMount() {
+        let { tab_arr_obj } = this.props.binderObj;
+        let { interface_obj } = this.props;
 
-    //         if (tab_arr_obj) {
-    //             let tabArrLength = tab_arr_obj.length;
-    //             let tabIndex = null;
-    //             let pageIndex = null;
-    //             for (let i = 0; i < tabArrLength; i++) {
-    //                 if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-    //                     tabIndex = i;
-    //                     break;
-    //                 }
-    //             }
-    //             const { page_arr_obj } = tab_arr_obj[tabIndex];
-    //             for (let i = 0; i < tabArrLength; i++) {
-    //                 if (interface_obj.page_id === page_arr_obj[i]._id) {
-    //                     pageIndex = i;
-    //                     break;
-    //                 }
-    //             }
-    //             if (!page_arr_obj[pageIndex].panel_dimensions.number_of_panels) {
-    //                 return;
-    //             } else {
-    //                 console.log('cwm panel component recieving new props');
-    //                 console.log('cwm panel setting panels to', page_arr_obj[pageIndex].panel_dimensions.number_of_panels)
-    //                 // this.props.setNumOfPanels(page_arr_obj[pageIndex].panel_dimensions.number_of_panels, interface_obj);
-    //             }
-    //         } else {
-    //             console.log("DOES NOT WORK");
-    //         }
-    //     }
-    // }
+        if (tab_arr_obj) {
+            let tabArrLength = tab_arr_obj.length;
+            let tabIndex = null;
+            let pageIndex = null;
+            for (let i = 0; i < tabArrLength; i++) {
+                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                    tabIndex = i;
+                    break;
+                }
+            }
+            const { page_arr_obj } = tab_arr_obj[tabIndex];
+            for (let i = 0; i < page_arr_obj.length; i++) {
+                if (interface_obj.page_id === page_arr_obj[i]._id) {
+                    pageIndex = i;
+                    break;
+                }
+            }
+            if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
+                console.log('cwm panel component mounting');
+                this.props.getPanelNum(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
+            } else {
+                console.log('does not have panel_dimensions property, calling getPanelNum in cwm')
+                this.props.getPanelNum(3);
+            }
+        } else {
+            console.log("DOES NOT WORK");
+        }
+    }
 
     componentWillReceiveProps(nextProps) {
 
@@ -77,12 +72,11 @@ class Panel extends Component {
                     }
                 }
                 if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
-                    console.log('cwm panel component mounting');
-                    //console.log('cwm panel setting panels to', page_arr_obj[pageIndex].panel_dimensions.number_of_panels)
-                    this.props.setNumOfPanels(3, interface_obj);
-                    
+                    console.log('c w r props panel component mounting');
+                    this.props.getPanelNum(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
                 } else {
-                    return;
+                    console.log('does not have panel_dimensions property, calling getPanelNum in cwrp')
+                    this.props.getPanelNum(3);
                 }
             } else {
                 console.log("DOES NOT WORK");
@@ -128,4 +122,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { setNumOfPanels, updateBinderArray })(Panel);;
+export default connect(mapStateToProps, { setNumOfPanels, getPanelNum, updateBinderArray })(Panel);;
