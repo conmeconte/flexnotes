@@ -96,69 +96,27 @@ export function setNumOfPanels(num, interfaceObj) {
 
 //Lecture Slides Action Creator
 
-export function setSlidesUrl(value, interfaceObj) {
-    if (value) {
-        if (value.indexOf('presentation/d/') !== -1 || value.indexOf('presentation/d/e') !== -1) {
-            if (value.indexOf('presentation/d/e') !== -1) {
-                const urlSplit1 = value.split("presentation/d/e/");
-                const urlSplit2 = urlSplit1[1].split('/');
-                let presentationID = urlSplit2[0];
-                const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
-                return (dispatch) => {
-                    axios.put('/api/page', {
-                        lecture_slides: {
-                            lec_id: slidesURL
-                        },
-                        binderID: interfaceObj.binder_id,
-                        tabID: interfaceObj.tab_id,
-                        pageID: interfaceObj.page_id
-                    }).then((resp) => {
-                        console.log("setSlidesUrl response: ", resp);
-                        dispatch({
-                            type: types.SET_SLIDES_URL,
-                            payload: slidesURL
-                        });
-                    }).catch(error => {
-                        dispatch({
-                            type: types.AXIOS_ERROR,
-                            msg: 'Failed to update Google Slides URL'
-                        })
-                    });
-                }
-            } else {
-                const urlSplit1 = value.split("presentation/d/");
-                const urlSplit2 = urlSplit1[1].split('/');
-                let presentationID = urlSplit2[0];
-                const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
-                return (dispatch) => {
-                    axios.put('/api/page', {
-                        lecture_slides: {
-                            lec_id: slidesURL
-                        },
-                        binderID: interfaceObj.binder_id,
-                        tabID: interfaceObj.tab_id,
-                        pageID: interfaceObj.page_id
-                    }).then((resp) => {
-                        console.log("setSlidesUrl response: ", resp);
-                        dispatch({
-                            type: types.SET_SLIDES_URL,
-                            payload: slidesURL
-                        });
-                    }).catch(error => {
-                        dispatch({
-                            type: types.AXIOS_ERROR,
-                            msg: 'Failed to update Google Slides URL'
-                        })
-                    });
-                }
-            }
-        }
-        else {
-            return {
+export function setSlidesUrl(slidesURL, interfaceObj) {
+    return (dispatch) => {
+        axios.put('/api/page', {
+            lecture_slides: {
+                lec_id: slidesURL
+            },
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then((resp) => {
+            console.log("setSlidesUrl response: ", resp);
+            dispatch({
                 type: types.SET_SLIDES_URL,
-                payload: ''
-            };
-        }
+                payload: slidesURL
+            });
+        }).catch(error => {
+            dispatch({
+                type: types.AXIOS_ERROR,
+                msg: 'Failed to update Google Slides URL'
+            })
+        });
     }
 }
 // End of Lecture Slides Action Creators
@@ -478,7 +436,7 @@ export function deletePage(binder_id, tab_id, page_id) {
     }
 }
 
-export function editBinder(binder_id, binder_name){
+export function editBinder(binder_id, binder_name) {
     return (dispatch) => {
         const test = axios.put('/api/binder', {
             binderID: binder_id,
@@ -499,7 +457,7 @@ export function editBinder(binder_id, binder_name){
     }
 }
 
-export function editTab(binder_id, tab_id, tab_name){
+export function editTab(binder_id, tab_id, tab_name) {
     return (dispatch) => {
         const test = axios.put('/api/tab', {
             binderID: binder_id,
@@ -521,11 +479,11 @@ export function editTab(binder_id, tab_id, tab_name){
     }
 }
 
-export function editPage(binder_id, tab_id, page_id, page_name){
+export function editPage(binder_id, tab_id, page_id, page_name) {
     return (dispatch) => {
         const test = axios.put('/api/page', {
             binderID: binder_id,
-            tabID: tab_id, 
+            tabID: tab_id,
             pageID: page_id,
             page_name: page_name
         })
