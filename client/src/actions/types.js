@@ -32,5 +32,6 @@ export default {
     PANEL_TOP_LEFT_HEIGHT: 'panel_top_left_height',
     PANEL_TOP_LEFT_WIDTH: 'panel_top_left_width',
     PANEL_TOP_RIGHT_HEIGHT: 'panel_top_right_height',
-    NUM_OF_PANELS: 'num_of_panels'
+    NUM_OF_PANELS: 'num_of_panels',
+    NO_VIDEO_LINK: 'no_video_link'
 }
