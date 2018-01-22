@@ -5,8 +5,8 @@ import * as actions from "../actions";
 import googleButton from '../assets/images/google-login.png';
 import backgroundImage from '../assets/images/landing-background.png';
 import Login from './login';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../assets/css/landing-page.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import '../assets/css/landing-page.css';
 
 const backgroundImg = {
     background: `url('${backgroundImage}')`,
@@ -24,7 +24,7 @@ class LandingPage extends Component {
                     <div></div>
                 );
             default:
-                return <div className="dashboard-button"><a href="/main#"><button className="btn btn-sm logoutBtn">Back to Dashboard</button></a></div>
+                return <div className="dashboard-button"><a href="/main#"><button className="btn btn-sm logoutBtn  light-blue darken-3">Back to Dashboard</button></a></div>
         }
     }
     render () {
@@ -43,15 +43,18 @@ class LandingPage extends Component {
                         <h3>Web Application</h3>
                             <ul className="item-list">
                                 <li>
-                                    <span className="glyphicon glyphicon-thumbs-up"></span>
+                                    {/* <span className="glyphicon glyphicon-thumbs-up"></span> */}
+                                    <i className="material-icons landing">thumb_up</i>
                                     <div className="item-text">Easy to use</div>
                                 </li>
                                 <li>
-                                    <span className="glyphicon glyphicon-wrench"></span>
+                                    {/* <span className="glyphicon glyphicon-wrench"></span> */}
+                                    <i className="material-icons landing">build</i>
                                     <div className="item-text">Customizable user interface</div>
                                 </li>
                                 <li>
-                                    <span className="glyphicon glyphicon-pencil"></span>
+                                    {/* <span className="glyphicon glyphicon-pencil"></span> */}
+                                    <i className="material-icons landing">featured_video</i>
                                     <div className="item-text">Text editor, videos, slides, and more!</div>
                                 </li>
                             </ul>

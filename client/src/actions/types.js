@@ -4,10 +4,16 @@ export default {
     FETCH_USER: 'fetch_user',
     GET_USER_DATA: 'get_user_data',
     UPDATE_BINDER_ARRAY: 'update_binder_array',
+    AXIOS_ERROR: 'axios_error',
     ADD_BINDER: 'add_binder',
     ADD_TAB: 'add_tab',
     ADD_PAGE: 'add_page',
     DELETE_BINDER: 'delete_binder',
+    DELETE_TAB: 'delete_tab',
+    DELETE_PAGE: 'delete_page',
+    EDIT_BINDER: 'edit_binder',
+    EDIT_TAB: 'edit_tab',
+    EDIT_PAGE: 'edit_page',
     SELECT_BINDER: 'select_binder',
     SELECT_TAB: 'select_tab',
     SELECT_PAGE: 'select_page',
@@ -26,5 +32,6 @@ export default {
     PANEL_TOP_LEFT_HEIGHT: 'panel_top_left_height',
     PANEL_TOP_LEFT_WIDTH: 'panel_top_left_width',
     PANEL_TOP_RIGHT_HEIGHT: 'panel_top_right_height',
-    NUM_OF_PANELS: 'num_of_panels'
+    NUM_OF_PANELS: 'num_of_panels',
+    NO_VIDEO_LINK: 'no_video_link'
 }

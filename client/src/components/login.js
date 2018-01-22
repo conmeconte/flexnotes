@@ -13,20 +13,20 @@ class Login extends Component {
                     <a href="/auth/google"><img src={googleButton} /></a>
                 );
             default:
-                return <a href="/api/logout"><button className="btn btn-sm logoutBtn">Logout <span className="glyphicon glyphicon-log-out"></span></button></a>
+                return <a className="landing-login-text" href="/api/logout"><button className="btn light-blue darken-4">Logout <i className="material-icons left">arrow_forward</i></button></a>
         }
     }
 
     render() {
         // console.log(this.props);
         return (
-            <nav>
+            <div>
                 <div className="nav-wrapper">
-                    <ul className="right">
+                    {/* <ul className="right"> */}
                         {this.renderContent()}
-                    </ul>
+                    {/* </ul> */}
                 </div>
-            </nav>
+            </div>
         );
     }
 }

@@ -11,7 +11,7 @@ const notesNode = new Schema({
             kind: {type: String, default: "text"},
             leaves: [
                 {
-                    text: {type: String, default: "A line of text in a paragraph."}
+                    text: {type: String, default: "Welcome to FlexNotes your solution to daily note taking"}
                 }
             ]
         }

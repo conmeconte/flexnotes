@@ -14,6 +14,13 @@ export default function(state = DEFAULT_STATE, action){
             return {binderObj: action.payload.data};
         case types.ADD_PAGE:
             return {binderObj: action.payload.data};
+        case types.DELETE_TAB:
+            return {binderObj: action.payload};
+        case types.DELETE_PAGE:
+            return {binderObj: action.payload};
+        // case types.EDIT_TAB:
+        // console.log('binderreducer for edit tab: ',action.payload);
+        //     return {binderObj: action.payload};
         default:
             return state;
     }
