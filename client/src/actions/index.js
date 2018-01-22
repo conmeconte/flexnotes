@@ -97,7 +97,6 @@ export function setNumOfPanels(num, interfaceObj) {
 //Lecture Slides Action Creator
 
 export function setSlidesUrl(value, interfaceObj) {
-    console.log("setSlides url action 1:", value);
     if (value) {
         if (value.indexOf('presentation/d/') !== -1 || value.indexOf('presentation/d/e') !== -1) {
             if (value.indexOf('presentation/d/e') !== -1) {
@@ -126,31 +125,32 @@ export function setSlidesUrl(value, interfaceObj) {
                         })
                     });
                 }
-            }
-            const urlSplit1 = value.split("presentation/d/");
-            const urlSplit2 = urlSplit1[1].split('/');
-            let presentationID = urlSplit2[0];
-            const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
-            return (dispatch) => {
-                axios.put('/api/page', {
-                    lecture_slides: {
-                        lec_id: slidesURL
-                    },
-                    binderID: interfaceObj.binder_id,
-                    tabID: interfaceObj.tab_id,
-                    pageID: interfaceObj.page_id
-                }).then((resp) => {
-                    console.log("setSlidesUrl response: ", resp);
-                    dispatch({
-                        type: types.SET_SLIDES_URL,
-                        payload: slidesURL
+            } else {
+                const urlSplit1 = value.split("presentation/d/");
+                const urlSplit2 = urlSplit1[1].split('/');
+                let presentationID = urlSplit2[0];
+                const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
+                return (dispatch) => {
+                    axios.put('/api/page', {
+                        lecture_slides: {
+                            lec_id: slidesURL
+                        },
+                        binderID: interfaceObj.binder_id,
+                        tabID: interfaceObj.tab_id,
+                        pageID: interfaceObj.page_id
+                    }).then((resp) => {
+                        console.log("setSlidesUrl response: ", resp);
+                        dispatch({
+                            type: types.SET_SLIDES_URL,
+                            payload: slidesURL
+                        });
+                    }).catch(error => {
+                        dispatch({
+                            type: types.AXIOS_ERROR,
+                            msg: 'Failed to update Google Slides URL'
+                        })
                     });
-                }).catch(error => {
-                    dispatch({
-                        type: types.AXIOS_ERROR,
-                        msg: 'Failed to update Google Slides URL'
-                    })
-                });
+                }
             }
         }
         else {
@@ -159,12 +159,6 @@ export function setSlidesUrl(value, interfaceObj) {
                 payload: ''
             };
         }
-    }
-    else {
-        return {
-            type: types.SET_SLIDES_URL,
-            payload: ''
-        };
     }
 }
 // End of Lecture Slides Action Creators
