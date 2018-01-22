@@ -24,7 +24,7 @@ class ThreePanel extends Component {
     }
 
     componentWillMount() {
-        this.props.updateBinderArray();
+        //this.props.updateBinderArray();
     }
 
     // componentWillReceiveProps(nextProps) {
@@ -52,8 +52,18 @@ class ThreePanel extends Component {
     //         topLeftPanelWidth = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width;
     //     }
     // }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+            console.log("save panel dimsensions now");
+            //save panel dimensions here.
+
+        } else {
+            return;
+        }
+    }
 
     render() {
+        console.log('panel three props:', this.props);
         const loTLHsave = _.debounce((size) => {
             this.logTopLeftHeight(size);
         }, 300);
@@ -77,7 +87,7 @@ class ThreePanel extends Component {
             }
             const { page_arr_obj } = tab_arr_obj[tabIndex];
             for (let i = 0; i < page_arr_obj.length; i++) {
-            // for (let i = 0; i < tabArrLength; i++) {
+                // for (let i = 0; i < tabArrLength; i++) {
                 if (interface_obj.page_id === page_arr_obj[i]._id) {
                     pageIndex = i;
                     break;

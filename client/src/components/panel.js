@@ -11,7 +11,7 @@ import { setNumOfPanels, updateBinderArray } from '../actions/index';
 class Panel extends Component {
     constructor(props) {
         super(props);
-        this.props = props;
+        //this.props = props;
     }
 
     // componentWillReceiveProps(nextProps) {
@@ -52,40 +52,49 @@ class Panel extends Component {
     //     }
     // }
 
-    componentWillMount() {
-        let { tab_arr_obj } = this.props.binderObj;
-        let { interface_obj } = this.props;
-        console.log('cwm panel.js:', tab_arr_obj);
-        if (tab_arr_obj) {
-            let tabArrLength = tab_arr_obj.length;
-            let tabIndex = null;
-            let pageIndex = null;
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    tabIndex = i;
-                    break;
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.binderObj !== this.props.binderObj) {
+            let { tab_arr_obj } = nextProps.binderObj;
+            let { interface_obj } = nextProps;
+            if (tab_arr_obj) {
+                console.log('cwrp panel.js tab arr obj:', tab_arr_obj);
+                console.log('cwro panel.js interface obj:', interface_obj);
+                let tabArrLength = tab_arr_obj.length;
+                let tabIndex = null;
+                let pageIndex = null;
+                for (let i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        tabIndex = i;
+                        break;
+                    }
                 }
-            }
-            const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.page_id === page_arr_obj[i]._id) {
-                    pageIndex = i;
-                    break;
+                const { page_arr_obj } = tab_arr_obj[tabIndex];
+                for (let i = 0; i < page_arr_obj.length; i++) {
+                    if (interface_obj.page_id === page_arr_obj[i]._id) {
+                        pageIndex = i;
+                        break;
+                    }
                 }
-            }
-            if (!page_arr_obj[pageIndex].panel_dimensions) {
-                return;
+                if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
+                    console.log('cwm panel component mounting');
+                    //console.log('cwm panel setting panels to', page_arr_obj[pageIndex].panel_dimensions.number_of_panels)
+                    this.props.setNumOfPanels(3, interface_obj);
+                    
+                } else {
+                    return;
+                }
             } else {
-                console.log('cwm panel component mounting');
-                console.log('cwm panel setting panels to', page_arr_obj[pageIndex].panel_dimensions.number_of_panels)
-                this.props.setNumOfPanels(page_arr_obj[pageIndex].panel_dimensions.number_of_panels, interface_obj);
+                console.log("DOES NOT WORK");
             }
+
         } else {
-            console.log("DOES NOT WORK");
+            return;
         }
     }
 
     render() {
+        console.log("panel props", this.props);
         return (
             <div className="col s10">
                 {/* <header>
