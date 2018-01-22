@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import Results from './results';
 import VideoContainer from './video-container';
-import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray } from '../actions';
+import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray, getDataObject } from '../actions';
 import { Field, reduxForm } from 'redux-form';
 import VideoModal from './video-modal';
 
@@ -51,7 +51,6 @@ class Video extends Component {
     componentWillMount() {
         let { tab_arr_obj } = this.props.binderObj;
         let { interface_obj } = this.props;
-
         if (tab_arr_obj) {
             let tabArrLength = tab_arr_obj.length;
             let tabIndex = null;
@@ -75,47 +74,22 @@ class Video extends Component {
                 this.props.setVideoUrl('', interface_obj);
             } else {
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
+                
             }
-        } else {
-            console.log("DOES NOT WORK");
-        }
+        } 
     }
     componentWillReceiveProps(nextProps) {
-        // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+        console.log("NEXT PROPS: ", nextProps);
+        if (this.props.interface_obj.page_id !== nextProps.interface_obj.page_id){
+            this.updateVideoComponent(nextProps);
+        }
+
+        // if (nextProps.interface_obj.sent_to_db) {
         //     this.props.updateBinderArray();
+        //     console.log("BINDER HAS BEEN UPDATED");
         // } else {
-            let { tab_arr_obj } = nextProps.binderObj;
-            let { interface_obj } = nextProps;
-
-            if (tab_arr_obj) {
-                let tabArrLength = tab_arr_obj.length;
-                let tabIndex = null;
-                let pageIndex = null;
-                for (let i = 0; i < tabArrLength; i++) {
-                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                        //console.log('tabid = interface id at index:', i);
-                        tabIndex = i;
-                        break;
-                    }
-                }
-                const { page_arr_obj } = tab_arr_obj[tabIndex];
-                for (let i = 0; i < page_arr_obj.length; i++) {
-                    if (interface_obj.page_id === page_arr_obj[i]._id) {
-                        pageIndex = i;
-                        break;
-                    }
-                }
-                if (typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined') {
-                    // return;
-                    this.props.setVideoUrl('', interface_obj);
-
-                } else {
-                    this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
-                }
-            } else {
-                console.log("DOES NOT WORK");
-            }
-        //}
+        //     this.updateVideoComponent(nextProps);
+        // }
     }
     renderInput({ input }) {
         console.log(input);
@@ -125,7 +99,41 @@ class Video extends Component {
             </div>
         )
     }
+
+    updateVideoComponent(nextProps) {
+        console.log("update video component");
+        let { tab_arr_obj } = nextProps.binderObj;
+        let { interface_obj } = nextProps;
+        if (tab_arr_obj) {
+            let tabArrLength = tab_arr_obj.length;
+            let tabIndex = null;
+            let pageIndex = null;
+            for (let i = 0; i < tabArrLength; i++) {
+                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                    //console.log('tabid = interface id at index:', i);
+                    tabIndex = i;
+                    break;
+                }
+            }
+            const { page_arr_obj } = tab_arr_obj[tabIndex];
+            for (let i = 0; i < page_arr_obj.length; i++) {
+                if (interface_obj.page_id === page_arr_obj[i]._id) {
+                    pageIndex = i;
+                    break;
+                }
+            }
+            if (page_arr_obj[pageIndex].hasOwnProperty('video')) {
+                // return;
+                this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
+                
+            } else {
+                this.props.setVideoUrl('', interface_obj);
+            }
+        } 
+    }
+
     render() {
+        console.log("video props:", this.props);
         return (
             <div className="main">
                 <VideoModal />
@@ -143,7 +151,7 @@ class Video extends Component {
                                 this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                                 this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                                 }}>
-                                    <i className="material-icons">keyboard_arrow_right</i>
+                                    <i className="material-icons">close</i>
                                 </button>
 
                             </span>
@@ -178,4 +186,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray })(Video);
+export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray, getDataObject })(Video);

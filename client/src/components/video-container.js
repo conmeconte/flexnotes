@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray } from '../actions';
+import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray, getDataObject } from '../actions';
 
 class VideoContainer extends Component {
     renderInput ({input}) {
@@ -17,12 +17,14 @@ class VideoContainer extends Component {
         this.props.grabVideoUrl(values.input);
         this.props.playPastedLinkVideo(values["youtube-url"]);
         this.props.toggleModal(this.props.addVideoModalStyle);
+        //this.props.getDataObject();
+        //this.props.updateBinderArray();
     }
     // componentWillReceiveProps(nextProps){
     //     debugger
     // }
     render () {
-        
+        console.log('video-container props ', this.props);
     return ( 
         <div className="iframe-wrapper">
             <div className="row">
@@ -35,7 +37,7 @@ class VideoContainer extends Component {
                                 <button type="button" className="btn btn-primary vidList vid-left-arrow" onClick={ () => {
                                 this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                                 this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
-                                }}><i className="material-icons">keyboard_arrow_left</i>
+                                }}><i className="fa fa-youtube" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
@@ -71,4 +73,4 @@ VideoContainer = reduxForm({
     form: 'youtube-url'
 })(VideoContainer)
 
-export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray })(VideoContainer)
+export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray, getDataObject })(VideoContainer)

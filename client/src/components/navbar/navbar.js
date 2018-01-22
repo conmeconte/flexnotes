@@ -3,7 +3,7 @@ import Binder from './binder';
 
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, deleteBinder, addBinder} from '../../actions';
+import { updateBinderArray, deleteBinder, addBinder, updateBinderObj} from '../../actions';
 
 
 class NavBar extends Component{
@@ -22,6 +22,18 @@ class NavBar extends Component{
         if(nextProps.interface.pull_from_db || nextProps.interface.page_id !== this.props.interface.page_id){
             console.log("update binder array");
             this.props.updateBinderArray();
+        }
+
+        if(nextProps.interface.sent_to_db){
+            console.log("sent to db = true");
+            for (let i = 0; i < this.props.binderArr.length; i++) {
+                if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
+                    let binderObj = this.props.binderArr[i];
+                    console.log("binder object: ", binderObj);
+                    this.props.updateBinderObj(binderObj);
+                }
+            }
+            
         }
     }
     addBinder() {
@@ -149,4 +161,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{ updateBinderArray, deleteBinder, addBinder})(NavBar);
+export default connect(mapStateToProps,{ updateBinderArray, deleteBinder, addBinder, updateBinderObj})(NavBar);

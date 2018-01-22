@@ -40,11 +40,10 @@ const initialValue = Value.fromJSON({
 
 const saveStyle = {
     true: {
-        // backgroundColor: "#ffffff",
+        backgroundColor: "#ffffff",
         color: "#00cc00"
     },
     false: {
-        // backgroundColor: "#ffffff",
         color: "#96858F"
     }
 }
@@ -52,7 +51,7 @@ const saveStyle = {
 // --------------------------- UNDO AND REDO  ---------------------------
 
 const ToolbarButton = props => (
-    <span title={props.icon} className="button" onMouseDown={props.onMouseDown}>
+    <span title={props.icon} className="styleSquare" onMouseDown={props.onMouseDown}>
         <span className="material-icons">{props.icon}</span>
     </span>
 );
@@ -125,14 +124,57 @@ class Notes extends Component {
             binderID: interface_obj.binder_id,
             tabID: interface_obj.tab_id,
             pageID: interface_obj.page_id
-        });
-        this.setState({ save: true })
+        }).then(
+            this.setState({
+                ...value,
+                save: true
+            })
+            );
     }
 
 
     componentWillMount() {
         let { tab_arr_obj } = this.props.binderObj;
         let { interface_obj } = this.props;
+
+        if (tab_arr_obj) {
+            let tabArrLength = tab_arr_obj.length;
+            let tabIndex = null;
+            let pageIndex = null;
+            for (let i = 0; i < tabArrLength; i++) {
+                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                    tabIndex = i;
+                    break;
+                }
+            }
+            const { page_arr_obj } = tab_arr_obj[tabIndex];
+            for (let i = 0; i < page_arr_obj.length; i++) {
+                if (interface_obj.page_id === page_arr_obj[i]._id) {
+                    pageIndex = i;
+                    break;
+                }
+            }
+            if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                console.log('HAS NOTES cwm', tab_arr_obj[tabIndex].page_arr_obj[pageIndex].notes);
+                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                this.setState({
+                    value: Value.fromJSON(lastContent),
+                    save: false
+                })
+            } else {
+                this.setState({
+                    value: initialValue,
+                    save: false
+                })
+            }
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+        //     this.props.updateBinderArray();
+        // }else{
+        let { tab_arr_obj } = nextProps.binderObj;
+        let { interface_obj } = nextProps;
 
         if (tab_arr_obj) {
             let tabArrLength = tab_arr_obj.length;
@@ -152,62 +194,22 @@ class Notes extends Component {
                     break;
                 }
             }
-            if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
-                // return;
-                const noteText="{\"kind\":\"value\",\"document\":{\"kind\":\"document\",\"data\":{},\"nodes\":[{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Write Something\",\"marks\":[]}]}]}]}}"
-                const lastContent = JSON.parse(noteText);
-                this.setState({
-                    value: Value.fromJSON(lastContent)
-                })
-            } else {
+            if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                console.log('HAS NOTES cwrp', tab_arr_obj[tabIndex].page_arr_obj[pageIndex].notes);
                 const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
                 this.setState({
-                    value: Value.fromJSON(lastContent)
+                    value: Value.fromJSON(lastContent),
+                    save: false
+                })
+            } else {
+                this.setState({
+                    value: initialValue,
+                    save: false
                 })
             }
+        } else {
+            console.log("DOES NOT WORK");
         }
-    }
-    componentWillReceiveProps(nextProps) {
-        // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-        //     this.props.updateBinderArray();
-        // }else{
-            let { tab_arr_obj } = nextProps.binderObj;
-            let { interface_obj } = nextProps;
-
-            if (tab_arr_obj) {
-                let tabArrLength = tab_arr_obj.length;
-                let tabIndex = null;
-                let pageIndex = null;
-                for (let i = 0; i < tabArrLength; i++) {
-                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                        //console.log('tabid = interface id at index:', i);
-                        tabIndex = i;
-                        break;
-                    }
-                }
-                const { page_arr_obj } = tab_arr_obj[tabIndex];
-                for (let i = 0; i < page_arr_obj.length; i++) {
-                    if (interface_obj.page_id === page_arr_obj[i]._id) {
-                        pageIndex = i;
-                        break;
-                    }
-                }
-                if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
-                    // return;
-                    const noteText="{\"kind\":\"value\",\"document\":{\"kind\":\"document\",\"data\":{},\"nodes\":[{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Write Something\",\"marks\":[]}]}]}]}}"
-                    const lastContent = JSON.parse(noteText);
-                    this.setState({
-                        value: Value.fromJSON(lastContent)
-                    })
-                } else {
-                    const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
-                    this.setState({
-                        value: Value.fromJSON(lastContent),
-                    })
-                }
-            } else {
-                console.log("DOES NOT WORK");
-            }
         //}
     }
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
@@ -481,8 +483,8 @@ class Notes extends Component {
         switch (node.type) {
             case 'block-quote': return <blockquote {...attributes}>{children}</blockquote>;
             case 'bulleted-list': return <ul {...attributes}>{children}</ul>;
-            case 'heading-one': return <h1 {...attributes}>{children}</h1>;
-            case 'heading-two': return <h2 {...attributes}>{children}</h2>;
+            case 'heading-one': return <h5 {...attributes}>{children}</h5>;
+            // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
             case 'list-item': return <li {...attributes}>{children}</li>;
             case 'numbered-list': return <ol {...attributes}>{children}</ol>;
             case 'link': {
@@ -512,8 +514,8 @@ class Notes extends Component {
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
                     {this.renderMarkButton('code', 'code')}
-                    {this.renderBlockButton('heading-one', 'looks_one')}
-                    {this.renderBlockButton('heading-two', 'looks_two')}
+                    {this.renderBlockButton('heading-one', 'title')}
+                    {/*{this.renderBlockButton('heading-two', 'title')}*/}
                     {this.renderBlockButton('block-quote', 'format_quote')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
@@ -524,16 +526,14 @@ class Notes extends Component {
                         <span className="material-icons">image</span>
                     </span>
                 </div>
-                {/*<div className="searchSave">*/}
-                {/*<div className="search-box">*/}
-                <input
-                    className="search-input"
-                    placeholder="Search keywords..."
-                    onChange={this.onInputChange}
-                />
-                <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved" : "Save Changes"}</button>
-                {/*</div>*/}
-                {/*</div>*/}
+                <div className="search-box">
+                    <input
+                        className="search-input"
+                        placeholder="Search keywords..."
+                        onChange={this.onInputChange}
+                    />
+                    <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved" : "Save Changes"}</button>
+                </div>
             </div>
 
         )

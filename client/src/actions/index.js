@@ -95,6 +95,13 @@ export function setNumOfPanels(num, interfaceObj) {
     }
 }
 
+export function getPanelNum(num) {
+    return {
+        type: types.GET_PANEL_NUM,
+        payload: num
+    }
+}
+
 //Lecture Slides Action Creator
 
 export function setSlidesUrl(slidesURL, interfaceObj) {
@@ -302,6 +309,14 @@ export function updateBinderArray() {
                     msg: 'Failed call in update binder array'
                 });
             });
+    }
+}
+
+export function updateBinderObj(binder_obj){
+
+    return{
+        type: types.UPDATE_BINDER_OBJ,
+        payload: binder_obj
     }
 }
 
