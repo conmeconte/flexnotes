@@ -81,11 +81,12 @@ class Panel extends Component {
                         }
                     }
                     if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
-                        return;
+                        //console.log('cwm panel component mounting');
+                        //console.log('cwm panel setting panels to', page_arr_obj[pageIndex].panel_dimensions.number_of_panels)
+                        this.props.setNumOfPanels(3, interface_obj);
+                        
                     } else {
-                        console.log('cwm panel component mounting');
-                        console.log('cwm panel setting panels to', page_arr_obj[pageIndex].panel_dimensions.number_of_panels)
-                        this.props.setNumOfPanels(page_arr_obj[pageIndex].panel_dimensions.number_of_panels, interface_obj);
+                        return;
                     }
                 } else {
                     console.log("DOES NOT WORK");
