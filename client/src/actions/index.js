@@ -120,6 +120,13 @@ export function setSlidesUrl(slidesURL, interfaceObj) {
         });
     }
 }
+
+export function getSlidesURL(slidesURL) {
+    return {
+        type: types.GET_SLIDES_URL,
+        payload: slidesURL
+    }
+}
 // End of Lecture Slides Action Creators
 
 //Video Action Creators

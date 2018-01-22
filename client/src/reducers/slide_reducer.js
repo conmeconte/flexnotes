@@ -8,6 +8,8 @@ export default function (state = DEFAULT_STATE, action) {
     switch (action.type) {
         case types.SET_SLIDES_URL:
             return { input: action.payload }
+        case types.GET_SLIDES_URL:
+            return { input: action.payload }
         default:
             return state;
     }
