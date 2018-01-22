@@ -84,12 +84,12 @@ class Video extends Component {
             this.updateVideoComponent(nextProps);
         }
 
-        if (nextProps.interface_obj.sent_to_db) {
-            this.props.updateBinderArray();
-            console.log("BINDER HAS BEEN UPDATED");
-        } else {
-            this.updateVideoComponent(nextProps);
-        }
+        // if (nextProps.interface_obj.sent_to_db) {
+        //     this.props.updateBinderArray();
+        //     console.log("BINDER HAS BEEN UPDATED");
+        // } else {
+        //     this.updateVideoComponent(nextProps);
+        // }
     }
     renderInput({ input }) {
         console.log(input);
@@ -101,6 +101,7 @@ class Video extends Component {
     }
 
     updateVideoComponent(nextProps) {
+        console.log("update video component");
         let { tab_arr_obj } = nextProps.binderObj;
         let { interface_obj } = nextProps;
         if (tab_arr_obj) {
@@ -121,16 +122,18 @@ class Video extends Component {
                     break;
                 }
             }
-            if (typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined') {
+            if (page_arr_obj[pageIndex].hasOwnProperty('video')) {
                 // return;
-                this.props.setVideoUrl('', interface_obj);
-            } else {
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
+                
+            } else {
+                this.props.setVideoUrl('', interface_obj);
             }
         } 
     }
 
     render() {
+        console.log("video props:", this.props);
         return (
             <div className="main">
                 <VideoModal />

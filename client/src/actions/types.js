@@ -17,6 +17,7 @@ export default {
     SELECT_BINDER: 'select_binder',
     SELECT_TAB: 'select_tab',
     SELECT_PAGE: 'select_page',
+    UPDATE_BINDER_OBJ: 'update_binder_obj',
     GET_VIDEO_RESULTS: 'get_video_results',
     SET_VIDEO_URL: 'set_video_url',
     PLAY_PASTED_VIDEO_LINK: 'play_pasted_video',
@@ -35,5 +36,7 @@ export default {
     PANEL_TOP_LEFT_WIDTH: 'panel_top_left_width',
     PANEL_TOP_RIGHT_HEIGHT: 'panel_top_right_height',
     NUM_OF_PANELS: 'num_of_panels',
+    GET_PANEL_NUM: 'get_panel_num',
+    RESET_PANEL_NUM: 'reset_panel_num',
     NO_VIDEO_LINK: 'no_video_link'
 }
