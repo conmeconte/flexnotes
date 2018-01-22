@@ -95,6 +95,13 @@ export function setNumOfPanels(num, interfaceObj) {
     }
 }
 
+export function getPanelNum(num) {
+    return {
+        type: types.GET_PANEL_NUM,
+        payload: num
+    }
+}
+
 //Lecture Slides Action Creator
 
 export function setSlidesUrl(slidesURL, interfaceObj) {

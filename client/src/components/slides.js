@@ -40,13 +40,13 @@ class Slides extends Component {
                 }
                 // console.log('tab index:' , tabIndex);
                 // console.log('page index:' , pageIndex);
-                if(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")){
+                if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
                     this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
                 } else {
                     this.props.resetSlidesURL('');
                     //return;
                 }
-                
+
             }
             else {
                 console.log("DOES NOT WORK");
@@ -74,18 +74,11 @@ class Slides extends Component {
                     break;
                 }
             }
-            if(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")){
+            if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
                 this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
             } else {
                 this.props.resetSlidesURL('');
-                //return;
             }
-            // if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
-            //     this.props.setSlidesUrl('', interface_obj);
-            //     return;
-            // } else {
-            //     this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
-            // }
         } else {
             console.log("DOES NOT WORK");
         }
@@ -97,7 +90,6 @@ class Slides extends Component {
                 const urlSplit2 = urlSplit1[1].split('/');
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
-                //console.log('slidesUrl', slidesURL);
                 this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
             }
             else if (values.url.indexOf('presentation/d/') !== -1) {
@@ -105,7 +97,6 @@ class Slides extends Component {
                 const urlSplit2 = urlSplit1[1].split('/');
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
-                //console.log('slidesUrl', slidesURL);
                 this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
             }
         } else {
@@ -114,12 +105,11 @@ class Slides extends Component {
     }
 
     render() {
-        //console.log('slides props:', this.props);
         return (
             <div className="slides-div">
                 <form className="form-horizontal" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
                     <Field name="url" component={this.renderInput} />
-                    <button className="btn btn-success"><span className="glyphicon glyphicon-save"></span></button>
+                    <button className="btn green darken-1"><i className="material-icons">save</i></button>
                 </form>
                 {
                     this.props.slide_input ?

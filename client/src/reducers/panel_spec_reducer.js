@@ -17,6 +17,8 @@ export default function (state = DEFAULT_STATE, action) {
             return { ...state, topLeftWidth: action.payload }
         case types.PANEL_TOP_RIGHT_HEIGHT:
             return { ...state, topRightHeight: action.payload }
+        case types.GET_PANEL_NUM:
+            return { ...state, numberPanels: action.payload }
         default:
             return state;
     }
