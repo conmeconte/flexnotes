@@ -8,61 +8,89 @@ export const fetchUser = () => async dispatch => {
 
 //PANEL SPECs Action Creator
 
-// Yo hyung, if I set PUT request individually in each of these functions, they will overwrite each other right????
 export function setTopLeftHeight(num, interfaceObj) {
-    axios.put('/api/page', {
-
-        top_left_panel_height: num,
-        binderID: interfaceObj.binder_id,
-        tabID: interfaceObj.tab_id,
-        pageID: interfaceObj.page_id
-    });
-
-    return {
-        type: types.PANEL_TOP_LEFT_HEIGHT,
-        payload: num
+    return (dispatch) => {
+        axios.put('/api/page', {
+            top_left_panel_height: num,
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        })
+            .then((resp) => {
+                dispatch({
+                    type: types.PANEL_TOP_LEFT_HEIGHT,
+                    payload: num
+                })
+            })
+            .catch(error => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed to update Top Left Panel Height'
+                })
+            });
     }
 }
 
 export function setTopLeftWidth(num, interfaceObj) {
-    axios.put('/api/page', {
-        top_left_panel_width: num,
-        binderID: interfaceObj.binder_id,
-        tabID: interfaceObj.tab_id,
-        pageID: interfaceObj.page_id
-    });
-
-    return {
-        type: types.PANEL_TOP_LEFT_WIDTH,
-        payload: num
+    return (dispatch) => {
+        axios.put('/api/page', {
+            top_left_panel_width: num,
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then((resp) => {
+            dispatch({
+                type: types.PANEL_TOP_LEFT_WIDTH,
+                payload: num
+            })
+        }).catch(error => {
+            dispatch({
+                type: types.AXIOS_ERROR,
+                msg: 'Failed to update Top Left Panel Width'
+            })
+        });
     }
 }
 
 export function setTopRightHeight(num, interfaceObj) {
-    axios.put('/api/page', {
-        top_right_panel_height: num,
-        binderID: interfaceObj.binder_id,
-        tabID: interfaceObj.tab_id,
-        pageID: interfaceObj.page_id
-    });
-
-    return {
-        type: types.PANEL_TOP_RIGHT_HEIGHT,
-        payload: num
+    return (dispatch) => {
+        axios.put('/api/page', {
+            top_right_panel_height: num,
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then((resp) => {
+            dispatch({
+                type: types.PANEL_TOP_RIGHT_HEIGHT,
+                payload: num
+            })
+        }).catch(error => {
+            dispatch({
+                type: types.AXIOS_ERROR,
+                msg: 'Failed to update Top Right Panel Height'
+            })
+        });
     }
 }
 
 export function setNumOfPanels(num, interfaceObj) {
-    axios.put('/api/page', {
-        number_of_panels: num,
-        binderID: interfaceObj.binder_id,
-        tabID: interfaceObj.tab_id,
-        pageID: interfaceObj.page_id
-    });
-
-    return {
-        type: types.NUM_OF_PANELS,
-        payload: num
+    return (dispatch) => {
+        axios.put('/api/page', {
+            number_of_panels: num,
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then((resp) => {
+            dispatch({
+                type: types.NUM_OF_PANELS,
+                payload: num
+            })
+        }).catch(error => {
+            dispatch({
+                type: types.AXIOS_ERROR,
+                msg: 'Failed to update Number of Panels'
+            })
+        });
     }
 }
 
@@ -77,6 +105,33 @@ export function setSlidesUrl(value, interfaceObj) {
                 const urlSplit2 = urlSplit1[1].split('/');
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
+                return (dispatch) => {
+                    axios.put('/api/page', {
+                        lecture_slides: {
+                            lec_id: slidesURL
+                        },
+                        binderID: interfaceObj.binder_id,
+                        tabID: interfaceObj.tab_id,
+                        pageID: interfaceObj.page_id
+                    }).then((resp) => {
+                        console.log("setSlidesUrl response: ", resp);
+                        dispatch({
+                            type: types.SET_SLIDES_URL,
+                            payload: slidesURL
+                        });
+                    }).catch(error => {
+                        dispatch({
+                            type: types.AXIOS_ERROR,
+                            msg: 'Failed to update Google Slides URL'
+                        })
+                    });
+                }
+            }
+            const urlSplit1 = value.split("presentation/d/");
+            const urlSplit2 = urlSplit1[1].split('/');
+            let presentationID = urlSplit2[0];
+            const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
+            return (dispatch) => {
                 axios.put('/api/page', {
                     lecture_slides: {
                         lec_id: slidesURL
@@ -84,27 +139,18 @@ export function setSlidesUrl(value, interfaceObj) {
                     binderID: interfaceObj.binder_id,
                     tabID: interfaceObj.tab_id,
                     pageID: interfaceObj.page_id
+                }).then((resp) => {
+                    console.log("setSlidesUrl response: ", resp);
+                    dispatch({
+                        type: types.SET_SLIDES_URL,
+                        payload: slidesURL
+                    });
+                }).catch(error => {
+                    dispatch({
+                        type: types.AXIOS_ERROR,
+                        msg: 'Failed to update Google Slides URL'
+                    })
                 });
-                return {
-                    type: types.SET_SLIDES_URL,
-                    payload: slidesURL
-                }
-            }
-            const urlSplit1 = value.split("presentation/d/");
-            const urlSplit2 = urlSplit1[1].split('/');
-            let presentationID = urlSplit2[0];
-            const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
-            axios.put('/api/page', {
-                lecture_slides: {
-                    lec_id: slidesURL
-                },
-                binderID: interfaceObj.binder_id,
-                tabID: interfaceObj.tab_id,
-                pageID: interfaceObj.page_id
-            });
-            return {
-                type: types.SET_SLIDES_URL,
-                payload: slidesURL
             }
         }
         else {
@@ -182,24 +228,38 @@ export function toggleResults(bool) {
     }
 }
 export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
+    if (!videoUrl) {
+        return {
+            type: types.NO_VIDEO_LINK
+        }
+    }
     let videoId = videoUrl.split("/");
     videoId = videoId[4];
-    axios.post('/api/video', {
-        video: {
-            videoTitle: videoTitle,
-            videoId: videoId,
-            videoUrl: videoUrl
-        },
-        binderID: interfaceObj.binder_id,
-        tabID: interfaceObj.tab_id,
-        pageID: interfaceObj.page_id
-    });
-    console.log("DATA HAS BEEN SENT");
-    return {
-        type: types.ADD_TO_PLAYLIST,
-        payload: videoUrl
-    }
+    return (dispatch) => {
+        const videoTest = axios.post('/api/video', {
+            video: {
+                videoTitle: videoTitle,
+                videoId: videoId,
+                videoUrl: videoUrl
+            },
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then((response) => {
+            console.log("DATA HAS BEEN SENT", response);
+            dispatch({
+                type: types.ADD_TO_PLAYLIST,
+                payload: videoUrl
+            });
+        }).catch(error => {
+            dispatch({
+                type: types.AXIOS_ERROR,
+                msg: 'Add to Playlist Failed.'
+            })
+        })
+    };
 }
+
 export function playVideo(url) {
     let videoId = url;
     document.querySelector(".video-iframe").src = url
@@ -209,6 +269,11 @@ export function playVideo(url) {
     }
 }
 export function playPastedLinkVideo(url) {
+    if (!url) {
+        return {
+            type: types.NO_VIDEO_LINK
+        };
+    }
     let videoId = url
     videoId = videoId.split('&')[0];
     videoId = videoId.split('=')[1];
@@ -225,7 +290,7 @@ export function grabVideoUrl(videoLink) {
         payload: videoLink
     }
 }
-export function setVideoUrl (value, interfaceObj) {
+export function setVideoUrl(value, interfaceObj) {
     console.log("VIDEO URL FROM ACTION CREATOR: ", value);
     return {
         type: types.SET_VIDEO_URL,
@@ -238,7 +303,7 @@ export function getDataObject() {
     return (dispatch) => {
         const test = axios.get('/api/binder')
             .then((resp) => {
-                //console.log("get data object: ", resp.data);
+                console.log("get data object: ", resp.data);
 
                 dispatch({
                     type: types.GET_USER_DATA,
@@ -246,7 +311,7 @@ export function getDataObject() {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
+                    type: types.AXIOS_ERROR,
                     msg: 'Failed call in get user data'
                 });
             });
@@ -258,7 +323,7 @@ export function updateBinderArray() {
     return (dispatch) => {
         const test = axios.get('/api/binder')
             .then((resp) => {
-                console.log("get response: ", resp.data.binder_arr_obj);
+                console.log("update binder array: ", resp.data.binder_arr_obj);
 
                 dispatch({
                     type: types.UPDATE_BINDER_ARRAY,
@@ -266,8 +331,8 @@ export function updateBinderArray() {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
-                    msg: 'Failed call in binderarray'
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in update binder array'
                 });
             });
     }
@@ -287,10 +352,16 @@ export function selectTab(tabObj) {
     }
 }
 
-export function selectPage(pageObj) {
+export function selectPage(binder_id, tab_id, page_id) {
+    //console.log('select page action idObj:', idObj);
+    let idObject = {
+        binder_id: binder_id,
+        tab_id: tab_id,
+        page_id: page_id
+    }
     return {
         type: types.SELECT_PAGE,
-        payload: pageObj
+        payload: idObject
     }
 }
 
@@ -305,8 +376,8 @@ export function addBinder() {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
-                    msg: 'Failed call in binderarray'
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in add binder'
                 });
             });
     }
@@ -325,8 +396,8 @@ export function addTab(binder_id) {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
-                    msg: 'Failed call in binderarray'
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in add tab'
                 });
             });
     }
@@ -346,8 +417,8 @@ export function addPage(binder_id, tab_id) {
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
-                    msg: 'Failed call in binderarray'
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in add page'
                 });
             });
     }
@@ -362,12 +433,118 @@ export function deleteBinder(binder_id) {
 
                 dispatch({
                     type: types.DELETE_BINDER,
-                    payload: resp.data.binder_arr_obj
+                    payload: resp.data
                 });
             }).catch(err => {
                 dispatch({
-                    type: 'error',
-                    msg: 'Failed call in binderarray'
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in delete binder'
+                });
+            });
+    }
+}
+
+export function deleteTab(binder_id, tab_id) {
+    return (dispatch) => {
+        const test = axios.delete(`/api/tab?binderID=${binder_id}&tabID=${tab_id}`, {
+        })
+            .then((resp) => {
+                //console.log("delete tab response: ", resp);
+
+                dispatch({
+                    type: types.DELETE_TAB,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in delete tab'
+                });
+            });
+    }
+}
+
+export function deletePage(binder_id, tab_id, page_id) {
+    return (dispatch) => {
+        const test = axios.delete(`/api/page?binderID=${binder_id}&tabID=${tab_id}&pageID=${page_id}`, {
+        })
+            .then((resp) => {
+                //console.log("delete page response: ", resp);
+
+                dispatch({
+                    type: types.DELETE_PAGE,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in delete page'
+                });
+            });
+    }
+}
+
+export function editBinder(binder_id, binder_name){
+    return (dispatch) => {
+        const test = axios.put('/api/binder', {
+            binderID: binder_id,
+            binder_name: binder_name
+        })
+            .then((resp) => {
+                //console.log("edit binder: ", resp);
+                dispatch({
+                    type: types.EDIT_BINDER,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in edit binder'
+                });
+            });
+    }
+}
+
+export function editTab(binder_id, tab_id, tab_name){
+    return (dispatch) => {
+        const test = axios.put('/api/tab', {
+            binderID: binder_id,
+            tabID: tab_id,
+            tab_name: tab_name
+        })
+            .then((resp) => {
+                //console.log("edit tab resp: ", resp);
+                dispatch({
+                    type: types.EDIT_TAB,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in edit tab'
+                });
+            });
+    }
+}
+
+export function editPage(binder_id, tab_id, page_id, page_name){
+    return (dispatch) => {
+        const test = axios.put('/api/page', {
+            binderID: binder_id,
+            tabID: tab_id, 
+            pageID: page_id,
+            page_name: page_name
+        })
+            .then((resp) => {
+                console.log("edit page resp: ", resp);
+                dispatch({
+                    type: types.EDIT_PAGE,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Failed call in edit page'
                 });
             });
     }

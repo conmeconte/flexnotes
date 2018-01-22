@@ -1,10 +1,10 @@
 import types from '../actions/types';
 
 const DEFAULT_STATE = {
-    topLeftHeight: 0,
-    topLeftWidth: 0,
+    topLeftHeight: 500,
+    topLeftWidth: 425,
     topRightHeight: 0,
-    numberPanels: 0
+    numberPanels: 3
 };
 
 export default function (state = DEFAULT_STATE, action) {

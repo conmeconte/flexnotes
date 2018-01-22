@@ -20,28 +20,30 @@ let fakeData =
               {
                 page_arr_obj: [
                   {
-                    page_count: 1,
-                    page_color: 'white',
-                    page_name: 'Page1',
-                    page_date: '',
-                    calendar: {
-                      cal_url: String
-                    },
-                    lecture_slides: {
-                      lec_id: ''
-                    },
-                    notes: {},
-                    video: [
-                      {
-                        _id: { $oid: 'someRandomNumberMongoDBAssings' },
-                        videoTitle: "king of the hills",
-                        videoId: "Ukg_U3CnJWI",
-                        videoURL: "adfadsfa.com"
-                      }
-                    ],
-                    panel_dimensions: {
-                      //         top_left_panel_height: num
-                      //     }
+                    _id: { $oid: 'someRandomNumberMongoDBAssings' },
+                      videoTitle: "king of the hills",
+                      videoId: "Ukg_U3CnJWI",
+                      videoURL: "adfadsfa.com"
+                  }
+                ],
+                panel_dimensions: {
+                  lecture_Panel: {
+                    top_left_panel_height: Number,
+                    top_left_panel_width: Number,
+					          top_right_panel_height: Number,
+					          number_of_panels: Number
+                  },
+                  video_Panel: {
+                    width: String,
+                    height: String
+                  },
+                  note_Panel: {
+                    width: String,
+                    height: String
+                  },
+                  meister_Panel: {
+                    width: String,
+                    height: String
                   }
                 ]
               }
