@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import '../assets/css/slides.css';
 import axios from 'axios';
-import { setSlidesUrl, getSlidesURL, updateBinderArray } from '../actions';
+import { setSlidesUrl, getSlidesURL, updateBinderArray, resetSlidesURL } from '../actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
@@ -38,8 +38,15 @@ class Slides extends Component {
                         break;
                     }
                 }
-
-                this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
+                // console.log('tab index:' , tabIndex);
+                // console.log('page index:' , pageIndex);
+                if(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")){
+                    this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
+                } else {
+                    this.props.resetSlidesURL('');
+                    //return;
+                }
+                
             }
             else {
                 console.log("DOES NOT WORK");
@@ -66,6 +73,12 @@ class Slides extends Component {
                     pageIndex = i;
                     break;
                 }
+            }
+            if(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")){
+                this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
+            } else {
+                this.props.resetSlidesURL('');
+                //return;
             }
             // if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
             //     this.props.setSlidesUrl('', interface_obj);
@@ -142,4 +155,4 @@ function mapStateToProps(state) {
     }
 };
 
-export default connect(mapStateToProps, { setSlidesUrl, updateBinderArray, getSlidesURL })(Slides);
+export default connect(mapStateToProps, { setSlidesUrl, updateBinderArray, getSlidesURL, resetSlidesURL })(Slides);
