@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import '../assets/css/slides.css';
 import axios from 'axios';
-import { setSlidesUrl, updateBinderArray } from '../actions';
+import { setSlidesUrl, getSlidesURL, updateBinderArray } from '../actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
@@ -17,39 +17,33 @@ class Slides extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-        //     this.props.updateBinderArray();
-        // } else {
-        let { tab_arr_obj } = nextProps.binderObj;
-        let { interface_obj } = nextProps;
+        if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+            let { tab_arr_obj } = nextProps.binderObj;
+            let { interface_obj } = nextProps;
 
-        if (tab_arr_obj) {
-            let tabArrLength = tab_arr_obj.length;
-            let tabIndex = null;
-            let pageIndex = null;
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    tabIndex = i;
-                    break;
+            if (tab_arr_obj) {
+                let tabArrLength = tab_arr_obj.length;
+                let tabIndex = null;
+                let pageIndex = null;
+                for (let i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        tabIndex = i;
+                        break;
+                    }
                 }
-            }
-            const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < page_arr_obj.length; i++) {
-                if (interface_obj.page_id === page_arr_obj[i]._id) {
-                    pageIndex = i;
-                    break;
+                const { page_arr_obj } = tab_arr_obj[tabIndex];
+                for (let i = 0; i < page_arr_obj.length; i++) {
+                    if (interface_obj.page_id === page_arr_obj[i]._id) {
+                        pageIndex = i;
+                        break;
+                    }
                 }
+                this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
             }
-            if (typeof (page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof (page_arr_obj[pageIndex].lecture_slides) === '') {
-                // return;
-                this.props.setSlidesUrl('', interface_obj);
-            } else {
-                this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
+            else {
+                console.log("DOES NOT WORK");
             }
-        } else {
-            console.log("DOES NOT WORK");
         }
-        //}
     }
     componentWillMount() {
         let { tab_arr_obj } = this.props.binderObj;
@@ -145,4 +139,4 @@ function mapStateToProps(state) {
     }
 };
 
-export default connect(mapStateToProps, { setSlidesUrl, updateBinderArray })(Slides);
+export default connect(mapStateToProps, { setSlidesUrl, updateBinderArray, getSlidesURL })(Slides);
