@@ -114,7 +114,7 @@ class Slides extends Component {
     }
 
     render() {
-        console.log('slides props:', this.props);
+        //console.log('slides props:', this.props);
         return (
             <div className="slides-div">
                 <form className="form-horizontal" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>

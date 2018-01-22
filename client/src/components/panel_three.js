@@ -63,7 +63,7 @@ class ThreePanel extends Component {
     }
 
     render() {
-        console.log('panel three props:', this.props);
+        //console.log('panel three props:', this.props);
         const loTLHsave = _.debounce((size) => {
             this.logTopLeftHeight(size);
         }, 300);

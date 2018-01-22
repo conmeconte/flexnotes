@@ -305,6 +305,14 @@ export function updateBinderArray() {
     }
 }
 
+export function updateBinderObj(binder_obj){
+
+    return{
+        type: types.UPDATE_BINDER_OBJ,
+        payload: binder_obj
+    }
+}
+
 export function selectBinder(binderObj) {
     return {
         type: types.SELECT_BINDER,

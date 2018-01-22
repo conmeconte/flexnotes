@@ -17,6 +17,7 @@ export default {
     SELECT_BINDER: 'select_binder',
     SELECT_TAB: 'select_tab',
     SELECT_PAGE: 'select_page',
+    UPDATE_BINDER_OBJ: 'update_binder_obj',
     GET_VIDEO_RESULTS: 'get_video_results',
     SET_VIDEO_URL: 'set_video_url',
     PLAY_PASTED_VIDEO_LINK: 'play_pasted_video',
