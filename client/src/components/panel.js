@@ -14,78 +14,78 @@ class Panel extends Component {
         //this.props = props;
     }
 
-    componentWillMount() {
-        let { tab_arr_obj } = this.props.binderObj;
-        let { interface_obj } = this.props;
+    // componentWillMount() {
+    //     let { tab_arr_obj } = this.props.binderObj;
+    //     let { interface_obj } = this.props;
 
-        if (tab_arr_obj) {
-            let tabArrLength = tab_arr_obj.length;
-            let tabIndex = null;
-            let pageIndex = null;
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    tabIndex = i;
-                    break;
-                }
-            }
-            const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < page_arr_obj.length; i++) {
-                if (interface_obj.page_id === page_arr_obj[i]._id) {
-                    pageIndex = i;
-                    break;
-                }
-            }
-            if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
-                console.log('cwm panel component mounting');
-                this.props.getPanelNum(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
-            } else {
-                console.log('does not have panel_dimensions property, calling getPanelNum in cwm')
-                this.props.getPanelNum(3);
-            }
-        } else {
-            console.log("DOES NOT WORK");
-        }
-    }
+    //     if (tab_arr_obj) {
+    //         let tabArrLength = tab_arr_obj.length;
+    //         let tabIndex = null;
+    //         let pageIndex = null;
+    //         for (let i = 0; i < tabArrLength; i++) {
+    //             if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+    //                 tabIndex = i;
+    //                 break;
+    //             }
+    //         }
+    //         const { page_arr_obj } = tab_arr_obj[tabIndex];
+    //         for (let i = 0; i < page_arr_obj.length; i++) {
+    //             if (interface_obj.page_id === page_arr_obj[i]._id) {
+    //                 pageIndex = i;
+    //                 break;
+    //             }
+    //         }
+    //         if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
+    //             console.log('cwm panel component mounting');
+    //             this.props.getPanelNum(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
+    //         } else {
+    //             console.log('does not have panel_dimensions property, calling getPanelNum in cwm')
+    //             this.props.getPanelNum(3);
+    //         }
+    //     } else {
+    //         console.log("DOES NOT WORK");
+    //     }
+    // }
 
-    componentWillReceiveProps(nextProps) {
+    // componentWillReceiveProps(nextProps) {
 
-        if (nextProps.binderObj !== this.props.binderObj) {
-            let { tab_arr_obj } = nextProps.binderObj;
-            let { interface_obj } = nextProps;
-            if (tab_arr_obj) {
-                //console.log('cwrp panel.js tab arr obj:', tab_arr_obj);
-                //console.log('cwro panel.js interface obj:', interface_obj);
-                let tabArrLength = tab_arr_obj.length;
-                let tabIndex = null;
-                let pageIndex = null;
-                for (let i = 0; i < tabArrLength; i++) {
-                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                        tabIndex = i;
-                        break;
-                    }
-                }
-                const { page_arr_obj } = tab_arr_obj[tabIndex];
-                for (let i = 0; i < page_arr_obj.length; i++) {
-                    if (interface_obj.page_id === page_arr_obj[i]._id) {
-                        pageIndex = i;
-                        break;
-                    }
-                }
-                if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
-                    console.log('c w r props panel component mounting');
-                    this.props.getPanelNum(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
-                } else {
-                    console.log('does not have panel_dimensions property, calling getPanelNum in cwrp')
-                    this.props.getPanelNum(3);
-                }
-            } else {
-                console.log("DOES NOT WORK");
-            }
+    //     if (nextProps.binderObj !== this.props.binderObj) {
+    //         let { tab_arr_obj } = nextProps.binderObj;
+    //         let { interface_obj } = nextProps;
+    //         if (tab_arr_obj) {
+    //             //console.log('cwrp panel.js tab arr obj:', tab_arr_obj);
+    //             //console.log('cwro panel.js interface obj:', interface_obj);
+    //             let tabArrLength = tab_arr_obj.length;
+    //             let tabIndex = null;
+    //             let pageIndex = null;
+    //             for (let i = 0; i < tabArrLength; i++) {
+    //                 if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+    //                     tabIndex = i;
+    //                     break;
+    //                 }
+    //             }
+    //             const { page_arr_obj } = tab_arr_obj[tabIndex];
+    //             for (let i = 0; i < page_arr_obj.length; i++) {
+    //                 if (interface_obj.page_id === page_arr_obj[i]._id) {
+    //                     pageIndex = i;
+    //                     break;
+    //                 }
+    //             }
+    //             if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
+    //                 console.log('c w r props panel component mounting');
+    //                 this.props.getPanelNum(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
+    //             } else {
+    //                 console.log('does not have panel_dimensions property, calling getPanelNum in cwrp')
+    //                 this.props.getPanelNum(3);
+    //             }
+    //         } else {
+    //             console.log("DOES NOT WORK");
+    //         }
 
-        } else {
-            return;
-        }
-    }
+    //     } else {
+    //         return;
+    //     }
+    // }
 
     render() {
         //console.log("panel props", this.props);
@@ -106,7 +106,7 @@ class Panel extends Component {
                     <h1 className="app-title">FlexNote</h1>
                 </div> */}
                 <div className="panel_div col s10">
-                    <PanelNum num={this.props.panel_num} />
+                    <PanelNum num={3} />
                 </div>
             </div>
         );
