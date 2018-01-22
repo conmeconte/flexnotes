@@ -57,7 +57,6 @@ class Panel extends Component {
         if (nextProps.binderObj !== this.props.binderObj) {
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
-
             if (tab_arr_obj) {
                 console.log('cwrp panel.js tab arr obj:', tab_arr_obj);
                 console.log('cwro panel.js interface obj:', interface_obj);
@@ -69,22 +68,12 @@ class Panel extends Component {
                         tabIndex = i;
                         break;
                     }
-<<<<<<< HEAD
                 }
                 const { page_arr_obj } = tab_arr_obj[tabIndex];
                 for (let i = 0; i < page_arr_obj.length; i++) {
                     if (interface_obj.page_id === page_arr_obj[i]._id) {
                         pageIndex = i;
                         break;
-=======
-                    if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
-                        //console.log('cwm panel component mounting');
-                        //console.log('cwm panel setting panels to', page_arr_obj[pageIndex].panel_dimensions.number_of_panels)
-                        this.props.setNumOfPanels(3, interface_obj);
-                        
-                    } else {
-                        return;
->>>>>>> 72485d9f00ed39109333ce3b04ea22ad88c8e8cb
                     }
                 }
                 if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
