@@ -29,6 +29,7 @@ export default {
     GRAB_VIDEO_URL: 'grab_video_url',
     SET_SLIDES_URL: 'set_slides_url',
     GET_SLIDES_URL: 'get_slides_url',
+    RESET_SLIDES_URL: 'reset_slides_url',
     SAVE_NOTES: 'save_notes',
     PANEL_TOP_LEFT_HEIGHT: 'panel_top_left_height',
     PANEL_TOP_LEFT_WIDTH: 'panel_top_left_width',

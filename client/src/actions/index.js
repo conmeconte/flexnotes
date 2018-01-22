@@ -127,6 +127,13 @@ export function getSlidesURL(slidesURL) {
         payload: slidesURL
     }
 }
+
+export function resetSlidesURL(slidesURL) {
+    return {
+        type: types.RESET_SLIDES_URL,
+        payload: slidesURL
+    }
+}
 // End of Lecture Slides Action Creators
 
 //Video Action Creators

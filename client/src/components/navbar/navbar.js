@@ -20,6 +20,7 @@ class NavBar extends Component{
 
     componentWillReceiveProps(nextProps){
         if(nextProps.interface.pull_from_db || nextProps.interface.page_id !== this.props.interface.page_id){
+            console.log("update binder array");
             this.props.updateBinderArray();
         }
     }
