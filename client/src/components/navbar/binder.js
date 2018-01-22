@@ -13,35 +13,15 @@ class Binder extends Component {
         super(props);
 
         this.state = {
-            binder_color_arr: [
-                '#000080', '#808000', '#800000', '#a0522d', '#8a2be2'
-            ],
             editable: false,
             binderName : '',
-            active: false,
-            new_tab_arr: [{
-                tab_id: 1,
-                tab_color: 'blue',
-                tab_name: 'TabName',
-                tab_url: '/tab1',
-                page_arr_obj: [{
-
-                    page_id: 1,
-                    page_color: 'white',
-                    page_name: 'PageName',
-                    page_date: '',
-                    page_url: '/page1'
-                }]
-            }]
-
+            active: false
         }
 
         this.addTab = this.addTab.bind(this);
         this.deleteTab = this.deleteTab.bind(this);
         this.editable = this.editable.bind(this);
         this.notEditable = this.notEditable.bind(this);
-        // this.binderLinkActive = this.binderLinkActive.bind(this);
-        // this.binderLinkNotActive = this.binderLinkNotActive.bind(this);
         this.binderSelect = this.binderSelect.bind(this);
         this.deleteBinder = this.deleteBinder.bind(this);
     }
@@ -230,7 +210,7 @@ class Binder extends Component {
             <div>
                 {binder_title}
 
-                <div className={`binderBody ${active ? 'visibleBinder' : 'hiddenBinder'}`}>
+                <div className={`binderBody ${active ? 'visible' : 'hidden'}`}>
                 <button type="button" className='btn' onClick={this.editable}>
                        E Binder
                     </button>
