@@ -53,7 +53,7 @@ class Tab extends Component {
         //console.log('addPage clicked');
         //this.props.addTab(this.props.binderObj._id);
         
-        this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
+        this.props.addPage(this.props.interface.binder_id, this.props.tabObj._id);
     }
 
     deletePage(page_id){
