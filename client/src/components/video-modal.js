@@ -33,7 +33,7 @@ class VideoModal extends Component {
                     () => { 
                         this.props.toggleModal(this.props.addVideoModalStyle)
                     }
-                    } className="btn blue darken-1">Go back</button>
+                    } className="btn red darken-1">Don't Save</button>
                         </form>
                 </div>
             </div>
