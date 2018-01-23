@@ -172,14 +172,15 @@ class Page extends Component {
                     {this.props.pageObj.page_name}
                 </div>
                 </Link>
-                <div className="right-align btn-div">
-                    <button type="button" className='btn page-btn' onClick={this.editPage}>
-                            E P
+                <div className="right-align">
+                    <button type="button" className='btn-floating navbar-btn edit-btn' onClick={this.editPage}>
+                    <i className="small material-icons">edit</i>
                     </button>
-                    <button type="button" className="btn page-btn" onClick={()=>this.deletePage()} >
-                    D P
+                    <button type="button" className="btn-floating navbar-btn delete-btn" onClick={()=>this.deletePage()} >
+                    <i className="small material-icons">delete_forever</i>
                     </button>
                 </div>
+
 
                 </div>
             );

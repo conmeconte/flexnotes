@@ -30,7 +30,7 @@
     height: 90%;
     padding-bottom: 0;
     position: relative;
-    top: -10%;
+    top: -3vh;
 }
 
 .video-container#video-container .row form{
@@ -104,19 +104,14 @@ button.close {
     border:none;
 }
 
-.video-btn {
-    text-align: center;
-    box-sizing: border-box;
-    background-color: #d5d5d5;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    cursor: pointer;
-    margin: 1vmin;
-    line-height: 0;
+.btn:hover{
+
 }
 .video-btn i {
     margin: 0px -1px;
 }
 .video-btn:hover{
+
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
 }
 #query {
@@ -137,6 +132,8 @@ button.close {
 }
 .iframe-wrapper {
     height: 100%;
+    position: relative;
+    top: -4vh;
 }
 .row {
     margin-bottom: 0;
@@ -156,7 +153,7 @@ button.close {
 }
 .arrow-container {
     position: absolute;
-    top: 5px;
+    top: 4vh;
     right: 5px;
     z-index: 3000;
     cursor: pointer;
@@ -178,4 +175,7 @@ button.close {
 }
 #youtube-play {
     padding: 0px 5px;
+}
+.red-text {
+    color: red;
 }

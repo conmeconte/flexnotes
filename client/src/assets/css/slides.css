@@ -30,3 +30,10 @@
 /* #slides-input.slides-input {
   background-color: #fff;
 } */
+.arrow-container-slides {
+  position: absolute;
+  top: 0vh;
+  right: 5px;
+  z-index: 3000;
+  cursor: pointer;
+}

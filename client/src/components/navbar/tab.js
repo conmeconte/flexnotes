@@ -177,16 +177,18 @@ class Tab extends Component {
             tab_title = (
                 <div className="tabTitle">
                     <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
-                        <div className=""  onClick={()=>this.handleClick()}>
+                        <div className="tabLink"  onClick={()=>this.handleClick()}>
                             {this.props.tabObj.tab_name}
                         </div>
                     </Link>
-                    <button type="button" className={`btn btn-default btn-xs btn_edit_binder`} onClick={this.editTabs}>
-                        E Tab
-                    </button>
-                    <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
-                    D Tab
-                    </button>
+                    <div className="left-align">
+                        <button type="button" className="btn-floating navbar-btn edit-btn" onClick={this.editTabs}>
+                        <i className="small material-icons">edit</i>
+                        </button>
+                        <button type="button" className="btn-floating navbar-btn delete-btn" onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
+                        <i className="small material-icons">delete_forever</i>
+                        </button>
+                    </div>
                 </div>
             );
         }
@@ -299,9 +301,8 @@ class Tab extends Component {
                 <button className="btn btn-default btn-xs btn_add" onClick={this.addTab}>
                     <span className="glyphicon glyphicon-plus"></span>
                 </button>   */}
-                <button className="btn btn-default btn-xs btn_add" onClick={this.addPage}>
-                    A Page
-                </button>   
+                <button className="btn add-btn waves-effect waves-light" onClick={this.addPage}>
+                New Page</button>   
                 <Route path={`/main/${url}`+"/:page"} component={Page}/>
                 </div>
             </div>
