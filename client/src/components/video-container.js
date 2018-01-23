@@ -11,24 +11,36 @@ class VideoContainer extends Component {
         this.slideOutVideoSearch = this.slideOutVideoSearch.bind(this);
         this.state = {
             style: {
-                transform: 'translateY(-81px)'
+                transform: 'translateY(-119px)'
             },
             toggleSlideOut: true
         }
     }
-    renderInput ({input}) {
+    renderInput ({input, type, placeholder, meta: { error, touched }}) {
         console.log({input});
         return (
             <div className="col s8 input-field">
-                <input {...input} className="pastedVideoInput" type="text" placeholder="Paste a YouTube video URL..."/>
+                <input {...input} className="pastedVideoInput" type={type} placeholder={ placeholder }/>
+                <p className="red-text">{ touched && error }</p>
             </div>
         );
     }
     handleYouTubeUrl (values) {
-        console.log("VALUES: ", values)
+        console.log(values);
+        console.log("HERE IS A VIDEO INPUT", values["youtube-url"]);
+        const youtubeLinkInput = values["youtube-url"];
+        if (!youtubeLinkInput) {
+            return;
+        }
+        // console.log(values.input);
+        // if (!value) {
+        //     console.log("PLEASE SEARCH A VIDEO.");
+        //     return;
+        // }
         this.props.grabVideoUrl(values.input);
         this.props.playPastedLinkVideo(values["youtube-url"]);
         this.props.toggleModal(this.props.addVideoModalStyle);
+        this.props.reset()
         //this.props.getDataObject();
         //this.props.updateBinderArray();
     }
@@ -39,10 +51,10 @@ class VideoContainer extends Component {
         let { toggleSlideOut } = this.state;
         let { transform } = this.state.style;
         if (toggleSlideOut) {
-            transform = 'translateY(0px)',
+            transform = 'translateY(39px)',
             toggleSlideOut = false;
         } else {
-            transform = 'translateY(-81px)';
+            transform = 'translateY(-119px)';
             toggleSlideOut = true;
         }
         this.setState({
@@ -104,8 +116,17 @@ function mapStateToProps (state) {
     }
 }
 
+function validate(values) {
+    const error = {};
+    if (!values["youtube-url"]) {
+        error["youtube-url"] = 'Please paste a valid YouTube Url'
+    }
+    return error;
+}
+
 VideoContainer = reduxForm({
-    form: 'youtube-url'
+    form: 'youtube-url',
+    validate
 })(VideoContainer)
 
 export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray, getDataObject })(VideoContainer)
