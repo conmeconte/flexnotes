@@ -125,3 +125,9 @@ ul > li {
 .delete-btn {
     background-color: red;
 }
+
+
+
+.hideNavbar {
+    margin-top: 120px;
+}

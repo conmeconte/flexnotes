@@ -138,7 +138,7 @@ class Slides extends Component {
                 <form style={{ transform }} className="form-horizontal slide-out-input" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
                     <div className="row">
                         <Field name="url" component={this.renderInput} />
-                        <button className="btn green darken-1 col s2"><i className="material-icons">save</i></button>
+                        <button className="btn green darken-1 col s2 slidesBtn"><i className="material-icons">save</i></button>
                     </div>
                 </form>
                 <div className="arrow-container-slides" onClick={ () => {
