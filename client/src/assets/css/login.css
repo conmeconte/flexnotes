@@ -1,25 +1,39 @@
-/* .logout {
+.logoArea {
     position: absolute;
-    left: -28px;
-    bottom: 10px;
-    text-align: right;
-    width: 10%;
-    z-index: 1;
-} */
-
-/* .logoutBtn {
-    background-color: #31C3E7;
-    color: #ffffff;
-    font-size: 15px;
+    top: 1%;
+    left: 0.7%;
+    width: 14vw;
 }
-
-.logoutBtn:hover {
-    background-color: #ffffff;
-    border: 2px solid #31C3E7;
-    color: #31C3E7;
-} */
 
 .logoImage {
     height: 100px;
-    #padding: 0 0 10px 35px;
+    float: left;
+}
+
+.logoBtns {
+    float: right;
+}
+
+.startTour, .logoutBtn {
+    height: 50px;
+    width: 50px;
+    background-color: #d5d5d5;
+    color: #6d7993;
+}
+
+.startTour:hover, .logoutBtn:hover {
+    background-color: #96858f;
+    color: #ffffff;
+    border: none;
+}
+
+.startTour {
+    margin-bottom: 5px;
+    background-color: #d5d5d5;
+}
+
+.logoutBtn {
+    font-size: 15px;
+    padding-left: 12px;
+    padding-top: 8px;
 }

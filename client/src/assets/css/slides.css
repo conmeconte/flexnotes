@@ -37,3 +37,7 @@
   z-index: 3000;
   cursor: pointer;
 }
+
+.slidesBtn {
+  margin-top: 10px;
+}
