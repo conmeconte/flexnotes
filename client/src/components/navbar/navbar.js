@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateBinderArray, deleteBinder, addBinder, updateBinderObj} from '../../actions';
 
-
 class NavBar extends Component{
     constructor(props){
         super(props);
