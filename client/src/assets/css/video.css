@@ -139,3 +139,11 @@ button.close {
 .btn-wrapper button {
     padding: 0 1vmin;
 }
+.slide-out-input {
+    transition: 0.2s;
+}
+.arrow-container {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}
