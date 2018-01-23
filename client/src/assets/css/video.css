@@ -104,19 +104,14 @@ button.close {
     border:none;
 }
 
-.video-btn {
-    text-align: center;
-    box-sizing: border-box;
-    background-color: #d5d5d5;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    cursor: pointer;
-    margin: 1vmin;
-    line-height: 0;
+.btn:hover{
+
 }
 .video-btn i {
     margin: 0px -1px;
 }
 .video-btn:hover{
+
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
 }
 #query {
