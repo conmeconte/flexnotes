@@ -3,11 +3,14 @@
     top: 1%;
     left: 0.7%;
     width: 14vw;
+    background-color: #6d7993;
+    z-index: 2;
 }
 
 .logoImage {
     height: 100px;
     float: left;
+    margin-bottom: 10px;
 }
 
 .logoBtns {
