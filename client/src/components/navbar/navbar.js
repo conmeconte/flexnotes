@@ -104,7 +104,7 @@ class NavBar extends Component{
                 //console.log('navbar item', item);
                 
                 return (
-                    <div key={index}>
+                    <div key={index} className="binderWrap">
                         <Binder index={index} binderObj={item}/>
 
                     </div>
@@ -143,8 +143,8 @@ class NavBar extends Component{
                 </div> */}
                 {/* {binder_route} */}
                 
-                <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
-                    A Binder
+                <button className="btn-floating" onClick={this.addBinder}>
+                    add binder
                 </button>
                 <Route path={'/main/:binder'} component={Binder}/>
             </div>
