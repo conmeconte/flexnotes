@@ -133,7 +133,7 @@ class NavBar extends Component{
                     <img className="logoImage" src={logo} />
                     <Login />
                 </div> */}
-                <button>
+                <button className='hideNavbar'>
                 <i className="small material-icons">chevron_left</i>
                 </button>
             {/* <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>

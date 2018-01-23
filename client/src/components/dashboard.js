@@ -80,10 +80,13 @@ class Dashboard extends Component {
         return(
 
             <div id="dashboard-container" className="row">
-                <div className="logout">
+                <div className="logoArea">
                     <img className="logoImage" src={logo} />
-                    <Login />
-                    <button className="startTour" onClick={this.openTour}>Tour</button>
+                    <div className="logoBtns">
+                        <button className="startTour" onClick={this.openTour}>Tour</button>
+                        <Login />
+                    </div>
+
                 </div>
 
                 <NavBar />
