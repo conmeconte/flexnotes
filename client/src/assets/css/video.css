@@ -39,6 +39,8 @@
 }
 .video-items {
     list-style-type: none;
+    position: relative;
+    top: 1vh;
 }
 button.close {
     color: #fff;
@@ -102,7 +104,7 @@ button.close {
     border:none;
 }
 
-.btn {
+.video-btn {
     text-align: center;
     box-sizing: border-box;
     background-color: #d5d5d5;
@@ -111,7 +113,10 @@ button.close {
     margin: 1vmin;
     line-height: 0;
 }
-.btn:hover{
+.video-btn i {
+    margin: 0px -1px;
+}
+.video-btn:hover{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
 }
 #query {
@@ -140,7 +145,7 @@ button.close {
     white-space: nowrap;
 }
 .btn-wrapper button {
-    padding: 0 1vmin;
+    padding: 0 5px;
 }
 .slide-out-input {
     transition: 0.2s;
@@ -170,4 +175,7 @@ button.close {
 }
 .vid-right-arrow:hover {
     background-color: #96858F;
+}
+#youtube-play {
+    padding: 0px 5px;
 }
