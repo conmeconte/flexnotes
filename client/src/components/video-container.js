@@ -63,8 +63,8 @@ class VideoContainer extends Component {
                     <Field name="youtube-url" component={this.renderInput} />
                         <div className="col s3">
                             <div className="row btn-wrapper">
-                                <button className="btn btn-success green darken-1"><i className="material-icons">save</i></button>
-                                <button type="button" className="btn btn-primary vidList vid-left-arrow" onClick={ () => {
+                                <button className="btn btn-success green darken-1 video-btn"><i className="material-icons">save</i></button>
+                                <button type="button" className="btn btn-primary vidList vid-left-arrow video-btn" onClick={ () => {
                                 this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                                 this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                                 }}><i className="fa fa-youtube" aria-hidden="true"></i>
