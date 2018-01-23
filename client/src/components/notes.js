@@ -506,7 +506,7 @@ class Notes extends Component {
     toolbar = () => {
         return (
 
-            <div className="toolbar">
+            <div className="toolbar sixth-step">
                 <div className="stylingButtons">
                     <ToolbarButton icon="undo" onMouseDown={this.onClickUndo} />
                     <ToolbarButton icon="redo" onMouseDown={this.onClickRedo} />
@@ -541,7 +541,7 @@ class Notes extends Component {
 
     render() {
         return (
-            <div className="notes-component">
+            <div className="notes-component fifth-step">
 
                 {this.toolbar()}
                 <Editor

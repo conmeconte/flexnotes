@@ -161,7 +161,7 @@ class Video extends Component {
                         <Results results={this.props.videoResults} />
                     </div>
                 </div>
-                <div id="video-wrapper" className="video-wrapper">
+                <div id="video-wrapper" className="video-wrapper third-step">
                     <VideoContainer />
                 </div>
             </div>
