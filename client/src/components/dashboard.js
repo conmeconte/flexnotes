@@ -5,7 +5,7 @@ import Login from './login';
 // import '../assets/css/login.css';
 import '../assets/css/login.css';
 
-import logo from '../assets/images/flexnotes_logo.gif';
+import logo from '../assets/images/logo.png';
 
 import { connect } from 'react-redux';
 import { getDataObject } from '../actions';
