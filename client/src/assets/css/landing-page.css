@@ -95,12 +95,15 @@ body {
     margin: 0 auto;
     font-size: 3vmin;
 }
-.item-list .glyphicon {
+.item-list li {
+    white-space: nowrap;
+}
+/* .item-list .glyphicon {
     color: #31C3E7;
     font-size: 2.8vmin;
     display: inline-block;
     margin-right: 10px;
-}
+} */
 
 .flex {
     color: #40c4ff; 
@@ -142,4 +145,18 @@ a.landing-login-text {
 }
 .material-icons.landing {
     color: #40c4ff; 
+}
+.email-wrapper {
+    position: relative;
+    text-align: center;
+    top: 30%;
+    color: #fff;
+    font-size: 2em;
+}
+.email-wrapper a:hover {
+    color: #fff;
+}
+.material-icons.left {
+    display: inline-block;
+    margin-right: 30px;
 }
