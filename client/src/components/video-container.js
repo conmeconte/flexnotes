@@ -11,7 +11,7 @@ class VideoContainer extends Component {
         this.slideOutVideoSearch = this.slideOutVideoSearch.bind(this);
         this.state = {
             style: {
-                transform: 'translateY(-66px)'
+                transform: 'translateY(-81px)'
             },
             toggleSlideOut: true
         }
@@ -19,7 +19,7 @@ class VideoContainer extends Component {
     renderInput ({input}) {
         console.log({input});
         return (
-            <div className="col s8">
+            <div className="col s8 input-field">
                 <input {...input} className="pastedVideoInput" type="text" placeholder="Paste a YouTube video URL..."/>
             </div>
         );
@@ -42,7 +42,7 @@ class VideoContainer extends Component {
             transform = 'translateY(0px)',
             toggleSlideOut = false;
         } else {
-            transform = 'translateY(-66px)';
+            transform = 'translateY(-81px)';
             toggleSlideOut = true;
         }
         this.setState({

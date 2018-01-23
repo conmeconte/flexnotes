@@ -94,8 +94,8 @@ class Video extends Component {
     renderInput({ input }) {
         console.log(input);
         return (
-            <div className="col s8">
-                <input {...input} id="query" placeholder="Search on Youtube..." className="form-control" />
+            <div id="input-field" className="col s8 input-field">
+                <input type="text" {...input} id="query" placeholder="Search on Youtube..." className="form-control" />
             </div>
         )
     }
