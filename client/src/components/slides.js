@@ -11,7 +11,7 @@ class Slides extends Component {
             this.slideOutSlidesSearch = this.slideOutSlidesSearch.bind(this);
             this.state = {
                 style: {
-                    transform: 'translateY(-66px)'
+                    transform: 'translateY(-81px)'
                 },
                 toggleSlideOut: true
             }
@@ -19,8 +19,8 @@ class Slides extends Component {
     renderInput(props) {
         const { input, meta: { touched, error } } = props;
         return (
-            <div className="col s8">
-                <input id="slides-input" className="slides-input form-control" {...input} placeholder="Paste a Google Slides URL..." />
+            <div className="col s8 input-field">
+                <input id="slides-input" className="slides-input form-control" {...input} type="text" placeholder="Paste a Google Slides URL..." />
             </div>
         )
     }
@@ -31,7 +31,7 @@ class Slides extends Component {
             transform = 'translateY(0px)',
             toggleSlideOut = false;
         } else {
-            transform = 'translateY(-66px)';
+            transform = 'translateY(-81px)';
             toggleSlideOut = true;
         }
         this.setState({
