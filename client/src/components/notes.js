@@ -541,24 +541,25 @@ class Notes extends Component {
 
     render() {
         return (
-            <div className="notes-component fifth-step">
-
+            <div className="text-editor">
                 {this.toolbar()}
-                <Editor
-                    className="editor"
-                    style={{ overflowY: scroll }}
-                    placeholder="Enter notes..."
-                    value={this.state.value}
-                    onChange={this.onChange}
-                    onKeyDown={this.onKeyDown}
-                    schema={schema}
-                    onDrop={this.onDropOrPaste}
-                    onPaste={this.onDropOrPaste}
-                    onPaste={this.onPaste}
-                    renderNode={this.renderNode}
-                    renderMark={this.renderMark}
-                    spellCheck
-                />
+                <div className="notes-component fifth-step">
+                    <Editor
+                        className="editor"
+                        style={{ overflowY: scroll }}
+                        placeholder="Enter notes..."
+                        value={this.state.value}
+                        onChange={this.onChange}
+                        onKeyDown={this.onKeyDown}
+                        schema={schema}
+                        onDrop={this.onDropOrPaste}
+                        onPaste={this.onDropOrPaste}
+                        onPaste={this.onPaste}
+                        renderNode={this.renderNode}
+                        renderMark={this.renderMark}
+                        spellCheck
+                    />
+                </div>
             </div>
         );
     }

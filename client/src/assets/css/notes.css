@@ -7,15 +7,19 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(0, 0, 0, 0.3);
 }
 
-.notes-component {
-    height: 100%;
-}
+/*.text-editor {*/
+    /*height: 100%;*/
+/*}*/
+
+/*.notes-component {*/
+    /*height: 100%;*/
+/*}*/
 
 .editor {
     padding-left: 1vmin;
     padding-top: 2vmin;
-    height: 100%;
-    max-width: 750px;
+    height: 85vh;
+    max-width: 770px;
     margin-top: 100px;
 }
 
