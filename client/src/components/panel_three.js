@@ -95,8 +95,8 @@ class ThreePanel extends Component {
         //     }
         // if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
         return (
-            <SplitPane className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={425}>
-                <SplitPane split="horizontal" minSize={200} maxSize={-200} defaultSize={500}>
+            <SplitPane className="width-w-nav" split="vertical" minSize={400} maxSize={-400} defaultSize={425}>
+                <SplitPane split="horizontal" minSize={400} maxSize={-400} defaultSize={500}>
                     <div className="video-parent-panel"><Video /></div>
                     <div className="slides-container"><Slides /></div>
                 </SplitPane>

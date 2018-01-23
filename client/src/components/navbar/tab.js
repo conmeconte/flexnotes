@@ -53,7 +53,7 @@ class Tab extends Component {
         //console.log('addPage clicked');
         //this.props.addTab(this.props.binderObj._id);
         
-        this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
+        this.props.addPage(this.props.interface.binder_id, this.props.tabObj._id);
     }
 
     deletePage(page_id){
@@ -181,7 +181,12 @@ class Tab extends Component {
                             {this.props.tabObj.tab_name}
                         </div>
                     </Link>
-
+                    <button type="button" className={`btn btn-default btn-xs btn_edit_binder`} onClick={this.editTabs}>
+                        E Tab
+                    </button>
+                    <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
+                    D Tab
+                    </button>
                 </div>
             );
         }
@@ -271,12 +276,7 @@ class Tab extends Component {
             <div>
                 {tab_title}
             <div className={`tabBody ${open ? 'visible' : 'hidden'}`}>
-            <button type="button" className={`btn btn-default btn-xs btn_edit_binder`} onClick={this.editTabs}>
-                        E Tab
-                    </button>
-                    <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
-                    D Tab
-                    </button>
+
                     <ul className="collection">
                         {page_list}
                     </ul>

@@ -6,16 +6,41 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
 class Slides extends Component {
-
+        constructor (props) {
+            super(props);
+            this.slideOutSlidesSearch = this.slideOutSlidesSearch.bind(this);
+            this.state = {
+                style: {
+                    transform: 'translateY(-66px)'
+                },
+                toggleSlideOut: true
+            }
+    }
     renderInput(props) {
         const { input, meta: { touched, error } } = props;
         return (
-            <div className="col-sm-9">
-                <input className="slides-input form-control" {...input} placeholder="Paste a Google Slides URL..." />
+            <div className="col s8">
+                <input id="slides-input" className="slides-input form-control" {...input} placeholder="Paste a Google Slides URL..." />
             </div>
         )
     }
-
+    slideOutSlidesSearch() {
+        let { toggleSlideOut } = this.state;
+        let { transform } = this.state.style;
+        if (toggleSlideOut) {
+            transform = 'translateY(0px)',
+            toggleSlideOut = false;
+        } else {
+            transform = 'translateY(-66px)';
+            toggleSlideOut = true;
+        }
+        this.setState({
+            style: {
+                transform: transform
+            },
+            toggleSlideOut: toggleSlideOut
+        });
+    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
             let { tab_arr_obj } = nextProps.binderObj;
@@ -105,12 +130,21 @@ class Slides extends Component {
     }
 
     render() {
+        const { toggleSlideOut } = this.state;
+        const { transform } = this.state.style;
         return (
             <div className="slides-div">
-                <form className="form-horizontal" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
-                    <Field name="url" component={this.renderInput} />
-                    <button className="btn green darken-1"><i className="material-icons">save</i></button>
+                <form style={{ transform }} className="form-horizontal slide-out-input" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
+                    <div className="row">
+                        <Field name="url" component={this.renderInput} />
+                        <button className="btn green darken-1 col s3"><i className="material-icons">save</i></button>
+                    </div>
                 </form>
+                <div className="arrow-container" onClick={ () => {
+                    this.slideOutSlidesSearch()
+                }}>
+                    { !toggleSlideOut ? <i className="material-icons">keyboard_arrow_up</i> : <i className="material-icons">keyboard_arrow_down</i> }
+                </div>
                 {
                     this.props.slide_input ?
                         <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe" allowFullScreen></iframe>

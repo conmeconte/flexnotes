@@ -49,20 +49,39 @@ ul > li {
 
 .binderTitle{
     border: solid 1px red;
+    background-color: red;
 }
 
 .binderBody{
-    border: solid 1px teal;
+    #border: solid 1px teal;
+}
+
+.binderWrap{
+    background-color: white;
+}
+
+.tabWrap{
+    background-color: yellow;
+    width: 95%;
 }
 
 .tabTitle{
     border: solid 1px orange;
+    
 }
 
 .tabBody{
-    border: solid 1px magenta;
+    #border: solid 1px magenta;
 }
 
 .pageBody{
     border: 1px solid green;
+    background-color: lightblue;
+    width: 95%;
+    display: inline-block;
 }
+
+.pageLink, .page-btn, .btn-div{
+    display: inline-block;
+}
+
