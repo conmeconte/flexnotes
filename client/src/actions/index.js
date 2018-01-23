@@ -9,7 +9,7 @@ export const fetchUser = () => async dispatch => {
 //PANEL SPECs Action Creator
 
 export function setTopLeftHeight(num, interfaceObj) {
-    console.log('panel 3 settopleft: ', num)
+    console.log('panel 3 settopleft: ', num/window.innerHeight)
     return (dispatch) => {
         axios.put('/api/page', {
             top_left_panel_height: num,
@@ -35,7 +35,7 @@ export function setTopLeftHeight(num, interfaceObj) {
 export function setTopLeftWidth(num, interfaceObj) {
     return (dispatch) => {
         axios.put('/api/page', {
-            top_left_panel_width: num,
+            top_left_panel_width: num/window.innerWidth,
             binderID: interfaceObj.binder_id,
             tabID: interfaceObj.tab_id,
             pageID: interfaceObj.page_id
@@ -56,7 +56,7 @@ export function setTopLeftWidth(num, interfaceObj) {
 export function setTopRightHeight(num, interfaceObj) {
     return (dispatch) => {
         axios.put('/api/page', {
-            top_right_panel_height: num,
+            top_right_panel_height: num.window.innerHeight,
             binderID: interfaceObj.binder_id,
             tabID: interfaceObj.tab_id,
             pageID: interfaceObj.page_id
