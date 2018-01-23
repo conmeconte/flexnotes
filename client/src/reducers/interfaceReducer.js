@@ -43,16 +43,18 @@ export default function (state = DEFAULT_STATE, action) {
         case types.DELETE_PAGE:
             return { ...state, pull_from_db: true };
         case types.UPDATE_BINDER_ARRAY:
-            return { ...state, pull_from_db: false };
+            return { ...state, pull_from_db: false,  sent_to_db: true };
         case types.ADD_TO_PLAYLIST:
         case types.SET_SLIDES_URL:
         case types.PANEL_TOP_LEFT_HEIGHT:
         case types.PANEL_TOP_LEFT_WIDTH:
         case types.PANEL_TOP_RIGHT_HEIGHT:
         case types.NUM_OF_PANELS:
-            return { ...state, sent_to_db: true };
+            return { ...state, pull_from_db: true};
         case types.AXIOS_ERROR:
             return { ...state, axios_error_response: action.msg };
+        case types.UPDATE_BINDER_OBJ:
+            return {...state, sent_to_db: false};
         default:
             return state;
     }

@@ -270,14 +270,14 @@ class Tab extends Component {
 
             <div>
                 {tab_title}
-            <div className={`tabBody ${open ? 'visibleTab' : 'hiddenTab'}`}>
+            <div className={`tabBody ${open ? 'visible' : 'hidden'}`}>
             <button type="button" className={`btn btn-default btn-xs btn_edit_binder`} onClick={this.editTabs}>
                         E Tab
                     </button>
                     <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
                     D Tab
                     </button>
-                    <ul>
+                    <ul className="collection">
                         {page_list}
                     </ul>
                     

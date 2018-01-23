@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import '../assets/css/slides.css';
 import axios from 'axios';
-import { setSlidesUrl, updateBinderArray } from '../actions';
+import { setSlidesUrl, getSlidesURL, updateBinderArray, resetSlidesURL } from '../actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
@@ -17,9 +17,7 @@ class Slides extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!nextProps.interface_obj.sent_to_db) {
-            this.props.updateBinderArray();
-        } else {
+        if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
 
@@ -40,13 +38,17 @@ class Slides extends Component {
                         break;
                     }
                 }
-                if (typeof(page_arr_obj[pageIndex].lecture_slides) === 'undefined' || typeof(page_arr_obj[pageIndex].lecture_slides) === '') {
-                    // return;
-                    this.props.setSlidesUrl('', interface_obj);
+                // console.log('tab index:' , tabIndex);
+                // console.log('page index:' , pageIndex);
+                if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
+                    this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
                 } else {
-                    this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
+                    this.props.resetSlidesURL('');
+                    //return;
                 }
-            } else {
+
+            }
+            else {
                 console.log("DOES NOT WORK");
             }
         }
@@ -66,23 +68,40 @@ class Slides extends Component {
                 }
             }
             const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < tabArrLength; i++) {
+            for (let i = 0; i < page_arr_obj.length; i++) {
                 if (interface_obj.page_id === page_arr_obj[i]._id) {
                     pageIndex = i;
                     break;
                 }
             }
-            if (!page_arr_obj[pageIndex].lecture_slides) {
-                return;
+            if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
+                this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
             } else {
-                this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
+                this.props.resetSlidesURL('');
             }
         } else {
             console.log("DOES NOT WORK");
         }
     }
     setURLinReduxForm(values) {
-        this.props.setSlidesUrl(values.url, this.props.interface_obj);
+        if (values.url.indexOf('presentation/d/') !== -1 || values.url.indexOf('presentation/d/e') !== -1) {
+            if (values.url.indexOf('presentation/d/e/') !== -1) {
+                const urlSplit1 = values.url.split("presentation/d/e/");
+                const urlSplit2 = urlSplit1[1].split('/');
+                let presentationID = urlSplit2[0];
+                const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
+                this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
+            }
+            else if (values.url.indexOf('presentation/d/') !== -1) {
+                const urlSplit1 = values.url.split("presentation/d/");
+                const urlSplit2 = urlSplit1[1].split('/');
+                let presentationID = urlSplit2[0];
+                const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
+                this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
+            }
+        } else {
+            return;
+        }
     }
 
     render() {
@@ -90,7 +109,7 @@ class Slides extends Component {
             <div className="slides-div">
                 <form className="form-horizontal" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
                     <Field name="url" component={this.renderInput} />
-                    <button className="btn btn-success"><span className="glyphicon glyphicon-save"></span></button>
+                    <button className="btn green darken-1"><i className="material-icons">save</i></button>
                 </form>
                 {
                     this.props.slide_input ?
@@ -126,4 +145,4 @@ function mapStateToProps(state) {
     }
 };
 
-export default connect(mapStateToProps, { setSlidesUrl, updateBinderArray })(Slides);
+export default connect(mapStateToProps, { setSlidesUrl, updateBinderArray, getSlidesURL, resetSlidesURL })(Slides);
