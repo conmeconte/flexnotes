@@ -6001,7 +6001,7 @@ var fetchUser = exports.fetchUser = function fetchUser() {
 //PANEL SPECs Action Creator
 
 function setTopLeftHeight(num, interfaceObj) {
-    console.log('panel 3 settopleft: ', num);
+    console.log('panel 3 settopleft: ', num / window.innerHeight);
     return function (dispatch) {
         _axios2.default.put('/api/page', {
             top_left_panel_height: num,
@@ -6025,7 +6025,7 @@ function setTopLeftHeight(num, interfaceObj) {
 function setTopLeftWidth(num, interfaceObj) {
     return function (dispatch) {
         _axios2.default.put('/api/page', {
-            top_left_panel_width: num,
+            top_left_panel_width: num / window.innerWidth,
             binderID: interfaceObj.binder_id,
             tabID: interfaceObj.tab_id,
             pageID: interfaceObj.page_id
@@ -6046,7 +6046,7 @@ function setTopLeftWidth(num, interfaceObj) {
 function setTopRightHeight(num, interfaceObj) {
     return function (dispatch) {
         _axios2.default.put('/api/page', {
-            top_right_panel_height: num,
+            top_right_panel_height: num.window.innerHeight,
             binderID: interfaceObj.binder_id,
             tabID: interfaceObj.tab_id,
             pageID: interfaceObj.page_id
@@ -41222,10 +41222,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Slides = function (_Component) {
     _inherits(Slides, _Component);
 
-    function Slides() {
+    function Slides(props) {
         _classCallCheck(this, Slides);
 
-        return _possibleConstructorReturn(this, (Slides.__proto__ || Object.getPrototypeOf(Slides)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Slides.__proto__ || Object.getPrototypeOf(Slides)).call(this, props));
+
+        _this.slideOutSlidesSearch = _this.slideOutSlidesSearch.bind(_this);
+        _this.state = {
+            style: {
+                transform: 'translateY(-66px)'
+            },
+            toggleSlideOut: true
+        };
+        return _this;
     }
 
     _createClass(Slides, [{
@@ -41238,9 +41247,28 @@ var Slides = function (_Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: 'col-sm-9' },
-                _react2.default.createElement('input', _extends({ className: 'slides-input form-control' }, input, { placeholder: 'Paste a Google Slides URL...' }))
+                { className: 'col s8' },
+                _react2.default.createElement('input', _extends({ id: 'slides-input', className: 'slides-input form-control' }, input, { placeholder: 'Paste a Google Slides URL...' }))
             );
+        }
+    }, {
+        key: 'slideOutSlidesSearch',
+        value: function slideOutSlidesSearch() {
+            var toggleSlideOut = this.state.toggleSlideOut;
+            var transform = this.state.style.transform;
+
+            if (toggleSlideOut) {
+                transform = 'translateY(0px)', toggleSlideOut = false;
+            } else {
+                transform = 'translateY(-66px)';
+                toggleSlideOut = true;
+            }
+            this.setState({
+                style: {
+                    transform: transform
+                },
+                toggleSlideOut: toggleSlideOut
+            });
         }
     }, {
         key: 'componentWillReceiveProps',
@@ -41339,21 +41367,45 @@ var Slides = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
+            var toggleSlideOut = this.state.toggleSlideOut;
+            var transform = this.state.style.transform;
+
             return _react2.default.createElement(
                 'div',
                 { className: 'slides-div' },
                 _react2.default.createElement(
                     'form',
-                    { className: 'form-horizontal', onSubmit: this.props.handleSubmit(this.setURLinReduxForm.bind(this)) },
-                    _react2.default.createElement(_reduxForm.Field, { name: 'url', component: this.renderInput }),
+                    { style: { transform: transform }, className: 'form-horizontal slide-out-input', onSubmit: this.props.handleSubmit(this.setURLinReduxForm.bind(this)) },
                     _react2.default.createElement(
-                        'button',
-                        { className: 'btn green darken-1' },
+                        'div',
+                        { className: 'row' },
+                        _react2.default.createElement(_reduxForm.Field, { name: 'url', component: this.renderInput }),
                         _react2.default.createElement(
-                            'i',
-                            { className: 'material-icons' },
-                            'save'
+                            'button',
+                            { className: 'btn green darken-1 col s3' },
+                            _react2.default.createElement(
+                                'i',
+                                { className: 'material-icons' },
+                                'save'
+                            )
                         )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'arrow-container', onClick: function onClick() {
+                            _this2.slideOutSlidesSearch();
+                        } },
+                    !toggleSlideOut ? _react2.default.createElement(
+                        'i',
+                        { className: 'material-icons' },
+                        'keyboard_arrow_up'
+                    ) : _react2.default.createElement(
+                        'i',
+                        { className: 'material-icons' },
+                        'keyboard_arrow_down'
                     )
                 ),
                 this.props.slide_input ? _react2.default.createElement('iframe', { src: this.props.slide_input, frameBorder: '0', className: 'slides-iframe', allowFullScreen: true }) : _react2.default.createElement(
@@ -64182,10 +64234,10 @@ var ThreePanel = function (_Component) {
             // if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
             return _react2.default.createElement(
                 _reactSplitPane2.default,
-                { className: 'width-w-nav', split: 'vertical', minSize: 200, maxSize: -200, defaultSize: 425 },
+                { className: 'width-w-nav', split: 'vertical', minSize: 400, maxSize: -400, defaultSize: 425 },
                 _react2.default.createElement(
                     _reactSplitPane2.default,
-                    { split: 'horizontal', minSize: 200, maxSize: -200, defaultSize: 500 },
+                    { split: 'horizontal', minSize: 400, maxSize: -400, defaultSize: 500 },
                     _react2.default.createElement(
                         'div',
                         { className: 'video-parent-panel' },
@@ -85696,10 +85748,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var VideoContainer = function (_Component) {
     _inherits(VideoContainer, _Component);
 
-    function VideoContainer() {
+    function VideoContainer(props) {
         _classCallCheck(this, VideoContainer);
 
-        return _possibleConstructorReturn(this, (VideoContainer.__proto__ || Object.getPrototypeOf(VideoContainer)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (VideoContainer.__proto__ || Object.getPrototypeOf(VideoContainer)).call(this, props));
+
+        _this.slideOutVideoSearch = _this.slideOutVideoSearch.bind(_this);
+        _this.state = {
+            style: {
+                transform: 'translateY(-66px)'
+            },
+            toggleSlideOut: true
+        };
+        return _this;
     }
 
     _createClass(VideoContainer, [{
@@ -85729,11 +85790,32 @@ var VideoContainer = function (_Component) {
         // }
 
     }, {
+        key: 'slideOutVideoSearch',
+        value: function slideOutVideoSearch() {
+            var toggleSlideOut = this.state.toggleSlideOut;
+            var transform = this.state.style.transform;
+
+            if (toggleSlideOut) {
+                transform = 'translateY(0px)', toggleSlideOut = false;
+            } else {
+                transform = 'translateY(-66px)';
+                toggleSlideOut = true;
+            }
+            this.setState({
+                style: {
+                    transform: transform
+                },
+                toggleSlideOut: toggleSlideOut
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
-            console.log('video-container props ', this.props);
+            var toggleSlideOut = this.state.toggleSlideOut;
+            var transform = this.state.style.transform;
+
             return _react2.default.createElement(
                 'div',
                 { className: 'iframe-wrapper' },
@@ -85745,7 +85827,7 @@ var VideoContainer = function (_Component) {
                         { onSubmit: this.props.handleSubmit(this.handleYouTubeUrl.bind(this)) },
                         _react2.default.createElement(
                             'div',
-                            { className: 'row' },
+                            { style: { transform: transform }, className: 'row slide-out-input' },
                             _react2.default.createElement(_reduxForm.Field, { name: 'youtube-url', component: this.renderInput }),
                             _react2.default.createElement(
                                 'div',
@@ -85772,6 +85854,21 @@ var VideoContainer = function (_Component) {
                                     )
                                 )
                             )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'arrow-container', onClick: function onClick() {
+                                _this2.slideOutVideoSearch();
+                            } },
+                        !toggleSlideOut ? _react2.default.createElement(
+                            'i',
+                            { className: 'material-icons' },
+                            'keyboard_arrow_up'
+                        ) : _react2.default.createElement(
+                            'i',
+                            { className: 'material-icons' },
+                            'keyboard_arrow_down'
                         )
                     )
                 ),
@@ -107662,7 +107759,7 @@ var NavBar = function (_Component) {
 
                     return _react2.default.createElement(
                         'div',
-                        { key: index },
+                        { key: index, className: 'binderWrap' },
                         _react2.default.createElement(_binder2.default, { index: index, binderObj: item })
                     );
                 });
@@ -107682,8 +107779,8 @@ var NavBar = function (_Component) {
                 binder,
                 _react2.default.createElement(
                     'button',
-                    { className: "btn btn-default btn-xs btn_add", onClick: this.addBinder },
-                    'A Binder'
+                    { className: 'btn-floating', onClick: this.addBinder },
+                    'add binder'
                 ),
                 _react2.default.createElement(_reactRouterDom.Route, { path: '/main/:binder', component: _binder2.default })
             );
@@ -107944,6 +108041,18 @@ var Binder = function (_Component) {
                                 } },
                             this.props.binderObj.binder_name
                         )
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { type: 'button', className: 'btn', onClick: this.editable },
+                        'E Bin'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { type: 'button', className: 'btn', onClick: function onClick() {
+                                return _this2.deleteBinder(_this2.props.binderObj._id);
+                            } },
+                        'D Bin'
                     )
                 );
             }
@@ -107957,7 +108066,7 @@ var Binder = function (_Component) {
 
                 return _react2.default.createElement(
                     'div',
-                    { key: index },
+                    { key: index, className: 'tabWrap' },
                     _react2.default.createElement(_tab2.default, { index: index, tabObj: item })
                 )
                 // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
@@ -107976,18 +108085,6 @@ var Binder = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'binderBody ' + (active ? 'visible' : 'hidden') },
-                    _react2.default.createElement(
-                        'button',
-                        { type: 'button', className: 'btn', onClick: this.editable },
-                        'E Binder'
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { type: 'button', className: 'btn', onClick: function onClick() {
-                                return _this2.deleteBinder(_this2.props.binderObj._id);
-                            } },
-                        'D Binder'
-                    ),
                     tab_link,
                     _react2.default.createElement(
                         'button',
@@ -108105,7 +108202,7 @@ var Tab = function (_Component) {
             //console.log('addPage clicked');
             //this.props.addTab(this.props.binderObj._id);
 
-            this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
+            this.props.addPage(this.props.interface.binder_id, this.props.tabObj._id);
         }
     }, {
         key: 'deletePage',
@@ -108257,6 +108354,18 @@ var Tab = function (_Component) {
                                 } },
                             this.props.tabObj.tab_name
                         )
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { type: 'button', className: 'btn btn-default btn-xs btn_edit_binder', onClick: this.editTabs },
+                        'E Tab'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { type: 'button', className: 'btn btn-default btn_delete', onClick: function onClick() {
+                                return _this2.deleteTab(_this2.props.interface.binder_id);
+                            } },
+                        'D Tab'
                     )
                 );
             }
@@ -108348,18 +108457,6 @@ var Tab = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'tabBody ' + (open ? 'visible' : 'hidden') },
-                    _react2.default.createElement(
-                        'button',
-                        { type: 'button', className: 'btn btn-default btn-xs btn_edit_binder', onClick: this.editTabs },
-                        'E Tab'
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { type: 'button', className: 'btn btn-default btn_delete', onClick: function onClick() {
-                                return _this2.deleteTab(_this2.props.interface.binder_id);
-                            } },
-                        'D Tab'
-                    ),
                     _react2.default.createElement(
                         'ul',
                         { className: 'collection' },
@@ -108607,29 +108704,33 @@ var Page = function (_Component) {
             } else {
                 page_list = _react2.default.createElement(
                     'div',
-                    null,
+                    { className: '' },
                     _react2.default.createElement(
                         _reactRouterDom.Link,
                         { to: '/main/' + url, style: { textDecoration: 'none' } },
                         _react2.default.createElement(
                             'div',
-                            { className: '', onClick: function onClick() {
+                            { className: 'pageLink', onClick: function onClick() {
                                     return _this2.handleClick();
                                 } },
                             this.props.pageObj.page_name
                         )
                     ),
                     _react2.default.createElement(
-                        'button',
-                        { type: 'button', className: 'btn btn-default btn-xs btn_edit_binder', onClick: this.editPage },
-                        'E Page'
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { type: 'button', className: 'btn btn-default btn_delete', onClick: function onClick() {
-                                return _this2.deletePage();
-                            } },
-                        'D Page'
+                        'div',
+                        { className: 'right-align btn-div' },
+                        _react2.default.createElement(
+                            'button',
+                            { type: 'button', className: 'btn page-btn', onClick: this.editPage },
+                            'E P'
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { type: 'button', className: 'btn page-btn', onClick: function onClick() {
+                                    return _this2.deletePage();
+                                } },
+                            'D P'
+                        )
                     )
                 );
             }
@@ -108664,7 +108765,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, "a {\r\n    color: white;\r\n}\r\n\r\n.nav_binder, .nav_tab, .nav_page {\r\n    display: inline-block;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.navbar{\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 10%;\r\n    height: 100vh;\r\n    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);\r\n    /* #border: solid 2px black; */\r\n    overflow-y:scroll;\r\n    #border: solid 2px black;\r\n\r\n    background-color: #6d7993;\r\n}\r\n\r\n\r\nul > li {\r\n    list-style: none;\r\n\r\n}\r\n\r\n.binder_wrap{\r\n    border: 1px solid #747474;\r\n    border-radius: 3px;\r\n    background-color: white;\r\n    /* #background-image: url(\"../../assets/images/concrete-wall-3.png\");    */\r\n    width: 75%;\r\n    height: 80px;\r\n    margin-left: 10%;\r\n    margin-bottom: 2%;\r\n    overflow-y: scroll;\r\n}\r\n\r\n.visible{\r\n    display: inline;\r\n}\r\n\r\n.hidden{\r\n    display: none;\r\n}\r\n\r\n.binderTitle{\r\n    border: solid 1px red;\r\n}\r\n\r\n.binderBody{\r\n    border: solid 1px teal;\r\n}\r\n\r\n.tabTitle{\r\n    border: solid 1px orange;\r\n}\r\n\r\n.tabBody{\r\n    border: solid 1px magenta;\r\n}\r\n\r\n.pageBody{\r\n    border: 1px solid green;\r\n}", ""]);
+exports.push([module.i, "a {\r\n    color: white;\r\n}\r\n\r\n.nav_binder, .nav_tab, .nav_page {\r\n    display: inline-block;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.navbar{\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 10%;\r\n    height: 100vh;\r\n    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);\r\n    /* #border: solid 2px black; */\r\n    overflow-y:scroll;\r\n    #border: solid 2px black;\r\n\r\n    background-color: #6d7993;\r\n}\r\n\r\n\r\nul > li {\r\n    list-style: none;\r\n\r\n}\r\n\r\n.binder_wrap{\r\n    border: 1px solid #747474;\r\n    border-radius: 3px;\r\n    background-color: white;\r\n    /* #background-image: url(\"../../assets/images/concrete-wall-3.png\");    */\r\n    width: 75%;\r\n    height: 80px;\r\n    margin-left: 10%;\r\n    margin-bottom: 2%;\r\n    overflow-y: scroll;\r\n}\r\n\r\n.visible{\r\n    display: inline;\r\n}\r\n\r\n.hidden{\r\n    display: none;\r\n}\r\n\r\n.binderTitle{\r\n    border: solid 1px red;\r\n    background-color: red;\r\n}\r\n\r\n.binderBody{\r\n    #border: solid 1px teal;\r\n}\r\n\r\n.binderWrap{\r\n    background-color: white;\r\n}\r\n\r\n.tabWrap{\r\n    background-color: yellow;\r\n    width: 95%;\r\n}\r\n\r\n.tabTitle{\r\n    border: solid 1px orange;\r\n    \r\n}\r\n\r\n.tabBody{\r\n    #border: solid 1px magenta;\r\n}\r\n\r\n.pageBody{\r\n    border: 1px solid green;\r\n    background-color: lightblue;\r\n    width: 95%;\r\n    display: inline-block;\r\n}\r\n\r\n.pageLink, .page-btn, .btn-div{\r\n    display: inline-block;\r\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -109019,7 +109120,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    overflow-y: scroll;\r\n    border-left: 1px solid black;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.notes-component {\r\n    height: 100%;\r\n}\r\n\r\n.editor {\r\n    padding-left: 1vmin;\r\n    padding-top: 2vmin;\r\n    height: 100%;\r\n    margin-top: 100px;\r\n}\r\n\r\n/* -------------------- TOOLBAR --------------------*/\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    min-width: 420px;\r\n    height: 12%;\r\n    min-height: 100px;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    padding: 2%;\r\n    background-color: #96858F;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    border-left: 1px solid black;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    justify-content: space-between;\r\n    height: 32px;\r\n    width: 100%;\r\n}\r\n\r\n.styleSquare {\r\n    width: 40px;\r\n    height: 30px;\r\n    padding: 3px 0 0 7px;\r\n    border: 1px solid black;\r\n    box-sizing: border-box;\r\n    background-color: #d5d5d5;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n    cursor: pointer;\r\n}\r\n\r\n.styleSquare:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n    background-color: ghostwhite;\r\n}\r\n\r\n.material-icons {\r\n    font-size: 3vmin;\r\n}\r\n\r\n.search-box {\r\n    margin-top: 12px;\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    justify-content: space-between;\r\n}\r\n\r\n.search-input {\r\n    width: 250px !important;\r\n    height: 30px !important;\r\n    padding-left: 5px !important;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;\r\n    background-color: white !important;\r\n    border: 1px solid black;\r\n}\r\n\r\n.saveNotes {\r\n    width: 125px !important;\r\n    height: 30px !important;\r\n    font-weight: 600 !important;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;\r\n}\r\n\r\n.saveNotes:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55) !important;;\r\n    background-color: ghostwhite !important;;\r\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    overflow-y: auto;\r\n    border-left: 1px solid black;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.notes-component {\r\n    height: 100%;\r\n}\r\n\r\n.editor {\r\n    padding-left: 1vmin;\r\n    padding-top: 2vmin;\r\n    height: 100%;\r\n    margin-top: 100px;\r\n}\r\n\r\n/* -------------------- TOOLBAR --------------------*/\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    min-width: 420px;\r\n    height: 12%;\r\n    min-height: 100px;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    padding: 2%;\r\n    background-color: #96858F;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    border-left: 1px solid black;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    justify-content: space-between;\r\n    height: 32px;\r\n    width: 100%;\r\n}\r\n\r\n.styleSquare {\r\n    width: 40px;\r\n    height: 30px;\r\n    padding: 3px 0 0 7px;\r\n    border: 1px solid black;\r\n    box-sizing: border-box;\r\n    background-color: #d5d5d5;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n    cursor: pointer;\r\n}\r\n\r\n.styleSquare:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n    background-color: ghostwhite;\r\n}\r\n\r\n.material-icons {\r\n    font-size: 3vmin;\r\n}\r\n\r\n.search-box {\r\n    margin-top: 12px;\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    justify-content: space-between;\r\n}\r\n\r\n.search-input {\r\n    width: 250px !important;\r\n    height: 30px !important;\r\n    padding-left: 5px !important;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;\r\n    background-color: white !important;\r\n    border: 1px solid black;\r\n}\r\n\r\n.saveNotes {\r\n    width: 125px !important;\r\n    height: 30px !important;\r\n    font-weight: 600 !important;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;\r\n}\r\n\r\n.saveNotes:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55) !important;;\r\n    background-color: ghostwhite !important;;\r\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -109064,7 +109165,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, "* {\r\n    box-sizing: border-box;\r\n}\r\nbutton {\r\n    outline: none;\r\n}\r\nbody {\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n/* Resizable Panel */\r\n.Resizer {\r\n    background: #000;\r\n    opacity: .2;\r\n    z-index: 1;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -moz-background-clip: padding;\r\n    -webkit-background-clip: padding;\r\n    background-clip: padding-box;\r\n}\r\n\r\n.Resizer:hover {\r\n    -webkit-transition: all 2s ease;\r\n    transition: all 2s ease;\r\n}\r\n\r\n.Resizer.horizontal {\r\n    height: 11px;\r\n    margin: -5px 0;\r\n    border-top: 5px solid rgba(255, 255, 255, 0);\r\n    border-bottom: 5px solid rgba(255, 255, 255, 0);\r\n    cursor: row-resize;\r\n    width: 90vw;\r\n}\r\n\r\n.Resizer.horizontal:hover {\r\n    border-top: 5px solid rgba(0, 0, 0, 0.5);\r\n    border-bottom: 5px solid rgba(0, 0, 0, 0.5);\r\n}\r\n\r\n.Resizer.vertical {\r\n    width: 11px;\r\n    margin: 0 -5px;\r\n    border-left: 5px solid rgba(255, 255, 255, 0);\r\n    border-right: 5px solid rgba(255, 255, 255, 0);\r\n    cursor: col-resize;\r\n}\r\n\r\n.Resizer.vertical:hover {\r\n    border-left: 5px solid rgba(0, 0, 0, 0.5);\r\n    border-right: 5px solid rgba(0, 0, 0, 0.5);\r\n}\r\n\r\n.Resizer.disabled {\r\n  cursor: not-allowed;\r\n}\r\n\r\n.Resizer.disabled:hover {\r\n  border-color: transparent;\r\n}\r\n.SplitPane.width-w-nav.vertical {\r\n    left: auto !important;\r\n    width: 83%\r\n}\r\n\r\n/* .panel_div{\r\n    height: 90vh;\r\n} */\r\n\r\n.container-fluid {\r\n    padding: 0;\r\n}\r\n\r\n.welcome {\r\n    float: left;\r\n    color: #31C3E7;\r\n    margin: 0 0 0 10px;\r\n    padding: 0 10px;\r\n    line-height: 40px;\r\n    background-image: url('/paperimages/Book+top+view2.jpg');\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    width: 87.5%;\r\n    padding-left: 5%;\r\n    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);\r\n}\r\n\r\n.panelOptions {\r\n    float: right;\r\n    display: flex;\r\n    flex-direction: row;\r\n}\r\n\r\n.panelOptions:last-child {\r\n    margin-right: 20px;\r\n}\r\n\r\n.optionsTitle {\r\n    color: #31C3E7;\r\n    margin: 6px 10px 0 0;\r\n}\r\n\r\n.layoutBtn {\r\n    color: #ffffff;\r\n    background-color: #31C3E7;\r\n    border: 1px solid #31C3E7;\r\n    border-radius: 3px;\r\n    margin-right: 5px;\r\n    font-size: 18px;\r\n    margin-top: 5px;\r\n    transition: 0.2s;\r\n}\r\n\r\n.layoutBtn:hover {\r\n    background-color: #ffffff;\r\n    border: 2px solid #31C3E7;\r\n    color: #31C3E7;\r\n}\r\n.panel_div {\r\n    width: 88.5%;\r\n    height: 95vh;\r\n}\r\n#dashboard-container {\r\n    margin-bottom: 0;\r\n}", ""]);
+exports.push([module.i, "* {\r\n    box-sizing: border-box;\r\n}\r\nbutton {\r\n    outline: none;\r\n}\r\nbody {\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n/* Resizable Panel */\r\n.Resizer {\r\n    background: #000;\r\n    opacity: .2;\r\n    z-index: 1;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -moz-background-clip: padding;\r\n    -webkit-background-clip: padding;\r\n    background-clip: padding-box;\r\n}\r\n\r\n.Resizer:hover {\r\n    -webkit-transition: all 2s ease;\r\n    transition: all 2s ease;\r\n}\r\n\r\n.Resizer.horizontal {\r\n    height: 11px;\r\n    margin: -5px 0;\r\n    border-top: 5px solid rgba(255, 255, 255, 0);\r\n    border-bottom: 5px solid rgba(255, 255, 255, 0);\r\n    cursor: row-resize;\r\n    width: 90vw;\r\n}\r\n\r\n.Resizer.horizontal:hover {\r\n    border-top: 5px solid rgba(0, 0, 0, 0.5);\r\n    border-bottom: 5px solid rgba(0, 0, 0, 0.5);\r\n}\r\n\r\n.Resizer.vertical {\r\n    width: 11px;\r\n    margin: 0 -5px;\r\n    border-left: 5px solid rgba(255, 255, 255, 0);\r\n    border-right: 5px solid rgba(255, 255, 255, 0);\r\n    cursor: col-resize;\r\n}\r\n\r\n.Resizer.vertical:hover {\r\n    border-left: 5px solid rgba(0, 0, 0, 0.5);\r\n    border-right: 5px solid rgba(0, 0, 0, 0.5);\r\n}\r\n\r\n.Resizer.disabled {\r\n  cursor: not-allowed;\r\n}\r\n\r\n.Resizer.disabled:hover {\r\n  border-color: transparent;\r\n}\r\n.SplitPane.width-w-nav.vertical {\r\n    left: auto !important;\r\n    width: 83%\r\n}\r\n\r\n/* .panel_div{\r\n    height: 90vh;\r\n} */\r\n\r\n.container-fluid {\r\n    padding: 0;\r\n}\r\n\r\n.welcome {\r\n    float: left;\r\n    color: #31C3E7;\r\n    margin: 0 0 0 10px;\r\n    padding: 0 10px;\r\n    line-height: 40px;\r\n    background-image: url('/paperimages/Book+top+view2.jpg');\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    width: 87.5%;\r\n    padding-left: 5%;\r\n    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);\r\n}\r\n\r\n.panelOptions {\r\n    float: right;\r\n    display: flex;\r\n    flex-direction: row;\r\n}\r\n\r\n.panelOptions:last-child {\r\n    margin-right: 20px;\r\n}\r\n\r\n.optionsTitle {\r\n    color: #31C3E7;\r\n    margin: 6px 10px 0 0;\r\n}\r\n\r\n.layoutBtn {\r\n    color: #ffffff;\r\n    background-color: #31C3E7;\r\n    border: 1px solid #31C3E7;\r\n    border-radius: 3px;\r\n    margin-right: 5px;\r\n    font-size: 18px;\r\n    margin-top: 5px;\r\n    transition: 0.2s;\r\n}\r\n\r\n.layoutBtn:hover {\r\n    background-color: #ffffff;\r\n    border: 2px solid #31C3E7;\r\n    color: #31C3E7;\r\n}\r\n.panel_div {\r\n    width: 88.5%;\r\n    height: 95vh;\r\n}\r\n#dashboard-container {\r\n    margin-bottom: 0;\r\n}\r\n", ""]);
 
 // exports
 
@@ -109109,7 +109210,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, ".slides-container {\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: #d5d5d5;\r\n}\r\n\r\n.slides-div {\r\n  height: 90%\r\n}\r\n\r\n.slides-iframe\r\n{\r\n  position: relative;\r\n  top: 1vh;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  z-index: 1;\r\n  width: 95%;\r\n  height: 93%;\r\n  margin: 0 auto;\r\n  -moz-box-sizing: border-box;\r\n  box-sizing: border-box;\r\n}\r\n.text-danger {\r\n  position: relative;\r\n  left: 1vw;\r\n}", ""]);
+exports.push([module.i, ".slides-container {\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: #d5d5d5;\r\n}\r\n\r\n.slides-div {\r\n  height: 90%;\r\n  overflow: hidden;\r\n}\r\n\r\n.slides-iframe\r\n{\r\n  position: relative;\r\n  top: 1vh;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  z-index: 1;\r\n  width: 95%;\r\n  height: 93%;\r\n  margin: 0 auto;\r\n  -moz-box-sizing: border-box;\r\n  box-sizing: border-box;\r\n}\r\n.text-danger {\r\n  position: relative;\r\n  left: 1vw;\r\n}\r\n/* #slides-input.slides-input {\r\n  background-color: #fff;\r\n} */", ""]);
 
 // exports
 
@@ -109199,7 +109300,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, ".main {\r\n    color: #000;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    height: 100%;\r\n    overflow:hidden;\r\n    margin: 0 auto;\r\n}\r\n.opacity {\r\n    position: absolute;\r\n    top: 0; \r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #000;\r\n    display: block;\r\n    z-index: 2;\r\n    opacity: 0.6;\r\n}\r\n.search-button-input {\r\n    padding-top: 1vh;\r\n}\r\n\r\n.vid-container {\r\n    z-index: 1;\r\n}\r\n.video-wrapper#video-wrapper {\r\n    height: 100%;\r\n}\r\n.video-container#video-container {\r\n    height: 80%;\r\n    padding-bottom: 0;\r\n}\r\n\r\n.video-container#video-container .row form{\r\n    width: 80%;\r\n    display: inline-block;\r\n}\r\n.video-items {\r\n    list-style-type: none;\r\n}\r\nbutton.close {\r\n    color: #fff;\r\n    position: relative;\r\n    top: -3.5vh;\r\n    left: 6vh;\r\n}\r\n.results-container {\r\n    width: 100%;\r\n    height: 100%;\r\n    z-index: 3;\r\n    overflow: auto;\r\n    transition: 0.4s;\r\n}\r\n.results-container li,\r\n.results-container button {\r\n    display: inline-block;\r\n}\r\n.results-container.sidebar {\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    background-color: #fff;\r\n    width: 100%;\r\n    border-left: 1px solid #e4e4e4;\r\n}\r\n.row.results-input-container {\r\n    margin-left: 0;\r\n    margin-right: 0;\r\n}\r\n#search {\r\n    position: absolute;\r\n    color: #fff;\r\n    right: 20px;\r\n    top: 15px;\r\n}\r\n.video-parent-panel {\r\n    height: 100%;\r\n    width: 100%;\r\n}\r\n.video-embed-wrapper {\r\n    height: 100%;\r\n    text-align: center;\r\n}\r\n\r\n.video-container iframe {\r\n    width: 95%;\r\n    height: 100%;\r\n    margin: 0 auto;\r\n}\r\n.video-iframe {\r\n    display: inline-block;\r\n    position: relative;\r\n    top: 1vh;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    z-index: 1;\r\n    border:none;\r\n}\r\n\r\n.btn {\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    background-color: #d5d5d5;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n    cursor: pointer;\r\n    margin: 1vmin;\r\n    line-height: 0;\r\n}\r\n.btn:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n    background-color: ghostwhite;\r\n}\r\n#query {\r\n    padding-left: 8px;\r\n}\r\n.list-item-wrapper {\r\n    padding: 10px 5px;\r\n}\r\n.results-btn {\r\n    padding: 0 1vmin;\r\n}\r\n.collection {\r\n    border: none;\r\n}\r\n.vid-left-arrow,\r\n.vid-right-arrow {\r\n    background-color: #96858F;\r\n}\r\n.iframe-wrapper {\r\n    height: 100%;\r\n}\r\n.row {\r\n    margin-bottom: 0;\r\n}\r\n.btn-wrapper {\r\n    white-space: nowrap;\r\n}\r\n.btn-wrapper button {\r\n    padding: 0 1vmin;\r\n}", ""]);
+exports.push([module.i, ".main {\r\n    color: #000;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    height: 100%;\r\n    overflow:hidden;\r\n    margin: 0 auto;\r\n}\r\n.opacity {\r\n    position: absolute;\r\n    top: 0; \r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #000;\r\n    display: block;\r\n    z-index: 2;\r\n    opacity: 0.6;\r\n}\r\n.search-button-input {\r\n    padding-top: 1vh;\r\n}\r\n\r\n.vid-container {\r\n    z-index: 1;\r\n}\r\n.video-wrapper#video-wrapper {\r\n    height: 100%;\r\n}\r\n.video-container#video-container {\r\n    height: 80%;\r\n    padding-bottom: 0;\r\n}\r\n\r\n.video-container#video-container .row form{\r\n    width: 80%;\r\n    display: inline-block;\r\n}\r\n.video-items {\r\n    list-style-type: none;\r\n}\r\nbutton.close {\r\n    color: #fff;\r\n    position: relative;\r\n    top: -3.5vh;\r\n    left: 6vh;\r\n}\r\n.results-container {\r\n    width: 100%;\r\n    height: 100%;\r\n    z-index: 3;\r\n    overflow: auto;\r\n    transition: 0.4s;\r\n}\r\n.results-container li,\r\n.results-container button {\r\n    display: inline-block;\r\n}\r\n.results-container.sidebar {\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    background-color: #fff;\r\n    width: 100%;\r\n    border-left: 1px solid #e4e4e4;\r\n}\r\n.row.results-input-container {\r\n    margin-left: 0;\r\n    margin-right: 0;\r\n}\r\n#search {\r\n    position: absolute;\r\n    color: #fff;\r\n    right: 20px;\r\n    top: 15px;\r\n}\r\n.video-parent-panel {\r\n    height: 100%;\r\n    width: 100%;\r\n    background-color: #d5d5d5;\r\n}\r\n.video-embed-wrapper {\r\n    height: 100%;\r\n    text-align: center;\r\n}\r\n\r\n.video-container iframe {\r\n    width: 95%;\r\n    height: 100%;\r\n    margin: 0 auto;\r\n}\r\n.video-iframe {\r\n    display: inline-block;\r\n    position: relative;\r\n    top: 1vh;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    z-index: 1;\r\n    border:none;\r\n}\r\n\r\n.btn {\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    background-color: #d5d5d5;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n    cursor: pointer;\r\n    margin: 1vmin;\r\n    line-height: 0;\r\n}\r\n.btn:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n    background-color: ghostwhite;\r\n}\r\n#query {\r\n    padding-left: 8px;\r\n}\r\n.list-item-wrapper {\r\n    padding: 10px 5px;\r\n}\r\n.results-btn {\r\n    padding: 0 1vmin;\r\n}\r\n.collection {\r\n    border: none;\r\n}\r\n.vid-left-arrow,\r\n.vid-right-arrow {\r\n    background-color: #96858F;\r\n}\r\n.iframe-wrapper {\r\n    height: 100%;\r\n}\r\n.row {\r\n    margin-bottom: 0;\r\n}\r\n.btn-wrapper {\r\n    white-space: nowrap;\r\n}\r\n.btn-wrapper button {\r\n    padding: 0 1vmin;\r\n}\r\n.slide-out-input {\r\n    transition: 0.2s;\r\n    background-color: #fff;\r\n}\r\n.arrow-container {\r\n    position: absolute;\r\n    top: 10px;\r\n    right: 5px;\r\n}", ""]);
 
 // exports
 
