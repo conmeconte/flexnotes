@@ -5926,7 +5926,10 @@ exports.setTopLeftHeight = setTopLeftHeight;
 exports.setTopLeftWidth = setTopLeftWidth;
 exports.setTopRightHeight = setTopRightHeight;
 exports.setNumOfPanels = setNumOfPanels;
+exports.getPanelNum = getPanelNum;
 exports.setSlidesUrl = setSlidesUrl;
+exports.getSlidesURL = getSlidesURL;
+exports.resetSlidesURL = resetSlidesURL;
 exports.toggleModal = toggleModal;
 exports.getVideoResults = getVideoResults;
 exports.getResultStyles = getResultStyles;
@@ -5939,6 +5942,7 @@ exports.grabVideoUrl = grabVideoUrl;
 exports.setVideoUrl = setVideoUrl;
 exports.getDataObject = getDataObject;
 exports.updateBinderArray = updateBinderArray;
+exports.updateBinderObj = updateBinderObj;
 exports.selectBinder = selectBinder;
 exports.selectTab = selectTab;
 exports.selectPage = selectPage;
@@ -5997,6 +6001,7 @@ var fetchUser = exports.fetchUser = function fetchUser() {
 //PANEL SPECs Action Creator
 
 function setTopLeftHeight(num, interfaceObj) {
+    console.log('panel 3 settopleft: ', num);
     return function (dispatch) {
         _axios2.default.put('/api/page', {
             top_left_panel_height: num,
@@ -6080,76 +6085,51 @@ function setNumOfPanels(num, interfaceObj) {
     };
 }
 
+function getPanelNum(num) {
+    return {
+        type: _types2.default.GET_PANEL_NUM,
+        payload: num
+    };
+}
+
 //Lecture Slides Action Creator
 
-function setSlidesUrl(value, interfaceObj) {
-    console.log("setSlides url action 1:", value);
-    if (value) {
-        if (value.indexOf('presentation/d/') !== -1 || value.indexOf('presentation/d/e') !== -1) {
-            if (value.indexOf('presentation/d/e') !== -1) {
-                var _urlSplit = value.split("presentation/d/e/");
-                var _urlSplit2 = _urlSplit[1].split('/');
-                var _presentationID = _urlSplit2[0];
-                var _slidesURL = 'https://docs.google.com/presentation/d/e/' + _presentationID + '/embed';
-                return function (dispatch) {
-                    _axios2.default.put('/api/page', {
-                        lecture_slides: {
-                            lec_id: _slidesURL
-                        },
-                        binderID: interfaceObj.binder_id,
-                        tabID: interfaceObj.tab_id,
-                        pageID: interfaceObj.page_id
-                    }).then(function (resp) {
-                        console.log("setSlidesUrl response: ", resp);
-                        dispatch({
-                            type: _types2.default.SET_SLIDES_URL,
-                            payload: _slidesURL
-                        });
-                    }).catch(function (error) {
-                        dispatch({
-                            type: _types2.default.AXIOS_ERROR,
-                            msg: 'Failed to update Google Slides URL'
-                        });
-                    });
-                };
-            }
-            var urlSplit1 = value.split("presentation/d/");
-            var urlSplit2 = urlSplit1[1].split('/');
-            var presentationID = urlSplit2[0];
-            var slidesURL = 'https://docs.google.com/presentation/d/' + presentationID + '/embed';
-            return function (dispatch) {
-                _axios2.default.put('/api/page', {
-                    lecture_slides: {
-                        lec_id: slidesURL
-                    },
-                    binderID: interfaceObj.binder_id,
-                    tabID: interfaceObj.tab_id,
-                    pageID: interfaceObj.page_id
-                }).then(function (resp) {
-                    console.log("setSlidesUrl response: ", resp);
-                    dispatch({
-                        type: _types2.default.SET_SLIDES_URL,
-                        payload: slidesURL
-                    });
-                }).catch(function (error) {
-                    dispatch({
-                        type: _types2.default.AXIOS_ERROR,
-                        msg: 'Failed to update Google Slides URL'
-                    });
-                });
-            };
-        } else {
-            return {
+function setSlidesUrl(slidesURL, interfaceObj) {
+    return function (dispatch) {
+        _axios2.default.put('/api/page', {
+            lecture_slides: {
+                lec_id: slidesURL
+            },
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then(function (resp) {
+            console.log("setSlidesUrl response: ", resp);
+            dispatch({
                 type: _types2.default.SET_SLIDES_URL,
-                payload: ''
-            };
-        }
-    } else {
-        return {
-            type: _types2.default.SET_SLIDES_URL,
-            payload: ''
-        };
-    }
+                payload: slidesURL
+            });
+        }).catch(function (error) {
+            dispatch({
+                type: _types2.default.AXIOS_ERROR,
+                msg: 'Failed to update Google Slides URL'
+            });
+        });
+    };
+}
+
+function getSlidesURL(slidesURL) {
+    return {
+        type: _types2.default.GET_SLIDES_URL,
+        payload: slidesURL
+    };
+}
+
+function resetSlidesURL(slidesURL) {
+    return {
+        type: _types2.default.RESET_SLIDES_URL,
+        payload: slidesURL
+    };
 }
 // End of Lecture Slides Action Creators
 
@@ -6319,6 +6299,14 @@ function updateBinderArray() {
                 msg: 'Failed call in update binder array'
             });
         });
+    };
+}
+
+function updateBinderObj(binder_obj) {
+
+    return {
+        type: _types2.default.UPDATE_BINDER_OBJ,
+        payload: binder_obj
     };
 }
 
@@ -9145,6 +9133,7 @@ exports.default = {
     SELECT_BINDER: 'select_binder',
     SELECT_TAB: 'select_tab',
     SELECT_PAGE: 'select_page',
+    UPDATE_BINDER_OBJ: 'update_binder_obj',
     GET_VIDEO_RESULTS: 'get_video_results',
     SET_VIDEO_URL: 'set_video_url',
     PLAY_PASTED_VIDEO_LINK: 'play_pasted_video',
@@ -9156,11 +9145,15 @@ exports.default = {
     TOGGLE_MODAL: 'toggle_modal',
     GRAB_VIDEO_URL: 'grab_video_url',
     SET_SLIDES_URL: 'set_slides_url',
+    GET_SLIDES_URL: 'get_slides_url',
+    RESET_SLIDES_URL: 'reset_slides_url',
     SAVE_NOTES: 'save_notes',
     PANEL_TOP_LEFT_HEIGHT: 'panel_top_left_height',
     PANEL_TOP_LEFT_WIDTH: 'panel_top_left_width',
     PANEL_TOP_RIGHT_HEIGHT: 'panel_top_right_height',
     NUM_OF_PANELS: 'num_of_panels',
+    GET_PANEL_NUM: 'get_panel_num',
+    RESET_PANEL_NUM: 'reset_panel_num',
     NO_VIDEO_LINK: 'no_video_link'
 };
 
@@ -33595,7 +33588,6 @@ var Video = function (_Component) {
             var tab_arr_obj = this.props.binderObj.tab_arr_obj;
             var interface_obj = this.props.interface_obj;
 
-
             if (tab_arr_obj) {
                 var tabArrLength = tab_arr_obj.length;
                 var tabIndex = null;
@@ -33621,49 +33613,22 @@ var Video = function (_Component) {
                 } else {
                     this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
                 }
-            } else {
-                console.log("DOES NOT WORK");
             }
         }
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            if (!nextProps.interface_obj.sent_to_db) {
-                this.props.updateBinderArray();
-            } else {
-                var tab_arr_obj = nextProps.binderObj.tab_arr_obj;
-                var interface_obj = nextProps.interface_obj;
-
-
-                if (tab_arr_obj) {
-                    var tabArrLength = tab_arr_obj.length;
-                    var tabIndex = null;
-                    var pageIndex = null;
-                    for (var i = 0; i < tabArrLength; i++) {
-                        if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                            //console.log('tabid = interface id at index:', i);
-                            tabIndex = i;
-                            break;
-                        }
-                    }
-                    var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
-
-                    for (var _i2 = 0; _i2 < page_arr_obj.length; _i2++) {
-                        if (interface_obj.page_id === page_arr_obj[_i2]._id) {
-                            pageIndex = _i2;
-                            break;
-                        }
-                    }
-                    if (typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined') {
-                        // return;
-                        this.props.setVideoUrl('', interface_obj);
-                    } else {
-                        this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
-                    }
-                } else {
-                    console.log("DOES NOT WORK");
-                }
+            console.log("NEXT PROPS: ", nextProps);
+            if (this.props.interface_obj.page_id !== nextProps.interface_obj.page_id) {
+                this.updateVideoComponent(nextProps);
             }
+
+            // if (nextProps.interface_obj.sent_to_db) {
+            //     this.props.updateBinderArray();
+            //     console.log("BINDER HAS BEEN UPDATED");
+            // } else {
+            //     this.updateVideoComponent(nextProps);
+            // }
         }
     }, {
         key: 'renderInput',
@@ -33678,10 +33643,45 @@ var Video = function (_Component) {
             );
         }
     }, {
+        key: 'updateVideoComponent',
+        value: function updateVideoComponent(nextProps) {
+            console.log("update video component");
+            var tab_arr_obj = nextProps.binderObj.tab_arr_obj;
+            var interface_obj = nextProps.interface_obj;
+
+            if (tab_arr_obj) {
+                var tabArrLength = tab_arr_obj.length;
+                var tabIndex = null;
+                var pageIndex = null;
+                for (var i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        //console.log('tabid = interface id at index:', i);
+                        tabIndex = i;
+                        break;
+                    }
+                }
+                var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
+
+                for (var _i2 = 0; _i2 < page_arr_obj.length; _i2++) {
+                    if (interface_obj.page_id === page_arr_obj[_i2]._id) {
+                        pageIndex = _i2;
+                        break;
+                    }
+                }
+                if (page_arr_obj[pageIndex].hasOwnProperty('video')) {
+                    // return;
+                    this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
+                } else {
+                    this.props.setVideoUrl('', interface_obj);
+                }
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
+            console.log("video props:", this.props);
             return _react2.default.createElement(
                 'div',
                 { className: 'main' },
@@ -33718,7 +33718,7 @@ var Video = function (_Component) {
                                     _react2.default.createElement(
                                         'i',
                                         { className: 'material-icons' },
-                                        'keyboard_arrow_right'
+                                        'close'
                                     )
                                 )
                             )
@@ -33759,7 +33759,7 @@ function mapStateToProps(state) {
     };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { getResultStyles: _actions.getResultStyles, getOpacityDisplay: _actions.getOpacityDisplay, toggleResults: _actions.toggleResults, getVideoResults: _actions.getVideoResults, setVideoUrl: _actions.setVideoUrl, updateBinderArray: _actions.updateBinderArray })(Video);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { getResultStyles: _actions.getResultStyles, getOpacityDisplay: _actions.getOpacityDisplay, toggleResults: _actions.toggleResults, getVideoResults: _actions.getVideoResults, setVideoUrl: _actions.setVideoUrl, updateBinderArray: _actions.updateBinderArray, getDataObject: _actions.getDataObject })(Video);
 
 /***/ }),
 /* 367 */
@@ -35221,11 +35221,10 @@ var initialValue = _slate.Value.fromJSON({
 
 var saveStyle = {
     true: {
-        // backgroundColor: "#ffffff",
+        backgroundColor: "#ffffff",
         color: "#00cc00"
     },
     false: {
-        // backgroundColor: "#ffffff",
         color: "#96858F"
     }
 
@@ -35234,7 +35233,7 @@ var saveStyle = {
 };var ToolbarButton = function ToolbarButton(props) {
     return _react2.default.createElement(
         'span',
-        { title: props.icon, className: 'button', onMouseDown: props.onMouseDown },
+        { title: props.icon, className: 'styleSquare', onMouseDown: props.onMouseDown },
         _react2.default.createElement(
             'span',
             { className: 'material-icons' },
@@ -35629,16 +35628,11 @@ var Notes = function (_Component) {
                     );
                 case 'heading-one':
                     return _react2.default.createElement(
-                        'h1',
+                        'h5',
                         attributes,
                         children
                     );
-                case 'heading-two':
-                    return _react2.default.createElement(
-                        'h2',
-                        attributes,
-                        children
-                    );
+                // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
                 case 'list-item':
                     return _react2.default.createElement(
                         'li',
@@ -35683,8 +35677,7 @@ var Notes = function (_Component) {
                     _this.renderMarkButton('italic', 'format_italic'),
                     _this.renderMarkButton('underlined', 'format_underlined'),
                     _this.renderMarkButton('code', 'code'),
-                    _this.renderBlockButton('heading-one', 'looks_one'),
-                    _this.renderBlockButton('heading-two', 'looks_two'),
+                    _this.renderBlockButton('heading-one', 'title'),
                     _this.renderBlockButton('block-quote', 'format_quote'),
                     _this.renderBlockButton('numbered-list', 'format_list_numbered'),
                     _react2.default.createElement(
@@ -35706,15 +35699,19 @@ var Notes = function (_Component) {
                         )
                     )
                 ),
-                _react2.default.createElement('input', {
-                    className: 'search-input',
-                    placeholder: 'Search keywords...',
-                    onChange: _this.onInputChange
-                }),
                 _react2.default.createElement(
-                    'button',
-                    { style: saveStyle[_this.state.save], className: 'saveNotes', onClick: _this.submitNotes.bind(_this) },
-                    _this.state.save ? "Changes Saved" : "Save Changes"
+                    'div',
+                    { className: 'search-box' },
+                    _react2.default.createElement('input', {
+                        className: 'search-input',
+                        placeholder: 'Search keywords...',
+                        onChange: _this.onInputChange
+                    }),
+                    _react2.default.createElement(
+                        'button',
+                        { style: saveStyle[_this.state.save], className: 'saveNotes', onClick: _this.submitNotes.bind(_this) },
+                        _this.state.save ? "Changes Saved" : "Save Changes"
+                    )
                 )
             );
         }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -35733,84 +35730,96 @@ var Notes = function (_Component) {
                 binderID: interface_obj.binder_id,
                 tabID: interface_obj.tab_id,
                 pageID: interface_obj.page_id
-            });
-            this.setState({ save: true });
+            }).then(this.setState(_extends({}, value, {
+                save: true
+            })));
         }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var tab_arr_obj = this.props.binderObj.tab_arr_obj;
+            var interface_obj = this.props.interface_obj;
 
-        // componentWillMount() {
-        //     let { tab_arr_obj } = this.props.binderObj;
-        //     let { interface_obj } = this.props;
 
-        //     if (tab_arr_obj) {
-        //         let tabArrLength = tab_arr_obj.length;
-        //         let tabIndex = null;
-        //         let pageIndex = null;
-        //         for (let i = 0; i < tabArrLength; i++) {
-        //             if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-        //                 //console.log('tabid = interface id at index:', i);
-        //                 tabIndex = i;
-        //                 break;
-        //             }
-        //         }
-        //         const { page_arr_obj } = tab_arr_obj[tabIndex];
-        //         for (let i = 0; i < page_arr_obj; i++) {
-        //             if (interface_obj.page_id === page_arr_obj[i]._id) {
-        //                 pageIndex = i;
-        //                 break;
-        //             }
-        //         }
-        //         if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
-        //             return;
-        //         } else {
-        //             const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
-        //             this.setState({
-        //                 value: Value.fromJSON(lastContent),
-        //             })
-        //         }
-        //     }
-        // }
+            if (tab_arr_obj) {
+                var tabArrLength = tab_arr_obj.length;
+                var tabIndex = null;
+                var pageIndex = null;
+                for (var i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        tabIndex = i;
+                        break;
+                    }
+                }
+                var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
 
+                for (var _i = 0; _i < page_arr_obj.length; _i++) {
+                    if (interface_obj.page_id === page_arr_obj[_i]._id) {
+                        pageIndex = _i;
+                        break;
+                    }
+                }
+                if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                    console.log('HAS NOTES cwm', tab_arr_obj[tabIndex].page_arr_obj[pageIndex].notes);
+                    var lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                    this.setState({
+                        value: _slate.Value.fromJSON(lastContent),
+                        save: false
+                    });
+                } else {
+                    this.setState({
+                        value: initialValue,
+                        save: false
+                    });
+                }
+            }
+        }
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            if (!nextProps.interface_obj.sent_to_db) {
-                this.props.updateBinderArray();
-            } else {
-                var tab_arr_obj = nextProps.binderObj.tab_arr_obj;
-                var interface_obj = nextProps.interface_obj;
+            // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+            //     this.props.updateBinderArray();
+            // }else{
+            var tab_arr_obj = nextProps.binderObj.tab_arr_obj;
+            var interface_obj = nextProps.interface_obj;
 
 
-                if (tab_arr_obj) {
-                    var tabArrLength = tab_arr_obj.length;
-                    var tabIndex = null;
-                    var pageIndex = null;
-                    for (var i = 0; i < tabArrLength; i++) {
-                        if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                            //console.log('tabid = interface id at index:', i);
-                            tabIndex = i;
-                            break;
-                        }
+            if (tab_arr_obj) {
+                var tabArrLength = tab_arr_obj.length;
+                var tabIndex = null;
+                var pageIndex = null;
+                for (var i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        //console.log('tabid = interface id at index:', i);
+                        tabIndex = i;
+                        break;
                     }
-                    var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
-
-                    for (var _i = 0; _i < page_arr_obj.length; _i++) {
-                        if (interface_obj.page_id === page_arr_obj[_i]._id) {
-                            pageIndex = _i;
-                            break;
-                        }
-                    }
-                    if (typeof page_arr_obj[pageIndex].notes === 'undefined') {
-                        return;
-                    } else {
-                        var lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
-                        this.setState({
-                            value: _slate.Value.fromJSON(lastContent)
-                        });
-                    }
-                } else {
-                    console.log("DOES NOT WORK");
                 }
+                var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
+
+                for (var _i2 = 0; _i2 < page_arr_obj.length; _i2++) {
+                    if (interface_obj.page_id === page_arr_obj[_i2]._id) {
+                        pageIndex = _i2;
+                        break;
+                    }
+                }
+                if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                    console.log('HAS NOTES cwrp', tab_arr_obj[tabIndex].page_arr_obj[pageIndex].notes);
+                    var lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                    this.setState({
+                        value: _slate.Value.fromJSON(lastContent),
+                        save: false
+                    });
+                } else {
+                    this.setState({
+                        value: initialValue,
+                        save: false
+                    });
+                }
+            } else {
+                console.log("DOES NOT WORK");
             }
+            //}
         }
         // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
@@ -41236,9 +41245,7 @@ var Slides = function (_Component) {
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            if (!nextProps.interface_obj.sent_to_db) {
-                this.props.updateBinderArray();
-            } else {
+            if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
                 var tab_arr_obj = nextProps.binderObj.tab_arr_obj;
                 var interface_obj = nextProps.interface_obj;
 
@@ -41261,11 +41268,13 @@ var Slides = function (_Component) {
                             break;
                         }
                     }
-                    if (typeof page_arr_obj[pageIndex].lecture_slides === 'undefined' || typeof page_arr_obj[pageIndex].lecture_slides === '') {
-                        // return;
-                        this.props.setSlidesUrl('', interface_obj);
+                    // console.log('tab index:' , tabIndex);
+                    // console.log('page index:' , pageIndex);
+                    if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
+                        this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id);
                     } else {
-                        this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
+                        this.props.resetSlidesURL('');
+                        //return;
                     }
                 } else {
                     console.log("DOES NOT WORK");
@@ -41291,16 +41300,16 @@ var Slides = function (_Component) {
                 }
                 var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
 
-                for (var _i2 = 0; _i2 < tabArrLength; _i2++) {
+                for (var _i2 = 0; _i2 < page_arr_obj.length; _i2++) {
                     if (interface_obj.page_id === page_arr_obj[_i2]._id) {
                         pageIndex = _i2;
                         break;
                     }
                 }
-                if (!page_arr_obj[pageIndex].lecture_slides) {
-                    return;
+                if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
+                    this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id);
                 } else {
-                    this.props.setSlidesUrl(page_arr_obj[pageIndex].lecture_slides.lec_id, interface_obj);
+                    this.props.resetSlidesURL('');
                 }
             } else {
                 console.log("DOES NOT WORK");
@@ -41309,7 +41318,23 @@ var Slides = function (_Component) {
     }, {
         key: 'setURLinReduxForm',
         value: function setURLinReduxForm(values) {
-            this.props.setSlidesUrl(values.url, this.props.interface_obj);
+            if (values.url.indexOf('presentation/d/') !== -1 || values.url.indexOf('presentation/d/e') !== -1) {
+                if (values.url.indexOf('presentation/d/e/') !== -1) {
+                    var urlSplit1 = values.url.split("presentation/d/e/");
+                    var urlSplit2 = urlSplit1[1].split('/');
+                    var presentationID = urlSplit2[0];
+                    var slidesURL = 'https://docs.google.com/presentation/d/e/' + presentationID + '/embed';
+                    this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
+                } else if (values.url.indexOf('presentation/d/') !== -1) {
+                    var _urlSplit = values.url.split("presentation/d/");
+                    var _urlSplit2 = _urlSplit[1].split('/');
+                    var _presentationID = _urlSplit2[0];
+                    var _slidesURL = 'https://docs.google.com/presentation/d/' + _presentationID + '/embed';
+                    this.props.setSlidesUrl(_slidesURL, this.props.interface_obj);
+                }
+            } else {
+                return;
+            }
         }
     }, {
         key: 'render',
@@ -41323,8 +41348,12 @@ var Slides = function (_Component) {
                     _react2.default.createElement(_reduxForm.Field, { name: 'url', component: this.renderInput }),
                     _react2.default.createElement(
                         'button',
-                        { className: 'btn btn-success' },
-                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-save' })
+                        { className: 'btn green darken-1' },
+                        _react2.default.createElement(
+                            'i',
+                            { className: 'material-icons' },
+                            'save'
+                        )
                     )
                 ),
                 this.props.slide_input ? _react2.default.createElement('iframe', { src: this.props.slide_input, frameBorder: '0', className: 'slides-iframe', allowFullScreen: true }) : _react2.default.createElement(
@@ -41367,7 +41396,7 @@ function mapStateToProps(state) {
     };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { setSlidesUrl: _actions.setSlidesUrl, updateBinderArray: _actions.updateBinderArray })(Slides);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { setSlidesUrl: _actions.setSlidesUrl, updateBinderArray: _actions.updateBinderArray, getSlidesURL: _actions.getSlidesURL, resetSlidesURL: _actions.resetSlidesURL })(Slides);
 
 /***/ }),
 /* 449 */
@@ -63838,21 +63867,51 @@ var Panel = function (_Component) {
     function Panel(props) {
         _classCallCheck(this, Panel);
 
-        var _this = _possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).call(this, props));
-
-        _this.props = props;
-        return _this;
+        return _possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).call(this, props));
+        //this.props = props;
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     console.log('cw r p panel.js', nextProps.interface_obj.sent_to_db)
-    //     if (nextProps.interface_obj.sent_to_db) {
-    //         this.props.updateBinderArray();
+    // componentWillMount() {
+    //     let { tab_arr_obj } = this.props.binderObj;
+    //     let { interface_obj } = this.props;
+
+    //     if (tab_arr_obj) {
+    //         let tabArrLength = tab_arr_obj.length;
+    //         let tabIndex = null;
+    //         let pageIndex = null;
+    //         for (let i = 0; i < tabArrLength; i++) {
+    //             if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+    //                 tabIndex = i;
+    //                 break;
+    //             }
+    //         }
+    //         const { page_arr_obj } = tab_arr_obj[tabIndex];
+    //         for (let i = 0; i < page_arr_obj.length; i++) {
+    //             if (interface_obj.page_id === page_arr_obj[i]._id) {
+    //                 pageIndex = i;
+    //                 break;
+    //             }
+    //         }
+    //         if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
+    //             console.log('cwm panel component mounting');
+    //             this.props.getPanelNum(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
+    //         } else {
+    //             console.log('does not have panel_dimensions property, calling getPanelNum in cwm')
+    //             this.props.getPanelNum(3);
+    //         }
     //     } else {
+    //         console.log("DOES NOT WORK");
+    //     }
+    // }
+
+    // componentWillReceiveProps(nextProps) {
+
+    //     if (nextProps.binderObj !== this.props.binderObj) {
     //         let { tab_arr_obj } = nextProps.binderObj;
     //         let { interface_obj } = nextProps;
-
     //         if (tab_arr_obj) {
+    //             //console.log('cwrp panel.js tab arr obj:', tab_arr_obj);
+    //             //console.log('cwro panel.js interface obj:', interface_obj);
     //             let tabArrLength = tab_arr_obj.length;
     //             let tabIndex = null;
     //             let pageIndex = null;
@@ -63863,71 +63922,39 @@ var Panel = function (_Component) {
     //                 }
     //             }
     //             const { page_arr_obj } = tab_arr_obj[tabIndex];
-    //             for (let i = 0; i < tabArrLength; i++) {
+    //             for (let i = 0; i < page_arr_obj.length; i++) {
     //                 if (interface_obj.page_id === page_arr_obj[i]._id) {
     //                     pageIndex = i;
     //                     break;
     //                 }
     //             }
-    //             if (!page_arr_obj[pageIndex].panel_dimensions.number_of_panels) {
-    //                 return;
+    //             if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
+    //                 console.log('c w r props panel component mounting');
+    //                 this.props.getPanelNum(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
     //             } else {
-    //                 console.log('cwm panel component recieving new props');
-    //                 console.log('cwm panel setting panels to', page_arr_obj[pageIndex].panel_dimensions.number_of_panels)
-    //                 // this.props.setNumOfPanels(page_arr_obj[pageIndex].panel_dimensions.number_of_panels, interface_obj);
+    //                 console.log('does not have panel_dimensions property, calling getPanelNum in cwrp')
+    //                 this.props.getPanelNum(3);
     //             }
     //         } else {
     //             console.log("DOES NOT WORK");
     //         }
+
+    //     } else {
+    //         return;
     //     }
     // }
 
     _createClass(Panel, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            var tab_arr_obj = this.props.binderObj.tab_arr_obj;
-            var interface_obj = this.props.interface_obj;
-
-            console.log('cwm panel.js:', tab_arr_obj);
-            if (tab_arr_obj) {
-                var tabArrLength = tab_arr_obj.length;
-                var tabIndex = null;
-                var pageIndex = null;
-                for (var i = 0; i < tabArrLength; i++) {
-                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                        tabIndex = i;
-                        break;
-                    }
-                }
-                var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
-
-                for (var _i = 0; _i < tabArrLength; _i++) {
-                    if (interface_obj.page_id === page_arr_obj[_i]._id) {
-                        pageIndex = _i;
-                        break;
-                    }
-                }
-                if (!page_arr_obj[pageIndex].panel_dimensions) {
-                    return;
-                } else {
-                    console.log('cwm panel component mounting');
-                    console.log('cwm panel setting panels to', page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
-                    this.props.setNumOfPanels(page_arr_obj[pageIndex].panel_dimensions.number_of_panels, interface_obj);
-                }
-            } else {
-                console.log("DOES NOT WORK");
-            }
-        }
-    }, {
         key: 'render',
         value: function render() {
+            //console.log("panel props", this.props);
             return _react2.default.createElement(
                 'div',
                 { className: 'col s10' },
                 _react2.default.createElement(
                     'div',
                     { className: 'panel_div col s10' },
-                    _react2.default.createElement(_panel_num2.default, { num: this.props.panel_num })
+                    _react2.default.createElement(_panel_num2.default, { num: 3 })
                 )
             );
         }
@@ -63944,7 +63971,7 @@ function mapStateToProps(state) {
     };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { setNumOfPanels: _index.setNumOfPanels, updateBinderArray: _index.updateBinderArray })(Panel);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { setNumOfPanels: _index.setNumOfPanels, getPanelNum: _index.getPanelNum, updateBinderArray: _index.updateBinderArray })(Panel);
 ;
 
 /***/ }),
@@ -64067,147 +64094,130 @@ var ThreePanel = function (_Component) {
     function ThreePanel(props) {
         _classCallCheck(this, ThreePanel);
 
-        var _this = _possibleConstructorReturn(this, (ThreePanel.__proto__ || Object.getPrototypeOf(ThreePanel)).call(this, props));
-
-        _this.logTopLeftHeight = _this.logTopLeftHeight.bind(_this);
-        _this.logTopLeftWidth = _this.logTopLeftWidth.bind(_this);
-        return _this;
+        return _possibleConstructorReturn(this, (ThreePanel.__proto__ || Object.getPrototypeOf(ThreePanel)).call(this, props));
+        // this.logTopLeftHeight = this.logTopLeftHeight.bind(this);
+        // this.logTopLeftWidth = this.logTopLeftWidth.bind(this);
     }
 
+    // logTopLeftHeight(size) {
+    //     this.props.setTopLeftHeight(size, this.props.interface_obj);
+    // }
+
+    // logTopLeftWidth(size) {
+    //     this.props.setTopLeftWidth(size, this.props.interface_obj);
+    // }
+
+    // componentWillMount() {
+    //     //this.props.updateBinderArray();
+    // }
+
+    // componentWillReceiveProps(nextProps) {
+    //     let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+    //     let tabIndex = null;
+    //     let pageIndex = null;
+    //     for (let i = 0; i < tabArrLength; i++) {
+    //         if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+    //             tabIndex = i;
+    //             break;
+    //         }
+    //     }
+    //     const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+    //     for (let i = 0; i < tabArrLength; i++) {
+    //         if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+    //             pageIndex = i;
+    //             break;
+    //         }
+    //     }
+    //     if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
+    //         topLeftPanelHeight = 500;
+    //         topLeftPanelWidth = 425;
+    //     } else {
+    //         topLeftPanelHeight = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height;
+    //         topLeftPanelWidth = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width;
+    //     }
+    // }
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+    //         console.log("save panel dimsensions now");
+    //         //save panel dimensions here.
+
+    //     } else {
+    //         return;
+    //     }
+    // }
+
     _createClass(ThreePanel, [{
-        key: 'logTopLeftHeight',
-        value: function logTopLeftHeight(size) {
-            this.props.setTopLeftHeight(size, this.props.interface_obj);
-        }
-    }, {
-        key: 'logTopLeftWidth',
-        value: function logTopLeftWidth(size) {
-            this.props.setTopLeftWidth(size, this.props.interface_obj);
-        }
-    }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.props.updateBinderArray();
-        }
-
-        // componentWillReceiveProps(nextProps) {
-        //     let tabArrLength = this.props.binderObj.tab_arr_obj.length;
-        //     let tabIndex = null;
-        //     let pageIndex = null;
-        //     for (let i = 0; i < tabArrLength; i++) {
-        //         if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
-        //             tabIndex = i;
-        //             break;
-        //         }
-        //     }
-        //     const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
-        //     for (let i = 0; i < tabArrLength; i++) {
-        //         if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
-        //             pageIndex = i;
-        //             break;
-        //         }
-        //     }
-        //     if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
-        //         topLeftPanelHeight = 500;
-        //         topLeftPanelWidth = 425;
-        //     } else {
-        //         topLeftPanelHeight = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height;
-        //         topLeftPanelWidth = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width;
-        //     }
-        // }
-
-    }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            console.log('panel three props:', this.props);
+            // const loTLHsave = _.debounce((size) => {
+            //     this.logTopLeftHeight(size);
+            // }, 300);
 
-            var loTLHsave = _lodash2.default.debounce(function (size) {
-                _this2.logTopLeftHeight(size);
-            }, 300);
+            // const loTLWsave = _.debounce((size) => {
+            //     this.logTopLeftWidth(size);
+            // }, 300);
 
-            var loTLWsave = _lodash2.default.debounce(function (size) {
-                _this2.logTopLeftWidth(size);
-            }, 300);
+            // let { tab_arr_obj } = this.props.binderObj;
+            // let { interface_obj } = this.props;
 
-            var tab_arr_obj = this.props.binderObj.tab_arr_obj;
-            var interface_obj = this.props.interface_obj;
-
-
-            if (tab_arr_obj) {
-                var tabArrLength = tab_arr_obj.length;
-                var tabIndex = null;
-                var pageIndex = null;
-                for (var i = 0; i < tabArrLength; i++) {
-                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                        tabIndex = i;
-                        break;
-                    }
-                }
-                var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
-
-                for (var _i = 0; _i < page_arr_obj.length; _i++) {
-                    // for (let i = 0; i < tabArrLength; i++) {
-                    if (interface_obj.page_id === page_arr_obj[_i]._id) {
-                        pageIndex = _i;
-                        break;
-                    }
-                }
-                if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
-                    return _react2.default.createElement(
-                        _reactSplitPane2.default,
-                        { onChange: loTLHsave, className: 'width-w-nav', split: 'vertical', minSize: 200, maxSize: -200, defaultSize: 425 },
-                        _react2.default.createElement(
-                            _reactSplitPane2.default,
-                            { onChange: loTLWsave, split: 'horizontal', minSize: 200, maxSize: -200, defaultSize: 500 },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'video-parent-panel' },
-                                _react2.default.createElement(_video2.default, null)
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'slides-container' },
-                                _react2.default.createElement(_slides2.default, null)
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'notes-parent-panel' },
-                            _react2.default.createElement(_notes2.default, null)
-                        )
-                    );
-                } else {
-                    return _react2.default.createElement(
-                        _reactSplitPane2.default,
-                        { onChange: loTLHsave, className: 'width-w-nav', split: 'vertical', minSize: 200, maxSize: -200, defaultSize: page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height },
-                        _react2.default.createElement(
-                            _reactSplitPane2.default,
-                            { onChange: loTLWsave, split: 'horizontal', minSize: 200, maxSize: -200, defaultSize: page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'video-parent-panel' },
-                                _react2.default.createElement(_video2.default, null)
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'slides-container' },
-                                _react2.default.createElement(_slides2.default, null)
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'notes-parent-panel' },
-                            _react2.default.createElement(_notes2.default, null)
-                        )
-                    );
-                }
-            } else {
-                return _react2.default.createElement(
-                    'h2',
-                    null,
-                    'Loading...'
-                );
-            }
+            // if (tab_arr_obj) {
+            //     let tabArrLength = tab_arr_obj.length;
+            //     let tabIndex = null;
+            //     let pageIndex = null;
+            //     for (let i = 0; i < tabArrLength; i++) {
+            //         if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+            //             tabIndex = i;
+            //             break;
+            //         }
+            //     }
+            //     const { page_arr_obj } = tab_arr_obj[tabIndex];
+            //     for (let i = 0; i < page_arr_obj.length; i++) {
+            //         // for (let i = 0; i < tabArrLength; i++) {
+            //         if (interface_obj.page_id === page_arr_obj[i]._id) {
+            //             pageIndex = i;
+            //             break;
+            //         }
+            //     }
+            // if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
+            return _react2.default.createElement(
+                _reactSplitPane2.default,
+                { className: 'width-w-nav', split: 'vertical', minSize: 200, maxSize: -200, defaultSize: 425 },
+                _react2.default.createElement(
+                    _reactSplitPane2.default,
+                    { split: 'horizontal', minSize: 200, maxSize: -200, defaultSize: 500 },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'video-parent-panel' },
+                        _react2.default.createElement(_video2.default, null)
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'slides-container' },
+                        _react2.default.createElement(_slides2.default, null)
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'notes-parent-panel' },
+                    _react2.default.createElement(_notes2.default, null)
+                )
+            );
+            // }
+            //     else {
+            //         return (
+            //             <SplitPane onChange={loTLHsave} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height}>
+            //                 <SplitPane onChange={loTLWsave} split="horizontal" minSize={200} maxSize={-200} defaultSize={page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width}>
+            //                     <div className="video-parent-panel"><Video /></div>
+            //                     <div className="slides-container"><Slides /></div>
+            //                 </SplitPane>
+            //                 <div className="notes-parent-panel"><Notes /></div>
+            //             </SplitPane>
+            //         )
+            //     }
+            // } else {
+            //     return <h2>Loading...</h2>
+            // }
         }
     }]);
 
@@ -85711,6 +85721,8 @@ var VideoContainer = function (_Component) {
             this.props.grabVideoUrl(values.input);
             this.props.playPastedLinkVideo(values["youtube-url"]);
             this.props.toggleModal(this.props.addVideoModalStyle);
+            //this.props.getDataObject();
+            //this.props.updateBinderArray();
         }
         // componentWillReceiveProps(nextProps){
         //     debugger
@@ -85721,6 +85733,7 @@ var VideoContainer = function (_Component) {
         value: function render() {
             var _this2 = this;
 
+            console.log('video-container props ', this.props);
             return _react2.default.createElement(
                 'div',
                 { className: 'iframe-wrapper' },
@@ -85755,11 +85768,7 @@ var VideoContainer = function (_Component) {
                                                 _this2.props.getResultStyles(_this2.props.resultsStyles, _this2.props.toggleResultsBool);
                                                 _this2.props.getOpacityDisplay(_this2.props.opacityContainer, _this2.props.toggleResultsBool);
                                             } },
-                                        _react2.default.createElement(
-                                            'i',
-                                            { className: 'material-icons' },
-                                            'keyboard_arrow_left'
-                                        )
+                                        _react2.default.createElement('i', { className: 'fa fa-youtube', 'aria-hidden': 'true' })
                                     )
                                 )
                             )
@@ -85801,7 +85810,7 @@ VideoContainer = (0, _reduxForm.reduxForm)({
     form: 'youtube-url'
 })(VideoContainer);
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { playVideo: _actions.playVideo, grabVideoUrl: _actions.grabVideoUrl, addToPlaylist: _actions.addToPlaylist, toggleModal: _actions.toggleModal, getResultStyles: _actions.getResultStyles, getOpacityDisplay: _actions.getOpacityDisplay, playPastedLinkVideo: _actions.playPastedLinkVideo, updateBinderArray: _actions.updateBinderArray })(VideoContainer);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { playVideo: _actions.playVideo, grabVideoUrl: _actions.grabVideoUrl, addToPlaylist: _actions.addToPlaylist, toggleModal: _actions.toggleModal, getResultStyles: _actions.getResultStyles, getOpacityDisplay: _actions.getOpacityDisplay, playPastedLinkVideo: _actions.playPastedLinkVideo, updateBinderArray: _actions.updateBinderArray, getDataObject: _actions.getDataObject })(VideoContainer);
 
 /***/ }),
 /* 853 */
@@ -94014,7 +94023,8 @@ var VideoModal = function (_Component) {
     }, {
         key: 'setName',
         value: function setName(values) {
-            console.log('Values:', values);
+            console.log('Values in video modal:', values);
+            console.log('video modal props:', this.props);
             this.props.addToPlaylist(this.props.videoLink, values.title, this.props.binderTabPageIds);
             this.props.toggleModal(this.props.addVideoModalStyle);
         }
@@ -94030,7 +94040,7 @@ var VideoModal = function (_Component) {
                     'div',
                     { className: 'add-modal' },
                     _react2.default.createElement(
-                        'h4',
+                        'h6',
                         null,
                         'Enter video name: '
                     ),
@@ -94040,14 +94050,14 @@ var VideoModal = function (_Component) {
                         _react2.default.createElement(_reduxForm.Field, { name: 'title', component: this.renderInput }),
                         _react2.default.createElement(
                             'button',
-                            { className: 'save btn btn-success' },
-                            'Continue'
+                            { className: 'save btn green darken-3' },
+                            'Save'
                         ),
                         _react2.default.createElement(
                             'button',
                             { type: 'button', onClick: function onClick() {
                                     _this2.props.toggleModal(_this2.props.addVideoModalStyle);
-                                }, className: 'btn btn-primary' },
+                                }, className: 'btn blue darken-1' },
                             'Go back'
                         )
                     )
@@ -107559,8 +107569,20 @@ var NavBar = function (_Component) {
     _createClass(NavBar, [{
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            if (nextProps.interface.pull_from_db) {
+            if (nextProps.interface.pull_from_db || nextProps.interface.page_id !== this.props.interface.page_id) {
+                console.log("update binder array");
                 this.props.updateBinderArray();
+            }
+
+            if (nextProps.interface.sent_to_db) {
+                console.log("sent to db = true");
+                for (var i = 0; i < this.props.binderArr.length; i++) {
+                    if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
+                        var binderObj = this.props.binderArr[i];
+                        console.log("binder object: ", binderObj);
+                        this.props.updateBinderObj(binderObj);
+                    }
+                }
             }
         }
     }, {
@@ -107680,7 +107702,7 @@ function mapStateToProps(state) {
     };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { updateBinderArray: _actions.updateBinderArray, deleteBinder: _actions.deleteBinder, addBinder: _actions.addBinder })(NavBar);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { updateBinderArray: _actions.updateBinderArray, deleteBinder: _actions.deleteBinder, addBinder: _actions.addBinder, updateBinderObj: _actions.updateBinderObj })(NavBar);
 
 /***/ }),
 /* 1167 */
@@ -107728,33 +107750,15 @@ var Binder = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Binder.__proto__ || Object.getPrototypeOf(Binder)).call(this, props));
 
         _this.state = {
-            binder_color_arr: ['#000080', '#808000', '#800000', '#a0522d', '#8a2be2'],
             editable: false,
             binderName: '',
-            active: false,
-            new_tab_arr: [{
-                tab_id: 1,
-                tab_color: 'blue',
-                tab_name: 'TabName',
-                tab_url: '/tab1',
-                page_arr_obj: [{
-
-                    page_id: 1,
-                    page_color: 'white',
-                    page_name: 'PageName',
-                    page_date: '',
-                    page_url: '/page1'
-                }]
-            }]
-
+            active: false
         };
 
         _this.addTab = _this.addTab.bind(_this);
         _this.deleteTab = _this.deleteTab.bind(_this);
         _this.editable = _this.editable.bind(_this);
         _this.notEditable = _this.notEditable.bind(_this);
-        // this.binderLinkActive = this.binderLinkActive.bind(this);
-        // this.binderLinkNotActive = this.binderLinkNotActive.bind(this);
         _this.binderSelect = _this.binderSelect.bind(_this);
         _this.deleteBinder = _this.deleteBinder.bind(_this);
         return _this;
@@ -107971,7 +107975,7 @@ var Binder = function (_Component) {
                 binder_title,
                 _react2.default.createElement(
                     'div',
-                    { className: 'binderBody ' + (active ? 'visibleBinder' : 'hiddenBinder') },
+                    { className: 'binderBody ' + (active ? 'visible' : 'hidden') },
                     _react2.default.createElement(
                         'button',
                         { type: 'button', className: 'btn', onClick: this.editable },
@@ -108343,7 +108347,7 @@ var Tab = function (_Component) {
                 tab_title,
                 _react2.default.createElement(
                     'div',
-                    { className: 'tabBody ' + (open ? 'visibleTab' : 'hiddenTab') },
+                    { className: 'tabBody ' + (open ? 'visible' : 'hidden') },
                     _react2.default.createElement(
                         'button',
                         { type: 'button', className: 'btn btn-default btn-xs btn_edit_binder', onClick: this.editTabs },
@@ -108358,7 +108362,7 @@ var Tab = function (_Component) {
                     ),
                     _react2.default.createElement(
                         'ul',
-                        null,
+                        { className: 'collection' },
                         page_list
                     ),
                     _react2.default.createElement(
@@ -108557,6 +108561,7 @@ var Page = function (_Component) {
             //this.props.selectBinder(binderObj);
             this.props.selectPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id);
             //console.log("page id updated");
+            //this.props.
         }
     }, {
         key: 'render',
@@ -108659,7 +108664,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, "a {\r\n    color: white;\r\n}\r\n\r\n.nav_binder, .nav_tab, .nav_page {\r\n    display: inline-block;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.navbar{\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 10%;\r\n    height: 100vh;\r\n    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);\r\n    /* #border: solid 2px black; */\r\n    overflow-y:scroll;\r\n    #border: solid 2px black;\r\n\r\n    background-color: #6d7993;\r\n}\r\n\r\nul {\r\n    margin: 0;\r\n    padding: 0;    \r\n}\r\n\r\nul > li {\r\n    list-style: none;\r\n\r\n}\r\n\r\n.contain-tab, .contain-page{\r\n    /* #border: 1px solid #000080; */\r\n    display: inline-block; \r\n    margin: 0;\r\n    padding: 0;    \r\n    height: 75vh;\r\n    /*background-color: rgba(0, 0, 0, .38);*/\r\n}\r\n\r\n.contain-page{\r\n    /* #border-right: 3px solid #000080; */\r\n    /*box-shadow: 2px 0px 1px #747474;*/\r\n    margin-left: 1%;\r\n    width: 53%;\r\n    /*background-color: #f9f9f9; */\r\n    /*background-image: url(\"../../assets/images/paper.png\");*/\r\n}\r\n\r\n.contain-tab{\r\n    /*border-left: 1px solid #747474;*/\r\n    /* #border-right: #ff0000 3px solid; */\r\n    /*background-color: #ccc;*/\r\n    /*background-image: url(\"../../assets/images/black-linen.png\");*/\r\n    /*box-shadow: 2px 0px 1px #454545;*/\r\n    width: 45%;\r\n\r\n}\r\n\r\n.nav_binder {\r\n    border: 3px solid #000080;\r\n    border-radius: 3px;\r\n    /* #border-bottom: 4px ridge #000080; */\r\n    background-color: #000080B3;\r\n    /* #background-image: url(\"../../assets/images/concrete-wall-3.png\");     */\r\n    position: relative;\r\n    width: 100%;\r\n    box-shadow: 1px 1.5px .5px #747474;\r\n    padding-bottom: 8%;\r\n}\r\n\r\n.binder_wrap{\r\n    border: 1px solid #747474;\r\n    border-radius: 3px;\r\n    background-color: white;\r\n    /* #background-image: url(\"../../assets/images/concrete-wall-3.png\");    */\r\n    width: 75%;\r\n    height: 80px;\r\n    margin-left: 10%;\r\n    margin-bottom: 2%;\r\n    overflow-y: scroll;\r\n}\r\n\r\n.nav_tab {\r\n    /* #border-left: 2px solid red; */\r\n    display: inline-block;\r\n    position: absolute;\r\n    top: 110%;\r\n    width: 45%;\r\n    left: -.5%;\r\n}\r\n\r\n.nav_page {\r\n    /* #border-left: 2px solid lightgreen; */\r\n    /* #border-right: 2px solid red; */\r\n    display: inline-block; \r\n    position: absolute;\r\n    top: 1%;\r\n    left: 102%;\r\n    width: 120%;   \r\n}\r\n\r\n.nav-tab-col, .nav-page-col{\r\n    margin-top: 25%;\r\n}\r\n\r\n.binderDiv{\r\n    /* #border: 2px solid #000080; */\r\n    text-align: left;\r\n    padding-left: 5%;\r\n    padding-top: 5%;\r\n    /* #background-color: #ccccff; */\r\n    font-weight: 600;\r\n    color: black;\r\n}\r\n\r\n\r\n.binderDiv:hover{\r\n    background-color: #000080;\r\n    color: white\r\n}\r\n\r\n.binderDiv:active{\r\n    background-color: #000080;\r\n}\r\n\r\n.tabDiv{\r\n    border-left: 12px solid #ff0000;\r\n    border-top: 1px solid #747474;\r\n    border-bottom: 1px solid #747474;\r\n    text-align: center;\r\n    padding-top: 8%;\r\n    padding-bottom: 8%;\r\n    background-color: white;\r\n    margin-bottom: 5%;\r\n    width: 100%;\r\n    font-weight: 500;\r\n    color: black;\r\n    box-shadow: -1px 1px 1px #333, .5px  0px .5px #333;\r\n}\r\n\r\n.tabDiv:hover{\r\n    background-color: #ffcccc;\r\n    text-decoration: none;\r\n}\r\n\r\n.pageDiv{\r\n    border-bottom: 1px solid black;\r\n    box-shadow: 0px 1px 0px #747474;\r\n    padding: 7% 3% 7% 0;\r\n    width: 100%;\r\n    text-align: center;\r\n    margin-left: 2%;\r\n    color: black;\r\n    #background-color: ##f2f2f2;\r\n}\r\n\r\n.pageDiv:hover{\r\n    background-color: #ffcccc;\r\n    text-decoration: none;\r\n}\r\n\r\n.btn_add {\r\n    border-radius: 20%;\r\n    /* #border: 2px solid black; */\r\n    margin-left: 10%;\r\n    margin-top: 0%;  \r\n    margin-right: 2%;\r\n    margin-bottom: 0%;\r\n}\r\n\r\n.btn_delete {\r\n    padding: 2%;\r\n    padding-right: 3%;\r\n    padding-bottom: 3%;\r\n    margin-left: 2%;  \r\n    margin-right: 2%;\r\n    line-height: 1%;\r\n    border-radius: 50%;\r\n}\r\n\r\n.btn_delete > .glyphicon-minus {\r\n    top: 0px;\r\n}\r\n\r\n.btn_delete:hover{\r\n    background-color: red;\r\n    color: white;\r\n}\r\n\r\n.delete_btn{\r\n    font-size: 1.5em;\r\n    /* #border: solid 1px black; */\r\n    background-color: white;\r\n    border-radius: 100%;\r\n}\r\n\r\n.delete_btn:hover{\r\n    color: red;\r\n}\r\n\r\n.btn_edit_binder{\r\n    margin-top: 8%;\r\n    margin-left: 10%;\r\n    margin-bottom: 5%;\r\n    font-size: 1.3em;\r\n}\r\n\r\n.btn_edit_tab{\r\n    margin-left: 10%;\r\n    margin-top: 2%;\r\n    font-size: 1.1em;\r\n}\r\n\r\n.btn_edit_page{\r\n    margin-left: 15%;\r\n    font-size: 1em;\r\n    margin-top: 2%;\r\n}\r\n\r\n.edit_input{\r\n    margin-left: 3%;\r\n    width: 65%;\r\n    background: white;\r\n    border: none;\r\n    outline: none;\r\n    border-bottom: 1px dashed black;\r\n    border-radius: none;\r\n}\r\n\r\n.visibleBinder{\r\n    display: inline;\r\n}\r\n\r\n.hiddenBinder{\r\n    display: none;\r\n}\r\n\r\n.visibleTab{\r\n    visibility: visible;\r\n}\r\n\r\n.hiddenTab{\r\n    visibility: hidden;\r\n}\r\n\r\n.binderTitle{\r\n    border: solid 1px red;\r\n}\r\n\r\n.binderBody{\r\n    border: solid 1px teal;\r\n}\r\n\r\n.tabTitle{\r\n    border: solid 1px orange;\r\n}\r\n\r\n.tabBody{\r\n    border: solid 1px magenta;\r\n}", ""]);
+exports.push([module.i, "a {\r\n    color: white;\r\n}\r\n\r\n.nav_binder, .nav_tab, .nav_page {\r\n    display: inline-block;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.navbar{\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 10%;\r\n    height: 100vh;\r\n    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);\r\n    /* #border: solid 2px black; */\r\n    overflow-y:scroll;\r\n    #border: solid 2px black;\r\n\r\n    background-color: #6d7993;\r\n}\r\n\r\n\r\nul > li {\r\n    list-style: none;\r\n\r\n}\r\n\r\n.binder_wrap{\r\n    border: 1px solid #747474;\r\n    border-radius: 3px;\r\n    background-color: white;\r\n    /* #background-image: url(\"../../assets/images/concrete-wall-3.png\");    */\r\n    width: 75%;\r\n    height: 80px;\r\n    margin-left: 10%;\r\n    margin-bottom: 2%;\r\n    overflow-y: scroll;\r\n}\r\n\r\n.visible{\r\n    display: inline;\r\n}\r\n\r\n.hidden{\r\n    display: none;\r\n}\r\n\r\n.binderTitle{\r\n    border: solid 1px red;\r\n}\r\n\r\n.binderBody{\r\n    border: solid 1px teal;\r\n}\r\n\r\n.tabTitle{\r\n    border: solid 1px orange;\r\n}\r\n\r\n.tabBody{\r\n    border: solid 1px magenta;\r\n}\r\n\r\n.pageBody{\r\n    border: 1px solid green;\r\n}", ""]);
 
 // exports
 
@@ -109014,7 +109019,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    margin-top: 75px;\r\n    overflow-y: scroll;\r\n\r\n\r\n    /*background-image: linear-gradient(0deg, transparent 24%, rgba(177, 235, 249, 1) 25%, rgba(177, 235, 249, 1) 26%, transparent 27%, transparent 74%, rgba(177, 235, 249, 1) 75%, rgba(177, 235, 249, 1) 76%, transparent 77%, transparent);*/\r\n    /*background-size:50px 50px;*/\r\n    /*background-attachment: local;*/\r\n    /*box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);*/\r\n\r\n    border: 1px solid black;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n/*.notes-parent-panel::-webkit-scrollbar-track {*/\r\n\t/*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/\r\n\t/*border-radius: 10px;*/\r\n\t/*background-color: #ffffff;*/\r\n/*}*/\r\n\r\n/*.notes-parent-panel::-webkit-scrollbar {*/\r\n\t/*width: 2%;*/\r\n\t/*background-color: #ffffff;*/\r\n/*}*/\r\n\r\n/*.notes-parent-panel::-webkit-scrollbar-thumb {*/\r\n\t/*border-radius: 10px;*/\r\n\t/*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);*/\r\n\t/*background-color: #31C3E7;*/\r\n/*}*/\r\n\r\n.notes-component {\r\n    width: 100%;\r\n    height: 100%;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    /*width: 45%;*/\r\n    /*height: 100%;*/\r\n\r\n}\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    height: 12%;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    padding: 2%;\r\n    /*border-bottom: 1px solid black;*/\r\n    background-color: #96858F;\r\n    /*padding: 5px 0 0 15px;*/\r\n    /*background-color: #96858F;*/\r\n    /*text-align: left;*/\r\n    /*line-height: 45px;*/\r\n    /*z-index: 1;*/\r\n    box-shadow: 0 5px 5px #999;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    /*justify-content: space-around;*/\r\n    height: 50%;\r\n    margin: -5px 0 10px 10px;\r\n}\r\n\r\n.styleSquare {\r\n    /*width: 40px;*/\r\n    /*height: 30px;*/\r\n    width: 9%;\r\n    height: 100%;\r\n    border: 1px solid black;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    background-color: #d5d5d5;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n    cursor: pointer;\r\n}\r\n\r\n.styleSquare:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n    background-color: ghostwhite;\r\n}\r\n\r\n.editor {\r\n    text-align: left;\r\n    padding-left: 10px;\r\n    margin-top: 18px;\r\n    line-height: 25px;\r\n}\r\n\r\n/*.search-box {*/\r\n    /*margin-top: -12px;*/\r\n    /*margin-left: -5px;*/\r\n    /*line-height: 23px;*/\r\n/*}*/\r\n\r\n.search-input {\r\n    width: 250px;\r\n    height: 30px;\r\n    padding-left: 5px;\r\n    cursor: pointer;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n    float: left;\r\n    margin: 0 1% 0 .5%;\r\n\r\n    /*border-radius: 5px;*/\r\n\r\n\r\n}\r\n\r\n.material-icons {\r\n    font-size: 3vmin;\r\n}\r\n\r\n.saveNotes {\r\n    /*width: 125px;*/\r\n    /*margin-right: 10px;*/\r\n    font-weight: 600;\r\n    /*border-radius: 5px;*/\r\n    /*box-shadow: 3px 3px #999;*/\r\n\r\n    float: right;\r\n    margin-right: 1%;\r\n    height: 45%;\r\n    width: 15%;\r\n    cursor: pointer;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n}\r\n\r\n.saveNotes:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n    background-color: ghostwhite;\r\n}\r\n\r\n.searchSave {\r\n    min-width: 275px;\r\n}\r\n\r\n", ""]);
+exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    overflow-y: scroll;\r\n    border-left: 1px solid black;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.notes-component {\r\n    height: 100%;\r\n}\r\n\r\n.editor {\r\n    padding-left: 1vmin;\r\n    padding-top: 2vmin;\r\n    height: 100%;\r\n    margin-top: 100px;\r\n}\r\n\r\n/* -------------------- TOOLBAR --------------------*/\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    min-width: 420px;\r\n    height: 12%;\r\n    min-height: 100px;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    padding: 2%;\r\n    background-color: #96858F;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    border-left: 1px solid black;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    justify-content: space-between;\r\n    height: 32px;\r\n    width: 100%;\r\n}\r\n\r\n.styleSquare {\r\n    width: 40px;\r\n    height: 30px;\r\n    padding: 3px 0 0 7px;\r\n    border: 1px solid black;\r\n    box-sizing: border-box;\r\n    background-color: #d5d5d5;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n    cursor: pointer;\r\n}\r\n\r\n.styleSquare:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n    background-color: ghostwhite;\r\n}\r\n\r\n.material-icons {\r\n    font-size: 3vmin;\r\n}\r\n\r\n.search-box {\r\n    margin-top: 12px;\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    justify-content: space-between;\r\n}\r\n\r\n.search-input {\r\n    width: 250px !important;\r\n    height: 30px !important;\r\n    padding-left: 5px !important;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;\r\n    background-color: white !important;\r\n    border: 1px solid black;\r\n}\r\n\r\n.saveNotes {\r\n    width: 125px !important;\r\n    height: 30px !important;\r\n    font-weight: 600 !important;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;\r\n}\r\n\r\n.saveNotes:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55) !important;;\r\n    background-color: ghostwhite !important;;\r\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -109149,7 +109154,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, ".add-modal-container {\r\n    width: 100%;\r\n    height: 100%;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(0,0,0,0.7);\r\n    z-index: 2000;\r\n}\r\n.add-modal {\r\n    position: relative;\r\n    top: 30%;\r\n    height: 40%;\r\n    width: 50%;\r\n    background-color: #fff;\r\n    border-radius: 2px;\r\n    margin: 0 auto;\r\n    padding: 2vmin 3vmin;\r\n    overflow-y: auto;\r\n}\r\n.add-modal .save {\r\n    margin-right: 8px;\r\n}\r\n.save-title-input {\r\n    margin-bottom: 5px;\r\n}\r\n", ""]);
+exports.push([module.i, ".add-modal-container {\r\n    width: 100%;\r\n    height: 100%;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(0,0,0,0.7);\r\n    z-index: 2000;\r\n}\r\n.add-modal {\r\n    position: relative;\r\n    top: 26%;\r\n    height: 43%;\r\n    width: 75%;\r\n    background-color: #fff;\r\n    border-radius: 2px;\r\n    margin: 0 auto;\r\n    padding: 2vmin 3vmin;\r\n    overflow-y: auto;\r\n}\r\n.add-modal .save {\r\n    margin-right: 8px;\r\n}\r\n.save-title-input {\r\n    margin-bottom: 5px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -109194,7 +109199,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, ".main {\r\n    color: #000;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    height: 100%;\r\n    overflow:hidden;\r\n    margin: 0 auto;\r\n}\r\n.opacity {\r\n    position: absolute;\r\n    top: 0; \r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #000;\r\n    display: block;\r\n    z-index: 2;\r\n    opacity: 0.6;\r\n}\r\n.search-button-input {\r\n    padding-top: 1vh;\r\n}\r\n\r\n.vid-container {\r\n    z-index: 1;\r\n}\r\n.video-wrapper#video-wrapper {\r\n    height: 100%;\r\n}\r\n.video-container#video-container {\r\n    height: 80%;\r\n    padding-bottom: 0;\r\n}\r\n\r\n.video-container#video-container .row form{\r\n    width: 80%;\r\n    display: inline-block;\r\n}\r\n.video-items {\r\n    list-style-type: none;\r\n}\r\nbutton.close {\r\n    color: #fff;\r\n    position: relative;\r\n    top: -3.5vh;\r\n    left: 6vh;\r\n}\r\n.results-container {\r\n    width: 100%;\r\n    height: 100%;\r\n    z-index: 3;\r\n    overflow: auto;\r\n    transition: 0.4s;\r\n}\r\n.results-container li,\r\n.results-container button {\r\n    display: inline-block;\r\n}\r\n.results-container.sidebar {\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    background-color: #fff;\r\n    width: 65%;\r\n    border-left: 1px solid #e4e4e4;\r\n}\r\n.row.results-input-container {\r\n    margin-left: 0;\r\n    margin-right: 0;\r\n}\r\n#search {\r\n    position: absolute;\r\n    color: #fff;\r\n    right: 20px;\r\n    top: 15px;\r\n}\r\n.video-parent-panel {\r\n    height: 100%;\r\n    width: 100%;\r\n}\r\n.video-embed-wrapper {\r\n    height: 100%;\r\n    text-align: center;\r\n}\r\n\r\n.video-container iframe {\r\n    width: 95%;\r\n    height: 100%;\r\n    margin: 0 auto;\r\n}\r\n.video-iframe {\r\n    display: inline-block;\r\n    position: relative;\r\n    top: 1vh;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    z-index: 1;\r\n    border:none;\r\n}\r\n\r\n.btn {\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    background-color: #d5d5d5;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n    cursor: pointer;\r\n    margin: 1vmin;\r\n    line-height: 0;\r\n}\r\n.btn-success, .btn-primary {\r\n    padding: 0.1vh 0.5vw;\r\n}\r\n.btn:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n    background-color: ghostwhite;\r\n}\r\n#query {\r\n    padding-left: 8px;\r\n}\r\n.list-item-wrapper {\r\n    padding: 10px 5px;\r\n}\r\n.results-btn {\r\n    padding: 0.1vw 0.2vw;\r\n}\r\n.collection {\r\n    border: none;\r\n}\r\n.vid-left-arrow,\r\n.vid-right-arrow {\r\n    background-color: #96858F;\r\n}\r\n.iframe-wrapper {\r\n    height: 100%;\r\n}\r\n.row {\r\n    margin-bottom: 0;\r\n}\r\n.btn-wrapper {\r\n    white-space: nowrap;\r\n}", ""]);
+exports.push([module.i, ".main {\r\n    color: #000;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    height: 100%;\r\n    overflow:hidden;\r\n    margin: 0 auto;\r\n}\r\n.opacity {\r\n    position: absolute;\r\n    top: 0; \r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #000;\r\n    display: block;\r\n    z-index: 2;\r\n    opacity: 0.6;\r\n}\r\n.search-button-input {\r\n    padding-top: 1vh;\r\n}\r\n\r\n.vid-container {\r\n    z-index: 1;\r\n}\r\n.video-wrapper#video-wrapper {\r\n    height: 100%;\r\n}\r\n.video-container#video-container {\r\n    height: 80%;\r\n    padding-bottom: 0;\r\n}\r\n\r\n.video-container#video-container .row form{\r\n    width: 80%;\r\n    display: inline-block;\r\n}\r\n.video-items {\r\n    list-style-type: none;\r\n}\r\nbutton.close {\r\n    color: #fff;\r\n    position: relative;\r\n    top: -3.5vh;\r\n    left: 6vh;\r\n}\r\n.results-container {\r\n    width: 100%;\r\n    height: 100%;\r\n    z-index: 3;\r\n    overflow: auto;\r\n    transition: 0.4s;\r\n}\r\n.results-container li,\r\n.results-container button {\r\n    display: inline-block;\r\n}\r\n.results-container.sidebar {\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    background-color: #fff;\r\n    width: 100%;\r\n    border-left: 1px solid #e4e4e4;\r\n}\r\n.row.results-input-container {\r\n    margin-left: 0;\r\n    margin-right: 0;\r\n}\r\n#search {\r\n    position: absolute;\r\n    color: #fff;\r\n    right: 20px;\r\n    top: 15px;\r\n}\r\n.video-parent-panel {\r\n    height: 100%;\r\n    width: 100%;\r\n}\r\n.video-embed-wrapper {\r\n    height: 100%;\r\n    text-align: center;\r\n}\r\n\r\n.video-container iframe {\r\n    width: 95%;\r\n    height: 100%;\r\n    margin: 0 auto;\r\n}\r\n.video-iframe {\r\n    display: inline-block;\r\n    position: relative;\r\n    top: 1vh;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    z-index: 1;\r\n    border:none;\r\n}\r\n\r\n.btn {\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    background-color: #d5d5d5;\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n    cursor: pointer;\r\n    margin: 1vmin;\r\n    line-height: 0;\r\n}\r\n.btn:hover{\r\n    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n    background-color: ghostwhite;\r\n}\r\n#query {\r\n    padding-left: 8px;\r\n}\r\n.list-item-wrapper {\r\n    padding: 10px 5px;\r\n}\r\n.results-btn {\r\n    padding: 0 1vmin;\r\n}\r\n.collection {\r\n    border: none;\r\n}\r\n.vid-left-arrow,\r\n.vid-right-arrow {\r\n    background-color: #96858F;\r\n}\r\n.iframe-wrapper {\r\n    height: 100%;\r\n}\r\n.row {\r\n    margin-bottom: 0;\r\n}\r\n.btn-wrapper {\r\n    white-space: nowrap;\r\n}\r\n.btn-wrapper button {\r\n    padding: 0 1vmin;\r\n}", ""]);
 
 // exports
 
@@ -109484,10 +109489,12 @@ exports.default = function () {
             return { binderObj: action.payload };
         case _types2.default.DELETE_PAGE:
             return { binderObj: action.payload };
-        // case types.EDIT_TAB:
-        // console.log('binderreducer for edit tab: ',action.payload);
-        //     return {binderObj: action.payload};
-        default:
+        case _types2.default.UPDATE_BINDER_OBJ:
+            return { binderObj: action.payload
+                // case types.EDIT_TAB:
+                // console.log('binderreducer for edit tab: ',action.payload);
+                //     return {binderObj: action.payload};
+            };default:
             return state;
     }
 };
@@ -109550,16 +109557,18 @@ exports.default = function () {
         case _types2.default.DELETE_PAGE:
             return _extends({}, state, { pull_from_db: true });
         case _types2.default.UPDATE_BINDER_ARRAY:
-            return _extends({}, state, { pull_from_db: false });
+            return _extends({}, state, { pull_from_db: false, sent_to_db: true });
         case _types2.default.ADD_TO_PLAYLIST:
         case _types2.default.SET_SLIDES_URL:
         case _types2.default.PANEL_TOP_LEFT_HEIGHT:
         case _types2.default.PANEL_TOP_LEFT_WIDTH:
         case _types2.default.PANEL_TOP_RIGHT_HEIGHT:
         case _types2.default.NUM_OF_PANELS:
-            return _extends({}, state, { sent_to_db: true });
+            return _extends({}, state, { pull_from_db: true });
         case _types2.default.AXIOS_ERROR:
             return _extends({}, state, { axios_error_response: action.msg });
+        case _types2.default.UPDATE_BINDER_OBJ:
+            return _extends({}, state, { sent_to_db: false });
         default:
             return state;
     }
@@ -109599,6 +109608,9 @@ exports.default = function () {
 
     switch (action.type) {
         case _types2.default.SET_SLIDES_URL:
+            return { input: action.payload };
+        case _types2.default.GET_SLIDES_URL:
+        case _types2.default.RESET_SLIDES_URL:
             return { input: action.payload };
         default:
             return state;
@@ -109643,6 +109655,8 @@ exports.default = function () {
             return _extends({}, state, { topLeftWidth: action.payload });
         case _types2.default.PANEL_TOP_RIGHT_HEIGHT:
             return _extends({}, state, { topRightHeight: action.payload });
+        case _types2.default.GET_PANEL_NUM:
+            return _extends({}, state, { numberPanels: action.payload });
         default:
             return state;
     }
