@@ -5,19 +5,19 @@
 }
 
 .slides-div {
-  height: 90%;
+  height: 95%;
   overflow: hidden;
 }
 
 .slides-iframe
 {
   position: relative;
-  top: 1vh;
+  top: -5vh;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 1;
-  width: 95%;
+  width: 92%;
   height: 93%;
   margin: 0 auto;
   -moz-box-sizing: border-box;
