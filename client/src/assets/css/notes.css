@@ -15,6 +15,7 @@
     padding-left: 1vmin;
     padding-top: 2vmin;
     height: 100%;
+    max-width: 750px;
     margin-top: 100px;
 }
 
@@ -43,23 +44,25 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     height: 32px;
-    width: 100%;
+    width: 70%;
 }
 
 .styleSquare {
     width: 40px;
     height: 30px;
     padding: 3px 0 0 7px;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     box-sizing: border-box;
-    background-color: #d5d5d5;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /*background-color: #d5d5d5;*/
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
     cursor: pointer;
+    color: white;
 }
 
 .styleSquare:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);*/
     background-color: ghostwhite;
+    color: #96858F;
 }
 
 .material-icons {
@@ -67,7 +70,7 @@
 }
 
 .search-box {
-    margin-top: 12px;
+    margin-top: 8px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -78,21 +81,27 @@
     width: 250px !important;
     height: 30px !important;
     padding-left: 5px !important;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;*/
     background-color: white !important;
-    border: 1px solid black;
+    border: 3px inset gray !important;
 }
 
 .saveNotes {
-    width: 125px !important;
-    height: 30px !important;
+    width: 130px !important;
+    height: 35px !important;
     font-weight: 600 !important;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;*/
+    border: 3px outset gray !important;
 }
 
 .saveNotes:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55) !important;;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55) !important;;*/
     background-color: ghostwhite !important;;
+}
+
+.saveNotes:active {
+    border: 2px outset gray !important;
+    transform: translateY(4px);
 }
 
 
