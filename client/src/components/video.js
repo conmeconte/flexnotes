@@ -143,11 +143,11 @@ class Video extends Component {
                         <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input">
                             <Field name="video" component={this.renderInput} />
                             <span className="input-group-btn btn-wrapper">
-                                <button id="search-button" className="btn results-btn  red darken-3">
+                                <button id="search-button" className="btn results-btn video-btn red darken-3">
                                 <i className="material-icons">search</i>
                                 </button>
 
-                                <button className="btn results-btn vid-right-arrow" onClick={ () => {
+                                <button className="btn results-btn vid-right-arrow video-btn" onClick={ () => {
                                 this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                                 this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                                 }}>
@@ -161,7 +161,7 @@ class Video extends Component {
                         <Results results={this.props.videoResults} />
                     </div>
                 </div>
-                <div id="video-wrapper" className="video-wrapper">
+                <div id="video-wrapper" className="video-wrapper third-step">
                     <VideoContainer />
                 </div>
             </div>

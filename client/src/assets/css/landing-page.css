@@ -126,6 +126,12 @@ body {
 .login-logout-container button {
     height: 4vmin;
     font-size: 1.5vmin;
+    background-color: #96858F;
+    border-radius: 5px;
+    border: none;
+}
+.login-logout-container button i {
+    margin-right: 0;
 }
 .dashboard-button {
     position: absolute;

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Binder from './binder';
+import Login from '../login';
+import logo from '../../assets/images/logo.png';
 
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -103,7 +105,7 @@ class NavBar extends Component{
                 //console.log('navbar item', item);
                 
                 return (
-                    <div key={index} className="binderWrap">
+                    <div key={index} className="binderWrap second-step">
                         <Binder index={index} binderObj={item}/>
 
                     </div>
@@ -127,13 +129,24 @@ class NavBar extends Component{
         // });
         return (
             <div className="navbar col s2">
+                {/* <div className="logout">
+                    <img className="logoImage" src={logo} />
+                    <Login />
+                </div> */}
+                <button>
+                <i className="small material-icons">chevron_left</i>
+                </button>
             {/* <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
                     Binders <span className="glyphicon glyphicon-pencil"></span>
             </button>
             <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
                     Binders <span className="glyphicon glyphicon-ok"></span>
             </button> */}
+
+                
                 {binder}
+
+
                 {/* <div className="contain-tab">
                     <h4 className="nav_header"></h4>
                 </div>
@@ -142,9 +155,8 @@ class NavBar extends Component{
                 </div> */}
                 {/* {binder_route} */}
                 
-                <button className="btn-floating" onClick={this.addBinder}>
-                    add binder
-                </button>
+                <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
+                New Binder</button>  
                 <Route path={'/main/:binder'} component={Binder}/>
             </div>
         );

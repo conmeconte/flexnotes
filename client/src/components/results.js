@@ -16,8 +16,9 @@ class Results extends Component {
             return (
                 <li className="result-item collection-item col s12" key={index}>
                     <div className="row list-item-wrapper">
-                        <span className="video-items col s8">{item.videoTitle}</span>
-                        <button className="btn red darken-3 right col s3" onClick={ () => { this.props.playVideo(item.url) }}>
+                        <img className="col s3" src={results[index].thumbnails.default.url}/>
+                        <span className="video-items col s6">{item.videoTitle}</span>
+                        <button id="youtube-play" className="btn red darken-3 right col s1 video-btn" onClick={ () => { this.props.playVideo(item.url) }}>
                             <i className="material-icons">play_arrow</i>
                         </button>
                     </div>
@@ -27,7 +28,6 @@ class Results extends Component {
         return (
             <ul className="results collection">{list}</ul>
         );
-
     }
 }
 

@@ -11,7 +11,7 @@ class Slides extends Component {
             this.slideOutSlidesSearch = this.slideOutSlidesSearch.bind(this);
             this.state = {
                 style: {
-                    transform: 'translateY(-81px)'
+                    transform: 'translateY(-90px)'
                 },
                 toggleSlideOut: true
             }
@@ -31,7 +31,7 @@ class Slides extends Component {
             transform = 'translateY(0px)',
             toggleSlideOut = false;
         } else {
-            transform = 'translateY(-81px)';
+            transform = 'translateY(-90px)';
             toggleSlideOut = true;
         }
         this.setState({
@@ -123,6 +123,7 @@ class Slides extends Component {
                 let presentationID = urlSplit2[0];
                 const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
                 this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
+                this.props.reset();
             }
         } else {
             return;
@@ -133,14 +134,14 @@ class Slides extends Component {
         const { toggleSlideOut } = this.state;
         const { transform } = this.state.style;
         return (
-            <div className="slides-div">
+            <div className="slides-div fourth-step">
                 <form style={{ transform }} className="form-horizontal slide-out-input" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
                     <div className="row">
                         <Field name="url" component={this.renderInput} />
                         <button className="btn green darken-1 col s2"><i className="material-icons">save</i></button>
                     </div>
                 </form>
-                <div className="arrow-container" onClick={ () => {
+                <div className="arrow-container-slides" onClick={ () => {
                     this.slideOutSlidesSearch()
                 }}>
                     { !toggleSlideOut ? <i className="material-icons">keyboard_arrow_up</i> : <i className="material-icons">keyboard_arrow_down</i> }

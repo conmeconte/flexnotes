@@ -19,6 +19,7 @@ class VideoModal extends Component {
         console.log('video modal props:', this.props);
         this.props.addToPlaylist(this.props.videoLink, values.title, this.props.binderTabPageIds);
         this.props.toggleModal(this.props.addVideoModalStyle);
+        this.props.reset();
     }
 
     render () {
@@ -28,12 +29,14 @@ class VideoModal extends Component {
                         <h6>Enter video name: </h6>
                         <form onSubmit={this.props.handleSubmit(this.setName.bind(this))}>
                             <Field name="title" component={this.renderInput}/>
+                            <div className="btn-wrapper">
                             <button className="save btn green darken-3">Save</button>
                 <button type="button" onClick={ 
                     () => { 
                         this.props.toggleModal(this.props.addVideoModalStyle)
                     }
                     } className="btn red darken-1">Don't Save</button>
+                    </div>
                         </form>
                 </div>
             </div>
