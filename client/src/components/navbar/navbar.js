@@ -105,7 +105,7 @@ class NavBar extends Component{
                 //console.log('navbar item', item);
                 
                 return (
-                    <div key={index} className="binderWrap">
+                    <div key={index} className="binderWrap second-step">
                         <Binder index={index} binderObj={item}/>
 
                     </div>

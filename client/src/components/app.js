@@ -14,12 +14,19 @@ import '../assets/css/panel.css';
 import '../assets/css/slides.css';
 import '../assets/css/video-add-modal.css';
 import '../assets/css/video.css';
+
+
+
+
 //import { getDataObject } from './../actions/index';
 
 // import 'materialize-css/dist/css/materialize.min.css';
-//import { getDataObject } from './../actions/index';
+// import { getDataObject } from './../actions/index';
+
+
 
 class App extends Component {
+
 
     componentWillMount() {
         this.props.fetchUser();
@@ -30,13 +37,13 @@ class App extends Component {
         return (
             <div className="app">
                 <BrowserRouter >
-
                     <div>
                         <Route path="/main" component={Dashboard} />
                         <Route exact path="/" component={LandingPage} />
-
                     </div>
                 </BrowserRouter>
+
+
             </div>
         );
     }
