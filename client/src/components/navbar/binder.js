@@ -167,8 +167,8 @@ class Binder extends Component {
                             // onKeyPress={this.keyPressed}
                              value={binderName}
                              />
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visibleBinder' : 'hiddenBinder'}`} onClick={this.notEditable}>
-                    Done Edit
+                <button type="button" className={`btn-floating ${editable ? 'visibleBinder' : 'hiddenBinder'}`} onClick={this.notEditable}>
+                <i className="small material-icons">check_circle</i>
                 </button>
             </div>              
             );
@@ -176,15 +176,18 @@ class Binder extends Component {
             binder_title = (
                 <div className="binderTitle">
                     <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }} >
-                                <div className=""  onClick={()=>this.binderSelect()}>
+                                <div className="binderLink"  onClick={()=>this.binderSelect()}>
                                     {this.props.binderObj.binder_name}
                                 </div>
                     </Link>
-                    <button type="button" className='btn' onClick={this.editable}>
-                       E Bin
-                    </button>
-                    <button type="button" className="btn" onClick={()=>this.deleteBinder(this.props.binderObj._id)}>D Bin
-                    </button>
+                    <div className="left-align">
+                        <button type="button" className='btn-floating navbar-btn edit-btn' onClick={this.editable}>
+                        <i className="small material-icons">edit</i>
+                        </button>
+                        <button type="button" className="btn-floating navbar-btn delete-btn" onClick={()=>this.deleteBinder(this.props.binderObj._id)}>
+                        <i className="small material-icons">delete_forever</i>
+                        </button>
+                    </div>
                 </div>
             );
         }
@@ -237,9 +240,8 @@ class Binder extends Component {
                 <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
                     <span className="glyphicon glyphicon-plus"></span>
                 </button> */}
-                <button className="btn btn-default btn-xs btn_add" onClick={this.addTab}>
-                    A Tab
-                </button>
+                <button className="btn add-btn waves-effect waves-light" onClick={this.addTab}>
+                New Tab</button>  
                 <Route path={`/main/${binder_url}`+"/:tab"} component={Tab}/>
                 </div>
             </div>

@@ -22,11 +22,7 @@ class Dashboard extends Component {
             return null;
         } 
         return(
-            <div id="dashboard-container" className="row">
-                <div className="logout">
-                    <img className="logoImage" src={logo} />
-                    <Login />
-                </div>
+            <div className="dashboard-container row">
                 <NavBar />
                 <Panel />
             </div>

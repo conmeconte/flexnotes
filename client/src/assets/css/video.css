@@ -102,7 +102,7 @@ button.close {
     border:none;
 }
 
-.btn {
+/* .btn {
     text-align: center;
     box-sizing: border-box;
     background-color: #d5d5d5;
@@ -110,7 +110,7 @@ button.close {
     cursor: pointer;
     margin: 1vmin;
     line-height: 0;
-}
+} */
 .btn:hover{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
 }
