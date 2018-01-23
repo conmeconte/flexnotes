@@ -166,18 +166,21 @@ class Page extends Component {
             );
         } else {
             page_list = (
-                <div>
+                <div className="">
             <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
-                <div className=""  onClick={()=>this.handleClick()}>
+                <div className="pageLink"  onClick={()=>this.handleClick()}>
                     {this.props.pageObj.page_name}
                 </div>
                 </Link>
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder`} onClick={this.editPage}>
-                        E Page
-                </button>
-                <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deletePage()} >
-                   D Page
-                </button>
+                <div className="right-align btn-div">
+                    <button type="button" className='btn page-btn' onClick={this.editPage}>
+                            E P
+                    </button>
+                    <button type="button" className="btn page-btn" onClick={()=>this.deletePage()} >
+                    D P
+                    </button>
+                </div>
+
                 </div>
             );
         }
