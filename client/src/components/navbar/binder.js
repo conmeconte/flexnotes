@@ -180,7 +180,11 @@ class Binder extends Component {
                                     {this.props.binderObj.binder_name}
                                 </div>
                     </Link>
-
+                    <button type="button" className='btn' onClick={this.editable}>
+                       E Bin
+                    </button>
+                    <button type="button" className="btn" onClick={()=>this.deleteBinder(this.props.binderObj._id)}>D Bin
+                    </button>
                 </div>
             );
         }
@@ -194,7 +198,7 @@ class Binder extends Component {
             }
 
                 return (
-                    <div key={index}>
+                    <div key={index} className="tabWrap">
                         <Tab index={index} tabObj={item}/>
                     </div>
                     // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
@@ -211,11 +215,7 @@ class Binder extends Component {
                 {binder_title}
 
                 <div className={`binderBody ${active ? 'visible' : 'hidden'}`}>
-                <button type="button" className='btn' onClick={this.editable}>
-                       E Binder
-                    </button>
-                    <button type="button" className="btn" onClick={()=>this.deleteBinder(this.props.binderObj._id)}>D Binder
-                    </button>
+
                     {tab_link}
                 
                 
