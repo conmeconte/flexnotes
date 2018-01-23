@@ -176,3 +176,6 @@ a.landing-login-text {
 .dash-btn:hover {
     background-color: #74636D;
 }
+.btn-wrapper button {
+    margin-right: 5px;
+}
