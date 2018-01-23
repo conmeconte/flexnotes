@@ -3,7 +3,19 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray, getDataObject } from '../actions';
 
+
+
 class VideoContainer extends Component {
+    constructor (props) {
+        super(props);
+        this.slideOutVideoSearch = this.slideOutVideoSearch.bind(this);
+        this.state = {
+            style: {
+                transform: 'translateY(-66px)'
+            },
+            toggleSlideOut: true
+        }
+    }
     renderInput ({input}) {
         console.log({input});
         return (
@@ -23,13 +35,31 @@ class VideoContainer extends Component {
     // componentWillReceiveProps(nextProps){
     //     debugger
     // }
+    slideOutVideoSearch() {
+        let { toggleSlideOut } = this.state;
+        let { transform } = this.state.style;
+        if (toggleSlideOut) {
+            transform = 'translateY(0px)',
+            toggleSlideOut = false;
+        } else {
+            transform = 'translateY(-66px)';
+            toggleSlideOut = true;
+        }
+        this.setState({
+            style: {
+                transform: transform
+            },
+            toggleSlideOut: toggleSlideOut
+        });
+    }
     render () {
-        console.log('video-container props ', this.props);
+        const { toggleSlideOut } = this.state;
+        const { transform } = this.state.style;
     return ( 
         <div className="iframe-wrapper">
             <div className="row">
                 <form onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}>
-                    <div className="row">
+                    <div style={{ transform }} className="row slide-out-input">
                     <Field name="youtube-url" component={this.renderInput} />
                         <div className="col s3">
                             <div className="row btn-wrapper">
@@ -43,6 +73,11 @@ class VideoContainer extends Component {
                         </div>
                     </div>
                 </form>
+                <div className="arrow-container" onClick={ () => {
+                    this.slideOutVideoSearch()
+                }}>
+                    { !toggleSlideOut ? <i className="material-icons">keyboard_arrow_up</i> : <i className="material-icons">keyboard_arrow_down</i> }
+                </div>
             </div>
             <div id="video-container" className="video-container">
                 <div className="video-embed-wrapper">

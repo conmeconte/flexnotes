@@ -76,6 +76,7 @@ button.close {
 .video-parent-panel {
     height: 100%;
     width: 100%;
+    background-color: #d5d5d5;
 }
 .video-embed-wrapper {
     height: 100%;
@@ -138,4 +139,13 @@ button.close {
 }
 .btn-wrapper button {
     padding: 0 1vmin;
+}
+.slide-out-input {
+    transition: 0.2s;
+    background-color: #fff;
+}
+.arrow-container {
+    position: absolute;
+    top: 10px;
+    right: 5px;
 }
