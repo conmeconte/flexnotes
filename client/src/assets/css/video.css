@@ -30,7 +30,7 @@
     height: 90%;
     padding-bottom: 0;
     position: relative;
-    top: -10%;
+    top: -3vh;
 }
 
 .video-container#video-container .row form{
@@ -132,6 +132,8 @@ button.close {
 }
 .iframe-wrapper {
     height: 100%;
+    position: relative;
+    top: -4vh;
 }
 .row {
     margin-bottom: 0;
@@ -151,7 +153,7 @@ button.close {
 }
 .arrow-container {
     position: absolute;
-    top: 5px;
+    top: 4vh;
     right: 5px;
     z-index: 3000;
     cursor: pointer;
@@ -173,4 +175,7 @@ button.close {
 }
 #youtube-play {
     padding: 0px 5px;
+}
+.red-text {
+    color: red;
 }

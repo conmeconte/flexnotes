@@ -19,6 +19,7 @@ class VideoModal extends Component {
         console.log('video modal props:', this.props);
         this.props.addToPlaylist(this.props.videoLink, values.title, this.props.binderTabPageIds);
         this.props.toggleModal(this.props.addVideoModalStyle);
+        this.props.reset();
     }
 
     render () {
