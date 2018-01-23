@@ -133,7 +133,7 @@ class Slides extends Component {
         const { toggleSlideOut } = this.state;
         const { transform } = this.state.style;
         return (
-            <div className="slides-div">
+            <div className="slides-div fourth-step">
                 <form style={{ transform }} className="form-horizontal slide-out-input" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
                     <div className="row">
                         <Field name="url" component={this.renderInput} />
