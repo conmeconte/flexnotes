@@ -129,10 +129,10 @@ class NavBar extends Component{
         // });
         return (
             <div className="navbar col s2">
-                <div className="logout">
+                {/* <div className="logout">
                     <img className="logoImage" src={logo} />
                     <Login />
-                </div>
+                </div> */}
                 <button>
                 <i className="small material-icons">chevron_left</i>
                 </button>

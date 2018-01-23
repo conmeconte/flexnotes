@@ -83,7 +83,7 @@ class Dashboard extends Component {
                 <div className="logout">
                     <img className="logoImage" src={logo} />
                     <Login />
-                    
+                    <button className="startTour" onClick={this.openTour}>Tour</button>
                 </div>
 
                 <NavBar />
