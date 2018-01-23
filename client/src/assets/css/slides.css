@@ -5,7 +5,8 @@
 }
 
 .slides-div {
-  height: 90%
+  height: 90%;
+  overflow: hidden;
 }
 
 .slides-iframe
@@ -26,6 +27,6 @@
   position: relative;
   left: 1vw;
 }
-.slides-input {
+/* #slides-input.slides-input {
   background-color: #fff;
-}
+} */

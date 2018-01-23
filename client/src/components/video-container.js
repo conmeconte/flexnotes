@@ -11,7 +11,7 @@ class VideoContainer extends Component {
         this.slideOutVideoSearch = this.slideOutVideoSearch.bind(this);
         this.state = {
             style: {
-                transform: 'translateY(-55px)'
+                transform: 'translateY(-66px)'
             },
             toggleSlideOut: true
         }
@@ -42,7 +42,7 @@ class VideoContainer extends Component {
             transform = 'translateY(0px)',
             toggleSlideOut = false;
         } else {
-            transform = 'translateY(-55px)';
+            transform = 'translateY(-66px)';
             toggleSlideOut = true;
         }
         this.setState({
