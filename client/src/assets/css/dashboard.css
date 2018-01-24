@@ -1,0 +1,58 @@
+header {
+    position: absolute;
+    top: 0;
+    left: 10px;
+}
+
+header > h4 {
+    font-size: 40px;
+    color: #d5d5d5;
+}
+
+.dashFlex {
+    color: #96858f;
+}
+
+.logoImage {
+    height: 30px;
+}
+
+/*.logoArea {*/
+    /*position: absolute;*/
+    /*top: 0.5%;*/
+    /*left: 0.7%;*/
+    /*width: 14vw;*/
+    /*background-color: #6d7993;*/
+    /*z-index: 2;*/
+    /*border: 1px solid red;*/
+    /*color: #d5d5d5;*/
+/*}*/
+
+/*.logoImage {*/
+    /*height: 50px;*/
+    /*float: left;*/
+    /*margin-bottom: -50px;*/
+/*}*/
+
+/*.logoBtns {*/
+    /*float: right;*/
+/*}*/
+
+/*.startTour {*/
+    /*height: 50px;*/
+    /*width: 50px;*/
+    /*background-color: #d5d5d5;*/
+    /*color: #6d7993;*/
+    /*margin-bottom: 5px;*/
+/*}*/
+
+/*.startTour:hover {*/
+    /*background-color: #96858f;*/
+    /*color: #ffffff;*/
+    /*border: none;*/
+/*}*/
+
+/*.dashFlex {*/
+    /*color: #96858f;*/
+/*}*/
+

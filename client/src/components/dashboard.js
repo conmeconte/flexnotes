@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Panel from './panel';
 import NavBar from './navbar/navbar';
 import Login from './login';
-// import '../assets/css/login.css';
+
 import '../assets/css/login.css';
+import '../assets/css/dashboard.css';
 
 import logo from '../assets/images/logo.png';
 
@@ -80,18 +81,17 @@ class Dashboard extends Component {
         return(
 
             <div id="dashboard-container" className="row">
-                <div className="logoArea">
-                    <img className="logoImage" src={logo} />
-                    <div className="logoBtns">
-                        <button className="startTour" onClick={this.openTour}>Tour</button>
-                        <Login />
-                    </div>
-
-                </div>
+                <header>
+                    <h4><img className="logoImage" src={logo}/><span className="dashFlex">Flex</span>Notes</h4>
+                </header>
 
                 <NavBar />
                 <Panel />
 
+                <footer>
+                    <button className="startTour" onClick={this.openTour}>Tour</button>
+                    <Login />
+                </footer>
                 <Tour
                     steps={steps}
                     isOpen={this.state.isTourOpen}
