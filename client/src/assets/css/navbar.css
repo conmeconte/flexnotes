@@ -14,7 +14,7 @@ a {
     width: 10%;
     height: 100vh;
     box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);
-    overflow-y:scroll;
+    /*overflow-y:scroll;*/
     background-color: #6d7993;
 }
 
@@ -45,7 +45,7 @@ ul > li {
 }
 
 .binderTitle{
-    margin-top: 3%;
+    /*margin-top: 3%;*/
     border-top: solid 5px #7b6b73;
     background-color: #96858f;
 }
@@ -93,6 +93,11 @@ ul > li {
     width: 100%;
 }
 
+.navbarShow{
+    position: absolute;
+    z-index: 100;
+}
+
 .add-btn-binder  {
     margin-top: 3%;
     padding: 0;
@@ -129,8 +134,52 @@ ul > li {
     background-color: red;
 }
 
+section {
+    height: 82vh;
+    overflow: auto;
+}
 
+/* --------------------- HEADER AND FOOTER ---------------------*/
 
-.hideNavbar {
-    margin-top: 120px;
+header {
+    margin-bottom: 5px;
+}
+
+header > h3 {
+    margin: 0;
+    font-size: 38px;
+    color: #d5d5d5;
+}
+
+.dashFlex {
+    color: #96858f;
+}
+
+.logoImage {
+    height: 28px;
+}
+
+footer {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #6d7993;
+    z-index: 2;
+}
+
+.startTour, .logoutBtn {
+    height: 40px;
+    width: 80px;
+    background-color: #d5d5d5;
+    color: #6d7993;
+}
+
+.startTour:hover, .logoutBtn:hover {
+    background-color: #96858f;
+    color: #ffffff;
+    border: none;
+}
+
+.startTour {
+    float: left;
+    margin: 0 5% 0 6%;
 }

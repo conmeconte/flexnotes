@@ -5,14 +5,14 @@
 }
 
 .slides-div {
-  height: 95%;
+  height: 100%;
   overflow: hidden;
 }
 
 .slides-iframe
 {
   position: relative;
-  top: -5vh;
+  top: -7vh;
   bottom: 0;
   left: 0;
   right: 0;
@@ -22,6 +22,11 @@
   margin: 0 auto;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  /* box-shadow: 8px 12px #8888886e; */
+  -webkit-box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+  left:2.5%;
+  /* width: 98%; */
 }
 .text-danger {
   position: relative;

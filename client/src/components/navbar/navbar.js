@@ -139,23 +139,31 @@ class NavBar extends Component{
             <div>
 
             
-            <button className={`${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
+            <button className={`navbarShow ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
             <i className="small material-icons">chevron_right</i>
             </button>
             <div className={`navbar col s2 ${this.props.interface.navbar_min ? 'hidden' : 'visible'}`}>
-                {/* <div className="logout">
-                    <img className="logoImage" src={logo} />
-                    <Login />
-                </div> */}
+
                 <button className='hideNavbar' onClick={this.hideNav.bind(this)}>
-                <i className="small material-icons">chevron_left</i>
+                    <i className="small material-icons">chevron_left</i>
                 </button>
 
-                
-                {binder}
-                <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
-                New Binder</button>  
-                <Route path={'/main/:binder'} component={Binder}/>
+                <header>
+                    <h3><img className="logoImage" src={logo}/><span className="dashFlex">Flex</span>Notes</h3>
+                </header>
+
+                <section>
+                    {binder}
+                    <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
+                        New Binder</button>
+                    <Route path={'/main/:binder'} component={Binder}/>
+                </section>
+
+                <footer>
+
+                    <button className="startTour" onClick={this.openTour}>Tour</button>
+                    <Login />
+                </footer>
             </div>
             </div>
         );

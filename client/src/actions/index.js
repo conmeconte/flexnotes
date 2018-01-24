@@ -239,7 +239,7 @@ export function playVideo(url) {
     document.querySelector(".video-iframe").src = url
     return {
         type: types.PLAY_VIDEO,
-        payload: videoId
+        payload: { videoId: videoId, resultsContainer: { style: { transform: 'translateY(0px)' } } }
     }
 }
 export function playPastedLinkVideo(url) {

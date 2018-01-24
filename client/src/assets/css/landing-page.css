@@ -179,3 +179,7 @@ a.landing-login-text {
 .btn-wrapper button {
     margin-right: 5px;
 }
+
+.landingLogo {
+    height: 41px;
+}

@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import Panel from './panel';
 import NavBar from './navbar/navbar';
 import Login from './login';
-// import '../assets/css/login.css';
-import '../assets/css/login.css';
 
-import logo from '../assets/images/logo.png';
+
+
 
 import { connect } from 'react-redux';
 import { getDataObject } from '../actions';
@@ -80,18 +79,8 @@ class Dashboard extends Component {
         return(
 
             <div id="dashboard-container" className="row">
-                <div className="logoArea">
-                    <img className="logoImage" src={logo} />
-                    <div className="logoBtns">
-                        <button className="startTour" onClick={this.openTour}>Tour</button>
-                        <Login />
-                    </div>
-
-                </div>
-
                 <NavBar />
                 <Panel />
-
                 <Tour
                     steps={steps}
                     isOpen={this.state.isTourOpen}
@@ -99,7 +88,6 @@ class Dashboard extends Component {
                 />
             </div>
         );
-           // }
     }
 }
 
