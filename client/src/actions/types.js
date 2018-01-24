@@ -38,5 +38,7 @@ export default {
     NUM_OF_PANELS: 'num_of_panels',
     GET_PANEL_NUM: 'get_panel_num',
     RESET_PANEL_NUM: 'reset_panel_num',
-    NO_VIDEO_LINK: 'no_video_link'
+    NO_VIDEO_LINK: 'no_video_link',
+    HIDE_NAV: 'hide_nav',
+    SHOW_NAV: 'show_nav'
 }

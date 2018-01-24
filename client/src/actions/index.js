@@ -531,3 +531,15 @@ export function editPage(binder_id, tab_id, page_id, page_name) {
             });
     }
 }
+
+export function minNav(){
+    return {
+        type: types.HIDE_NAV
+    }
+}
+
+export function showNav(){
+    return {
+        type: types.SHOW_NAV
+    }
+}

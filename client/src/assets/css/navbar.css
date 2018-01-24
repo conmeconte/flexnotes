@@ -45,7 +45,8 @@ ul > li {
 }
 
 .binderTitle{
-    border: solid 5px #887780;
+    margin-top: 3%;
+    border-top: solid 5px #7b6b73;
     background-color: #96858f;
 }
 
@@ -54,8 +55,9 @@ ul > li {
 }
 
 .binderWrap{
-    background-color: #d5d5d5;
-     width: 90%;
+    background-color: #96858f;
+     width: 100%;
+     border-bottom: solid 3px #7b6b73;
 }
 
 .tabWrap{
@@ -86,13 +88,18 @@ ul > li {
 }
 
 .add-btn.btn  {
-    #margin-left: 5%;
+    margin-bottom: 8%;
     padding: 0;
     width: 100%;
 }
 
+.navbarShow{
+    position: absolute;
+    z-index: 100;
+}
+
 .add-btn-binder  {
-    #margin-left: 5%;
+    margin-top: 3%;
     padding: 0;
     width: 90%;
 }
@@ -116,6 +123,7 @@ ul > li {
 
 .navbar-btn {
     margin: 1%;
+    margin-bottom: 3%;
 }
 
 .edit-btn {
