@@ -163,7 +163,6 @@ class NavBar extends Component{
 
                 <footer>
                     <FlexNotesTour toggleTour={this.props.toggleTour}/>
-                    {/*<button className="startTour" onClick={this.openTour}>Tour</button>*/}
                     <Login />
                 </footer>
             </div>
