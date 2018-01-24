@@ -24,7 +24,7 @@ class LandingPage extends Component {
                     <div></div>
                 );
             default:
-                return <div className="dashboard-button"><a href="/main#"><button className="btn btn-sm logoutBtn  light-blue darken-3">Back to Dashboard</button></a></div>
+                return <div className="dashboard-button"><a href="/main#"><button className="btn btn-sm dash-btn">Back to Dashboard</button></a></div>
         }
     }
     render () {

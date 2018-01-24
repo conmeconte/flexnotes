@@ -20,7 +20,7 @@ class VideoContainer extends Component {
         console.log({input});
         return (
             <div className="col s8 input-field">
-                <input {...input} className="pastedVideoInput" type={type} placeholder={ placeholder }/>
+                <input {...input} className="pastedVideoInput" type={type} placeholder="Paste a YouTube video URL..."/>
                 <p className="red-text">{ touched && error }</p>
             </div>
         );
