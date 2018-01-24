@@ -14,7 +14,11 @@ const DEFAULT_STATE = {
     opacityDisplay: {
         display: 'none'
     },
-    videoLink: ''
+    videoLink: '',
+    videoLinkSlideOut: {
+        transform: 'translateY(-119px)'
+    },
+    toggleSlideOut: true
  };
 
 export default function (state = DEFAULT_STATE, action) {
@@ -41,11 +45,16 @@ export default function (state = DEFAULT_STATE, action) {
         case types.PLAY_PASTED_VIDEO_LINK: 
             return { ...state, videoLink: action.payload }
         case types.PLAY_VIDEO:
-            return { ...state, resultsStyles: { transform: 'translateX(100%)' } }
+            return { ...state, videoLink: action.payload.videoId, resultsStyles: { transform: 'translateX(100%)' } }
         case types.NO_VIDEO_LINK:
             return { ...state }
         case types.SET_VIDEO_URL: 
             return { ...state, videoLink: action.payload }
+        case types.TOGGLE_VIDEO_SLIDE_OUT:
+        debugger;
+            return { ...state, videoLinkSlideOut: action.payload.slideOutStyles, toggleSlideOut: action.payload.toggleSlideOut }
+        case types.EMPTY_VIDEO_SLIDE_OUT:
+            return { ...state, videoLinkSlideOut: action.payload.slideOutStyles.style }
         default:
             return state;
     }

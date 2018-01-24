@@ -27,6 +27,8 @@ export default {
     GET_OPACITY_DISPLAY: 'get_opacity_display',
     TOGGLE_RESULTS: 'toggle_results',
     TOGGLE_MODAL: 'toggle_modal',
+    TOGGLE_VIDEO_SLIDE_OUT: 'toggle_video_slide_out',
+    EMPTY_VIDEO_SLIDE_OUT: 'empty_video_slide_out',
     GRAB_VIDEO_URL: 'grab_video_url',
     SET_SLIDES_URL: 'set_slides_url',
     GET_SLIDES_URL: 'get_slides_url',
