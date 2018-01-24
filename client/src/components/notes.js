@@ -542,7 +542,7 @@ class Notes extends Component {
     render() {
         return (
             <div className="text-editor">
-                {this.toolbar()}
+                <div>{this.toolbar()}</div>
 
                 <div className="notes-component fifth-step">
                     <Editor
