@@ -88,7 +88,7 @@ class NavBar extends Component{
         });
     }
     render(){
-        console.log("navbar props:", this.props);
+        //console.log("navbar props:", this.props);
         let editableText = '';
 
         if(this.props.interface.editable){

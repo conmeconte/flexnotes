@@ -23,12 +23,13 @@ class Page extends Component {
         this.notEditPage = this.notEditPage.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
-    // componentWillReceiveProps(nextProps){
-    //     //console.log('nextProps: ',nextProps);
-    //      if(this.props.binderObj != nextProps.binderObj){
-    //          this.props.updateBinderArray();
-    //      }
-    // }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.interface.editable === false){
+            this.setState({
+                editable: false
+            });
+        }
+    }
 
     // addPage(){
     //     //console.log('addPage clicked');
@@ -94,6 +95,7 @@ class Page extends Component {
             pageName: e.target.value
         });
     }
+
     editPage(){
         //console.log("editable should be true");
         this.setState({
@@ -109,6 +111,14 @@ class Page extends Component {
         this.setState({ 
             editable: false 
         });
+    }
+
+    keyPressed(event) {
+        //console.log('keypress',event);
+        if(event.key === 'Enter') {
+            //console.log('enter key pressed');
+          this.notEditPage();
+      }
     }
 
     deletePage(page_id){
@@ -149,34 +159,34 @@ class Page extends Component {
         if(editable){
             //let editName = this.props.binderObj.binder_name;
             page_list = (
-                <div className="tabTitle">
+                <div className="editMode">
                          <input 
                              className="edit_input"
                              ref='textInput'
                              type='text'
                              onChange={(e)=>this.editPageName(e)}
                              // onBlur={this.notEditable}
-                            // onKeyPress={this.keyPressed}
+                             onKeyPress={this.keyPressed.bind(this)}
                              value={pageName}
                              />
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditPage}>
-                    Done <span className="glyphicon glyphicon-ok"></span>
+                <button type="button" className={`btn-floating ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditPage}>
+                <i className="small material-icons">check</i>
                 </button>
             </div>              
             );
         } else {
             page_list = (
-                <div className="">
+                <div className="page-edit">
             <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
                 <div className="pageLink"  onClick={()=>this.handleClick()}>
                     {this.props.pageObj.page_name}
                 </div>
                 </Link>
-                <div className="right-align">
+                <div className="modify-btn">
                     <button type="button" className={`btn-floating navbar-btn edit-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={this.editPage}>
                     <i className="small material-icons">edit</i>
                     </button>
-                    <button type="button" className={`btn-floating navbar-btn delete-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deletePage()} >
+                    <button type="button" className={`btn-floating navbar-btn delete-btn red darken-4 ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deletePage()} >
                     <i className="small material-icons">delete_forever</i>
                     </button>
                 </div>
@@ -186,10 +196,14 @@ class Page extends Component {
             );
         }
 
-
+        if(this.props.interface.page_id === this.props.pageObj._id){
+            //set color to active color
+        } else {
+            //set color to default
+        }
 
         return(
-            <li className="pageBody">
+            <li className="pageBody" >
                 {page_list}
             </li>
             
