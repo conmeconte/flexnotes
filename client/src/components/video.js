@@ -137,7 +137,7 @@ class Video extends Component {
         return (
             <div className="main">
                 <VideoModal />
-                <div style={this.props.opacityContainer} className="opacity"></div>
+                {/* <div style={this.props.opacityContainer} className="opacity"></div> */}
                 <div style={this.props.resultsStyles} className="results-container sidebar">
                     <div className="row btn-wrapper">
                         <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input">

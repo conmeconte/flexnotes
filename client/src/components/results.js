@@ -8,6 +8,9 @@ class Results extends Component {
         videoData.items.push(obj);
         console.log(videoData);
     }
+    handlePlayVideo(videoUrl) {
+        this.props.playVideo(videoUrl); 
+    }
     render() {
         const {results} = this.props;
         console.log("video results: ", results)
@@ -18,7 +21,7 @@ class Results extends Component {
                     <div className="row list-item-wrapper">
                         <img className="col s3" src={results[index].thumbnails.default.url}/>
                         <span className="video-items col s6">{item.videoTitle}</span>
-                        <button id="youtube-play" className="btn red darken-3 right col s1 video-btn" onClick={ () => { this.props.playVideo(item.url) }}>
+                        <button id="youtube-play" className="btn red darken-3 right col s1 video-btn" onClick={ () => { this.handlePlayVideo(item.url) }}>
                             <i className="material-icons">play_arrow</i>
                         </button>
                     </div>
