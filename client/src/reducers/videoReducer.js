@@ -40,6 +40,8 @@ export default function (state = DEFAULT_STATE, action) {
             return {...state, videoTitle: action.payload}
         case types.PLAY_PASTED_VIDEO_LINK: 
             return { ...state, videoLink: action.payload }
+        case types.PLAY_VIDEO:
+            return { ...state, resultsStyles: { transform: 'translateX(100%)' } }
         case types.NO_VIDEO_LINK:
             return { ...state }
         case types.SET_VIDEO_URL: 
