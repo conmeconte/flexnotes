@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
 
-// const User = require('../controllers/user');
 //Restful/ CRUD operation 
 
 module.exports = (app) => {     
@@ -110,7 +109,6 @@ module.exports = (app) => {
                         tab= new Tab();
                         tab.page_arr_obj.push(new Page());
                         tab.page_arr_obj[0].video.push(new Video());
-                        // tab.page_arr_obj[0].notes.document.nodes.push(new Note());
                         binder.tab_arr_obj.push(tab);
 
                         existingUser.save();
@@ -145,8 +143,8 @@ module.exports = (app) => {
             const existingUser= await User.findById(req.user.id, function (err){if(err){return res.send('error')}});
                 if (existingUser) {
                     const tab = existingUser
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
-                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID
+                    .binder_arr_obj.id(req.body.binderID) 
+                    .tab_arr_obj.id(req.body.tabID) 
                     
                     tab.tab_color = req.body.tab_color || tab.tab_color;
                     tab.tab_name = req.body.tab_name || tab.tab_name;
@@ -178,8 +176,8 @@ module.exports = (app) => {
             const existingUser= await User.findById(req.user.id,function(err,user){if(err){return res.send('error')}});
                 if (existingUser) {
                     const tab = existingUser
-                    .binder_arr_obj.id(req.body.binderID) //req.body.binderID
-                    .tab_arr_obj.id(req.body.tabID)  //req.body.tabID
+                    .binder_arr_obj.id(req.body.binderID) 
+                    .tab_arr_obj.id(req.body.tabID)  
                     if(tab){
                         let page = new Page()
                         page.video.push(new Video());
@@ -200,9 +198,9 @@ module.exports = (app) => {
             const existingUser= await User.findById(req.user.id,function(err,user){if(err){return res.send('error')}});
                 if (existingUser) {
                     const page = existingUser
-                    .binder_arr_obj.id(req.query.binderID) //req.body.binderID
-                    .tab_arr_obj.id(req.query.tabID)  //req.body.tabID
-                    .page_arr_obj.id(req.query.pageID); //req.body.pageID
+                    .binder_arr_obj.id(req.query.binderID) 
+                    .tab_arr_obj.id(req.query.tabID)  
+                    .page_arr_obj.id(req.query.pageID); 
 
                     const binder= existingUser
                     .binder_arr_obj.id(req.query.binderID)

@@ -4,9 +4,6 @@ const mongoose = require('mongoose');
 const keys = require('../config/keys');
 const fs            = require('fs');
 const path = require('path');
-
-
-
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
 
 
@@ -32,7 +29,6 @@ passport.use(
             const existingUser = await User.findOne({ googleId: profile.id });
             if (existingUser) {
                 let loginLog= {Date: new Date().toLocaleString(),user: `user ${existingUser.userName} has logged in`};
-                // fs.appendFile('./errorLogs/logins.log', JSON.stringify(loginLog) + '\n', function (err) {
                 fs.appendFile(path.join(__dirname, '..', 'errorLogs', 'logins.log'), JSON.stringify(loginLog) + '\n', function (err) {
                     // if (err) throw err; 
                     if (err) console.log('writing log failed'); 
@@ -41,16 +37,25 @@ passport.use(
                 return done(null, existingUser);
             }
             //no user record in db make a new record
-            // console.log(profile);
-            const defaultBinder = new Binder({binder_name: "FlexNotes!"});
-            defaultBinder.tab_arr_obj.push(new Tab({tab_name :"First Tab"}));
-            defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({ page_name : "Welcome To FlexNotes", page_color: 'orange', notes:{document:{}} }));
-            defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ videoInfo: 'No Info' }));
-            // defaultBinder.tab_arr_obj[0].page_arr_obj[0].notes.document.nodes.push(new Note());
+            const defaultBinder = new Binder({binder_name: "Binder"});
+            defaultBinder.tab_arr_obj.push(new Tab({tab_name :"Tab"}));
+            defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({
+                page_name : "Page",
+                page_color: 'orange',
+                notes:{
+                    document:{
+                        content: "{\"kind\":\"value\",\"document\":{\"kind\":\"document\",\"data\":{},\"nodes\":[{\"kind\":\"block\",\"type\":\"heading-one\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Welcome to FlexNotes!\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"FlexNotes was designed to help students keep all their class information in one place for easy access and review.\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"You can start by separating each subject into binders and then organize your notes into tabs and pages.\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Each page will have a space for you to save any slides and videos from class as well as a notepad where you can type up your notes.\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Don't have any class videos? No problem! You can search YouTube directly from your page and find videos that can help reinforce what you have learned so far!\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"image\",\"isVoid\":true,\"data\":{\"src\":\"http://www.ccc.edu/menu/PublishingImages/laptop%20discount%20program.jpg\"},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\" \",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\" \",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]}]}}"
+                    }
+                }
+            })
+            );
+            defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ "videoInfo": 'No Info' }));
+            defaultBinder.tab_arr_obj[0].page_arr_obj[0].lecture_slides={"lec_id": "https://docs.google.com/presentation/d/1vbEyxRSmXcY4s3U3LH1BZJD60ZFGmowh2fBdKyah8mg/embed"}
+            
             const user = await new User({
                 googleId: profile.id,
                 userName: profile.displayName,
-                binder_arr_obj: [defaultBinder]   //how come this works even thought it's an array array: obj?
+                binder_arr_obj: [defaultBinder]
             }).save()
             done(null, user);
 

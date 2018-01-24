@@ -5,16 +5,16 @@ import logo from '../../assets/images/logo.png';
 
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, deleteBinder, addBinder, updateBinderObj, minNav, showNav} from '../../actions';
+import { updateBinderArray, deleteBinder, addBinder, updateBinderObj, minNav, showNav, editable, notEditable} from '../../actions';
+
+import FlexNotesTour from '../react_tour';
 
 class NavBar extends Component{
     constructor(props){
         super(props);
-        this.state = {
-            editable: false
-        }
+
         this.addBinder = this.addBinder.bind(this);
-        this.editable = this.editable.bind(this);
+        this.editMode = this.editMode.bind(this);
         this.notEditable = this.notEditable.bind(this);
         this.deleteBinder = this.deleteBinder.bind(this);
     }
@@ -59,11 +59,13 @@ class NavBar extends Component{
         // }
     }
 
-    editable() {
-        console.log("editable should be true");
-        this.setState({
-            editable: true
-        });
+    editMode() {
+        if(this.props.interface.editable){
+            this.props.notEditable();
+        } else {
+            this.props.editable();
+        }
+        
     }
 
     editName(){
@@ -87,75 +89,55 @@ class NavBar extends Component{
     }
     render(){
         console.log("navbar props:", this.props);
-        const { editable } = this.state;
-        let binder = [];
-        if(editable){
-            // binder = this.props.binderArr.map((item, index) => {
-            //     //let binder_url = '/' + item._id;
-            //     //console.log('Route binder id: ', binder_url);
-            //     //console.log("binder_url", binder_url);
-            //     console.log('navbar item', item);
-                
-            //     return (
-            //         <div key={index}>
-            //             <div onClick={()=>this.editName()}>{item.binder_name}</div>
-            //             <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteBinder(item._id)} >
-            //              <span className="glyphicon glyphicon-minus"></span>Delete Binder
-            //             </button>
-            //         </div>
-            //     );
-            // });
-        }else{
-            binder = this.props.binderArr.map((item, index) => {
-                //let binder_url = '/' + item._id;
-                //console.log('Route binder id: ', binder_url);
-                //console.log("binder_url", binder_url);
-                //console.log('navbar item', item);
-                
-                return (
-                    <div key={index} className="binderWrap second-step">
-                        <Binder index={index} binderObj={item}/>
+        let editableText = '';
 
-                    </div>
-                );
-            });
+        if(this.props.interface.editable){
+            editableText = 'Done';
+        } else {
+            editableText = 'Edit';
         }
 
+        let binder = this.props.binderArr.map((item, index) => {
+
+            return (
+                <div key={index} className="binderWrap second-step">
+                    <Binder index={index} binderObj={item}/>
+
+                </div>
+            );
+        });
 
 
 
-
-
-
-        // const binder_route = this.props.binderArr.map((item, index) => {
-        //     let binder_url = '/' + item._id;
-        //     //console.log('Route binder id: ', binder_url);
-        //     //console.log("binder_url", binder_url);
-        //     return (
-        //         <Route key={index} path={'/main/:binder'} component={Binder}/>
-        //     );
-        // });
         return (
             <div>
 
             
-            <button className={`navbarShow ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
+            <button className={`navbarShow btn ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
             <i className="small material-icons">chevron_right</i>
             </button>
             <div className={`navbar col s2 ${this.props.interface.navbar_min ? 'hidden' : 'visible'}`}>
-                {/* <div className="logout">
-                    <img className="logoImage" src={logo} />
-                    <Login />
-                </div> */}
-                <button className='hideNavbar' onClick={this.hideNav.bind(this)}>
-                <i className="small material-icons">chevron_left</i>
-                </button>
 
-                
-                {binder}
-                <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
-                New Binder</button>  
-                <Route path={'/main/:binder'} component={Binder}/>
+                <header>
+                    <h3><img className="logoImage" src={logo}/><span className="dashFlex">Flex</span>Notes</h3>
+                </header>
+                <button className='btn hideNavbar' onClick={this.hideNav.bind(this)}>
+                    <i className="small material-icons">chevron_left</i>
+                </button>
+                <button className={`editMode btn ${this.props.interface.editable ? 'editing':'' }`} onClick={this.editMode.bind(this)}>
+                    {editableText}
+                </button>
+                <section>
+                    {binder}
+                    <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
+                        New Binder</button>
+                    <Route path={'/main/:binder'} component={Binder}/>
+                </section>
+
+                <footer>
+                    <FlexNotesTour toggleTour={this.props.toggleTour}/>
+                    <Login />
+                </footer>
             </div>
             </div>
         );
@@ -171,4 +153,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{ updateBinderArray, deleteBinder, addBinder, updateBinderObj, minNav, showNav})(NavBar);
+export default connect(mapStateToProps,{ editable, notEditable, updateBinderArray, deleteBinder, addBinder, updateBinderObj, minNav, showNav})(NavBar);
