@@ -123,6 +123,9 @@ body {
     width: 88.5%;
     height: 95vh;
 }
+.panel_div_power{
+    width:100%;
+}
 /* #dashboard-container {
     margin-bottom: 0;
 } */
