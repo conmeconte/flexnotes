@@ -123,9 +123,12 @@ body {
     width: 88.5%;
     height: 95vh;
 }
-.panel_div_power{
-    width:100%;
+
+.full_width.width-w-nav{
+    width: 100% !important;
 }
+
+
 /* #dashboard-container {
     margin-bottom: 0;
 } */
