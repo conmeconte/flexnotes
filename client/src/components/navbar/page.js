@@ -173,10 +173,10 @@ class Page extends Component {
                 </div>
                 </Link>
                 <div className="right-align">
-                    <button type="button" className='btn-floating navbar-btn edit-btn' onClick={this.editPage}>
+                    <button type="button" className={`btn-floating navbar-btn edit-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={this.editPage}>
                     <i className="small material-icons">edit</i>
                     </button>
-                    <button type="button" className="btn-floating navbar-btn delete-btn" onClick={()=>this.deletePage()} >
+                    <button type="button" className={`btn-floating navbar-btn delete-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deletePage()} >
                     <i className="small material-icons">delete_forever</i>
                     </button>
                 </div>

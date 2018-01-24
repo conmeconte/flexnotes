@@ -543,3 +543,15 @@ export function showNav(){
         type: types.SHOW_NAV
     }
 }
+
+export function editable(){
+    return {
+        type: types.EDITABLE
+    }
+}
+
+export function notEditable(){
+    return {
+        type: types.NOT_EDITABLE
+    }
+}
