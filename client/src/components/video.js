@@ -69,18 +69,18 @@ class Video extends Component {
                     break;
                 }
             }
-            if (typeof(page_arr_obj[pageIndex].video[0].videoURL) === 'undefined' || typeof(page_arr_obj[pageIndex].video[0].videoURL) === '') {
+            if (typeof (page_arr_obj[pageIndex].video[0].videoURL) === 'undefined' || typeof (page_arr_obj[pageIndex].video[0].videoURL) === '') {
                 // return;
                 this.props.setVideoUrl('', interface_obj);
             } else {
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
-                
+
             }
-        } 
+        }
     }
     componentWillReceiveProps(nextProps) {
         console.log("NEXT PROPS: ", nextProps);
-        if (this.props.interface_obj.page_id !== nextProps.interface_obj.page_id){
+        if (this.props.interface_obj.page_id !== nextProps.interface_obj.page_id) {
             this.updateVideoComponent(nextProps);
         }
 
@@ -125,11 +125,11 @@ class Video extends Component {
             if (page_arr_obj[pageIndex].hasOwnProperty('video')) {
                 // return;
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
-                
+
             } else {
                 this.props.setVideoUrl('', interface_obj);
             }
-        } 
+        }
     }
 
     render() {
@@ -144,12 +144,12 @@ class Video extends Component {
                             <Field name="video" component={this.renderInput} />
                             <span className="input-group-btn btn-wrapper">
                                 <button id="search-button" className="btn results-btn video-btn red darken-3">
-                                <i className="material-icons">search</i>
+                                    <i className="material-icons">search</i>
                                 </button>
 
-                                <button className="btn results-btn vid-right-arrow video-btn" onClick={ () => {
-                                this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
-                                this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
+                                <button className="btn results-btn vid-right-arrow video-btn" onClick={() => {
+                                    this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
+                                    this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                                 }}>
                                     <i className="material-icons">close</i>
                                 </button>
