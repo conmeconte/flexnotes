@@ -6,21 +6,22 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
 class Slides extends Component {
-        constructor (props) {
-            super(props);
-            this.slideOutSlidesSearch = this.slideOutSlidesSearch.bind(this);
-            this.state = {
-                style: {
-                    transform: 'translateY(-90px)'
-                },
-                toggleSlideOut: true
-            }
+    constructor(props) {
+        super(props);
+        this.slideOutSlidesSearch = this.slideOutSlidesSearch.bind(this);
+        this.state = {
+            style: {
+                transform: 'translateY(-90px)'
+            },
+            toggleSlideOut: true
+        }
     }
     renderInput(props) {
         const { input, meta: { touched, error } } = props;
         return (
             <div className="col s8 input-field">
                 <input id="slides-input" className="slides-input form-control" {...input} type="text" placeholder="Paste a Google Slides URL..." />
+                <p><em>{touched && error}</em></p>
             </div>
         )
     }
@@ -29,7 +30,7 @@ class Slides extends Component {
         let { transform } = this.state.style;
         if (toggleSlideOut) {
             transform = 'translateY(0px)',
-            toggleSlideOut = false;
+                toggleSlideOut = false;
         } else {
             transform = 'translateY(-90px)';
             toggleSlideOut = true;
@@ -138,18 +139,18 @@ class Slides extends Component {
                 <form style={{ transform }} className="form-horizontal slide-out-input" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
                     <div className="row">
                         <Field name="url" component={this.renderInput} />
-                        <button className="btn green darken-1 col s2 slidesBtn"><i className="material-icons">save</i></button>
+                        <button className="btn green darken-1 col s2 slidesBtn"><i className="material-icons">check</i></button>
                     </div>
                 </form>
-                <div className="arrow-container-slides" onClick={ () => {
+                <div className="arrow-container-slides" onClick={() => {
                     this.slideOutSlidesSearch()
                 }}>
-                    { !toggleSlideOut ? <i className="material-icons">keyboard_arrow_up</i> : <i className="material-icons">keyboard_arrow_down</i> }
+                    {!toggleSlideOut ? <i className="material-icons">keyboard_arrow_up</i> : <i className="material-icons">keyboard_arrow_down</i>}
                 </div>
                 {
                     this.props.slide_input ?
                         <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe" allowFullScreen></iframe>
-                        : <p className="text-danger"><em>Please paste a valid Google Slides URL</em></p>
+                        : ""
                 }
             </div>
         )
@@ -160,7 +161,7 @@ function validate(values) {
     const errors = {};
     const valuesStr = values.url;
     if (valuesStr) {
-        if (valuesStr.indexOf('presentation/d/') === -1) {
+        if (valuesStr.indexOf('docs.google.com/presentation/d/') === -1 || valuesStr.indexOf('docs.google.com/presentation/d/e/') === -1) {
             errors.url = "Please paste a valid Google Slides URL";
         }
     }
