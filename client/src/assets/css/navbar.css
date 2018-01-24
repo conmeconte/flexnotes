@@ -93,6 +93,11 @@ ul > li {
     width: 100%;
 }
 
+.navbarShow{
+    position: absolute;
+    z-index: 100;
+}
+
 .add-btn-binder  {
     margin-top: 3%;
     padding: 0;
