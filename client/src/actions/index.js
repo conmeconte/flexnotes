@@ -239,7 +239,7 @@ export function playVideo(url) {
     document.querySelector(".video-iframe").src = url
     return {
         type: types.PLAY_VIDEO,
-        payload: videoId
+        payload: { videoId: videoId, resultsContainer: { style: { transform: 'translateY(0px)' } } }
     }
 }
 export function playPastedLinkVideo(url) {
@@ -529,5 +529,17 @@ export function editPage(binder_id, tab_id, page_id, page_name) {
                     msg: 'Failed call in edit page'
                 });
             });
+    }
+}
+
+export function minNav(){
+    return {
+        type: types.HIDE_NAV
+    }
+}
+
+export function showNav(){
+    return {
+        type: types.SHOW_NAV
     }
 }
