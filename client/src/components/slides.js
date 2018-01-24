@@ -110,7 +110,7 @@ class Slides extends Component {
         }
     }
     setURLinReduxForm(values) {
-        if (values.url.indexOf('presentation/d/') !== -1 || values.url.indexOf('presentation/d/e') !== -1) {
+        if (values.url.indexOf('presentation/d/') != -1 || values.url.indexOf('presentation/d/e') != -1) {
             if (values.url.indexOf('presentation/d/e/') !== -1) {
                 const urlSplit1 = values.url.split("presentation/d/e/");
                 const urlSplit2 = urlSplit1[1].split('/');
@@ -161,7 +161,7 @@ function validate(values) {
     const errors = {};
     const valuesStr = values.url;
     if (valuesStr) {
-        if (valuesStr.indexOf('docs.google.com/presentation/d/') === -1 || valuesStr.indexOf('docs.google.com/presentation/d/e/') === -1) {
+        if (valuesStr.indexOf('docs.google.com/presentation/d/') != -1 || valuesStr.indexOf('docs.google.com/presentation/d/e/') != -1) {
             errors.url = "Please paste a valid Google Slides URL";
         }
     }
