@@ -11,7 +11,7 @@ class Slides extends Component {
         return (
             <div className="col s8 input-field">
                 <input id="slides-input" className="slides-input form-control" {...input} type="text" placeholder="Paste a Google Slides URL..." />
-                <p><em>{touched && error}</em></p>
+                <p><em>{touched && error ? error : ''}</em></p>
             </div>
         )
     }
@@ -37,8 +37,6 @@ class Slides extends Component {
                         break;
                     }
                 }
-                // console.log('tab index:' , tabIndex);
-                // console.log('page index:' , pageIndex);
                 if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
                     this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
                     this.props.slideOutSlidesSearch(false,'translateY(-100px)');
@@ -135,8 +133,9 @@ class Slides extends Component {
 function validate(values) {
     const errors = {};
     const valuesStr = values.url;
+    console.log('VALIDATE slides:', valuesStr);
     if (valuesStr) {
-        if (valuesStr.indexOf('docs.google.com/presentation/d/') === -1 || valuesStr.indexOf('docs.google.com/presentation/d/e/') === -1) {
+        if (valuesStr.indexOf('docs.google.com/presentation/d/') === -1) {
             errors.url = "Please paste a valid Google Slides URL";
         }
     }
