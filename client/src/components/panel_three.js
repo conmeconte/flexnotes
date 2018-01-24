@@ -96,9 +96,10 @@ class ThreePanel extends Component {
         // if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
         return (
             <SplitPane className={`width-w-nav ${this.props.interface_obj.navbar_min ? 'full_width' : ''}`} split="vertical" minSize={300} maxSize={-300} defaultSize={425}>
-                <SplitPane split="horizontal" minSize={300} maxSize={-300} defaultSize={500}>
+                <SplitPane split="horizontal" minSize={350} maxSize={-300} defaultSize={350}>
                     <div className="video-parent-panel"><Video /></div>
                     <div className="slides-container"><Slides /></div>
+                    <div className="hakuna-matata">hello</div>
                 </SplitPane>
                 <div className="notes-parent-panel"><Notes /></div>
             </SplitPane>
