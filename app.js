@@ -3,6 +3,8 @@ const mongoose      = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport      = require('passport');
 const keys          = require('./config/keys');
+const path          = require('path');
+
 const { logError, errorHandler, clientErrorHandler } = require('./middlewares/handleError');
 const fs            = require('fs');
 
@@ -37,11 +39,15 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
 
 /* Routing middleware */
 require('./routes/authRoutes')(app);
 require('./routes/realApiRoutes')(app, db);
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
 app.use(logError);
 app.use(errorHandler);
 app.use(clientErrorHandler);
