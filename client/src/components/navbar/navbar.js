@@ -139,7 +139,7 @@ class NavBar extends Component{
             <div>
 
             
-            <button className={`${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
+            <button className={`navbarShow ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
             <i className="small material-icons">chevron_right</i>
             </button>
             <div className={`navbar col s2 ${this.props.interface.navbar_min ? 'hidden' : 'visible'}`}>
