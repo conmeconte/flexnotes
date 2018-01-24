@@ -14,7 +14,7 @@ a {
     width: 10%;
     height: 100vh;
     box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);
-    overflow-y:scroll;
+    /*overflow-y:scroll;*/
     background-color: #6d7993;
 }
 
