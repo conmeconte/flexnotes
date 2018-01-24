@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import Results from './results';
 import VideoContainer from './video-container';
-import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray, getDataObject } from '../actions';
+import { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray, getDataObject, slideOutVideoSearch } from '../actions';
 import { Field, reduxForm } from 'redux-form';
 import VideoModal from './video-modal';
 
@@ -122,12 +122,13 @@ class Video extends Component {
                     break;
                 }
             }
-            if (page_arr_obj[pageIndex].hasOwnProperty('video')) {
+            if (pageIndex !== null && page_arr_obj[pageIndex].hasOwnProperty('video') && page_arr_obj[pageIndex].video[0].hasOwnProperty('videoId')) {
                 // return;
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
-                
+                this.props.slideOutVideoSearch(false, 'translate(-119px)');
             } else {
                 this.props.setVideoUrl('', interface_obj);
+                this.props.slideOutVideoSearch(this.props.toggleSlideOut, this.props.slideOutStyles);
             }
         } 
     }
@@ -138,7 +139,7 @@ class Video extends Component {
         return (
             <div className="main">
                 <VideoModal />
-                <div style={this.props.opacityContainer} className="opacity"></div>
+                {/* <div style={this.props.opacityContainer} className="opacity"></div> */}
                 <div style={this.props.resultsStyles} className="results-container sidebar">
                     <div className="row btn-wrapper">
                         <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input">
@@ -184,7 +185,9 @@ function mapStateToProps(state) {
         toggleResultsBool: state.video.toggleResults,
         interface_obj: state.interface,
         binderObj: state.binder.binderObj,
+        slideOutStyles: state.video.videoLinkSlideOut,
+        toggleSlideOut: state.video.toggleSlideOut
     }
 }
 
-export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray, getDataObject })(Video);
+export default connect(mapStateToProps, { getResultStyles, getOpacityDisplay, toggleResults, getVideoResults, setVideoUrl, updateBinderArray, getDataObject, slideOutVideoSearch })(Video);

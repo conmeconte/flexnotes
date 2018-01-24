@@ -233,7 +233,36 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
         })
     };
 }
-
+export function slideOutVideoSearch(toggleBool, slide) {
+    debugger;
+    let toggleSlideOut = toggleBool;
+    var slideOutStyles;
+    if (toggleSlideOut) {
+        slideOutStyles = 'translateY(27px)',
+        toggleSlideOut = false;
+    } else {
+        slideOutStyles = 'translateY(-119px)';
+        toggleSlideOut = true;
+    }
+    return {
+        type: types.TOGGLE_VIDEO_SLIDE_OUT,
+        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut  } 
+    }
+}
+export function emptyVideoSlideOut (toggleBool, slide) {
+    let toggleSlideOut = toggleBool;
+    let slideOutStyles = slide.style;
+    if (toggleSlideOut) {
+        slideOutStyles =  'translateY(27px)';
+        toggleSlideOut = false;
+    }
+    slideOutStyles =  'translateY(27px)';
+    toggleSlideOut = false;
+    return {
+        type: types.EMPTY_VIDEO_SLIDE_OUT,
+        payload: { slideOutStyles: { style: { transform: slideOutStyles } }, toggleSlideOut }
+    }
+}
 export function playVideo(url) {
     let videoId = url;
     document.querySelector(".video-iframe").src = url

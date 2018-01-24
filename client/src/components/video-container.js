@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray, getDataObject } from '../actions';
+import { playVideo, grabVideoUrl, addVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray, getDataObject, slideOutVideoSearch } from '../actions';
 
 
 
 class VideoContainer extends Component {
-    constructor (props) {
-        super(props);
-        this.slideOutVideoSearch = this.slideOutVideoSearch.bind(this);
-        this.state = {
-            style: {
-                transform: 'translateY(-119px)'
-            },
-            toggleSlideOut: true
-        }
-    }
     renderInput ({input, type, placeholder, meta: { error, touched }}) {
         console.log({input});
         return (
@@ -29,7 +19,7 @@ class VideoContainer extends Component {
         console.log(values);
         console.log("HERE IS A VIDEO INPUT", values["youtube-url"]);
         const youtubeLinkInput = values["youtube-url"];
-        if (!youtubeLinkInput) {
+        if (!youtubeLinkInput || youtubeLinkInput.indexOf("youtu") === -1) {
             return;
         }
         // console.log(values.input);
@@ -47,31 +37,12 @@ class VideoContainer extends Component {
     // componentWillReceiveProps(nextProps){
     //     debugger
     // }
-    slideOutVideoSearch() {
-        let { toggleSlideOut } = this.state;
-        let { transform } = this.state.style;
-        if (toggleSlideOut) {
-            transform = 'translateY(39px)',
-            toggleSlideOut = false;
-        } else {
-            transform = 'translateY(-119px)';
-            toggleSlideOut = true;
-        }
-        this.setState({
-            style: {
-                transform: transform
-            },
-            toggleSlideOut: toggleSlideOut
-        });
-    }
     render () {
-        const { toggleSlideOut } = this.state;
-        const { transform } = this.state.style;
     return ( 
         <div className="iframe-wrapper">
             <div className="row">
                 <form onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}>
-                    <div style={{ transform }} className="row slide-out-input">
+                    <div style={ this.props.slideOutStyles } className="row slide-out-input">
                     <Field name="youtube-url" component={this.renderInput} />
                         <div className="col s3">
                             <div className="row btn-wrapper">
@@ -86,9 +57,9 @@ class VideoContainer extends Component {
                     </div>
                 </form>
                 <div className="arrow-container" onClick={ () => {
-                    this.slideOutVideoSearch()
+                    this.props.slideOutVideoSearch(this.props.toggleSlideOut, this.props.slideOutStyles );
                 }}>
-                    { !toggleSlideOut ? <i className="material-icons">keyboard_arrow_up</i> : <i className="material-icons">keyboard_arrow_down</i> }
+                    { !this.props.toggleSlideOut ? <i className="material-icons">keyboard_arrow_up</i> : <i className="material-icons">keyboard_arrow_down</i> }
                 </div>
             </div>
             <div id="video-container" className="video-container">
@@ -112,7 +83,9 @@ function mapStateToProps (state) {
         resultsStyles: state.video.resultsStyles,
         toggleResultsBool: state.video.toggleResults,
         opacityContainer: state.video.opacityDisplay,
-        interface_obj: state.interface
+        interface_obj: state.interface,
+        slideOutStyles: state.video.videoLinkSlideOut,
+        toggleSlideOut: state.video.toggleSlideOut
     }
 }
 
@@ -129,4 +102,4 @@ VideoContainer = reduxForm({
     validate
 })(VideoContainer)
 
-export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray, getDataObject })(VideoContainer)
+export default connect(mapStateToProps, { playVideo, grabVideoUrl, addToPlaylist, toggleModal, getResultStyles, getOpacityDisplay, playPastedLinkVideo, updateBinderArray, getDataObject, slideOutVideoSearch })(VideoContainer)
