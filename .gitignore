@@ -5,3 +5,5 @@ errorLogs
 .vscode
 keys.js
 
+logins.log
+serverError.log
