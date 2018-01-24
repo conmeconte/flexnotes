@@ -99,6 +99,7 @@ class ThreePanel extends Component {
                 <SplitPane split="horizontal" minSize={300} maxSize={600} defaultSize={450}>
                     <div className="video-parent-panel"><Video /></div>
                     <div className="slides-container"><Slides /></div>
+                    <div className="hakuna-matata">hello</div>
                 </SplitPane>
                 <div className="notes-parent-panel"><Notes /></div>
             </SplitPane>
