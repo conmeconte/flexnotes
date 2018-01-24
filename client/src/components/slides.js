@@ -11,7 +11,7 @@ class Slides extends Component {
         this.slideOutSlidesSearch = this.slideOutSlidesSearch.bind(this);
         this.state = {
             style: {
-                transform: 'translateY(-90px)'
+                transform: 'translateY(-100px)'
             },
             toggleSlideOut: true
         }
@@ -32,7 +32,7 @@ class Slides extends Component {
             transform = 'translateY(0px)',
                 toggleSlideOut = false;
         } else {
-            transform = 'translateY(-90px)';
+            transform = 'translateY(-100px)';
             toggleSlideOut = true;
         }
         this.setState({

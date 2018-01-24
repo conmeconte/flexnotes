@@ -63,7 +63,7 @@ button.close {
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #fff;
+    background-color:rgba(255,255,255, 0.97);
     width: 100%;
     border-left: 1px solid #e4e4e4;
     z-index: 5000;
@@ -71,6 +71,10 @@ button.close {
 .row.results-input-container {
     margin-left: 0;
     margin-right: 0;
+}
+.result-item.collection-item,
+.list-item-wrapper {
+    background-color: transparent; 
 }
 #search {
     position: absolute;
@@ -178,4 +182,7 @@ button.close {
 }
 .red-text {
     color: red;
+}
+.Pane.horizontal.Pane2 {
+    height: 325px;
 }

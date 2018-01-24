@@ -5,14 +5,14 @@
 }
 
 .slides-div {
-  height: 95%;
+  height: 100%;
   overflow: hidden;
 }
 
 .slides-iframe
 {
   position: relative;
-  top: -5vh;
+  top: -7vh;
   bottom: 0;
   left: 0;
   right: 0;
