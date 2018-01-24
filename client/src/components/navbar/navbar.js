@@ -5,7 +5,7 @@ import logo from '../../assets/images/logo.png';
 
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, deleteBinder, addBinder, updateBinderObj} from '../../actions';
+import { updateBinderArray, deleteBinder, addBinder, updateBinderObj, minNav, showNav} from '../../actions';
 
 class NavBar extends Component{
     constructor(props){
@@ -70,6 +70,14 @@ class NavBar extends Component{
         console.log('editname');
     
     }
+
+    hideNav(){
+        this.props.minNav();
+    }
+
+    openNav(){
+        this.props.showNav();
+    }
     
     notEditable() {
         console.log("editable should be false");
@@ -78,7 +86,7 @@ class NavBar extends Component{
         });
     }
     render(){
-        //console.log("navbar props:", this.props);
+        console.log("navbar props:", this.props);
         const { editable } = this.state;
         let binder = [];
         if(editable){
@@ -128,36 +136,27 @@ class NavBar extends Component{
         //     );
         // });
         return (
-            <div className="navbar col s2">
+            <div>
+
+            
+            <button className={`${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
+            <i className="small material-icons">chevron_right</i>
+            </button>
+            <div className={`navbar col s2 ${this.props.interface.navbar_min ? 'hidden' : 'visible'}`}>
                 {/* <div className="logout">
                     <img className="logoImage" src={logo} />
                     <Login />
                 </div> */}
-                <button className='hideNavbar'>
+                <button className='hideNavbar' onClick={this.hideNav.bind(this)}>
                 <i className="small material-icons">chevron_left</i>
                 </button>
-            {/* <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
-                    Binders <span className="glyphicon glyphicon-pencil"></span>
-            </button>
-            <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
-                    Binders <span className="glyphicon glyphicon-ok"></span>
-            </button> */}
 
                 
                 {binder}
-
-
-                {/* <div className="contain-tab">
-                    <h4 className="nav_header"></h4>
-                </div>
-                <div className="contain-page">
-                    <h4 className="nav_header"></h4>
-                </div> */}
-                {/* {binder_route} */}
-                
                 <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
                 New Binder</button>  
                 <Route path={'/main/:binder'} component={Binder}/>
+            </div>
             </div>
         );
     }
@@ -172,4 +171,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{ updateBinderArray, deleteBinder, addBinder, updateBinderObj})(NavBar);
+export default connect(mapStateToProps,{ updateBinderArray, deleteBinder, addBinder, updateBinderObj, minNav, showNav})(NavBar);
