@@ -40,5 +40,7 @@ export default {
     RESET_PANEL_NUM: 'reset_panel_num',
     NO_VIDEO_LINK: 'no_video_link',
     HIDE_NAV: 'hide_nav',
-    SHOW_NAV: 'show_nav'
+    SHOW_NAV: 'show_nav',
+    EDITABLE: 'editable',
+    NOT_EDITABLE: 'not_editable'
 }

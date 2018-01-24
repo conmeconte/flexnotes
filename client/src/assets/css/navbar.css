@@ -36,17 +36,17 @@ ul > li {
     overflow-y: scroll;
 }
 
-.visible{
+.visible, .edit-btn.visible, .delete-btn.visible, .navbarShow.visible{
     display: inline;
 }
 
-.hidden{
+.hidden, .edit-btn.hidden, .delete-btn.hidden, .navbarShow.hidden{
     display: none;
 }
 
 .binderTitle{
-    /*margin-top: 3%;*/
-    border-top: solid 5px #7b6b73;
+    #margin-top: 1%;
+    border-top: solid 4px #7b6b73;
     background-color: #96858f;
 }
 
@@ -57,7 +57,7 @@ ul > li {
 .binderWrap{
     background-color: #96858f;
      width: 100%;
-     border-bottom: solid 3px #7b6b73;
+     border-bottom: solid 2px #7b6b73;
 }
 
 .tabWrap{
@@ -79,6 +79,8 @@ ul > li {
 .pageBody{
     border: 1px solid #696969;
     background-color: #d5d5d5;
+    padding: 2% 0%; 
+    #line-height: 100%;
     width: 98%;
     display: inline-block;
 }
@@ -87,21 +89,42 @@ ul > li {
     display: inline-block;
 }
 
-.add-btn.btn  {
+.add-btn-page.btn  {
     margin-bottom: 8%;
     padding: 0;
     width: 100%;
+    font-weight: 500;
 }
 
-.navbarShow{
-    position: absolute;
-    z-index: 100;
+.add-btn-page.btn:hover  {
+    background-color: #d5d5d5;
+    color: black;
 }
 
-.add-btn-binder  {
+.add-btn-tab.btn  {
+    margin-top: 3%;
+    margin-bottom: 5%;
+    padding: 0;
+    width: 100%;
+    font-weight: 500;
+}
+
+.add-btn-tab.btn:hover  {
+    background-color: #9099a2;
+    color: black;
+    
+}
+
+.add-btn-binder.btn  {
     margin-top: 3%;
     padding: 0;
-    width: 90%;
+    width: 100%;
+    font-weight: 500;
+}
+
+.add-btn-binder.btn:hover{
+    background-color: #96858f;
+    color: black;
 }
 
 .pageLink{
@@ -134,7 +157,39 @@ ul > li {
     background-color: red;
 }
 
+.navbarShow.btn, .hideNavbar.btn, .editMode.btn{
+    background-color: #d5d5d5;
+    color: black;
+    #font-weight: 400;
+}
+.editMode.btn{
+    margin-left: 5%;
+}
+
+.editMode.btn:focus{
+    background-color: #d5d5d5;
+}
+
+.editMode.btn:hover{
+    background-color: #2bbbad;
+}
+
+.editMode.btn.editing:focus{
+    background-color: #2bbbad;
+    color: white;
+}
+.navbarShow:hover, .hideNavbar:hover{
+
+}
+
+.navbarShow{
+    position: absolute;
+    z-index: 100;
+}
+
+
 section {
+    margin-top: 5%;
     height: 82vh;
     overflow: auto;
 }

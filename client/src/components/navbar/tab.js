@@ -182,10 +182,10 @@ class Tab extends Component {
                         </div>
                     </Link>
                     <div className="left-align">
-                        <button type="button" className="btn-floating navbar-btn edit-btn" onClick={this.editTabs}>
+                        <button type="button" className={`btn-floating navbar-btn edit-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={this.editTabs}>
                         <i className="small material-icons">edit</i>
                         </button>
-                        <button type="button" className="btn-floating navbar-btn delete-btn" onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
+                        <button type="button" className={`btn-floating navbar-btn delete-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
                         <i className="small material-icons">delete_forever</i>
                         </button>
                     </div>
@@ -301,7 +301,7 @@ class Tab extends Component {
                 <button className="btn btn-default btn-xs btn_add" onClick={this.addTab}>
                     <span className="glyphicon glyphicon-plus"></span>
                 </button>   */}
-                <button className="btn add-btn waves-effect waves-light" onClick={this.addPage}>
+                <button className="btn add-btn-page waves-effect waves-light" onClick={this.addPage}>
                 New Page</button>   
                 <Route path={`/main/${url}`+"/:page"} component={Page}/>
                 </div>
