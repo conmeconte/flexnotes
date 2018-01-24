@@ -233,7 +233,36 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
         })
     };
 }
-
+export function slideOutVideoSearch(toggleBool, slide) {
+    debugger;
+    let toggleSlideOut = toggleBool;
+    var slideOutStyles;
+    if (toggleSlideOut) {
+        slideOutStyles = 'translateY(27px)',
+        toggleSlideOut = false;
+    } else {
+        slideOutStyles = 'translateY(-119px)';
+        toggleSlideOut = true;
+    }
+    return {
+        type: types.TOGGLE_VIDEO_SLIDE_OUT,
+        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut  } 
+    }
+}
+export function emptyVideoSlideOut (toggleBool, slide) {
+    let toggleSlideOut = toggleBool;
+    let slideOutStyles = slide.style;
+    if (toggleSlideOut) {
+        slideOutStyles =  'translateY(27px)';
+        toggleSlideOut = false;
+    }
+    slideOutStyles =  'translateY(27px)';
+    toggleSlideOut = false;
+    return {
+        type: types.EMPTY_VIDEO_SLIDE_OUT,
+        payload: { slideOutStyles: { style: { transform: slideOutStyles } }, toggleSlideOut }
+    }
+}
 export function playVideo(url) {
     let videoId = url;
     document.querySelector(".video-iframe").src = url
@@ -243,20 +272,38 @@ export function playVideo(url) {
     }
 }
 export function playPastedLinkVideo(url) {
+    debugger;
     if (!url) {
         return {
             type: types.NO_VIDEO_LINK
         };
+    } else if (url.indexOf("&") !== -1 || url.indexOf("=") !== -1) {
+        let videoId = url
+        videoId = videoId.split('&')[0];
+        videoId = videoId.split('=')[1];
+        videoId = `https://www.youtube.com/embed/${videoId}`;
+        console.log("PLAY PASTED LINK VIDEO: ", videoId);
+        return {
+            type: types.PLAY_PASTED_VIDEO_LINK,
+            payload: videoId
+        }
+    } else if (url.indexOf("youtu.be") !== -1) { 
+        let videoId = url;
+        videoId = url.split("/");
+        videoId = videoId[3];
+        videoId = `https://www.youtube.com/embed/${videoId}`;
+        return {
+            type: types.PLAY_PASTED_VIDEO_LINK,
+            payload: videoId
+        }
+    } else {
+        let videoId = url
+        return {
+            type: types.PLAY_PASTED_VIDEO_LINK,
+            payload: videoId
+        }
     }
-    let videoId = url
-    videoId = videoId.split('&')[0];
-    videoId = videoId.split('=')[1];
-    videoId = `https://www.youtube.com/embed/${videoId}`;
-    console.log("PLAY PASTED LINK VIDEO: ", videoId)
-    return {
-        type: types.PLAY_PASTED_VIDEO_LINK,
-        payload: videoId
-    }
+    
 }
 export function grabVideoUrl(videoLink) {
     return {
