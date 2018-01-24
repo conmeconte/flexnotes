@@ -69,18 +69,18 @@ class Video extends Component {
                     break;
                 }
             }
-            if (typeof (page_arr_obj[pageIndex].video[0].videoURL) === 'undefined' || typeof (page_arr_obj[pageIndex].video[0].videoURL) === '') {
+            if (typeof(page_arr_obj[pageIndex].video[0].videoURL) === 'undefined' || typeof(page_arr_obj[pageIndex].video[0].videoURL) === '') {
                 // return;
                 this.props.setVideoUrl('', interface_obj);
             } else {
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
-
+                
             }
-        }
+        } 
     }
     componentWillReceiveProps(nextProps) {
         console.log("NEXT PROPS: ", nextProps);
-        if (this.props.interface_obj.page_id !== nextProps.interface_obj.page_id) {
+        if (this.props.interface_obj.page_id !== nextProps.interface_obj.page_id){
             this.updateVideoComponent(nextProps);
         }
 
@@ -91,9 +91,8 @@ class Video extends Component {
         //     this.updateVideoComponent(nextProps);
         // }
     }
-    renderInput({ input }) {
-        console.log(input);
-        console.log(this.props);
+    renderInput({ input, defaultValue }) {
+        
         return (
             <div id="input-field" className="col s8 input-field">
                 <input type="text" {...input} id="query" placeholder="Search on Youtube..." className="form-control" />
@@ -126,31 +125,32 @@ class Video extends Component {
             if (page_arr_obj[pageIndex].hasOwnProperty('video')) {
                 // return;
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
-
+                
             } else {
                 this.props.setVideoUrl('', interface_obj);
             }
-        }
+        } 
     }
 
     render() {
-        console.log("video props:", this.props);
+        const { resultsVideoUrl } = this.props;
+        console.log("video props:", resultsVideoUrl);
         return (
             <div className="main">
                 <VideoModal />
-                {/* <div style={this.props.opacityContainer} className="opacity"></div> */}
+                <div style={this.props.opacityContainer} className="opacity"></div>
                 <div style={this.props.resultsStyles} className="results-container sidebar">
                     <div className="row btn-wrapper">
                         <form onSubmit={this.props.handleSubmit(this.search.bind(this))} id="search-input-container" className="search-button-input">
-                            <Field name="video" component={this.renderInput} />
+                            <Field name="video" defaultValue={resultsVideoUrl} component={this.renderInput} />
                             <span className="input-group-btn btn-wrapper">
                                 <button id="search-button" className="btn results-btn video-btn red darken-3">
-                                    <i className="material-icons">search</i>
+                                <i className="material-icons">search</i>
                                 </button>
 
-                                <button className="btn results-btn vid-right-arrow video-btn" onClick={() => {
-                                    this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
-                                    this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
+                                <button className="btn results-btn vid-right-arrow video-btn" onClick={ () => {
+                                this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
+                                this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
                                 }}>
                                     <i className="material-icons">close</i>
                                 </button>
@@ -184,7 +184,6 @@ function mapStateToProps(state) {
         toggleResultsBool: state.video.toggleResults,
         interface_obj: state.interface,
         binderObj: state.binder.binderObj,
-        videoLink: state.video.videoLink
     }
 }
 

@@ -243,20 +243,38 @@ export function playVideo(url) {
     }
 }
 export function playPastedLinkVideo(url) {
+    debugger;
     if (!url) {
         return {
             type: types.NO_VIDEO_LINK
         };
+    } else if (url.indexOf("&") !== -1 || url.indexOf("=") !== -1) {
+        let videoId = url
+        videoId = videoId.split('&')[0];
+        videoId = videoId.split('=')[1];
+        videoId = `https://www.youtube.com/embed/${videoId}`;
+        console.log("PLAY PASTED LINK VIDEO: ", videoId);
+        return {
+            type: types.PLAY_PASTED_VIDEO_LINK,
+            payload: videoId
+        }
+    } else if (url.indexOf("youtu.be") !== -1) { 
+        let videoId = url;
+        videoId = url.split("/");
+        videoId = videoId[3];
+        videoId = `https://www.youtube.com/embed/${videoId}`;
+        return {
+            type: types.PLAY_PASTED_VIDEO_LINK,
+            payload: videoId
+        }
+    } else {
+        let videoId = url
+        return {
+            type: types.PLAY_PASTED_VIDEO_LINK,
+            payload: videoId
+        }
     }
-    let videoId = url
-    videoId = videoId.split('&')[0];
-    videoId = videoId.split('=')[1];
-    videoId = `https://www.youtube.com/embed/${videoId}`;
-    console.log("PLAY PASTED LINK VIDEO: ", videoId)
-    return {
-        type: types.PLAY_PASTED_VIDEO_LINK,
-        payload: videoId
-    }
+    
 }
 export function grabVideoUrl(videoLink) {
     return {
