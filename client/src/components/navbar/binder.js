@@ -143,7 +143,7 @@ class Binder extends Component {
 
     render() {
         const { active, editable, binderName } = this.state;
-        //console.log("Binder props:", this.props);
+        console.log("Binder props:", this.props);
         //console.log("Binder state:", this.state);
         if(!this.props.binderObj){
             return null;
@@ -168,7 +168,7 @@ class Binder extends Component {
                              value={binderName}
                              />
                 <button type="button" className={`btn-floating ${editable ? 'visibleBinder' : 'hiddenBinder'}`} onClick={this.notEditable}>
-                <i className="small material-icons">check_circle</i>
+                Done
                 </button>
             </div>              
             );
@@ -181,10 +181,10 @@ class Binder extends Component {
                                 </div>
                     </Link>
                     <div className="left-align">
-                        <button type="button" className='btn-floating navbar-btn edit-btn' onClick={this.editable}>
+                        <button type="button" className={`btn-floating navbar-btn edit-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={this.editable}>
                         <i className="small material-icons">edit</i>
                         </button>
-                        <button type="button" className="btn-floating navbar-btn delete-btn" onClick={()=>this.deleteBinder(this.props.binderObj._id)}>
+                        <button type="button" className={`btn-floating navbar-btn delete-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deleteBinder(this.props.binderObj._id)}>
                         <i className="small material-icons">delete_forever</i>
                         </button>
                     </div>
@@ -240,7 +240,7 @@ class Binder extends Component {
                 <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
                     <span className="glyphicon glyphicon-plus"></span>
                 </button> */}
-                <button className="btn add-btn waves-effect waves-light" onClick={this.addTab}>
+                <button className="btn add-btn-tab waves-effect waves-light" onClick={this.addTab}>
                 New Tab</button>  
                 <Route path={`/main/${binder_url}`+"/:tab"} component={Tab}/>
                 </div>
