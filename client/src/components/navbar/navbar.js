@@ -143,10 +143,7 @@ class NavBar extends Component{
             <i className="small material-icons">chevron_right</i>
             </button>
             <div className={`navbar col s2 ${this.props.interface.navbar_min ? 'hidden' : 'visible'}`}>
-                {/* <div className="logout">
-                    <img className="logoImage" src={logo} />
-                    <Login />
-                </div> */}
+
                 <button className='hideNavbar' onClick={this.hideNav.bind(this)}>
                     <i className="small material-icons">chevron_left</i>
                 </button>
@@ -154,15 +151,18 @@ class NavBar extends Component{
                 <header>
                     <h3><img className="logoImage" src={logo}/><span className="dashFlex">Flex</span>Notes</h3>
                 </header>
-                
-                {binder}
-                <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
-                New Binder</button>  
-                <Route path={'/main/:binder'} component={Binder}/>
+
+                <section>
+                    {binder}
+                    <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
+                        New Binder</button>
+                    <Route path={'/main/:binder'} component={Binder}/>
+                </section>
 
                 <footer>
-                    <Login />
+
                     <button className="startTour" onClick={this.openTour}>Tour</button>
+                    <Login />
                 </footer>
             </div>
             </div>

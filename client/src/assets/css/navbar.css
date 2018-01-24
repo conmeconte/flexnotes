@@ -45,7 +45,7 @@ ul > li {
 }
 
 .binderTitle{
-    margin-top: 3%;
+    /*margin-top: 3%;*/
     border-top: solid 5px #7b6b73;
     background-color: #96858f;
 }
@@ -134,9 +134,19 @@ ul > li {
     background-color: red;
 }
 
+section {
+    height: 82vh;
+    overflow: auto;
+}
+
 /* --------------------- HEADER AND FOOTER ---------------------*/
 
+header {
+    margin-bottom: 5px;
+}
+
 header > h3 {
+    margin: 0;
     font-size: 38px;
     color: #d5d5d5;
 }
@@ -149,10 +159,11 @@ header > h3 {
     height: 28px;
 }
 
-.footer {
-    position: absolute;
-    bottom: 0;
-    left: 8px;
+footer {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #6d7993;
+    z-index: 2;
 }
 
 .startTour, .logoutBtn {
@@ -170,4 +181,5 @@ header > h3 {
 
 .startTour {
     float: left;
+    margin: 0 5% 0 6%;
 }
