@@ -115,7 +115,6 @@ class Notes extends Component {
     };
 
     submitNotes() {
-        console.log("it saved!")
         let { interface_obj } = this.props;
         const { value } = this.state;
         const content = JSON.stringify(value.toJSON());
@@ -155,7 +154,6 @@ class Notes extends Component {
                 }
             }
             if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
-                console.log('HAS NOTES cwm', tab_arr_obj[tabIndex].page_arr_obj[pageIndex].notes);
                 const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
                 this.setState({
                     value: Value.fromJSON(lastContent),
@@ -182,7 +180,6 @@ class Notes extends Component {
             let pageIndex = null;
             for (let i = 0; i < tabArrLength; i++) {
                 if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    //console.log('tabid = interface id at index:', i);
                     tabIndex = i;
                     break;
                 }
@@ -195,7 +192,6 @@ class Notes extends Component {
                 }
             }
             if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
-                console.log('HAS NOTES cwrp', tab_arr_obj[tabIndex].page_arr_obj[pageIndex].notes);
                 const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
                 this.setState({
                     value: Value.fromJSON(lastContent),

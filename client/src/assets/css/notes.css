@@ -8,16 +8,15 @@
 }
 
 .text-editor {
-
+    height: 100%;
     margin-top: 100px;
 }
 
 .editor {
     padding-left: 1vmin;
     padding-top: 2vmin;
-    height: 85%;
-    max-width: 750px;
-
+    height: 85vh;
+    max-width: 50vw;
 }
 
 /* -------------------- TOOLBAR --------------------*/
