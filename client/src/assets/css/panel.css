@@ -127,7 +127,9 @@ body {
 .full_width.width-w-nav{
     width: 100% !important;
 }
-
+.hakuna-matata{
+    height: 1px; 
+}
 
 /* #dashboard-container {
     margin-bottom: 0;

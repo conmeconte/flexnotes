@@ -5,9 +5,7 @@ exports.logError = function (err, req, res, next){
         next()
     } else {
         console.log('error yaya!!')
-        // console.error(err.stack)
         let errorData= {Date: new Date().toLocaleString(),errorMessage: err.stack};
-        // fs.appendFile('./errorLogs/serverError.log', JSON.stringify(errorData) + '\n', function (err) {
         fs.appendFile(path.join(__dirname, '..', 'errorLogs', 'serverError.log'), JSON.stringify(errorData) + '\n', function (err) {
             if (err) next(err); 
             console.log('Updated!');

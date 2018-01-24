@@ -7,6 +7,8 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateBinderArray, deleteBinder, addBinder, updateBinderObj, minNav, showNav, editable, notEditable} from '../../actions';
 
+import FlexNotesTour from '../react_tour';
+
 class NavBar extends Component{
     constructor(props){
         super(props);
@@ -133,8 +135,7 @@ class NavBar extends Component{
                 </section>
 
                 <footer>
-
-                    <button className="startTour" onClick={this.openTour}>Tour</button>
+                    <FlexNotesTour toggleTour={this.props.toggleTour}/>
                     <Login />
                 </footer>
             </div>
