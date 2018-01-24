@@ -93,6 +93,7 @@ class Video extends Component {
     }
     renderInput({ input }) {
         console.log(input);
+        console.log(this.props);
         return (
             <div id="input-field" className="col s8 input-field">
                 <input type="text" {...input} id="query" placeholder="Search on Youtube..." className="form-control" />
@@ -183,6 +184,7 @@ function mapStateToProps(state) {
         toggleResultsBool: state.video.toggleResults,
         interface_obj: state.interface,
         binderObj: state.binder.binderObj,
+        videoLink: state.video.videoLink
     }
 }
 
