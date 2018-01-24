@@ -160,11 +160,7 @@ function validate(values) {
     const valuesStr = values.url;
     console.log('VALIDATE slides:', valuesStr);
     if (valuesStr) {
-<<<<<<< HEAD
-        if (valuesStr.indexOf('docs.google.com/presentation/d/') != -1 || valuesStr.indexOf('docs.google.com/presentation/d/e/') != -1) {
-=======
         if (valuesStr.indexOf('docs.google.com/presentation/d/') === -1) {
->>>>>>> 5345d2781d139debe78b8b36a467172d8c923fd7
             errors.url = "Please paste a valid Google Slides URL";
         }
     }

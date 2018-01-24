@@ -234,7 +234,6 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
     };
 }
 export function slideOutVideoSearch(toggleBool, slide) {
-    debugger;
     let toggleSlideOut = toggleBool;
     var slideOutStyles;
     if (toggleSlideOut) {
@@ -272,7 +271,6 @@ export function playVideo(url) {
     }
 }
 export function playPastedLinkVideo(url) {
-    debugger;
     if (!url) {
         return {
             type: types.NO_VIDEO_LINK

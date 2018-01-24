@@ -51,7 +51,6 @@ export default function (state = DEFAULT_STATE, action) {
         case types.SET_VIDEO_URL: 
             return { ...state, videoLink: action.payload }
         case types.TOGGLE_VIDEO_SLIDE_OUT:
-        debugger;
             return { ...state, videoLinkSlideOut: action.payload.slideOutStyles, toggleSlideOut: action.payload.toggleSlideOut }
         case types.EMPTY_VIDEO_SLIDE_OUT:
             return { ...state, videoLinkSlideOut: action.payload.slideOutStyles.style }
