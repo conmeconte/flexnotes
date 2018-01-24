@@ -7,12 +7,14 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateBinderArray, deleteBinder, addBinder, updateBinderObj, minNav, showNav} from '../../actions';
 
+import FlexNotesTour from '../react_tour';
+
 class NavBar extends Component{
     constructor(props){
         super(props);
         this.state = {
             editable: false
-        }
+        };
         this.addBinder = this.addBinder.bind(this);
         this.editable = this.editable.bind(this);
         this.notEditable = this.notEditable.bind(this);
@@ -160,8 +162,8 @@ class NavBar extends Component{
                 </section>
 
                 <footer>
-
-                    <button className="startTour" onClick={this.openTour}>Tour</button>
+                    <FlexNotesTour toggleTour={this.props.toggleTour}/>
+                    {/*<button className="startTour" onClick={this.openTour}>Tour</button>*/}
                     <Login />
                 </footer>
             </div>

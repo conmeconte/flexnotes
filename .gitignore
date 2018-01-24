@@ -1,4 +1,5 @@
 node_modules
+errorLogs
 .DS_Store
 .idea
 .vscode
