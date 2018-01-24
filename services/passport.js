@@ -37,9 +37,9 @@ passport.use(
                 return done(null, existingUser);
             }
             //no user record in db make a new record
-            const defaultBinder = new Binder({binder_name: "FlexNotes!"});
-            defaultBinder.tab_arr_obj.push(new Tab({tab_name :"First Tab"}));
-            defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({ page_name : "Welcome To FlexNotes", page_color: 'orange', notes:{document:{}} }));
+            const defaultBinder = new Binder({binder_name: "Binder"});
+            defaultBinder.tab_arr_obj.push(new Tab({tab_name :"Tab"}));
+            defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({ page_name : "Page", page_color: 'orange', notes:{document:{}} }));
             defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ videoInfo: 'No Info' }));
             const user = await new User({
                 googleId: profile.id,

@@ -9,7 +9,7 @@ const pageSchemaNew = new Schema({
     page_color : String,
     page_date : {type: Date, default:Date.now},
     page_count : { type:Number, default:1},
-    page_name : { type:String, default:"untitled"},
+    page_name : { type:String, default:"New Page"},
     calendar : {
         cal_url : String
     },
