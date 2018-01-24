@@ -55,6 +55,10 @@ export default function (state = DEFAULT_STATE, action) {
             return { ...state, axios_error_response: action.msg };
         case types.UPDATE_BINDER_OBJ:
             return {...state, sent_to_db: false};
+        case types.HIDE_NAV:
+            return {...state, navbar_min: true};
+        case types.SHOW_NAV:
+            return {...state, navbar_min: false};
         default:
             return state;
     }

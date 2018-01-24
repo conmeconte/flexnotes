@@ -90,7 +90,7 @@ class Panel extends Component {
     render() {
         //console.log("panel props", this.props);
         return (
-            <div className="col s10">
+            <div className="">
                 {/* <header>
                     <div>
                         <h3 className="welcome">FlexNotes{this.props.binderArray.binderArr.userName}</h3>
@@ -105,7 +105,7 @@ class Panel extends Component {
                     <button onClick={this.sendSize} className="btn btn-primary">Save</button>
                     <h1 className="app-title">FlexNote</h1>
                 </div> */}
-                <div className="panel_div col s10">
+                <div className={`col panel_div ${this.props.interface_obj.navbar_min ? 's12' : 's10'}`}>
                     <PanelNum num={3} />
                 </div>
             </div>
