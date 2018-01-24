@@ -136,7 +136,7 @@ ul > li {
 
 /* --------------------- HEADER AND FOOTER ---------------------*/
 
-header {
+header > h3 {
     font-size: 38px;
     color: #d5d5d5;
 }
@@ -150,8 +150,24 @@ header {
 }
 
 .footer {
-    float: right;
     position: absolute;
     bottom: 0;
     left: 8px;
+}
+
+.startTour, .logoutBtn {
+    height: 40px;
+    width: 80px;
+    background-color: #d5d5d5;
+    color: #6d7993;
+}
+
+.startTour:hover, .logoutBtn:hover {
+    background-color: #96858f;
+    color: #ffffff;
+    border: none;
+}
+
+.startTour {
+    float: left;
 }

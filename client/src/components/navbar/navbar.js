@@ -152,13 +152,18 @@ class NavBar extends Component{
                 </button>
 
                 <header>
-                    <h4><img className="logoImage" src={logo}/><span className="dashFlex">Flex</span>Notes</h4>
+                    <h3><img className="logoImage" src={logo}/><span className="dashFlex">Flex</span>Notes</h3>
                 </header>
                 
                 {binder}
                 <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
                 New Binder</button>  
                 <Route path={'/main/:binder'} component={Binder}/>
+
+                <footer>
+                    <Login />
+                    <button className="startTour" onClick={this.openTour}>Tour</button>
+                </footer>
             </div>
             </div>
         );
