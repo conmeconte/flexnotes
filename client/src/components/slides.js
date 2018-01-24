@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 // import '../assets/css/slides.css';
 import axios from 'axios';
-import { setSlidesUrl, getSlidesURL, updateBinderArray, resetSlidesURL } from '../actions';
+import { setSlidesUrl, getSlidesURL, updateBinderArray, resetSlidesURL, slideOutSlidesSearch } from '../actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
 class Slides extends Component {
-    constructor(props) {
-        super(props);
-        this.slideOutSlidesSearch = this.slideOutSlidesSearch.bind(this);
-        this.state = {
-            style: {
-                transform: 'translateY(-100px)'
-            },
-            toggleSlideOut: true
-        }
-    }
     renderInput(props) {
         const { input, meta: { touched, error } } = props;
         return (
@@ -24,23 +14,6 @@ class Slides extends Component {
                 <p><em>{touched && error ? error : ''}</em></p>
             </div>
         )
-    }
-    slideOutSlidesSearch() {
-        let { toggleSlideOut } = this.state;
-        let { transform } = this.state.style;
-        if (toggleSlideOut) {
-            transform = 'translateY(0px)',
-                toggleSlideOut = false;
-        } else {
-            transform = 'translateY(-100px)';
-            toggleSlideOut = true;
-        }
-        this.setState({
-            style: {
-                transform: transform
-            },
-            toggleSlideOut: toggleSlideOut
-        });
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
@@ -66,8 +39,11 @@ class Slides extends Component {
                 }
                 if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
                     this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
+                    this.props.slideOutSlidesSearch(false,'translateY(-100px)');
                 } else {
                     this.props.resetSlidesURL('');
+                    this.props.slideOutSlidesSearch(true,'translateY(0px)');
+                    //return;
                 }
 
             }
@@ -129,19 +105,18 @@ class Slides extends Component {
     }
 
     render() {
-        const { toggleSlideOut } = this.state;
-        const { transform } = this.state.style;
-
+        const toggleSlideOut = this.props.toggleLectureSlideOut;
+        const slideOutStyles = this.props.lectureSlideOutStyles;
         return (
             <div className="slides-div fourth-step">
-                <form style={{ transform }} className="form-horizontal slide-out-input" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
+                <form style={ slideOutStyles } className="form-horizontal slide-out-input" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
                     <div className="row">
                         <Field name="url" component={this.renderInput} />
                         <button className="btn green darken-1 col s2 slidesBtn"><i style={{ marginRight: "0px" }} className="material-icons">check</i></button>
                     </div>
                 </form>
                 <div className="arrow-container-slides" onClick={() => {
-                    this.slideOutSlidesSearch()
+                    this.props.slideOutSlidesSearch(toggleSlideOut, slideOutStyles)
                 }}>
                     {!toggleSlideOut ? <i className="material-icons">keyboard_arrow_up</i> : <i className="material-icons">keyboard_arrow_down</i>}
                 </div>
@@ -177,7 +152,9 @@ function mapStateToProps(state) {
         slide_input: state.slides.input,
         interface_obj: state.interface,
         binderObj: state.binder.binderObj,
+        toggleLectureSlideOut: state.slides.toggleLectureSlideOut,
+        lectureSlideOutStyles: state.slides.slideLinkSlideOut
     }
 };
 
-export default connect(mapStateToProps, { setSlidesUrl, updateBinderArray, getSlidesURL, resetSlidesURL })(Slides);
+export default connect(mapStateToProps, { setSlidesUrl, updateBinderArray, getSlidesURL, resetSlidesURL, slideOutSlidesSearch })(Slides);

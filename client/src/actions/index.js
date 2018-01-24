@@ -234,7 +234,6 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
     };
 }
 export function slideOutVideoSearch(toggleBool, slide) {
-    debugger;
     let toggleSlideOut = toggleBool;
     var slideOutStyles;
     if (toggleSlideOut) {
@@ -246,6 +245,21 @@ export function slideOutVideoSearch(toggleBool, slide) {
     }
     return {
         type: types.TOGGLE_VIDEO_SLIDE_OUT,
+        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut  } 
+    }
+}
+export function slideOutSlidesSearch (toggleBool, slide) {
+    let toggleSlideOut = toggleBool;
+    var slideOutStyles;
+    if (toggleSlideOut) {
+        slideOutStyles = 'translateY(0px)'
+        toggleSlideOut = false;
+    } else {
+        slideOutStyles = 'translateY(-100px)'
+        toggleSlideOut = true;
+    }
+    return {
+        type: types.TOGGLE_SLIDE_OUT_MENU,
         payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut  } 
     }
 }
@@ -272,7 +286,6 @@ export function playVideo(url) {
     }
 }
 export function playPastedLinkVideo(url) {
-    debugger;
     if (!url) {
         return {
             type: types.NO_VIDEO_LINK
