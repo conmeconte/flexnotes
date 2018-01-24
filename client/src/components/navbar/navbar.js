@@ -148,9 +148,12 @@ class NavBar extends Component{
                     <Login />
                 </div> */}
                 <button className='hideNavbar' onClick={this.hideNav.bind(this)}>
-                <i className="small material-icons">chevron_left</i>
+                    <i className="small material-icons">chevron_left</i>
                 </button>
 
+                <header>
+                    <h4><img className="logoImage" src={logo}/><span className="dashFlex">Flex</span>Notes</h4>
+                </header>
                 
                 {binder}
                 <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>

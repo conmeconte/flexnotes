@@ -81,9 +81,7 @@ class Dashboard extends Component {
         return(
 
             <div id="dashboard-container" className="row">
-                <header>
-                    <h4><img className="logoImage" src={logo}/><span className="dashFlex">Flex</span>Notes</h4>
-                </header>
+
 
                 <NavBar />
                 <Panel />

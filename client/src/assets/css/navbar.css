@@ -129,8 +129,24 @@ ul > li {
     background-color: red;
 }
 
+/* --------------------- HEADER AND FOOTER ---------------------*/
 
+header {
+    font-size: 38px;
+    color: #d5d5d5;
+}
 
-.hideNavbar {
-    margin-top: 120px;
+.dashFlex {
+    color: #96858f;
+}
+
+.logoImage {
+    height: 28px;
+}
+
+.footer {
+    float: right;
+    position: absolute;
+    bottom: 0;
+    left: 8px;
 }
