@@ -124,9 +124,9 @@ class NavBar extends Component{
                 <button className='btn hideNavbar' onClick={this.hideNav.bind(this)}>
                     <i className="small material-icons">chevron_left</i>
                 </button>
-                <button className={`editMode btn ${this.props.interface.editable ? 'editing':'' }`} onClick={this.editMode.bind(this)}>
+                {/* <button className={`editMode btn ${this.props.interface.editable ? 'editing':'' }`} onClick={this.editMode.bind(this)}>
                     {editableText}
-                </button>
+                </button> */}
                 <section>
                     {binder}
                     <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>

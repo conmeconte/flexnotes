@@ -13,7 +13,10 @@ class Tab extends Component {
             tab_color_arr: ['#ff0000', '#0000ff', '#ff00ff', '#FF8C00', '#008000'],
             editable: false,
             open: false,
-            tabName: ''
+            tabName: '',
+            hover: false,
+            editHover: false,
+            deleteHover: false
             //binder: this.props.binder_obj
         }
 
@@ -155,10 +158,46 @@ class Tab extends Component {
         //console.log("tab id updated");
     }
 
+    hover(){
+        this.setState({
+            hover: true
+        });
+    }
+
+    notHover(){
+        this.setState({
+            hover: false
+        });
+    }
+
+    hoverEditBtn(){
+        this.setState({
+            editHover: true
+        });
+    }
+
+    notHoverEditBtn(){
+        this.setState({
+            editHover: false
+        });
+    }
+
+    hoverDeleteBtn(){
+        this.setState({
+            deleteHover: true
+        });
+    }
+
+    notHoverDeleteBtn(){
+        this.setState({
+            deleteHover: false
+        });
+    }
+
 
     render(){
         //this.props.selectBinder(this.props.binderObj);
-        const {open, editable, tabName} = this.state;
+        const {open, editable, tabName, hover, editHover, deleteHover} = this.state;
 
         //console.log('props in tab:', this.props);
         //console.log('state in tab:', this.state);
@@ -189,17 +228,17 @@ class Tab extends Component {
             );
         } else {
             tab_title = (
-                <div className="tabTitle">
+                <div className="tabTitle" onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
                     <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
                         <div className="tabLink"  onClick={()=>this.handleClick()}>
                             {this.props.tabObj.tab_name}
                         </div>
                     </Link>
-                    <div className="">
-                        <button type="button" className={`btn-floating navbar-btn edit-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={this.editTabs}>
+                    <div className="modify-btn">
+                        <button type="button"  onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editTabs}>
                         <i className="small material-icons">edit</i>
                         </button>
-                        <button type="button" className={`btn-floating navbar-btn delete-btn red darken-4 ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
+                        <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
                         <i className="small material-icons">delete_forever</i>
                         </button>
                     </div>

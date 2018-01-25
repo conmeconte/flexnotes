@@ -50,6 +50,10 @@ ul > li {
     background-color: #96858f;
 }
 
+.modify-btn{
+    display: flex;
+}
+
 .editMode > .edit_input {
     margin-bottom: 2% !important;
 }
@@ -129,26 +133,44 @@ ul > li {
     color: black;
 }
 
+.visibleHover{
+    visibility: visible;
+    opacity: 0.3;
+}
+
+
+
+.hiddenHover{
+    opacity: 0.3;
+    visibility: hidden;
+}
+
+.fullOpacity{
+    opacity: 1;
+}
+
 .pageLink{
     padding-left: 5%;
     font-size: 1rem;
     color: black;
+    overflow-wrap: break-word;
 }
 
 .tabLink{
     padding-left: 3%;
     font-size: 1.5rem;
     color: black;
+    overflow-wrap: break-word;
 }
 .binderLink{
     padding-left: 3%;
     font-size: 1.75rem;
     color: black;
+    overflow-wrap: break-word;
 }
 
 .navbar-btn {
     margin: 1%;
-    margin-bottom: 3%;
 }
 
 .edit-btn.navbar-btn {

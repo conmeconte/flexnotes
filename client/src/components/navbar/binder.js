@@ -15,7 +15,10 @@ class Binder extends Component {
         this.state = {
             editable: false,
             binderName : '',
-            active: false
+            active: false,
+            hover: false,
+            editHover: false,
+            deleteHover: false
         }
 
         this.addTab = this.addTab.bind(this);
@@ -139,8 +142,44 @@ class Binder extends Component {
         this.props.selectBinder(this.props.binderObj);
     }
 
+    hover(){
+        this.setState({
+            hover: true
+        });
+    }
+
+    notHover(){
+        this.setState({
+            hover: false
+        });
+    }
+
+    hoverEditBtn(){
+        this.setState({
+            editHover: true
+        });
+    }
+
+    notHoverEditBtn(){
+        this.setState({
+            editHover: false
+        });
+    }
+
+    hoverDeleteBtn(){
+        this.setState({
+            deleteHover: true
+        });
+    }
+
+    notHoverDeleteBtn(){
+        this.setState({
+            deleteHover: false
+        });
+    }
+
     render() {
-        const { active, editable, binderName } = this.state;
+        const { active, editable, binderName, hover, editHover, deleteHover } = this.state;
         //console.log("Binder props:", this.props);
         //console.log("Binder state:", this.state);
         if(!this.props.binderObj){
@@ -171,17 +210,19 @@ class Binder extends Component {
             );
         } else {
             binder_title = (
-                <div className="binderTitle">
-                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }} >
-                                <div className="binderLink"  onClick={()=>this.binderSelect()}>
-                                    {this.props.binderObj.binder_name}
-                                </div>
+                <div className="binderTitle" onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+
+                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }}  onClick={()=>this.binderSelect()}> 
+                        <div className="binderLink">
+                            {this.props.binderObj.binder_name}
+                        </div>    
                     </Link>
+                   
                     <div className="modify-btn">
-                        <button type="button" className={`btn-floating navbar-btn edit-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={this.editable}>
+                        <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editable}>
                         <i className="small material-icons">edit</i>
                         </button>
-                        <button type="button" className={`btn-floating navbar-btn delete-btn red darken-4 ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deleteBinder(this.props.binderObj._id)}>
+                        <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deleteBinder(this.props.binderObj._id)}>
                         <i className="small material-icons">delete_forever</i>
                         </button>
                     </div>
