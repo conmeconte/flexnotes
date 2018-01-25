@@ -9,7 +9,7 @@ export const fetchUser = () => async dispatch => {
 //PANEL SPECs Action Creator
 
 export function setTopLeftHeight(num, interfaceObj) {
-    console.log('panel 3 settopleft: ', num/window.innerHeight)
+    console.log('panel 3 settopleft: ', num / window.innerHeight)
     return (dispatch) => {
         axios.put('/api/page', {
             top_left_panel_height: num,
@@ -35,7 +35,7 @@ export function setTopLeftHeight(num, interfaceObj) {
 export function setTopLeftWidth(num, interfaceObj) {
     return (dispatch) => {
         axios.put('/api/page', {
-            top_left_panel_width: num/window.innerWidth,
+            top_left_panel_width: num / window.innerWidth,
             binderID: interfaceObj.binder_id,
             tabID: interfaceObj.tab_id,
             pageID: interfaceObj.page_id
@@ -238,17 +238,17 @@ export function slideOutVideoSearch(toggleBool, slide) {
     var slideOutStyles;
     if (toggleSlideOut) {
         slideOutStyles = 'translateY(27px)',
-        toggleSlideOut = false;
+            toggleSlideOut = false;
     } else {
         slideOutStyles = 'translateY(-119px)';
         toggleSlideOut = true;
     }
     return {
         type: types.TOGGLE_VIDEO_SLIDE_OUT,
-        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut  } 
+        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut }
     }
 }
-export function slideOutSlidesSearch (toggleBool, slide) {
+export function slideOutSlidesSearch(toggleBool, slide) {
     let toggleSlideOut = toggleBool;
     var slideOutStyles;
     if (toggleSlideOut) {
@@ -260,17 +260,17 @@ export function slideOutSlidesSearch (toggleBool, slide) {
     }
     return {
         type: types.TOGGLE_SLIDE_OUT_MENU,
-        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut  } 
+        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut }
     }
 }
-export function emptyVideoSlideOut (toggleBool, slide) {
+export function emptyVideoSlideOut(toggleBool, slide) {
     let toggleSlideOut = toggleBool;
     let slideOutStyles = slide.style;
     if (toggleSlideOut) {
-        slideOutStyles =  'translateY(27px)';
+        slideOutStyles = 'translateY(27px)';
         toggleSlideOut = false;
     }
-    slideOutStyles =  'translateY(27px)';
+    slideOutStyles = 'translateY(27px)';
     toggleSlideOut = false;
     return {
         type: types.EMPTY_VIDEO_SLIDE_OUT,
@@ -300,7 +300,7 @@ export function playPastedLinkVideo(url) {
             type: types.PLAY_PASTED_VIDEO_LINK,
             payload: videoId
         }
-    } else if (url.indexOf("youtu.be") !== -1) { 
+    } else if (url.indexOf("youtu.be") !== -1) {
         let videoId = url;
         videoId = url.split("/");
         videoId = videoId[3];
@@ -316,7 +316,7 @@ export function playPastedLinkVideo(url) {
             payload: videoId
         }
     }
-    
+
 }
 export function grabVideoUrl(videoLink) {
     return {
@@ -372,9 +372,9 @@ export function updateBinderArray() {
     }
 }
 
-export function updateBinderObj(binder_obj){
+export function updateBinderObj(binder_obj) {
 
-    return{
+    return {
         type: types.UPDATE_BINDER_OBJ,
         payload: binder_obj
     }
@@ -592,25 +592,25 @@ export function editPage(binder_id, tab_id, page_id, page_name) {
     }
 }
 
-export function minNav(){
+export function minNav() {
     return {
         type: types.HIDE_NAV
     }
 }
 
-export function showNav(){
+export function showNav() {
     return {
         type: types.SHOW_NAV
     }
 }
 
-export function editable(){
+export function editable() {
     return {
         type: types.EDITABLE
     }
 }
 
-export function notEditable(){
+export function notEditable() {
     return {
         type: types.NOT_EDITABLE
     }

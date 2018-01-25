@@ -35,19 +35,11 @@ class Binder extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        // if(nextProps.hasOwnProperty("binderObj")){
-        //     this.setState({
-        //         binderName: nextProps.binderObj.binder_name
-        //     });
-        // }
-        //console.log('nextProps: ',nextProps);
-        //console.log('this.props in CWRP: ', this.props);
-        // if(!this.props.binder || !nextProps.binder){
-        //     return;
-        // }
-        //  if(this.props.binder != nextProps.binder){
-        //      this.props.updateBinderArray();
-        //  }
+        if(nextProps.interface.editable === false){
+            this.setState({
+                editable: false
+            });
+        }
         if(this.props.hasOwnProperty("binderObj")){
             // this.setState({
             //     binderName: this.props.binderObj.binder_name
@@ -128,9 +120,15 @@ class Binder extends Component {
         
 
     }
+    keyPressed(event) {
+        //console.log('keypress',event);
+        if(event.key === 'Enter') {
+            //console.log('enter key pressed');
+          this.notEditable();
+      }
+    }
+
     editBinderName(e){
-
-
         this.setState({
             binderName: e.target.value
         });
@@ -143,7 +141,7 @@ class Binder extends Component {
 
     render() {
         const { active, editable, binderName } = this.state;
-        console.log("Binder props:", this.props);
+        //console.log("Binder props:", this.props);
         //console.log("Binder state:", this.state);
         if(!this.props.binderObj){
             return null;
@@ -157,19 +155,18 @@ class Binder extends Component {
         if(editable){
             //let editName = this.props.binderObj.binder_name;
             binder_title = (
-                <div className="binderTitle">
+                <div className="editMode">
                          <input 
                              className="edit_input"
                              ref='textInput'
                              type='text'
                              onChange={(e)=>this.editBinderName(e)}
                              // onBlur={this.notEditable}
-                            // onKeyPress={this.keyPressed}
+                             onKeyPress={this.keyPressed.bind(this)}
                              value={binderName}
                              />
-                <button type="button" className={`btn-floating ${editable ? 'visibleBinder' : 'hiddenBinder'}`} onClick={this.notEditable}>
-                Done
-                </button>
+                <button type="button" className={`btn-floating ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
+                <i className="small material-icons">check</i></button>
             </div>              
             );
         } else {
@@ -180,11 +177,11 @@ class Binder extends Component {
                                     {this.props.binderObj.binder_name}
                                 </div>
                     </Link>
-                    <div className="left-align">
+                    <div className="modify-btn">
                         <button type="button" className={`btn-floating navbar-btn edit-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={this.editable}>
                         <i className="small material-icons">edit</i>
                         </button>
-                        <button type="button" className={`btn-floating navbar-btn delete-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deleteBinder(this.props.binderObj._id)}>
+                        <button type="button" className={`btn-floating navbar-btn delete-btn red darken-4 ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deleteBinder(this.props.binderObj._id)}>
                         <i className="small material-icons">delete_forever</i>
                         </button>
                     </div>

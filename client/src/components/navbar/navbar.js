@@ -88,7 +88,7 @@ class NavBar extends Component{
         });
     }
     render(){
-        console.log("navbar props:", this.props);
+        //console.log("navbar props:", this.props);
         let editableText = '';
 
         if(this.props.interface.editable){
@@ -114,7 +114,7 @@ class NavBar extends Component{
 
             
             <button className={`navbarShow btn ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
-            <i className="small material-icons">chevron_right</i>
+                <i className="small material-icons">chevron_right</i>
             </button>
             <div className={`navbar col s2 ${this.props.interface.navbar_min ? 'hidden' : 'visible'}`}>
 

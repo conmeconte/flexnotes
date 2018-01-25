@@ -13,7 +13,7 @@ class Login extends Component {
                     <a href="/auth/google"><img src={googleButton} /></a>
                 );
             default:
-                return <a className="landing-login-text" href="/api/logout"><button className="logoutBtn">Logout</button></a>
+                return <a className="landing-login-text" href="/api/logout"><button className="btn logoutBtn">LOGOUT</button></a>
         }
     }
 

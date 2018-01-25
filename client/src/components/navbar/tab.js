@@ -35,6 +35,14 @@ class Tab extends Component {
             });
         }
     }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.interface.editable === false){
+            this.setState({
+                editable: false
+            });
+        }
+    }
     // componentWillReceiveProps(nextProps){
 
     //     if(this.props.hasOwnProperty("binder")){
@@ -127,7 +135,13 @@ class Tab extends Component {
     //         binder: binder
     //     });
     // }
-    
+    keyPressed(event) {
+        //console.log('keypress',event);
+        if(event.key === 'Enter') {
+            //console.log('enter key pressed');
+          this.notEditTabs();
+      }
+    }
 
 
     handleClick(){
@@ -158,18 +172,18 @@ class Tab extends Component {
         if(editable){
             //let editName = this.props.binderObj.binder_name;
             tab_title = (
-                <div className="tabTitle">
+                <div className="editMode">
                          <input 
                              className="edit_input"
                              ref='textInput'
                              type='text'
                              onChange={(e)=>this.editTabName(e)}
                              // onBlur={this.notEditable}
-                            // onKeyPress={this.keyPressed}
+                             onKeyPress={this.keyPressed.bind(this)}
                              value={tabName}
                              />
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditTabs}>
-                    Done Tab
+                <button type="button" className={`btn-floating ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditTabs}>
+                <i className="small material-icons">check</i>
                 </button>
             </div>              
             );
@@ -181,11 +195,11 @@ class Tab extends Component {
                             {this.props.tabObj.tab_name}
                         </div>
                     </Link>
-                    <div className="left-align">
+                    <div className="">
                         <button type="button" className={`btn-floating navbar-btn edit-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={this.editTabs}>
                         <i className="small material-icons">edit</i>
                         </button>
-                        <button type="button" className={`btn-floating navbar-btn delete-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
+                        <button type="button" className={`btn-floating navbar-btn delete-btn red darken-4 ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
                         <i className="small material-icons">delete_forever</i>
                         </button>
                     </div>

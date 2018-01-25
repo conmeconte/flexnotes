@@ -8,7 +8,7 @@ import Login from './login';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../assets/css/landing-page.css';
 
-import frontLogo from '../assets/images/landingLogo.png';
+import logo from '../assets/images/logo.png';
 
 const backgroundImg = {
     background: `url('${backgroundImage}')`,
@@ -36,7 +36,7 @@ class LandingPage extends Component {
                 <div className="top-background-layer"></div>
                 <div style={backgroundImg} className="landing-page-container">
                     <div className="title-container">
-                        <h1><img className="landingLogo" src={frontLogo}/><span className="flex">Flex</span>Notes</h1>
+                        <h1><img className="landingLogo" src={logo}/><span className="flex">Flex</span>Notes</h1>
                     </div>
                     <div className="login-container">
                         <div className="blur"></div>
