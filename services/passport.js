@@ -50,7 +50,7 @@ passport.use(
             })
             );
             defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ "videoInfo": 'No Info' }));
-            defaultBinder.tab_arr_obj[0].page_arr_obj[0].lecture_slides={"lec_id": "https://docs.google.com/presentation/d/1vbEyxRSmXcY4s3U3LH1BZJD60ZFGmowh2fBdKyah8mg/embed"}
+            defaultBinder.tab_arr_obj[0].page_arr_obj[0].lecture_slides={"lec_id": "https://docs.google.com/presentation/d/1ijcyjcRNCHacUGmsqU_x-hx4xlMe0NVjTg2QcQ7BpgM/edit?usp=sharing"}
             
             const user = await new User({
                 googleId: profile.id,
