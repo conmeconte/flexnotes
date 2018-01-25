@@ -5937,6 +5937,7 @@ exports.getOpacityDisplay = getOpacityDisplay;
 exports.toggleResults = toggleResults;
 exports.addToPlaylist = addToPlaylist;
 exports.slideOutVideoSearch = slideOutVideoSearch;
+exports.slideOutSlidesSearch = slideOutSlidesSearch;
 exports.emptyVideoSlideOut = emptyVideoSlideOut;
 exports.playVideo = playVideo;
 exports.playPastedLinkVideo = playPastedLinkVideo;
@@ -6242,6 +6243,21 @@ function slideOutVideoSearch(toggleBool, slide) {
     }
     return {
         type: _types2.default.TOGGLE_VIDEO_SLIDE_OUT,
+        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut: toggleSlideOut }
+    };
+}
+function slideOutSlidesSearch(toggleBool, slide) {
+    var toggleSlideOut = toggleBool;
+    var slideOutStyles;
+    if (toggleSlideOut) {
+        slideOutStyles = 'translateY(0px)';
+        toggleSlideOut = false;
+    } else {
+        slideOutStyles = 'translateY(-100px)';
+        toggleSlideOut = true;
+    }
+    return {
+        type: _types2.default.TOGGLE_SLIDE_OUT_MENU,
         payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut: toggleSlideOut }
     };
 }
@@ -9248,6 +9264,7 @@ exports.default = {
     GRAB_VIDEO_URL: 'grab_video_url',
     SET_SLIDES_URL: 'set_slides_url',
     GET_SLIDES_URL: 'get_slides_url',
+    TOGGLE_SLIDE_OUT_MENU: 'toggle_slide_out_menu',
     RESET_SLIDES_URL: 'reset_slides_url',
     SAVE_NOTES: 'save_notes',
     PANEL_TOP_LEFT_HEIGHT: 'panel_top_left_height',
@@ -35954,10 +35971,10 @@ var Video = function (_Component) {
                 if (pageIndex !== null && page_arr_obj[pageIndex].hasOwnProperty('video') && page_arr_obj[pageIndex].video[0].hasOwnProperty('videoId')) {
                     // return;
                     this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
-                    this.props.slideOutVideoSearch(false, 'translate(-119px)');
+                    this.props.slideOutVideoSearch(false, 'translateY(-119px)');
                 } else {
                     this.props.setVideoUrl('', interface_obj);
-                    this.props.slideOutVideoSearch(this.props.toggleSlideOut, this.props.slideOutStyles);
+                    this.props.slideOutVideoSearch(true, 'translateY(27px)');
                 }
             }
         }
@@ -43515,19 +43532,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Slides = function (_Component) {
     _inherits(Slides, _Component);
 
-    function Slides(props) {
+    function Slides() {
         _classCallCheck(this, Slides);
 
-        var _this = _possibleConstructorReturn(this, (Slides.__proto__ || Object.getPrototypeOf(Slides)).call(this, props));
-
-        _this.slideOutSlidesSearch = _this.slideOutSlidesSearch.bind(_this);
-        _this.state = {
-            style: {
-                transform: 'translateY(-100px)'
-            },
-            toggleSlideOut: true
-        };
-        return _this;
+        return _possibleConstructorReturn(this, (Slides.__proto__ || Object.getPrototypeOf(Slides)).apply(this, arguments));
     }
 
     _createClass(Slides, [{
@@ -43552,25 +43560,6 @@ var Slides = function (_Component) {
                     )
                 )
             );
-        }
-    }, {
-        key: 'slideOutSlidesSearch',
-        value: function slideOutSlidesSearch() {
-            var toggleSlideOut = this.state.toggleSlideOut;
-            var transform = this.state.style.transform;
-
-            if (toggleSlideOut) {
-                transform = 'translateY(0px)', toggleSlideOut = false;
-            } else {
-                transform = 'translateY(-100px)';
-                toggleSlideOut = true;
-            }
-            this.setState({
-                style: {
-                    transform: transform
-                },
-                toggleSlideOut: toggleSlideOut
-            });
         }
     }, {
         key: 'componentWillReceiveProps',
@@ -43600,8 +43589,11 @@ var Slides = function (_Component) {
                     }
                     if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
                         this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id);
+                        this.props.slideOutSlidesSearch(false, 'translateY(-100px)');
                     } else {
                         this.props.resetSlidesURL('');
+                        this.props.slideOutSlidesSearch(true, 'translateY(0px)');
+                        //return;
                     }
                 } else {
                     console.log("DOES NOT WORK");
@@ -43669,16 +43661,14 @@ var Slides = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var toggleSlideOut = this.state.toggleSlideOut;
-            var transform = this.state.style.transform;
-
-
+            var toggleSlideOut = this.props.toggleLectureSlideOut;
+            var slideOutStyles = this.props.lectureSlideOutStyles;
             return _react2.default.createElement(
                 'div',
                 { className: 'slides-div fourth-step' },
                 _react2.default.createElement(
                     'form',
-                    { style: { transform: transform }, className: 'form-horizontal slide-out-input', onSubmit: this.props.handleSubmit(this.setURLinReduxForm.bind(this)) },
+                    { style: slideOutStyles, className: 'form-horizontal slide-out-input', onSubmit: this.props.handleSubmit(this.setURLinReduxForm.bind(this)) },
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
@@ -43697,7 +43687,7 @@ var Slides = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'arrow-container-slides', onClick: function onClick() {
-                            _this2.slideOutSlidesSearch();
+                            _this2.props.slideOutSlidesSearch(toggleSlideOut, slideOutStyles);
                         } },
                     !toggleSlideOut ? _react2.default.createElement(
                         'i',
@@ -43738,11 +43728,13 @@ function mapStateToProps(state) {
     return {
         slide_input: state.slides.input,
         interface_obj: state.interface,
-        binderObj: state.binder.binderObj
+        binderObj: state.binder.binderObj,
+        toggleLectureSlideOut: state.slides.toggleLectureSlideOut,
+        lectureSlideOutStyles: state.slides.slideLinkSlideOut
     };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { setSlidesUrl: _actions.setSlidesUrl, updateBinderArray: _actions.updateBinderArray, getSlidesURL: _actions.getSlidesURL, resetSlidesURL: _actions.resetSlidesURL })(Slides);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { setSlidesUrl: _actions.setSlidesUrl, updateBinderArray: _actions.updateBinderArray, getSlidesURL: _actions.getSlidesURL, resetSlidesURL: _actions.resetSlidesURL, slideOutSlidesSearch: _actions.slideOutSlidesSearch })(Slides);
 
 /***/ }),
 /* 451 */
@@ -110241,7 +110233,7 @@ var NavBar = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log("navbar props:", this.props);
+            //console.log("navbar props:", this.props);
             var editableText = '';
 
             if (this.props.interface.editable) {
@@ -110411,19 +110403,11 @@ var Binder = function (_Component) {
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            // if(nextProps.hasOwnProperty("binderObj")){
-            //     this.setState({
-            //         binderName: nextProps.binderObj.binder_name
-            //     });
-            // }
-            //console.log('nextProps: ',nextProps);
-            //console.log('this.props in CWRP: ', this.props);
-            // if(!this.props.binder || !nextProps.binder){
-            //     return;
-            // }
-            //  if(this.props.binder != nextProps.binder){
-            //      this.props.updateBinderArray();
-            //  }
+            if (nextProps.interface.editable === false) {
+                this.setState({
+                    editable: false
+                });
+            }
             if (this.props.hasOwnProperty("binderObj")) {
                 // this.setState({
                 //     binderName: this.props.binderObj.binder_name
@@ -110508,9 +110492,17 @@ var Binder = function (_Component) {
             });
         }
     }, {
+        key: 'keyPressed',
+        value: function keyPressed(event) {
+            //console.log('keypress',event);
+            if (event.key === 'Enter') {
+                //console.log('enter key pressed');
+                this.notEditable();
+            }
+        }
+    }, {
         key: 'editBinderName',
         value: function editBinderName(e) {
-
             this.setState({
                 binderName: e.target.value
             });
@@ -110530,9 +110522,9 @@ var Binder = function (_Component) {
                 active = _state.active,
                 editable = _state.editable,
                 binderName = _state.binderName;
-
-            console.log("Binder props:", this.props);
+            //console.log("Binder props:", this.props);
             //console.log("Binder state:", this.state);
+
             if (!this.props.binderObj) {
                 return null;
             }
@@ -110547,7 +110539,7 @@ var Binder = function (_Component) {
                 //let editName = this.props.binderObj.binder_name;
                 binder_title = _react2.default.createElement(
                     'div',
-                    { className: 'binderTitle' },
+                    { className: 'editMode' },
                     _react2.default.createElement('input', {
                         className: 'edit_input',
                         ref: 'textInput',
@@ -110556,13 +110548,17 @@ var Binder = function (_Component) {
                             return _this2.editBinderName(e);
                         }
                         // onBlur={this.notEditable}
-                        // onKeyPress={this.keyPressed}
-                        , value: binderName
+                        , onKeyPress: this.keyPressed.bind(this),
+                        value: binderName
                     }),
                     _react2.default.createElement(
                         'button',
-                        { type: 'button', className: 'btn-floating ' + (editable ? 'visibleBinder' : 'hiddenBinder'), onClick: this.notEditable },
-                        'Done'
+                        { type: 'button', className: 'btn-floating ' + (editable ? 'visible' : 'hidden'), onClick: this.notEditable },
+                        _react2.default.createElement(
+                            'i',
+                            { className: 'small material-icons' },
+                            'check'
+                        )
                     )
                 );
             } else {
@@ -110582,7 +110578,7 @@ var Binder = function (_Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'left-align' },
+                        { className: 'modify-btn' },
                         _react2.default.createElement(
                             'button',
                             { type: 'button', className: 'btn-floating navbar-btn edit-btn ' + (this.props.interface.editable ? 'visible' : 'hidden'), onClick: this.editable },
@@ -110594,7 +110590,7 @@ var Binder = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn-floating navbar-btn delete-btn ' + (this.props.interface.editable ? 'visible' : 'hidden'), onClick: function onClick() {
+                            { type: 'button', className: 'btn-floating navbar-btn delete-btn red darken-4 ' + (this.props.interface.editable ? 'visible' : 'hidden'), onClick: function onClick() {
                                     return _this2.deleteBinder(_this2.props.binderObj._id);
                                 } },
                             _react2.default.createElement(
@@ -110731,6 +110727,15 @@ var Tab = function (_Component) {
                 });
             }
         }
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            if (nextProps.interface.editable === false) {
+                this.setState({
+                    editable: false
+                });
+            }
+        }
         // componentWillReceiveProps(nextProps){
 
         //     if(this.props.hasOwnProperty("binder")){
@@ -110832,7 +110837,15 @@ var Tab = function (_Component) {
         //     });
         // }
 
-
+    }, {
+        key: 'keyPressed',
+        value: function keyPressed(event) {
+            //console.log('keypress',event);
+            if (event.key === 'Enter') {
+                //console.log('enter key pressed');
+                this.notEditTabs();
+            }
+        }
     }, {
         key: 'handleClick',
         value: function handleClick() {
@@ -110872,7 +110885,7 @@ var Tab = function (_Component) {
                 //let editName = this.props.binderObj.binder_name;
                 tab_title = _react2.default.createElement(
                     'div',
-                    { className: 'tabTitle' },
+                    { className: 'editMode' },
                     _react2.default.createElement('input', {
                         className: 'edit_input',
                         ref: 'textInput',
@@ -110881,13 +110894,17 @@ var Tab = function (_Component) {
                             return _this2.editTabName(e);
                         }
                         // onBlur={this.notEditable}
-                        // onKeyPress={this.keyPressed}
-                        , value: tabName
+                        , onKeyPress: this.keyPressed.bind(this),
+                        value: tabName
                     }),
                     _react2.default.createElement(
                         'button',
-                        { type: 'button', className: 'btn btn-default btn-xs btn_edit_binder ' + (editable ? 'visible' : 'hidden'), onClick: this.notEditTabs },
-                        'Done Tab'
+                        { type: 'button', className: 'btn-floating ' + (editable ? 'visible' : 'hidden'), onClick: this.notEditTabs },
+                        _react2.default.createElement(
+                            'i',
+                            { className: 'small material-icons' },
+                            'check'
+                        )
                     )
                 );
             } else {
@@ -110907,7 +110924,7 @@ var Tab = function (_Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'left-align' },
+                        { className: '' },
                         _react2.default.createElement(
                             'button',
                             { type: 'button', className: 'btn-floating navbar-btn edit-btn ' + (this.props.interface.editable ? 'visible' : 'hidden'), onClick: this.editTabs },
@@ -110919,7 +110936,7 @@ var Tab = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn-floating navbar-btn delete-btn ' + (this.props.interface.editable ? 'visible' : 'hidden'), onClick: function onClick() {
+                            { type: 'button', className: 'btn-floating navbar-btn delete-btn red darken-4 ' + (this.props.interface.editable ? 'visible' : 'hidden'), onClick: function onClick() {
                                     return _this2.deleteTab(_this2.props.interface.binder_id);
                                 } },
                             _react2.default.createElement(
@@ -111103,73 +111120,76 @@ var Page = function (_Component) {
         _this.handleClick = _this.handleClick.bind(_this);
         return _this;
     }
-    // componentWillReceiveProps(nextProps){
-    //     //console.log('nextProps: ',nextProps);
-    //      if(this.props.binderObj != nextProps.binderObj){
-    //          this.props.updateBinderArray();
-    //      }
-    // }
-
-    // addPage(){
-    //     //console.log('addPage clicked');
-    //     this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
-    // }
-
-    // editPages(){
-    //     console.log("editable should be true");
-    //     this.setState({
-    //         editable: true
-    //     });
-    // }
-
-    // notEditPages() {
-    //     console.log("editable should be false");
-    //     this.setState({ 
-    //         editable: false 
-    //     });
-    // }
-
-    // pageTextChanged(e, id){
-    //     const {tabObject} = this.state;
-    //     const {page_arr_obj} = tabObject;
-    //     //console.log("text changed, id:", id);
-    //     //console.log(e.target.value);
-
-    //     for(let i =0; i<page_arr_obj.length; i++){
-    //         if(page_arr_obj[i].tab_id===id ){
-    //             //console.log('binder_id and id match');
-    //             page_arr_obj[i].tab_name = e.target.value;
-    //         }
-    //     }
-
-    //     tabObject.page_arr_obj = page_arr_obj;
-
-    //     this.setState({
-    //         tabObject: tabObject
-    //     });
-    // }
-
-    // deletePage(delete_id){
-
-    //     const {tabObject} = this.state;
-    //     const {page_arr_obj} = tabObject;
-    //     //console.log(binder_array);
-    //     let deleteIndex = 0;
-    //     for(deleteIndex; deleteIndex<page_arr_obj.length; deleteIndex++){
-    //         if(page_arr_obj[deleteIndex].page_id === delete_id){
-    //             page_arr_obj.splice(deleteIndex, 1);
-    //         }
-    //     }
-
-    //     tabObject.page_arr_obj = page_arr_obj;
-
-    //     this.setState({
-    //         tabObject: tabObject
-    //     });
-    // }   
-
 
     _createClass(Page, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            if (nextProps.interface.editable === false) {
+                this.setState({
+                    editable: false
+                });
+            }
+        }
+
+        // addPage(){
+        //     //console.log('addPage clicked');
+        //     this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
+        // }
+
+        // editPages(){
+        //     console.log("editable should be true");
+        //     this.setState({
+        //         editable: true
+        //     });
+        // }
+
+        // notEditPages() {
+        //     console.log("editable should be false");
+        //     this.setState({ 
+        //         editable: false 
+        //     });
+        // }
+
+        // pageTextChanged(e, id){
+        //     const {tabObject} = this.state;
+        //     const {page_arr_obj} = tabObject;
+        //     //console.log("text changed, id:", id);
+        //     //console.log(e.target.value);
+
+        //     for(let i =0; i<page_arr_obj.length; i++){
+        //         if(page_arr_obj[i].tab_id===id ){
+        //             //console.log('binder_id and id match');
+        //             page_arr_obj[i].tab_name = e.target.value;
+        //         }
+        //     }
+
+        //     tabObject.page_arr_obj = page_arr_obj;
+
+        //     this.setState({
+        //         tabObject: tabObject
+        //     });
+        // }
+
+        // deletePage(delete_id){
+
+        //     const {tabObject} = this.state;
+        //     const {page_arr_obj} = tabObject;
+        //     //console.log(binder_array);
+        //     let deleteIndex = 0;
+        //     for(deleteIndex; deleteIndex<page_arr_obj.length; deleteIndex++){
+        //         if(page_arr_obj[deleteIndex].page_id === delete_id){
+        //             page_arr_obj.splice(deleteIndex, 1);
+        //         }
+        //     }
+
+        //     tabObject.page_arr_obj = page_arr_obj;
+
+        //     this.setState({
+        //         tabObject: tabObject
+        //     });
+        // }   
+
+    }, {
         key: 'editPageName',
         value: function editPageName(e) {
 
@@ -111196,6 +111216,15 @@ var Page = function (_Component) {
             this.setState({
                 editable: false
             });
+        }
+    }, {
+        key: 'keyPressed',
+        value: function keyPressed(event) {
+            //console.log('keypress',event);
+            if (event.key === 'Enter') {
+                //console.log('enter key pressed');
+                this.notEditPage();
+            }
         }
     }, {
         key: 'deletePage',
@@ -111244,7 +111273,7 @@ var Page = function (_Component) {
                 //let editName = this.props.binderObj.binder_name;
                 page_list = _react2.default.createElement(
                     'div',
-                    { className: 'tabTitle' },
+                    { className: 'editMode' },
                     _react2.default.createElement('input', {
                         className: 'edit_input',
                         ref: 'textInput',
@@ -111253,20 +111282,23 @@ var Page = function (_Component) {
                             return _this2.editPageName(e);
                         }
                         // onBlur={this.notEditable}
-                        // onKeyPress={this.keyPressed}
-                        , value: pageName
+                        , onKeyPress: this.keyPressed.bind(this),
+                        value: pageName
                     }),
                     _react2.default.createElement(
                         'button',
-                        { type: 'button', className: 'btn btn-default btn-xs btn_edit_binder ' + (editable ? 'visible' : 'hidden'), onClick: this.notEditPage },
-                        'Done ',
-                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' })
+                        { type: 'button', className: 'btn-floating ' + (editable ? 'visible' : 'hidden'), onClick: this.notEditPage },
+                        _react2.default.createElement(
+                            'i',
+                            { className: 'small material-icons' },
+                            'check'
+                        )
                     )
                 );
             } else {
                 page_list = _react2.default.createElement(
                     'div',
-                    { className: '' },
+                    { className: 'page-edit' },
                     _react2.default.createElement(
                         _reactRouterDom.Link,
                         { to: '/main/' + url, style: { textDecoration: 'none' } },
@@ -111280,7 +111312,7 @@ var Page = function (_Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'right-align' },
+                        { className: 'modify-btn' },
                         _react2.default.createElement(
                             'button',
                             { type: 'button', className: 'btn-floating navbar-btn edit-btn ' + (this.props.interface.editable ? 'visible' : 'hidden'), onClick: this.editPage },
@@ -111292,7 +111324,7 @@ var Page = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn-floating navbar-btn delete-btn ' + (this.props.interface.editable ? 'visible' : 'hidden'), onClick: function onClick() {
+                            { type: 'button', className: 'btn-floating navbar-btn delete-btn red darken-4 ' + (this.props.interface.editable ? 'visible' : 'hidden'), onClick: function onClick() {
                                     return _this2.deletePage();
                                 } },
                             _react2.default.createElement(
@@ -111304,6 +111336,12 @@ var Page = function (_Component) {
                     )
                 );
             }
+
+            if (this.props.interface.page_id === this.props.pageObj._id) {
+                //set color to active color
+            } else {
+                    //set color to default
+                }
 
             return _react2.default.createElement(
                 'li',
@@ -111335,7 +111373,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, "a {\r\n    color: white;\r\n}\r\n\r\n.nav_binder, .nav_tab, .nav_page {\r\n    display: inline-block;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.navbar.s2{\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 10%;\r\n    height: 100vh;\r\n    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);\r\n    /*overflow-y:scroll;*/\r\n    background-color: #6d7993;\r\n}\r\n\r\n\r\nul > li {\r\n    list-style: none;\r\n\r\n}\r\n\r\n.binder_wrap{\r\n    border: 1px solid #747474;\r\n    border-radius: 3px;\r\n    background-color: white;\r\n    /* #background-image: url(\"../../assets/images/concrete-wall-3.png\");    */\r\n    width: 75%;\r\n    height: 80px;\r\n    margin-left: 10%;\r\n    margin-bottom: 2%;\r\n    overflow-y: scroll;\r\n}\r\n\r\n.visible, .edit-btn.visible, .delete-btn.visible, .navbarShow.visible{\r\n    display: inline;\r\n}\r\n\r\n.hidden, .edit-btn.hidden, .delete-btn.hidden, .navbarShow.hidden{\r\n    display: none;\r\n}\r\n\r\n.binderTitle{\r\n    #margin-top: 1%;\r\n    border-top: solid 4px #7b6b73;\r\n    background-color: #96858f;\r\n}\r\n\r\n.binderBody{\r\n    #border: solid 1px teal;\r\n}\r\n\r\n.binderWrap{\r\n    background-color: #96858f;\r\n     width: 100%;\r\n     border-bottom: solid 2px #7b6b73;\r\n}\r\n\r\n.tabWrap{\r\n    background-color: #9099a2;\r\n    width: 95%;\r\n    margin-left: 5%;\r\n}\r\n\r\n.tabTitle{\r\n    border-top: solid 3px #75818a;\r\n    \r\n}\r\n\r\n.tabBody{\r\n    #width: 95%;\r\n    #border: solid 1px magenta;\r\n}\r\n\r\n.pageBody{\r\n    border: 1px solid #696969;\r\n    background-color: #d5d5d5;\r\n    padding: 2% 0%; \r\n    #line-height: 100%;\r\n    width: 98%;\r\n    display: inline-block;\r\n}\r\n\r\n.pageLink, .page-btn, .modify-div{\r\n    display: inline-block;\r\n}\r\n\r\n.add-btn-page.btn  {\r\n    margin-bottom: 8%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n}\r\n\r\n.add-btn-page.btn:hover  {\r\n    background-color: #d5d5d5;\r\n    color: black;\r\n}\r\n\r\n.add-btn-tab.btn  {\r\n    margin-top: 3%;\r\n    margin-bottom: 5%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n}\r\n\r\n.add-btn-tab.btn:hover  {\r\n    background-color: #9099a2;\r\n    color: black;\r\n    \r\n}\r\n\r\n.add-btn-binder.btn  {\r\n    margin-top: 3%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n}\r\n\r\n.add-btn-binder.btn:hover{\r\n    background-color: #96858f;\r\n    color: black;\r\n}\r\n\r\n.pageLink{\r\n    padding-left: 5%;\r\n    font-size: 1rem;\r\n    color: black;\r\n}\r\n\r\n.tabLink{\r\n    padding-left: 3%;\r\n    font-size: 1.5rem;\r\n    color: black;\r\n}\r\n.binderLink{\r\n    padding-left: 3%;\r\n    font-size: 1.75rem;\r\n    color: black;\r\n}\r\n\r\n.navbar-btn {\r\n    margin: 1%;\r\n    margin-bottom: 3%;\r\n}\r\n\r\n.edit-btn {\r\n    background-color: blue;\r\n}\r\n\r\n.delete-btn {\r\n    background-color: red;\r\n}\r\n\r\n.navbarShow.btn, .hideNavbar.btn, .editMode.btn{\r\n    background-color: #d5d5d5;\r\n    color: black;\r\n    #font-weight: 400;\r\n}\r\n.editMode.btn{\r\n    margin-left: 5%;\r\n}\r\n\r\n.editMode.btn:focus{\r\n    background-color: #d5d5d5;\r\n}\r\n\r\n.editMode.btn:hover{\r\n    background-color: #2bbbad;\r\n}\r\n\r\n.editMode.btn.editing:focus{\r\n    background-color: #2bbbad;\r\n    color: white;\r\n}\r\n.navbarShow:hover, .hideNavbar:hover{\r\n\r\n}\r\n\r\n.navbarShow{\r\n    position: absolute;\r\n    z-index: 100;\r\n}\r\n\r\n\r\nsection {\r\n    margin-top: 5%;\r\n    height: 82vh;\r\n    overflow: auto;\r\n}\r\n\r\n/* --------------------- HEADER AND FOOTER ---------------------*/\r\n\r\nheader {\r\n    margin-bottom: 5px;\r\n}\r\n\r\nheader > h3 {\r\n    margin: 0;\r\n    font-size: 38px;\r\n    color: #d5d5d5;\r\n}\r\n\r\n.dashFlex {\r\n    color: #96858f;\r\n}\r\n\r\n.logoImage {\r\n    height: 28px;\r\n}\r\n\r\nfooter {\r\n    width: 100%;\r\n    margin-top: 10px;\r\n    background-color: #6d7993;\r\n    z-index: 2;\r\n}\r\n\r\n.startTour, .logoutBtn {\r\n    height: 40px;\r\n    width: 80px;\r\n    background-color: #d5d5d5;\r\n    color: #6d7993;\r\n}\r\n\r\n.startTour:hover, .logoutBtn:hover {\r\n    background-color: #96858f;\r\n    color: #ffffff;\r\n    border: none;\r\n}\r\n\r\n.startTour {\r\n    float: left;\r\n    margin: 0 5% 0 6%;\r\n}", ""]);
+exports.push([module.i, "a {\r\n    color: white;\r\n}\r\n\r\n.nav_binder, .nav_tab, .nav_page {\r\n    display: inline-block;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.navbar.s2{\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 10%;\r\n    height: 100vh;\r\n    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);\r\n    /*overflow-y:scroll;*/\r\n    background-color: #6d7993;\r\n}\r\n\r\n\r\nul > li {\r\n    list-style: none;\r\n\r\n}\r\n\r\n.binder_wrap{\r\n    border: 1px solid #747474;\r\n    border-radius: 3px;\r\n    background-color: white;\r\n    /* #background-image: url(\"../../assets/images/concrete-wall-3.png\");    */\r\n    width: 75%;\r\n    height: 80px;\r\n    margin-left: 10%;\r\n    margin-bottom: 2%;\r\n    overflow-y: scroll;\r\n}\r\n\r\n.visible, .edit-btn.visible, .delete-btn.visible, .navbarShow.visible{\r\n    display: inline;\r\n}\r\n\r\n.hidden, .edit-btn.hidden, .delete-btn.hidden, .navbarShow.hidden{\r\n    display: none;\r\n}\r\n\r\n.binderTitle{\r\n    #margin-top: 1%;\r\n    border-top: solid 4px #7b6b73;\r\n    background-color: #96858f;\r\n}\r\n\r\n.editMode > .edit_input {\r\n    margin-bottom: 2% !important;\r\n}\r\n\r\n.binderBody{\r\n    #border: solid 1px teal;\r\n}\r\n\r\n.binderWrap{\r\n    background-color: #96858f;\r\n     width: 100%;\r\n     border-bottom: solid 2px #7b6b73;\r\n}\r\n\r\n.tabWrap{\r\n    background-color: #9099a2;\r\n    width: 95%;\r\n    margin-left: 5%;\r\n}\r\n\r\n.tabTitle{\r\n    border-top: solid 3px #75818a;   \r\n}\r\n\r\n.tabBody{\r\n    #width: 95%;\r\n    #border: solid 1px magenta;\r\n}\r\n\r\n.pageBody{\r\n    border: 1px solid #696969;\r\n    background-color: #d5d5d5;\r\n    padding: 2% 0%; \r\n    #line-height: 100%;\r\n    width: 98%;\r\n}\r\n\r\n.pageLink, .page-btn, .delete-btn, .edit-btn {\r\n    display: inline-block;\r\n}\r\n\r\n.add-btn-page.btn  {\r\n    margin-bottom: 8%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n}\r\n\r\n.add-btn-page.btn:hover  {\r\n    background-color: #d5d5d5;\r\n    color: black;\r\n}\r\n\r\n.add-btn-tab.btn  {\r\n    margin-top: 3%;\r\n    margin-bottom: 5%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n}\r\n\r\n.add-btn-tab.btn:hover  {\r\n    background-color: #9099a2;\r\n    color: black;\r\n    \r\n}\r\n\r\n.add-btn-binder.btn  {\r\n    margin-top: 3%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n}\r\n\r\n.add-btn-binder.btn:hover{\r\n    background-color: #96858f;\r\n    color: black;\r\n}\r\n\r\n.pageLink{\r\n    padding-left: 5%;\r\n    font-size: 1rem;\r\n    color: black;\r\n}\r\n\r\n.tabLink{\r\n    padding-left: 3%;\r\n    font-size: 1.5rem;\r\n    color: black;\r\n}\r\n.binderLink{\r\n    padding-left: 3%;\r\n    font-size: 1.75rem;\r\n    color: black;\r\n}\r\n\r\n.navbar-btn {\r\n    margin: 1%;\r\n    margin-bottom: 3%;\r\n}\r\n\r\n.edit-btn.navbar-btn {\r\n    #margin-left: 3%;\r\n}\r\n\r\n.delete-btn {\r\n    background-color: red;\r\n}\r\n\r\n.navbarShow.btn, .hideNavbar.btn, .editMode.btn{\r\n    background-color: #d5d5d5;\r\n    color: black;\r\n    #font-weight: 400;\r\n}\r\n\r\n.navbarShow.btn, .hideNavbar.btn{\r\n    padding-left: 10px;\r\n    padding-right: 6px;\r\n}\r\n\r\n.editMode.btn{\r\n    margin-left: 5%;\r\n}\r\n\r\n.editMode.btn:focus{\r\n    background-color: #d5d5d5;\r\n}\r\n\r\n.editMode.btn:hover{\r\n    background-color: #2bbbad;\r\n}\r\n\r\n.editMode.btn.editing{\r\n    background-color: #2bbbad;\r\n    color: white;\r\n}\r\n\r\n.btn.done-editing{\r\n    padding-left: 5px;\r\n    padding-right: 3px;\r\n}\r\n.navbarShow:hover, .hideNavbar:hover{\r\n\r\n}\r\n\r\n.navbarShow{\r\n    position: absolute;\r\n    z-index: 100;\r\n}\r\n\r\n\r\nsection {\r\n    margin-top: 5%;\r\n    height: 82vh;\r\n    overflow: auto;\r\n}\r\n\r\n/* --------------------- HEADER AND FOOTER ---------------------*/\r\n\r\nheader {\r\n    margin-bottom: 5px;\r\n}\r\n\r\nheader > h3 {\r\n    margin: 0;\r\n    font-size: 38px;\r\n    color: #d5d5d5;\r\n}\r\n\r\n.dashFlex {\r\n    color: #96858f;\r\n}\r\n\r\n.logoImage {\r\n    height: 28px;\r\n}\r\n\r\nfooter {\r\n    width: 100%;\r\n    margin-top: 10px;\r\n    background-color: #6d7993;\r\n    z-index: 2;\r\n}\r\n\r\n.startTour, .logoutBtn {\r\n    height: 40px;\r\n    width: 80px;\r\n    background-color: #d5d5d5;\r\n    color: #6d7993;\r\n}\r\n\r\n.startTour:hover, .logoutBtn:hover {\r\n    background-color: #96858f;\r\n    color: #ffffff;\r\n    border: none;\r\n}\r\n\r\n.startTour {\r\n    float: left;\r\n    margin: 0 5% 0 6%;\r\n}", ""]);
 
 // exports
 
@@ -116041,6 +116079,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 exports.default = function () {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
     var action = arguments[1];
@@ -116051,6 +116091,8 @@ exports.default = function () {
         case _types2.default.GET_SLIDES_URL:
         case _types2.default.RESET_SLIDES_URL:
             return { input: action.payload };
+        case _types2.default.TOGGLE_SLIDE_OUT_MENU:
+            return _extends({}, state, { slideLinkSlideOut: { transform: action.payload.slideOutStyles.transform }, toggleLectureSlideOut: action.payload.toggleSlideOut });
         default:
             return state;
     }
@@ -116063,7 +116105,11 @@ var _types2 = _interopRequireDefault(_types);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var DEFAULT_STATE = {
-    input: ''
+    input: '',
+    slideLinkSlideOut: {
+        transform: 'translateY(-100px)'
+    },
+    toggleLectureSlideOut: true
 };
 
 ;
