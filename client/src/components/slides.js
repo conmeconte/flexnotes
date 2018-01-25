@@ -83,7 +83,7 @@ class Slides extends Component {
         }
     }
     setURLinReduxForm(values) {
-        if (values.url.indexOf('presentation/d/') !== -1 || values.url.indexOf('presentation/d/e') !== -1) {
+        if (values.url.indexOf('presentation/d/') != -1 || values.url.indexOf('presentation/d/e') != -1) {
             if (values.url.indexOf('presentation/d/e/') !== -1) {
                 const urlSplit1 = values.url.split("presentation/d/e/");
                 const urlSplit2 = urlSplit1[1].split('/');
