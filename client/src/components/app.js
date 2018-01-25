@@ -6,7 +6,6 @@ import LandingPage from './landingpage';
 import Dashboard from './dashboard';
 import 'materialize-css/dist/css/materialize.min.css';
 import '../assets/css/landing-page.css';
-import '../assets/css/login.css';
 import '../assets/css/modal.css';
 import '../assets/css/navbar.css';
 import '../assets/css/notes.css';
