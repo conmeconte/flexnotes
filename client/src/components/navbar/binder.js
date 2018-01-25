@@ -180,19 +180,7 @@ class Binder extends Component {
         });
     }
 
-    hoverBinder(){
-        this.setState
-        ({
-            active: true
-        });
-    }
 
-    notHoverBinder(){
-        this.setState
-        ({
-            active: false
-        });
-    }
 
     render() {
         const { active, editable, binderName, hover, editHover, deleteHover, binderHover } = this.state;

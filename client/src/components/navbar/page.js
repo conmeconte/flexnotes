@@ -207,7 +207,7 @@ class Page extends Component {
         if(this.props.interface.page_id === this.props.pageObj._id){
             //set color to active color
             background_color = {
-                backgroundColor: '#546e7a'
+                backgroundColor: '#0288d1'
             }
 
             whiteColor = true;
