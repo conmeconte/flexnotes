@@ -15,7 +15,6 @@ class VideoContainer extends Component {
         );
     }
 
-
     handleYouTubeUrl(values) {
         const youtubeLinkInput = values["youtube-url"];
         if (!youtubeLinkInput || youtubeLinkInput.indexOf("youtu") === -1) {
@@ -28,8 +27,7 @@ class VideoContainer extends Component {
         // }
         this.props.grabVideoUrl(values.input);
         this.props.playPastedLinkVideo(values["youtube-url"]);
-        this.props.toggleModal(this.props.addVideoModalStyle);
-        this.props.reset()
+        this.props.addToPlaylist(this.props.videoLink, values.title, this.props.binderTabPageIds);
         //this.props.getDataObject();
         //this.props.updateBinderArray();
     }
@@ -82,7 +80,9 @@ function mapStateToProps(state) {
         opacityContainer: state.video.opacityDisplay,
         interface_obj: state.interface,
         slideOutStyles: state.video.videoLinkSlideOut,
-        toggleSlideOut: state.video.toggleSlideOut
+        toggleSlideOut: state.video.toggleSlideOut,
+        url: state.url,
+        // pastedVideoUrl: state.videoResults.videoLink,
     }
 }
 
