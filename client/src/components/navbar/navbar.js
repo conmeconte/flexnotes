@@ -13,6 +13,10 @@ class NavBar extends Component{
     constructor(props){
         super(props);
 
+        this.state = {
+            active: false
+        }
+
         this.addBinder = this.addBinder.bind(this);
         this.editMode = this.editMode.bind(this);
         this.notEditable = this.notEditable.bind(this);
@@ -87,6 +91,15 @@ class NavBar extends Component{
             editable: false
         });
     }
+
+    hoverBinder(){
+
+    }
+
+    notHoverBinder(){
+
+    }
+
     render(){
         //console.log("navbar props:", this.props);
         let editableText = '';
@@ -100,7 +113,7 @@ class NavBar extends Component{
         let binder = this.props.binderArr.map((item, index) => {
 
             return (
-                <div key={index} className="binderWrap second-step">
+                <div key={index} onMouseEnter={this.hoverBinder.bind(this)} onMouseLeave={this.notHoverBinder.bind(this)} className="binderWrap second-step blue-grey darken-3">
                     <Binder index={index} binderObj={item}/>
 
                 </div>
@@ -124,9 +137,9 @@ class NavBar extends Component{
                 <button className='btn hideNavbar' onClick={this.hideNav.bind(this)}>
                     <i className="small material-icons">chevron_left</i>
                 </button>
-                <button className={`editMode btn ${this.props.interface.editable ? 'editing':'' }`} onClick={this.editMode.bind(this)}>
+                {/* <button className={`editMode btn ${this.props.interface.editable ? 'editing':'' }`} onClick={this.editMode.bind(this)}>
                     {editableText}
-                </button>
+                </button> */}
                 <section>
                     {binder}
                     <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>

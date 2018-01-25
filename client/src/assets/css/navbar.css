@@ -15,7 +15,7 @@ a {
     height: 100vh;
     box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);
     /*overflow-y:scroll;*/
-    background-color: #6d7993;
+    background-color: #eceff1;
 }
 
 
@@ -33,7 +33,9 @@ ul > li {
     height: 80px;
     margin-left: 10%;
     margin-bottom: 2%;
-    overflow-y: scroll;
+    #overflow-y: scroll;
+    box-sizing: content-box;
+    box-shadow: -5px .5px .5px #333333;
 }
 
 .visible, .edit-btn.visible, .delete-btn.visible, .navbarShow.visible{
@@ -46,8 +48,14 @@ ul > li {
 
 .binderTitle{
     #margin-top: 1%;
-    border-top: solid 4px #7b6b73;
-    background-color: #96858f;
+    #border-top: solid 4px #white;
+    #background-color: #96858f;
+    cursor: pointer;
+    #border-top-left-radius: 5px;
+}
+
+.modify-btn{
+    display: flex;
 }
 
 .editMode > .edit_input {
@@ -59,19 +67,26 @@ ul > li {
 }
 
 .binderWrap{
-    background-color: #96858f;
+    #background-color: #96858f;
      width: 100%;
-     border-bottom: solid 2px #7b6b73;
+     #border-bottom: solid 2px #7b6b73;
+     margin-top: 2%;
+     box-shadow: 1px .5px .5px #747474;
+     
 }
 
 .tabWrap{
-    background-color: #9099a2;
-    width: 95%;
-    margin-left: 5%;
+    #background-color: #9099a2;
+    width: 90%;
+    margin-left: 10%;
+    box-shadow: 1px .5px .5px #747474;
+    
 }
 
 .tabTitle{
-    border-top: solid 3px #75818a;   
+    #border-top: solid 3px #75818a;
+    cursor: pointer;   
+    border-top-left-radius: 5px;
 }
 
 .tabBody{
@@ -80,11 +95,13 @@ ul > li {
 }
 
 .pageBody{
-    border: 1px solid #696969;
-    background-color: #d5d5d5;
+    border: 1px inset #696969;
+    #background-color: #d5d5d5;
     padding: 2% 0%; 
-    #line-height: 100%;
-    width: 98%;
+    margin-left: 10%;
+    width: 90%;
+    cursor: pointer;
+    box-shadow: -2px 1px    0.5px #747474;
 }
 
 .pageLink, .page-btn, .delete-btn, .edit-btn {
@@ -96,23 +113,25 @@ ul > li {
     padding: 0;
     width: 100%;
     font-weight: 500;
+    background-color: #546e7a; 
 }
 
 .add-btn-page.btn:hover  {
-    background-color: #d5d5d5;
+    background-color: #fafafa;
     color: black;
 }
 
 .add-btn-tab.btn  {
     margin-top: 3%;
     margin-bottom: 5%;
+    background-color: #455a64;
     padding: 0;
     width: 100%;
     font-weight: 500;
 }
 
 .add-btn-tab.btn:hover  {
-    background-color: #9099a2;
+    background-color: #cfd8dc;
     color: black;
     
 }
@@ -122,45 +141,71 @@ ul > li {
     padding: 0;
     width: 100%;
     font-weight: 500;
+    background-color: #455a64;
 }
 
 .add-btn-binder.btn:hover{
-    background-color: #96858f;
+    background-color: #cfd8dc;
     color: black;
+}
+
+.visibleHover{
+    visibility: visible;
+    opacity: 0.3;
+}
+
+
+
+.hiddenHover{
+    opacity: 0.3;
+    visibility: hidden;
+}
+
+.fullOpacity{
+    opacity: 1;
 }
 
 .pageLink{
     padding-left: 5%;
     font-size: 1rem;
-    color: black;
+    overflow-wrap: break-word;
 }
 
 .tabLink{
     padding-left: 3%;
     font-size: 1.5rem;
     color: black;
+    overflow-wrap: break-word;
 }
 .binderLink{
     padding-left: 3%;
     font-size: 1.75rem;
-    color: black;
+    color: #fafafa;
+    overflow-wrap: break-word;
 }
 
 .navbar-btn {
     margin: 1%;
-    margin-bottom: 3%;
 }
 
 .edit-btn.navbar-btn {
     #margin-left: 3%;
 }
 
+.pageList.whiteFont>a {
+    color: white;
+}
+
+.pageList.blackFont>a {
+    color: black;
+}
+
 .delete-btn {
     background-color: red;
 }
 .hideNavbar.btn, .editMode.btn{
-    background-color: #d5d5d5;
-    color: black;
+    color: #fafafa;
+    background-color: #607d8b;
     #font-weight: 400;
 }
 .navbarShow.btn {
@@ -169,6 +214,7 @@ ul > li {
     padding: 0;
     top: 50%;
   transform: translateY(-50%);
+  background-color: #607d8b;
 }
 .navbarShow.btn i {
     position: relative;
@@ -179,6 +225,13 @@ ul > li {
     padding-right: 6px;
 }
 
+.textLight{
+    color: white;
+}
+
+.textDark{
+    color: black;
+}
 .editMode.btn{
     margin-left: 5%;
 }
@@ -200,8 +253,12 @@ ul > li {
     padding-left: 5px;
     padding-right: 3px;
 }
-.navbarShow:hover, .hideNavbar:hover{
+.navbarShow.btn:hover{
+    background-color: #37474f;
+}
 
+.hideNavbar.btn:hover {
+    background-color: #37474f;
 }
 
 .navbarShow{
@@ -209,6 +266,23 @@ ul > li {
     z-index: 100;
 }
 
+input.edit_input_binder{
+    font-size: 1.75rem !important;
+    color: #fafafa;
+    margin-left: 2%;
+}
+
+input.edit_input_tab{
+    padding-left: 3%;
+    font-size: 1.5rem !important;
+    color: black;
+}
+
+input.edit_input_page{
+    padding-left: 5%;
+    font-size: 1rem !important;
+    color: #fafafa;
+}
 
 section {
     margin-top: 5%;
