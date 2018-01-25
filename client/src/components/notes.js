@@ -538,7 +538,7 @@ class Notes extends Component {
     render() {
         return (
             <div className="text-editor">
-                <div>{this.toolbar()}</div>
+                <div className='notes-component-toolbar'>{this.toolbar()}</div>
 
                 <div className="notes-component fifth-step">
                     <Editor
