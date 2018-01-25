@@ -13,7 +13,8 @@ class Page extends Component {
             pageName: '',
             hover: false,
             editHover: false,
-            deleteHover: false
+            deleteHover: false,
+            active: false 
             //tabObject: this.props.tabObj,
             //binderUrl: this.props.binderUrl
         }
@@ -186,7 +187,7 @@ class Page extends Component {
 
     render(){
 
-        const {editable, pageName, hover, editHover, deleteHover} = this.state;
+        const {editable, pageName, hover, editHover, deleteHover, active} = this.state;
         if(!this.props.pageObj){
             return null;
         }
@@ -196,6 +197,11 @@ class Page extends Component {
         //console.log('Props in Page:',this.props);
         //console.log('State in Page:',this.state);
         let page_list = [];
+
+        let background_color = {
+            backgroundColor: '',
+            color: ''
+        }
         if(editable){
             //let editName = this.props.binderObj.binder_name;
             page_list = (
@@ -216,14 +222,14 @@ class Page extends Component {
             );
         } else {
             page_list = (
-                <div className="pageList" onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+                <div className="pageList"  onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
             <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
-                <div className="pageLink"  onClick={()=>this.handleClick()}>
+                <div className="pageLink" >
                     {this.props.pageObj.page_name}
                 </div>
                 </Link>
                 <div className="right-align">
-                    <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editPage}>
+                    <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn cyan ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editPage}>
                     <i className="small material-icons">edit</i>
                     </button>
                     <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deletePage()} >
@@ -238,12 +244,21 @@ class Page extends Component {
 
         if(this.props.interface.page_id === this.props.pageObj._id){
             //set color to active color
+            background_color = {
+                backgroundColor: '#2bbbad',
+                color: '#ffffff'
+            }
+
         } else {
             //set color to default
+            background_color = {
+                backgroundColor: '#d5d5d5',
+                color: 'black'
+            }
         }
 
         return(
-            <li className="pageBody" >
+            <li className="pageBody"  style={background_color} onClick={()=>this.handleClick()}>
                 {page_list}
             </li>
             

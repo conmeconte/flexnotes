@@ -228,9 +228,9 @@ class Tab extends Component {
             );
         } else {
             tab_title = (
-                <div className="tabTitle" onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+                <div className="tabTitle" onClick={()=>this.handleClick()} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
                     <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
-                        <div className="tabLink"  onClick={()=>this.handleClick()}>
+                        <div className="tabLink" >
                             {this.props.tabObj.tab_name}
                         </div>
                     </Link>
