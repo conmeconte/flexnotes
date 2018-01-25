@@ -156,11 +156,17 @@ ul > li {
 .delete-btn {
     background-color: red;
 }
-
-.navbarShow.btn, .hideNavbar.btn, .editMode.btn{
+.hideNavbar.btn, .editMode.btn{
     background-color: #d5d5d5;
     color: black;
     #font-weight: 400;
+}
+.navbarShow.btn {
+    height: 51%;
+    width: 0.75%;
+    padding: 0;
+    top: 50%;
+  transform: translateY(-50%);
 }
 .editMode.btn{
     margin-left: 5%;
