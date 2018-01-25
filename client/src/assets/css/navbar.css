@@ -34,6 +34,8 @@ ul > li {
     margin-left: 10%;
     margin-bottom: 2%;
     overflow-y: scroll;
+    box-sizing: content-box;
+    box-shadow: -5px .5px .5px #333333;
 }
 
 .visible, .edit-btn.visible, .delete-btn.visible, .navbarShow.visible{
@@ -48,6 +50,7 @@ ul > li {
     #margin-top: 1%;
     border-top: solid 4px #7b6b73;
     background-color: #96858f;
+    cursor: pointer;
 }
 
 .modify-btn{
@@ -70,12 +73,14 @@ ul > li {
 
 .tabWrap{
     background-color: #9099a2;
-    width: 95%;
-    margin-left: 5%;
+    width: 90%;
+    margin-left: 10%;
+    box-shadow: -2px .5px .5px #747474;
 }
 
 .tabTitle{
-    border-top: solid 3px #75818a;   
+    border-top: solid 3px #75818a;
+    cursor: pointer;   
 }
 
 .tabBody{
@@ -84,11 +89,13 @@ ul > li {
 }
 
 .pageBody{
-    border: 1px solid #696969;
-    background-color: #d5d5d5;
+    border: 1px inset #696969;
+    #background-color: #d5d5d5;
     padding: 2% 0%; 
-    #line-height: 100%;
-    width: 98%;
+    margin-left: 10%;
+    width: 90%;
+    cursor: pointer;
+    box-shadow: -3px 1px    0.5px #747474;
 }
 
 .pageLink, .page-btn, .delete-btn, .edit-btn {
@@ -181,7 +188,6 @@ ul > li {
     background-color: red;
 }
 .hideNavbar.btn, .editMode.btn{
-    background-color: #d5d5d5;
     color: black;
     #font-weight: 400;
 }

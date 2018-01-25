@@ -210,9 +210,9 @@ class Binder extends Component {
             );
         } else {
             binder_title = (
-                <div className="binderTitle" onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+                <div className="binderTitle"  onClick={()=>this.binderSelect()} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
 
-                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }}  onClick={()=>this.binderSelect()}> 
+                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }}> 
                         <div className="binderLink">
                             {this.props.binderObj.binder_name}
                         </div>    
