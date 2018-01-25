@@ -142,8 +142,16 @@ body {
     position:absolute;
     width: 100%;
     height: 100%;
-    background-color: #000;
+    background-color: transparent;
     z-index: 8000;
     display: none;
+}
+.resize-blocker2 {
+    position:absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
     background-color: transparent;
+    z-index: 8000;
+    display: none;
 }
