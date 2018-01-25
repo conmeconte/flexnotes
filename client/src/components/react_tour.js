@@ -2,7 +2,7 @@ import React from 'react';
 
 function FlexNotesTour({toggleTour}){
     return(
-        <button className="startTour" onClick={toggleTour}>Tour</button>
+        <button className="btn startTour" onClick={toggleTour}>TOUR</button>
     )
 }
 

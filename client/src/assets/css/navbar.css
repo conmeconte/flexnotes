@@ -216,11 +216,11 @@ header {
 header > h3 {
     margin: 0;
     font-size: 38px;
-    color: #d5d5d5;
+    color: #ffffff;
 }
 
 .dashFlex {
-    color: #96858f;
+    color: #26a69a;
 }
 
 .logoImage {
@@ -234,17 +234,17 @@ footer {
     z-index: 2;
 }
 
-.startTour, .logoutBtn {
+.startTour.btn, .logoutBtn.btn {
     height: 40px;
     width: 80px;
     background-color: #d5d5d5;
-    color: #6d7993;
+    color: #000000;
+    padding: 5px;
 }
 
-.startTour:hover, .logoutBtn:hover {
-    background-color: #96858f;
-    color: #ffffff;
-    border: none;
+.startTour.btn:hover, .logoutBtn.btn:hover {
+    background-color: #26a69a;
+    color: #000000;
 }
 
 .startTour {

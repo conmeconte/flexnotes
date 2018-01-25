@@ -9,6 +9,8 @@ import { getDataObject } from '../actions';
 import Tour from 'reactour';
 import steps from './react_tour_steps';
 
+import '../assets/css/dashboard.css';
+
 class Dashboard extends Component {
     componentWillMount(){
         this.props.getDataObject();
