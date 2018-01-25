@@ -248,6 +248,21 @@ export function slideOutVideoSearch(toggleBool, slide) {
         payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut  } 
     }
 }
+export function slideOutSlidesSearch (toggleBool, slide) {
+    let toggleSlideOut = toggleBool;
+    var slideOutStyles;
+    if (toggleSlideOut) {
+        slideOutStyles = 'translateY(0px)'
+        toggleSlideOut = false;
+    } else {
+        slideOutStyles = 'translateY(-100px)'
+        toggleSlideOut = true;
+    }
+    return {
+        type: types.TOGGLE_SLIDE_OUT_MENU,
+        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut  } 
+    }
+}
 export function emptyVideoSlideOut (toggleBool, slide) {
     let toggleSlideOut = toggleBool;
     let slideOutStyles = slide.style;
