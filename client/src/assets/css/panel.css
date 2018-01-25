@@ -138,3 +138,12 @@ body {
     border-bottom: 1px solid #96858F !important;
     box-shadow: 0 1px 0 0 #96858F !important;
   }
+.resize-blocker {
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 8000;
+    display: none;
+    background-color: transparent;
+}

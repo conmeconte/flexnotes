@@ -61,7 +61,14 @@ class ThreePanel extends Component {
     //         return;
     //     }
     // }
-
+    componentDidMount () {
+        document.querySelector(".Resizer.vertical").addEventListener("mousedown", function () {
+            document.querySelector(".resize-blocker").style.display = "block";
+        })
+        document.querySelector("body").addEventListener("mouseup", function () {
+            document.querySelector(".resize-blocker").style.display = "none";
+        })
+    }
     render() {
         console.log('panel three props:', this.props);
         // const loTLHsave = _.debounce((size) => {
@@ -94,6 +101,7 @@ class ThreePanel extends Component {
         //         }
         //     }
         // if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
+        
         return (
             <SplitPane className={`width-w-nav ${this.props.interface_obj.navbar_min ? 'full_width' : ''}`} split="vertical" minSize={300} maxSize={1000} defaultSize={425}>
                 <SplitPane split="horizontal" minSize={300} maxSize={600} defaultSize={450}>
