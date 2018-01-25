@@ -40,11 +40,11 @@ class Tab extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.interface.editable === false){
-            this.setState({
-                editable: false
-            });
-        }
+        // if(nextProps.interface.editable === false){
+        //     this.setState({
+        //         editable: false
+        //     });
+        // }
     }
     // componentWillReceiveProps(nextProps){
 
@@ -213,7 +213,7 @@ class Tab extends Component {
             tab_title = (
                 <div className="editMode">
                          <input 
-                             className="edit_input"
+                             className="edit_input_tab"
                              ref='textInput'
                              type='text'
                              onChange={(e)=>this.editTabName(e)}
@@ -235,7 +235,7 @@ class Tab extends Component {
                         </div>
                     </Link>
                     <div className="modify-btn">
-                        <button type="button"  onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editTabs}>
+                        <button type="button"  onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn grey darken-4 ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editTabs}>
                         <i className="small material-icons">edit</i>
                         </button>
                         <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >

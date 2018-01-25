@@ -13,6 +13,10 @@ class NavBar extends Component{
     constructor(props){
         super(props);
 
+        this.state = {
+            active: false
+        }
+
         this.addBinder = this.addBinder.bind(this);
         this.editMode = this.editMode.bind(this);
         this.notEditable = this.notEditable.bind(this);
@@ -87,6 +91,15 @@ class NavBar extends Component{
             editable: false
         });
     }
+
+    hoverBinder(){
+
+    }
+
+    notHoverBinder(){
+
+    }
+
     render(){
         //console.log("navbar props:", this.props);
         let editableText = '';
@@ -100,7 +113,7 @@ class NavBar extends Component{
         let binder = this.props.binderArr.map((item, index) => {
 
             return (
-                <div key={index} className="binderWrap second-step">
+                <div key={index} onMouseEnter={this.hoverBinder.bind(this)} onMouseLeave={this.notHoverBinder.bind(this)} className="binderWrap second-step blue-grey darken-3">
                     <Binder index={index} binderObj={item}/>
 
                 </div>

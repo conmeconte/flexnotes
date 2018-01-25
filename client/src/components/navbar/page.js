@@ -28,11 +28,11 @@ class Page extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps.interface.editable === false){
-            this.setState({
-                editable: false
-            });
-        }
+        // if(nextProps.interface.editable === false){
+        //     this.setState({
+        //         editable: false
+        //     });
+        // }
     }
 
     // addPage(){
@@ -199,15 +199,33 @@ class Page extends Component {
         let page_list = [];
 
         let background_color = {
-            backgroundColor: '',
-            color: ''
+            backgroundColor: ''
+        }
+
+        let whiteColor = true;
+        
+        if(this.props.interface.page_id === this.props.pageObj._id){
+            //set color to active color
+            background_color = {
+                backgroundColor: '#546e7a'
+            }
+
+            whiteColor = true;
+
+        } else {
+            //set color to default
+            background_color = {
+                backgroundColor: '#fafafa'
+            }
+
+            whiteColor = false;
         }
         if(editable){
             //let editName = this.props.binderObj.binder_name;
             page_list = (
                 <div className="editMode">
                          <input 
-                             className="edit_input"
+                             className="edit_input_page"
                              ref='textInput'
                              type='text'
                              onChange={(e)=>this.editPageName(e)}
@@ -222,14 +240,14 @@ class Page extends Component {
             );
         } else {
             page_list = (
-                <div className="pageList"  onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
-            <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
+                <div className={`pageList ${whiteColor ? 'whiteFont' : 'blackFont'}`} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+            <Link to={`/main/${url}`} style={{ textDecoration: 'none'}} >
                 <div className="pageLink" >
                     {this.props.pageObj.page_name}
                 </div>
                 </Link>
                 <div className="right-align">
-                    <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn cyan ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editPage}>
+                    <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn grey darken-4  ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editPage}>
                     <i className="small material-icons">edit</i>
                     </button>
                     <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deletePage()} >
@@ -242,20 +260,6 @@ class Page extends Component {
             );
         }
 
-        if(this.props.interface.page_id === this.props.pageObj._id){
-            //set color to active color
-            background_color = {
-                backgroundColor: '#2bbbad',
-                color: '#ffffff'
-            }
-
-        } else {
-            //set color to default
-            background_color = {
-                backgroundColor: '#d5d5d5',
-                color: 'black'
-            }
-        }
 
         return(
             <li className="pageBody"  style={background_color} onClick={()=>this.handleClick()}>
