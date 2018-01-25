@@ -120,11 +120,14 @@ class Slides extends Component {
                 }}>
                     {!toggleSlideOut ? <i className="material-icons">keyboard_arrow_up</i> : <i className="material-icons">keyboard_arrow_down</i>}
                 </div>
-                {
-                    this.props.slide_input ?
-                        <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe" allowFullScreen></iframe>
-                        : ""
-                }
+                <div className="slides-container">
+                    <div className="resize-blocker2"></div>
+                    {
+                        this.props.slide_input ?
+                            <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe" allowFullScreen></iframe>
+                            : ""
+                    }
+                </div>
             </div>
         )
     }

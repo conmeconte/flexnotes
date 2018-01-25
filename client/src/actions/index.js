@@ -202,36 +202,95 @@ export function toggleResults(bool) {
     }
 }
 export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
+    debugger;
     if (!videoUrl) {
         return {
             type: types.NO_VIDEO_LINK
-        }
-    }
-    let videoId = videoUrl.split("/");
-    videoId = videoId[4];
-    return (dispatch) => {
-        const videoTest = axios.post('/api/video', {
-            video: {
-                videoTitle: videoTitle,
-                videoId: videoId,
-                videoUrl: videoUrl
-            },
-            binderID: interfaceObj.binder_id,
-            tabID: interfaceObj.tab_id,
-            pageID: interfaceObj.page_id
-        }).then((response) => {
-            console.log("DATA HAS BEEN SENT", response);
-            dispatch({
-                type: types.ADD_TO_PLAYLIST,
-                payload: videoUrl
-            });
-        }).catch(error => {
-            dispatch({
-                type: types.AXIOS_ERROR,
-                msg: 'Add to Playlist Failed.'
+        };
+    } else if (videoUrl.indexOf("&") !== -1 || videoUrl.indexOf("=") !== -1) {
+        let videoLink = videoUrl
+        let videoId = videoLink.split('&')[0];
+        videoId = videoLink.split('=')[1];
+        videoLink = `https://www.youtube.com/embed/${videoId}`;
+        return (dispatch) => {
+            const videoTest = axios.post('/api/video', {
+                video: {
+                    videoTitle: '',
+                    videoId: videoId,
+                    videoUrl: videoLink
+                },
+                binderID: interfaceObj.binder_id,
+                tabID: interfaceObj.tab_id,
+                pageID: interfaceObj.page_id
+            }).then((response) => {
+                console.log("DATA HAS BEEN SENT", response);
+                dispatch({
+                    type: types.ADD_TO_PLAYLIST,
+                    payload: videoLink
+                });
+            }).catch(error => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Add to Playlist Failed.'
+                })
             })
-        })
-    };
+        };
+    } else if (videoUrl.indexOf("youtu.be") !== -1) {
+        let videoLink = videoUrl;
+        let videoId = videoUrl.split("/");
+        videoId = videoId[3];
+        videoLink = `https://www.youtube.com/embed/${videoId}`;
+        return (dispatch) => {
+            const videoTest = axios.post('/api/video', {
+                video: {
+                    videoTitle: '',
+                    videoId: videoId,
+                    videoUrl: videoLink
+                },
+                binderID: interfaceObj.binder_id,
+                tabID: interfaceObj.tab_id,
+                pageID: interfaceObj.page_id
+            }).then((response) => {
+                console.log("DATA HAS BEEN SENT", response);
+                dispatch({
+                    type: types.ADD_TO_PLAYLIST,
+                    payload: videoLink
+                });
+            }).catch(error => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Add to Playlist Failed.'
+                })
+            })
+        };
+    } else {
+        let videoLink = videoUrl;
+        let videoId = videoLink.split("/")
+        videoId = videoId[3];
+        return (dispatch) => {
+            const videoTest = axios.post('/api/video', {
+                video: {
+                    videoTitle: '',
+                    videoId: videoId,
+                    videoUrl: videoUrl
+                },
+                binderID: interfaceObj.binder_id,
+                tabID: interfaceObj.tab_id,
+                pageID: interfaceObj.page_id
+            }).then((response) => {
+                console.log("DATA HAS BEEN SENT", response);
+                dispatch({
+                    type: types.ADD_TO_PLAYLIST,
+                    payload: videoUrl
+                });
+            }).catch(error => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Add to Playlist Failed.'
+                })
+            })
+        };
+    }
 }
 export function slideOutVideoSearch(toggleBool, slide) {
     let toggleSlideOut = toggleBool;

@@ -25,9 +25,9 @@ class VideoContainer extends Component {
         //     console.log("PLEASE SEARCH A VIDEO.");
         //     return;
         // }
-        this.props.grabVideoUrl(values.input);
+        // this.props.grabVideoUrl(values.input);
         this.props.playPastedLinkVideo(values["youtube-url"]);
-        this.props.addToPlaylist(this.props.videoLink, values.title, this.props.binderTabPageIds);
+        this.props.addToPlaylist(values["youtube-url"], '', this.props.binderTabPageIds);
         //this.props.getDataObject();
         //this.props.updateBinderArray();
     }
@@ -59,6 +59,7 @@ class VideoContainer extends Component {
                 </div>
                 <div id="video-container" className="video-container">
                     <div className="video-embed-wrapper">
+                        <div className="resize-blocker"></div>
                         <iframe allowFullScreen id="video-iframe" src={this.props.videoLink} className="video-iframe"></iframe>
                     </div>
                 </div>

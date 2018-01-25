@@ -10,6 +10,12 @@ import VideoModal from './video-modal';
 
 const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
 class Video extends Component {
+    constructor(props) {
+        super(props);
+        // document.querySelector(".Resizer").addEventListener("mousedown", function () {
+        //     document.querySelector(".resize-blocker").style.display = "none";
+        // })
+    }
     search(values) {
         if (!values.video) {
             return;
