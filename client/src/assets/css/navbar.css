@@ -170,7 +170,10 @@ ul > li {
     top: 50%;
   transform: translateY(-50%);
 }
-
+.navbarShow.btn i {
+    position: relative;
+    left: -13px;
+}
 .navbarShow.btn, .hideNavbar.btn{
     padding-left: 10px;
     padding-right: 6px;
