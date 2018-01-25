@@ -125,10 +125,10 @@ class Video extends Component {
             if (pageIndex !== null && page_arr_obj[pageIndex].hasOwnProperty('video') && page_arr_obj[pageIndex].video[0].hasOwnProperty('videoId')) {
                 // return;
                 this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoURL, interface_obj);
-                this.props.slideOutVideoSearch(false, 'translate(-119px)');
+                this.props.slideOutVideoSearch(false, 'translateY(-119px)');
             } else {
                 this.props.setVideoUrl('', interface_obj);
-                this.props.slideOutVideoSearch(this.props.toggleSlideOut, this.props.slideOutStyles);
+                this.props.slideOutVideoSearch(true, 'translateY(27px)');
             }
         } 
     }

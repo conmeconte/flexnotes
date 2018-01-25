@@ -50,6 +50,10 @@ ul > li {
     background-color: #96858f;
 }
 
+.editMode > .edit_input {
+    margin-bottom: 2% !important;
+}
+
 .binderBody{
     #border: solid 1px teal;
 }
@@ -67,8 +71,7 @@ ul > li {
 }
 
 .tabTitle{
-    border-top: solid 3px #75818a;
-    
+    border-top: solid 3px #75818a;   
 }
 
 .tabBody{
@@ -82,10 +85,9 @@ ul > li {
     padding: 2% 0%; 
     #line-height: 100%;
     width: 98%;
-    display: inline-block;
 }
 
-.pageLink, .page-btn, .modify-div{
+.pageLink, .page-btn, .delete-btn, .edit-btn {
     display: inline-block;
 }
 
@@ -149,8 +151,8 @@ ul > li {
     margin-bottom: 3%;
 }
 
-.edit-btn {
-    background-color: blue;
+.edit-btn.navbar-btn {
+    #margin-left: 3%;
 }
 
 .delete-btn {
@@ -162,6 +164,12 @@ ul > li {
     color: black;
     #font-weight: 400;
 }
+
+.navbarShow.btn, .hideNavbar.btn{
+    padding-left: 10px;
+    padding-right: 6px;
+}
+
 .editMode.btn{
     margin-left: 5%;
 }
@@ -174,9 +182,14 @@ ul > li {
     background-color: #2bbbad;
 }
 
-.editMode.btn.editing:focus{
+.editMode.btn.editing{
     background-color: #2bbbad;
     color: white;
+}
+
+.btn.done-editing{
+    padding-left: 5px;
+    padding-right: 3px;
 }
 .navbarShow:hover, .hideNavbar:hover{
 
