@@ -10,7 +10,10 @@ class Page extends Component {
 
         this.state = {
             editable: false,
-            pageName: ''
+            pageName: '',
+            hover: false,
+            editHover: false,
+            deleteHover: false
             //tabObject: this.props.tabObj,
             //binderUrl: this.props.binderUrl
         }
@@ -144,9 +147,46 @@ class Page extends Component {
         //this.props.
     }
 
+    hover(){
+        this.setState({
+            hover: true
+        });
+    }
+
+    notHover(){
+        this.setState({
+            hover: false
+        });
+    }
+
+    hoverEditBtn(){
+        this.setState({
+            editHover: true
+        });
+    }
+
+    notHoverEditBtn(){
+        this.setState({
+            editHover: false
+        });
+    }
+
+    hoverDeleteBtn(){
+        this.setState({
+            deleteHover: true
+        });
+    }
+
+    notHoverDeleteBtn(){
+        this.setState({
+            deleteHover: false
+        });
+    }
+
+
     render(){
 
-        const {editable, pageName} = this.state;
+        const {editable, pageName, hover, editHover, deleteHover} = this.state;
         if(!this.props.pageObj){
             return null;
         }
@@ -176,17 +216,17 @@ class Page extends Component {
             );
         } else {
             page_list = (
-                <div className="page-edit">
+                <div className="pageList" onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
             <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
                 <div className="pageLink"  onClick={()=>this.handleClick()}>
                     {this.props.pageObj.page_name}
                 </div>
                 </Link>
-                <div className="modify-btn">
-                    <button type="button" className={`btn-floating navbar-btn edit-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={this.editPage}>
+                <div className="right-align">
+                    <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editPage}>
                     <i className="small material-icons">edit</i>
                     </button>
-                    <button type="button" className={`btn-floating navbar-btn delete-btn red darken-4 ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deletePage()} >
+                    <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deletePage()} >
                     <i className="small material-icons">delete_forever</i>
                     </button>
                 </div>
