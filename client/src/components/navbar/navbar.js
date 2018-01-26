@@ -25,16 +25,16 @@ class NavBar extends Component{
 
     componentWillReceiveProps(nextProps){
         if(nextProps.interface.pull_from_db || nextProps.interface.page_id !== this.props.interface.page_id){
-            console.log("update binder array");
+            //console.log("update binder array");
             this.props.updateBinderArray();
         }
 
         if(nextProps.interface.sent_to_db){
-            console.log("sent to db = true");
+            //console.log("sent to db = true");
             for (let i = 0; i < this.props.binderArr.length; i++) {
                 if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
                     let binderObj = this.props.binderArr[i];
-                    console.log("binder object: ", binderObj);
+                    //console.log("binder object: ", binderObj);
                     this.props.updateBinderObj(binderObj);
                 }
             }
