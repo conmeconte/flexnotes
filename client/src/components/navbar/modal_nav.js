@@ -19,14 +19,35 @@ export default class ModalNav extends Component {
     }
 
     render(){
-        // console.log('Modal props:', this.props);
+        //console.log('Modal props:', this.props);
         const {visible} = this.state;
+        let bodyText = '';
+        let modalBtn = [];
+        
+        if(this.props.arrLength === 1){
+            bodyText = 'Can not delete the last '+this.props.type+'!';
+            modalBtn = (
+                <div className='card-action modal-nav'>
+                    <button onClick={()=>this.setState({visible: false})} className='btn grey lighten-4'>Back</button>
+                </div>
+            );
+        } else {
+            bodyText = 'Delete '+ this.props.name +'?';
+            modalBtn = (
+                <div className='card-action modal-nav'>
+                    <button onClick={()=>this.setState({visible: false})} className='btn grey lighten-4'>Cancel</button>
+                    <button onClick={this.handleConfirm} className='btn red darken-3'>Delete</button>
+                </div>
+            );
+        }
+
         const button = (
             <button onClick={()=>this.setState({visible: true})} 
             className={` ${visible  ? 'fullOpacity visible' : 'visibleHover'} ${this.props.className  ? this.props.className : ''}`}>
             {this.props.children ? this.props.children : ''}
             </button>
         );
+
         if(this.state.visible){
             return(
                 <span>
@@ -35,12 +56,9 @@ export default class ModalNav extends Component {
                         <div className="modal-content modal-nav">
                                 <div className="card">
                                     <div className='card-content'>
-                                        Delete {this.props.name}?
+                                        {bodyText}
                                     </div>
-                                    <div className='card-action modal-nav'>
-                                        <button onClick={()=>this.setState({visible: false})} className='btn grey lighten-4'>Cancel</button>
-                                        <button onClick={this.handleConfirm} className='btn red darken-3'>Delete</button>
-                                    </div>
+                                        {modalBtn}
                                 </div>
                         
                         </div>
