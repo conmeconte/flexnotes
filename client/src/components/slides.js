@@ -47,9 +47,6 @@ class Slides extends Component {
                 }
 
             }
-            else {
-                console.log("DOES NOT WORK");
-            }
         }
     }
     componentWillMount() {
@@ -78,9 +75,7 @@ class Slides extends Component {
             } else {
                 this.props.resetSlidesURL('');
             }
-        } else {
-            console.log("DOES NOT WORK");
-        }
+        } 
     }
     setURLinReduxForm(values) {
         if (values.url.indexOf('presentation/d/') != -1 || values.url.indexOf('presentation/d/e') != -1) {
@@ -136,7 +131,7 @@ class Slides extends Component {
 function validate(values) {
     const errors = {};
     const valuesStr = values.url;
-    console.log('VALIDATE slides:', valuesStr);
+    // console.log('VALIDATE slides:', valuesStr);
     if (valuesStr) {
         if (valuesStr.indexOf('docs.google.com/presentation/d/') === -1) {
             errors.url = "Please paste a valid Google Slides URL";

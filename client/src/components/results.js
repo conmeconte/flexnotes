@@ -6,16 +6,16 @@ import { addToPlayList, playVideo } from '../actions/index';
 class Results extends Component {
     addToPlayList (obj) {
         videoData.items.push(obj);
-        console.log(videoData);
+        // console.log(videoData);
     }
     handlePlayVideo(videoUrl) {
         this.props.playVideo(videoUrl); 
     }
     render() {
         const {results} = this.props;
-        console.log("video results: ", results)
+        // console.log("video results: ", results)
         const list = results.map((item, index) => {
-            console.log(item.url);
+            // console.log(item.url);
             return (
                 <li onMouseOver={ () => {this.showVideoDescription(item.description)}} className="result-item collection-item col s12" key={index}>
                     <div className="row list-item-wrap-container">

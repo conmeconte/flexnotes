@@ -173,7 +173,7 @@ class Notes extends Component {
             // }else{
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
-            console.log('notes nextProps:', nextProps.binderObj);
+            // console.log('notes nextProps:', nextProps.binderObj);
             if (tab_arr_obj) {
                 let tabArrLength = tab_arr_obj.length;
                 let tabIndex = null;
@@ -203,9 +203,7 @@ class Notes extends Component {
                         save: false
                     })
                 }
-            } else {
-                console.log("DOES NOT WORK");
-            }
+            } 
         }
     }
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------

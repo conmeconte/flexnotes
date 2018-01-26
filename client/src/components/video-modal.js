@@ -7,7 +7,7 @@ import { Field, reduxForm } from 'redux-form';
 class VideoModal extends Component {
     renderInput(props) {
         const { label, input, meta: { touched, error }  } = props;
-        console.log('INPUT: ', input);
+        // console.log('INPUT: ', input);
 
         return (
                 <input {...input} className="save-title-input form-control"/>
@@ -15,8 +15,8 @@ class VideoModal extends Component {
     }
 
     setName(values){
-        console.log('Values in video modal:', values);
-        console.log('video modal props:', this.props);
+        // console.log('Values in video modal:', values);
+        // console.log('video modal props:', this.props);
         this.props.addToPlaylist(this.props.videoLink, values.title, this.props.binderTabPageIds);
         this.props.toggleModal(this.props.addVideoModalStyle);
         this.props.reset();
