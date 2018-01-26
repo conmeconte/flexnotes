@@ -353,10 +353,9 @@ input.edit_input_page{
     color: #fafafa;
 }
 
-section {
+.binder-container {
     margin-top: 0;
-    height: 82vh;
-
+    height: 80vh;
     overflow: auto;
 }
 
@@ -383,19 +382,19 @@ header > h1 {
 
 footer {
     width: 100%;
-    margin: 1% 0;
     z-index: 2;
     position: relative;
-    bottom: 0vh;
+    bottom: 2vh;
+    background-color: #eceff1;
 }
 
 .startTour.btn, .logoutBtn.btn {
-    height: 6%;
-    width: 41%;
+    width: 40%;
     background-color: #0288d1;;
     color: #fafafa;
-    padding: 2%;
-    font-size: 1vw;
+    padding: 0 4%;
+    margin: 3% 4% 0 4%;
+    font-size: .75vw;
     font-weight: 500;
 }
 
@@ -403,7 +402,4 @@ footer {
     background-color: #37474f;
 }
 
-.startTour {
-    float: left;
-    margin: 0 5% 0 6%;
-}
+
