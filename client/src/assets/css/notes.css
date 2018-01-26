@@ -1,6 +1,5 @@
 .notes-parent-panel {
     height: 99%;
-    overflow-y: auto;
     box-sizing: border-box;
     background-color: ghostwhite;
     /*box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3);*/
@@ -22,6 +21,8 @@
 }
 .notes-component.fifth-step{
     height: 88%; 
+    overflow-y: auto;
+
 }
 
 .toolbar {
@@ -70,7 +71,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between; */
-    height: 52%;
+    height: 40%;
     width: 60%;
     margin-right: 20%;
     display: inline-block;
@@ -94,6 +95,7 @@
     color:white; 
     width: 20%;
     background-color: #0393d7;
+    height: 40%; 
 }
 
 .saveNotes:hover{
