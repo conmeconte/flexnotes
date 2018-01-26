@@ -100,7 +100,7 @@ class Video extends Component {
     renderInput({ input, defaultValue }) {
         
         return (
-            <div id="input-field" className="col s8 input-field">
+            <div id="input-field" className="col s12 input-field">
                 <input type="text" {...input} id="query" placeholder="Search on Youtube..." className="form-control" />
             </div>
         )
