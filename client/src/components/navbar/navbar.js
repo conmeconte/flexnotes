@@ -53,7 +53,7 @@ class NavBar extends Component {
         } else {
             this.props.deleteBinder(delete_id);
         }
-        
+
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
         // let deleteIndex = 0;
