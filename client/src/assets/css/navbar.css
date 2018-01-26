@@ -370,12 +370,15 @@ header {
 
 header > h1 {
     margin-left: 2px;
-    font-size: 2.6vw;
+    font-size: 2vw;
     display: inline;
+    font-weight: 800;
+    letter-spacing: 3.5px;
 }
 
 .dashFlex {
     color: #0288d1;
+    font-style: italic;
 }
 
 .logoImage {
