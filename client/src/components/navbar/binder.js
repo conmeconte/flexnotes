@@ -41,12 +41,7 @@ class Binder extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.interface.editable === false){
-            //this is breaking edit mode
-            // this.setState({
-            //     editable: false
-            // });
-        }
+
         if(this.props.hasOwnProperty("binderObj")){
             // this.setState({
             //     binderName: this.props.binderObj.binder_name
@@ -212,7 +207,7 @@ class Binder extends Component {
         const { tab_arr_obj } = this.props.binderObj;
 
         let binder_url = this.props.binderObj._id;
-
+        let binderArrLength = this.props.binderArr.length;
         let binder_title = [];
 
         if(editable){ 
@@ -256,6 +251,8 @@ class Binder extends Component {
                             <ModalNav 
                                 callback={()=>this.props.deleteBinder(this.props.binderObj._id)} 
                                 name={this.props.binderObj.binder_name}
+                                type='binder'
+                                arrLength={this.props.binderArr.length}
                                 className={`btn-floating  delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
                                 <i className='material-icons'>delete_forever</i>
                             </ModalNav>

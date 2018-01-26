@@ -137,10 +137,10 @@ class Page extends Component {
         for(let i = 0; i < this.props.binder.tab_arr_obj.length; i++){
             if(this.props.binder.tab_arr_obj[i]._id === this.props.tabID){
                 deleteIndex = i;
-                console.log('delete Index', deleteIndex);
-                console.log('page arr obj length', this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length);
-                console.log('binder_tab_arr_obj[deleteindex] id', this.props.binder.tab_arr_obj[i]._id);
-                console.log('tabid', this.props.tabID);
+                // console.log('delete Index', deleteIndex);
+                // console.log('page arr obj length', this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length);
+                // console.log('binder_tab_arr_obj[deleteindex] id', this.props.binder.tab_arr_obj[i]._id);
+                // console.log('tabid', this.props.tabID);
             }
         }
         if(this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length === 1){
@@ -258,6 +258,22 @@ class Page extends Component {
             </div>              
             );
         } else {
+
+            let deleteIndex = null;
+            let pageArrLength = 1;
+            for(let i = 0; i < this.props.binder.tab_arr_obj.length; i++){
+                if(this.props.binder.tab_arr_obj[i]._id === this.props.tabID){
+                    deleteIndex = i;
+                    //console.log('delete Index', deleteIndex);
+                    pageArrLength = this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length;
+                    // console.log('page arr obj length', this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length);
+                    // console.log('binder_tab_arr_obj[deleteindex] id', this.props.binder.tab_arr_obj[i]._id);
+                    // console.log('tabid', this.props.tabID);
+                }
+            }
+            
+            //console.log('pageArrLength',pageArrLength);
+
             page_list = (
                 <div className={`pageList ${whiteColor ? 'whiteFont' : 'blackFont'}`} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
             <Link to={`/main/${url}`} style={{ textDecoration: 'none'}} >
@@ -274,6 +290,8 @@ class Page extends Component {
                         <ModalNav 
                             callback={()=>this.deletePage()} 
                             name={this.props.pageObj.page_name}
+                            type='page'
+                            arrLength={pageArrLength}
                             className={`btn-floating delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
                             <i className='material-icons'>delete_forever</i>
                         </ModalNav>
