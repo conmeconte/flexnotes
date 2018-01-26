@@ -93,6 +93,7 @@
     border: 3px outset gray !important; */
     color:white; 
     width: 20%;
+    background-color: #0393d7;
 }
 
 .saveNotes:hover{
