@@ -256,6 +256,8 @@ class Tab extends Component {
                             <ModalNav 
                                 callback={()=>this.deleteTab(this.props.interface.binder_id)} 
                                 name={this.props.tabObj.tab_name}
+                                type='tab'
+                                arrLength={this.props.binder.tab_arr_obj.length}
                                 className={`btn-floating delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
                                 <i className='material-icons'>delete_forever</i>
                             </ModalNav>
