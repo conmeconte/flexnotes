@@ -132,7 +132,7 @@ button.close {
 }
 .vid-left-arrow,
 .vid-right-arrow {
-    background-color: #96858F;
+    background-color: #0288d1;
 }
 .iframe-wrapper {
     height: 100%;
@@ -164,7 +164,7 @@ button.close {
     cursor: pointer;
 }
 .vid-left-arrow:hover {
-    background-color: #96858F
+    background-color: #0288d1
 }
 .arrow-container-slides .material-icons {
     margin-right: 0;
@@ -176,7 +176,7 @@ button.close {
     top: 1vh;
 }
 .vid-right-arrow:hover {
-    background-color: #96858F;
+    background-color: #0288d1;
 }
 #youtube-play {
     padding: 0px 5px;
