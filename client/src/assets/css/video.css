@@ -160,14 +160,14 @@ button.close {
 .arrow-container {
     position: absolute;
     top: 4vh;
-    right: 5px;
+    right: 4px;
     z-index: 3000;
     cursor: pointer;
 }
 .vid-left-arrow:hover {
     background-color: #96858F
 }
-.arrow-container .material-icons {
+.arrow-container-slides .material-icons {
     margin-right: 0;
 }
 .btn-success,
@@ -191,4 +191,13 @@ button.close {
 .video-container iframe,
 .slides-iframe {
     width: 93%;
+    top: -8vh; 
+}
+#video-iframe{
+    top: 0vh;
+    /* height: 90% */
+}
+#video-container{
+    height: 90%;
+    top: -3vh; 
 }
