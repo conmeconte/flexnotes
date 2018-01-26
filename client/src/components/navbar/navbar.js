@@ -113,13 +113,8 @@ class NavBar extends Component {
         let binder = this.props.binderArr.map((item, index) => {
 
             return (
-<<<<<<< HEAD
-                <div key={index} onMouseEnter={this.hoverBinder.bind(this)} onMouseLeave={this.notHoverBinder.bind(this)} className="binderWrap second-step blue-grey darken-3">
-                    <Binder index={index} binderObj={item} />
-=======
                 <div key={index} onMouseEnter={this.hoverBinder.bind(this)} onMouseLeave={this.notHoverBinder.bind(this)} className="binderWrap blue-grey darken-3">
-                    <Binder index={index} binderObj={item}/>
->>>>>>> db1e375477a979336a8d563f53ca622918bcbd4a
+                    <Binder index={index} binderObj={item} />
 
                 </div>
             );
@@ -145,8 +140,7 @@ class NavBar extends Component {
                     {/* <button className={`editMode btn ${this.props.interface.editable ? 'editing':'' }`} onClick={this.editMode.bind(this)}>
                     {editableText}
                 </button> */}
-<<<<<<< HEAD
-                    <section>
+                    <section className="second-step">
                         {binder}
                         <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
                             New Binder</button>
@@ -158,20 +152,6 @@ class NavBar extends Component {
                         <Login />
                     </footer>
                 </div>
-=======
-                <section className="second-step">
-                    {binder}
-                    <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
-                        New Binder</button>
-                    <Route path={'/main/:binder'} component={Binder}/>
-                </section>
-
-                <footer>
-                    <FlexNotesTour toggleTour={this.props.toggleTour}/>
-                    <Login />
-                </footer>
-            </div>
->>>>>>> db1e375477a979336a8d563f53ca622918bcbd4a
             </div>
         );
     }
