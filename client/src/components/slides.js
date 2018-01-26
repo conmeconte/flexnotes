@@ -37,7 +37,7 @@ class Slides extends Component {
                         break;
                     }
                 }
-                if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
+                if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
                     this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
                     this.props.slideOutSlidesSearch(false, 'translateY(-100px)');
                 } else {

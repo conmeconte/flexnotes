@@ -29,7 +29,7 @@ class NavBar extends Component {
             this.props.updateBinderArray();
         }
 
-        if (nextProps.interface.sent_to_db) {
+        if (nextProps.interface.sent_to_db || this.props.interface.sent_to_db) {
             //console.log("sent to db = true");
             for (let i = 0; i < this.props.binderArr.length; i++) {
                 if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
@@ -50,9 +50,10 @@ class NavBar extends Component {
         //console.log('delete button clicked, binder_id: ', delete_id);
         if (this.props.binderArr.length === 1) {
             console.log('can not delete last binder');
-            return;
+        } else {
+            this.props.deleteBinder(delete_id);
         }
-        this.props.deleteBinder(delete_id);
+        
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
         // let deleteIndex = 0;

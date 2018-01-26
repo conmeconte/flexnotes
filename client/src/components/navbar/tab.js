@@ -78,7 +78,8 @@ class Tab extends Component {
         this.props.deletePage(this.props.interface.binder_id, this.props.interface.tab_id, page_id);
     }
 
-    editTabs(){
+    editTabs(event){
+        event.stopPropagation();
         //console.log("editable should be true");
         this.setState({
             editable: true,
@@ -86,7 +87,8 @@ class Tab extends Component {
         });
     }
 
-    notEditTabs() {
+    notEditTabs(event) {
+        event.stopPropagation();
         //console.log("editable should be false");
         const { tabName } = this.state;
         this.props.editTab(this.props.binder._id, this.props.tabObj._id, tabName);
@@ -109,10 +111,11 @@ class Tab extends Component {
         //console.log('delete tab btn clicked, binder_id: ', this.props.binderObj._id);
         if(this.props.binder.tab_arr_obj.length === 1){
             console.log('can not delete last tab');
-            return;
+        } else {
+            this.props.deleteTab(this.props.interface.binder_id, this.props.tabObj._id);
         }
 
-        this.props.deleteTab(this.props.interface.binder_id, this.props.tabObj._id);
+        
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
         // let deleteIndex = 0;
@@ -150,8 +153,7 @@ class Tab extends Component {
     }
 
 
-    handleClick(event){
-        event.stopPropagation();
+    handleClick(){
         const {open} = this.state;
         let toggle = !open;
         //this.props.selectBinder(binderObj);
@@ -231,30 +233,30 @@ class Tab extends Component {
                              onKeyPress={this.keyPressed.bind(this)}
                              value={tabName}
                              />
-                <button type="button" className={`btn-floating edit-mode-btn green accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditTabs}>
+                <button type="button" className={`btn-floating edit-mode-btn green accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditTabs(event)}>
                 <i className="small material-icons">check</i></button>
                  
-                <button type="button" className={`btn-floating edit-mode-btn red accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={this.cancelTabEdit}>
+                <button type="button" className={`btn-floating edit-mode-btn red accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelTabEdit(event)}>
                 <i className="small material-icons">close</i></button>
             </div>              
             );
         } else {
             tab_title = (
-                <div className="tabTitle" onClick={(event)=>this.handleClick(event)} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+                <div className="tabTitle" onClick={()=>this.handleClick()} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
                     <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
                         <div className="tabLink" >
                             {this.props.tabObj.tab_name}
                         </div>
                     </Link>
                     <div className="modify-btn">
-                        <button type="button"  onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn grey darken-4 ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editTabs}>
+                        <button type="button"  onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn grey darken-4 ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event)=>this.editTabs(event)}>
                         <i className="small material-icons">edit</i>
                         </button>
-                        <div onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
+                        <div className="navbar-btn" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
                             <ModalNav 
                                 callback={()=>this.deleteTab(this.props.interface.binder_id)} 
                                 name={this.props.tabObj.tab_name}
-                                className={`btn-floating navbar-btn delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
+                                className={`btn-floating delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
                                 <i className='material-icons'>delete_forever</i>
                             </ModalNav>
                         </div>
