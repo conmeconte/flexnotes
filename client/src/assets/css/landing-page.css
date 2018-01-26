@@ -34,7 +34,7 @@ body {
     margin: 0 auto;
     position: relative;
     top: 13vh;
-    box-shadow: 0 4px 2px -2px #26a69a;
+    box-shadow: 0 4px 2px -2px #0393d7;
     border-radius: 5px;
 }
 .blur {
@@ -51,6 +51,7 @@ body {
 }
 .title-container h1 {
     line-height: 8vh;
+    letter-spacing: 3.5px;
 }
 .google-div,
 .info {
@@ -107,7 +108,8 @@ body {
 } */
 
 .flex {
-    color: #26a69a; 
+    color: #0393d7; 
+    font-style: italic;
 }
 .user-circle {
     border: 3px solid #fff;
@@ -152,7 +154,7 @@ a.landing-login-text {
     margin-right: 8px;
 }
 .material-icons.landing {
-    color: #26a69a; 
+    color: #0393d7; 
 }
 .email-wrapper {
     position: relative;
@@ -162,7 +164,7 @@ a.landing-login-text {
     font-size: 2em;
 }
 .email-wrapper a {
-    color: #26a69a;
+    color: #0393d7;
 }
 .email-wrapper a:hover {
     color: #fff;
@@ -172,7 +174,7 @@ a.landing-login-text {
     margin-right: 30px;
 }
 .dash-btn {
-    background-color: #96858F;
+    background-color: #0393d7;
 }
 .dash-btn:hover {
     background-color: #74636D;

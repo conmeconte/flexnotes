@@ -133,6 +133,11 @@ ul > li {
     display: inline-block;
 }
 
+.btn.delete-btn, .btn.edit-btn, .btn.edit-mode-btn{
+    padding-right: 0px;
+    padding-left: 6px;
+}
+
 .add-btn-page.btn  {
     margin-bottom: 8%;
     padding: 0;
@@ -365,12 +370,15 @@ header {
 
 header > h1 {
     margin-left: 2px;
-    font-size: 2.6vw;
+    font-size: 2vw;
     display: inline;
+    font-weight: 800;
+    letter-spacing: 3.5px;
 }
 
 .dashFlex {
     color: #0288d1;
+    font-style: italic;
 }
 
 .logoImage {

@@ -53,7 +53,7 @@ class NavBar extends Component {
         } else {
             this.props.deleteBinder(delete_id);
         }
-        
+
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
         // let deleteIndex = 0;
@@ -114,7 +114,7 @@ class NavBar extends Component {
         let binder = this.props.binderArr.map((item, index) => {
 
             return (
-                <div key={index} onMouseEnter={this.hoverBinder.bind(this)} onMouseLeave={this.notHoverBinder.bind(this)} className="binderWrap blue-grey darken-3">
+                <div key={index} onMouseEnter={this.hoverBinder.bind(this)} onMouseLeave={this.notHoverBinder.bind(this)} className="binderWrap blue-grey darken-2">
                     <Binder index={index} binderObj={item} />
 
                 </div>
