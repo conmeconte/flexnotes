@@ -38,7 +38,7 @@ class VideoContainer extends Component {
                 <div className="row">
                     <form onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}>
                         <div style={this.props.slideOutStyles} className="row slide-out-input">
-                            <Field name="youtube-url" defaultValue={!this.props.videoLink ? "" : this.props.videoLink} component={this.renderInput} />
+                            <Field name="youtube-url" component={this.renderInput} />
                             <div className="col s3">
                                 <div className="row btn-wrapper">
                                     <button className="btn btn-success green darken-1 video-btn"><i className="material-icons">save</i></button>

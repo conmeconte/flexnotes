@@ -9,58 +9,7 @@ import Slides from './slides';
 import Modal from './modal';
 
 class ThreePanel extends Component {
-    constructor(props) {
-        super(props);
-        // this.logTopLeftHeight = this.logTopLeftHeight.bind(this);
-        // this.logTopLeftWidth = this.logTopLeftWidth.bind(this);
-    }
 
-    // logTopLeftHeight(size) {
-    //     this.props.setTopLeftHeight(size, this.props.interface_obj);
-    // }
-
-    // logTopLeftWidth(size) {
-    //     this.props.setTopLeftWidth(size, this.props.interface_obj);
-    // }
-
-    // componentWillMount() {
-    //     //this.props.updateBinderArray();
-    // }
-
-    // componentWillReceiveProps(nextProps) {
-    //     let tabArrLength = this.props.binderObj.tab_arr_obj.length;
-    //     let tabIndex = null;
-    //     let pageIndex = null;
-    //     for (let i = 0; i < tabArrLength; i++) {
-    //         if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
-    //             tabIndex = i;
-    //             break;
-    //         }
-    //     }
-    //     const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
-    //     for (let i = 0; i < tabArrLength; i++) {
-    //         if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
-    //             pageIndex = i;
-    //             break;
-    //         }
-    //     }
-    //     if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
-    //         topLeftPanelHeight = 500;
-    //         topLeftPanelWidth = 425;
-    //     } else {
-    //         topLeftPanelHeight = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height;
-    //         topLeftPanelWidth = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width;
-    //     }
-    // }
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-    //         console.log("save panel dimsensions now");
-    //         //save panel dimensions here.
-
-    //     } else {
-    //         return;
-    //     }
-    // }
     componentDidMount () {
         document.querySelector(".Resizer.vertical").addEventListener("mousedown", function () {
             document.querySelector(".resize-blocker").style.display = "block";
