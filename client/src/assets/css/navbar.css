@@ -79,10 +79,6 @@ ul > li {
     justify-content: flex-end;
 }
 
-.page-modify-btn{
-    display: flex;
-}
-
 .editMode > .edit_input {
     margin-bottom: 2% !important;
 }
