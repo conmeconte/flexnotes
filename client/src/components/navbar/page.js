@@ -281,7 +281,7 @@ class Page extends Component {
                     {this.props.pageObj.page_name}
                 </div>
                 </Link>
-                <div className="modify-btn">
+                <div className="page-modify-btn">
                     <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn grey darken-4  ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event)=>this.editPage(event)}>
                     <i className="small material-icons">edit</i>
                     </button>
