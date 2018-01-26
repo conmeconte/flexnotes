@@ -293,13 +293,15 @@ section {
 /* --------------------- HEADER AND FOOTER ---------------------*/
 
 header {
-    margin-bottom: 5px;
+    margin: 5px 0 5px 0;
+    width: 15.6vw;
 }
 
-header > h3 {
-    margin: 0;
-    font-size: 38px;
+header > h1 {
+    margin-left: 2px;
+    font-size: 2.6vw;
     color: #ffffff;
+    display: inline;
 }
 
 .dashFlex {
@@ -307,27 +309,27 @@ header > h3 {
 }
 
 .logoImage {
-    height: 28px;
+    width: 3.25vw;
 }
 
 footer {
     width: 100%;
     margin-top: 10px;
-    background-color: #6d7993;
     z-index: 2;
 }
 
 .startTour.btn, .logoutBtn.btn {
-    height: 40px;
-    width: 80px;
-    background-color: #d5d5d5;
-    color: #000000;
+    height: 4.7vh;
+    width: 6vw;
+    background-color: #607d8b;;
+    color: #fafafa;
     padding: 5px;
+    font-size: 1.25vw;
+    font-weight: 500;
 }
 
 .startTour.btn:hover, .logoutBtn.btn:hover {
-    background-color: #26a69a;
-    color: #000000;
+    background-color: #37474f;
 }
 
 .startTour {
