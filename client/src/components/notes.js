@@ -52,7 +52,7 @@ const saveStyle = {
 
 const ToolbarButton = props => (
     <span title={props.icon} className="styleSquare" onMouseDown={props.onMouseDown}>
-        <span className="material-icons">{props.icon}</span>
+        <span className="material-icons notesIcons">{props.icon}</span>
     </span>
 );
 
@@ -191,7 +191,7 @@ class Notes extends Component {
                         break;
                     }
                 }
-                if (pageIndex !==null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
                     const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
                     this.setState({
                         value: Value.fromJSON(lastContent),
@@ -203,7 +203,7 @@ class Notes extends Component {
                         save: false
                     })
                 }
-            } 
+            }
         }
     }
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
@@ -301,7 +301,7 @@ class Notes extends Component {
 
         return (
             <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons">{icon}</span>
+                <span className="material-icons notesIcons">{icon}</span>
             </span>
         )
     };
@@ -312,7 +312,7 @@ class Notes extends Component {
 
         return (
             <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons">{icon}</span>
+                <span className="material-icons notesIcons">{icon}</span>
             </span>
         )
     };
@@ -514,10 +514,10 @@ class Notes extends Component {
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
                     <span className="styleSquare" title="link" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
-                        <span className="material-icons">link</span>
+                        <span className="material-icons notesIcons">link</span>
                     </span>
                     <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
-                        <span className="material-icons">image</span>
+                        <span className="material-icons notesIcons">image</span>
                     </span>
                 </div>
                 <div className="search-box">
