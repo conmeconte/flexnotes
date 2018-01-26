@@ -223,10 +223,10 @@ class Binder extends Component {
                              onKeyPress={this.keyPressed.bind(this)}
                              value={binderName}
                              />
-                <button type="button" className={`btn edit-mode-btn green accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditable(event)}>
+                <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditable(event)}>
                 <i className="small material-icons">check</i></button>
                  
-                <button type="button" className={`btn edit-mode-btn red accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelEdit(event)}>
+                <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelEdit(event)}>
                 <i className="small material-icons">close</i></button>
                         </div>             
             );
