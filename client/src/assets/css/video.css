@@ -111,7 +111,8 @@ button.close {
 
 }
 .video-btn i {
-    margin: 0px -1px;
+    margin: 0 -1px;
+    width: 45px;
 }
 .video-btn:hover{
 
@@ -143,9 +144,11 @@ button.close {
 }
 .btn-wrapper {
     white-space: nowrap;
+    margin: 5px 0 0 -15px;
 }
 .btn-wrapper button {
-    padding: 0 5px;
+    padding: 0;
+    width: 45px;
 }
 .slide-out-input {
     transition: 0.2s;

@@ -8,7 +8,7 @@ import { updateBinderArray } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
-// import '../assets/css/notes.css';
+import '../assets/css/notes.css';
 
 const DEFAULT_NODE = 'paragraph';
 
@@ -510,7 +510,7 @@ class Notes extends Component {
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
                     {this.renderMarkButton('code', 'code')}
-                    {this.renderBlockButton('heading-one', 'title')}
+                    {this.renderBlockButton('heading-one', 'format_size')}
                     {/*{this.renderBlockButton('heading-two', 'title')}*/}
                     {this.renderBlockButton('block-quote', 'format_quote')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}

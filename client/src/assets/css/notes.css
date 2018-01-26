@@ -1,47 +1,41 @@
 .notes-parent-panel {
-    height: 100%;
+    height: 99%;
     overflow-y: auto;
-    border-left: 1px solid black;
     box-sizing: border-box;
     background-color: ghostwhite;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(0, 0, 0, 0.3);
+    /*box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3);*/
 }
 
 .text-editor {
     height: 100%;
-    /* margin-top: 100px; */
 }
 
 .editor {
     padding-left: 1vmin;
     padding-top: 2vmin;
     height: 100%;
-    /* max-width: 50vw; */
 }
 
-/* -------------------- TOOLBAR --------------------*/
-.notes-component-toolbar{
-    height:11%;
+.notes-component-toolbar {
+    height: 11.5%;
 
 }
 .notes-component.fifth-step{
     height: 88%; 
 }
+
 .toolbar {
     width: 100%;
-    /* min-width: 420px; */
     height: 100%;
-    /* min-height: 100px; */
     position: relative;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    padding: 2%;
     background-color: #96858F;
     box-shadow: 0 5px 5px #999;
     z-index: 1;
-    border-left: 1px solid black;
+    padding: 1.5% 1% 1% 1%;
 }
 
 .stylingButtons {
@@ -56,17 +50,12 @@
 .styleSquare {
     width: 40px;
     height: 30px;
-    padding: 3px 0 0 7px;
-    /*border: 1px solid black;*/
     box-sizing: border-box;
-    /*background-color: #d5d5d5;*/
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
     cursor: pointer;
     color: white;
 }
 
 .styleSquare:hover{
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);*/
     background-color: ghostwhite;
     color: #96858F;
 }
@@ -76,7 +65,7 @@
 }
 
 .search-box {
-    margin-top: 8px;
+    margin-top: 5px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -87,7 +76,6 @@
     width: 250px !important;
     height: 30px !important;
     padding-left: 5px !important;
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;*/
     background-color: white !important;
     border: 3px inset gray !important;
 }
@@ -96,12 +84,10 @@
     width: 130px !important;
     height: 35px !important;
     font-weight: 600 !important;
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;*/
     border: 3px outset gray !important;
 }
 
 .saveNotes:hover{
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55) !important;;*/
     background-color: ghostwhite !important;;
 }
 
@@ -109,6 +95,3 @@
     border: 2px outset gray !important;
     transform: translateY(4px);
 }
-
-
-
