@@ -40,11 +40,11 @@ const initialValue = Value.fromJSON({
 
 const saveStyle = {
     true: {
-        backgroundColor: "#ffffff",
+        // backgroundColor: "#ffffff",
         color: "#00cc00"
     },
     false: {
-        color: "#96858F"
+        color: "#ffffff"
     }
 };
 
@@ -524,12 +524,13 @@ class Notes extends Component {
                 </div>
                 <div className="search-box">
                     <input
-                        className="search-input"
+                        className="search-input keyword"
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
-                    <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved" : "Save Changes"}</button>
                 </div>
+                <button style={saveStyle[this.state.save]} className="saveNotes btn waves-effect waves-light" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Saved" : "Save Changes"}</button>
+
             </div>
 
         )

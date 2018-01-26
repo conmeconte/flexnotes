@@ -4,6 +4,5 @@ errorLogs
 .idea
 .vscode
 keys.js
-
 logins.log
 serverError.log
