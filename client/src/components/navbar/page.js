@@ -137,10 +137,10 @@ class Page extends Component {
         for(let i = 0; i < this.props.binder.tab_arr_obj.length; i++){
             if(this.props.binder.tab_arr_obj[i]._id === this.props.tabID){
                 deleteIndex = i;
-                console.log('delete Index', deleteIndex);
-                console.log('page arr obj length', this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length);
-                console.log('binder_tab_arr_obj[deleteindex] id', this.props.binder.tab_arr_obj[i]._id);
-                console.log('tabid', this.props.tabID);
+                // console.log('delete Index', deleteIndex);
+                // console.log('page arr obj length', this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length);
+                // console.log('binder_tab_arr_obj[deleteindex] id', this.props.binder.tab_arr_obj[i]._id);
+                // console.log('tabid', this.props.tabID);
             }
         }
         if(this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length === 1){
