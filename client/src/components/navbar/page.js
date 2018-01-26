@@ -251,9 +251,9 @@ class Page extends Component {
                              onKeyPress={this.keyPressed.bind(this)}
                              value={pageName}
                              />
-                <button type="button" className={`btn-floating edit-mode-btn green accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditPage(event)}>
+                <button type="button" className={`btn edit-mode-btn green accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditPage(event)}>
                 <i className="small material-icons">check</i></button>
-                 <button type="button" className={`btn-floating edit-mode-btn red accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelPageEdit(event)}>
+                 <button type="button" className={`btn edit-mode-btn red accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelPageEdit(event)}>
                 <i className="small material-icons">close</i></button>
             </div>              
             );
@@ -282,7 +282,7 @@ class Page extends Component {
                 </div>
                 </Link>
                 <div className="modify-btn">
-                    <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn grey darken-4  ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event)=>this.editPage(event)}>
+                    <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn navbar-btn edit-btn grey darken-4  ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event)=>this.editPage(event)}>
                     <i className="small material-icons">edit</i>
                     </button>
                     
@@ -292,7 +292,7 @@ class Page extends Component {
                             name={this.props.pageObj.page_name}
                             type='page'
                             arrLength={pageArrLength}
-                            className={`btn-floating delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
+                            className={`btn delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
                             <i className='material-icons'>delete_forever</i>
                         </ModalNav>
                     </div>
