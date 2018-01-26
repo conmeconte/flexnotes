@@ -101,7 +101,7 @@ class Video extends Component {
         
         return (
             <div id="input-field" className="col s12 input-field">
-                <input type="text" {...input} id="query" placeholder="Search on Youtube..." className="form-control" />
+                <input type="text" {...input} id="query" placeholder="Search and save from Youtube Search.." className="form-control" />
             </div>
         )
     }

@@ -133,6 +133,11 @@ ul > li {
     display: inline-block;
 }
 
+.btn.delete-btn, .btn.edit-btn, .btn.edit-mode-btn{
+    padding-right: 0px;
+    padding-left: 6px;
+}
+
 .add-btn-page.btn  {
     margin-bottom: 8%;
     padding: 0;
