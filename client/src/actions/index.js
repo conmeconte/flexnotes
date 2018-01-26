@@ -202,7 +202,6 @@ export function toggleResults(bool) {
     }
 }
 export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
-    debugger;
     if (!videoUrl) {
         return {
             type: types.NO_VIDEO_LINK
