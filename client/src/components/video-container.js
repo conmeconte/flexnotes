@@ -9,7 +9,7 @@ class VideoContainer extends Component {
     renderInput({ input, type, placeholder, defaultValue, meta: { error, touched } }) {
         return (
             <div className="col s8 input-field">
-                <input {...input} className="pastedVideoInput" type={type} placeholder="Paste a YouTube video URL..." value={input.value === '' && defaultValue ? defaultValue : input.value} />
+                <input {...input} className="pastedVideoInput" type={type} placeholder="Paste and Save a Youtube video URL..." value={input.value === '' && defaultValue ? defaultValue : input.value} />
                 <p className="red-text">{touched && error}</p>
             </div>
         );
@@ -41,7 +41,7 @@ class VideoContainer extends Component {
                             <Field name="youtube-url" component={this.renderInput} />
                             <div className="col s3">
                                 <div className="row btn-wrapper">
-                                    <button className="btn btn-success green darken-1 video-btn"><i className="material-icons">save</i></button>
+                                    <button className="btn btn-success green darken-1 video-btn"><i className="material-icons">check</i></button>
                                     <button type="button" className="btn btn-primary vidList vid-left-arrow video-btn" onClick={() => {
                                         this.props.getResultStyles(this.props.resultsStyles, this.props.toggleResultsBool)
                                         this.props.getOpacityDisplay(this.props.opacityContainer, this.props.toggleResultsBool)
