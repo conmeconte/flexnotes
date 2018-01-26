@@ -35,7 +35,7 @@ class Dashboard extends Component {
     }
 
     render(){
-        console.log('dashboard props', this.props);
+        // console.log('dashboard props', this.props);
         if(!this.props.binderArr){
             return null;
         } 

@@ -144,7 +144,6 @@ button.close {
 }
 .btn-wrapper {
     white-space: nowrap;
-    margin: 5px 0 0 -15px;
 }
 .btn-wrapper button {
     padding: 0;
@@ -218,4 +217,7 @@ button.close {
 #search-input-container {
     display: flex;
     align-items: center;
+}
+.video-description {
+    display: none;
 }

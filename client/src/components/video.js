@@ -20,7 +20,7 @@ class Video extends Component {
         if (!values.video) {
             return;
         }
-        console.log("VALUES FROM SEARCH: ", values);
+        // console.log("VALUES FROM SEARCH: ", values);
         var ROOT_URL = 'https://www.googleapis.com/youtube/v3/search';
         var params = {
             part: 'snippet',
@@ -85,7 +85,7 @@ class Video extends Component {
         } 
     }
     componentWillReceiveProps(nextProps) {
-        console.log("NEXT PROPS: ", nextProps);
+        // console.log("NEXT PROPS: ", nextProps);
         if (this.props.interface_obj.page_id !== nextProps.interface_obj.page_id){
             this.updateVideoComponent(nextProps);
         }
@@ -107,7 +107,7 @@ class Video extends Component {
     }
 
     updateVideoComponent(nextProps) {
-        console.log("update video component");
+        // console.log("update video component");
         let { tab_arr_obj } = nextProps.binderObj;
         let { interface_obj } = nextProps;
         if (tab_arr_obj) {
@@ -141,7 +141,7 @@ class Video extends Component {
 
     render() {
         const { resultsVideoUrl } = this.props;
-        console.log("video props:", resultsVideoUrl);
+        // console.log("video props:", resultsVideoUrl);
         return (
             <div className="main">
                 <VideoModal />
