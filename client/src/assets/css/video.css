@@ -10,7 +10,7 @@
     top: 0; 
     left: 0;
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
     background-color: #000;
     display: block;
     z-index: 2;
@@ -41,6 +41,10 @@
     list-style-type: none;
     position: relative;
     top: 1vh;
+    font-weight: bold;
+}
+.video-description {
+    font-style:italic;
 }
 button.close {
     color: #fff;
@@ -93,7 +97,6 @@ button.close {
 }
 
 .video-container iframe {
-    width: 95%;
     height: 100%;
     margin: 0 auto;
 }
@@ -107,12 +110,9 @@ button.close {
     z-index: 1;
     border:none;
 }
-
-.btn:hover{
-
-}
 .video-btn i {
-    margin: 0px -1px;
+    margin: 0 -1px;
+    width: 45px;
 }
 .video-btn:hover{
 
@@ -144,28 +144,30 @@ button.close {
 }
 .btn-wrapper {
     white-space: nowrap;
+    margin: 5px 0 0 -15px;
 }
 .btn-wrapper button {
-    padding: 0 5px;
+    padding: 0;
+    width: 45px;
 }
 .slide-out-input {
     transition: 0.2s;
     background-color: #fff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    z-index: 2000;
+    z-index: 30;
     position: relative;
 }
 .arrow-container {
     position: absolute;
     top: 4vh;
-    right: 5px;
+    right: 4px;
     z-index: 3000;
     cursor: pointer;
 }
 .vid-left-arrow:hover {
     background-color: #96858F
 }
-.arrow-container .material-icons {
+.arrow-container-slides .material-icons {
     margin-right: 0;
 }
 .btn-success,
@@ -179,10 +181,41 @@ button.close {
 }
 #youtube-play {
     padding: 0px 5px;
+    position: relative;
+    right: 1vw;
 }
 .red-text {
     color: red;
 }
 .Pane.horizontal.Pane2 {
     height: 325px;
+}
+.video-container iframe,
+.slides-iframe {
+    width: 93%;
+    top: -8vh; 
+}
+#video-iframe{
+    top: 0vh;
+    /* height: 90% */
+}
+#video-container{
+    height: 90%;
+    top: -3vh; 
+}
+.list-item-wrap-container {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+.list-item-wrapper {
+    display: flex;
+    align-items: center;
+}
+.col.s3 {
+    margin-left: 0;
+}
+#search-input-container {
+    display: flex;
+    align-items: center;
 }

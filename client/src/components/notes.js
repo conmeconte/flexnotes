@@ -8,7 +8,7 @@ import { updateBinderArray } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
-// import '../assets/css/notes.css';
+import '../assets/css/notes.css';
 
 const DEFAULT_NODE = 'paragraph';
 
@@ -40,11 +40,11 @@ const initialValue = Value.fromJSON({
 
 const saveStyle = {
     true: {
-        backgroundColor: "#ffffff",
+        // backgroundColor: "#ffffff",
         color: "#00cc00"
     },
     false: {
-        color: "#96858F"
+        color: "#ffffff"
     }
 };
 
@@ -168,45 +168,45 @@ class Notes extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-        //     this.props.updateBinderArray();
-        // }else{
-        let { tab_arr_obj } = nextProps.binderObj;
-        let { interface_obj } = nextProps;
-
-        if (tab_arr_obj) {
-            let tabArrLength = tab_arr_obj.length;
-            let tabIndex = null;
-            let pageIndex = null;
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    tabIndex = i;
-                    break;
+        if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+            //     this.props.updateBinderArray();
+            // }else{
+            let { tab_arr_obj } = nextProps.binderObj;
+            let { interface_obj } = nextProps;
+            console.log('notes nextProps:', nextProps.binderObj);
+            if (tab_arr_obj) {
+                let tabArrLength = tab_arr_obj.length;
+                let tabIndex = null;
+                let pageIndex = null;
+                for (let i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        tabIndex = i;
+                        break;
+                    }
                 }
-            }
-            const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < page_arr_obj.length; i++) {
-                if (interface_obj.page_id === page_arr_obj[i]._id) {
-                    pageIndex = i;
-                    break;
+                const { page_arr_obj } = tab_arr_obj[tabIndex];
+                for (let i = 0; i < page_arr_obj.length; i++) {
+                    if (interface_obj.page_id === page_arr_obj[i]._id) {
+                        pageIndex = i;
+                        break;
+                    }
                 }
-            }
-            if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
-                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
-                this.setState({
-                    value: Value.fromJSON(lastContent),
-                    save: false
-                })
+                if (pageIndex !==null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                    const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                    this.setState({
+                        value: Value.fromJSON(lastContent),
+                        save: false
+                    })
+                } else {
+                    this.setState({
+                        value: initialValue,
+                        save: false
+                    })
+                }
             } else {
-                this.setState({
-                    value: initialValue,
-                    save: false
-                })
+                console.log("DOES NOT WORK");
             }
-        } else {
-            console.log("DOES NOT WORK");
         }
-        //}
     }
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
@@ -510,7 +510,7 @@ class Notes extends Component {
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
                     {this.renderMarkButton('code', 'code')}
-                    {this.renderBlockButton('heading-one', 'title')}
+                    {this.renderBlockButton('heading-one', 'format_size')}
                     {/*{this.renderBlockButton('heading-two', 'title')}*/}
                     {this.renderBlockButton('block-quote', 'format_quote')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
@@ -524,12 +524,13 @@ class Notes extends Component {
                 </div>
                 <div className="search-box">
                     <input
-                        className="search-input"
+                        className="search-input keyword"
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
-                    <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved" : "Save Changes"}</button>
                 </div>
+                <button style={saveStyle[this.state.save]} className="saveNotes btn waves-effect waves-light" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Saved" : "Save Changes"}</button>
+
             </div>
 
         )
@@ -538,7 +539,7 @@ class Notes extends Component {
     render() {
         return (
             <div className="text-editor">
-                <div>{this.toolbar()}</div>
+                <div className='notes-component-toolbar'>{this.toolbar()}</div>
 
                 <div className="notes-component fifth-step">
                     <Editor

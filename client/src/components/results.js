@@ -18,11 +18,20 @@ class Results extends Component {
             console.log(item.url);
             return (
                 <li className="result-item collection-item col s12" key={index}>
-                    <div className="row list-item-wrapper">
-                        <img className="col s3" src={results[index].thumbnails.default.url}/>
-                        <span className="video-items col s6">{item.videoTitle}</span>
+                    <div className="row list-item-wrap-container">
+                        <div className="row list-item-wrapper col s10">
+                            <img src={results[index].thumbnails.default.url}/>
+                            <div className="col s8 video-contents">
+                                <div>
+                                    <span className="video-items">{item.videoTitle}</span>
+                                </div>
+                                <div>
+                                    <p className="item-description"><span className="video-description">Description: </span>{item.description}</p>
+                                </div>
+                            </div>
+                        </div>
                         <button id="youtube-play" className="btn red darken-3 right col s1 video-btn" onClick={ () => { this.handlePlayVideo(item.url) }}>
-                            <i className="material-icons">play_arrow</i>
+                                <i className="material-icons">play_arrow</i>
                         </button>
                     </div>
                 </li>

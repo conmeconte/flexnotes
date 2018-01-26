@@ -10,6 +10,12 @@ import VideoModal from './video-modal';
 
 const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
 class Video extends Component {
+    constructor(props) {
+        super(props);
+        // document.querySelector(".Resizer").addEventListener("mousedown", function () {
+        //     document.querySelector(".resize-blocker").style.display = "none";
+        // })
+    }
     search(values) {
         if (!values.video) {
             return;
@@ -94,7 +100,7 @@ class Video extends Component {
     renderInput({ input, defaultValue }) {
         
         return (
-            <div id="input-field" className="col s8 input-field">
+            <div id="input-field" className="col s12 input-field">
                 <input type="text" {...input} id="query" placeholder="Search on Youtube..." className="form-control" />
             </div>
         )

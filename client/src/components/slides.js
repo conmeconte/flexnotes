@@ -11,7 +11,7 @@ class Slides extends Component {
         return (
             <div className="col s8 input-field">
                 <input id="slides-input" className="slides-input form-control" {...input} type="text" placeholder="Paste a Google Slides URL..." />
-                <p><em>{touched && error ? error : ''}</em></p>
+                <p className="red-text"><em>{touched && error ? error : ''}</em></p>
             </div>
         )
     }
@@ -37,12 +37,12 @@ class Slides extends Component {
                         break;
                     }
                 }
-                if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
+                if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
                     this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id)
-                    this.props.slideOutSlidesSearch(false,'translateY(-100px)');
+                    this.props.slideOutSlidesSearch(false, 'translateY(-100px)');
                 } else {
                     this.props.resetSlidesURL('');
-                    this.props.slideOutSlidesSearch(true,'translateY(0px)');
+                    this.props.slideOutSlidesSearch(true, 'translateY(0px)');
                     //return;
                 }
 
@@ -109,7 +109,7 @@ class Slides extends Component {
         const slideOutStyles = this.props.lectureSlideOutStyles;
         return (
             <div className="slides-div fourth-step">
-                <form style={ slideOutStyles } className="form-horizontal slide-out-input" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
+                <form style={slideOutStyles} className="form-horizontal slide-out-input" onSubmit={this.props.handleSubmit(this.setURLinReduxForm.bind(this))}>
                     <div className="row">
                         <Field name="url" component={this.renderInput} />
                         <button className="btn green darken-1 col s2 slidesBtn"><i style={{ marginRight: "0px" }} className="material-icons">check</i></button>
@@ -120,11 +120,14 @@ class Slides extends Component {
                 }}>
                     {!toggleSlideOut ? <i className="material-icons">keyboard_arrow_up</i> : <i className="material-icons">keyboard_arrow_down</i>}
                 </div>
-                {
-                    this.props.slide_input ?
-                        <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe" allowFullScreen></iframe>
-                        : ""
-                }
+                <div className="slides-container">
+                    <div className="resize-blocker2"></div>
+                    {
+                        this.props.slide_input ?
+                            <iframe src={this.props.slide_input} frameBorder="0" className="slides-iframe" allowFullScreen></iframe>
+                            : ""
+                    }
+                </div>
             </div>
         )
     }

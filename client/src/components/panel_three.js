@@ -9,59 +9,22 @@ import Slides from './slides';
 import Modal from './modal';
 
 class ThreePanel extends Component {
-    constructor(props) {
-        super(props);
-        // this.logTopLeftHeight = this.logTopLeftHeight.bind(this);
-        // this.logTopLeftWidth = this.logTopLeftWidth.bind(this);
+
+    componentDidMount () {
+        document.querySelector(".Resizer.vertical").addEventListener("mousedown", function () {
+            document.querySelector(".resize-blocker").style.display = "block";
+            document.querySelector(".resize-blocker2").style.display = "block";
+        })
+        document.querySelector(".Resizer.horizontal").addEventListener("mousedown", function () {
+            document.querySelector(".resize-blocker").style.display = "block";
+            document.querySelector(".resize-blocker2").style.display = "block";
+            
+        })
+        document.querySelector("body").addEventListener("mouseup", function () {
+            document.querySelector(".resize-blocker").style.display = "none";
+            document.querySelector(".resize-blocker2").style.display = "none";
+        })
     }
-
-    // logTopLeftHeight(size) {
-    //     this.props.setTopLeftHeight(size, this.props.interface_obj);
-    // }
-
-    // logTopLeftWidth(size) {
-    //     this.props.setTopLeftWidth(size, this.props.interface_obj);
-    // }
-
-    // componentWillMount() {
-    //     //this.props.updateBinderArray();
-    // }
-
-    // componentWillReceiveProps(nextProps) {
-    //     let tabArrLength = this.props.binderObj.tab_arr_obj.length;
-    //     let tabIndex = null;
-    //     let pageIndex = null;
-    //     for (let i = 0; i < tabArrLength; i++) {
-    //         if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
-    //             tabIndex = i;
-    //             break;
-    //         }
-    //     }
-    //     const { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
-    //     for (let i = 0; i < tabArrLength; i++) {
-    //         if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
-    //             pageIndex = i;
-    //             break;
-    //         }
-    //     }
-    //     if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
-    //         topLeftPanelHeight = 500;
-    //         topLeftPanelWidth = 425;
-    //     } else {
-    //         topLeftPanelHeight = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height;
-    //         topLeftPanelWidth = page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width;
-    //     }
-    // }
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-    //         console.log("save panel dimsensions now");
-    //         //save panel dimensions here.
-
-    //     } else {
-    //         return;
-    //     }
-    // }
-
     render() {
         console.log('panel three props:', this.props);
         // const loTLHsave = _.debounce((size) => {
@@ -94,6 +57,7 @@ class ThreePanel extends Component {
         //         }
         //     }
         // if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
+        
         return (
             <SplitPane className={`width-w-nav ${this.props.interface_obj.navbar_min ? 'full_width' : ''}`} split="vertical" minSize={300} maxSize={1000} defaultSize={425}>
                 <SplitPane split="horizontal" minSize={300} maxSize={600} defaultSize={450}>

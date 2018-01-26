@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { selectTab, addPage, deletePage, updateBinderArray, editTab, deleteTab } from '../../actions';
 
 import Page from './page';
+import ModalNav from './modal_nav';
 
 class Tab extends Component {
     constructor(props){
@@ -13,7 +14,10 @@ class Tab extends Component {
             tab_color_arr: ['#ff0000', '#0000ff', '#ff00ff', '#FF8C00', '#008000'],
             editable: false,
             open: false,
-            tabName: ''
+            tabName: '',
+            hover: false,
+            editHover: false,
+            deleteHover: false
             //binder: this.props.binder_obj
         }
 
@@ -26,6 +30,7 @@ class Tab extends Component {
         // this.editable = this.editable.bind(this);
         // this.notEditable = this.notEditable.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.cancelTabEdit = this.cancelTabEdit.bind(this);
     }
 
     componentDidMount(){
@@ -37,11 +42,11 @@ class Tab extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.interface.editable === false){
-            this.setState({
-                editable: false
-            });
-        }
+        // if(nextProps.interface.editable === false){
+        //     this.setState({
+        //         editable: false
+        //     });
+        // }
     }
     // componentWillReceiveProps(nextProps){
 
@@ -73,7 +78,8 @@ class Tab extends Component {
         this.props.deletePage(this.props.interface.binder_id, this.props.interface.tab_id, page_id);
     }
 
-    editTabs(){
+    editTabs(event){
+        event.stopPropagation();
         //console.log("editable should be true");
         this.setState({
             editable: true,
@@ -81,12 +87,14 @@ class Tab extends Component {
         });
     }
 
-    notEditTabs() {
+    notEditTabs(event) {
+        event.stopPropagation();
         //console.log("editable should be false");
         const { tabName } = this.state;
         this.props.editTab(this.props.binder._id, this.props.tabObj._id, tabName);
         this.setState({ 
-            editable: false 
+            editable: false,
+            editHover: false
         });
     }
 
@@ -103,10 +111,11 @@ class Tab extends Component {
         //console.log('delete tab btn clicked, binder_id: ', this.props.binderObj._id);
         if(this.props.binder.tab_arr_obj.length === 1){
             console.log('can not delete last tab');
-            return;
+        } else {
+            this.props.deleteTab(this.props.interface.binder_id, this.props.tabObj._id);
         }
 
-        this.props.deleteTab(this.props.interface.binder_id, this.props.tabObj._id);
+        
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
         // let deleteIndex = 0;
@@ -155,10 +164,52 @@ class Tab extends Component {
         //console.log("tab id updated");
     }
 
+    hover(){
+        this.setState({
+            hover: true
+        });
+    }
 
+    notHover(){
+        this.setState({
+            hover: false
+        });
+    }
+
+    hoverEditBtn(){
+        this.setState({
+            editHover: true
+        });
+    }
+
+    notHoverEditBtn(){
+        this.setState({
+            editHover: false
+        });
+    }
+
+    hoverDeleteBtn(){
+        this.setState({
+            deleteHover: true
+        });
+    }
+
+    notHoverDeleteBtn(){
+        this.setState({
+            deleteHover: false
+        });
+    }
+
+    cancelTabEdit(){
+        this.setState({
+            editable: false,
+            tabName: this.props.tabObj.tab_name,
+            editHover: false
+        });
+    }
     render(){
         //this.props.selectBinder(this.props.binderObj);
-        const {open, editable, tabName} = this.state;
+        const {open, editable, tabName, hover, editHover, deleteHover} = this.state;
 
         //console.log('props in tab:', this.props);
         //console.log('state in tab:', this.state);
@@ -174,7 +225,7 @@ class Tab extends Component {
             tab_title = (
                 <div className="editMode">
                          <input 
-                             className="edit_input"
+                             className="edit_input_tab"
                              ref='textInput'
                              type='text'
                              onChange={(e)=>this.editTabName(e)}
@@ -182,26 +233,39 @@ class Tab extends Component {
                              onKeyPress={this.keyPressed.bind(this)}
                              value={tabName}
                              />
-                <button type="button" className={`btn-floating ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditTabs}>
-                <i className="small material-icons">check</i>
-                </button>
+                <button type="button" className={`btn-floating edit-mode-btn green accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditTabs(event)}>
+                <i className="small material-icons">check</i></button>
+                 
+                <button type="button" className={`btn-floating edit-mode-btn red accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelTabEdit(event)}>
+                <i className="small material-icons">close</i></button>
             </div>              
             );
         } else {
             tab_title = (
-                <div className="tabTitle">
+                <div className="tabTitle" onClick={()=>this.handleClick()} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
                     <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
-                        <div className="tabLink"  onClick={()=>this.handleClick()}>
+                        <div className="tabLink" >
                             {this.props.tabObj.tab_name}
                         </div>
                     </Link>
-                    <div className="">
-                        <button type="button" className={`btn-floating navbar-btn edit-btn ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={this.editTabs}>
+                    <div className="modify-btn">
+                        <button type="button"  onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn grey darken-4 ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event)=>this.editTabs(event)}>
                         <i className="small material-icons">edit</i>
                         </button>
-                        <button type="button" className={`btn-floating navbar-btn delete-btn red darken-4 ${this.props.interface.editable ? 'visible' : 'hidden'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
+                        <div className="navbar-btn" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
+                            <ModalNav 
+                                callback={()=>this.deleteTab(this.props.interface.binder_id)} 
+                                name={this.props.tabObj.tab_name}
+                                type='tab'
+                                arrLength={this.props.binder.tab_arr_obj.length}
+                                className={`btn-floating delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
+                                <i className='material-icons'>delete_forever</i>
+                            </ModalNav>
+                        </div>
+
+                        {/* <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
                         <i className="small material-icons">delete_forever</i>
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             );
