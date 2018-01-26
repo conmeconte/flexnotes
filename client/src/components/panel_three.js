@@ -60,10 +60,9 @@ class ThreePanel extends Component {
         
         return (
             <SplitPane className={`width-w-nav ${this.props.interface_obj.navbar_min ? 'full_width' : ''}`} split="vertical" minSize={300} maxSize={1000} defaultSize={425}>
-                <SplitPane split="horizontal" minSize={300} maxSize={600} defaultSize={450}>
+                <SplitPane split="horizontal" minSize={400} maxSize={600} defaultSize={450}>
                     <div className="video-parent-panel"><Video /></div>
                     <div className="slides-container"><Slides /></div>
-                    <div className="hakuna-matata">hello</div>
                 </SplitPane>
                 <div className="notes-parent-panel"><Notes /></div>
             </SplitPane>
