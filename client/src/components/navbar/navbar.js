@@ -140,7 +140,7 @@ class NavBar extends Component {
                     {/* <button className={`editMode btn ${this.props.interface.editable ? 'editing':'' }`} onClick={this.editMode.bind(this)}>
                     {editableText}
                 </button> */}
-                    <section className="second-step">
+                    <section className="second-step binder-container">
                         {binder}
                         <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
                             New Binder</button>
