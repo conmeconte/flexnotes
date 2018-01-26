@@ -154,7 +154,7 @@ button.close {
     transition: 0.2s;
     background-color: #fff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    z-index: 2000;
+    z-index: 30;
     position: relative;
 }
 .arrow-container {
