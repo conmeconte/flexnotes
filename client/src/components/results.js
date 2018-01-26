@@ -6,31 +6,28 @@ import { addToPlayList, playVideo } from '../actions/index';
 class Results extends Component {
     addToPlayList (obj) {
         videoData.items.push(obj);
-        console.log(videoData);
+        // console.log(videoData);
     }
     handlePlayVideo(videoUrl) {
         this.props.playVideo(videoUrl); 
     }
     render() {
         const {results} = this.props;
-        console.log("video results: ", results)
+        // console.log("video results: ", results)
         const list = results.map((item, index) => {
-            console.log(item.url);
+            // console.log(item.url);
             return (
-                <li className="result-item collection-item col s12" key={index}>
+                <li onMouseOver={ () => {this.showVideoDescription(item.description)}} className="result-item collection-item col s12" key={index}>
                     <div className="row list-item-wrap-container">
                         <div className="row list-item-wrapper col s10">
                             <img src={results[index].thumbnails.default.url}/>
-                            <div className="col s8 video-contents">
+                            <div className="col s10 video-contents">
                                 <div>
                                     <span className="video-items">{item.videoTitle}</span>
                                 </div>
-                                <div>
-                                    <p className="item-description"><span className="video-description">Description: </span>{item.description}</p>
-                                </div>
                             </div>
                         </div>
-                        <button id="youtube-play" className="btn red darken-3 right col s1 video-btn" onClick={ () => { this.handlePlayVideo(item.url) }}>
+                        <button id="youtube-play" className="btn red darken-3 right video-btn" onClick={ () => { this.handlePlayVideo(item.url) }}>
                                 <i className="material-icons">play_arrow</i>
                         </button>
                     </div>
