@@ -76,11 +76,11 @@ ul > li {
 
 .modify-btn{
     display: flex;
+    justify-content: flex-end;
 }
 
-.page-modify-btn{
+.modify-btn{
     display: flex;
-    justify-content: flex-end;
 }
 
 .editMode > .edit_input {
@@ -172,6 +172,7 @@ ul > li {
     font-weight: 500;
     background-color: #455a64;
     box-shadow: 1px 1px 1px #747474;
+    margin-bottom: 5%;
 }
 
 .add-btn-binder.btn:hover, .add-btn-binder.btn:hover{

@@ -25,7 +25,7 @@ export default class ModalNav extends Component {
         let modalBtn = [];
         
         if(this.props.arrLength === 1){
-            bodyText = 'Can not delete the last '+this.props.type+'!';
+            bodyText = 'Cannot delete the last '+this.props.type+'!';
             modalBtn = (
                 <div className='card-action modal-nav'>
                     <button onClick={()=>this.setState({visible: false})} className='btn grey lighten-4'>Back</button>
