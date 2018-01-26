@@ -363,42 +363,44 @@ section {
 /* --------------------- HEADER AND FOOTER ---------------------*/
 
 header {
-    margin-bottom: 2%;
+    margin: 2% 0 2% 0;
+    width: 15.6vw;
 }
 
-header > h3 {
-    margin: 0;
-    font-size: 38px;
-    color: #ffffff;
+header > h1 {
+    margin-left: 2px;
+    font-size: 2.6vw;
+    display: inline;
 }
 
 .dashFlex {
-    color: #26a69a;
+    color: #0288d1;
 }
 
 .logoImage {
-    height: 28px;
+    width: 3.25vw;
 }
 
 footer {
     width: 100%;
-    margin-top: 10px;
+    margin: 1% 0;
     z-index: 2;
+    position: relative;
+    bottom: 0vh;
 }
 
 .startTour.btn, .logoutBtn.btn {
-    height: 40px;
-    width: 80px;
-    /*background-color: #d5d5d5;*/
-    background-color: #607d8b;
-
-    color: #fff;
-    padding: 5px;
+    height: 6%;
+    width: 41%;
+    background-color: #0288d1;;
+    color: #fafafa;
+    padding: 2%;
+    font-size: 1vw;
+    font-weight: 500;
 }
 
 .startTour.btn:hover, .logoutBtn.btn:hover {
-    background-color: #26a69a;
-    color: #fff;
+    background-color: #37474f;
 }
 
 .startTour {
