@@ -66,27 +66,9 @@ body {
     width: 83%
 }
 
-/* .panel_div{
-    height: 90vh;
-} */
-
 .container-fluid {
     padding: 0;
 }
-
-/*.welcome {*/
-    /*float: left;*/
-    /*color: #31C3E7;*/
-    /*margin: 0 0 0 10px;*/
-    /*padding: 0 10px;*/
-    /*line-height: 40px;*/
-    /*background-image: url('/paperimages/Book+top+view2.jpg');*/
-    /*background-size: 100% 100%;*/
-    /*background-repeat: no-repeat;*/
-    /*width: 87.5%;*/
-    /*padding-left: 5%;*/
-    /*box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);*/
-/*}*/
 
 .panelOptions {
     float: right;
@@ -119,22 +101,12 @@ body {
     border: 2px solid #31C3E7;
     color: #31C3E7;
 }
-/*.panel_div {*/
-    /*width: 88.5%;*/
-    /*height: 55vh;*/
-/*}*/
 
 .full_width.width-w-nav{
     width: 100% !important;
 }
 
-/* #dashboard-container {
-    margin-bottom: 0;
-} */
-
-/* label color */
-  /* label underline focus color */
-  .input-field input[type=text]:focus {
+.input-field input[type=text]:focus {
     border-bottom: 1px solid #96858F !important;
     box-shadow: 0 1px 0 0 #96858F !important;
   }
@@ -154,4 +126,9 @@ body {
     background-color: transparent;
     z-index: 8000;
     display: none;
+}
+
+.Pane.vertical.Pane2 {
+    background-color: ghostwhite;
+    border-left: 1px solid black;
 }

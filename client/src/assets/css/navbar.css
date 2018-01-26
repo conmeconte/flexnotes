@@ -356,6 +356,7 @@ input.edit_input_page{
 section {
     margin-top: 0;
     height: 82vh;
+
     overflow: auto;
 }
 
@@ -382,21 +383,22 @@ header > h3 {
 footer {
     width: 100%;
     margin-top: 10px;
-    background-color: #6d7993;
     z-index: 2;
 }
 
 .startTour.btn, .logoutBtn.btn {
     height: 40px;
     width: 80px;
-    background-color: #d5d5d5;
-    color: #000000;
+    /*background-color: #d5d5d5;*/
+    background-color: #607d8b;
+
+    color: #fff;
     padding: 5px;
 }
 
 .startTour.btn:hover, .logoutBtn.btn:hover {
     background-color: #26a69a;
-    color: #000000;
+    color: #fff;
 }
 
 .startTour {
