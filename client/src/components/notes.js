@@ -168,45 +168,45 @@ class Notes extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        // if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-        //     this.props.updateBinderArray();
-        // }else{
-        let { tab_arr_obj } = nextProps.binderObj;
-        let { interface_obj } = nextProps;
-
-        if (tab_arr_obj) {
-            let tabArrLength = tab_arr_obj.length;
-            let tabIndex = null;
-            let pageIndex = null;
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    tabIndex = i;
-                    break;
+        if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+            //     this.props.updateBinderArray();
+            // }else{
+            let { tab_arr_obj } = nextProps.binderObj;
+            let { interface_obj } = nextProps;
+            console.log('notes nextProps:', nextProps.binderObj);
+            if (tab_arr_obj) {
+                let tabArrLength = tab_arr_obj.length;
+                let tabIndex = null;
+                let pageIndex = null;
+                for (let i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        tabIndex = i;
+                        break;
+                    }
                 }
-            }
-            const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < page_arr_obj.length; i++) {
-                if (interface_obj.page_id === page_arr_obj[i]._id) {
-                    pageIndex = i;
-                    break;
+                const { page_arr_obj } = tab_arr_obj[tabIndex];
+                for (let i = 0; i < page_arr_obj.length; i++) {
+                    if (interface_obj.page_id === page_arr_obj[i]._id) {
+                        pageIndex = i;
+                        break;
+                    }
                 }
-            }
-            if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
-                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
-                this.setState({
-                    value: Value.fromJSON(lastContent),
-                    save: false
-                })
+                if (pageIndex !==null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                    const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                    this.setState({
+                        value: Value.fromJSON(lastContent),
+                        save: false
+                    })
+                } else {
+                    this.setState({
+                        value: initialValue,
+                        save: false
+                    })
+                }
             } else {
-                this.setState({
-                    value: initialValue,
-                    save: false
-                })
+                console.log("DOES NOT WORK");
             }
-        } else {
-            console.log("DOES NOT WORK");
         }
-        //}
     }
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 

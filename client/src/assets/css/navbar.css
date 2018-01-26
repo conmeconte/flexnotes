@@ -52,7 +52,7 @@ ul > li {
     height: 80px;
     margin-left: 10%;
     margin-bottom: 2%;
-    overflow-y: auto;
+    overflow-y: scroll;
     box-sizing: content-box;
     box-shadow: -5px .5px .5px #333333;
 }
@@ -145,7 +145,7 @@ ul > li {
     background-color: #546e7a; 
 }
 
-.add-btn-page.btn:hover  {
+.add-btn-page.btn:hover, .add-btn-page.btn:focus  {
     background-color: #fafafa;
     color: black;
 }
@@ -159,8 +159,8 @@ ul > li {
     font-weight: 500;
 }
 
-.add-btn-tab.btn:hover  {
-    background-color: #cfd8dc;
+.add-btn-tab.btn:hover, .add-btn-tab.btn:focus  {
+    background-color: #b0bec5;
     color: black;
     
 }
@@ -174,7 +174,7 @@ ul > li {
     box-shadow: 1px 1px 1px #747474;
 }
 
-.add-btn-binder.btn:hover{
+.add-btn-binder.btn:hover, .add-btn-binder.btn:hover{
     background-color: #cfd8dc;
     color: black;
     border-bottom: solid 1px #78909c;
