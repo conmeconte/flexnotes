@@ -4,6 +4,8 @@ import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectPage, deletePage, editPage } from '../../actions';
 
+import ModalNav from './modal_nav';
+
 class Page extends Component {
     constructor(props){
         super(props);
@@ -26,6 +28,7 @@ class Page extends Component {
         this.editPage = this.editPage.bind(this);
         this.notEditPage = this.notEditPage.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.cancelPageEdit = this.cancelPageEdit.bind(this);
     }
     componentWillReceiveProps(nextProps){
         // if(nextProps.interface.editable === false){
@@ -113,7 +116,8 @@ class Page extends Component {
         const { pageName } = this.state;
         this.props.editPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id, pageName);
         this.setState({ 
-            editable: false 
+            editable: false,
+            editHover: false
         });
     }
 
@@ -184,6 +188,13 @@ class Page extends Component {
         });
     }
 
+    cancelPageEdit(){
+        this.setState({
+            editable: false,
+            tabName: this.props.pageObj.page_name,
+            editHover: false
+        });
+    }
 
     render(){
 
@@ -233,9 +244,10 @@ class Page extends Component {
                              onKeyPress={this.keyPressed.bind(this)}
                              value={pageName}
                              />
-                <button type="button" className={`btn-floating ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditPage}>
-                <i className="small material-icons">check</i>
-                </button>
+                <button type="button" className={`btn-floating edit-mode-btn green accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditPage}>
+                <i className="small material-icons">check</i></button>
+                 <button type="button" className={`btn-floating edit-mode-btn red accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={this.cancelPageEdit}>
+                <i className="small material-icons">close</i></button>
             </div>              
             );
         } else {
@@ -246,13 +258,22 @@ class Page extends Component {
                     {this.props.pageObj.page_name}
                 </div>
                 </Link>
-                <div className="right-align">
+                <div className="page-modify-btn">
                     <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn grey darken-4  ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editPage}>
                     <i className="small material-icons">edit</i>
                     </button>
-                    <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deletePage()} >
+                    
+                    <div onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
+                        <ModalNav 
+                            callback={()=>this.deletePage()} 
+                            name={this.props.pageObj.page_name}
+                            className={`btn-floating navbar-btn delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
+                            <i className='material-icons'>delete_forever</i>
+                        </ModalNav>
+                    </div>
+                    {/* <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deletePage()} >
                     <i className="small material-icons">delete_forever</i>
-                    </button>
+                    </button> */}
                 </div>
 
 

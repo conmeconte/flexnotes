@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { selectTab, addPage, deletePage, updateBinderArray, editTab, deleteTab } from '../../actions';
 
 import Page from './page';
+import ModalNav from './modal_nav';
 
 class Tab extends Component {
     constructor(props){
@@ -29,6 +30,7 @@ class Tab extends Component {
         // this.editable = this.editable.bind(this);
         // this.notEditable = this.notEditable.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.cancelTabEdit = this.cancelTabEdit.bind(this);
     }
 
     componentDidMount(){
@@ -89,7 +91,8 @@ class Tab extends Component {
         const { tabName } = this.state;
         this.props.editTab(this.props.binder._id, this.props.tabObj._id, tabName);
         this.setState({ 
-            editable: false 
+            editable: false,
+            editHover: false
         });
     }
 
@@ -147,7 +150,8 @@ class Tab extends Component {
     }
 
 
-    handleClick(){
+    handleClick(event){
+        event.stopPropagation();
         const {open} = this.state;
         let toggle = !open;
         //this.props.selectBinder(binderObj);
@@ -194,7 +198,13 @@ class Tab extends Component {
         });
     }
 
-
+    cancelTabEdit(){
+        this.setState({
+            editable: false,
+            tabName: this.props.tabObj.tab_name,
+            editHover: false
+        });
+    }
     render(){
         //this.props.selectBinder(this.props.binderObj);
         const {open, editable, tabName, hover, editHover, deleteHover} = this.state;
@@ -221,14 +231,16 @@ class Tab extends Component {
                              onKeyPress={this.keyPressed.bind(this)}
                              value={tabName}
                              />
-                <button type="button" className={`btn-floating ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditTabs}>
-                <i className="small material-icons">check</i>
-                </button>
+                <button type="button" className={`btn-floating edit-mode-btn green accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditTabs}>
+                <i className="small material-icons">check</i></button>
+                 
+                <button type="button" className={`btn-floating edit-mode-btn red accent-4 ${editable ? 'visible' : 'hidden'}`} onClick={this.cancelTabEdit}>
+                <i className="small material-icons">close</i></button>
             </div>              
             );
         } else {
             tab_title = (
-                <div className="tabTitle" onClick={()=>this.handleClick()} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+                <div className="tabTitle" onClick={(event)=>this.handleClick(event)} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
                     <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
                         <div className="tabLink" >
                             {this.props.tabObj.tab_name}
@@ -238,9 +250,18 @@ class Tab extends Component {
                         <button type="button"  onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn-floating navbar-btn edit-btn grey darken-4 ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={this.editTabs}>
                         <i className="small material-icons">edit</i>
                         </button>
-                        <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
+                        <div onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
+                            <ModalNav 
+                                callback={()=>this.deleteTab(this.props.interface.binder_id)} 
+                                name={this.props.tabObj.tab_name}
+                                className={`btn-floating navbar-btn delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
+                                <i className='material-icons'>delete_forever</i>
+                            </ModalNav>
+                        </div>
+
+                        {/* <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
                         <i className="small material-icons">delete_forever</i>
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             );
