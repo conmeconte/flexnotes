@@ -133,6 +133,11 @@ ul > li {
     display: inline-block;
 }
 
+.btn.delete-btn, .btn.edit-btn, .btn.edit-mode-btn{
+    padding-right: 0px;
+    padding-left: 6px;
+}
+
 .add-btn-page.btn  {
     margin-bottom: 8%;
     padding: 0;
@@ -304,11 +309,11 @@ ul > li {
     padding-right: 3px;
 }
 .navbarShow.btn:hover{
-    background-color: #37474f;
+    background-color: #01579b;
 }
 
 .hideNavbar.btn:hover {
-    background-color: #37474f;
+    background-color: #01579b;
 }
 
 .edit-mode-btn {
@@ -365,16 +370,20 @@ header {
 
 header > h1 {
     margin-left: 2px;
-    font-size: 2.6vw;
+    font-size: 2vw;
     display: inline;
+    font-weight: 800;
+    letter-spacing: 3.5px;
 }
 
 .dashFlex {
     color: #0288d1;
+    font-style: italic;
 }
 
 .logoImage {
-    width: 3.25vw;
+    width: 1.8vw;
+    margin-right: 1%;
 }
 
 footer {
@@ -396,7 +405,7 @@ footer {
 }
 
 .startTour.btn:hover, .logoutBtn.btn:hover {
-    background-color: #37474f;
+    background-color: #01579b;
 }
 
 

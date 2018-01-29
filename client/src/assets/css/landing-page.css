@@ -51,6 +51,7 @@ body {
 }
 .title-container h1 {
     line-height: 8vh;
+    letter-spacing: 3.5px;
 }
 .google-div,
 .info {
@@ -108,6 +109,7 @@ body {
 
 .flex {
     color: #0393d7; 
+    font-style: italic;
 }
 .user-circle {
     border: 3px solid #fff;
@@ -175,12 +177,13 @@ a.landing-login-text {
     background-color: #0393d7;
 }
 .dash-btn:hover {
-    background-color: #74636D;
+    background-color: #01579b;
 }
 .btn-wrapper button {
     margin-right: 5px;
 }
 
 .landingLogo {
-    height: 41px;
+    width: 2.9vw;
+    margin-right: .5%;
 }

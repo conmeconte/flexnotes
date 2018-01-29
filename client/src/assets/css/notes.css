@@ -33,7 +33,8 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: #37474f;
+    /* background-color: #b0bec5; */
+    background-color: #455a64;
     box-shadow: 0 5px 5px #999;
     z-index: 1;
     padding: 1.5% 1% 1% 1%;
@@ -44,25 +45,24 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    height: 32px;
-    width: 70%;
+    height: 40%;
+    width: 60%;
 }
 
 .styleSquare {
-    width: 40px;
-    height: 30px;
-    box-sizing: border-box;
+    height: 80%;
     cursor: pointer;
     color: white;
 }
 
 .styleSquare:hover{
     background-color: ghostwhite;
-    color: #96858F;
+    color: #01579b;
 }
 
-.material-icons {
+.material-icons.notesIcons {
     font-size: 3vmin;
+    margin: 0;
 }
 
 .search-box {
@@ -98,8 +98,8 @@
     height: 40%; 
 }
 
-.saveNotes:hover{
-    background-color: ghostwhite !important;;
+.saveNotes.btn:hover{
+    background-color: #01579b;
 }
 
 .saveNotes:active {
