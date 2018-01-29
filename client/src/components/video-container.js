@@ -10,7 +10,7 @@ class VideoContainer extends Component {
         return (
             <div className="col s8 input-field">
                 <input {...input} className="pastedVideoInput" type={type} placeholder="Paste and Save a Youtube video URL..." value={input.value === '' && defaultValue ? defaultValue : input.value} />
-                <p className="red-text">{touched && error}</p>
+                <p className="red-text"><em>{touched && error ? error : ''}</em></p>
             </div>
         );
     }
@@ -89,9 +89,13 @@ function mapStateToProps(state) {
 
 function validate(values) {
     const error = {};
-    if (!values["youtube-url"]) {
-        error["youtube-url"] = 'Please paste a valid YouTube Url'
-    }
+    const youtubeLinkValue = values["youtube-url"];
+    console.log("VALUES: ", values);
+    if (youtubeLinkValue) {
+        if (youtubeLinkValue.indexOf("youtu") === -1) {
+            error["youtube-url"] = 'Please paste a valid YouTube URL'
+        }
+}
     return error;
 }
 
