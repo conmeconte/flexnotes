@@ -9,6 +9,7 @@ export const fetchUser = () => async dispatch => {
 //PANEL SPECs Action Creator
 
 export function setTopLeftHeight(num, interfaceObj) {
+    console.log('panel 3 settopleft: ', num / window.innerHeight)
     return (dispatch) => {
         axios.put('/api/page', {
             top_left_panel_height: num,
@@ -34,7 +35,7 @@ export function setTopLeftHeight(num, interfaceObj) {
 export function setTopLeftWidth(num, interfaceObj) {
     return (dispatch) => {
         axios.put('/api/page', {
-            top_left_panel_width: num,
+            top_left_panel_width: num / window.innerWidth,
             binderID: interfaceObj.binder_id,
             tabID: interfaceObj.tab_id,
             pageID: interfaceObj.page_id
@@ -55,7 +56,7 @@ export function setTopLeftWidth(num, interfaceObj) {
 export function setTopRightHeight(num, interfaceObj) {
     return (dispatch) => {
         axios.put('/api/page', {
-            top_right_panel_height: num,
+            top_right_panel_height: num.window.innerHeight,
             binderID: interfaceObj.binder_id,
             tabID: interfaceObj.tab_id,
             pageID: interfaceObj.page_id
@@ -94,77 +95,50 @@ export function setNumOfPanels(num, interfaceObj) {
     }
 }
 
+export function getPanelNum(num) {
+    return {
+        type: types.GET_PANEL_NUM,
+        payload: num
+    }
+}
+
 //Lecture Slides Action Creator
 
-export function setSlidesUrl(value, interfaceObj) {
-    console.log("setSlides url action 1:", value);
-    if (value) {
-        if (value.indexOf('presentation/d/') !== -1 || value.indexOf('presentation/d/e') !== -1) {
-            if (value.indexOf('presentation/d/e') !== -1) {
-                const urlSplit1 = value.split("presentation/d/e/");
-                const urlSplit2 = urlSplit1[1].split('/');
-                let presentationID = urlSplit2[0];
-                const slidesURL = `https://docs.google.com/presentation/d/e/${presentationID}/embed`;
-                return (dispatch) => {
-                    axios.put('/api/page', {
-                        lecture_slides: {
-                            lec_id: slidesURL
-                        },
-                        binderID: interfaceObj.binder_id,
-                        tabID: interfaceObj.tab_id,
-                        pageID: interfaceObj.page_id
-                    }).then((resp) => {
-                        console.log("setSlidesUrl response: ", resp);
-                        dispatch({
-                            type: types.SET_SLIDES_URL,
-                            payload: slidesURL
-                        });
-                    }).catch(error => {
-                        dispatch({
-                            type: types.AXIOS_ERROR,
-                            msg: 'Failed to update Google Slides URL'
-                        })
-                    });
-                }
-            }
-            const urlSplit1 = value.split("presentation/d/");
-            const urlSplit2 = urlSplit1[1].split('/');
-            let presentationID = urlSplit2[0];
-            const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
-            return (dispatch) => {
-                axios.put('/api/page', {
-                    lecture_slides: {
-                        lec_id: slidesURL
-                    },
-                    binderID: interfaceObj.binder_id,
-                    tabID: interfaceObj.tab_id,
-                    pageID: interfaceObj.page_id
-                }).then((resp) => {
-                    console.log("setSlidesUrl response: ", resp);
-                    dispatch({
-                        type: types.SET_SLIDES_URL,
-                        payload: slidesURL
-                    });
-                }).catch(error => {
-                    dispatch({
-                        type: types.AXIOS_ERROR,
-                        msg: 'Failed to update Google Slides URL'
-                    })
-                });
-            }
-        }
-        else {
-            return {
+export function setSlidesUrl(slidesURL, interfaceObj) {
+    return (dispatch) => {
+        axios.put('/api/page', {
+            lecture_slides: {
+                lec_id: slidesURL
+            },
+            binderID: interfaceObj.binder_id,
+            tabID: interfaceObj.tab_id,
+            pageID: interfaceObj.page_id
+        }).then((resp) => {
+            console.log("setSlidesUrl response: ", resp);
+            dispatch({
                 type: types.SET_SLIDES_URL,
-                payload: ''
-            };
-        }
+                payload: slidesURL
+            });
+        }).catch(error => {
+            dispatch({
+                type: types.AXIOS_ERROR,
+                msg: 'Failed to update Google Slides URL'
+            })
+        });
     }
-    else {
-        return {
-            type: types.SET_SLIDES_URL,
-            payload: ''
-        };
+}
+
+export function getSlidesURL(slidesURL) {
+    return {
+        type: types.GET_SLIDES_URL,
+        payload: slidesURL
+    }
+}
+
+export function resetSlidesURL(slidesURL) {
+    return {
+        type: types.RESET_SLIDES_URL,
+        payload: slidesURL
     }
 }
 // End of Lecture Slides Action Creators
@@ -228,51 +202,179 @@ export function toggleResults(bool) {
     }
 }
 export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
-    let videoId = videoUrl.split("/");
-    videoId = videoId[4];
-    return (dispatch) => {
-        const videoTest = axios.post('/api/video', {
-            video: {
-                videoTitle: videoTitle,
-                videoId: videoId,
-                videoUrl: videoUrl
-            },
-            binderID: interfaceObj.binder_id,
-            tabID: interfaceObj.tab_id,
-            pageID: interfaceObj.page_id
-        }).then((response) => {
-            console.log("DATA HAS BEEN SENT", response);
-            dispatch({
-                type: types.ADD_TO_PLAYLIST,
-                payload: videoUrl
-            });
-        }).catch(error => {
-            dispatch({
-                type: types.AXIOS_ERROR,
-                msg: 'Add to Playlist Failed.'
+    if (!videoUrl) {
+        return {
+            type: types.NO_VIDEO_LINK
+        };
+    } else if (videoUrl.indexOf("&") !== -1 || videoUrl.indexOf("=") !== -1) {
+        let videoLink = videoUrl
+        let videoId = videoLink.split('&')[0];
+        videoId = videoLink.split('=')[1];
+        videoLink = `https://www.youtube.com/embed/${videoId}`;
+        return (dispatch) => {
+            const videoTest = axios.post('/api/video', {
+                video: {
+                    videoTitle: '',
+                    videoId: videoId,
+                    videoUrl: videoLink
+                },
+                binderID: interfaceObj.binder_id,
+                tabID: interfaceObj.tab_id,
+                pageID: interfaceObj.page_id
+            }).then((response) => {
+                console.log("DATA HAS BEEN SENT", response);
+                dispatch({
+                    type: types.ADD_TO_PLAYLIST,
+                    payload: videoLink
+                });
+            }).catch(error => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Add to Playlist Failed.'
+                })
             })
-        })
-    };
+        };
+    } else if (videoUrl.indexOf("youtu.be") !== -1) {
+        let videoLink = videoUrl;
+        let videoId = videoUrl.split("/");
+        videoId = videoId[3];
+        videoLink = `https://www.youtube.com/embed/${videoId}`;
+        return (dispatch) => {
+            const videoTest = axios.post('/api/video', {
+                video: {
+                    videoTitle: '',
+                    videoId: videoId,
+                    videoUrl: videoLink
+                },
+                binderID: interfaceObj.binder_id,
+                tabID: interfaceObj.tab_id,
+                pageID: interfaceObj.page_id
+            }).then((response) => {
+                console.log("DATA HAS BEEN SENT", response);
+                dispatch({
+                    type: types.ADD_TO_PLAYLIST,
+                    payload: videoLink
+                });
+            }).catch(error => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Add to Playlist Failed.'
+                })
+            })
+        };
+    } else {
+        let videoLink = videoUrl;
+        let videoId = videoLink.split("/")
+        videoId = videoId[3];
+        return (dispatch) => {
+            const videoTest = axios.post('/api/video', {
+                video: {
+                    videoTitle: '',
+                    videoId: videoId,
+                    videoUrl: videoUrl
+                },
+                binderID: interfaceObj.binder_id,
+                tabID: interfaceObj.tab_id,
+                pageID: interfaceObj.page_id
+            }).then((response) => {
+                console.log("DATA HAS BEEN SENT", response);
+                dispatch({
+                    type: types.ADD_TO_PLAYLIST,
+                    payload: videoUrl
+                });
+            }).catch(error => {
+                dispatch({
+                    type: types.AXIOS_ERROR,
+                    msg: 'Add to Playlist Failed.'
+                })
+            })
+        };
+    }
 }
-
+export function slideOutVideoSearch(toggleBool, slide) {
+    let toggleSlideOut = toggleBool;
+    var slideOutStyles;
+    if (toggleSlideOut) {
+        slideOutStyles = 'translateY(27px)',
+            toggleSlideOut = false;
+    } else {
+        slideOutStyles = 'translateY(-119px)';
+        toggleSlideOut = true;
+    }
+    return {
+        type: types.TOGGLE_VIDEO_SLIDE_OUT,
+        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut }
+    }
+}
+export function slideOutSlidesSearch(toggleBool, slide) {
+    let toggleSlideOut = toggleBool;
+    var slideOutStyles;
+    if (toggleSlideOut) {
+        slideOutStyles = 'translateY(0px)'
+        toggleSlideOut = false;
+    } else {
+        slideOutStyles = 'translateY(-100px)'
+        toggleSlideOut = true;
+    }
+    return {
+        type: types.TOGGLE_SLIDE_OUT_MENU,
+        payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut }
+    }
+}
+export function emptyVideoSlideOut(toggleBool, slide) {
+    let toggleSlideOut = toggleBool;
+    let slideOutStyles = slide.style;
+    if (toggleSlideOut) {
+        slideOutStyles = 'translateY(27px)';
+        toggleSlideOut = false;
+    }
+    slideOutStyles = 'translateY(27px)';
+    toggleSlideOut = false;
+    return {
+        type: types.EMPTY_VIDEO_SLIDE_OUT,
+        payload: { slideOutStyles: { style: { transform: slideOutStyles } }, toggleSlideOut }
+    }
+}
 export function playVideo(url) {
     let videoId = url;
     document.querySelector(".video-iframe").src = url
     return {
         type: types.PLAY_VIDEO,
-        payload: videoId
+        payload: { videoId: videoId, resultsContainer: { style: { transform: 'translateY(0px)' } } }
     }
 }
 export function playPastedLinkVideo(url) {
-    let videoId = url
-    videoId = videoId.split('&')[0];
-    videoId = videoId.split('=')[1];
-    videoId = `https://www.youtube.com/embed/${videoId}`;
-    console.log("PLAY PASTED LINK VIDEO: ", videoId)
-    return {
-        type: types.PLAY_PASTED_VIDEO_LINK,
-        payload: videoId
+    if (!url) {
+        return {
+            type: types.NO_VIDEO_LINK
+        };
+    } else if (url.indexOf("&") !== -1 || url.indexOf("=") !== -1) {
+        let videoId = url
+        videoId = videoId.split('&')[0];
+        videoId = videoId.split('=')[1];
+        videoId = `https://www.youtube.com/embed/${videoId}`;
+        console.log("PLAY PASTED LINK VIDEO: ", videoId);
+        return {
+            type: types.PLAY_PASTED_VIDEO_LINK,
+            payload: videoId
+        }
+    } else if (url.indexOf("youtu.be") !== -1) {
+        let videoId = url;
+        videoId = url.split("/");
+        videoId = videoId[3];
+        videoId = `https://www.youtube.com/embed/${videoId}`;
+        return {
+            type: types.PLAY_PASTED_VIDEO_LINK,
+            payload: videoId
+        }
+    } else {
+        let videoId = url
+        return {
+            type: types.PLAY_PASTED_VIDEO_LINK,
+            payload: videoId
+        }
     }
+
 }
 export function grabVideoUrl(videoLink) {
     return {
@@ -325,6 +427,14 @@ export function updateBinderArray() {
                     msg: 'Failed call in update binder array'
                 });
             });
+    }
+}
+
+export function updateBinderObj(binder_obj) {
+
+    return {
+        type: types.UPDATE_BINDER_OBJ,
+        payload: binder_obj
     }
 }
 
@@ -474,7 +584,7 @@ export function deletePage(binder_id, tab_id, page_id) {
     }
 }
 
-export function editBinder(binder_id, binder_name){
+export function editBinder(binder_id, binder_name) {
     return (dispatch) => {
         const test = axios.put('/api/binder', {
             binderID: binder_id,
@@ -495,7 +605,7 @@ export function editBinder(binder_id, binder_name){
     }
 }
 
-export function editTab(binder_id, tab_id, tab_name){
+export function editTab(binder_id, tab_id, tab_name) {
     return (dispatch) => {
         const test = axios.put('/api/tab', {
             binderID: binder_id,
@@ -517,11 +627,11 @@ export function editTab(binder_id, tab_id, tab_name){
     }
 }
 
-export function editPage(binder_id, tab_id, page_id, page_name){
+export function editPage(binder_id, tab_id, page_id, page_name) {
     return (dispatch) => {
         const test = axios.put('/api/page', {
             binderID: binder_id,
-            tabID: tab_id, 
+            tabID: tab_id,
             pageID: page_id,
             page_name: page_name
         })
@@ -537,5 +647,29 @@ export function editPage(binder_id, tab_id, page_id, page_name){
                     msg: 'Failed call in edit page'
                 });
             });
+    }
+}
+
+export function minNav() {
+    return {
+        type: types.HIDE_NAV
+    }
+}
+
+export function showNav() {
+    return {
+        type: types.SHOW_NAV
+    }
+}
+
+export function editable() {
+    return {
+        type: types.EDITABLE
+    }
+}
+
+export function notEditable() {
+    return {
+        type: types.NOT_EDITABLE
     }
 }

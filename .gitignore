@@ -1,6 +1,9 @@
 node_modules
+errorLogs
 .DS_Store
 .idea
 .vscode
 keys.js
-
+logins.log
+serverError.log
+logins.log

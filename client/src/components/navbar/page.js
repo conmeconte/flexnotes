@@ -4,13 +4,19 @@ import {Link, Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectPage, deletePage, editPage } from '../../actions';
 
+import ModalNav from './modal_nav';
+
 class Page extends Component {
     constructor(props){
         super(props);
 
         this.state = {
             editable: false,
-            pageName: ''
+            pageName: '',
+            hover: false,
+            editHover: false,
+            deleteHover: false,
+            active: false 
             //tabObject: this.props.tabObj,
             //binderUrl: this.props.binderUrl
         }
@@ -22,13 +28,15 @@ class Page extends Component {
         this.editPage = this.editPage.bind(this);
         this.notEditPage = this.notEditPage.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.cancelPageEdit = this.cancelPageEdit.bind(this);
     }
-    // componentWillReceiveProps(nextProps){
-    //     //console.log('nextProps: ',nextProps);
-    //      if(this.props.binderObj != nextProps.binderObj){
-    //          this.props.updateBinderArray();
-    //      }
-    // }
+    componentWillReceiveProps(nextProps){
+        // if(nextProps.interface.editable === false){
+        //     this.setState({
+        //         editable: false
+        //     });
+        // }
+    }
 
     // addPage(){
     //     //console.log('addPage clicked');
@@ -94,7 +102,9 @@ class Page extends Component {
             pageName: e.target.value
         });
     }
+
     editPage(){
+        //event.stopPropagation();
         //console.log("editable should be true");
         this.setState({
             editable: true,
@@ -103,12 +113,22 @@ class Page extends Component {
     }
 
     notEditPage() {
+        //event.stopPropagation();
         //console.log("editable should be false");
         const { pageName } = this.state;
         this.props.editPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id, pageName);
         this.setState({ 
-            editable: false 
+            editable: false,
+            editHover: false
         });
+    }
+
+    keyPressed(event) {
+        //console.log('keypress',event);
+        if(event.key === 'Enter') {
+            //console.log('enter key pressed');
+          this.notEditPage();
+      }
     }
 
     deletePage(page_id){
@@ -116,26 +136,76 @@ class Page extends Component {
         let deleteIndex = null;
         for(let i = 0; i < this.props.binder.tab_arr_obj.length; i++){
             if(this.props.binder.tab_arr_obj[i]._id === this.props.tabID){
-                console.log('delete Index', deleteIndex);
                 deleteIndex = i;
+                // console.log('delete Index', deleteIndex);
+                // console.log('page arr obj length', this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length);
+                // console.log('binder_tab_arr_obj[deleteindex] id', this.props.binder.tab_arr_obj[i]._id);
+                // console.log('tabid', this.props.tabID);
             }
         }
         if(this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length === 1){
             console.log('can not delete last page');
-            return;
+        } else {
+            this.props.deletePage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id);
+
         }
-        this.props.deletePage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id);
     }
 
     handleClick(){
         //this.props.selectBinder(binderObj);
         this.props.selectPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id);
         //console.log("page id updated");
+        //this.props.
+    }
+
+    hover(){
+        this.setState({
+            hover: true
+        });
+    }
+
+    notHover(){
+        this.setState({
+            hover: false
+        });
+    }
+
+    hoverEditBtn(){
+        this.setState({
+            editHover: true
+        });
+    }
+
+    notHoverEditBtn(){
+        this.setState({
+            editHover: false
+        });
+    }
+
+    hoverDeleteBtn(){
+        this.setState({
+            deleteHover: true
+        });
+    }
+
+    notHoverDeleteBtn(){
+        this.setState({
+            deleteHover: false
+        });
+    }
+
+    cancelPageEdit(){
+        //event.stopPropagation();
+        this.setState({
+            editable: false,
+            tabName: this.props.pageObj.page_name,
+            editHover: false
+        });
     }
 
     render(){
 
-        const {editable, pageName} = this.state;
+        const {editable, pageName, hover, editHover, deleteHover, active} = this.state;
         if(!this.props.pageObj){
             return null;
         }
@@ -145,46 +215,100 @@ class Page extends Component {
         //console.log('Props in Page:',this.props);
         //console.log('State in Page:',this.state);
         let page_list = [];
+
+        let background_color = {
+            backgroundColor: ''
+        }
+
+        let whiteColor = true;
+        
+        if(this.props.interface.page_id === this.props.pageObj._id){
+            //set color to active color
+            background_color = {
+                backgroundColor: '#0288d1'
+            }
+
+            whiteColor = true;
+
+        } else {
+            //set color to default
+            background_color = {
+                backgroundColor: '#fafafa'
+            }
+
+            whiteColor = false;
+        }
         if(editable){
             //let editName = this.props.binderObj.binder_name;
             page_list = (
-                <div className="tabTitle">
+                <div className="editMode">
                          <input 
-                             className="edit_input"
+                             className="edit_input_page"
                              ref='textInput'
                              type='text'
                              onChange={(e)=>this.editPageName(e)}
                              // onBlur={this.notEditable}
-                            // onKeyPress={this.keyPressed}
+                             onKeyPress={this.keyPressed.bind(this)}
                              value={pageName}
                              />
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditPage}>
-                    Done <span className="glyphicon glyphicon-ok"></span>
-                </button>
+                <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditPage(event)}>
+                <i className="small material-icons">check</i></button>
+                 <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelPageEdit(event)}>
+                <i className="small material-icons">close</i></button>
             </div>              
             );
         } else {
+
+            let deleteIndex = null;
+            let pageArrLength = 1;
+            for(let i = 0; i < this.props.binder.tab_arr_obj.length; i++){
+                if(this.props.binder.tab_arr_obj[i]._id === this.props.tabID){
+                    deleteIndex = i;
+                    //console.log('delete Index', deleteIndex);
+                    pageArrLength = this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length;
+                    // console.log('page arr obj length', this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length);
+                    // console.log('binder_tab_arr_obj[deleteindex] id', this.props.binder.tab_arr_obj[i]._id);
+                    // console.log('tabid', this.props.tabID);
+                }
+            }
+            
+            //console.log('pageArrLength',pageArrLength);
+
             page_list = (
-                <div>
-            <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
-                <div className=""  onClick={()=>this.handleClick()}>
+                <div className={`pageList ${whiteColor ? 'whiteFont' : 'blackFont'}`} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+            <Link to={`/main/${url}`} style={{ textDecoration: 'none'}} >
+                <div className="pageLink" >
                     {this.props.pageObj.page_name}
                 </div>
                 </Link>
-                <button type="button" className={`btn btn-default btn-xs btn_edit_binder`} onClick={this.editPage}>
-                        E Page
-                </button>
-                <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deletePage()} >
-                   D Page
-                </button>
+                <div className="modify-btn">
+                    <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn navbar-btn edit-btn grey darken-4  ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event)=>this.editPage(event)}>
+                    <i className="small material-icons">edit</i>
+                    </button>
+                    
+                    <div className="navbar-btn" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
+                        <ModalNav 
+                            callback={()=>this.deletePage()} 
+                            name={this.props.pageObj.page_name}
+                            type='page'
+                            arrLength={pageArrLength}
+                            className={`btn delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
+                            <i className='material-icons'>delete_forever</i>
+                        </ModalNav>
+                    </div>
+                    {/* <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deletePage()} >
+                    <i className="small material-icons">delete_forever</i>
+                    </button> */}
+                </div>
+
+
                 </div>
             );
         }
 
 
-
         return(
-            <li className="pageBody">
+            <li className="pageBody"  style={background_color} onClick={()=>this.handleClick()}>
                 {page_list}
             </li>
             

@@ -2,36 +2,55 @@ import React, { Component } from 'react';
 import Panel from './panel';
 import NavBar from './navbar/navbar';
 import Login from './login';
-// import '../assets/css/login.css';
-import '../assets/css/login.css';
-
-import logo from '../assets/images/flexnotes_logo.gif';
 
 import { connect } from 'react-redux';
 import { getDataObject } from '../actions';
 
+import Tour from 'reactour';
+import steps from './react_tour_steps';
+
+import '../assets/css/dashboard.css';
 
 class Dashboard extends Component {
     componentWillMount(){
         this.props.getDataObject();
+
+        this.state = {
+            isTourOpen: false
+        };
+
+        this.toggleTour = this.toggleTour.bind(this);
+    }
+
+    toggleTour() {
+        if (this.state.isTourOpen) {
+            this.setState({
+                isTourOpen: false
+            });
+        } else {
+            this.setState({
+                isTourOpen: true
+            });
+        }
     }
 
     render(){
-        console.log('dashboard props', this.props);
+        // console.log('dashboard props', this.props);
         if(!this.props.binderArr){
             return null;
         } 
         return(
+
             <div id="dashboard-container" className="row">
-                <div className="logout">
-                    <img className="logoImage" src={logo} />
-                    <Login />
-                </div>
-                <NavBar />
+                <NavBar toggleTour={this.toggleTour}/>
                 <Panel />
+                <Tour
+                    steps={steps}
+                    isOpen={this.state.isTourOpen}
+                    onRequestClose={this.toggleTour}
+                />
             </div>
         );
-           // }
     }
 }
 

@@ -8,7 +8,7 @@ import { updateBinderArray } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
-// import '../assets/css/notes.css';
+import '../assets/css/notes.css';
 
 const DEFAULT_NODE = 'paragraph';
 
@@ -44,16 +44,15 @@ const saveStyle = {
         color: "#00cc00"
     },
     false: {
-        // backgroundColor: "#ffffff",
-        color: "#96858F"
+        color: "#ffffff"
     }
-}
+};
 
 // --------------------------- UNDO AND REDO  ---------------------------
 
 const ToolbarButton = props => (
-    <span title={props.icon} className="button" onMouseDown={props.onMouseDown}>
-        <span className="material-icons">{props.icon}</span>
+    <span title={props.icon} className="styleSquare" onMouseDown={props.onMouseDown}>
+        <span className="material-icons notesIcons">{props.icon}</span>
     </span>
 );
 
@@ -116,7 +115,6 @@ class Notes extends Component {
     };
 
     submitNotes() {
-        console.log("it saved!")
         let { interface_obj } = this.props;
         const { value } = this.state;
         const content = JSON.stringify(value.toJSON());
@@ -125,8 +123,12 @@ class Notes extends Component {
             binderID: interface_obj.binder_id,
             tabID: interface_obj.tab_id,
             pageID: interface_obj.page_id
-        });
-        this.setState({ save: true })
+        }).then(
+            this.setState({
+                ...value,
+                save: true
+            })
+            );
     }
 
 
@@ -140,60 +142,68 @@ class Notes extends Component {
             let pageIndex = null;
             for (let i = 0; i < tabArrLength; i++) {
                 if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    //console.log('tabid = interface id at index:', i);
                     tabIndex = i;
                     break;
                 }
             }
             const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < tabArrLength; i++) {
+            for (let i = 0; i < page_arr_obj.length; i++) {
                 if (interface_obj.page_id === page_arr_obj[i]._id) {
                     pageIndex = i;
                     break;
                 }
             }
-            if (!page_arr_obj[pageIndex].notes) {
-                return;
-            } else {
+            if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
                 const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
                 this.setState({
                     value: Value.fromJSON(lastContent),
+                    save: false
+                })
+            } else {
+                this.setState({
+                    value: initialValue,
+                    save: false
                 })
             }
         }
     }
     componentWillReceiveProps(nextProps) {
-        let { tab_arr_obj } = nextProps.binderObj;
-        let { interface_obj } = nextProps;
-
-        if (tab_arr_obj) {
-            let tabArrLength = tab_arr_obj.length;
-            let tabIndex = null;
-            let pageIndex = null;
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                    //console.log('tabid = interface id at index:', i);
-                    tabIndex = i;
-                    break;
+        if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+            //     this.props.updateBinderArray();
+            // }else{
+            let { tab_arr_obj } = nextProps.binderObj;
+            let { interface_obj } = nextProps;
+            // console.log('notes nextProps:', nextProps.binderObj);
+            if (tab_arr_obj) {
+                let tabArrLength = tab_arr_obj.length;
+                let tabIndex = null;
+                let pageIndex = null;
+                for (let i = 0; i < tabArrLength; i++) {
+                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+                        tabIndex = i;
+                        break;
+                    }
+                }
+                const { page_arr_obj } = tab_arr_obj[tabIndex];
+                for (let i = 0; i < page_arr_obj.length; i++) {
+                    if (interface_obj.page_id === page_arr_obj[i]._id) {
+                        pageIndex = i;
+                        break;
+                    }
+                }
+                if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                    const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                    this.setState({
+                        value: Value.fromJSON(lastContent),
+                        save: false
+                    })
+                } else {
+                    this.setState({
+                        value: initialValue,
+                        save: false
+                    })
                 }
             }
-            const { page_arr_obj } = tab_arr_obj[tabIndex];
-            for (let i = 0; i < tabArrLength; i++) {
-                if (interface_obj.page_id === page_arr_obj[i]._id) {
-                    pageIndex = i;
-                    break;
-                }
-            }
-            if (!page_arr_obj[pageIndex].notes) {
-                return;
-            } else {
-                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
-                this.setState({
-                    value: Value.fromJSON(lastContent),
-                })
-            }
-        } else {
-            console.log("DOES NOT WORK");
         }
     }
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
@@ -291,7 +301,7 @@ class Notes extends Component {
 
         return (
             <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons">{icon}</span>
+                <span className="material-icons notesIcons">{icon}</span>
             </span>
         )
     };
@@ -302,7 +312,7 @@ class Notes extends Component {
 
         return (
             <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons">{icon}</span>
+                <span className="material-icons notesIcons">{icon}</span>
             </span>
         )
     };
@@ -467,8 +477,8 @@ class Notes extends Component {
         switch (node.type) {
             case 'block-quote': return <blockquote {...attributes}>{children}</blockquote>;
             case 'bulleted-list': return <ul {...attributes}>{children}</ul>;
-            case 'heading-one': return <h1 {...attributes}>{children}</h1>;
-            case 'heading-two': return <h2 {...attributes}>{children}</h2>;
+            case 'heading-one': return <h5 {...attributes}>{children}</h5>;
+            // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
             case 'list-item': return <li {...attributes}>{children}</li>;
             case 'numbered-list': return <ol {...attributes}>{children}</ol>;
             case 'link': {
@@ -490,7 +500,7 @@ class Notes extends Component {
     toolbar = () => {
         return (
 
-            <div className="toolbar">
+            <div className="toolbar sixth-step">
                 <div className="stylingButtons">
                     <ToolbarButton icon="undo" onMouseDown={this.onClickUndo} />
                     <ToolbarButton icon="redo" onMouseDown={this.onClickRedo} />
@@ -498,28 +508,27 @@ class Notes extends Component {
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
                     {this.renderMarkButton('code', 'code')}
-                    {this.renderBlockButton('heading-one', 'looks_one')}
-                    {this.renderBlockButton('heading-two', 'looks_two')}
+                    {this.renderBlockButton('heading-one', 'format_size')}
+                    {/*{this.renderBlockButton('heading-two', 'title')}*/}
                     {this.renderBlockButton('block-quote', 'format_quote')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
                     <span className="styleSquare" title="link" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
-                        <span className="material-icons">link</span>
+                        <span className="material-icons notesIcons">link</span>
                     </span>
                     <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
-                        <span className="material-icons">image</span>
+                        <span className="material-icons notesIcons">image</span>
                     </span>
                 </div>
-                {/*<div className="searchSave">*/}
-                {/*<div className="search-box">*/}
-                <input
-                    className="search-input"
-                    placeholder="Search keywords..."
-                    onChange={this.onInputChange}
-                />
-                <button style={saveStyle[this.state.save]} className="saveNotes" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Changes Saved" : "Save Changes"}</button>
-                {/*</div>*/}
-                {/*</div>*/}
+                <div className="search-box">
+                    <input
+                        className="search-input keyword"
+                        placeholder="Search keywords..."
+                        onChange={this.onInputChange}
+                    />
+                </div>
+                <button style={saveStyle[this.state.save]} className="saveNotes btn waves-effect waves-light" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Saved" : "Save Changes"}</button>
+
             </div>
 
         )
@@ -527,25 +536,28 @@ class Notes extends Component {
 
     render() {
         return (
-            <div className="notes-component">
+            <div className="text-editor">
+                <div className='notes-component-toolbar'>{this.toolbar()}</div>
 
-                {this.toolbar()}
-                <Editor
-                    className="editor"
-                    style={{ overflowY: scroll }}
-                    placeholder="Enter notes..."
-                    value={this.state.value}
-                    onChange={this.onChange}
-                    onKeyDown={this.onKeyDown}
-                    schema={schema}
-                    onDrop={this.onDropOrPaste}
-                    onPaste={this.onDropOrPaste}
-                    onPaste={this.onPaste}
-                    renderNode={this.renderNode}
-                    renderMark={this.renderMark}
-                    spellCheck
-                />
+                <div className="notes-component fifth-step">
+                    <Editor
+                        className="editor"
+                        style={{ overflowY: scroll }}
+                        placeholder="Enter notes..."
+                        value={this.state.value}
+                        onChange={this.onChange}
+                        onKeyDown={this.onKeyDown}
+                        schema={schema}
+                        onDrop={this.onDropOrPaste}
+                        onPaste={this.onDropOrPaste}
+                        onPaste={this.onPaste}
+                        renderNode={this.renderNode}
+                        renderMark={this.renderMark}
+                        spellCheck
+                    />
+                </div>
             </div>
+
         );
     }
 }

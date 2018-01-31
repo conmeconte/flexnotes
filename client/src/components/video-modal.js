@@ -7,7 +7,7 @@ import { Field, reduxForm } from 'redux-form';
 class VideoModal extends Component {
     renderInput(props) {
         const { label, input, meta: { touched, error }  } = props;
-        console.log('INPUT: ', input);
+        // console.log('INPUT: ', input);
 
         return (
                 <input {...input} className="save-title-input form-control"/>
@@ -15,24 +15,28 @@ class VideoModal extends Component {
     }
 
     setName(values){
-        console.log('Values:', values);
+        // console.log('Values in video modal:', values);
+        // console.log('video modal props:', this.props);
         this.props.addToPlaylist(this.props.videoLink, values.title, this.props.binderTabPageIds);
         this.props.toggleModal(this.props.addVideoModalStyle);
+        this.props.reset();
     }
 
     render () {
         return(
             <div style={this.props.addVideoModalStyle} className="add-modal-container">
                 <div className="add-modal">
-                        <h4>Enter video name: </h4>
+                        <h6>Enter video name: </h6>
                         <form onSubmit={this.props.handleSubmit(this.setName.bind(this))}>
                             <Field name="title" component={this.renderInput}/>
-                            <button className="save btn btn-success">Continue</button>
+                            <div className="btn-wrapper">
+                            <button className="save btn green darken-3">Save</button>
                 <button type="button" onClick={ 
                     () => { 
                         this.props.toggleModal(this.props.addVideoModalStyle)
                     }
-                    } className="btn btn-primary">Go back</button>
+                    } className="btn red darken-1">Don't Save</button>
+                    </div>
                         </form>
                 </div>
             </div>
