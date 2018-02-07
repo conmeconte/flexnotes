@@ -5,7 +5,7 @@ const path= require('path');
 
 module.exports = app => {
     app.get('/auth/google', passport.authenticate('google', {
-        scope: ['profile', 'email', 'https://www.googleapis.com/auth/admin.directory.resource.calendar']
+        scope: ['profile', 'email']
     })
     );
 
