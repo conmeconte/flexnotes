@@ -1,2 +1,6 @@
-# c10.17_notes_for_you
-An app for organizing students notes
+#FlexNotes
+
+
+>An innovative multi-panel note taking application for student in order to organize all the multi-media study materials in one place
+
+
