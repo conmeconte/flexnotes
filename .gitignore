@@ -1,5 +1,8 @@
-.idea
-.DS_Store
 node_modules
-config
+errorLogs
+.DS_Store
+.idea
+.vscode
 keys.js
+logins.log
+serverError.log
