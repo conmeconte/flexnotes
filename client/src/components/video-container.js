@@ -29,7 +29,7 @@ class VideoContainer extends Component {
       return;
     }
     this.props.playPastedLinkVideo(values['youtube-url']);
-    this.props.addToPlaylist(
+    this.props.addVideoToDatabase(
       values['youtube-url'],
       '',
       this.props.binderTabPageIds
@@ -89,7 +89,6 @@ class VideoContainer extends Component {
         </div>
         <div id="video-container" className="video-container">
           <div className="video-embed-wrapper">
-            <div className="resize-blocker" />
             <iframe
               allowFullScreen
               id="video-iframe"
@@ -108,9 +107,6 @@ function mapStateToProps(state) {
     pastedVideoUrl: state.videoResults.videoLink,
     videoLink: state.video.videoLink,
     binderTabPageIds: state.interface,
-    playlist: state.videoResults.playlist,
-    addVideoModalStyle: state.video.addVideoModal,
-    videoTitle: state.video.videoTitle,
     resultsStyles: state.video.resultsStyles,
     toggleResultsBool: state.video.toggleResults,
     opacityContainer: state.video.opacityDisplay,
@@ -137,4 +133,4 @@ VideoContainer = reduxForm({
   validate
 })(VideoContainer);
 
-export default connect(mapStateToProps, { ...actions })(VideoContainer);
+export default connect(mapStateToProps, actions)(VideoContainer);

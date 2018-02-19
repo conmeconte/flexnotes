@@ -2,8 +2,7 @@ import types from '../actions/types';
 
 const DEFAULT_STATE = {
   results: [],
-  videoList: [],
-  videoTitle: '',
+  addedVideo: [],
   toggleResults: true,
   addVideoModal: {
     display: 'none'
@@ -25,8 +24,8 @@ export default function(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case types.GET_VIDEO_RESULTS:
       return { ...state, results: action.payload };
-    case types.ADD_TO_PLAYLIST:
-      return { ...state, videoList: [action.payload, ...state.videoList] };
+    case types.ADD_VIDEO_TO_DATABASE:
+      return { ...state, addedVideo: [action.payload, ...state.addedVideo] };
     case types.GET_RESULT_STYLES:
       return {
         ...state,
@@ -41,11 +40,6 @@ export default function(state = DEFAULT_STATE, action) {
       return { ...state, opacityDisplay: action.payload };
     case types.TOGGLE_MODAL:
       return { ...state, addVideoModal: { display: action.payload } };
-    case types.GET_VIDEO_TITLE:
-      if (!action.payload) {
-        return state;
-      }
-      return { ...state, videoTitle: action.payload };
     case types.PLAY_PASTED_VIDEO_LINK:
       return { ...state, videoLink: action.payload };
     case types.PLAY_VIDEO:

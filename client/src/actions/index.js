@@ -154,29 +154,32 @@ export function resetSlidesURL(slidesURL) {
     payload: slidesURL
   };
 }
+export function slideOutSlidesSearch(toggleBool, slide) {
+  let toggleSlideOut = toggleBool;
+  var slideOutStyles;
+  if (toggleSlideOut) {
+    slideOutStyles = 'translateY(0px)';
+    toggleSlideOut = false;
+  } else {
+    slideOutStyles = 'translateY(-100px)';
+    toggleSlideOut = true;
+  }
+  return {
+    type: types.TOGGLE_SLIDE_OUT_MENU,
+    payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut }
+  };
+}
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
-export function toggleModal({ display }) {
-  let displayValue = display;
-  if (displayValue === 'none') {
-    displayValue = 'block';
-  } else {
-    displayValue = 'none';
-  }
-  return {
-    type: types.TOGGLE_MODAL,
-    payload: displayValue
-  };
-}
 export function getVideoResults(videos) {
   return {
     type: types.GET_VIDEO_RESULTS,
     payload: videos
   };
 }
-export function getResultStyles(styles, bool) {
-  if (!bool) {
+export function getResultStyles(styles, visible) {
+  if (!visible) {
     styles = {
       transform: 'translateX(100%)'
     };
@@ -190,8 +193,8 @@ export function getResultStyles(styles, bool) {
     payload: styles
   };
 }
-export function getOpacityDisplay(styles, bool) {
-  if (!bool) {
+export function getOpacityDisplay(styles, visible) {
+  if (!visible) {
     styles = {
       display: 'none'
     };
@@ -205,14 +208,14 @@ export function getOpacityDisplay(styles, bool) {
     payload: styles
   };
 }
-export function toggleResults(bool) {
-  let toggleResults = !bool;
+export function toggleResults(visible) {
+  let toggleResults = !visible;
   return {
     type: types.TOGGLE_RESULTS,
     payload: toggleResults
   };
 }
-export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
+export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
   if (!videoUrl) {
     return {
       type: types.NO_VIDEO_LINK
@@ -222,9 +225,9 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
     let videoId = videoLink.split('&')[0];
     videoId = videoLink.split('=')[1];
     videoLink = `https://www.youtube.com/embed/${videoId}`;
-    return dispatch => {
-      const videoTest = axios
-        .post('/api/video', {
+    return async dispatch => {
+      try {
+        const response = await axios.post('/api/video', {
           video: {
             videoTitle: '',
             videoId: videoId,
@@ -233,19 +236,17 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
           binderID: interfaceObj.binder_id,
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
-        })
-        .then(response => {
-          dispatch({
-            type: types.ADD_TO_PLAYLIST,
-            payload: videoLink
-          });
-        })
-        .catch(error => {
-          dispatch({
-            type: types.AXIOS_ERROR,
-            msg: 'Add to Playlist Failed.'
-          });
         });
+        dispatch({
+          type: types.ADD_VIDEO_TO_DATABASE,
+          payload: videoLink
+        });
+      } catch (error) {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Add to Playlist Failed.'
+        });
+      }
     };
   } else if (videoUrl.indexOf('youtu.be') !== -1) {
     let videoLink = videoUrl;
@@ -310,8 +311,8 @@ export function addToPlaylist(videoUrl, videoTitle, interfaceObj) {
     };
   }
 }
-export function slideOutVideoSearch(toggleBool, slide) {
-  let toggleSlideOut = toggleBool;
+export function slideOutVideoSearch(visible, slide) {
+  let toggleSlideOut = visible;
   var slideOutStyles;
   if (toggleSlideOut) {
     (slideOutStyles = 'translateY(27px)'), (toggleSlideOut = false);
@@ -321,21 +322,6 @@ export function slideOutVideoSearch(toggleBool, slide) {
   }
   return {
     type: types.TOGGLE_VIDEO_SLIDE_OUT,
-    payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut }
-  };
-}
-export function slideOutSlidesSearch(toggleBool, slide) {
-  let toggleSlideOut = toggleBool;
-  var slideOutStyles;
-  if (toggleSlideOut) {
-    slideOutStyles = 'translateY(0px)';
-    toggleSlideOut = false;
-  } else {
-    slideOutStyles = 'translateY(-100px)';
-    toggleSlideOut = true;
-  }
-  return {
-    type: types.TOGGLE_SLIDE_OUT_MENU,
     payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut }
   };
 }

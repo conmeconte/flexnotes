@@ -5,58 +5,44 @@ import Results from './results';
 import VideoContainer from './video-container';
 import * as actions from '../actions';
 import { Field, reduxForm } from 'redux-form';
-import VideoModal from './video-modal';
-
-const API_KEY = 'AIzaSyCGMjVZZ0fUy-XXyU7TTUCCZJUIosTjnXI';
+import keys from '../../../config/keys';
 class Video extends Component {
-  constructor(props) {
-    super(props);
-  }
   search(values) {
     if (!values.video) {
       return;
     }
-    var ROOT_URL = 'https://www.googleapis.com/youtube/v3/search';
-    var params = {
+    const ROOT_URL = 'https://www.googleapis.com/youtube/v3/search';
+    const params = {
       part: 'snippet',
-      key: API_KEY,
+      key: keys.videoKey,
       q: values.video,
       type: 'video',
       maxResults: 50,
       playerVars: { rel: 0 }
     };
-    var self = this;
-    var videos = [];
-    axios
-      .get(ROOT_URL, { params: params })
-      .then(function(response) {
-        videos = [];
-        const listOfVideoInfo = response.data.items;
-        for (
-          var listOfVideoInfoIndex = 0;
-          listOfVideoInfoIndex < listOfVideoInfo.length;
-          listOfVideoInfoIndex++
-        ) {
-          const vidObject = {
-            videoTitle: listOfVideoInfo[listOfVideoInfoIndex].snippet.title,
-            videoId: listOfVideoInfo[listOfVideoInfoIndex].id.videoId,
-            url:
-              'https://www.youtube.com/embed/' +
-              listOfVideoInfo[listOfVideoInfoIndex].id.videoId,
-            description:
-              listOfVideoInfo[listOfVideoInfoIndex].snippet.description,
-            channelTitle:
-              listOfVideoInfo[listOfVideoInfoIndex].snippet.channelTitle,
-            channelId: listOfVideoInfo[listOfVideoInfoIndex].snippet.channelId,
-            thumbnails: listOfVideoInfo[listOfVideoInfoIndex].snippet.thumbnails
-          };
-          videos.push(vidObject);
-        }
-        self.props.getVideoResults(videos);
-      })
-      .catch(function(error) {
-        console.error(error);
-      });
+    let videos = [];
+    axios.get(ROOT_URL, { params: params }).then(response => {
+      videos = [];
+      const listOfVideoInfo = response.data.items;
+      for (
+        let listOfVideoInfoIndex = 0;
+        listOfVideoInfoIndex < listOfVideoInfo.length;
+        listOfVideoInfoIndex++
+      ) {
+        const currentVideo = listOfVideoInfo[listOfVideoInfoIndex];
+        const vidObject = {
+          videoTitle: currentVideo.snippet.title,
+          videoId: currentVideo.id.videoId,
+          url: `https://www.youtube.com/embed/${currentVideo.id.videoId}`,
+          description: currentVideo.snippet.description,
+          channelTitle: currentVideo.snippet.channelTitle,
+          channelId: currentVideo.snippet.channelId,
+          thumbnails: currentVideo.snippet.thumbnails
+        };
+        videos.push(vidObject);
+      }
+      this.props.getVideoResults(videos);
+    });
   }
   componentWillMount() {
     let { tab_arr_obj } = this.props.binderObj;
@@ -146,12 +132,10 @@ class Video extends Component {
       }
     }
   }
-
   render() {
     const { resultsVideoUrl } = this.props;
     return (
       <div className="main">
-        <VideoModal />
         <div
           style={this.props.resultsStyles}
           className="results-container sidebar"
