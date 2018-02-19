@@ -253,9 +253,9 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
     let videoId = videoUrl.split('/');
     videoId = videoId[3];
     videoLink = `https://www.youtube.com/embed/${videoId}`;
-    return dispatch => {
-      const videoTest = axios
-        .post('/api/video', {
+    return async dispatch => {
+      try {
+        const response = await axios.post('/api/video', {
           video: {
             videoTitle: '',
             videoId: videoId,
@@ -264,28 +264,25 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
           binderID: interfaceObj.binder_id,
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
-        })
-        .then(response => {
-          console.log('DATA HAS BEEN SENT', response);
-          dispatch({
-            type: types.ADD_TO_PLAYLIST,
-            payload: videoLink
-          });
-        })
-        .catch(error => {
-          dispatch({
-            type: types.AXIOS_ERROR,
-            msg: 'Add to Playlist Failed.'
-          });
         });
+        dispatch({
+          type: types.ADD_TO_PLAYLIST,
+          payload: videoLink
+        });
+      } catch (error) {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Add to Playlist Failed.'
+        });
+      }
     };
   } else {
     let videoLink = videoUrl;
     let videoId = videoLink.split('/');
     videoId = videoId[3];
-    return dispatch => {
-      const videoTest = axios
-        .post('/api/video', {
+    return async dispatch => {
+      try {
+        const response = await axios.post('/api/video', {
           video: {
             videoTitle: '',
             videoId: videoId,
@@ -294,20 +291,18 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
           binderID: interfaceObj.binder_id,
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
-        })
-        .then(response => {
-          console.log('DATA HAS BEEN SENT', response);
-          dispatch({
-            type: types.ADD_TO_PLAYLIST,
-            payload: videoUrl
-          });
-        })
-        .catch(error => {
-          dispatch({
-            type: types.AXIOS_ERROR,
-            msg: 'Add to Playlist Failed.'
-          });
         });
+
+        dispatch({
+          type: types.ADD_TO_PLAYLIST,
+          payload: videoUrl
+        });
+      } catch (error) {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Add to Playlist Failed.'
+        });
+      }
     };
   }
 }

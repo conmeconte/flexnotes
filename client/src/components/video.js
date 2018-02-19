@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { connect } from 'react-redux';
 import Results from './results';
 import VideoContainer from './video-container';
+import axios from 'axios';
 import * as actions from '../actions';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import keys from '../../../config/keys';
 class Video extends Component {
-  search(values) {
+  async search(values) {
     if (!values.video) {
       return;
     }
@@ -21,28 +21,26 @@ class Video extends Component {
       playerVars: { rel: 0 }
     };
     let videos = [];
-    axios.get(ROOT_URL, { params: params }).then(response => {
-      videos = [];
-      const listOfVideoInfo = response.data.items;
-      for (
-        let listOfVideoInfoIndex = 0;
-        listOfVideoInfoIndex < listOfVideoInfo.length;
-        listOfVideoInfoIndex++
-      ) {
-        const currentVideo = listOfVideoInfo[listOfVideoInfoIndex];
-        const vidObject = {
-          videoTitle: currentVideo.snippet.title,
-          videoId: currentVideo.id.videoId,
-          url: `https://www.youtube.com/embed/${currentVideo.id.videoId}`,
-          description: currentVideo.snippet.description,
-          channelTitle: currentVideo.snippet.channelTitle,
-          channelId: currentVideo.snippet.channelId,
-          thumbnails: currentVideo.snippet.thumbnails
-        };
-        videos.push(vidObject);
-      }
-      this.props.getVideoResults(videos);
-    });
+    const response = await axios.get(ROOT_URL, { params: params });
+    videos = [];
+    const listOfVideoInfo = response.data.items;
+    for (
+      let listOfVideoInfoIndex = 0;
+      listOfVideoInfoIndex < listOfVideoInfo.length;
+      listOfVideoInfoIndex++
+    ) {
+      const currentVideo = listOfVideoInfo[listOfVideoInfoIndex];
+      const vidObject = {
+        videoTitle: currentVideo.snippet.title,
+        videoId: currentVideo.id.videoId,
+        url: `https://www.youtube.com/embed/${currentVideo.id.videoId}`,
+        description: currentVideo.snippet.description,
+        channelId: currentVideo.snippet.channelId,
+        thumbnails: currentVideo.snippet.thumbnails
+      };
+      videos.push(vidObject);
+    }
+    this.props.getVideoResults(videos);
   }
   componentWillMount() {
     let { tab_arr_obj } = this.props.binderObj;
@@ -78,7 +76,8 @@ class Video extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.interface_obj.page_id !== nextProps.interface_obj.page_id) {
+    const { interface_obj } = this.props;
+    if (interface_obj.page_id !== nextProps.interface_obj.page_id) {
       this.updateVideoComponent(nextProps);
     }
   }
@@ -95,7 +94,6 @@ class Video extends Component {
       </div>
     );
   }
-
   updateVideoComponent(nextProps) {
     let { tab_arr_obj } = nextProps.binderObj;
     let { interface_obj } = nextProps;
@@ -116,15 +114,13 @@ class Video extends Component {
           break;
         }
       }
+      const currentPage = page_arr_obj[pageIndex];
       if (
         pageIndex !== null &&
-        page_arr_obj[pageIndex].hasOwnProperty('video') &&
-        page_arr_obj[pageIndex].video[0].hasOwnProperty('videoId')
+        currentPage.hasOwnProperty('video') &&
+        currentPage.video[0].hasOwnProperty('videoId')
       ) {
-        this.props.setVideoUrl(
-          page_arr_obj[pageIndex].video[0].videoURL,
-          interface_obj
-        );
+        this.props.setVideoUrl(currentPage.video[0].videoURL, interface_obj);
         this.props.slideOutVideoSearch(false, 'translateY(-119px)');
       } else {
         this.props.setVideoUrl('', interface_obj);
@@ -197,7 +193,6 @@ function mapStateToProps(state) {
   return {
     pastedVideoUrl: state.videoResults.videoLink,
     videoResults: state.video.results,
-    playlist: state.video.videoList,
     resultsStyles: state.video.resultsStyles,
     opacityContainer: state.video.opacityDisplay,
     toggleResultsBool: state.video.toggleResults,
