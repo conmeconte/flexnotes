@@ -35,7 +35,6 @@ class Dashboard extends Component {
     }
 
     render(){
-        // console.log('dashboard props', this.props);
         if(!this.props.binderArr){
             return null;
         } 
@@ -55,12 +54,8 @@ class Dashboard extends Component {
 }
 
 function mapStateToProps(state){
-    //console.log('mstp dashboard:', state);
     return{
-        //data: state.auth,
         binderArr: state.binderArray.binderArr
-        //initBinder: state.binder.binderObj,
-        //interface: state.interface
     }
 }
 
