@@ -1,82 +1,125 @@
 import React, { Component } from 'react';
-import Video from './video';
-import Notes from './notes';
-import Slides from './slides';
-import Modal from './modal';
-import '../assets/css/panel.css';
+import PanelNum from './panel_num';
+// import '../assets/css/panel.css';
+import axios from 'axios';
 // import { SortablePane, Pane } from 'react-sortable-pane';
 // import Resizable from 're-resizable';
-import SplitPane from 'react-split-pane';
+import { connect } from 'react-redux';
+import { setNumOfPanels, getPanelNum, updateBinderArray } from '../actions/index';
+
 
 class Panel extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            vertical_width: 400,
-            horizontal_left: 400,
-            horizontal_right: 400,
-        };
-        this.sendSize = this.sendSize.bind(this);
+        //this.props = props;
     }
 
-    logVWsize(panelSize) {
-        console.log("vw size: ", panelSize);
+    // componentWillMount() {
+    //     let { tab_arr_obj } = this.props.binderObj;
+    //     let { interface_obj } = this.props;
 
-        const { vertical_width } = this.state;
-        this.setState({
-            vertical_width: panelSize
-        });
-    }
+    //     if (tab_arr_obj) {
+    //         let tabArrLength = tab_arr_obj.length;
+    //         let tabIndex = null;
+    //         let pageIndex = null;
+    //         for (let i = 0; i < tabArrLength; i++) {
+    //             if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+    //                 tabIndex = i;
+    //                 break;
+    //             }
+    //         }
+    //         const { page_arr_obj } = tab_arr_obj[tabIndex];
+    //         for (let i = 0; i < page_arr_obj.length; i++) {
+    //             if (interface_obj.page_id === page_arr_obj[i]._id) {
+    //                 pageIndex = i;
+    //                 break;
+    //             }
+    //         }
+    //         if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
+    //             console.log('cwm panel component mounting');
+    //             this.props.getPanelNum(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
+    //         } else {
+    //             console.log('does not have panel_dimensions property, calling getPanelNum in cwm')
+    //             this.props.getPanelNum(3);
+    //         }
+    //     } else {
+    //         console.log("DOES NOT WORK");
+    //     }
+    // }
 
-    logHLsize(panelSize) {
-        console.log("hl size: ", panelSize);
+    // componentWillReceiveProps(nextProps) {
 
-        const { horizontal_left } = this.state;
-        this.setState({
-            horizontal_left: panelSize
-        });
-    }
+    //     if (nextProps.binderObj !== this.props.binderObj) {
+    //         let { tab_arr_obj } = nextProps.binderObj;
+    //         let { interface_obj } = nextProps;
+    //         if (tab_arr_obj) {
+    //             //console.log('cwrp panel.js tab arr obj:', tab_arr_obj);
+    //             //console.log('cwro panel.js interface obj:', interface_obj);
+    //             let tabArrLength = tab_arr_obj.length;
+    //             let tabIndex = null;
+    //             let pageIndex = null;
+    //             for (let i = 0; i < tabArrLength; i++) {
+    //                 if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+    //                     tabIndex = i;
+    //                     break;
+    //                 }
+    //             }
+    //             const { page_arr_obj } = tab_arr_obj[tabIndex];
+    //             for (let i = 0; i < page_arr_obj.length; i++) {
+    //                 if (interface_obj.page_id === page_arr_obj[i]._id) {
+    //                     pageIndex = i;
+    //                     break;
+    //                 }
+    //             }
+    //             if (page_arr_obj[pageIndex].hasOwnProperty('panel_dimensions')) {
+    //                 console.log('c w r props panel component mounting');
+    //                 this.props.getPanelNum(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].panel_dimensions.number_of_panels);
+    //             } else {
+    //                 console.log('does not have panel_dimensions property, calling getPanelNum in cwrp')
+    //                 this.props.getPanelNum(3);
+    //             }
+    //         } else {
+    //             console.log("DOES NOT WORK");
+    //         }
 
-    logHRsize(panelSize) {
-        console.log("hr size: ", panelSize);
+    //     } else {
+    //         return;
+    //     }
+    // }
 
-        const { horizontal_right } = this.state;
-        this.setState({
-            horizontal_right: panelSize
-        });
-    }
-
-    sendSize() {
-        const { vertical_width, horizontal_left, horizontal_right } = this.state;
-        console.log('vertical_width: ', vertical_width);
-        console.log('horizontal_right: ', horizontal_right);
-        console.log('horizontal_left: ', horizontal_left);
-        //do an axios.post with these values ^
-    }
     render() {
-        const { vertical_width, horizontal_left, horizontal_right } = this.state;
+        //console.log("panel props", this.props);
         return (
-            <div className="panel_div col-xs-10">
-                {/* <SplitPane split="vertical" defaultSize={200}>
-                    <div><Notes/></div>
-                    <div><Video/></div>
-                    <div><Slides/></div>
-                    <div>MeisterTask</div>
-                </SplitPane> */}
-                <button onClick={this.sendSize} className="btn btn-primary">Save</button>
-                <SplitPane className="width-w-nav" onChange={size => this.logVWsize(size)} split="vertical" minSize={200} maxSize={-200} defaultSize={vertical_width}>
-                    <SplitPane onChange={size => this.logHLsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_left}>
-                        <div><Slides /></div>
-                        <div><Video /></div>
-                    </SplitPane>
-                    <SplitPane onChange={size => this.logHRsize(size)} split="horizontal" minSize={200} maxSize={-200} defaultSize={horizontal_right}>
-                        <div className="notes-parent-panel"><Notes /></div>
-                        <div>MeisterTask</div>
-                    </SplitPane>
-                </SplitPane>
+            <div className="">
+                {/* <header>
+                    <div>
+                        <h3 className="welcome">FlexNotes{this.props.binderArray.binderArr.userName}</h3>
+                    </div>
+                    <div className="panelOptions">
+                        <div><h3 className="optionsTitle">Panels:</h3></div>
+                        <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(3, this.props.interface_obj) }}>View Dashboard</button></div>
+                        <div><button className="layoutBtn" onClick={() => { this.props.setNumOfPanels(4, this.props.interface_obj) }}>4</button></div>
+                    </div>
+                </header> */}
+                {/* <div className="col-xs-10">
+                    <button onClick={this.sendSize} className="btn btn-primary">Save</button>
+                    <h1 className="app-title">FlexNote</h1>
+                </div> */}
+                <div className={`col panel_div ${this.props.interface_obj.navbar_min ? 's12' : 's10'}`}>
+                    <PanelNum num={3} />
+                </div>
             </div>
         );
     }
 }
 
-export default Panel;
+function mapStateToProps(state) {
+    return {
+        panel_num: state.panelSpecs.numberPanels,
+        interface_obj: state.interface,
+        binderObj: state.binder.binderObj
+    }
+}
+
+
+export default connect(mapStateToProps, { setNumOfPanels, getPanelNum, updateBinderArray })(Panel);;

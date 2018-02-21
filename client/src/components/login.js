@@ -10,24 +10,21 @@ class Login extends Component {
                 return;
             case false:
                 return (
-                    <li><a href="/auth/google"><img src={googleButton} /></a></li>
+                    <a href="/auth/google"><img src={googleButton} /></a>
                 );
             default:
-                return <li><a href="/api/logout">Logout</a></li>;
+                return <a className="landing-login-text" href="/api/logout"><button className="btn logoutBtn">LOGOUT</button></a>
         }
     }
 
     render() {
         // console.log(this.props);
-        return(
-        <nav>
-            <div className="nav-wrapper">
-
-                <ul className="right">
-                    {this.renderContent()}
-                </ul>
-            </div>
-        </nav>      
+        return (
+            <span>
+                {/* <ul className="right"> */}
+                {this.renderContent()}
+                {/* </ul> */}
+            </span>
         );
     }
 }

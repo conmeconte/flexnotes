@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const notesNode = require('./NotesNode');
+const videoSchemaNew = require('./Video');
 
 /* Page Schema */
 
 const pageSchemaNew = new Schema({
     page_color : String,
     page_date : {type: Date, default:Date.now},
-    page_id : { type:String, default:"P-01"},
-    page_name : { type:String, default:"Introduction to FlexNotes"},
-    page_url : String,
+    page_count : { type:Number, default:1},
+    page_name : { type:String, default:"New Page"},
     calendar : {
         cal_url : String
     },
@@ -16,30 +17,16 @@ const pageSchemaNew = new Schema({
         lec_id : String
     },
     notes : {
-        document: {
-          nodes: []
-        }
+        document: {}
       },
   
-    video :[],
+    video :[videoSchemaNew],
     panel_dimensions: {
-        lecture_Panel: {
-            width: String,
-            height: String
-        },
-        video_Panel: {
-            width: String,
-            height: String
-        },
-        note_Panel: {
-            width: String,
-            height: String
-        },
-        meister_Panel: {
-            width: String,
-            height: String
-        }
+        top_left_panel_height: Number,
+        top_left_panel_width: Number,
+        top_right_panel_height: Number,
+        number_of_panels: Number
     }
-});
+},{minimize: false});
 
 module.exports = pageSchemaNew;

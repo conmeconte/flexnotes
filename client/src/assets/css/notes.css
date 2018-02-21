@@ -1,37 +1,108 @@
-.notes-component {
-    position: absolute;
-    width: 100%;
+.notes-parent-panel {
+    height: 99%;
+    box-sizing: border-box;
+    background-color: ghostwhite;
+    /*box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3);*/
 }
 
-.toolbar {
-    position: fixed;
-    width: 90%;
-    height: 75px;
-    padding: 5px 0 0 15px;
-    background-color: #31C3E7;
-    text-align: left;
-    line-height: 45px;
-    z-index: 1;
+.text-editor {
+    height: 100%;
 }
 
 .editor {
-    margin-top: 90px;
-    text-align: left;
-    padding-left: 10px;
+    padding-left: 1vmin;
+    padding-top: 2vmin;
+    height: 100%;
+}
+
+.notes-component-toolbar {
+    height: 11.5%;
+
+}
+.notes-component.fifth-step{
+    height: 88%; 
+    overflow-y: auto;
+
+}
+
+.toolbar {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* background-color: #b0bec5; */
+    background-color: #455a64;
+    box-shadow: 0 5px 5px #999;
+    z-index: 1;
+    padding: 1.5% 1% 1% 1%;
+}
+
+.stylingButtons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    height: 40%;
+    width: 60%;
+}
+
+.styleSquare {
+    height: 80%;
+    cursor: pointer;
+    color: white;
+}
+
+.styleSquare:hover{
+    background-color: ghostwhite;
+    color: #01579b;
+}
+
+.material-icons.notesIcons {
+    font-size: 3vmin;
+    margin: 0;
 }
 
 .search-box {
-    margin-top: -12px;
-    margin-left: -5px;
-    line-height: 23px;
-
+    /* margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between; */
+    height: 40%;
+    width: 60%;
+    margin-right: 20%;
+    display: inline-block;
 }
 
-input {
-    border-radius: 5px;
-    padding-left: 5px;
+.search-input.keyword {
+    /* width: 250px !important;
+    height: 30px !important;
+    padding-left: 5px !important;
+    background-color: white !important;
+    border: 3px inset gray !important; */
+    background-color: #eceff1;
+    height: 100%; 
 }
 
-.material-icons {
-    color: white;
+.saveNotes.btn {
+    /* width: 130px !important;
+    height: 35px !important;
+    font-weight: 600 !important;
+    border: 3px outset gray !important; */
+    color:white; 
+    width: 20%;
+    background-color: #0393d7;
+    height: 40%; 
+}
+
+.saveNotes.btn:hover{
+    background-color: #01579b;
+}
+
+.saveNotes:active {
+    border: 2px outset gray !important;
+    transform: translateY(4px);
 }

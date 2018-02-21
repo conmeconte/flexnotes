@@ -1,197 +1,401 @@
 import React, {Component} from 'react';
+import {Link, Route, withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { selectTab, addPage, deletePage, updateBinderArray, editTab, deleteTab } from '../../actions';
 
-import {Link, Route} from 'react-router-dom';
 import Page from './page';
+import ModalNav from './modal_nav';
 
-export default class Tab extends Component {
+class Tab extends Component {
     constructor(props){
         super(props);
 
         this.state = {
+            tab_color_arr: ['#ff0000', '#0000ff', '#ff00ff', '#FF8C00', '#008000'],
             editable: false,
-            tabObject: this.props.tabObj,
-            binderUrl: this.props.binderUrl
+            open: false,
+            tabName: '',
+            hover: false,
+            editHover: false,
+            deleteHover: false
+            //binder: this.props.binder_obj
         }
+
+
 
         this.addPage = this.addPage.bind(this);
-        this.editPages = this.editPages.bind(this);
-        this.notEditPages = this.notEditPages.bind(this);
+        this.deletePage = this.deletePage.bind(this);
+        this.editTabs = this.editTabs.bind(this);
+        this.notEditTabs = this.notEditTabs.bind(this);
+        // this.editable = this.editable.bind(this);
+        // this.notEditable = this.notEditable.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.cancelTabEdit = this.cancelTabEdit.bind(this);
     }
 
+    componentDidMount(){
+        if(this.props.index===0){
+            this.setState({
+                open: true
+            });
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        // if(nextProps.interface.editable === false){
+        //     this.setState({
+        //         editable: false
+        //     });
+        // }
+    }
+    // componentWillReceiveProps(nextProps){
+
+    //     if(this.props.hasOwnProperty("binder")){
+    //         // this.setState({
+    //         //     binderName: this.props.binderObj.binder_name
+    //         // });
+    //         if(nextProps.binder.binder_name !== this.props.binder.binder_name){
+
+    //         } else {
+
+    //         }
+    //     }
+
+    // }
     addPage(){
-        console.log('addTab clicked');
-        const {tabObject} = this.state;
-        //console.log("addPage: ", tabObject);
-        const {page_arr_obj} = tabObject;
-        console.log('page_arr_obj:',page_arr_obj);
-
-        let length = page_arr_obj.length;
-         
-        if(length === 0) {
-            let new_page_obj = {
-                page_id: 1,
-                page_color: 'green',
-                page_name: 'Page 1',
-                page_date: '',
-                page_url: '/page1'
-            };
-
-            tabObject.page_arr_obj = [new_page_obj];
-
-            this.setState({
-                tabObject: tabObject
-            });
-
-        } else {
-            let new_index = page_arr_obj[length-1].page_id + 1;
-            //console.log('tab_arr_obj',tab_arr_obj[length-1]);
-            let new_url = '/page' + new_index;
-            //console.log('new_url:',new_url);
-            let new_page_obj = {
-                    page_id: new_index,
-                    page_color: 'green',
-                    page_name: 'NewPage',
-                    page_date: '',
-                    page_url: new_url
-                };
-            
-    
-            tabObject.page_arr_obj = [...tabObject.page_arr_obj, new_page_obj];
-    
-            this.setState({
-                tabObject: tabObject
-            });
-        }
+        //console.log('addPage clicked');
+        //this.props.addTab(this.props.binderObj._id);
+        
+        this.props.addPage(this.props.interface.binder_id, this.props.tabObj._id);
     }
 
-    editPages(){
-        console.log("editable should be true");
+    deletePage(page_id){
+        //console.log('delete page id:', page_id);
+        if(this.props.tabObj.page_arr_obj.length === 1){
+            console.log('can not delete last page');
+            return;
+        }
+        this.props.deletePage(this.props.interface.binder_id, this.props.interface.tab_id, page_id);
+    }
+
+    editTabs(event){
+        event.stopPropagation();
+        //console.log("editable should be true");
         this.setState({
-            editable: true
+            editable: true,
+            tabName: this.props.tabObj.tab_name
         });
     }
 
-    notEditPages() {
-        console.log("editable should be false");
+    notEditTabs(event) {
+        event.stopPropagation();
+        //console.log("editable should be false");
+        const { tabName } = this.state;
+        this.props.editTab(this.props.binder._id, this.props.tabObj._id, tabName);
         this.setState({ 
-            editable: false 
+            editable: false,
+            editHover: false
         });
     }
 
-    pageTextChanged(e, id){
-        const {tabObject} = this.state;
-        const {page_arr_obj} = tabObject;
-        //console.log("text changed, id:", id);
-        //console.log(e.target.value);
+    editTabName(e){
 
-        for(let i =0; i<page_arr_obj.length; i++){
-            if(page_arr_obj[i].tab_id===id ){
-                //console.log('binder_id and id match');
-                page_arr_obj[i].tab_name = e.target.value;
-            }
-        }
-
-        tabObject.page_arr_obj = page_arr_obj;
 
         this.setState({
-            tabObject: tabObject
+            tabName: e.target.value
         });
     }
-    
-    deletePage(delete_id){
 
-        const {tabObject} = this.state;
-        const {page_arr_obj} = tabObject;
-        //console.log(binder_array);
-        let deleteIndex = 0;
-        for(deleteIndex; deleteIndex<page_arr_obj.length; deleteIndex++){
-            if(page_arr_obj[deleteIndex].page_id === delete_id){
-                page_arr_obj.splice(deleteIndex, 1);
-            }
+    deleteTab(tab_id) {
+        //console.log('delete tab btn clicked, tab_id: ', tab_id);
+        //console.log('delete tab btn clicked, binder_id: ', this.props.binderObj._id);
+        if(this.props.binder.tab_arr_obj.length === 1){
+            console.log('can not delete last tab');
+        } else {
+            this.props.deleteTab(this.props.interface.binder_id, this.props.tabObj._id);
         }
 
-        tabObject.page_arr_obj = page_arr_obj;
+        
+        // const { binder_arr_obj } = this.state;
+        // console.log(binder_arr_obj);
+        // let deleteIndex = 0;
+        // for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
+        //     if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
+        //         binder_arr_obj.splice(deleteIndex, 1);
+        //     }
+        // }
+    }
+    // tabTextChanged(e, id){
+    //     const {binder} = this.state;
+    //     const {tab_arr_obj} = binder;
+    //     //console.log("text changed, id:", id);
+    //     //console.log(e.target.value);
 
+    //     for(let i =0; i<tab_arr_obj.length; i++){
+    //         if(tab_arr_obj[i].tab_id===id ){
+    //             //console.log('binder_id and id match');
+    //             tab_arr_obj[i].tab_name = e.target.value;
+    //         }
+    //     }
+
+    //     binder.tab_arr_obj = tab_arr_obj;
+
+    //     this.setState({
+    //         binder: binder
+    //     });
+    // }
+    keyPressed(event) {
+        //console.log('keypress',event);
+        if(event.key === 'Enter') {
+            //console.log('enter key pressed');
+          this.notEditTabs();
+      }
+    }
+
+
+    handleClick(){
+        const {open} = this.state;
+        let toggle = !open;
+        //this.props.selectBinder(binderObj);
+        this.props.selectTab(this.props.tabObj);
         this.setState({
-            tabObject: tabObject
+            open: toggle
         });
-    }   
+        //console.log("tab id updated");
+    }
 
+    hover(){
+        this.setState({
+            hover: true
+        });
+    }
 
+    notHover(){
+        this.setState({
+            hover: false
+        });
+    }
+
+    hoverEditBtn(){
+        this.setState({
+            editHover: true
+        });
+    }
+
+    notHoverEditBtn(){
+        this.setState({
+            editHover: false
+        });
+    }
+
+    hoverDeleteBtn(){
+        this.setState({
+            deleteHover: true
+        });
+    }
+
+    notHoverDeleteBtn(){
+        this.setState({
+            deleteHover: false
+        });
+    }
+
+    cancelTabEdit(){
+        this.setState({
+            editable: false,
+            tabName: this.props.tabObj.tab_name,
+            editHover: false
+        });
+    }
     render(){
+        //this.props.selectBinder(this.props.binderObj);
+        const {open, editable, tabName, hover, editHover, deleteHover} = this.state;
 
-        const {tabObject, binderUrl, editable} = this.state;
-        console.log('TabObj in Tab:',tabObject);
-        //console.log('BinderUrl in Tab:',binderUrl);
-        const{ page_arr_obj, tab_url} = tabObject;
-        //console.log('page_arr_obj:', page_arr_obj);
-        //console.log('tab_url:', tab_url);
-        let page_link = [];
+        //console.log('props in tab:', this.props);
+        //console.log('state in tab:', this.state);
+        if(!this.props.binder|| !this.props.tabObj){
+            return null;
+        }
+        let url = this.props.binder._id + "/" + this.props.tabObj._id;
+        const{ page_arr_obj} = this.props.tabObj;
+        let tab_title = [];
 
         if(editable){
-            page_link = page_arr_obj.map((item, index) => {
-                //console.log('editable map:', item);
-                return (
-                    <li key={item.page_id}>
-                        <input 
-                            className="edit_input"
-                            ref='textInput'
-                            type='text'
-                            onChange={(e)=>this.pageTextChanged(e, item.page_id)}
-                            // onBlur={this.notEditable}
-                           // onKeyPress={this.keyPressed}
-                            value={item.page_name}
-                            />
-
-                            <button type="button" className="btn btn-default btn-xs btn_delete"  onClick={()=>this.deletePage(item.page_id)} >
-                                <span className="glyphicon glyphicon-minus"></span>
-                            </button>    
-                    </li>
-                );
-            });
-        } else {
-            page_link = page_arr_obj.map((item, index) => {
-                //console.log('map:', item);
-                return (
-                    <li key={item.page_id}><Link to={'/main'+binderUrl + tab_url + item.page_url} style={{ textDecoration: 'none' }}>
-                    <div className="pageDiv">
-                        {item.page_name}
-                    </div></Link></li>
-                );               
-            });
-        }
-
-    
-        const page_route = page_arr_obj.map((item, index) => {
-            return(
-                <Route key={item.page_id} path={'/main'+binderUrl + tab_url + item.page_url} render={()=> 
-                    <Page/>
-                }
-                />
+            //let editName = this.props.binderObj.binder_name;
+            tab_title = (
+                <div className="editMode">
+                         <input 
+                             className="edit_input_tab"
+                             ref='textInput'
+                             type='text'
+                             onChange={(e)=>this.editTabName(e)}
+                             // onBlur={this.notEditable}
+                             onKeyPress={this.keyPressed.bind(this)}
+                             value={tabName}
+                             />
+                <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditTabs(event)}>
+                <i className="small material-icons">check</i></button>
+                 
+                <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelTabEdit(event)}>
+                <i className="small material-icons">close</i></button>
+            </div>              
             );
-        });
-            return(
-    
-                <div className='nav_page'>
-                    
-                    <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'hidden': 'visible'}`} onClick={this.editPages}>
-                        Pages <span className="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <button type="button" className={`nav_header btn btn-default btn-xs btn_edit ${editable ? 'visible': 'hidden'}`} onClick={this.notEditPages}>
-                        Pages <span className="glyphicon glyphicon-ok"></span>
-                    </button>
-  
-                    <ul className="nav-page-col">
-                        {page_link}
-                    </ul>
-        
-                    {page_route}
-                    <button className={`btn btn-default btn-xs btn_add ${editable ? 'visible': 'hidden'}`} onClick={this.addPage}>
-                        <span className="glyphicon glyphicon-plus"></span>
-                    </button>                     
+        } else {
+            tab_title = (
+                <div className="tabTitle" onClick={()=>this.handleClick()} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+                    <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
+                        <div className="tabLink" >
+                            {this.props.tabObj.tab_name}
+                        </div>
+                    </Link>
+                    <div className="modify-btn">
+                        <button type="button"  onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn navbar-btn edit-btn grey darken-4 ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event)=>this.editTabs(event)}>
+                        <i className="small material-icons">edit</i>
+                        </button>
+                        <div className="navbar-btn" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
+                            <ModalNav 
+                                callback={()=>this.deleteTab(this.props.interface.binder_id)} 
+                                name={this.props.tabObj.tab_name}
+                                type='tab'
+                                arrLength={this.props.binder.tab_arr_obj.length}
+                                className={`btn delete-btn red darken-4 ${editable ? 'hidden' : 'visible'} ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} >
+                                <i className='material-icons'>delete_forever</i>
+                            </ModalNav>
+                        </div>
+
+                        {/* <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deleteTab(this.props.interface.binder_id)} >
+                        <i className="small material-icons">delete_forever</i>
+                        </button> */}
+                    </div>
                 </div>
             );
+        }
+
+
+        let page_list = page_arr_obj.map((item, index) => {
+            //let tab_url = '/' + item._id;
+            //console.log('tab map:', item);
+            // var tabStyle ={
+            //     borderLeft: '12px solid '+item.tab_color
+            // }
+
+                return (
+                    <div key={index}>
+                        <Page pageObj={item} tabID={this.props.tabObj._id}/>
+                    </div>
+                    // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
+
+                    //     <div className=""style={tabStyle}>
+                    //         {item.tab_name}
+                    //     </div>
+                    // </Link>
+                );               
+             });
+        //console.log('binder tab_arr_obj', tab_arr_obj);
+        //console.log('binder tab_arr_obj', binder_url);
+        
+        // let tab_link = [];
+        // if(editable){
+        //     tab_link = tab_arr_obj.map((item, index) => {
+        //         //console.log('editable map:', item);
+        //         return (
+        //             <li key={index}>
+        //                 <input 
+        //                     className="edit_input"
+        //                     ref='textInput'
+        //                     type='text'
+        //                     onChange={(e)=>this.tabTextChanged(e, item.tab_count)}
+        //                     // onBlur={this.notEditable}
+        //                    // onKeyPress={this.keyPressed}
+        //                     value={item.tab_name}
+        //                     />
+
+        //             <button type="button" className="btn btn-default btn_delete" onClick={()=>this.deleteTab(item.tab_id)} >
+        //                 <span className="glyphicon glyphicon-minus"></span>
+        //             </button>
+                        
+                          
+        //             </li>
+        //         );
+        //     });
+
+        // } else {
+
+        //     tab_link = tab_arr_obj.map((item, index) => {
+        //         let tab_url = '/' + item._id;
+        //         //console.log('tab map:', item);
+        //         var tabStyle ={
+        //             borderLeft: '12px solid '+item.tab_color
+        //         }
+
+        //             return (
+        //                 <li key={index}><Link to={'/main'+this.props.binder_url + tab_url} style={{ textDecoration: 'none' }}>
+
+        //                     <div className="tabDiv" onClick={()=>{this.handleClick(item)}} style={tabStyle}>
+        //                         {item.tab_name}
+        //                     </div>
+        //                 </Link></li>
+        //             );               
+        //          });
+        // }
+    
+        // const tab_route = tab_arr_obj.map((item, index) => {
+        //     let tab_url = '/' + item._id;
+        //     return(
+
+        //         <Route key={index} path={'/main'+this.props.binder_url + tab_url} render={()=> 
+        //             <Page tabObj={item} binder_url={this.props.binder_url} tab_url={tab_url}/>
+
+        //         }
+        //         />
+        //     );
+        // });
+
+        return(
+
+            <div>
+                {tab_title}
+            <div className={`tabBody ${open ? 'visible' : 'hidden'}`}>
+
+                    <ul className="collection">
+                        {page_list}
+                    </ul>
+                    
+   
+            
+
+                
+                {/* <button type="button" className={`btn btn-default btn-xs btn_edit_tab ${editable ? 'hidden': 'visible'}`} onClick={this.editTabs}>
+                    Tabs <span className="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button type="button" className={`btn btn-default btn-xs btn_edit_tab ${editable ? 'visible': 'hidden'}`} onClick={this.notEditTabs}>
+                    Tabs <span className="glyphicon glyphicon-ok"></span>
+                </button>
+
+                <ul className="nav-tab-col">
+                    {tab_link}
+                </ul>
+                {tab_route}
+                <button className="btn btn-default btn-xs btn_add" onClick={this.addTab}>
+                    <span className="glyphicon glyphicon-plus"></span>
+                </button>   */}
+                <button className="btn add-btn-page waves-effect waves-light" onClick={this.addPage}>
+                New Page</button>   
+                <Route path={`/main/${url}`+"/:page"} component={Page}/>
+                </div>
+            </div>
+        );
     }
 
     
 }
+
+function mapStateToProps(state){
+    //console.log('tab mstp', state);
+    return {
+        binderArr: state.binderArray.binderArr,
+        binder: state.binder.binderObj,
+        interface: state.interface
+    }
+}
+export default withRouter(connect(mapStateToProps,{ selectTab, addPage, deleteTab, editTab, deletePage, updateBinderArray })(Tab));

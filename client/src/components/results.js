@@ -1,49 +1,55 @@
-import React, {Component} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-const videoData = {
-    vidDimensions: {
-        width: "",
-        height: ""
-    },
-    items: []
-};
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 class Results extends Component {
-    constructor (props) {
-        super(props);
-        this.play = this.play.bind(this);
-    }
-    play (link) {
-        console.log(link);
-        var iframe = document.createElement("iframe");
-        iframe.src = link;
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
-        document.querySelector(".video-container").innerText = "";
-        document.querySelector(".video-container").append(iframe);
-    }
-    addToPlayList (obj) {
-        videoData.items.push(obj);
-        console.log(videoData);
-    }
-    render() {
-        const {results} = this.props;
-        console.log("Here is the results from the results comp: ", results);
-        const list = results.map((item, index) => {
-            console.log(item.url);
-            return (
-                <div className="result-item col-xs-12" key={index}>
-                    <li className="video-items">{item.videoTitle}</li>
-                    <button className="btn-sm btn-success pull-right" onClick={ () => { this.addToPlayList(item) } }><span className="glyphicon glyphicon-plus"></span></button>
-                    <button className="btn-sm btn-primary pull-right" onClick={ () => { this.play(item.url) }}><span className="glyphicon glyphicon-play"></span></button>
+  handlePlayVideo(videoUrl) {
+    this.props.playVideo(videoUrl);
+    this.props.addVideoToDatabase(videoUrl, '', this.props.interface_obj);
+    this.props.slideOutVideoSearch(false, '');
+  }
+  render() {
+    const { results } = this.props;
+    const list = results.map((item, index) => {
+      return (
+        <li className="result-item collection-item col s12" key={index}>
+          <div className="row list-item-wrap-container">
+            <div className="row list-item-wrapper col s10">
+              <img src={results[index].thumbnails.default.url} />
+              <div className="col s10 video-contents">
+                <div>
+                  <span className="video-items">
+                    {item.videoTitle}
+                  </span>
                 </div>
-            );
-        });
-        return (
-            <div className="results text-left">{list}</div>
-        );
-
-    }
+              </div>
+            </div>
+            <button
+              id="youtube-play"
+              className="btn red darken-3 right video-btn"
+              onClick={() => {
+                this.handlePlayVideo(item.url);
+              }}
+            >
+              <i className="material-icons">play_arrow</i>
+            </button>
+          </div>
+        </li>
+      );
+    });
+    return (
+      <ul className="results collection">
+        {list}
+      </ul>
+    );
+  }
 }
-export default Results;
+
+function mapStateToProps(state) {
+  return {
+    url: state.url,
+    interface_obj: state.interface
+  };
+}
+
+export default connect(mapStateToProps, actions)(Results);
