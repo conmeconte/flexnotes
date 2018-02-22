@@ -13,6 +13,21 @@ import Slides from './slides';
 import Modal from './modal';
 
 class ThreePanel extends Component {
+  componentDidMount () {
+    document.querySelector(".Resizer.vertical").addEventListener("mousedown", function () {
+        document.querySelector(".resize-blocker").style.display = "block";
+        document.querySelector(".resize-blocker2").style.display = "block";
+    })
+    document.querySelector(".Resizer.horizontal").addEventListener("mousedown", function () {
+        document.querySelector(".resize-blocker").style.display = "block";
+        document.querySelector(".resize-blocker2").style.display = "block";
+        
+    })
+    document.querySelector("body").addEventListener("mouseup", function () {
+        document.querySelector(".resize-blocker").style.display = "none";
+        document.querySelector(".resize-blocker2").style.display = "none";
+    })
+}
   render() {
     // const loTLHsave = _.debounce((size) => {
     //     this.logTopLeftHeight(size);

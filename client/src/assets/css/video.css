@@ -27,6 +27,7 @@
     height: 100%;
 }
 .video-container#video-container {
+    text-align: center;
     height: 90%;
     padding-bottom: 0;
     position: relative;
@@ -97,8 +98,9 @@ button.close {
 }
 
 .video-container iframe {
+    position: relative;
     height: 100%;
-    margin: 0 auto;
+    display: inline-block;
 }
 .video-iframe {
     display: inline-block;
@@ -220,4 +222,10 @@ button.close {
 }
 .video-description {
     display: none;
+}
+
+@media (max-width: 767px) and (orientation: portrait) {
+    .video-container iframe {
+        height: 85vh;
+    }
 }

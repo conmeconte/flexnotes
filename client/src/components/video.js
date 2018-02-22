@@ -129,6 +129,7 @@ class Video extends Component {
     }
   }
   render() {
+    console.log(this.props);
     const { resultsVideoUrl } = this.props;
     return (
       <div className="main">
