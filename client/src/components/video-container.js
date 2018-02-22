@@ -88,14 +88,14 @@ class VideoContainer extends Component {
           </div>
         </div>
         <div id="video-container" className="video-container">
-          <div className="video-embed-wrapper">
-            <iframe
-              allowFullScreen
-              id="video-iframe"
-              src={this.props.videoLink}
-              className="video-iframe"
-            />
-          </div>
+          <div className="resize-blocker"></div>
+
+          <iframe
+            allowFullScreen
+            id="video-iframe"
+            src={this.props.videoLink}
+            className="video-iframe"
+          />
         </div>
       </div>
     );
