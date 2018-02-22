@@ -62,12 +62,17 @@ class Dashboard extends Component {
             console.log('isMobile is true');
             dashboard = (
                 <div>
-
+                    <Route path={'/main/mNavbar'} component={NavBar} />
                     <Route path={'/main/mVideo'} component={Video} />
                     <Route path={'/main/mSlides'} component={Slides} />
                     <Route path={'/main/mNotes'} component={Notes} />
 
                     <ul className="mobileNav">
+                        <li className="mobileLink navLink">                    
+                            <Link to={`/main/mNavbar`} style={{ textDecoration: 'none' }}> 
+                        <div><i className="small material-icons">dehaze</i><br/>Nav</div>    
+                            </Link>
+                        </li>
                         <li className="mobileLink">                    
                             <Link to={`/main/mVideo`} style={{ textDecoration: 'none' }}> 
                         <div><i className="small material-icons">video_library</i><br/>Video</div>    

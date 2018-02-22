@@ -335,6 +335,13 @@ input.edit_input_page{
     overflow: auto;
 }
 
+@media (max-width: 767px){
+    .hideNavbar.btn, .navbarShow.btn {
+        display: none;
+    }
+
+}
+
 /* --------------------- HEADER AND FOOTER ---------------------*/
 
 header {
