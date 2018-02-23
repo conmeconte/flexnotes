@@ -181,7 +181,7 @@ export function getVideoResults(videos) {
 export function getResultStyles(styles, visible) {
   if (!visible) {
     styles = {
-      transform: 'translateX(100%)'
+      transform: 'translateX(-100%)'
     };
   } else {
     styles = {

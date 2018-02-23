@@ -47,6 +47,10 @@
 .video-description {
     font-style:italic;
 }
+.youtube-search-buttons {
+    position: relative;
+    top: 3vh;
+}
 button.close {
     color: #fff;
     position: relative;
@@ -226,6 +230,26 @@ button.close {
 
 @media (max-width: 767px) and (orientation: portrait) {
     .video-container iframe {
-        height: 85vh;
+        height: 80vh;
+    }
+    #video-iframe {
+        top: 2vh;
+    }
+    .iframe-wrapper {
+        height: 92vh;
+        top: -9vh;
+    }
+    .arrow-container {
+        top: 9vh;
+    }
+    .input-field,
+    .youtube-search-buttons {
+        position: relative;
+    }
+    .input-field {
+        top: 3vh;
+    }
+    .youtube-search-buttons {
+        top:   6vh;
     }
 }
