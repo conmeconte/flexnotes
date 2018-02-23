@@ -5,6 +5,7 @@ import * as actions from "../actions";
 import googleButton from '../assets/images/google-login.png';
 import backgroundImage from '../assets/images/landing-background.png';
 import Login from './login';
+import { fetchSampleUser } from '../actions/index';
 
 
 import logo from '../assets/images/logo.png';
@@ -70,7 +71,7 @@ class LandingPage extends Component {
                             <div className="login-info">
                                 <h3>{!this.props.auth ? 'Sign In' : 'Sign Out'} <span className={!this.props.auth ? 'glyphicon glyphicon-user' : ''}></span></h3>
                                 <div className="login-logout-container"><Login /></div>
-                                <a className= "btn sample" href="api/sample">Sample</a>
+                                <div onClick={this.props.fetchSampleUser} className= "btn sample">Sample</div>
                             </div>
                         </div>
                     </div>
@@ -87,4 +88,4 @@ function mapStateToProps({ auth }) {
     return { auth };
 }
 
-export default connect(mapStateToProps)(LandingPage); 
+export default connect(mapStateToProps, { fetchSampleUser })(LandingPage); 

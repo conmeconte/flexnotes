@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
+const keys  = require('../config/keys')
 
 //Restful/ CRUD operation 
 
@@ -8,6 +9,15 @@ module.exports = (app) => {
     app.get('/', (req, res) => {
         res.send('Homepage')
     })
+
+    app.get('/api/sample', async(req, res) => {
+        const existingUser= await User.findById(keys.sampleId);
+        console.log("pulled existing user", existingUser); 
+        res.send(existingUser); 
+        res.redirect('/main');
+
+    })
+
 
     app.get('/api/userInfo',  (req, res) => {
         res.send(req.user);

@@ -13,10 +13,6 @@ module.exports = app => {
     })
     );
 
-    app.get('/api/sample', (req, res)=>{
-
-    })
- 
 
     app.get('/auth/google/callback', passport.authenticate('google'),
         (req, res) => {
@@ -37,6 +33,6 @@ module.exports = app => {
     });
 
     app.get('/api/current_user', (req, res) => {
-        res.send(req.user); //req.session has what cookie has saved
+        res.send(req.user || keys.sampleId); //req.session has what cookie has saved
     })
 }
