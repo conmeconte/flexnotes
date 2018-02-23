@@ -6,9 +6,8 @@
 .mobileNav {
     position: absolute;
     bottom: 0%;
-    border-top: solid red 5px;
     width: 100%;
-    height: 5vh;
+    height: 9vh;
 } 
 
 .mobileNav> li{
