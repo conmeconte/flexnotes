@@ -71,7 +71,8 @@ class LandingPage extends Component {
                             <div className="login-info">
                                 <h3>{!this.props.auth ? 'Sign In' : 'Sign Out'} <span className={!this.props.auth ? 'glyphicon glyphicon-user' : ''}></span></h3>
                                 <div className="login-logout-container"><Login /></div>
-                                <div onClick={this.props.fetchSampleUser} className= "btn sample">Sample</div>
+                                {/* <div onClick={this.props.fetchSampleUser} className= "btn sample">Sample</div> */}
+                                <a href="/main" className= "btn sample">Sample</a>
                             </div>
                         </div>
                     </div>
