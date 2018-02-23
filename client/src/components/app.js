@@ -37,8 +37,10 @@ class App extends Component {
             <div className="app">
                 <BrowserRouter >
                     <div>
+                        <Route exact path="/api/sample" component={LandingPage} />
                         <Route path="/main" component={Dashboard} />
                         <Route exact path="/" component={LandingPage} />
+
                     </div>
                 </BrowserRouter>
 

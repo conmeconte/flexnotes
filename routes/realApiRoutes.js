@@ -8,6 +8,7 @@ module.exports = (app) => {
     app.get('/', (req, res) => {
         res.send('Homepage')
     })
+
     app.get('/api/userInfo',  (req, res) => {
         res.send(req.user);
     });

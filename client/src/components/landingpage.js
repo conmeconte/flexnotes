@@ -5,8 +5,7 @@ import * as actions from "../actions";
 import googleButton from '../assets/images/google-login.png';
 import backgroundImage from '../assets/images/landing-background.png';
 import Login from './login';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../assets/css/landing-page.css';
+
 
 import logo from '../assets/images/logo.png';
 
@@ -71,6 +70,7 @@ class LandingPage extends Component {
                             <div className="login-info">
                                 <h3>{!this.props.auth ? 'Sign In' : 'Sign Out'} <span className={!this.props.auth ? 'glyphicon glyphicon-user' : ''}></span></h3>
                                 <div className="login-logout-container"><Login /></div>
+                                <a className= "btn sample" href="api/sample">Sample</a>
                             </div>
                         </div>
                     </div>
