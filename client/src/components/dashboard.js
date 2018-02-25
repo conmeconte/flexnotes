@@ -19,14 +19,16 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: window.innerWidth
+      width: window.innerWidth,
+      isTourOpen: false
     };
   }
   componentWillMount() {
     this.props.getDataObject();
 
-    this.state = {
-      isTourOpen: false
+    this.setState = {
+      isTourOpen: false,
+      width: window.innerWidth
     };
 
     this.toggleTour = this.toggleTour.bind(this);
@@ -58,7 +60,6 @@ class Dashboard extends Component {
       return null;
     }
     if (isMobile) {
-      console.log('isMobile is true');
       dashboard = (
         <div>
           <Route path={'/main/mNavbar'} component={NavBar} />
