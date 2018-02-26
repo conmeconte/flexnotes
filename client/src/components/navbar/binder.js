@@ -6,6 +6,7 @@ import { updateBinderArray, selectBinder, addTab, deleteTab, deleteBinder, editB
 
 import Tab from './tab';
 import ModalNav from './modal_nav';
+import Loader from '../loader';
 
 import '../../assets/css/navbar.css';
 
@@ -15,7 +16,7 @@ class Binder extends Component {
 
         this.state = {
             editable: false,
-            binderName : '',
+            binderName: '',
             active: false,
             hover: false,
             editHover: false,
@@ -32,21 +33,21 @@ class Binder extends Component {
         this.cancelEdit = this.cancelEdit.bind(this);
     }
 
-    componentDidMount(){
-        if(this.props.index===0){
+    componentDidMount() {
+        if (this.props.index === 0) {
             this.setState({
                 active: true
             });
         }
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
 
-        if(this.props.hasOwnProperty("binderObj")){
+        if (this.props.hasOwnProperty("binderObj")) {
             // this.setState({
             //     binderName: this.props.binderObj.binder_name
             // });
-            if(nextProps.interface.binder_id === this.props.binderObj._id){
+            if (nextProps.interface.binder_id === this.props.binderObj._id) {
                 //console.log('setting active to true');
                 this.setState({
                     active: true
@@ -62,7 +63,7 @@ class Binder extends Component {
 
     }
 
-    addTab(){
+    addTab() {
         //console.log('addTab clicked');
         this.props.addTab(this.props.binderObj._id);
         //this.props.updateBinderArray();
@@ -72,14 +73,14 @@ class Binder extends Component {
         event.stopPropagation();
         //console.log('delete tab btn clicked, tab_id: ', tab_id);
         //console.log('delete tab btn clicked, binder_id: ', this.props.binderObj._id);
-        if(this.props.binderObj.tab_arr_obj.length === 1){
+        if (this.props.binderObj.tab_arr_obj.length === 1) {
             console.log('can not delete last tab');
-            
+
         } else {
             this.props.deleteTab(this.props.binderObj._id, tab_id);
         }
 
-        
+
         // const { binder_arr_obj } = this.state;
         // console.log(binder_arr_obj);
         // let deleteIndex = 0;
@@ -93,7 +94,7 @@ class Binder extends Component {
     deleteBinder(delete_id) {
         //event.stopPropagation();
         //console.log('delete button clicked, binder_id: ', delete_id);
-        if(this.props.binderArr.length === 1){
+        if (this.props.binderArr.length === 1) {
             console.log('can not delete last binder');
             return;
         }
@@ -129,66 +130,66 @@ class Binder extends Component {
             editable: false,
             editHover: false
         });
-        
+
 
     }
     keyPressed(event) {
         //console.log('keypress',event);
-        if(event.key === 'Enter') {
+        if (event.key === 'Enter') {
             //console.log('enter key pressed');
-          this.notEditable();
-      }
+            this.notEditable();
+        }
     }
 
-    editBinderName(e){
+    editBinderName(e) {
         this.setState({
             binderName: e.target.value
         });
     }
 
-    binderSelect(event){
+    binderSelect(event) {
         event.stopPropagation();
         //console.log('binderObj:' ,binderObj);
         this.props.selectBinder(this.props.binderObj);
     }
 
-    hover(){
+    hover() {
         this.setState({
             hover: true
         });
     }
 
-    notHover(){
+    notHover() {
         this.setState({
             hover: false
         });
     }
 
-    hoverEditBtn(){
+    hoverEditBtn() {
         this.setState({
             editHover: true
         });
     }
 
-    notHoverEditBtn(){
+    notHoverEditBtn() {
         this.setState({
             editHover: false
         });
     }
 
-    hoverDeleteBtn(){
+    hoverDeleteBtn() {
         this.setState({
             deleteHover: true
         });
     }
 
-    notHoverDeleteBtn(){
+    notHoverDeleteBtn() {
         this.setState({
             deleteHover: false
         });
     }
 
-    cancelEdit(event){
+    cancelEdit(event) {
         event.stopPropagation();
         this.setState({
             editable: false,
@@ -199,10 +200,11 @@ class Binder extends Component {
 
     render() {
         const { active, editable, binderName, hover, editHover, deleteHover, binderHover } = this.state;
-        //console.log("Binder props:", this.props);
+        console.log("Binder props:", this.props);
         //console.log("Binder state:", this.state);
-        if(!this.props.binderObj){
-            return null;
+        if (!this.props.binderObj) {
+            console.log('BINDER OBJ is NOT HERE!', this.props.binderObj);
+            return <Loader />;
         }
         const { tab_arr_obj } = this.props.binderObj;
 
@@ -210,46 +212,46 @@ class Binder extends Component {
         let binderArrLength = this.props.binderArr.length;
         let binder_title = [];
 
-        if(editable){ 
+        if (editable) {
             //let editName = this.props.binderObj.binder_name;
             binder_title = (
                 <div className="editMode">
-                         <input 
-                             className="edit_input_binder"
-                             ref='textInput'
-                             type='text'
-                             onChange={(e)=>this.editBinderName(e)}
-                             // onBlur={this.notEditable}
-                             onKeyPress={this.keyPressed.bind(this)}
-                             value={binderName}
-                             />
-                <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditable(event)}>
-                <i className="small material-icons">check</i></button>
-                 
-                <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelEdit(event)}>
-                <i className="small material-icons">close</i></button>
-                        </div>             
+                    <input
+                        className="edit_input_binder"
+                        ref='textInput'
+                        type='text'
+                        onChange={(e) => this.editBinderName(e)}
+                        // onBlur={this.notEditable}
+                        onKeyPress={this.keyPressed.bind(this)}
+                        value={binderName}
+                    />
+                    <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event) => this.notEditable(event)}>
+                        <i className="small material-icons">check</i></button>
+
+                    <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event) => this.cancelEdit(event)}>
+                        <i className="small material-icons">close</i></button>
+                </div>
             );
         } else {
             binder_title = (
-                <div className={`binderTitle blue-grey ${active ? 'binderBorderTop' : ''} ${hover || active ? 'darken-2' : 'lighten-4'}`} onClick={(event)=>this.binderSelect(event)} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+                <div className={`binderTitle blue-grey ${active ? 'binderBorderTop' : ''} ${hover || active ? 'darken-2' : 'lighten-4'}`} onClick={(event) => this.binderSelect(event)} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
 
-                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }}> 
+                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }}>
                         <div className={`binderLink ${hover || active ? 'textLight' : 'textDark'}`}>
                             {this.props.binderObj.binder_name}
-                        </div>    
+                        </div>
                     </Link>
-                   
+
                     <div className="modify-btn">
-                        <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn navbar-btn edit-btn grey darken-4 ${editable ? 'hidden' : 'visible'} ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event)=>this.editable(event)}>
-                        <i className="small material-icons">edit</i>
+                        <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn navbar-btn edit-btn grey darken-4 ${editable ? 'hidden' : 'visible'} ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event) => this.editable(event)}>
+                            <i className="small material-icons">edit</i>
                         </button>
                         <div className="navbar-btn"
-                        onMouseEnter={this.hoverDeleteBtn.bind(this)} 
-                        onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
-                        
-                            <ModalNav 
-                                callback={()=>this.props.deleteBinder(this.props.binderObj._id)} 
+                            onMouseEnter={this.hoverDeleteBtn.bind(this)}
+                            onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
+
+                            <ModalNav
+                                callback={() => this.props.deleteBinder(this.props.binderObj._id)}
                                 name={this.props.binderObj.binder_name}
                                 type='binder'
                                 arrLength={this.props.binderArr.length}
@@ -270,22 +272,22 @@ class Binder extends Component {
         let tab_link = tab_arr_obj.map((item, index) => {
             let tab_url = '/' + item._id;
             //console.log('tab map:', item);
-            var tabStyle ={
-                borderLeft: '12px solid '+item.tab_color
+            var tabStyle = {
+                borderLeft: '12px solid ' + item.tab_color
             }
 
-                return (
-                    <div key={index} className="tabWrap blue-grey lighten-3">
-                        <Tab index={index} tabObj={item}/>
-                    </div>
-                    // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
+            return (
+                <div key={index} className="tabWrap blue-grey lighten-3">
+                    <Tab index={index} tabObj={item} />
+                </div>
+                // <Link to={'/main/'+ binder_url + tab_url} key={index} style={{ textDecoration: 'none' }}>
 
-                    //     <div className=""style={tabStyle}>
-                    //         {item.tab_name}
-                    //     </div>
-                    // </Link>
-                );               
-                });
+                //     <div className=""style={tabStyle}>
+                //         {item.tab_name}
+                //     </div>
+                // </Link>
+            );
+        });
 
         return (
             <div>
@@ -294,9 +296,9 @@ class Binder extends Component {
                 <div className={`binderBody ${active ? 'visible' : 'hidden'}`}>
 
                     {tab_link}
-                
-                
-                {/* <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
+
+
+                    {/* <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'hidden' : 'visible'}`} onClick={this.editable}>
                     Binders <span className="glyphicon glyphicon-pencil"></span>
                 </button>
                 <button type="button" className={`btn btn-default btn-xs btn_edit_binder ${editable ? 'visible' : 'hidden'}`} onClick={this.notEditable}>
@@ -314,23 +316,23 @@ class Binder extends Component {
                 <button className={"btn btn-default btn-xs btn_add"} onClick={this.addBinder}>
                     <span className="glyphicon glyphicon-plus"></span>
                 </button> */}
-                <button className="btn add-btn-tab waves-effect waves-light" onClick={this.addTab}>
-                New Tab</button>  
-                <Route path={`/main/${binder_url}`+"/:tab"} component={Tab}/>
+                    <button className="btn add-btn-tab waves-effect waves-light" onClick={this.addTab}>
+                        New Tab</button>
+                    <Route path={`/main/${binder_url}` + "/:tab"} component={Tab} />
                 </div>
             </div>
         );
     }
 }
-    function mapStateToProps(state){
-        //console.log('binder mstp', state);
-        return{
-            binderArr: state.binderArray.binderArr,
-            binder: state.binder.binderObj,
-            interface: state.interface
-        }
+function mapStateToProps(state) {
+    //console.log('binder mstp', state);
+    return {
+        binderArr: state.binderArray.binderArr,
+        binder: state.binder.binderObj,
+        interface: state.interface
     }
+}
 
-    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addTab, deleteTab, deleteBinder, editBinder})(Binder));
+export default withRouter(connect(mapStateToProps, { updateBinderArray, selectBinder, addTab, deleteTab, deleteBinder, editBinder })(Binder));
 
 
