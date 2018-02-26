@@ -4,15 +4,16 @@ const DEFAULT_STATE = {
   results: [],
   addedVideo: [],
   savedVideoTitle: '',
+  savedVideoImage: '',
   toggleResults: true,
   addVideoModal: {
     display: 'none'
   },
   resultsStyles: {
-    transform: 'translateX(-100%)'
+    transform: 'translateY(-100%)'
   },
   playlistStyles: {
-    transform: 'translateX(-100%)'
+    transform: 'translateY(-100%)'
   },
   opacityDisplay: {
     display: 'none'
@@ -49,7 +50,7 @@ export default function(state = DEFAULT_STATE, action) {
     case types.PLAY_VIDEO:
       return {
         ...state,
-        videoLink: action.payload.videoId,
+        videoLink: action.payload.videoLink,
         resultsStyles: { transform: 'translateX(100%)' }
       };
     case types.NO_VIDEO_LINK:
@@ -72,10 +73,15 @@ export default function(state = DEFAULT_STATE, action) {
         ...state,
         savedVideoTitle: action.payload
       };
+    case types.GET_SAVED_VIDEO_IMAGE:
+      return {
+        ...state,
+        savedVideoImage: action.payload
+      };
     case types.SET_VIDEO_PLAYLIST:
       return {
         ...state,
-        addedVideo: [action.payload, ...state.addedVideo]
+        addedVideo: action.payload
       };
     case types.TOGGLE_PLAYLIST:
       return {

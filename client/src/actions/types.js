@@ -23,6 +23,7 @@ export default {
   ADD_VIDEO_TO_DATABASE: 'add_video_to_database',
   TOGGLE_PLAYLIST: 'toggle_playlist',
   GET_SAVED_VIDEO_TITLE: 'get_saved_video_title',
+  GET_SAVED_VIDEO_IMAGE: 'get_saved_video_image',
   SET_VIDEO_PLAYLIST: 'set_video_playlist',
   GET_RESULT_STYLES: 'get_result_styles',
   GET_OPACITY_DISPLAY: 'get_opacity_display',

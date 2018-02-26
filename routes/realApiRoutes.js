@@ -315,8 +315,9 @@ module.exports = app => {
           page.video.unshift(
             new Video({
               videoId: req.body.video.videoId,
-              videoURL: req.body.video.videoUrl,
-              videoTitle: req.body.video.videoTitle
+              videoURL: req.body.video.videoURL,
+              videoTitle: req.body.video.videoTitle,
+              videoImg: req.body.video.videoImg
             })
           );
 

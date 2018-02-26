@@ -184,6 +184,17 @@ export const getSavedVideoTitle = videoUrl => async dispatch => {
     payload: response.data.items[0].snippet.title
   });
 };
+export const getSavedVideoImg = videoUrl => async dispatch => {
+  let videoId = videoUrl.split('=');
+  videoId = videoId[1];
+  const response = await axios.get(
+    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.videoKey}`
+  );
+  dispatch({
+    type: types.GET_SAVED_VIDEO_IMAGE,
+    payload: response.data.items[0].snippet.thumbnails.default.url
+  });
+};
 export function getVideoResults(videos) {
   return {
     type: types.GET_VIDEO_RESULTS,
@@ -234,10 +245,10 @@ export function setVideoPlaylist(videos) {
   };
 }
 export function togglePlaylist(playlistStyle) {
-  if (playlistStyle === 'translateX(-100%)') {
-    playlistStyle = 'translateX(0%)';
+  if (playlistStyle === 'translateY(-100%)') {
+    playlistStyle = 'translateY(0%)';
   } else {
-    playlistStyle = 'translateX(-100%)';
+    playlistStyle = 'translateY(-100%)';
   }
   return {
     type: types.TOGGLE_PLAYLIST,
@@ -247,8 +258,8 @@ export function togglePlaylist(playlistStyle) {
 export function addVideoToDatabase(
   videoUrl,
   videoTitle,
-  interfaceObj,
-  currentPlaylist
+  videoImg,
+  interfaceObj
 ) {
   if (!videoUrl) {
     return {
@@ -265,7 +276,8 @@ export function addVideoToDatabase(
           video: {
             videoTitle: videoTitle,
             videoId: videoId,
-            videoUrl: videoLink
+            videoURL: videoLink,
+            videoImg: videoImg
           },
           binderID: interfaceObj.binder_id,
           tabID: interfaceObj.tab_id,
@@ -276,7 +288,8 @@ export function addVideoToDatabase(
           payload: {
             videoTitle: videoTitle,
             videoId: videoId,
-            videoUrl: videoLink
+            videoURL: videoLink,
+            videoImg: videoImg
           }
         });
       } catch (error) {
@@ -297,7 +310,8 @@ export function addVideoToDatabase(
           video: {
             videoTitle: videoTitle,
             videoId: videoId,
-            videoUrl: videoLink
+            videoURL: videoLink,
+            videoImg: videoImg
           },
           binderID: interfaceObj.binder_id,
           tabID: interfaceObj.tab_id,
@@ -308,7 +322,8 @@ export function addVideoToDatabase(
           payload: {
             videoTitle: videoTitle,
             videoId: videoId,
-            videoUrl: videoLink
+            videoURL: videoLink,
+            videoImg: videoImg
           }
         });
       } catch (error) {
@@ -321,14 +336,15 @@ export function addVideoToDatabase(
   } else {
     let videoLink = videoUrl;
     let videoId = videoLink.split('/');
-    videoId = videoId[3];
+    videoId = videoId[4];
     return async dispatch => {
       try {
         const response = await axios.post('/api/video', {
           video: {
             videoTitle: videoTitle,
             videoId: videoId,
-            videoUrl: videoLink
+            videoURL: videoLink,
+            videoImg: videoImg
           },
           binderID: interfaceObj.binder_id,
           tabID: interfaceObj.tab_id,
@@ -339,7 +355,8 @@ export function addVideoToDatabase(
           payload: {
             videoTitle: videoTitle,
             videoId: videoId,
-            videoUrl: videoLink
+            videoURL: videoLink,
+            videoImg: videoImg
           }
         });
       } catch (error) {
@@ -382,13 +399,26 @@ export function emptyVideoSlideOut(toggleBool, slide) {
     }
   };
 }
-export function playVideo(url) {
-  let videoId = url;
-  document.querySelector('.video-iframe').src = url;
+export function playVideo(id) {
+  debugger;
+  // let videoId = url;
+  // document.querySelector('.video-iframe').src = url;
+  if (id.indexOf('youtube') !== -1) {
+    let videoId = id;
+    videoId = id.split('/');
+    videoId = videoId[4];
+    return {
+      type: types.PLAY_VIDEO,
+      payload: {
+        videoLink: `https://www.youtube.com/embed/${videoId}`,
+        resultsContainer: { style: { transform: 'translateY(0px)' } }
+      }
+    };
+  }
   return {
     type: types.PLAY_VIDEO,
     payload: {
-      videoId: videoId,
+      videoLink: `https://www.youtube.com/embed/${id}`,
       resultsContainer: { style: { transform: 'translateY(0px)' } }
     }
   };
@@ -430,10 +460,10 @@ export function grabVideoUrl(videoLink) {
     payload: videoLink
   };
 }
-export function setVideoUrl(value, interfaceObj) {
+export function setVideoUrl(id, interfaceObj) {
   return {
     type: types.SET_VIDEO_URL,
-    payload: value
+    payload: `https://www.youtube.com/embed/${id}`
   };
 }
 // END OF VIDEO ACTION CREATORS
