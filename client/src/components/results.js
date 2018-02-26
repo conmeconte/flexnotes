@@ -11,7 +11,6 @@ class Results extends Component {
   render() {
     const { results } = this.props;
     const list = results.map((item, index) => {
-      console.log(item);
       return (
         <li className="result-item collection-item col s12" key={index}>
           <div className="row list-item-wrap-container">
