@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
+const keys  = require('../config/keys')
 
 //Restful/ CRUD operation 
 
@@ -8,12 +9,22 @@ module.exports = (app) => {
     app.get('/', (req, res) => {
         res.send('Homepage')
     })
+
+
+    app.get('/api/sample', async(req, res) => {
+        const existingUser= await User.findById(keys.sampleId);
+        console.log("pulled existing sample user", existingUser); 
+        res.send(existingUser); 
+
+    })
+
+
     app.get('/api/userInfo',  (req, res) => {
         res.send(req.user);
     });
     //Front Error Handler//
-    app.post('/api/errors', requireLogin, async(req, res)=>{
-        const existingUser= await User.findById(req.user.id);
+    app.post('/api/errors', async(req, res)=>{
+        const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId);
         if(!existingUser){
             res.send("Error can't find user");
         }else{
@@ -28,17 +39,17 @@ module.exports = (app) => {
 
     // For Binder //
     app
-        .get('/api/binder', requireLogin,  async (req, res) => {
+        .get('/api/binder',  async (req, res) => {
             //give binder data 
-            const existingUser= await User.findById(req.user.id, function(err){if(err){return res.send('error')}});
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, function(err){if(err){return res.send('error')}});
             if(existingUser){
                 res.send(existingUser);
             }else{
                 res.send("Error can't find user")
             }
         })
-        .post('/api/binder', requireLogin, async (req, res) => {
-            const existingUser= await User.findById(req.user.id, function(err){if(err){return res.send('error')}});
+        .post('/api/binder', async (req, res) => {
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, function(err){if(err){return res.send('error')}});
             if(existingUser){
                     const defaultBinder = new Binder();
                     defaultBinder.tab_arr_obj.push(new Tab());
@@ -53,8 +64,8 @@ module.exports = (app) => {
             }
                 
         })
-        .delete('/api/binder', requireLogin,  async (req, res) => {
-            const existingUser= await User.findById(req.user.id,function(err){if(err){return res.send('error')}});
+        .delete('/api/binder',  async (req, res) => {
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId,function(err){if(err){return res.send('error')}});
             if (existingUser) {
                 const binder = existingUser
                 .binder_arr_obj.id(req.query.binderID) 
@@ -66,10 +77,10 @@ module.exports = (app) => {
             res.send("Error can't find user")
             }
         })
-        .put('/api/binder', requireLogin, async (req, res) => {
+        .put('/api/binder', async (req, res) => {
             // update binder
 
-            const existingUser= await User.findById(req.user.id, function (err){if(err){return res.send('error')}});    
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, function (err){if(err){return res.send('error')}});    
             if (existingUser) {
                 const binder = existingUser
                 .binder_arr_obj.id(req.body.binderID)
@@ -90,8 +101,8 @@ module.exports = (app) => {
     // For Tab//
     // For Tab//
     app
-        .get('/api/tab', requireLogin, async (req, res) => {
-            const existingUser= await User.findById(req.user.id, function (err){if(err){return res.send('error')}});
+        .get('/api/tab', async (req, res) => {
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, function (err){if(err){return res.send('error')}});
                 if (existingUser) {
                     res.send(existingUser.binder_arr_obj);
                 }else {
@@ -99,9 +110,9 @@ module.exports = (app) => {
                 }
         
         })
-        .post('/api/tab', requireLogin, async (req, res) => {
+        .post('/api/tab', async (req, res) => {
             //create new tab in user
-            const existingUser= await User.findById(req.user.id,function(err,user){if(err){return res.send('error')}});
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId,function(err,user){if(err){return res.send('error')}});
                 if (existingUser) {
                     const binder = existingUser
                     .binder_arr_obj.id(req.body.binderID)
@@ -119,8 +130,8 @@ module.exports = (app) => {
                 res.send("Error can't find user")
                 }
         })
-        .delete('/api/tab', requireLogin, async (req, res) => {
-            const existingUser= await User.findById(req.user.id,function(err,user){if(err){return res.send('error')}});
+        .delete('/api/tab', async (req, res) => {
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId,function(err,user){if(err){return res.send('error')}});
 
                 if (existingUser) {
                     const tab = existingUser
@@ -138,9 +149,9 @@ module.exports = (app) => {
                 res.send("Error can't find user")
                 }
         })
-        .put('/api/tab', requireLogin, async (req, res) => {
+        .put('/api/tab', async (req, res) => {
 
-            const existingUser= await User.findById(req.user.id, function (err){if(err){return res.send('error')}});
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, function (err){if(err){return res.send('error')}});
                 if (existingUser) {
                     const tab = existingUser
                     .binder_arr_obj.id(req.body.binderID) 
@@ -163,17 +174,17 @@ module.exports = (app) => {
     // For Page //
 
     app
-        .get('/api/page', requireLogin, async (req,res)=>{
-            const existingUser= await User.findById(req.user.id, function (err){if(err){return res.send('error')}});
+        .get('/api/page', async (req,res)=>{
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, function (err){if(err){return res.send('error')}});
                 if (existingUser) {
                     res.send(existingUser);
                 } else {
                 res.send("Error can't find user")
                 }
         })
-        .post('/api/page', requireLogin, async (req, res) => {
+        .post('/api/page', async (req, res) => {
             //create new page in user
-            const existingUser= await User.findById(req.user.id,function(err,user){if(err){return res.send('error')}});
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId,function(err,user){if(err){return res.send('error')}});
                 if (existingUser) {
                     const tab = existingUser
                     .binder_arr_obj.id(req.body.binderID) 
@@ -193,9 +204,9 @@ module.exports = (app) => {
                 res.send("Error can't find user")
                 }
         })
-        .delete('/api/page', requireLogin, async (req, res) => {
+        .delete('/api/page', async (req, res) => {
             //delete page
-            const existingUser= await User.findById(req.user.id,function(err,user){if(err){return res.send('error')}});
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId,function(err,user){if(err){return res.send('error')}});
                 if (existingUser) {
                     const page = existingUser
                     .binder_arr_obj.id(req.query.binderID) 
@@ -212,8 +223,8 @@ module.exports = (app) => {
                 res.send("Error can't find user")
                 }
         })
-        .put('/api/page', requireLogin, async (req,res)=>{
-            const existingUser= await User.findById(req.user.id,function(err){if(err){return res.send('error')}});
+        .put('/api/page', async (req,res)=>{
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId,function(err){if(err){return res.send('error')}});
                 if (existingUser) {
                     const page = existingUser
                     .binder_arr_obj.id(req.body.binderID)
@@ -238,8 +249,8 @@ module.exports = (app) => {
 
  //video//
     app
-        .post('/api/video', requireLogin, async (req,res)=>{
-            const existingUser= await User.findById(req.user.id, (err)=>{if(err){return res.send('error')}});
+        .post('/api/video', async (req,res)=>{
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, (err)=>{if(err){return res.send('error')}});
                 if (existingUser) {
                     const page = existingUser
                     .binder_arr_obj.id(req.body.binderID)
@@ -257,8 +268,8 @@ module.exports = (app) => {
                 res.send("Error can't find user")
                 }
         })
-        .delete('/api/video', requireLogin, async (req,res)=>{
-            const existingUser= await User.findById(req.user.id, (err,user)=>{if(err){return res.send('error')}});
+        .delete('/api/video', async (req,res)=>{
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, (err,user)=>{if(err){return res.send('error')}});
                 if (existingUser) {
                     const video = existingUser
                     .binder_arr_obj.id(req.query.binderID)
@@ -276,8 +287,8 @@ module.exports = (app) => {
                     res.render('error', {error: err}).send("Error can't find user")
                 }
         })
-        .put('/api/video', requireLogin, async (req,res)=>{
-            const existingUser= await User.findById(req.user.id, (err,user)=>{if(err){return res.send('error')}});
+        .put('/api/video', async (req,res)=>{
+            const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, (err,user)=>{if(err){return res.send('error')}});
                 if (existingUser) {
                     const video = existingUser
                     .binder_arr_obj.id(req.body.binderID)
@@ -298,8 +309,8 @@ module.exports = (app) => {
         });
 
 //note//
-app.put('/api/note', requireLogin, async (req,res)=>{
-        const existingUser= await User.findById(req.user.id, (err,user)=>{if(err){return res.send('error')}});
+app.put('/api/note', async (req,res)=>{
+        const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, (err,user)=>{if(err){return res.send('error')}});
             if (existingUser) {
                 const page = existingUser
                 .binder_arr_obj.id(req.body.binderID)
@@ -319,7 +330,3 @@ app.put('/api/note', requireLogin, async (req,res)=>{
 
 
 }
-
-
-
-

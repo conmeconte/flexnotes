@@ -26,7 +26,7 @@ passport.use(
             callbackURL: '/auth/google/callback'
         },
         async (accessToken, refreshToken, profile, done) => {
-            const existingUser = await User.findOne({ googleId: profile.id });
+            const existingUser = await User.findOne({ googleId: profile.id});
             if (existingUser) {
                 let loginLog= {Date: new Date().toLocaleString(),user: `user ${existingUser.userName} has logged in`};
                 fs.appendFile(path.join(__dirname, '..', 'errorLogs', 'logins.log'), JSON.stringify(loginLog) + '\n', function (err) {

@@ -1,9 +1,15 @@
 import axios from 'axios';
 import types from './types';
+import keys from '../../../config/keys';
 
 export const fetchUser = () => async dispatch => {
   const res = await axios.get('/api/current_user');
+  
   dispatch({ type: types.FETCH_USER, payload: res.data });
+};
+export const fetchSampleUser = () => async dispatch => {
+  const res = await axios.get('/api/sample');
+  dispatch({ type: types.FETCH_SAMPLE_USER, payload: res.data });
 };
 
 //PANEL SPECs Action Creator
@@ -172,6 +178,17 @@ export function slideOutSlidesSearch(toggleBool, slide) {
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
+export const getSavedVideoTitle = videoUrl => async dispatch => {
+  let videoId = videoUrl.split('=');
+  videoId = videoId[1];
+  const response = await axios.get(
+    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.videoKey}`
+  );
+  dispatch({
+    type: types.GET_SAVED_VIDEO_TITLE,
+    payload: response.data.items[0].snippet.title
+  });
+};
 export function getVideoResults(videos) {
   return {
     type: types.GET_VIDEO_RESULTS,
@@ -181,7 +198,7 @@ export function getVideoResults(videos) {
 export function getResultStyles(styles, visible) {
   if (!visible) {
     styles = {
-      transform: 'translateX(100%)'
+      transform: 'translateX(-100%)'
     };
   } else {
     styles = {
@@ -215,7 +232,18 @@ export function toggleResults(visible) {
     payload: toggleResults
   };
 }
-export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
+export function setVideoPlaylist(videos) {
+  return {
+    type: types.SET_VIDEO_PLAYLIST,
+    payload: videos
+  };
+}
+export function addVideoToDatabase(
+  videoUrl,
+  videoTitle,
+  interfaceObj,
+  currentPlaylist
+) {
   if (!videoUrl) {
     return {
       type: types.NO_VIDEO_LINK
@@ -229,7 +257,7 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
       try {
         const response = await axios.post('/api/video', {
           video: {
-            videoTitle: '',
+            videoTitle: videoTitle,
             videoId: videoId,
             videoUrl: videoLink
           },
@@ -239,7 +267,11 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
         });
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
-          payload: videoLink
+          payload: {
+            videoTitle: videoTitle,
+            videoId: videoId,
+            videoUrl: videoLink
+          }
         });
       } catch (error) {
         dispatch({
@@ -257,7 +289,7 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
       try {
         const response = await axios.post('/api/video', {
           video: {
-            videoTitle: '',
+            videoTitle: videoTitle,
             videoId: videoId,
             videoUrl: videoLink
           },
@@ -266,8 +298,12 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
           pageID: interfaceObj.page_id
         });
         dispatch({
-          type: types.ADD_TO_PLAYLIST,
-          payload: videoLink
+          type: types.ADD_VIDEO_TO_DATABASE,
+          payload: {
+            videoTitle: videoTitle,
+            videoId: videoId,
+            videoUrl: videoLink
+          }
         });
       } catch (error) {
         dispatch({
@@ -284,18 +320,21 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
       try {
         const response = await axios.post('/api/video', {
           video: {
-            videoTitle: '',
+            videoTitle: videoTitle,
             videoId: videoId,
-            videoUrl: videoUrl
+            videoUrl: videoLink
           },
           binderID: interfaceObj.binder_id,
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
-
         dispatch({
-          type: types.ADD_TO_PLAYLIST,
-          payload: videoUrl
+          type: types.ADD_VIDEO_TO_DATABASE,
+          payload: {
+            videoTitle: videoTitle,
+            videoId: videoId,
+            videoUrl: videoLink
+          }
         });
       } catch (error) {
         dispatch({
@@ -397,8 +436,6 @@ export function getDataObject() {
     const test = axios
       .get('/api/binder')
       .then(resp => {
-        console.log('get data object: ', resp.data);
-
         dispatch({
           type: types.GET_USER_DATA,
           payload: resp.data
@@ -418,8 +455,6 @@ export function updateBinderArray() {
     const test = axios
       .get('/api/binder')
       .then(resp => {
-        console.log('update binder array: ', resp.data.binder_arr_obj);
-
         dispatch({
           type: types.UPDATE_BINDER_ARRAY,
           payload: resp.data.binder_arr_obj
@@ -456,7 +491,6 @@ export function selectTab(tabObj) {
 }
 
 export function selectPage(binder_id, tab_id, page_id) {
-  //console.log('select page action idObj:', idObj);
   let idObject = {
     binder_id: binder_id,
     tab_id: tab_id,
@@ -473,7 +507,6 @@ export function addBinder() {
     const test = axios
       .post('/api/binder')
       .then(resp => {
-        //console.log("addBinder response: ", resp);
         dispatch({
           type: types.ADD_BINDER,
           payload: resp.data.binder_arr_obj
@@ -495,7 +528,6 @@ export function addTab(binder_id) {
         binderID: binder_id
       })
       .then(resp => {
-        //console.log("add tab: ", resp);
         dispatch({
           type: types.ADD_TAB,
           payload: resp
@@ -518,7 +550,6 @@ export function addPage(binder_id, tab_id) {
         tabID: tab_id
       })
       .then(resp => {
-        //console.log("addPage response: ", resp);
         dispatch({
           type: types.ADD_PAGE,
           payload: resp
@@ -538,8 +569,6 @@ export function deleteBinder(binder_id) {
     const test = axios
       .delete(`/api/binder?binderID=${binder_id}`, {})
       .then(resp => {
-        console.log('delete binder response: ', resp);
-
         dispatch({
           type: types.DELETE_BINDER,
           payload: resp.data
@@ -559,8 +588,6 @@ export function deleteTab(binder_id, tab_id) {
     const test = axios
       .delete(`/api/tab?binderID=${binder_id}&tabID=${tab_id}`, {})
       .then(resp => {
-        //console.log("delete tab response: ", resp);
-
         dispatch({
           type: types.DELETE_TAB,
           payload: resp.data
@@ -583,8 +610,6 @@ export function deletePage(binder_id, tab_id, page_id) {
         {}
       )
       .then(resp => {
-        //console.log("delete page response: ", resp);
-
         dispatch({
           type: types.DELETE_PAGE,
           payload: resp.data
@@ -607,7 +632,6 @@ export function editBinder(binder_id, binder_name) {
         binder_name: binder_name
       })
       .then(resp => {
-        //console.log("edit binder: ", resp);
         dispatch({
           type: types.EDIT_BINDER,
           payload: resp.data
@@ -631,7 +655,6 @@ export function editTab(binder_id, tab_id, tab_name) {
         tab_name: tab_name
       })
       .then(resp => {
-        //console.log("edit tab resp: ", resp);
         dispatch({
           type: types.EDIT_TAB,
           payload: resp.data

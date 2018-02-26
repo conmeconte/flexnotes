@@ -33,7 +33,6 @@ a {
     width: 10%;
     height: 100vh;
     box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);
-    /*overflow-y:scroll;*/
     background-color: #eceff1;
 }
 
@@ -47,7 +46,6 @@ ul > li {
     border: 1px solid #747474;
     border-radius: 3px;
     background-color: white;
-    /* #background-image: url("../../assets/images/concrete-wall-3.png");    */
     width: 75%;
     height: 80px;
     margin-left: 10%;
@@ -66,12 +64,7 @@ ul > li {
 }
 
 .binderTitle{
-    #margin-top: 1%;
-    #border-top: solid 4px #white;
-    #background-color: #96858f;
     cursor: pointer;
-    #border-top-left-radius: 5px;
-    
 }
 
 .modify-btn{
@@ -83,14 +76,9 @@ ul > li {
     margin-bottom: 2% !important;
 }
 
-.binderBody{
-    #border: solid 1px teal;
-}
 
 .binderWrap{
-    #background-color: #96858f;
      width: 100%;
-     
      margin-top: 0;
      margin-bottom: 2%;
      box-shadow: 1px 1px 1px #747474;
@@ -101,7 +89,6 @@ ul > li {
 }
 
 .tabWrap{
-    #background-color: #9099a2;
     width: 90%;
     margin-left: 10%;
     box-shadow: 1px 1px 1px #747474;
@@ -110,18 +97,11 @@ ul > li {
 
 .tabTitle{
     border-top: outset 3px #546e7a;
-    #border-bottom: outset 2px #607d8b;
     cursor: pointer;   
-}
-
-.tabBody{
-    #width: 95%;
-    #border: solid 1px magenta;
 }
 
 .pageBody{
     border: 1px inset #696969;
-    #background-color: #d5d5d5;
     padding: 2% 0%; 
     margin-left: 10%;
     width: 90%;
@@ -188,7 +168,6 @@ ul > li {
 }
 
 
-
 .hiddenHover{
     opacity: 0.3;
     visibility: hidden;
@@ -221,10 +200,6 @@ ul > li {
     margin: 1%;
 }
 
-.edit-btn.navbar-btn {
-    #margin-left: 3%;
-}
-
 .pageList.whiteFont>a {
     color: white;
 }
@@ -240,7 +215,6 @@ ul > li {
     color: #fafafa;
     background-color: #0288d1;
     margin-bottom: 5%;
-    #font-weight: 400;
     padding-left: 10px;
     padding-right: 6px;
 
@@ -361,6 +335,7 @@ input.edit_input_page{
     overflow: auto;
 }
 
+
 /* --------------------- HEADER AND FOOTER ---------------------*/
 
 header {
@@ -408,4 +383,34 @@ footer {
     background-color: #01579b;
 }
 
+
+@media (max-width: 767px){
+    .hideNavbar.btn, .navbarShow.btn {
+        display: none;
+    }
+    .binder-container {
+        height: 72vh;
+    }
+    .navbar.s2, header{
+        width: 100%;
+    }
+    .visibleHover, .hiddenHover{
+        visibility: visible;
+        opacity: .8;
+    }
+    header > h1 {
+        font-size: 3em;
+    }
+    .logoImage {
+        width: 10%;
+        margin-left: 2%;
+    }
+
+    footer{
+        padding-bottom: 5%;
+    }
+    .startTour.btn, .logoutBtn.btn {
+        font-size: 1em;
+    }
+}
 

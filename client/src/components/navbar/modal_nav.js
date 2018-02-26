@@ -19,7 +19,6 @@ export default class ModalNav extends Component {
     }
 
     render(){
-        //console.log('Modal props:', this.props);
         const {visible} = this.state;
         let bodyText = '';
         let modalBtn = [];

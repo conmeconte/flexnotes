@@ -17,20 +17,20 @@ class Page extends Component {
             hover: false,
             editHover: false,
             deleteHover: false,
+<<<<<<< HEAD
             active: false
             //tabObject: this.props.tabObj,
             //binderUrl: this.props.binderUrl
+=======
+>>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         }
-
-        // this.addPage = this.addPage.bind(this);
-        // this.editPages = this.editPages.bind(this);
-        // this.notEditPages = this.notEditPages.bind(this);
         this.deletePage = this.deletePage.bind(this);
         this.editPage = this.editPage.bind(this);
         this.notEditPage = this.notEditPage.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.cancelPageEdit = this.cancelPageEdit.bind(this);
     }
+<<<<<<< HEAD
     componentWillReceiveProps(nextProps) {
         // if(nextProps.interface.editable === false){
         //     this.setState({
@@ -99,14 +99,21 @@ class Page extends Component {
     editPageName(e) {
 
 
+=======
+    editPageName(e){
+>>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         this.setState({
             pageName: e.target.value
         });
     }
 
+<<<<<<< HEAD
     editPage() {
         //event.stopPropagation();
         //console.log("editable should be true");
+=======
+    editPage(){
+>>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         this.setState({
             editable: true,
             pageName: this.props.pageObj.page_name
@@ -114,8 +121,6 @@ class Page extends Component {
     }
 
     notEditPage() {
-        //event.stopPropagation();
-        //console.log("editable should be false");
         const { pageName } = this.state;
         this.props.editPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id, pageName);
         this.setState({
@@ -125,6 +130,7 @@ class Page extends Component {
     }
 
     keyPressed(event) {
+<<<<<<< HEAD
         //console.log('keypress',event);
         if (event.key === 'Enter') {
             //console.log('enter key pressed');
@@ -134,14 +140,18 @@ class Page extends Component {
 
     deletePage(page_id) {
         //console.log('delete page id:', page_id);
+=======
+        if(event.key === 'Enter') {
+          this.notEditPage();
+      }
+    }
+
+    deletePage(page_id){
+>>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         let deleteIndex = null;
         for (let i = 0; i < this.props.binder.tab_arr_obj.length; i++) {
             if (this.props.binder.tab_arr_obj[i]._id === this.props.tabID) {
                 deleteIndex = i;
-                // console.log('delete Index', deleteIndex);
-                // console.log('page arr obj length', this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length);
-                // console.log('binder_tab_arr_obj[deleteindex] id', this.props.binder.tab_arr_obj[i]._id);
-                // console.log('tabid', this.props.tabID);
             }
         }
         if (this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length === 1) {
@@ -152,11 +162,13 @@ class Page extends Component {
         }
     }
 
+<<<<<<< HEAD
     handleClick() {
         //this.props.selectBinder(binderObj);
+=======
+    handleClick(){
+>>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         this.props.selectPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id);
-        //console.log("page id updated");
-        //this.props.
     }
 
     hover() {
@@ -196,7 +208,6 @@ class Page extends Component {
     }
 
     cancelPageEdit() {
-        //event.stopPropagation();
         this.setState({
             editable: false,
             tabName: this.props.pageObj.page_name,
@@ -210,11 +221,7 @@ class Page extends Component {
         if (!this.props.pageObj) {
             return null;
         }
-
         let url = this.props.interface.binder_id + "/" + this.props.interface.tab_id + "/" + this.props.pageObj._id;
-
-        //console.log('Props in Page:',this.props);
-        //console.log('State in Page:',this.state);
         let page_list = [];
 
         let background_color = {
@@ -240,7 +247,6 @@ class Page extends Component {
             whiteColor = false;
         }
         if (editable) {
-            //let editName = this.props.binderObj.binder_name;
             page_list = (
                 <div className="editMode">
                     <input
@@ -248,7 +254,6 @@ class Page extends Component {
                         ref='textInput'
                         type='text'
                         onChange={(e) => this.editPageName(e)}
-                        // onBlur={this.notEditable}
                         onKeyPress={this.keyPressed.bind(this)}
                         value={pageName}
                     />
@@ -265,16 +270,9 @@ class Page extends Component {
             for (let i = 0; i < this.props.binder.tab_arr_obj.length; i++) {
                 if (this.props.binder.tab_arr_obj[i]._id === this.props.tabID) {
                     deleteIndex = i;
-                    //console.log('delete Index', deleteIndex);
                     pageArrLength = this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length;
-                    // console.log('page arr obj length', this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length);
-                    // console.log('binder_tab_arr_obj[deleteindex] id', this.props.binder.tab_arr_obj[i]._id);
-                    // console.log('tabid', this.props.tabID);
                 }
             }
-
-            //console.log('pageArrLength',pageArrLength);
-
             page_list = (
                 <div className={`pageList ${whiteColor ? 'whiteFont' : 'blackFont'}`} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
                     <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
@@ -297,17 +295,12 @@ class Page extends Component {
                                 <i className='material-icons'>delete_forever</i>
                             </ModalNav>
                         </div>
-                        {/* <button type="button" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)} className={`btn-floating navbar-btn delete-btn red darken-4 ${deleteHover ? 'fullOpacity' : ''}  ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={()=>this.deletePage()} >
-                    <i className="small material-icons">delete_forever</i>
-                    </button> */}
                     </div>
 
 
                 </div>
             );
         }
-
-
         return (
             <li className="pageBody" style={background_color} onClick={() => this.handleClick()}>
                 {page_list}
@@ -320,11 +313,9 @@ class Page extends Component {
 }
 
 function mapStateToProps(state) {
-    //console.log('page mstp', state);
     return {
         binder: state.binder.binderObj,
         interface: state.interface
     }
 }
 export default withRouter(connect(mapStateToProps, { selectPage, deletePage, editPage })(Page));
-//use binder reducer for logic

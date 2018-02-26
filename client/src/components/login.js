@@ -18,12 +18,9 @@ class Login extends Component {
     }
 
     render() {
-        // console.log(this.props);
         return (
             <span>
-                {/* <ul className="right"> */}
                 {this.renderContent()}
-                {/* </ul> */}
             </span>
         );
     }

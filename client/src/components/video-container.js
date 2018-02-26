@@ -29,73 +29,69 @@ class VideoContainer extends Component {
       return;
     }
     this.props.playPastedLinkVideo(values['youtube-url']);
-    this.props.addVideoToDatabase(
-      values['youtube-url'],
-      '',
-      this.props.binderTabPageIds
-    );
+    this.props.getSavedVideoTitle(values['youtube-url']).then(() => {
+      this.props.addVideoToDatabase(
+        values['youtube-url'],
+        this.props.savedVideoTitle,
+        this.props.binderTabPageIds,
+        this.props.videoPlaylist
+      );
+    });
   }
-
   render() {
     return (
       <div className="iframe-wrapper">
-        <div className="row">
-          <form
-            onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}
-          >
-            <div
-              style={this.props.slideOutStyles}
-              className="row slide-out-input"
-            >
-              <Field name="youtube-url" component={this.renderInput} />
-              <div className="col s3">
-                <div className="row btn-wrapper">
-                  <button className="btn green darken-1 video-btn">
-                    <i className="material-icons">check</i>
-                  </button>
-                  <button
-                    type="button"
-                    className="btn vidList vid-left-arrow video-btn"
-                    onClick={() => {
-                      this.props.getResultStyles(
-                        this.props.resultsStyles,
-                        this.props.toggleResultsBool
-                      );
-                      this.props.getOpacityDisplay(
-                        this.props.opacityContainer,
-                        this.props.toggleResultsBool
-                      );
-                    }}
-                  >
-                    <i className="fa fa-youtube" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
+        <form
+          onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}
+          style={this.props.slideOutStyles}
+          className="row slide-out-input"
+        >
+          <Field name="youtube-url" component={this.renderInput} />
+          <div className="col s3 youtube-search-buttons">
+            <div className="row btn-wrapper">
+              <button className="btn green darken-1 video-btn">
+                <i className="material-icons">check</i>
+              </button>
+              <button
+                type="button"
+                className="btn vidList vid-left-arrow video-btn"
+                onClick={() => {
+                  this.props.getResultStyles(
+                    this.props.resultsStyles,
+                    this.props.toggleResultsBool
+                  );
+                  this.props.getOpacityDisplay(
+                    this.props.opacityContainer,
+                    this.props.toggleResultsBool
+                  );
+                }}
+              >
+                <i className="fa fa-youtube" aria-hidden="true" />
+              </button>
             </div>
-          </form>
-          <div
-            className="arrow-container"
-            onClick={() => {
-              this.props.slideOutVideoSearch(
-                this.props.toggleSlideOut,
-                this.props.slideOutStyles
-              );
-            }}
-          >
-            {!this.props.toggleSlideOut
-              ? <i className="material-icons">keyboard_arrow_up</i>
-              : <i className="material-icons">keyboard_arrow_down</i>}
           </div>
+        </form>
+        <div
+          className="arrow-container"
+          onClick={() => {
+            this.props.slideOutVideoSearch(
+              this.props.toggleSlideOut,
+              this.props.slideOutStyles
+            );
+          }}
+        >
+          {!this.props.toggleSlideOut
+            ? <i className="material-icons">keyboard_arrow_up</i>
+            : <i className="material-icons">keyboard_arrow_down</i>}
         </div>
         <div id="video-container" className="video-container">
-          <div className="video-embed-wrapper">
-            <iframe
-              allowFullScreen
-              id="video-iframe"
-              src={this.props.videoLink}
-              className="video-iframe"
-            />
-          </div>
+          <div className="resize-blocker" />
+          <iframe
+            allowFullScreen
+            id="video-iframe"
+            src={this.props.videoLink}
+            className="video-iframe"
+          />
         </div>
       </div>
     );
@@ -113,7 +109,9 @@ function mapStateToProps(state) {
     interface_obj: state.interface,
     slideOutStyles: state.video.videoLinkSlideOut,
     toggleSlideOut: state.video.toggleSlideOut,
-    url: state.url
+    url: state.url,
+    videoPlaylist: state.video.addedVideo,
+    savedVideoTitle: state.video.savedVideoTitle
   };
 }
 
