@@ -29,7 +29,6 @@ class App extends Component {
 
     componentWillMount() {
         this.props.fetchUser();
-        //this.props.getDataObject();
     }
 
     render() {
