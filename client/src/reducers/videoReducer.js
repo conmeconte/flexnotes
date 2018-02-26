@@ -10,7 +10,7 @@ const DEFAULT_STATE = {
     display: 'none'
   },
   resultsStyles: {
-    transform: 'translateY(-100%)'
+    transform: 'translateX(-100%)'
   },
   playlistStyles: {
     transform: 'translateY(-100%)'
@@ -51,7 +51,7 @@ export default function(state = DEFAULT_STATE, action) {
       return {
         ...state,
         videoLink: action.payload.videoLink,
-        resultsStyles: { transform: 'translateX(100%)' }
+        resultsStyles: { transform: 'translateX(-100%)' }
       };
     case types.NO_VIDEO_LINK:
       return { ...state };

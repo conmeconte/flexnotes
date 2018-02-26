@@ -5,7 +5,6 @@ import * as actions from '../actions';
 class VideoPlaylist extends Component {
   render() {
     const { playlistStyles } = this.props;
-    console.log(this.props.playlistItems);
     let createPlaylist;
     if (this.props.playlistItems) {
       createPlaylist = this.props.playlistItems.map((item, index) => {
