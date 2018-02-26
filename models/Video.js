@@ -7,7 +7,8 @@ const videoPlayList = require('./VideoPlayList');
 const videoSchemaNew = new Schema({
   videoId: String,
   videoURL: String,
-  videoTitle: String
+  videoTitle: String,
+  videoImg: String
 });
 
 module.exports = videoSchemaNew;

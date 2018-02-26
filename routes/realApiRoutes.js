@@ -258,8 +258,7 @@ module.exports = (app) => {
                     .page_arr_obj.id(req.body.pageID)
                     if(page){
                         
-                        page.video[0]=new Video({videoId: req.body.video.videoId, videoURL: req.body.video.videoUrl, videoTitle: req.body.video.videoTitle});
-
+                        page.video.unshift(new Video({videoId: req.body.video.videoId, videoURL: req.body.video.videoURL, videoTitle: req.body.video.videoTitle, videoImg: req.body.video.videoImg}));
                         existingUser.save();
                         res.send(page);
                     }else{res.send('wrong path')} 
