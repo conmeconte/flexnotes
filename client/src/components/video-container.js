@@ -39,6 +39,7 @@ class VideoContainer extends Component {
     });
   }
   render() {
+    console.log(this.props.playlistStyles);
     return (
       <div className="iframe-wrapper">
         <form
@@ -71,6 +72,14 @@ class VideoContainer extends Component {
             </div>
           </div>
         </form>
+        <div
+          onClick={() => {
+            this.props.togglePlaylist(this.props.playlistStyles.transform);
+          }}
+          className="playlist-logo-container"
+        >
+          <i className="material-icons">featured_play_list</i>
+        </div>
         <div
           className="arrow-container"
           onClick={() => {
@@ -111,7 +120,8 @@ function mapStateToProps(state) {
     toggleSlideOut: state.video.toggleSlideOut,
     url: state.url,
     videoPlaylist: state.video.addedVideo,
-    savedVideoTitle: state.video.savedVideoTitle
+    savedVideoTitle: state.video.savedVideoTitle,
+    playlistStyles: state.video.playlistStyles
   };
 }
 

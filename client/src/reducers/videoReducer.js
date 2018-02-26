@@ -11,6 +11,9 @@ const DEFAULT_STATE = {
   resultsStyles: {
     transform: 'translateX(-100%)'
   },
+  playlistStyles: {
+    transform: 'translateX(-100%)'
+  },
   opacityDisplay: {
     display: 'none'
   },
@@ -73,6 +76,13 @@ export default function(state = DEFAULT_STATE, action) {
       return {
         ...state,
         addedVideo: [action.payload, ...state.addedVideo]
+      };
+    case types.TOGGLE_PLAYLIST:
+      return {
+        ...state,
+        playlistStyles: {
+          transform: action.payload
+        }
       };
     default:
       return state;

@@ -233,6 +233,17 @@ export function setVideoPlaylist(videos) {
     payload: videos
   };
 }
+export function togglePlaylist(playlistStyle) {
+  if (playlistStyle === 'translateX(-100%)') {
+    playlistStyle = 'translateX(0%)';
+  } else {
+    playlistStyle = 'translateX(-100%)';
+  }
+  return {
+    type: types.TOGGLE_PLAYLIST,
+    payload: playlistStyle
+  };
+}
 export function addVideoToDatabase(
   videoUrl,
   videoTitle,

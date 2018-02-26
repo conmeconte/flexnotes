@@ -98,6 +98,7 @@ class Video extends Component {
   }
   render() {
     const { resultsVideoUrl } = this.props;
+    const { playlistStyles } = this.props;
     return (
       <div className="main">
         <div
@@ -145,6 +146,16 @@ class Video extends Component {
             <Results results={this.props.videoResults} />
           </div>
         </div>
+        <div style={playlistStyles} className="video-playlist-panel">
+          <button
+            onClick={() => {
+              this.props.togglePlaylist(this.props.playlistStyles);
+            }}
+            className="btn close-playlist"
+          >
+            <i className="material-icons">close</i>
+          </button>
+        </div>
         <div id="video-wrapper" className="video-wrapper third-step">
           <VideoContainer />
         </div>
@@ -168,7 +179,8 @@ function mapStateToProps(state) {
     interface_obj: state.interface,
     binderObj: state.binder.binderObj,
     slideOutStyles: state.video.videoLinkSlideOut,
-    toggleSlideOut: state.video.toggleSlideOut
+    toggleSlideOut: state.video.toggleSlideOut,
+    playlistStyles: state.video.playlistStyles
   };
 }
 
