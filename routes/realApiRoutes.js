@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
+const keys  = require('../config/keys')
 
 //Restful/ CRUD operation
 
@@ -47,45 +48,30 @@ module.exports = app => {
         res.send("Error can't find user");
       }
     })
-    .post('/api/binder', requireLogin, async (req, res) => {
-      const existingUser = await User.findById(req.user.id, function(err) {
-        if (err) {
-          return res.send('error');
-        }
-      });
-      if (existingUser) {
-        const defaultBinder = new Binder();
-        defaultBinder.tab_arr_obj.push(new Tab());
-        defaultBinder.tab_arr_obj[0].page_arr_obj.push(
-          new Page({ page_date: new Date().toLocaleString() })
-        );
-        defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(
-          new Video({ videoInfo: 'No Info' })
-        );
-        existingUser.binder_arr_obj.push(defaultBinder);
-        existingUser.save();
-        res.send(existingUser);
-      } else {
-        res.send('Error did occurred');
-      }
+
+    app.get('/api/sample', async(req, res) => {
+        const existingUser= await User.findById(keys.sampleId);
+        console.log("pulled existing user", existingUser); 
+        res.send(existingUser); 
+        res.redirect('/main');
+
     })
-    .delete('/api/binder', requireLogin, async (req, res) => {
-      const existingUser = await User.findById(req.user.id, function(err) {
-        if (err) {
-          return res.send('error');
-        }
-      });
-      if (existingUser) {
-        const binder = existingUser.binder_arr_obj.id(req.query.binderID);
-        binder.remove();
-        existingUser.save();
-        res.send(existingUser.binder_arr_obj);
-      } else {
-        res.send("Error can't find user");
-      }
-    })
-    .put('/api/binder', requireLogin, async (req, res) => {
-      // update binder
+
+
+    app.get('/api/userInfo',  (req, res) => {
+        res.send(req.user);
+    });
+    //Front Error Handler//
+    app.post('/api/errors', requireLogin, async(req, res)=>{
+        const existingUser= await User.findById(req.user.id);
+        if(!existingUser){
+            res.send("Error can't find user");
+        }else{
+            const frontErrorLog= {Date: new Date().toLocaleString, Error: req.body.errorLog};
+            fs.appendFile('./errorLogs/frontEnd.log', JSON.stringify(frontErrorLog) + '\n', function (err) {
+                if (err) throw err; 
+                console.log('Front End Log Updated!');
+             });
 
       const existingUser = await User.findById(req.user.id, function(err) {
         if (err) {
