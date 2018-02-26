@@ -9,7 +9,7 @@ export const fetchUser = () => async dispatch => {
 };
 export const fetchSampleUser = () => async dispatch => {
   const res = await axios.get('/api/sample');
-  dispatch({ type: types.FETCH_USER, payload: res.data });
+  dispatch({ type: types.FETCH_SAMPLE_USER, payload: res.data });
 };
 
 //PANEL SPECs Action Creator

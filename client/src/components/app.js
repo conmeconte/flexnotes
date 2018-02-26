@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from "../actions";
+//import * as actions from "../actions";
+import { fetchUser, fetchSampleUser } from '../actions/index';
 import LandingPage from './landingpage';
 import Dashboard from './dashboard';
 import 'materialize-css/dist/css/materialize.min.css';
@@ -35,6 +36,7 @@ class App extends Component {
         if(nextProps.auth === false){
             //sample axios call here
             console.log('sample axio call here');
+            this.props.fetchSampleUser();
         }
 
     }
@@ -64,5 +66,5 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, actions)(App);
+export default connect(mapStateToProps, { fetchUser, fetchSampleUser })(App);
 
