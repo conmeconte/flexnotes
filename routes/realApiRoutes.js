@@ -12,12 +12,26 @@ module.exports = (app) => {
 
 
     app.get('/api/sample', async(req, res) => {
-        const existingUser= await User.findById(keys.sampleId);
+        const existingUser= await User.findById(keys.sampleId, function(err){if(err){return res.send('error pulling sampleUser')}});
         console.log("pulled existing sample user", existingUser); 
         res.send(existingUser); 
 
     })
 
+    app.get('/api/lfz', async(req, res)=>{
+        const existingUser= await User.findById(keys.lfzId, function(err){if(err){return res.send('error pulling sampleUser')}});
+        if(existingUser){
+            existingUser.binder_arr_obj.map((arr)=>{
+                if(arr.binder_name === "LearningFuze"){
+                    res.send(arr); 
+                }
+            }); 
+        }else{
+            res.send("Can't find LFZUserID");
+        }
+
+        
+    })
 
     app.get('/api/userInfo',  (req, res) => {
         res.send(req.user);
