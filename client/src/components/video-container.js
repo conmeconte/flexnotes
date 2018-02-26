@@ -29,12 +29,14 @@ class VideoContainer extends Component {
       return;
     }
     this.props.playPastedLinkVideo(values['youtube-url']);
-    this.props.getSavedVideoTitle(values['youtube-url']);
-    this.props.addVideoToDatabase(
-      values['youtube-url'],
-      this.props.savedVideoTitle,
-      this.props.binderTabPageIds
-    );
+    this.props.getSavedVideoTitle(values['youtube-url']).then(() => {
+      this.props.addVideoToDatabase(
+        values['youtube-url'],
+        this.props.savedVideoTitle,
+        this.props.binderTabPageIds,
+        this.props.videoPlaylist
+      );
+    });
   }
   render() {
     return (

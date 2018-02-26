@@ -227,7 +227,18 @@ export function toggleResults(visible) {
     payload: toggleResults
   };
 }
-export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
+export function setVideoPlaylist(videos) {
+  return {
+    type: types.SET_VIDEO_PLAYLIST,
+    payload: videos
+  };
+}
+export function addVideoToDatabase(
+  videoUrl,
+  videoTitle,
+  interfaceObj,
+  currentPlaylist
+) {
   if (!videoUrl) {
     return {
       type: types.NO_VIDEO_LINK
@@ -251,7 +262,11 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
         });
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
-          payload: videoLink
+          payload: {
+            videoTitle: videoTitle,
+            videoId: videoId,
+            videoUrl: videoLink
+          }
         });
       } catch (error) {
         dispatch({
@@ -279,7 +294,11 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
         });
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
-          payload: videoLink
+          payload: {
+            videoTitle: videoTitle,
+            videoId: videoId,
+            videoUrl: videoLink
+          }
         });
       } catch (error) {
         dispatch({
@@ -298,16 +317,19 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
           video: {
             videoTitle: videoTitle,
             videoId: videoId,
-            videoUrl: videoUrl
+            videoUrl: videoLink
           },
           binderID: interfaceObj.binder_id,
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
-
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
-          payload: videoUrl
+          payload: {
+            videoTitle: videoTitle,
+            videoId: videoId,
+            videoUrl: videoLink
+          }
         });
       } catch (error) {
         dispatch({
