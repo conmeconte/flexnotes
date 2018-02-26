@@ -37,6 +37,11 @@ body {
     box-shadow: 0 4px 2px -2px #0393d7;
     border-radius: 5px;
 }
+.btn.sample{
+    background-color: #12d0e9;
+    margin-top: 5%; 
+
+}
 .blur {
     position: absolute;
     top: 0;

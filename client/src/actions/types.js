@@ -1,5 +1,6 @@
 export default {
   FETCH_USER: 'fetch_user',
+  FETCH_SAMPLE_USER: 'fetch_sample_user',
   GET_USER_DATA: 'get_user_data',
   UPDATE_BINDER_ARRAY: 'update_binder_array',
   AXIOS_ERROR: 'axios_error',
