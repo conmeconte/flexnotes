@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Results from './results';
-import VideoContainer from './video-container';
+import Results from './Results';
+import VideoContainer from './VideoContainer';
+import VideoPlaylist from './VideoPlaylist';
 import axios from 'axios';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
@@ -87,7 +88,7 @@ class Video extends Component {
         currentPage.hasOwnProperty('video') &&
         currentPage.video[0].hasOwnProperty('videoId')
       ) {
-        this.props.setVideoUrl(currentPage.video[0].videoURL, interface_obj);
+        this.props.setVideoUrl(currentPage.video[0].videoId, interface_obj);
         this.props.slideOutVideoSearch(false, 'translateY(-119px)');
       } else {
         this.props.setVideoUrl('', interface_obj);
@@ -97,7 +98,7 @@ class Video extends Component {
     }
   }
   render() {
-    const { resultsVideoUrl } = this.props;
+    const { resultsVideoUrl, playlistStyles } = this.props;
     return (
       <div className="main">
         <div
@@ -145,6 +146,7 @@ class Video extends Component {
             <Results results={this.props.videoResults} />
           </div>
         </div>
+        <VideoPlaylist videoPlaylist={this.props.playlistItems} />
         <div id="video-wrapper" className="video-wrapper third-step">
           <VideoContainer />
         </div>
@@ -161,14 +163,15 @@ function mapStateToProps(state) {
   return {
     pastedVideoUrl: state.videoResults.videoLink,
     videoResults: state.video.results,
-    videoPlaylist: state.video.addedVideo,
     resultsStyles: state.video.resultsStyles,
     opacityContainer: state.video.opacityDisplay,
     toggleResultsBool: state.video.toggleResults,
     interface_obj: state.interface,
     binderObj: state.binder.binderObj,
     slideOutStyles: state.video.videoLinkSlideOut,
-    toggleSlideOut: state.video.toggleSlideOut
+    toggleSlideOut: state.video.toggleSlideOut,
+    playlistStyles: state.video.playlistStyles,
+    playlistItems: state.video.addedVideo
   };
 }
 
