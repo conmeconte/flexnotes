@@ -1,5 +1,6 @@
 import axios from 'axios';
 import types from './types';
+import keys from '../../../config/keys';
 
 export const fetchUser = () => async dispatch => {
   const res = await axios.get('/api/current_user');
@@ -172,6 +173,17 @@ export function slideOutSlidesSearch(toggleBool, slide) {
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
+export const getSavedVideoTitle = videoUrl => async dispatch => {
+  let videoId = videoUrl.split('=');
+  videoId = videoId[1];
+  const response = await axios.get(
+    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.videoKey}`
+  );
+  dispatch({
+    type: types.GET_SAVED_VIDEO_TITLE,
+    payload: response.data.items[0].snippet.title
+  });
+};
 export function getVideoResults(videos) {
   return {
     type: types.GET_VIDEO_RESULTS,
@@ -229,7 +241,7 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
       try {
         const response = await axios.post('/api/video', {
           video: {
-            videoTitle: '',
+            videoTitle: videoTitle,
             videoId: videoId,
             videoUrl: videoLink
           },
@@ -257,7 +269,7 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
       try {
         const response = await axios.post('/api/video', {
           video: {
-            videoTitle: '',
+            videoTitle: videoTitle,
             videoId: videoId,
             videoUrl: videoLink
           },
@@ -266,7 +278,7 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
           pageID: interfaceObj.page_id
         });
         dispatch({
-          type: types.ADD_TO_PLAYLIST,
+          type: types.ADD_VIDEO_TO_DATABASE,
           payload: videoLink
         });
       } catch (error) {
@@ -284,7 +296,7 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
       try {
         const response = await axios.post('/api/video', {
           video: {
-            videoTitle: '',
+            videoTitle: videoTitle,
             videoId: videoId,
             videoUrl: videoUrl
           },
@@ -294,7 +306,7 @@ export function addVideoToDatabase(videoUrl, videoTitle, interfaceObj) {
         });
 
         dispatch({
-          type: types.ADD_TO_PLAYLIST,
+          type: types.ADD_VIDEO_TO_DATABASE,
           payload: videoUrl
         });
       } catch (error) {

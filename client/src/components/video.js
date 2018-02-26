@@ -129,7 +129,6 @@ class Video extends Component {
     }
   }
   render() {
-    console.log(this.props);
     const { resultsVideoUrl } = this.props;
     return (
       <div className="main">
@@ -194,6 +193,7 @@ function mapStateToProps(state) {
   return {
     pastedVideoUrl: state.videoResults.videoLink,
     videoResults: state.video.results,
+    videoPlaylist: state.video.addedVideo,
     resultsStyles: state.video.resultsStyles,
     opacityContainer: state.video.opacityDisplay,
     toggleResultsBool: state.video.toggleResults,
