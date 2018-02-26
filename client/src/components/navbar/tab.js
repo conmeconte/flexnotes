@@ -37,53 +37,11 @@ class Tab extends Component {
             });
         }
     }
-<<<<<<< HEAD
-
-    componentWillReceiveProps(nextProps) {
-        // if(nextProps.interface.editable === false){
-        //     this.setState({
-        //         editable: false
-        //     });
-        // }
-    }
-    // componentWillReceiveProps(nextProps){
-
-    //     if(this.props.hasOwnProperty("binder")){
-    //         // this.setState({
-    //         //     binderName: this.props.binderObj.binder_name
-    //         // });
-    //         if(nextProps.binder.binder_name !== this.props.binder.binder_name){
-
-    //         } else {
-
-    //         }
-    //     }
-
-    // }
     addPage() {
-        //console.log('addPage clicked');
-        //this.props.addTab(this.props.binderObj._id);
-
         this.props.addPage(this.props.interface.binder_id, this.props.tabObj._id);
-    }
-
-    deletePage(page_id) {
-        //console.log('delete page id:', page_id);
-        if (this.props.tabObj.page_arr_obj.length === 1) {
-            console.log('can not delete last page');
-            return;
-        }
-        this.props.deletePage(this.props.interface.binder_id, this.props.interface.tab_id, page_id);
     }
 
     editTabs(event) {
-=======
-    addPage(){
-        this.props.addPage(this.props.interface.binder_id, this.props.tabObj._id);
-    }
-
-    editTabs(event){
->>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         event.stopPropagation();
         this.setState({
             editable: true,

@@ -17,12 +17,6 @@ class Page extends Component {
             hover: false,
             editHover: false,
             deleteHover: false,
-<<<<<<< HEAD
-            active: false
-            //tabObject: this.props.tabObj,
-            //binderUrl: this.props.binderUrl
-=======
->>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         }
         this.deletePage = this.deletePage.bind(this);
         this.editPage = this.editPage.bind(this);
@@ -30,90 +24,13 @@ class Page extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.cancelPageEdit = this.cancelPageEdit.bind(this);
     }
-<<<<<<< HEAD
-    componentWillReceiveProps(nextProps) {
-        // if(nextProps.interface.editable === false){
-        //     this.setState({
-        //         editable: false
-        //     });
-        // }
-    }
-
-    // addPage(){
-    //     //console.log('addPage clicked');
-    //     this.props.addPage(this.props.interface.binder_id, this.props.interface.tab_id);
-    // }
-
-    // editPages(){
-    //     console.log("editable should be true");
-    //     this.setState({
-    //         editable: true
-    //     });
-    // }
-
-    // notEditPages() {
-    //     console.log("editable should be false");
-    //     this.setState({ 
-    //         editable: false 
-    //     });
-    // }
-
-    // pageTextChanged(e, id){
-    //     const {tabObject} = this.state;
-    //     const {page_arr_obj} = tabObject;
-    //     //console.log("text changed, id:", id);
-    //     //console.log(e.target.value);
-
-    //     for(let i =0; i<page_arr_obj.length; i++){
-    //         if(page_arr_obj[i].tab_id===id ){
-    //             //console.log('binder_id and id match');
-    //             page_arr_obj[i].tab_name = e.target.value;
-    //         }
-    //     }
-
-    //     tabObject.page_arr_obj = page_arr_obj;
-
-    //     this.setState({
-    //         tabObject: tabObject
-    //     });
-    // }
-
-    // deletePage(delete_id){
-
-    //     const {tabObject} = this.state;
-    //     const {page_arr_obj} = tabObject;
-    //     //console.log(binder_array);
-    //     let deleteIndex = 0;
-    //     for(deleteIndex; deleteIndex<page_arr_obj.length; deleteIndex++){
-    //         if(page_arr_obj[deleteIndex].page_id === delete_id){
-    //             page_arr_obj.splice(deleteIndex, 1);
-    //         }
-    //     }
-
-    //     tabObject.page_arr_obj = page_arr_obj;
-
-    //     this.setState({
-    //         tabObject: tabObject
-    //     });
-    // }   
     editPageName(e) {
-
-
-=======
-    editPageName(e){
->>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         this.setState({
             pageName: e.target.value
         });
     }
 
-<<<<<<< HEAD
     editPage() {
-        //event.stopPropagation();
-        //console.log("editable should be true");
-=======
-    editPage(){
->>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         this.setState({
             editable: true,
             pageName: this.props.pageObj.page_name
@@ -130,24 +47,12 @@ class Page extends Component {
     }
 
     keyPressed(event) {
-<<<<<<< HEAD
-        //console.log('keypress',event);
         if (event.key === 'Enter') {
-            //console.log('enter key pressed');
             this.notEditPage();
         }
     }
 
     deletePage(page_id) {
-        //console.log('delete page id:', page_id);
-=======
-        if(event.key === 'Enter') {
-          this.notEditPage();
-      }
-    }
-
-    deletePage(page_id){
->>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         let deleteIndex = null;
         for (let i = 0; i < this.props.binder.tab_arr_obj.length; i++) {
             if (this.props.binder.tab_arr_obj[i]._id === this.props.tabID) {
@@ -162,12 +67,7 @@ class Page extends Component {
         }
     }
 
-<<<<<<< HEAD
     handleClick() {
-        //this.props.selectBinder(binderObj);
-=======
-    handleClick(){
->>>>>>> 9effb03718a99cea0ba09ea8b9740900ed489577
         this.props.selectPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id);
     }
 
