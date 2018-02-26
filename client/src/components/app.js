@@ -31,7 +31,16 @@ class App extends Component {
         this.props.fetchUser();
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.auth === false){
+            //sample axios call here
+            console.log('sample axio call here');
+        }
+
+    }
+
     render() {
+        console.log('app props', this.props);
         return (
             <div className="app">
                 <BrowserRouter >
@@ -49,5 +58,11 @@ class App extends Component {
     }
 }
 
-export default connect(null, actions)(App);
+function mapStateToProps(state){
+    return{
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps, actions)(App);
 

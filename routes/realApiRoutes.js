@@ -3,11 +3,50 @@ const requireLogin = require('../middlewares/requireLogin');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
 const keys  = require('../config/keys')
 
-//Restful/ CRUD operation 
+//Restful/ CRUD operation
 
-module.exports = (app) => {     
-    app.get('/', (req, res) => {
-        res.send('Homepage')
+module.exports = app => {
+  app.get('/', (req, res) => {
+    res.send('Homepage');
+  });
+  app.get('/api/userInfo', (req, res) => {
+    res.send(req.user);
+  });
+  //Front Error Handler//
+  app.post('/api/errors', requireLogin, async (req, res) => {
+    const existingUser = await User.findById(req.user.id);
+    if (!existingUser) {
+      res.send("Error can't find user");
+    } else {
+      const frontErrorLog = {
+        Date: new Date().toLocaleString,
+        Error: req.body.errorLog
+      };
+      fs.appendFile(
+        './errorLogs/frontEnd.log',
+        JSON.stringify(frontErrorLog) + '\n',
+        function(err) {
+          if (err) throw err;
+          console.log('Front End Log Updated!');
+        }
+      );
+    }
+  });
+
+  // For Binder //
+  app
+    .get('/api/binder', requireLogin, async (req, res) => {
+      //give binder data
+      const existingUser = await User.findById(req.user.id, function(err) {
+        if (err) {
+          return res.send('error');
+        }
+      });
+      if (existingUser) {
+        res.send(existingUser);
+      } else {
+        res.send("Error can't find user");
+      }
     })
 
 
@@ -34,9 +73,13 @@ module.exports = (app) => {
                 console.log('Front End Log Updated!');
              });
 
+      const existingUser = await User.findById(req.user.id, function(err) {
+        if (err) {
+          return res.send('error');
         }
-    });
-
+      });
+      if (existingUser) {
+        const binder = existingUser.binder_arr_obj.id(req.body.binderID);
     // For Binder //
     app
         .get('/api/binder',  async (req, res) => {
@@ -133,11 +176,8 @@ module.exports = (app) => {
         .delete('/api/tab', async (req, res) => {
             const existingUser= await User.findById(req.user.id,function(err,user){if(err){return res.send('error')}});
 
-                if (existingUser) {
-                    const tab = existingUser
-                    .binder_arr_obj.id(req.query.binderID) 
-                    .tab_arr_obj.id(req.query.tabID) 
 
+        const binder = existingUser.binder_arr_obj.id(req.query.binderID);
                     const binder = existingUser
                     .binder_arr_obj.id(req.query.binderID)
                     
@@ -151,27 +191,17 @@ module.exports = (app) => {
         })
         .put('/api/tab', async (req, res) => {
 
-            const existingUser= await User.findById(req.user.id, function (err){if(err){return res.send('error')}});
-                if (existingUser) {
-                    const tab = existingUser
-                    .binder_arr_obj.id(req.body.binderID) 
-                    .tab_arr_obj.id(req.body.tabID) 
-                    
-                    tab.tab_color = req.body.tab_color || tab.tab_color;
-                    tab.tab_name = req.body.tab_name || tab.tab_name;
-                    
-                    const binder = existingUser
-                    .binder_arr_obj.id(req.body.binderID);
+        tab.tab_color = req.body.tab_color || tab.tab_color;
+        tab.tab_name = req.body.tab_name || tab.tab_name;
 
-                    existingUser.save();
-                    res.send(existingUser.binder_arr_obj);
-                }else {
-                res.send("Error can't find user")
-                }
-        
-        });
+        const binder = existingUser.binder_arr_obj.id(req.body.binderID);
 
-    // For Page //
+        existingUser.save();
+        res.send(existingUser.binder_arr_obj);
+      } else {
+        res.send("Error can't find user");
+      }
+    });
 
     app
         .get('/api/page', async (req,res)=>{
@@ -319,18 +349,116 @@ app.put('/api/note', async (req,res)=>{
                 if(page){
                     page.notes.document= req.body.document || page.notes.document;
 
-                    existingUser.save();
-                    res.send(page);
-                }else{res.send('wrong path')}
-                
-            }else {
-            res.send("Error can't find user")
-            }
+        existingUser.save();
+        res.send(existingUser.binder_arr_obj);
+      } else {
+        res.send("Error can't find user");
+      }
     });
 
+  //video//
+  app
+    .post('/api/video', requireLogin, async (req, res) => {
+      const existingUser = await User.findById(req.user.id, err => {
+        if (err) {
+          return res.send('error');
+        }
+      });
+      if (existingUser) {
+        const page = existingUser.binder_arr_obj
+          .id(req.body.binderID)
+          .tab_arr_obj.id(req.body.tabID)
+          .page_arr_obj.id(req.body.pageID);
+        if (page) {
+          page.video.unshift(
+            new Video({
+              videoId: req.body.video.videoId,
+              videoURL: req.body.video.videoUrl,
+              videoTitle: req.body.video.videoTitle
+            })
+          );
 
-}
+          existingUser.save();
+          res.send(page);
+        } else {
+          res.send('wrong path');
+        }
+      } else {
+        res.send("Error can't find user");
+      }
+    })
+    .delete('/api/video', requireLogin, async (req, res) => {
+      const existingUser = await User.findById(req.user.id, (err, user) => {
+        if (err) {
+          return res.send('error');
+        }
+      });
+      if (existingUser) {
+        const video = existingUser.binder_arr_obj
+          .id(req.query.binderID)
+          .tab_arr_obj.id(req.query.tabID)
+          .page_arr_obj.id(req.query.pageID)
+          .video.id(req.query.videoID);
+        if (video) {
+          video.remove();
+          existingUser.save();
+          res.send(existingUser);
+        } else {
+          res.send('binder/tab/page id does not exist');
+        }
+      } else {
+        res.status(500);
+        res.render('error', { error: err }).send("Error can't find user");
+      }
+    })
+    .put('/api/video', requireLogin, async (req, res) => {
+      const existingUser = await User.findById(req.user.id, (err, user) => {
+        if (err) {
+          return res.send('error');
+        }
+      });
+      if (existingUser) {
+        const video = existingUser.binder_arr_obj
+          .id(req.body.binderID)
+          .tab_arr_obj.id(req.body.tabID)
+          .page_arr_obj.id(req.body.pageID)
+          .video.id(req.body.videoID);
+        if (video) {
+          video.vid_url = req.body.vid_url || video.vid_url;
+          video.videoInfo = req.body.videoInfo || video.videoInfo;
+          existingUser.save();
+          res.send(existingUser);
+        } else {
+          res.send('path ids provided does not work');
+        }
+      } else {
+        res.status(500);
+        res.render('error', { error: err }).send("Error can't find user");
+      }
+    });
 
+  //note//
+  app.put('/api/note', requireLogin, async (req, res) => {
+    const existingUser = await User.findById(req.user.id, (err, user) => {
+      if (err) {
+        return res.send('error');
+      }
+    });
+    if (existingUser) {
+      const page = existingUser.binder_arr_obj
+        .id(req.body.binderID)
+        .tab_arr_obj.id(req.body.tabID)
+        .page_arr_obj.id(req.body.pageID);
+      if (page) {
+        page.notes.document = req.body.document || page.notes.document;
 
-
-
+        existingUser.save();
+        res.send(page);
+      } else {
+        res.send('wrong path');
+      }
+    } else {
+      res.send("Error can't find user");
+    }
+  });
+};
