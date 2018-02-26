@@ -20,16 +20,19 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       width: window.innerWidth,
-      isTourOpen: false
-    };
+      isTourOpen: false,
+      mobilePanelIndex: 1
+    }
+    this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
+    this.mobileSelectComponent = this.mobileSelectComponent.bind(this);
   }
   componentWillMount() {
     this.props.getDataObject();
 
-    this.setState = {
+    this.setState({
       isTourOpen: false,
       width: window.innerWidth
-    };
+    });
 
     this.toggleTour = this.toggleTour.bind(this);
     window.addEventListener('resize', this.handleWindowSizeChange);
@@ -37,7 +40,7 @@ class Dashboard extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
   }
-  handleWindowSizeChange = () => {
+  handleWindowSizeChange(){
     this.setState({ width: window.innerWidth });
   };
   toggleTour() {
@@ -52,52 +55,64 @@ class Dashboard extends Component {
     }
   }
 
+  mobileSelectComponent(index){
+    console.log('select', index);
+    this.setState({
+      mobilePanelIndex: index
+    });
+  }
+
   render() {
-    const { width } = this.state;
+    console.log('dashboard props', this.props);
+    const { width, mobilePanelIndex } = this.state;
     const isMobile = width <= 767;
     let dashboard = {};
     if (!this.props.binderArr) {
       return null;
     }
     if (isMobile) {
+      let mobilePanel = {};
+      switch(mobilePanelIndex){
+        case 1:
+          mobilePanel = <NavBar/>;
+          break;
+        case 2: 
+          mobilePanel  = <Video/>;
+          break;
+        case 3: 
+          mobilePanel = <Slides/>;
+          break;
+        case 4: 
+          mobilePanel = <Notes/>;
+          break;
+      }
       dashboard = (
         <div>
-          <Route path={'/main/mNavbar'} component={NavBar} />
-          <Route path={'/main/mVideo'} component={Video} />
-          <Route path={'/main/mSlides'} component={Slides} />
-          <Route path={'/main/mNotes'} component={Notes} />
+          {mobilePanel}
           <ul className="mobileNav">
-            <li className="mobileLink navLink">
-              <Link to={`/main/mNavbar`} style={{ textDecoration: 'none' }}>
+            <li className="mobileLink navLink" onClick={()=>this.mobileSelectComponent(1)}>
                 <div>
                   <i className="small material-icons">dehaze</i>
                   <br />Nav
                 </div>
-              </Link>
             </li>
-            <li className="mobileLink">
-              <Link to={`/main/mVideo`} style={{ textDecoration: 'none' }}>
+            <li className="mobileLink" onClick={()=>this.mobileSelectComponent(2)}>
                 <div>
                   <i className="small material-icons">video_library</i>
                   <br />Video
                 </div>
-              </Link>
             </li>
-            <li className="mobileLink">
-              <Link to={`/main/mSlides`} style={{ textDecoration: 'none' }}>
+            <li className="mobileLink" onClick={()=>this.mobileSelectComponent(3)}>
                 <div>
                   <i className="small material-icons">video_label</i>
                   <br />Slides
                 </div>
-              </Link>
             </li>
-            <li className="mobileLink">
-              <Link to={`/main/mNotes`} style={{ textDecoration: 'none' }}>
+            <li className="mobileLink" onClick={()=>this.mobileSelectComponent(4)}>
                 <div>
                   <i className="small material-icons">description</i>
                   <br />Notes
                 </div>
-              </Link>
             </li>
           </ul>
         </div>
@@ -126,7 +141,8 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
   return {
-    binderArr: state.binderArray.binderArr
+    binderArr: state.binderArray.binderArr,
+    interface: state.interface
   };
 }
 
