@@ -56,14 +56,12 @@ class Dashboard extends Component {
   }
 
   mobileSelectComponent(index){
-    console.log('select', index);
     this.setState({
       mobilePanelIndex: index
     });
   }
 
   render() {
-    console.log('dashboard props', this.props);
     const { width, mobilePanelIndex } = this.state;
     const isMobile = width <= 767;
     let dashboard = {};
@@ -91,26 +89,26 @@ class Dashboard extends Component {
           {mobilePanel}
           <ul className="mobileNav">
             <li className="mobileLink navLink" onClick={()=>this.mobileSelectComponent(1)}>
-                <div>
+                <div className={`${ (mobilePanelIndex===1) ? 'activeMobile' : ''}`}>
                   <i className="small material-icons">dehaze</i>
                   <br />Nav
                 </div>
             </li>
             <li className="mobileLink" onClick={()=>this.mobileSelectComponent(2)}>
-                <div>
-                  <i className="small material-icons">video_library</i>
+                <div className={`${ (mobilePanelIndex===2) ? 'activeMobile' : ''}`}>
+                  <i className="small material-icons mobile-icon">video_library</i>
                   <br />Video
                 </div>
             </li>
             <li className="mobileLink" onClick={()=>this.mobileSelectComponent(3)}>
-                <div>
-                  <i className="small material-icons">video_label</i>
+                <div className={`${ (mobilePanelIndex===3) ? 'activeMobile' : ''}`}>
+                  <i className="small material-icons mobile-icon">video_label</i>
                   <br />Slides
                 </div>
             </li>
             <li className="mobileLink" onClick={()=>this.mobileSelectComponent(4)}>
-                <div>
-                  <i className="small material-icons">description</i>
+                <div className={`${ (mobilePanelIndex===4) ? 'activeMobile' : ''}`}>
+                  <i className="small material-icons mobile-icon">description</i>
                   <br />Notes
                 </div>
             </li>
