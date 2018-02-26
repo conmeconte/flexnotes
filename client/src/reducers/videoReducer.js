@@ -3,6 +3,7 @@ import types from '../actions/types';
 const DEFAULT_STATE = {
   results: [],
   addedVideo: [],
+  savedVideoTitle: '',
   toggleResults: true,
   addVideoModal: {
     display: 'none'
@@ -62,6 +63,16 @@ export default function(state = DEFAULT_STATE, action) {
       return {
         ...state,
         videoLinkSlideOut: action.payload.slideOutStyles.style
+      };
+    case types.GET_SAVED_VIDEO_TITLE:
+      return {
+        ...state,
+        savedVideoTitle: action.payload
+      };
+    case types.SET_VIDEO_PLAYLIST:
+      return {
+        ...state,
+        addedVideo: [action.payload, ...state.addedVideo]
       };
     default:
       return state;
