@@ -15,6 +15,7 @@ const DEFAULT_STATE = {
 export default function (state = DEFAULT_STATE, action) {
     switch (action.type) {
         case types.GET_USER_DATA:
+        case types.FETCH_SAMPLE_USER:
             let userName = action.payload.userName;
             let initBinderID = action.payload.binder_arr_obj[0]._id;
             let initTabID = action.payload.binder_arr_obj[0].tab_arr_obj[0]._id;

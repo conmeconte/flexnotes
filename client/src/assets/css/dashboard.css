@@ -15,7 +15,17 @@
 }
 .mobileLink{
     width: 22%;
+    font-weight: bold;
 }
 .navLink{
     margin-left: 12%;
+}
+
+.activeMobile {
+    color: #0288d1;
+
+}
+
+.mobile-icon.material-icons {
+    padding-left: 3%;
 }
