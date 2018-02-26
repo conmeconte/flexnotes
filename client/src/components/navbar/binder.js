@@ -249,7 +249,6 @@ function mapStateToProps(state) {
         interface: state.interface
     }
 }
-}
 
 export default withRouter(connect(mapStateToProps, { updateBinderArray, selectBinder, addTab, deleteBinder, editBinder })(Binder));
 
