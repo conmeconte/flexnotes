@@ -241,6 +241,7 @@ button.close {
   z-index: 3500;
   transition: 0.4s;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 .close-playlist {
   position: absolute;
@@ -281,5 +282,8 @@ button.close {
   }
   .youtube-search-buttons {
     top: 6vh;
+  }
+  .playlist-logo-container {
+    top: 9vh;
   }
 }
