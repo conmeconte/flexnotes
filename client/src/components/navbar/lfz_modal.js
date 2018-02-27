@@ -15,8 +15,7 @@ export default class LfzModal extends Component {
 
     handleConfirm(){
         const { password } = this.state;
-        //console.log('password', password);
-        this.props.callback();
+        this.props.callback(password);
         this.setState({
             visible: false
         });
@@ -27,7 +26,6 @@ export default class LfzModal extends Component {
         });
     }
     render(){
-        console.log(this.props);
         const {visible} = this.state;
 
         let bodyText = (

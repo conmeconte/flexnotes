@@ -68,8 +68,7 @@ class NavBar extends Component {
     }
 
     addLfz(password){
-        //console.log('password', password);
-        this.props.addLfzBinder();
+        this.props.addLfzBinder(password);
     }
     render() {
         let editableText = '';
@@ -102,7 +101,7 @@ class NavBar extends Component {
                         <i className="small material-icons">chevron_left</i>
                     </button>
                     <LfzModal
-                        callback={()=>this.addLfz()}
+                        callback={this.addLfz}
                     />
                     <section className="second-step binder-container">
                         {binder}
