@@ -248,8 +248,9 @@ button.close {
   right: 4px;
   top: 4px;
 }
-.close-playlist-icon {
+.playlist-logo-container i {
   margin-right: 0;
+  color: rgb(2, 136, 209);
 }
 .close-playlist-icon:hover {
   cursor: pointer;

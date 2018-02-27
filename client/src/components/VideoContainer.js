@@ -52,7 +52,7 @@ class VideoContainer extends Component {
           <div className="col s3 youtube-search-buttons">
             <div className="row btn-wrapper">
               <button className="btn green darken-1 video-btn">
-                <i className="material-icons">check</i>
+                <i className="material-icons">add</i>
               </button>
               <button
                 type="button"
