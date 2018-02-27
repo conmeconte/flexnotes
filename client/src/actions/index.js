@@ -703,7 +703,7 @@ export function addLfzBinder() {
         console.log('lfz import', resp); 
         dispatch({
           type: types.ADD_LFZ_BINDER,
-          payload: resp
+          payload: resp.data.binder_arr_obj
         });
       })
       .catch(err => {
