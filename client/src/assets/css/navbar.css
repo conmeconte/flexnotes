@@ -36,6 +36,21 @@ a {
     background-color: #eceff1;
 }
 
+.lfzLogo{
+    width: 2.5%;
+    position: absolute;
+    left: 13%;
+    filter: drop-shadow(1px 1px 1px #333333);
+}
+
+.lfzLogo:hover{
+    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);
+}
+
+.lfzLogo:active{
+    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);
+    transform: translateY(2px);
+}
 
 ul > li {
     list-style: none;
@@ -411,6 +426,17 @@ footer {
     }
     .startTour.btn, .logoutBtn.btn {
         font-size: 1em;
+    }
+
+    .lfzLogo{
+        width: 10%;
+        left: 85%;
+        top: 1.5%;
+    }
+    .modal-content.modal-nav{
+        position: absolute;
+        width: 90%;
+        left: 5%;
     }
 }
 
