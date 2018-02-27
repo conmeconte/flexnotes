@@ -697,10 +697,10 @@ export function editPage(binder_id, tab_id, page_id, page_name) {
 export function addLfzBinder() {
   return dispatch => {
     const test = axios
-      .post('/api/page', {
-        pw: password
+      .post('/api/lfz', {
       })
       .then(resp => {
+        console.log('lfz import', resp); 
         dispatch({
           type: types.ADD_LFZ_BINDER,
           payload: resp
