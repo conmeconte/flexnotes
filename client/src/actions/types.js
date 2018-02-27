@@ -7,6 +7,7 @@ export default {
   ADD_BINDER: 'add_binder',
   ADD_TAB: 'add_tab',
   ADD_PAGE: 'add_page',
+  ADD_LFZ_BINDER: 'add_lfz_binder',
   DELETE_BINDER: 'delete_binder',
   DELETE_TAB: 'delete_tab',
   DELETE_PAGE: 'delete_page',
