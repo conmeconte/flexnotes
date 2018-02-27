@@ -20,11 +20,19 @@ module.exports = (app) => {
 
     app.post('/api/lfz', async(req, res)=>{
         // if(req.body.pw === keys.lfzpw){
-            const existingUser= await User.findById(keys.lfzId, function(err){if(err){return res.send('error pulling sampleUser')}});
-            if(existingUser){
-                existingUser.binder_arr_obj.map((arr)=>{
+            const lfzUserInfo= await User.findById(keys.lfzId, function(err){if(err){return res.send('error pulling sampleUser')}});
+            if(lfzUserInfo){
+                lfzUserInfo.binder_arr_obj.map(async (arr)=>{
                     if(arr.binder_name === "LearningFuze"){
-                        res.send(arr); 
+                        const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, function(err){if(err){return res.send('error')}});
+                        if(existingUser){
+                            existingUser.binder_arr_obj.push(arr);
+                            existingUser.save()
+                            res.send(existingUser);    
+        
+                        }else{
+                            res.send("Error did occurred");
+                        }
                     }
                 }); 
             }else{
