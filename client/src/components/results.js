@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class Results extends Component {
-  handlePlayVideo(videoUrl) {
+  handlePlayVideo(videoUrl, videoTitle, videoImg, interfaceObj) {
     this.props.playVideo(videoUrl);
-    this.props.addVideoToDatabase(videoUrl, '', this.props.interface_obj);
+    this.props.addVideoToDatabase(videoUrl, videoTitle, videoImg, interfaceObj);
     this.props.slideOutVideoSearch(false, '');
   }
   render() {
@@ -28,10 +28,15 @@ class Results extends Component {
               id="youtube-play"
               className="btn red darken-3 right video-btn"
               onClick={() => {
-                this.handlePlayVideo(item.url);
+                this.handlePlayVideo(
+                  item.url,
+                  item.videoTitle,
+                  item.thumbnails.default.url,
+                  this.props.interface_obj
+                );
               }}
             >
-              <i className="material-icons">play_arrow</i>
+              <i className="material-icons">add</i>
             </button>
           </div>
         </li>

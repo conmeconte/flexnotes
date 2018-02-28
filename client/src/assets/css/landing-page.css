@@ -167,11 +167,11 @@ a.landing-login-text {
     color: #0393d7; 
 }
 .email-wrapper {
-    position: relative;
-    text-align: center;
-    top: 30%;
+    position: fixed;
+    bottom: 0;
     color: #fff;
     font-size: 2em;
+    width: 100%;
 }
 .email-wrapper a {
     color: #0393d7;

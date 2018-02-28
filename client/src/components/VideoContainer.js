@@ -29,13 +29,15 @@ class VideoContainer extends Component {
       return;
     }
     this.props.playPastedLinkVideo(values['youtube-url']);
-    this.props.getSavedVideoTitle(values['youtube-url']).then(() => {
-      this.props.addVideoToDatabase(
-        values['youtube-url'],
-        this.props.savedVideoTitle,
-        this.props.binderTabPageIds,
-        this.props.videoPlaylist
-      );
+    this.props.getSavedVideoImg(values['youtube-url']).then(() => {
+      this.props.getSavedVideoTitle(values['youtube-url']).then(() => {
+        this.props.addVideoToDatabase(
+          values['youtube-url'],
+          this.props.savedVideoTitle,
+          this.props.savedVideoImage,
+          this.props.binderTabPageIds
+        );
+      });
     });
   }
   render() {
@@ -50,7 +52,7 @@ class VideoContainer extends Component {
           <div className="col s3 youtube-search-buttons">
             <div className="row btn-wrapper">
               <button className="btn green darken-1 video-btn">
-                <i className="material-icons">check</i>
+                <i className="material-icons">add</i>
               </button>
               <button
                 type="button"
@@ -72,6 +74,14 @@ class VideoContainer extends Component {
           </div>
         </form>
         <div
+          onClick={() => {
+            this.props.togglePlaylist(this.props.playlistStyles.transform);
+          }}
+          className="playlist-logo-container"
+        >
+          <i className="material-icons">featured_play_list</i>
+        </div>
+        <div
           className="arrow-container"
           onClick={() => {
             this.props.slideOutVideoSearch(
@@ -86,12 +96,14 @@ class VideoContainer extends Component {
         </div>
         <div id="video-container" className="video-container">
           <div className="resize-blocker" />
-          <iframe
-            allowFullScreen
-            id="video-iframe"
-            src={this.props.videoLink}
-            className="video-iframe"
-          />
+          {this.props.videoLink
+            ? <iframe
+                allowFullScreen
+                id="video-iframe"
+                src={this.props.videoLink}
+                className="video-iframe"
+              />
+            : ''}
         </div>
       </div>
     );
@@ -110,8 +122,9 @@ function mapStateToProps(state) {
     slideOutStyles: state.video.videoLinkSlideOut,
     toggleSlideOut: state.video.toggleSlideOut,
     url: state.url,
-    videoPlaylist: state.video.addedVideo,
-    savedVideoTitle: state.video.savedVideoTitle
+    savedVideoTitle: state.video.savedVideoTitle,
+    savedVideoImage: state.video.savedVideoImage,
+    playlistStyles: state.video.playlistStyles
   };
 }
 

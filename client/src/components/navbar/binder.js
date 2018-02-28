@@ -5,6 +5,7 @@ import { updateBinderArray, selectBinder, addTab, deleteBinder, editBinder } fro
 
 import Tab from './tab';
 import ModalNav from './modal_nav';
+import Loader from '../loader';
 
 import '../../assets/css/navbar.css';
 
@@ -14,7 +15,7 @@ class Binder extends Component {
 
         this.state = {
             editable: false,
-            binderName : '',
+            binderName: '',
             active: false,
             hover: false,
             editHover: false,
@@ -30,18 +31,18 @@ class Binder extends Component {
         this.cancelEdit = this.cancelEdit.bind(this);
     }
 
-    componentDidMount(){
-        if(this.props.index===0){
+    componentDidMount() {
+        if (this.props.index === 0) {
             this.setState({
                 active: true
             });
         }
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
 
-        if(this.props.hasOwnProperty("binderObj")){
-            if(nextProps.interface.binder_id === this.props.binderObj._id){
+        if (this.props.hasOwnProperty("binderObj")) {
+            if (nextProps.interface.binder_id === this.props.binderObj._id) {
                 this.setState({
                     active: true
 
@@ -56,12 +57,12 @@ class Binder extends Component {
 
     }
 
-    addTab(){
+    addTab() {
         this.props.addTab(this.props.binderObj._id);
     }
 
     deleteBinder(delete_id) {
-        if(this.props.binderArr.length === 1){
+        if (this.props.binderArr.length === 1) {
             console.log('can not delete last binder');
             return;
         }
@@ -87,63 +88,63 @@ class Binder extends Component {
             editable: false,
             editHover: false
         });
-        
+
 
     }
     keyPressed(event) {
-        if(event.key === 'Enter') {
-          this.notEditable();
-      }
+        if (event.key === 'Enter') {
+            this.notEditable();
+        }
     }
 
-    editBinderName(e){
+    editBinderName(e) {
         this.setState({
             binderName: e.target.value
         });
     }
 
-    binderSelect(event){
+    binderSelect(event) {
         event.stopPropagation();
         this.props.selectBinder(this.props.binderObj);
     }
 
-    hover(){
+    hover() {
         this.setState({
             hover: true
         });
     }
 
-    notHover(){
+    notHover() {
         this.setState({
             hover: false
         });
     }
 
-    hoverEditBtn(){
+    hoverEditBtn() {
         this.setState({
             editHover: true
         });
     }
 
-    notHoverEditBtn(){
+    notHoverEditBtn() {
         this.setState({
             editHover: false
         });
     }
 
-    hoverDeleteBtn(){
+    hoverDeleteBtn() {
         this.setState({
             deleteHover: true
         });
     }
 
-    notHoverDeleteBtn(){
+    notHoverDeleteBtn() {
         this.setState({
             deleteHover: false
         });
     }
 
-    cancelEdit(event){
+    cancelEdit(event) {
         event.stopPropagation();
         this.setState({
             editable: false,
@@ -154,8 +155,9 @@ class Binder extends Component {
 
     render() {
         const { active, editable, binderName, hover, editHover, deleteHover, binderHover } = this.state;
-
+      
         if(!this.props.binderObj){
+
             return null;
         } 
 
@@ -165,7 +167,7 @@ class Binder extends Component {
         let binderArrLength = this.props.binderArr.length;
         let binder_title = [];
 
-        if(editable){ 
+        if (editable) {
             binder_title = (
                 <div className="editMode">
                          <input 
@@ -182,27 +184,28 @@ class Binder extends Component {
                 <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelEdit(event)}>
                 <i className="small material-icons">close</i></button>
                         </div>             
+
             );
         } else {
             binder_title = (
-                <div className={`binderTitle blue-grey ${active ? 'binderBorderTop' : ''} ${hover || active ? 'darken-2' : 'lighten-4'}`} onClick={(event)=>this.binderSelect(event)} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+                <div className={`binderTitle blue-grey ${active ? 'binderBorderTop' : ''} ${hover || active ? 'darken-2' : 'lighten-4'}`} onClick={(event) => this.binderSelect(event)} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
 
-                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }}> 
+                    <Link to={`/main/${binder_url}`} style={{ textDecoration: 'none' }}>
                         <div className={`binderLink ${hover || active ? 'textLight' : 'textDark'}`}>
                             {this.props.binderObj.binder_name}
-                        </div>    
+                        </div>
                     </Link>
-                   
+
                     <div className="modify-btn">
-                        <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn navbar-btn edit-btn grey darken-4 ${editable ? 'hidden' : 'visible'} ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event)=>this.editable(event)}>
-                        <i className="small material-icons">edit</i>
+                        <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn navbar-btn edit-btn grey darken-4 ${editable ? 'hidden' : 'visible'} ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event) => this.editable(event)}>
+                            <i className="small material-icons">edit</i>
                         </button>
                         <div className="navbar-btn"
-                        onMouseEnter={this.hoverDeleteBtn.bind(this)} 
-                        onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
-                        
-                            <ModalNav 
-                                callback={()=>this.props.deleteBinder(this.props.binderObj._id)} 
+                            onMouseEnter={this.hoverDeleteBtn.bind(this)}
+                            onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
+
+                            <ModalNav
+                                callback={() => this.props.deleteBinder(this.props.binderObj._id)}
                                 name={this.props.binderObj.binder_name}
                                 type='binder'
                                 arrLength={this.props.binderArr.length}
@@ -218,9 +221,10 @@ class Binder extends Component {
 
         let tab_link = tab_arr_obj.map((item, index) => {
             let tab_url = '/' + item._id;
-            var tabStyle ={
-                borderLeft: '12px solid '+item.tab_color
+            var tabStyle = {
+                borderLeft: '12px solid ' + item.tab_color
             }
+
 
                 return (
                     <div key={index} className="tabWrap blue-grey lighten-3">
@@ -229,28 +233,29 @@ class Binder extends Component {
                 );               
                 });
             
+
         return (
             <div>
                 {binder_title}
 
                 <div className={`binderBody ${active ? 'visible' : 'hidden'}`}>
                     {tab_link}
-                <button className="btn add-btn-tab waves-effect waves-light" onClick={this.addTab}>
-                New Tab</button>  
-                <Route path={`/main/${binder_url}`+"/:tab"} component={Tab}/>
+                    <button className="btn add-btn-tab waves-effect waves-light" onClick={this.addTab}>
+                        New Tab</button>
+                    <Route path={`/main/${binder_url}` + "/:tab"} component={Tab} />
                 </div>
             </div>
         );
     }
 }
-    function mapStateToProps(state){
-        return{
-            binderArr: state.binderArray.binderArr,
-            binder: state.binder.binderObj,
-            interface: state.interface
-        }
+function mapStateToProps(state) {
+    return {
+        binderArr: state.binderArray.binderArr,
+        binder: state.binder.binderObj,
+        interface: state.interface
     }
+}
 
-    export default withRouter(connect(mapStateToProps,{ updateBinderArray, selectBinder, addTab, deleteBinder, editBinder})(Binder));
+export default withRouter(connect(mapStateToProps, { updateBinderArray, selectBinder, addTab, deleteBinder, editBinder })(Binder));
 
 
