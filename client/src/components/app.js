@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from "../actions";
+//import * as actions from "../actions";
+import { fetchUser, fetchSampleUser } from '../actions/index';
 import LandingPage from './landingpage';
 import Dashboard from './dashboard';
 import 'materialize-css/dist/css/materialize.min.css';
@@ -26,10 +27,15 @@ import '../assets/css/video.css';
 
 class App extends Component {
 
-
     componentWillMount() {
         this.props.fetchUser();
-        //this.props.getDataObject();
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.auth === false){
+            this.props.fetchSampleUser();
+        }
+
     }
 
     render() {
@@ -37,7 +43,7 @@ class App extends Component {
             <div className="app">
                 <BrowserRouter >
                     <div>
-                        <Route exact path="/api/sample" component={LandingPage} />
+                        {/* <Route exact path="/api/sample" component={LandingPage} /> */}
                         <Route path="/main" component={Dashboard} />
                         <Route exact path="/" component={LandingPage} />
 
@@ -50,5 +56,11 @@ class App extends Component {
     }
 }
 
-export default connect(null, actions)(App);
+function mapStateToProps(state){
+    return{
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps, { fetchUser, fetchSampleUser })(App);
 

@@ -142,7 +142,7 @@ class Tab extends Component {
             tab_title = (
                 <div className="editMode">
                          <input 
-                             className="edit_input_tab"
+                             id="edit_input_tab"
                              ref='textInput'
                              type='text'
                              onChange={(e)=>this.editTabName(e)}

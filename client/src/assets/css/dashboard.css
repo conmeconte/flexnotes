@@ -4,19 +4,29 @@
 /*}*/
 
 .mobileNav {
-    position: absolute;
-    bottom: 0%;
+    position: fixed;
+    bottom: -2.2%;
     width: 100%;
-    height: 9vh;
+    height: 8vh;
+    background-color: white;
 } 
 
 .mobileNav> li{
     display: inline-block;
 }
-
-.navLink{
-    margin-left: 4%;
-}
 .mobileLink{
-    width: 24%;
+    width: 22%;
+    font-weight: bold;
+}
+.navLink{
+    margin-left: 12%;
+}
+
+.activeMobile {
+    color: #0288d1;
+
+}
+
+.mobile-icon.material-icons {
+    padding-left: 3%;
 }
