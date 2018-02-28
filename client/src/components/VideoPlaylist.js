@@ -13,12 +13,6 @@ class VideoPlaylist extends Component {
     this.currentVideoList = null;
   }
   deleteVideo(videoId) {
-    // let deleteIndex = null;
-    // for (let i = 0; i < this.props.binder.tab_arr_obj.length; i++) {
-    //   if (this.props.binder.tab_arr_obj[i]._id === this.props.tabID) {
-    //     deleteIndex = i;
-    //   }
-    // }
     this.props.removeVideoFromPlaylist(
       this.binderId,
       this.tabId,

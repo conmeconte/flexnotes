@@ -388,7 +388,8 @@ export function removeVideoFromPlaylist(
       )
       .then(res => {
         dispatch({
-          type: types.DELETE_FROM_PLAYLIST
+          type: types.DELETE_FROM_PLAYLIST,
+          payload: res.data
         });
       })
       .catch(error => {
