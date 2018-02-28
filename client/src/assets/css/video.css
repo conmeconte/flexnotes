@@ -120,9 +120,7 @@ button.close {
   margin: 0 -1px;
   width: 45px;
 }
-.video-btn:hover {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
-}
+
 #query {
   padding-left: 8px;
 }
@@ -175,9 +173,7 @@ button.close {
   z-index: 3000;
   cursor: pointer;
 }
-.vid-left-arrow:hover {
-  background-color: #0288d1;
-}
+
 .arrow-container-slides .material-icons {
   margin-right: 0;
 }
@@ -187,9 +183,7 @@ button.close {
   position: relative;
   top: 1vh;
 }
-.vid-right-arrow:hover {
-  background-color: #0288d1;
-}
+
 #youtube-play {
   padding: 0px 5px;
   position: relative;
@@ -216,8 +210,27 @@ button.close {
 }
 .list-item-wrap-container {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
+  margin-left: 0;
+}
+.list-item-wrap-container img {
+  max-width: 35%;
+}
+.list-item-wrap-container button i {
+  margin-right: auto;
+}
+.list-item-wrap-container .btn-small {
+  padding: 0 0.1em;
+}
+.btn-small {
+  padding: 0 0.8rem;
+}
+
+.playlist-play {
+  background-color: #0288d1;
+}
+.playlist-delete {
+  background-color: #d32f2f;
 }
 .list-item-wrapper {
   display: flex;
@@ -251,14 +264,35 @@ button.close {
 .playlist-logo-container i {
   margin-right: 0;
   color: rgb(2, 136, 209);
+  transition: 0.2s;
 }
-.close-playlist-icon:hover {
-  cursor: pointer;
-}
+
 .video-playlist {
   position: relative;
   top: 2vh;
   left: 0.5vw;
+}
+.playlist-logo-container i:hover {
+  color: #0073b2;
+}
+.close-playlist-icon:hover {
+  cursor: pointer;
+}
+.playlist-play:hover {
+  background-color: #0073b2;
+}
+.playlist-delete:hover {
+  background-color: #b71c1c;
+}
+.playlist-delete:focus {
+  background-color: #d32f2f;
+}
+.vid-right-arrow:hover,
+.vid-left-arrow:hover {
+  background-color: #0288d1;
+}
+.video-btn:hover {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
 }
 @media (max-width: 767px) and (orientation: portrait) {
   .video-container iframe {
