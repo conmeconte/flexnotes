@@ -12,15 +12,42 @@ module.exports = (app) => {
 
 
     app.get('/api/sample', async(req, res) => {
-        const existingUser= await User.findById(keys.sampleId);
-        console.log("pulled existing sample user", existingUser); 
+        const existingUser= await User.findById(keys.sampleId, function(err){if(err){return res.send('error pulling sampleUser')}});
         res.send(existingUser); 
 
     })
 
+    app.post('/api/lfz', async(req, res)=>{
+        // if(req.body.pw === keys.lfzpw){
+            const lfzUserInfo= await User.findById(keys.lfzId, function(err){if(err){return res.send('error pulling sampleUser')}});
+            if(lfzUserInfo){
+                lfzUserInfo.binder_arr_obj.map(async (arr)=>{
+                    if(arr.binder_name === "LearningFuze"){
+                        const existingUser= await User.findById(req.user ? req.user.id : keys.sampleId, function(err){if(err){return res.send('error')}});
+                        if(existingUser){
+                            existingUser.binder_arr_obj.push(arr);
+                            existingUser.save()
+                            res.send(existingUser);    
+        
+                        }else{
+                            res.send("Error did occurred");
+                        }
+                    }
+                }); 
+            }else{
+                res.send("Can't find LFZUserID");
+            }
+        // }else{
+        //     res.send("Wrong Password")
+        // }
 
-    app.get('/api/userInfo',  (req, res) => {
-        res.send(req.user);
+
+        
+    })
+
+    app.get('/api/userInfo',  async(req, res) => {
+        const existingUser= await User.findById(req.user.id || keys.sampleId);
+        res.send(req.user || existingUser);
     });
     //Front Error Handler//
     app.post('/api/errors', async(req, res)=>{

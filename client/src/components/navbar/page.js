@@ -149,19 +149,20 @@ class Page extends Component {
         if (editable) {
             page_list = (
                 <div className="editMode">
-                    <input
-                        className="edit_input_page"
-                        ref='textInput'
-                        type='text'
-                        onChange={(e) => this.editPageName(e)}
-                        onKeyPress={this.keyPressed.bind(this)}
-                        value={pageName}
-                    />
-                    <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event) => this.notEditPage(event)}>
-                        <i className="small material-icons">check</i></button>
-                    <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event) => this.cancelPageEdit(event)}>
-                        <i className="small material-icons">close</i></button>
-                </div>
+                         <input 
+                             id="edit_input_page"
+                             ref='textInput'
+                             type='text'
+                             onChange={(e)=>this.editPageName(e)}
+                             onKeyPress={this.keyPressed.bind(this)}
+                             value={pageName}
+                             />
+                <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditPage(event)}>
+                <i className="small material-icons">check</i></button>
+                 <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelPageEdit(event)}>
+                <i className="small material-icons">close</i></button>
+            </div>              
+
             );
         } else {
 

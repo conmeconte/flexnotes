@@ -36,6 +36,21 @@ a {
     background-color: #eceff1;
 }
 
+.lfzLogo{
+    width: 2.5%;
+    position: absolute;
+    left: 13%;
+    filter: drop-shadow(1px 1px 1px #333333);
+}
+
+.lfzLogo:hover{
+    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);
+}
+
+.lfzLogo:active{
+    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);
+    transform: translateY(2px);
+}
 
 ul > li {
     list-style: none;
@@ -71,11 +86,6 @@ ul > li {
     display: flex;
     justify-content: flex-end;
 }
-
-.editMode > .edit_input {
-    margin-bottom: 2% !important;
-}
-
 
 .binderWrap{
      width: 100%;
@@ -294,38 +304,28 @@ ul > li {
     margin: 1%;
 }
 
-input.edit_input_binder{
-    font-size: 1.75rem !important;
+input#edit_input_binder{
+    font-size: 1.75rem;
     color: #fafafa;
     margin-left: 2%;
     
 }
 
-input.edit_input_binder:focus, input.edit_input_tab:focus, {
-    border-bottom: 1px solid #0288d1 !important;
-    padding-left: 2%;
-}
-
-input.edit_input_page:focus {
-    border-bottom: 1px solid #fafafa !important;
-    padding-left: 2%;
-}
-
-input.edit_input_page::selection{
+input#edit_input_page::selection{
     background-color: #fafafa;
     color: black;
     font-weight: 500;
 }
 
-input.edit_input_tab{
+input#edit_input_tab{
     padding-left: 3%;
-    font-size: 1.5rem !important;
+    font-size: 1.5rem;
     color: black;
 }
 
-input.edit_input_page{
+input#edit_input_page{
     padding-left: 5%;
-    font-size: 1rem !important;
+    font-size: 1rem;
     color: #fafafa;
 }
 
@@ -411,6 +411,17 @@ footer {
     }
     .startTour.btn, .logoutBtn.btn {
         font-size: 1em;
+    }
+
+    .lfzLogo{
+        width: 10%;
+        left: 85%;
+        top: 1.5%;
+    }
+    .modal-content.modal-nav{
+        position: absolute;
+        width: 90%;
+        left: 5%;
     }
 }
 

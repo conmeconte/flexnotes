@@ -11,6 +11,7 @@ export default function(state = DEFAULT_STATE, action){
         case types.FETCH_SAMPLE_USER:
             return{ binderArr: [...action.payload.binder_arr_obj]}
         case types.UPDATE_BINDER_ARRAY:
+        case types.ADD_LFZ_BINDER:
             return{ binderArr: [...action.payload]}
         case types.ADD_BINDER:
             return{ binderArr: [...action.payload]}
