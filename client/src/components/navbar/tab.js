@@ -142,20 +142,20 @@ class Tab extends Component {
         if (editable) {
             tab_title = (
                 <div className="editMode">
-                    <input
-                        className="edit_input_tab"
-                        ref='textInput'
-                        type='text'
-                        onChange={(e) => this.editTabName(e)}
-                        onKeyPress={this.keyPressed.bind(this)}
-                        value={tabName}
-                    />
-                    <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event) => this.notEditTabs(event)}>
-                        <i className="small material-icons">check</i></button>
-
-                    <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event) => this.cancelTabEdit(event)}>
-                        <i className="small material-icons">close</i></button>
-                </div>
+                         <input 
+                             id="edit_input_tab"
+                             ref='textInput'
+                             type='text'
+                             onChange={(e)=>this.editTabName(e)}
+                             onKeyPress={this.keyPressed.bind(this)}
+                             value={tabName}
+                             />
+                <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditTabs(event)}>
+                <i className="small material-icons">check</i></button>
+                 
+                <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelTabEdit(event)}>
+                <i className="small material-icons">close</i></button>
+            </div>              
             );
         } else {
             tab_title = (

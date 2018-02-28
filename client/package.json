@@ -1,5 +1,5 @@
 {
-  "name": "react_starter",
+  "name": "FlexNotes",
   "version": "1.0.0",
   "proxy": {
     "/auth/google": {
@@ -15,18 +15,19 @@
       "target": "http://localhost:9000"
     }
   },
-  "description": "Starting setup for react redux project",
+
+  "description": "Multi-panel note taking app",
   "main": "index.js",
   "scripts": {
     "start": "node dev_server.js",
     "bundle": "node_modules/.bin/webpack --config webpack.deploy.config.js --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Scott Bowler",
+  "author": "Chung Hwan Hong",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Learning-Fuze/react_starter.git"
+    "url": "https://github.com/conmeconte/flexnotes.git"
   },
   "dependencies": {
     "axios": "^0.17.1",

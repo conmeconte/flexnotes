@@ -761,6 +761,28 @@ export function editPage(binder_id, tab_id, page_id, page_name) {
   };
 }
 
+export function addLfzBinder(password) {
+  return dispatch => {
+    const test = axios
+      .post('/api/lfz', {
+        pw: password
+      })
+      .then(resp => {
+        console.log('lfz import', resp); 
+        dispatch({
+          type: types.ADD_LFZ_BINDER,
+          payload: resp.data.binder_arr_obj
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Failed to add LearningFuze Binder'
+        });
+      });
+  };
+}
+
 export function minNav() {
   return {
     type: types.HIDE_NAV
