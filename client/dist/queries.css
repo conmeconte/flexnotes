@@ -177,4 +177,7 @@
         font-size: 3vw;
         margin: 15px 0 0 3%;
     }
+    .btn.sample > a {
+        font-size: 0.97rem;
+    }
 }

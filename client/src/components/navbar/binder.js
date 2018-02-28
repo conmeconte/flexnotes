@@ -155,9 +155,12 @@ class Binder extends Component {
 
     render() {
         const { active, editable, binderName, hover, editHover, deleteHover, binderHover } = this.state;
-        if (!this.props.binderObj) {
+      
+        if(!this.props.binderObj){
+
             return null;
-        }
+        } 
+
         const { tab_arr_obj } = this.props.binderObj;
 
         let binder_url = this.props.binderObj._id;
@@ -167,20 +170,21 @@ class Binder extends Component {
         if (editable) {
             binder_title = (
                 <div className="editMode">
-                    <input
-                        className="edit_input_binder"
-                        ref='textInput'
-                        type='text'
-                        onChange={(e) => this.editBinderName(e)}
-                        onKeyPress={this.keyPressed.bind(this)}
-                        value={binderName}
-                    />
-                    <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event) => this.notEditable(event)}>
-                        <i className="small material-icons">check</i></button>
+                         <input 
+                             id="edit_input_binder"
+                             ref='textInput'
+                             type='text'
+                             onChange={(e)=>this.editBinderName(e)}
+                             onKeyPress={this.keyPressed.bind(this)}
+                             value={binderName}
+                             />
+                <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditable(event)}>
+                <i className="small material-icons">check</i></button>
+                 
+                <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelEdit(event)}>
+                <i className="small material-icons">close</i></button>
+                        </div>             
 
-                    <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event) => this.cancelEdit(event)}>
-                        <i className="small material-icons">close</i></button>
-                </div>
             );
         } else {
             binder_title = (
@@ -221,12 +225,14 @@ class Binder extends Component {
                 borderLeft: '12px solid ' + item.tab_color
             }
 
-            return (
-                <div key={index} className="tabWrap blue-grey lighten-3">
-                    <Tab index={index} tabObj={item} />
-                </div>
-            );
-        });
+
+                return (
+                    <div key={index} className="tabWrap blue-grey lighten-3">
+                        <Tab index={index} tabObj={item}/>
+                    </div>
+                );               
+                });
+            
 
         return (
             <div>

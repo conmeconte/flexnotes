@@ -3,6 +3,55 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class VideoPlaylist extends Component {
+  constructor(props) {
+    super(props);
+    this.interface_obj = null;
+    this.binderId = null;
+    this.tabId = null;
+    this.pageId = null;
+    this.videoId = null;
+    this.currentVideoList = null;
+  }
+  deleteVideo(videoId) {
+    this.props.removeVideoFromPlaylist(
+      this.binderId,
+      this.tabId,
+      this.pageId,
+      videoId
+    );
+  }
+  componentWillReceiveProps(nextProps) {
+    const { interface_obj } = this.props;
+    if (interface_obj.page_id === nextProps.interface_obj.page_id) {
+      this.updatePlaylistComponent(nextProps);
+    }
+  }
+  updatePlaylistComponent(nextProps) {
+    let { tab_arr_obj } = nextProps.binderObj;
+    let { interface_obj } = nextProps;
+    if (tab_arr_obj) {
+      let tabArrLength = tab_arr_obj.length;
+      let tabIndex = null;
+      let pageIndex = null;
+      for (let i = 0; i < tabArrLength; i++) {
+        if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+          tabIndex = i;
+          break;
+        }
+      }
+      const { page_arr_obj } = tab_arr_obj[tabIndex];
+      for (let i = 0; i < page_arr_obj.length; i++) {
+        if (interface_obj.page_id === page_arr_obj[i]._id) {
+          pageIndex = i;
+          break;
+        }
+      }
+      this.binderId = nextProps.binderObj._id;
+      this.tabId = tab_arr_obj[tabIndex]._id;
+      this.pageId = page_arr_obj[pageIndex]._id;
+      this.currentVideoList = page_arr_obj[pageIndex].video;
+    }
+  }
   render() {
     const { playlistStyles } = this.props;
     let createPlaylist;
@@ -29,7 +78,12 @@ class VideoPlaylist extends Component {
               >
                 <i className="material-icons">play_arrow</i>
               </button>
-              <button className="btn btn-small playlist-delete col s1">
+              <button
+                onClick={() => {
+                  this.deleteVideo(item._id);
+                }}
+                className="btn btn-small playlist-delete col s1"
+              >
                 <i className="material-icons">delete_forever</i>
               </button>
             </div>
@@ -59,7 +113,9 @@ class VideoPlaylist extends Component {
 function mapStateToProps(state) {
   return {
     playlistStyles: state.video.playlistStyles,
-    playlistItems: state.video.addedVideo
+    playlistItems: state.video.addedVideo,
+    interface_obj: state.interface,
+    binderObj: state.binder.binderObj
   };
 }
 

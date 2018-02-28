@@ -373,6 +373,33 @@ export function addVideoToDatabase(
     };
   }
 }
+export function removeVideoFromPlaylist(
+  binderId,
+  tabId,
+  pageId,
+  videoId,
+  videoIndex
+) {
+  return dispatch => {
+    const response = axios
+      .delete(
+        `/api/video?binderID=${binderId}&tabID=${tabId}&pageID=${pageId}&videoId=${videoId}`,
+        {}
+      )
+      .then(res => {
+        dispatch({
+          type: types.DELETE_FROM_PLAYLIST,
+          payload: res.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Add to Playlist Failed.'
+        });
+      });
+  };
+}
 export function slideOutVideoSearch(visible, slide) {
   let toggleSlideOut = visible;
   var slideOutStyles;
@@ -729,6 +756,28 @@ export function editPage(binder_id, tab_id, page_id, page_name) {
         dispatch({
           type: types.AXIOS_ERROR,
           msg: 'Failed call in edit page'
+        });
+      });
+  };
+}
+
+export function addLfzBinder(password) {
+  return dispatch => {
+    const test = axios
+      .post('/api/lfz', {
+        pw: password
+      })
+      .then(resp => {
+        console.log('lfz import', resp); 
+        dispatch({
+          type: types.ADD_LFZ_BINDER,
+          payload: resp.data.binder_arr_obj
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Failed to add LearningFuze Binder'
         });
       });
   };

@@ -35,13 +35,18 @@ body {
     position: relative;
     top: 13vh;
     box-shadow: 0 4px 2px -2px #0393d7;
-    border-radius: 5px;
+    /* #border-radius: 5px; */
 }
 .btn.sample{
-    background-color: #12d0e9;
     margin-top: 25px;
-    border-radius: 5px;
+    border-radius: 2px;
     width: 40%;
+    background-color: #0393d7;
+
+}
+
+.btn.sample > a {
+    color: white;
 }
 .blur {
     position: absolute;
@@ -133,10 +138,11 @@ body {
     top: 2vh;
 }
 .login-logout-container button {
-    height: 4vmin;
+    /* height: 4vmin;  */
+    width: 20%;
     font-size: 1.5vmin;
     background-color: #96858F;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     border: none;
 }
 .login-logout-container button i {
@@ -166,7 +172,7 @@ a.landing-login-text {
     position: fixed;
     bottom: 0;
     color: #fff;
-    font-size: 2em;
+    font-size: 1.9em;
     width: 100%;
 }
 .email-wrapper a {
@@ -182,7 +188,7 @@ a.landing-login-text {
 .dash-btn {
     background-color: #0393d7;
 }
-.dash-btn:hover {
+.dash-btn:hover, .btn.sample:hover {
     background-color: #01579b;
 }
 .btn-wrapper button {

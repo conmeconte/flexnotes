@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import Binder from './binder';
 import Login from '../login';
+//import ModalNav from './modal_nav';
+import LfzModal from './lfz_modal';
 import logo from '../../assets/images/logo.png';
 
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, addBinder, updateBinderObj, minNav, showNav, editable, notEditable } from '../../actions';
+import { updateBinderArray, addLfzBinder, addBinder, updateBinderObj, minNav, showNav, editable, notEditable } from '../../actions';
 
 import FlexNotesTour from '../react_tour';
+import { isImage } from 'is-image';
+
+
 
 class NavBar extends Component {
     constructor(props) {
@@ -20,6 +25,7 @@ class NavBar extends Component {
         this.addBinder = this.addBinder.bind(this);
         this.editMode = this.editMode.bind(this);
         this.notEditable = this.notEditable.bind(this);
+        this.addLfz = this.addLfz.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -60,7 +66,23 @@ class NavBar extends Component {
             editable: false
         });
     }
+
+    addLfz(password){
+        let learningFuzeCheck = true;
+        for(let i =0; i<this.props.binderArr.length; i++){
+            //Bruce why did you add the actual binder ID number!!!!!!!!!!!!!!!! 
+            if(this.props.binderArr[i]._id === "5a6784f1bbd0a222889603a3"){
+                alert('LearningFuze binder already exists.');
+                learningFuzeCheck = false
+            }
+        }
+        if(learningFuzeCheck){
+            this.props.addLfzBinder(password);
+        }
+        
+    }
     render() {
+        console.log('navbar props', this.props);
         let editableText = '';
         if (this.props.interface.editable) {
             editableText = 'Done';
@@ -82,6 +104,7 @@ class NavBar extends Component {
                 <button className={`navbarShow btn ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
                     <i className="small material-icons">chevron_right</i>
                 </button>
+                     
                 <div className={`navbar col s2 ${this.props.interface.navbar_min ? 'hidden' : 'visible'}`}>
                     <header>
                         <img className="logoImage" src={logo} /><h1><span className="dashFlex">Flex</span>Notes</h1>
@@ -89,6 +112,9 @@ class NavBar extends Component {
                     <button className='btn hideNavbar' onClick={this.hideNav.bind(this)}>
                         <i className="small material-icons">chevron_left</i>
                     </button>
+                    <LfzModal
+                        callback={this.addLfz}
+                    />
                     <section className="second-step binder-container">
                         {binder}
                         <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
@@ -113,4 +139,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { editable, notEditable, updateBinderArray, addBinder, updateBinderObj, minNav, showNav })(NavBar);
+export default connect(mapStateToProps, { editable, notEditable, updateBinderArray, addLfzBinder, addBinder, updateBinderObj, minNav, showNav })(NavBar);

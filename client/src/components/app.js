@@ -27,27 +27,23 @@ import '../assets/css/video.css';
 
 class App extends Component {
 
-
     componentWillMount() {
         this.props.fetchUser();
     }
 
     componentWillReceiveProps(nextProps){
         if(nextProps.auth === false){
-            //sample axios call here
-            console.log('sample axio call here');
             this.props.fetchSampleUser();
         }
 
     }
 
     render() {
-        console.log('app props', this.props);
         return (
             <div className="app">
                 <BrowserRouter >
                     <div>
-                        <Route exact path="/api/sample" component={LandingPage} />
+                        {/* <Route exact path="/api/sample" component={LandingPage} /> */}
                         <Route path="/main" component={Dashboard} />
                         <Route exact path="/" component={LandingPage} />
 
