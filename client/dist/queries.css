@@ -127,6 +127,10 @@
     font-size: 2.5vw;
 }
 
+.mobilePanel-container {
+    height: 90vh;
+}
+
 
 .SplitPane.width-w-nav{
     -webkit-box-orient: vertical !important;
