@@ -154,9 +154,11 @@ class Binder extends Component {
 
     render() {
         const { active, editable, binderName, hover, editHover, deleteHover, binderHover } = this.state;
+
         if(!this.props.binderObj){
             return null;
-        }
+        } 
+
         const { tab_arr_obj } = this.props.binderObj;
 
         let binder_url = this.props.binderObj._id;
@@ -167,7 +169,7 @@ class Binder extends Component {
             binder_title = (
                 <div className="editMode">
                          <input 
-                             className="edit_input_binder"
+                             id="edit_input_binder"
                              ref='textInput'
                              type='text'
                              onChange={(e)=>this.editBinderName(e)}
@@ -226,7 +228,7 @@ class Binder extends Component {
                     </div>
                 );               
                 });
-
+            
         return (
             <div>
                 {binder_title}

@@ -28,25 +28,6 @@ export default class LfzModal extends Component {
     render(){
         const {visible} = this.state;
 
-        let bodyText = (
-            <div className='card-content'>
-                Please enter password to add LearningFuze Binder
-                <input 
-                type="text"
-                onChange={(e)=>this.handleForm(e)}
-                />
-            </div>
-            
-        );
-
-        let modalBtn = (
-            <div className='card-action modal-nav'>
-                <button onClick={()=>this.setState({visible: false})} className='btn grey lighten-4'>Cancel</button>
-                <button onClick={this.handleConfirm} className='btn green darken-3'>Confirm</button>
-            </div>
-        );
-        
-
         const button = (
             <img className="lfzLogo" src={lfzLogo} onClick={()=>this.setState({visible: true})}/> 
         );
@@ -58,10 +39,19 @@ export default class LfzModal extends Component {
                     <div className='confirm-modal modal-nav'>
                         <div className="modal-content modal-nav">
                                 <div className="card">
-                                    {bodyText}
-                                    {modalBtn}
+                                <div className='card-content'>
+                                    Add LearningFuze Binder:
+                                    <input 
+                                    type="text"
+                                    placeholder="Enter Password"
+                                    onChange={(e)=>this.handleForm(e)}
+                                    />
                                 </div>
-                        
+                                <div className='card-action modal-nav'>
+                                    <button onClick={()=>this.setState({visible: false})} className='btn grey lighten-4'>Cancel</button>
+                                    <button onClick={this.handleConfirm} className='btn green darken-3'>Confirm</button>
+                                </div>
+                                </div>
                         </div>
                     </div>
                 </span>

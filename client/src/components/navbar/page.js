@@ -149,7 +149,7 @@ class Page extends Component {
             page_list = (
                 <div className="editMode">
                          <input 
-                             className="edit_input_page"
+                             id="edit_input_page"
                              ref='textInput'
                              type='text'
                              onChange={(e)=>this.editPageName(e)}

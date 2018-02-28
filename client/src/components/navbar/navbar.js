@@ -68,9 +68,20 @@ class NavBar extends Component {
     }
 
     addLfz(password){
-        this.props.addLfzBinder(password);
+        let learningFuzeCheck = true;
+        for(let i =0; i<this.props.binderArr.length; i++){
+            if(this.props.binderArr[i]._id === "5a6784f1bbd0a222889603a3"){
+                console.log('learningFuze binder exists');
+                learningFuzeCheck = false
+            }
+        }
+        if(learningFuzeCheck){
+            this.props.addLfzBinder(password);
+        }
+        
     }
     render() {
+        console.log('navbar props', this.props);
         let editableText = '';
         if (this.props.interface.editable) {
             editableText = 'Done';
