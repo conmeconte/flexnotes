@@ -115,7 +115,6 @@ class Notes extends Component {
     };
 
     submitNotes() {
-        console.log("=================SUBMITTED NOTES==================");
         let { interface_obj } = this.props;
         const { value } = this.state;
         const content = JSON.stringify(value.toJSON());
@@ -172,7 +171,6 @@ class Notes extends Component {
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
             //     this.props.updateBinderArray();
             // }else{
-            this.submitNotes();
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
             // console.log('notes nextProps:', nextProps.binderObj);
