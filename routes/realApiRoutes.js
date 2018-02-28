@@ -18,7 +18,7 @@ module.exports = (app) => {
     })
 
     app.post('/api/lfz', async(req, res)=>{
-        // if(req.body.pw === keys.lfzpw){
+        if(req.body.pw === keys.lfzpw){
             const lfzUserInfo= await User.findById(keys.lfzId, function(err){if(err){return res.send('error pulling sampleUser')}});
             if(lfzUserInfo){
                 lfzUserInfo.binder_arr_obj.map(async (arr)=>{
@@ -34,12 +34,11 @@ module.exports = (app) => {
                         }
                     }
                 }); 
-            }else{
-                res.send("Can't find LFZUserID");
             }
-        // }else{
-        //     res.send("Wrong Password")
-        // }
+        }else{
+                res.send({success: false});
+            }
+
 
 
         
