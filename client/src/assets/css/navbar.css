@@ -371,11 +371,12 @@ footer {
 
 .startTour.btn, .logoutBtn.btn {
     width: 40%;
+    height: 35px;
+    font-size: 90%;
     background-color: #0288d1;;
     color: #fafafa;
     padding: 0 4%;
     margin: 3% 4% 0 4%;
-    font-size: .75vw;
     font-weight: 500;
 }
 
