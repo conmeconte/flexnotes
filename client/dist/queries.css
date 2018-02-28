@@ -96,12 +96,14 @@
 
 /* Big tablet to 1200px (width smaller than the 1140px row) */
 @media only screen and (max-width: 1200px) {
- 
 
 }
 
 /* Small tablet to big tablet: from 768px to 1023px */
 @media only screen and (max-width: 1023px) {
+    .login-container {
+        height: 70vh;
+    }
     .info, .google-div {
         width: 100%;
         height: 50%;
@@ -117,7 +119,13 @@
 
 /* Small phones to small tablets  from 481px to 767px*/ 
 @media only screen and (max-width: 767px) {
+.landingLogo {
+    width: 5vw;
+}
 
+.item-list {
+    font-size: 2.5vw;
+}
 
 
 .SplitPane.width-w-nav{
@@ -159,5 +167,14 @@
 
 /* Small phones: from 0 to 480px */
 @media only screen and (max-width: 480px) {
-
+    .login-container {
+        height: 66vh;
+    }
+    .material-icons.landing {
+        font-size: 5vw;
+    }
+    .item-list {
+        font-size: 3vw;
+        margin: 15px 0 0 3%;
+    }
 }
