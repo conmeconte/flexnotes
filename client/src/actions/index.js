@@ -373,6 +373,32 @@ export function addVideoToDatabase(
     };
   }
 }
+export function removeVideoFromPlaylist(
+  binderId,
+  tabId,
+  pageId,
+  videoId,
+  videoIndex
+) {
+  return dispatch => {
+    const response = axios
+      .delete(
+        `/api/video?binderID=${binderId}&tabID=${tabId}&pageID=${pageId}&videoId=${videoId}`,
+        {}
+      )
+      .then(res => {
+        dispatch({
+          type: types.DELETE_FROM_PLAYLIST
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Add to Playlist Failed.'
+        });
+      });
+  };
+}
 export function slideOutVideoSearch(visible, slide) {
   let toggleSlideOut = visible;
   var slideOutStyles;
