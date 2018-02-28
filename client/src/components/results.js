@@ -36,7 +36,7 @@ class Results extends Component {
                 );
               }}
             >
-              <i className="material-icons">play_arrow</i>
+              <i className="material-icons">add</i>
             </button>
           </div>
         </li>

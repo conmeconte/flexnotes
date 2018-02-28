@@ -14,25 +14,23 @@ class VideoPlaylist extends Component {
         return (
           <li className="result-item collection-item col s12" key={index}>
             <div className="row list-item-wrap-container">
-              <div className="row list-item-wrap-container col s10">
+              <div className="row list-item-wrap-container col s12">
                 <img src={item.videoImg} />
-                <div className="col s10 video-contents">
-                  <div>
-                    <span>
-                      {item.videoTitle}
-                    </span>
-                  </div>
+                <div className="col s9 video-contents">
+                  {item.videoTitle}
                 </div>
               </div>
               <button
-                id="youtube-play"
-                className="btn red darken-3 right video-btn"
+                className="btn btn-small playlist-play col s1 playlist-play"
                 onClick={() => {
                   this.props.playVideo(item.videoId);
                   this.props.togglePlaylist(this.props.playlistStyles);
                 }}
               >
                 <i className="material-icons">play_arrow</i>
+              </button>
+              <button className="btn btn-small playlist-delete col s1">
+                <i className="material-icons">delete_forever</i>
               </button>
             </div>
           </li>
