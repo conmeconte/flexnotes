@@ -784,6 +784,13 @@ export function addLfzBinder(password) {
       })
       .then(resp => {
         console.log('lfz import', resp);
+        if (resp.data.hasOwnProperty('success')) {
+          console.log('lfz incorrect pw', resp);
+          dispatch({
+            type: types.LFZ_WRONG_PASSWORD,
+            payload: resp.data.success
+          });
+        }
         dispatch({
           type: types.ADD_LFZ_BINDER,
           payload: resp.data.binder_arr_obj
