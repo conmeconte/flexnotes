@@ -8,7 +8,7 @@ import Notes from './notes';
 
 import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getDataObject, getVideoPlaylist } from '../actions';
+import { getDataObject, getVideoPlaylist, setVideoUrl } from '../actions';
 
 import Tour from 'reactour';
 import steps from './react_tour_steps';
@@ -149,6 +149,8 @@ class Dashboard extends Component {
               onClick={() => {
                 this.mobileSelectComponent(2);
                 this.props.getVideoPlaylist(this.props.addedVideo);
+                console.log(this.props.playlistItems[0].videoId);
+                this.props.setVideoUrl(this.props.playlistItems[0].videoId);
               }}
             >
               <div
@@ -216,6 +218,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getDataObject, getVideoPlaylist })(
-  Dashboard
-);
+export default connect(mapStateToProps, {
+  getDataObject,
+  getVideoPlaylist,
+  setVideoUrl
+})(Dashboard);
