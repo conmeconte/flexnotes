@@ -409,9 +409,11 @@ footer {
 
     footer{
         padding-bottom: 5%;
+        height: 40px;
     }
     .startTour.btn, .logoutBtn.btn {
         font-size: 1em;
+        margin: 0 4%;
     }
 
     .lfzLogo{
@@ -426,3 +428,11 @@ footer {
     }
 }
 
+@media (max-width: 480px) {
+    footer {
+        height: 70px;
+    }
+    .startTour.btn, .logoutBtn.btn {
+        margin: 3% 4% 0 4%;
+    }
+}

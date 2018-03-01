@@ -40,7 +40,7 @@ class Dashboard extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
   }
-  handleWindowSizeChange(){
+  handleWindowSizeChange() {
     this.setState({ width: window.innerWidth });
   };
   toggleTour() {
@@ -55,7 +55,7 @@ class Dashboard extends Component {
     }
   }
 
-  mobileSelectComponent(index){
+  mobileSelectComponent(index) {
     this.setState({
       mobilePanelIndex: index
     });
@@ -70,46 +70,46 @@ class Dashboard extends Component {
     }
     if (isMobile) {
       let mobilePanel = {};
-      switch(mobilePanelIndex){
+      switch (mobilePanelIndex) {
         case 1:
-          mobilePanel = <NavBar/>;
+          mobilePanel = <NavBar />;
           break;
-        case 2: 
-          mobilePanel  = <Video/>;
+        case 2:
+          mobilePanel = <Video />;
           break;
-        case 3: 
-          mobilePanel = <Slides/>;
+        case 3:
+          mobilePanel = <Slides />;
           break;
-        case 4: 
-          mobilePanel = <Notes/>;
+        case 4:
+          mobilePanel = <Notes />;
           break;
       }
       dashboard = (
-        <div>
+        <div className="mobilePanel-container">
           {mobilePanel}
           <ul className="mobileNav">
-            <li className="mobileLink navLink" onClick={()=>this.mobileSelectComponent(1)}>
-                <div className={`${ (mobilePanelIndex===1) ? 'activeMobile' : ''}`}>
-                  <i className="small material-icons">dehaze</i>
-                  <br />Nav
+            <li className="mobileLink navLink" onClick={() => this.mobileSelectComponent(1)}>
+              <div className={`${(mobilePanelIndex === 1) ? 'activeMobile' : ''}`}>
+                <i className="small material-icons">dehaze</i>
+                <br />Nav
                 </div>
             </li>
-            <li className="mobileLink" onClick={()=>this.mobileSelectComponent(2)}>
-                <div className={`${ (mobilePanelIndex===2) ? 'activeMobile' : ''}`}>
-                  <i className="small material-icons mobile-icon">video_library</i>
-                  <br />Video
+            <li className="mobileLink" onClick={() => this.mobileSelectComponent(2)}>
+              <div className={`${(mobilePanelIndex === 2) ? 'activeMobile' : ''}`}>
+                <i className="small material-icons mobile-icon">video_library</i>
+                <br />Video
                 </div>
             </li>
-            <li className="mobileLink" onClick={()=>this.mobileSelectComponent(3)}>
-                <div className={`${ (mobilePanelIndex===3) ? 'activeMobile' : ''}`}>
-                  <i className="small material-icons mobile-icon">video_label</i>
-                  <br />Slides
+            <li className="mobileLink" onClick={() => this.mobileSelectComponent(3)}>
+              <div className={`${(mobilePanelIndex === 3) ? 'activeMobile' : ''}`}>
+                <i className="small material-icons mobile-icon">video_label</i>
+                <br />Slides
                 </div>
             </li>
-            <li className="mobileLink" onClick={()=>this.mobileSelectComponent(4)}>
-                <div className={`${ (mobilePanelIndex===4) ? 'activeMobile' : ''}`}>
-                  <i className="small material-icons mobile-icon">description</i>
-                  <br />Notes
+            <li className="mobileLink" onClick={() => this.mobileSelectComponent(4)}>
+              <div className={`${(mobilePanelIndex === 4) ? 'activeMobile' : ''}`}>
+                <i className="small material-icons mobile-icon">description</i>
+                <br />Notes
                 </div>
             </li>
           </ul>
