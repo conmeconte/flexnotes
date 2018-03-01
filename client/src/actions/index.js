@@ -288,13 +288,17 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
+        console.log('DATA RESPONSE FROM ADD: ', response);
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
-            videoTitle: videoTitle,
-            videoId: videoId,
-            videoURL: videoLink,
-            videoImg: videoImg
+            videoInfo: {
+              videoTitle: videoTitle,
+              videoId: videoId,
+              videoURL: videoLink,
+              videoImg: videoImg
+            },
+            updatedPlaylist: response.data.video
           }
         });
       } catch (error) {
@@ -322,13 +326,17 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
+        console.log('DATA RESPONSE FROM ADD: ', response);
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
-            videoTitle: videoTitle,
-            videoId: videoId,
-            videoURL: videoLink,
-            videoImg: videoImg
+            videoInfo: {
+              videoTitle: videoTitle,
+              videoId: videoId,
+              videoURL: videoLink,
+              videoImg: videoImg
+            },
+            updatedPlaylist: response.data.video
           }
         });
       } catch (error) {
@@ -355,13 +363,17 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
+
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
-            videoTitle: videoTitle,
-            videoId: videoId,
-            videoURL: videoLink,
-            videoImg: videoImg
+            videoInfo: {
+              videoTitle: videoTitle,
+              videoId: videoId,
+              videoURL: videoLink,
+              videoImg: videoImg
+            },
+            updatedPlaylist: response.data.video
           }
         });
       } catch (error) {
@@ -389,7 +401,7 @@ export function removeVideoFromPlaylist(
       .then(res => {
         dispatch({
           type: types.DELETE_FROM_PLAYLIST,
-          payload: res.data
+          payload: res.data.video
         });
       })
       .catch(error => {
@@ -679,6 +691,7 @@ export function deletePage(binder_id, tab_id, page_id) {
         {}
       )
       .then(resp => {
+        console.log('response data: ', resp.data);
         dispatch({
           type: types.DELETE_PAGE,
           payload: resp.data
@@ -771,6 +784,7 @@ export function addLfzBinder(password) {
       })
       .then(resp => {
         console.log('lfz import', resp);
+
         if (resp.data.hasOwnProperty('success')) {
           console.log('lfz incorrect pw', resp);
           dispatch({
@@ -778,6 +792,7 @@ export function addLfzBinder(password) {
             payload: resp.data.success
           });
         }
+
         dispatch({
           type: types.ADD_LFZ_BINDER,
           payload: resp.data.binder_arr_obj
