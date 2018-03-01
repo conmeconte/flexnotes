@@ -41,6 +41,7 @@ class VideoContainer extends Component {
     });
   }
   render() {
+    console.log(this.props.videoLink);
     return (
       <div className="iframe-wrapper">
         <form
@@ -96,7 +97,8 @@ class VideoContainer extends Component {
         </div>
         <div id="video-container" className="video-container">
           <div className="resize-blocker" />
-          {this.props.videoLink
+
+          {this.props.videoLink !== 'https://www.youtube.com/embed/undefined'
             ? <iframe
                 allowFullScreen
                 id="video-iframe"
