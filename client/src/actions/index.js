@@ -182,7 +182,8 @@ export const getSavedVideoTitle = videoUrl => async dispatch => {
   let videoId = videoUrl.split('=');
   videoId = videoId[1];
   const response = await axios.get(
-    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.videoKey}`
+    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${process
+      .env.YOUTUBE_API_KEY}`
   );
   dispatch({
     type: types.GET_SAVED_VIDEO_TITLE,
@@ -193,7 +194,8 @@ export const getSavedVideoImg = videoUrl => async dispatch => {
   let videoId = videoUrl.split('=');
   videoId = videoId[1];
   const response = await axios.get(
-    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.videoKey}`
+    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${process
+      .env.YOUTUBE_API_KEY}`
   );
   dispatch({
     type: types.GET_SAVED_VIDEO_IMAGE,
@@ -510,7 +512,6 @@ export function setVideoUrl(id, interfaceObj) {
   };
 }
 // END OF VIDEO ACTION CREATORS
-
 
 export function getDataObject() {
   return dispatch => {

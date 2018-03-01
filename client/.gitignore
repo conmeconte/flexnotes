@@ -4,4 +4,5 @@ node_modules
 errorLogs
 config
 keys.js
-
+.env.development
+.env.production
