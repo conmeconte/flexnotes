@@ -5,7 +5,7 @@ import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import { connect } from 'react-redux';
-import { updateBinderArray, saveNotes } from '../actions';
+import { updateBinderArray } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
@@ -531,7 +531,6 @@ class Notes extends Component {
                         onChange={this.onInputChange}
                     />
                 </div>
-                {/*<button style={saveStyle[this.state.save]} className="saveNotes btn waves-effect waves-light" onClick={this.state.save ? "Saved" : "Save Changes"}></button>*/}
                 <h4 className="saveNotes" >{this.state.save ? "Saved" : "Saving..."}</h4>
             </div>
 
@@ -573,5 +572,5 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateBinderArray, saveNotes })(Notes);
+export default connect(mapStateToProps, { updateBinderArray })(Notes);
 

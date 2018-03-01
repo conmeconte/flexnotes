@@ -500,19 +500,6 @@ export function setVideoUrl(id, interfaceObj) {
 // END OF VIDEO ACTION CREATORS
 
 
-//NOTES ACTION CREATOR
-export function saveNotes(content, binderID, tabID, pageID) {
-  return dispatch => {
-    axios.put('/api/note', {
-      document: { content },
-      binderID: binderID,
-      tabID: tabID,
-      pageID: pageID
-    })
-  }
-}
-//END OF NOTES ACTION CREATOR
-
 export function getDataObject() {
   return dispatch => {
     const test = axios
