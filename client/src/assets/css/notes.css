@@ -87,15 +87,21 @@
     height: 100%; 
 }
 
+.saveNotes {
+    display: inline;
+    font-size: 1.5rem;
+    color: limegreen;
+}
+
 .saveNotes.btn {
     /* width: 130px !important;
     height: 35px !important;
     font-weight: 600 !important;
     border: 3px outset gray !important; */
-    color:white; 
+    /* color:white; 
     width: 20%;
     background-color: #0393d7;
-    height: 40%; 
+    height: 40%;  */
 }
 
 .saveNotes.btn:hover{
