@@ -9,7 +9,8 @@ const DEFAULT_STATE = {
     user_name: {},
     pull_from_db: false,
     sent_to_db: false,
-    axios_error_response: ''
+    axios_error_response: '',
+    lfz_response: ''
 }
 
 export default function (state = DEFAULT_STATE, action) {
@@ -65,6 +66,10 @@ export default function (state = DEFAULT_STATE, action) {
             return {...state, editable: true};
         case types.NOT_EDITABLE:
             return {...state, editable: false};
+        case types.ADD_LFZ_BINDER:
+            return {...state, lfz_response: true};
+        case types.LFZ_WRONG_PASSWORD:
+            return {...state, lfz_response: false};
         default:
             return state;
     }

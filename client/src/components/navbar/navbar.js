@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Binder from './binder';
 import Login from '../login';
-//import ModalNav from './modal_nav';
 import LfzModal from './lfz_modal';
 import logo from '../../assets/images/logo.png';
 
@@ -25,7 +24,6 @@ class NavBar extends Component {
         this.addBinder = this.addBinder.bind(this);
         this.editMode = this.editMode.bind(this);
         this.notEditable = this.notEditable.bind(this);
-        this.addLfz = this.addLfz.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -66,21 +64,6 @@ class NavBar extends Component {
             editable: false
         });
     }
-
-    addLfz(password){
-        let learningFuzeCheck = true;
-        for(let i =0; i<this.props.binderArr.length; i++){
-            //Bruce why did you add the actual binder ID number!!!!!!!!!!!!!!!! 
-            if(this.props.binderArr[i]._id === "5a6784f1bbd0a222889603a3"){
-                alert('LearningFuze binder already exists.');
-                learningFuzeCheck = false
-            }
-        }
-        if(learningFuzeCheck){
-            this.props.addLfzBinder(password);
-        }
-        
-    }
     render() {
         console.log('navbar props', this.props);
         let editableText = '';
@@ -112,9 +95,7 @@ class NavBar extends Component {
                     <button className='btn hideNavbar' onClick={this.hideNav.bind(this)}>
                         <i className="small material-icons">chevron_left</i>
                     </button>
-                    <LfzModal
-                        callback={this.addLfz}
-                    />
+                    <LfzModal/>
                     <section className="second-step binder-container">
                         {binder}
                         <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
