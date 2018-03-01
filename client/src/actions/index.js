@@ -1,6 +1,7 @@
 import axios from 'axios';
 import types from './types';
-import keys from '../../../config/keys';
+import keys from '../config/keys'
+
 
 export const fetchUser = () => async dispatch => {
   const res = await axios.get('/api/current_user');
@@ -182,8 +183,7 @@ export const getSavedVideoTitle = videoUrl => async dispatch => {
   let videoId = videoUrl.split('=');
   videoId = videoId[1];
   const response = await axios.get(
-    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${process
-      .env.YOUTUBE_API_KEY}`
+    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
   );
   dispatch({
     type: types.GET_SAVED_VIDEO_TITLE,
@@ -194,8 +194,7 @@ export const getSavedVideoImg = videoUrl => async dispatch => {
   let videoId = videoUrl.split('=');
   videoId = videoId[1];
   const response = await axios.get(
-    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${process
-      .env.YOUTUBE_API_KEY}`
+    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
   );
   dispatch({
     type: types.GET_SAVED_VIDEO_IMAGE,
