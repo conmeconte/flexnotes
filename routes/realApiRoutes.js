@@ -369,7 +369,31 @@ module.exports = app => {
       }
     });
   //video//
+
   app
+    .get('/api/video', async (req, res) => {
+      const existingUser = await User.findById(
+        req.user ? req.user.id : keys.sampleId,
+        err => {
+          if (err) {
+            return res.send('error');
+          }
+        }
+      );
+      if (existingUser) {
+        const page = existingUser.binder_arr_obj
+          .id(req.query.binderID)
+          .tab_arr_obj.id(req.query.tabID)
+          .page_arr_obj.id(req.query.pageID);
+        if (page) {
+          res.send(page);
+        } else {
+          res.send('wrong path');
+        }
+      } else {
+        res.send("Error can't find user");
+      }
+    })
     .post('/api/video', async (req, res) => {
       const existingUser = await User.findById(
         req.user ? req.user.id : keys.sampleId,

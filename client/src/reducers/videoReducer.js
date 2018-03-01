@@ -91,6 +91,11 @@ export default function(state = DEFAULT_STATE, action) {
         ...state,
         addedVideo: action.payload
       };
+    case types.GET_VIDEO_PLAYLIST:
+      return {
+        ...state,
+        addedVideo: action.payload.data.video
+      };
     case types.TOGGLE_PLAYLIST:
       return {
         ...state,
