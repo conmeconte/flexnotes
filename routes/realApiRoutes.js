@@ -376,16 +376,21 @@ module.exports = app => {
         }
       );
       if (existingUser) {
-        const parseVidIndex = parseFloat(req.query.videoIndex);
         const video = existingUser.binder_arr_obj
           .id(req.query.binderID)
           .tab_arr_obj.id(req.query.tabID)
           .page_arr_obj.id(req.query.pageID)
           .video.id(req.query.videoId);
+
         if (video) {
           video.remove();
           existingUser.save();
-          res.send(existingUser);
+          const page = existingUser.binder_arr_obj
+            .id(req.query.binderID)
+            .tab_arr_obj.id(req.query.tabID)
+            .page_arr_obj.id(req.query.pageID);
+
+          res.send(page);
         } else {
           res.send('binder/tab/page id does not exist');
         }
