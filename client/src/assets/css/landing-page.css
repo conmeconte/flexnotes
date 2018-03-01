@@ -38,9 +38,11 @@ body {
     /* #border-radius: 5px; */
 }
 .btn.sample{
+    margin-top: 25px;
+    border-radius: 2px;
+    width: 40%;
     background-color: #0393d7;
-    margin-top: 5%; 
-    color: white;
+
 }
 
 .btn.sample > a {
@@ -81,7 +83,7 @@ body {
 .info h3 {
     position: relative;
     top: 5vh;
-    font-size: 4vmin;
+    font-size: 2rem;
 }
 .google-div {
     color: #fff;
@@ -103,8 +105,8 @@ body {
     text-align: left;
     line-height: 5.5vh;
     width: 70%;
-    margin: 0 auto;
-    font-size: 3vmin;
+    margin: 15px auto;
+    font-size: 1.25rem;
 }
 .item-list li {
     white-space: nowrap;
@@ -170,7 +172,7 @@ a.landing-login-text {
     position: fixed;
     bottom: 0;
     color: #fff;
-    font-size: 2em;
+    font-size: 1.9em;
     width: 100%;
 }
 .email-wrapper a {

@@ -8,6 +8,7 @@ export default {
   ADD_TAB: 'add_tab',
   ADD_PAGE: 'add_page',
   ADD_LFZ_BINDER: 'add_lfz_binder',
+  LFZ_WRONG_PASSWORD: 'lfz_wrong_password',
   DELETE_BINDER: 'delete_binder',
   DELETE_TAB: 'delete_tab',
   DELETE_PAGE: 'delete_page',
