@@ -39,15 +39,6 @@ const initialValue = Value.fromJSON({
     }
 });
 
-const saveStyle = {
-    true: {
-        // backgroundColor: "#ffffff",
-        display: "none"
-    },
-    false: {
-    }
-};
-
 // --------------------------- UNDO AND REDO  ---------------------------
 
 const ToolbarButton = props => (
@@ -114,9 +105,7 @@ class Notes extends Component {
         this.submitNotes = _.debounce(this.submitNotes, 1300);
     }
 
-
     onChange = ({ value }) => {
-
         this.setState({ value, save: false });
         this.submitNotes();
     };
@@ -137,7 +126,6 @@ class Notes extends Component {
             })
         );
     }
-
 
     componentWillMount() {
         let { tab_arr_obj } = this.props.binderObj;
@@ -173,6 +161,7 @@ class Notes extends Component {
             }
         }
     }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
             let { tab_arr_obj } = nextProps.binderObj;
@@ -518,20 +507,17 @@ class Notes extends Component {
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
                     <span className="styleSquare" title="link" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
-                        <span className="material-icons notesIcons">link</span>
+                        <span className="material-icons notesIcons link">link</span>
                     </span>
                     <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
-                        <span className="material-icons notesIcons">image</span>
+                        <span className="material-icons notesIcons image">image</span>
                     </span>
-                </div>
-                <div className="search-box">
                     <input
                         className="search-input keyword"
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
                 </div>
-                <h4 className="saveNotes" >{this.state.save ? "Saved" : "Saving..."}</h4>
             </div>
 
         )
