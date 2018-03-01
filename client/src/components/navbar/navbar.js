@@ -67,6 +67,8 @@ class NavBar extends Component {
     render() {
         console.log('navbar props', this.props);
         let editableText = '';
+        let binderUrl = this.props.interface.binder_id;
+        console.log('binderUrl', binderUrl);
         if (this.props.interface.editable) {
             editableText = 'Done';
         } else {
@@ -100,7 +102,7 @@ class NavBar extends Component {
                         {binder}
                         <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
                             New Binder</button>
-                        <Route path={'/main/:binder'} component={Binder} />
+                        <Route path={`/main/${binderUrl}`} component={Binder} />
                     </section>
                     <footer>
                         <FlexNotesTour toggleTour={this.props.toggleTour} />
