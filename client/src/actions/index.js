@@ -498,6 +498,21 @@ export function setVideoUrl(id, interfaceObj) {
   };
 }
 // END OF VIDEO ACTION CREATORS
+
+
+//NOTES ACTION CREATOR
+export function saveNotes(content, binderID, tabID, pageID) {
+  return dispatch => {
+    axios.put('/api/note', {
+      document: { content },
+      binderID: binderID,
+      tabID: tabID,
+      pageID: pageID
+    })
+  }
+}
+//END OF NOTES ACTION CREATOR
+
 export function getDataObject() {
   return dispatch => {
     const test = axios
@@ -769,13 +784,13 @@ export function addLfzBinder(password) {
       })
       .then(resp => {
         console.log('lfz import', resp);
-        if(resp.data.hasOwnProperty('success')){
+        if (resp.data.hasOwnProperty('success')) {
           console.log('lfz incorrect pw', resp);
           dispatch({
             type: types.LFZ_WRONG_PASSWORD,
             payload: resp.data.success
           });
-        } 
+        }
         dispatch({
           type: types.ADD_LFZ_BINDER,
           payload: resp.data.binder_arr_obj

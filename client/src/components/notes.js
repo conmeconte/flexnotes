@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import { connect } from 'react-redux';
-import { updateBinderArray } from '../actions';
+import { updateBinderArray, saveNotes } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
@@ -41,10 +42,9 @@ const initialValue = Value.fromJSON({
 const saveStyle = {
     true: {
         // backgroundColor: "#ffffff",
-        color: "#00cc00"
+        display: "none"
     },
     false: {
-        color: "#ffffff"
     }
 };
 
@@ -103,15 +103,22 @@ const schema = {
 
 class Notes extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: initialValue,
+            save: false
+        };
 
-    state = {
-        value: initialValue,
-        save: false
-    };
+        this.submitNotes = this.submitNotes.bind(this);
+        this.submitNotes = _.debounce(this.submitNotes, 1300);
+    }
 
 
     onChange = ({ value }) => {
+
         this.setState({ value, save: false });
+        this.submitNotes();
     };
 
     submitNotes() {
@@ -128,14 +135,13 @@ class Notes extends Component {
                 ...value,
                 save: true
             })
-            );
+        );
     }
 
 
     componentWillMount() {
         let { tab_arr_obj } = this.props.binderObj;
         let { interface_obj } = this.props;
-
         if (tab_arr_obj) {
             let tabArrLength = tab_arr_obj.length;
             let tabIndex = null;
@@ -169,11 +175,9 @@ class Notes extends Component {
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-            //     this.props.updateBinderArray();
-            // }else{
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
-            // console.log('notes nextProps:', nextProps.binderObj);
+
             if (tab_arr_obj) {
                 let tabArrLength = tab_arr_obj.length;
                 let tabIndex = null;
@@ -527,8 +531,8 @@ class Notes extends Component {
                         onChange={this.onInputChange}
                     />
                 </div>
-                <button style={saveStyle[this.state.save]} className="saveNotes btn waves-effect waves-light" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Saved" : "Save Changes"}</button>
-
+                {/*<button style={saveStyle[this.state.save]} className="saveNotes btn waves-effect waves-light" onClick={this.state.save ? "Saved" : "Save Changes"}></button>*/}
+                <h4 className="saveNotes" >{this.state.save ? "Saved" : "Saving..."}</h4>
             </div>
 
         )
@@ -569,5 +573,5 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateBinderArray })(Notes);
+export default connect(mapStateToProps, { updateBinderArray, saveNotes })(Notes);
 
