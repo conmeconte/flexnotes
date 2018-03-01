@@ -6,7 +6,7 @@ import logo from '../../assets/images/logo.png';
 
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, addLfzBinder, addBinder, updateBinderObj, minNav, showNav, editable, notEditable } from '../../actions';
+import { updateBinderArray, addBinder, updateBinderObj, minNav, showNav, editable, notEditable } from '../../actions';
 
 import FlexNotesTour from '../react_tour';
 import { isImage } from 'is-image';
@@ -120,4 +120,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { editable, notEditable, updateBinderArray, addLfzBinder, addBinder, updateBinderObj, minNav, showNav })(NavBar);
+export default connect(mapStateToProps, { editable, notEditable, updateBinderArray, addBinder, updateBinderObj, minNav, showNav })(NavBar);
