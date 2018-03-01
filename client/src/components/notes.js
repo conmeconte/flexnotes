@@ -39,14 +39,14 @@ const initialValue = Value.fromJSON({
     }
 });
 
-const saveStyle = {
-    true: {
-        // backgroundColor: "#ffffff",
-        display: "none"
-    },
-    false: {
-    }
-};
+// const saveStyle = {
+//     true: {
+//         // backgroundColor: "#ffffff",
+//         display: "none"
+//     },
+//     false: {
+//     }
+// };
 
 // --------------------------- UNDO AND REDO  ---------------------------
 
@@ -114,9 +114,7 @@ class Notes extends Component {
         this.submitNotes = _.debounce(this.submitNotes, 1300);
     }
 
-
     onChange = ({ value }) => {
-
         this.setState({ value, save: false });
         this.submitNotes();
     };
@@ -137,7 +135,6 @@ class Notes extends Component {
             })
         );
     }
-
 
     componentWillMount() {
         let { tab_arr_obj } = this.props.binderObj;
@@ -173,6 +170,7 @@ class Notes extends Component {
             }
         }
     }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
             let { tab_arr_obj } = nextProps.binderObj;
@@ -531,7 +529,7 @@ class Notes extends Component {
                         onChange={this.onInputChange}
                     />
                 </div>
-                <h4 className="saveNotes" >{this.state.save ? "Saved" : "Saving..."}</h4>
+                {/*<h4 className="saveNotes" >{this.state.save ? "Saved" : "Saving..."}</h4>*/}
             </div>
 
         )
