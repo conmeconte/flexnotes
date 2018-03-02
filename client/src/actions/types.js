@@ -27,6 +27,7 @@ export default {
   TOGGLE_PLAYLIST: 'toggle_playlist',
   GET_SAVED_VIDEO_TITLE: 'get_saved_video_title',
   DELETE_FROM_PLAYLIST: 'delete_from_playlist',
+  GET_VIDEO_PLAYLIST: 'get_video_playlist',
   GET_SAVED_VIDEO_IMAGE: 'get_saved_video_image',
   SET_VIDEO_PLAYLIST: 'set_video_playlist',
   GET_RESULT_STYLES: 'get_result_styles',

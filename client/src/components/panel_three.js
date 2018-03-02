@@ -13,21 +13,35 @@ import Slides from './slides';
 import Modal from './modal';
 
 class ThreePanel extends Component {
-  componentDidMount () {
-    document.querySelector(".Resizer.vertical").addEventListener("mousedown", function () {
-        document.querySelector(".resize-blocker").style.display = "block";
-        document.querySelector(".resize-blocker2").style.display = "block";
-    })
-    document.querySelector(".Resizer.horizontal").addEventListener("mousedown", function () {
-        document.querySelector(".resize-blocker").style.display = "block";
-        document.querySelector(".resize-blocker2").style.display = "block";
-        
-    })
-    document.querySelector("body").addEventListener("mouseup", function () {
-        document.querySelector(".resize-blocker").style.display = "none";
-        document.querySelector(".resize-blocker2").style.display = "none";
-    })
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+      width: window.innerWidth
+    };
+  }
+  componentDidMount() {
+    const { width } = this.state;
+    if (width <= 767) {
+      document
+        .querySelector('.Resizer.vertical')
+        .addEventListener('mousedown', function() {
+          document.querySelector('.resize-blocker').style.display = 'block';
+          document.querySelector('.resize-blocker2').style.display = 'block';
+        });
+      document
+        .querySelector('.Resizer.horizontal')
+        .addEventListener('mousedown', function() {
+          document.querySelector('.resize-blocker').style.display = 'block';
+          document.querySelector('.resize-blocker2').style.display = 'block';
+        });
+      document.querySelector('body').addEventListener('mouseup', function() {
+        document.querySelector('.resize-blocker').style.display = 'none';
+        document.querySelector('.resize-blocker2').style.display = 'none';
+      });
+    } else {
+      return;
+    }
+  }
   render() {
     // const loTLHsave = _.debounce((size) => {
     //     this.logTopLeftHeight(size);
