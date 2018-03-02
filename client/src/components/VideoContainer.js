@@ -41,7 +41,6 @@ class VideoContainer extends Component {
     });
   }
   render() {
-    console.log(this.props.videoLink);
     return (
       <div className="iframe-wrapper">
         <form
@@ -98,7 +97,7 @@ class VideoContainer extends Component {
         <div id="video-container" className="video-container">
           <div className="resize-blocker" />
 
-          {this.props.videoLink !== 'https://www.youtube.com/embed/undefined'
+          {this.props.playlistItems.length !== 1
             ? <iframe
                 allowFullScreen
                 id="video-iframe"
@@ -126,7 +125,8 @@ function mapStateToProps(state) {
     url: state.url,
     savedVideoTitle: state.video.savedVideoTitle,
     savedVideoImage: state.video.savedVideoImage,
-    playlistStyles: state.video.playlistStyles
+    playlistStyles: state.video.playlistStyles,
+    playlistItems: state.video.addedVideo
   };
 }
 
