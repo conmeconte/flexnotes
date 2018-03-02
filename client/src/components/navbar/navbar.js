@@ -8,7 +8,7 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateBinderArray, addBinder, updateBinderObj, minNav, showNav, editable, notEditable } from '../../actions';
 
-import FlexNotesTour from '../react_tour';
+import TourButton from '../react_tour';
 import { isImage } from 'is-image';
 
 
@@ -103,7 +103,7 @@ class NavBar extends Component {
                         <Route path={'/main/:binder'} component={Binder} />
                     </section>
                     <footer>
-                        <FlexNotesTour toggleTour={this.props.toggleTour} />
+                        <TourButton toggleTour={this.props.toggleTour}/>
                         <Login />
                     </footer>
                 </div>
