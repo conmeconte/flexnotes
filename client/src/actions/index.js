@@ -1,6 +1,6 @@
 import axios from 'axios';
 import types from './types';
-import keys from '../../../config/keys';
+import keys from '../config/keys';
 
 export const fetchUser = () => async dispatch => {
   const res = await axios.get('/api/current_user');
@@ -182,7 +182,7 @@ export const getSavedVideoTitle = videoUrl => async dispatch => {
   let videoId = videoUrl.split('=');
   videoId = videoId[1];
   const response = await axios.get(
-    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.videoKey}`
+    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
   );
   dispatch({
     type: types.GET_SAVED_VIDEO_TITLE,
@@ -193,7 +193,7 @@ export const getSavedVideoImg = videoUrl => async dispatch => {
   let videoId = videoUrl.split('=');
   videoId = videoId[1];
   const response = await axios.get(
-    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.videoKey}`
+    `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
   );
   dispatch({
     type: types.GET_SAVED_VIDEO_IMAGE,
@@ -258,6 +258,25 @@ export function togglePlaylist(playlistStyle) {
   return {
     type: types.TOGGLE_PLAYLIST,
     payload: playlistStyle
+  };
+}
+export function getVideoPlaylist(binderID, tabID, pageID) {
+  return async dispatch => {
+    const response = await axios.get(
+      `/api/video?binderID=${binderID}&tabID=${tabID}&pageID=${pageID}`,
+      {}
+    );
+    try {
+      dispatch({
+        type: types.GET_VIDEO_PLAYLIST,
+        payload: response
+      });
+    } catch (error) {
+      dispatch({
+        type: types.AXIOS_ERROR,
+        payload: response
+      });
+    }
   };
 }
 export function addVideoToDatabase(
@@ -510,7 +529,6 @@ export function setVideoUrl(id, interfaceObj) {
   };
 }
 // END OF VIDEO ACTION CREATORS
-
 
 export function getDataObject() {
   return dispatch => {
