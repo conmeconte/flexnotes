@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import { getDataObject, getVideoPlaylist, setVideoUrl } from '../actions';
 
 import Tour from 'reactour';
-import steps from './react_tour_steps';
 
 import '../assets/css/dashboard.css';
 
@@ -23,6 +22,7 @@ class Dashboard extends Component {
       isTourOpen: false,
       mobilePanelIndex: 1
     };
+
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
     this.mobileSelectComponent = this.mobileSelectComponent.bind(this);
     this.binderId = null;
@@ -30,6 +30,7 @@ class Dashboard extends Component {
     this.pageId = null;
     this.currentVideoList = null;
   }
+
   componentWillMount() {
     this.props.getDataObject();
 
@@ -41,6 +42,7 @@ class Dashboard extends Component {
     this.toggleTour = this.toggleTour.bind(this);
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
+
   componentWillReceiveProps(nextProps) {
     // const { interface } = this.props;
     const { width } = this.state;
@@ -82,12 +84,15 @@ class Dashboard extends Component {
       this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
     }
   }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
   }
+
   handleWindowSizeChange() {
     this.setState({ width: window.innerWidth });
   }
+
   toggleTour() {
     if (this.state.isTourOpen) {
       this.setState({
@@ -95,7 +100,7 @@ class Dashboard extends Component {
       });
     } else {
       this.setState({
-        isTourOpen: true
+        isTourOpen: true,
       });
     }
   }
@@ -113,11 +118,88 @@ class Dashboard extends Component {
     if (!this.props.binderArr) {
       return null;
     }
+
+    const desktopSteps = [
+        {
+            selector: '.first-step',
+            content: 'Welcome to FlexNotes!',
+            style: {textAlign: "center"}
+        },
+        {
+            selector: '.second-step',
+            content: 'This is the navbar. You can organize your notes into binders, tabs and pages.',
+            style: {textAlign: "center", marginTop: "30px"}
+        },
+        {
+            selector: '.third-step',
+            content: 'You can save class videos here. Just paste the url address and save. You can also search YouTube!',
+            style: {textAlign: "center", marginTop: "30px"}
+        },
+        {
+            selector: '.fourth-step',
+            content: 'You can save class slides here. Just paste the url address and save.',
+            style: {textAlign: "center"}
+        },
+        {
+            selector: '.fifth-step',
+            content: 'You can take notes here.',
+            style: {textAlign: "center"}
+        },
+        {
+            selector: '.sixth-step',
+            content: 'You can style your notes with the toolbar. It also allows you to add links and images.',
+            style: {textAlign: "center"}
+        },
+        {
+            selector: '.last-step',
+            content: 'Happy note-taking!',
+            style: {textAlign: "center"}
+        }
+    ];
+
+      const mobileSteps = [
+          {
+              selector: '.first-step',
+              content: 'Welcome to FlexNotes!',
+              style: {textAlign: "center"}
+          },
+          {
+              selector: '.second-step',
+              content: 'This is the navbar. It helps you organize your notes into binders, tabs and pages.',
+              style: {textAlign: "center", marginTop: "18em"}
+          },
+          {
+              selector: '.navLink',
+              content: 'This is the menu. This will open the navbar so you can navigate through your binders, tabs and pages.',
+              style: {textAlign: "center", marginLeft: "1em"}
+          },
+          {
+              selector: '.videoLink',
+              content: 'This opens your video panel where you can save class videos and search YouTube!',
+              style: {textAlign: "center", marginLeft: "11em"}
+          },
+          {
+              selector: '.slideLink',
+              content: 'You can access your class slides here.',
+              style: {textAlign: "center", marginLeft: "5em"}
+          },
+          {
+              selector: '.notesLink',
+              content: 'Your notes are found here.',
+              style: {textAlign: "center", marginLeft: "-3em"}
+          },
+          {
+              selector: '.last-step',
+              content: 'Happy note-taking!',
+              style: {textAlign: "center"}
+          }
+      ];
+
     if (isMobile) {
       let mobilePanel = {};
       switch (mobilePanelIndex) {
         case 1:
-          mobilePanel = <NavBar />;
+          mobilePanel = <NavBar toggleTour={this.toggleTour} />;
           break;
         case 2:
           mobilePanel = <Video />;
@@ -129,84 +211,86 @@ class Dashboard extends Component {
           mobilePanel = <Notes />;
           break;
       }
-      dashboard = (
-        <div className="mobilePanel-container">
-          {mobilePanel}
-          <ul className="mobileNav">
-            <li
-              className="mobileLink navLink"
-              onClick={() => this.mobileSelectComponent(1)}
-            >
-              <div
-                className={`${mobilePanelIndex === 1 ? 'activeMobile' : ''}`}
-              >
-                <i className="small material-icons">dehaze</i>
-                <br />Nav
-              </div>
-            </li>
-            <li
-              className="mobileLink"
-              onClick={() => {
-                this.mobileSelectComponent(2);
-                this.props.getVideoPlaylist(
-                  this.binderId,
-                  this.tabId,
-                  this.pageId
-                );
-                this.props.setVideoUrl(this.props.playlistItems[0].videoId);
-              }}
-            >
-              <div
-                className={`${mobilePanelIndex === 2 ? 'activeMobile' : ''}`}
-              >
-                <i className="small material-icons mobile-icon">
-                  video_library
-                </i>
-                <br />Video
-              </div>
-            </li>
-            <li
-              className="mobileLink"
-              onClick={() => this.mobileSelectComponent(3)}
-            >
-              <div
-                className={`${mobilePanelIndex === 3 ? 'activeMobile' : ''}`}
-              >
-                <i className="small material-icons mobile-icon">video_label</i>
-                <br />Slides
-              </div>
-            </li>
-            <li
-              className="mobileLink"
-              onClick={() => this.mobileSelectComponent(4)}
-            >
-              <div
-                className={`${mobilePanelIndex === 4 ? 'activeMobile' : ''}`}
-              >
-                <i className="small material-icons mobile-icon">description</i>
-                <br />Notes
-              </div>
-            </li>
-          </ul>
-        </div>
-      );
+
+        dashboard = (
+            <div className="mobilePanel-container">
+                {mobilePanel}
+                <ul className="mobileNav">
+                    <li
+                        className="mobileLink navLink"
+                        onClick={() => this.mobileSelectComponent(1)}
+                    >
+                        <div
+                            className={`${mobilePanelIndex === 1 ? 'activeMobile' : ''}`}
+                        >
+                            <i className="small material-icons">dehaze</i>
+                            <br />Menu
+                        </div>
+                    </li>
+                    <li
+                        className="mobileLink videoLink"
+                        onClick={() => {
+                            this.mobileSelectComponent(2);
+                            this.props.getVideoPlaylist(
+                                this.binderId,
+                                this.tabId,
+                                this.pageId
+                            );
+                            this.props.setVideoUrl(this.props.playlistItems[0].videoId);
+                        }}
+                    >
+                        <div
+                            className={`${mobilePanelIndex === 2 ? 'activeMobile' : ''}`}
+                        >
+                            <i className="small material-icons mobile-icon">
+                                video_library
+                            </i>
+                            <br />Video
+                        </div>
+                    </li>
+                    <li
+                        className="mobileLink slideLink"
+                        onClick={() => this.mobileSelectComponent(3)}
+                    >
+                        <div
+                            className={`${mobilePanelIndex === 3 ? 'activeMobile' : ''}`}
+                        >
+                            <i className="small material-icons mobile-icon">video_label</i>
+                            <br />Slides
+                        </div>
+                    </li>
+                    <li
+                        className="mobileLink notesLink"
+                        onClick={() => this.mobileSelectComponent(4)}
+                    >
+                        <div
+                            className={`${mobilePanelIndex === 4 ? 'activeMobile' : ''}`}
+                        >
+                            <i className="small material-icons mobile-icon">description</i>
+                            <br />Notes
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        );
     } else {
-      dashboard = (
-        <div id="dashboard-container" className="row">
-          <NavBar toggleTour={this.toggleTour} />
-          <Panel />
-          <Tour
-            steps={steps}
-            isOpen={this.state.isTourOpen}
-            onRequestClose={this.toggleTour}
-          />
-        </div>
-      );
+        dashboard = (
+            <div id="dashboard-container" className="row">
+                <NavBar toggleTour={this.toggleTour} />
+                <Panel />
+            </div>
+        );
     }
 
-    return (
+
+      return (
       <div>
         {dashboard}
+        <Tour
+            steps={isMobile ? mobileSteps : desktopSteps}
+            isOpen={this.state.isTourOpen}
+            onRequestClose={this.toggleTour}
+        />
       </div>
     );
   }
