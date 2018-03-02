@@ -148,8 +148,11 @@ class Dashboard extends Component {
               className="mobileLink"
               onClick={() => {
                 this.mobileSelectComponent(2);
-                this.props.getVideoPlaylist(this.props.addedVideo);
-                console.log(this.props.playlistItems[0].videoId);
+                this.props.getVideoPlaylist(
+                  this.binderId,
+                  this.tabId,
+                  this.pageId
+                );
                 this.props.setVideoUrl(this.props.playlistItems[0].videoId);
               }}
             >
