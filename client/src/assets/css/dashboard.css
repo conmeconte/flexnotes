@@ -1,32 +1,21 @@
-/*#dashboard-container {*/
-    /*background-color: #6d7993;*/
-    /*padding: 0.5% 0.5% 0.5% 0;*/
-/*}*/
+.mobilePanel-container {
+    background-color: white;
+}
 
 .mobileNav {
-    position: fixed;
-    bottom: -2.2%;
-    width: 100%;
+    width: 90%;
     height: 8vh;
-    background-color: white;
-} 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin: 3% auto 0% auto;
+}
 
-.mobileNav> li{
-    display: inline-block;
-}
 .mobileLink{
-    width: 22%;
     font-weight: bold;
-}
-.navLink{
-    margin-left: 12%;
 }
 
 .activeMobile {
     color: #0288d1;
-
-}
-
-.mobile-icon.material-icons {
-    padding-left: 3%;
 }

@@ -6,12 +6,21 @@
 
 .text-editor {
     height: 100%;
+    overflow: hidden;
 }
 
 .editor {
     padding-left: 1vmin;
     padding-top: 2vmin;
     height: 100%;
+}
+
+code {
+    display: inline-block;
+    background-color: #d5d5d5;
+    color: #0288d1;
+    padding: 0 0.5em;
+    font-family: 'Overpass Mono' !important;
 }
 
 .notes-component.fifth-step{

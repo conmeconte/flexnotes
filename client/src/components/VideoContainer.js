@@ -96,7 +96,8 @@ class VideoContainer extends Component {
         </div>
         <div id="video-container" className="video-container">
           <div className="resize-blocker" />
-          {this.props.videoLink
+
+          {this.props.playlistItems.length !== 1
             ? <iframe
                 allowFullScreen
                 id="video-iframe"
@@ -124,7 +125,8 @@ function mapStateToProps(state) {
     url: state.url,
     savedVideoTitle: state.video.savedVideoTitle,
     savedVideoImage: state.video.savedVideoImage,
-    playlistStyles: state.video.playlistStyles
+    playlistStyles: state.video.playlistStyles,
+    playlistItems: state.video.addedVideo
   };
 }
 

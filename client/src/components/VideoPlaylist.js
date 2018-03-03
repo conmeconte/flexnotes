@@ -52,7 +52,7 @@ class VideoPlaylist extends Component {
       this.binderId = nextProps.binderObj._id;
       this.tabId = tab_arr_obj[tabIndex]._id;
       this.pageId = page_arr_obj[pageIndex]._id;
-      this.currentVideoList = page_arr_obj[pageIndex].video;
+      this.currentVideoList = page_arr_obj[pageIndex].video._id;
     }
   }
   render() {
