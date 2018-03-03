@@ -285,14 +285,12 @@ ul > li {
     left: -13px;
 }
 .navbarShow.btn{
-
     position: absolute;
     z-index: 100;
 }
 
 .textLight{
     color: white;
-    
 }
 
 .card-action.modal-nav{
@@ -431,7 +429,7 @@ footer {
         display: none;
     }
     .binder-container {
-        height: 72vh;
+        height: 70vh;
     }
     .navbar.s2, header{
         width: 100%;
@@ -447,14 +445,16 @@ footer {
         width: 10%;
         margin-left: 2%;
     }
-
+    header{
+        height: 8vh;
+    }
     footer{
-        padding-bottom: 5%;
-        height: 40px;
+        /* padding-bottom: 2%; */
+        height: 8vh;
     }
     .startTour.btn, .logoutBtn.btn {
         font-size: 1em;
-        margin: 0 4%;
+        margin: 2% 4%;
     }
 
     .lfzLogo{
@@ -467,14 +467,23 @@ footer {
         width: 90%;
         left: 5%;
     }
+    .pageLink{
+        padding-bottom: 15%;
+    }
+
+    .page-edit-btn, .page-delete-btn{
+        bottom: 0%;
+    }
+
 }
 
 @media (max-width: 480px) {
-    footer {
+    /* footer {
         height: 70px;
-    }
+    } */
     .startTour.btn, .logoutBtn.btn {
         margin: 3% 4% 0 4%;
+        
     }
 }
 

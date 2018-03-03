@@ -55,7 +55,6 @@ class LfzModal extends Component {
         }
     }
     render(){
-        console.log('lfzmodal', this.props);
         const {visible, response} = this.state;
         
         const button = (
