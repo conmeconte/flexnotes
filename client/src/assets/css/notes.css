@@ -1,17 +1,20 @@
 .notes-parent-panel {
-    height: 99%;
+    height: 100%;
     box-sizing: border-box;
     background-color: ghostwhite;
+
 }
 
 .text-editor {
     height: 100%;
     overflow: hidden;
+    margin-bottom: -500em;
 }
 
 .editor {
-    padding-left: 1vmin;
     padding-top: 2vmin;
+    padding-left: 2vmin;
+    padding-right: 2vmin;
     height: 100%;
 }
 
@@ -21,6 +24,13 @@ code {
     color: #0288d1;
     padding: 0 0.5em;
     font-family: 'Overpass Mono' !important;
+}
+
+blockquote {
+    border-left: 5px solid #0288d1 !important;
+    color: #0288d1;
+    font-style: italic;
+    margin: 0 !important;
 }
 
 .notes-component.fifth-step{
