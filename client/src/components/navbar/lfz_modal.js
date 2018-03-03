@@ -16,7 +16,8 @@ class LfzModal extends Component {
        this.handleConfirm = this.handleConfirm.bind(this);
     }
     componentWillReceiveProps(nextProps) {
-        if(nextProps.interface_obj.lfz_response === false){
+        if(this.props.interface_obj.lfz_response !== nextProps.interface_obj.lfz_response ){
+            if(nextProps.interface_obj.lfz_response === false)
             this.setState({
                 response: 'Incorrect Password!'
             });
@@ -54,7 +55,6 @@ class LfzModal extends Component {
         }
     }
     render(){
-        console.log('lfzmodal', this.props);
         const {visible, response} = this.state;
         
         const button = (

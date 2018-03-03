@@ -27,18 +27,21 @@ class NavBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.interface.pull_from_db || nextProps.interface.page_id !== this.props.interface.page_id) {
-            this.props.updateBinderArray();
+        if (nextProps.interface.pull_from_db !== this.props.interface.pull_from_db) {
+            if(nextProps.interface.pull_from_db){
+                this.props.updateBinderArray();
+            }
         }
 
-        if (nextProps.interface.sent_to_db || this.props.interface.sent_to_db) {
-            for (let i = 0; i < this.props.binderArr.length; i++) {
-                if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
-                    let binderObj = this.props.binderArr[i];
-                    this.props.updateBinderObj(binderObj);
+        if (nextProps.interface.sent_to_db !== this.props.interface.sent_to_db) {
+            if(nextProps.interface.sent_to_db){
+                for (let i = 0; i < this.props.binderArr.length; i++) {
+                    if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
+                        let binderObj = this.props.binderArr[i];
+                        this.props.updateBinderObj(binderObj);
+                    }
                 }
             }
-
         }
         if(this.props.mobile !== nextProps.mobile){
             if(nextProps.mobile){
@@ -72,11 +75,9 @@ class NavBar extends Component {
     }
 
     render() {
-        console.log('navbar props', this.props);
         let editableText = '';
         const { updateRoutes } = this.state;
-        //let binderUrl = this.props.interface.binder_id;
-        //console.log('binderUrl', binderUrl);
+
         if (this.props.interface.editable) {
             editableText = 'Done';
         } else {
@@ -94,7 +95,8 @@ class NavBar extends Component {
 
         return (
             <div>
-                <button className={`navbarShow btn ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
+                <button className={`navbarShow btn ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} 
+                    onClick={this.openNav.bind(this)}>
                     <i className="small material-icons">chevron_right</i>
                 </button>
                      
