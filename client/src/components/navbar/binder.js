@@ -183,7 +183,7 @@ class Binder extends Component {
                  
                 <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelEdit(event)}>
                 <i className="small material-icons">close</i></button>
-                        </div>             
+                </div>             
 
             );
         } else {
@@ -220,15 +220,14 @@ class Binder extends Component {
 
 
         let tab_link = tab_arr_obj.map((item, index) => {
-            let tab_url = '/' + item._id;
+            let tab_url = '/' + binder_url + item._id;
             var tabStyle = {
                 borderLeft: '12px solid ' + item.tab_color
             }
-
-
                 return (
                     <div key={index} className="tabWrap blue-grey lighten-3">
                         <Tab index={index} tabObj={item}/>
+                        <Route path={`/main/${item._id}`} component={Tab} />
                     </div>
                 );               
                 });
@@ -242,7 +241,7 @@ class Binder extends Component {
                     {tab_link}
                     <button className="btn add-btn-tab waves-effect waves-light" onClick={this.addTab}>
                         New Tab</button>
-                    <Route path={`/main/${binder_url}` + "/:tab"} component={Tab} />
+                        
                 </div>
             </div>
         );

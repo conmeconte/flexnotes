@@ -40,7 +40,13 @@ class NavBar extends Component {
             }
 
         }
+        if(this.props.mobile !== nextProps.mobile){
+            if(nextProps.mobile){
+                this.props.showNav();
+            }
+        }
     }
+
     addBinder() {
         this.props.addBinder();
     }
@@ -64,9 +70,13 @@ class NavBar extends Component {
             editable: false
         });
     }
+
     render() {
         console.log('navbar props', this.props);
         let editableText = '';
+        const { updateRoutes } = this.state;
+        //let binderUrl = this.props.interface.binder_id;
+        //console.log('binderUrl', binderUrl);
         if (this.props.interface.editable) {
             editableText = 'Done';
         } else {
@@ -74,10 +84,10 @@ class NavBar extends Component {
         }
 
         let binder = this.props.binderArr.map((item, index) => {
-
             return (
                 <div key={index} className="binderWrap blue-grey darken-2">
                     <Binder index={index} binderObj={item} />
+                    <Route path={`/main/${item._id}`} component={Binder} />
                 </div>
             );
         });
@@ -100,7 +110,6 @@ class NavBar extends Component {
                         {binder}
                         <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
                             New Binder</button>
-                        <Route path={'/main/:binder'} component={Binder} />
                     </section>
                     <footer>
                         <TourButton toggleTour={this.props.toggleTour}/>
