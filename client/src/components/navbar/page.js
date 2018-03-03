@@ -157,10 +157,16 @@ class Page extends Component {
                              onKeyPress={this.keyPressed.bind(this)}
                              value={pageName}
                              />
-                <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditPage(event)}>
-                <i className="small material-icons">check</i></button>
-                 <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelPageEdit(event)}>
-                <i className="small material-icons">close</i></button>
+                <button type="button" 
+                    className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} 
+                    onClick={(event)=>this.notEditPage(event)}>
+                    <i className="small material-icons">check</i>
+                </button>
+                 <button type="button" 
+                    className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} 
+                    onClick={(event)=>this.cancelPageEdit(event)}>
+                    <i className="small material-icons">close</i>
+                </button>
             </div>              
 
             );
@@ -182,11 +188,15 @@ class Page extends Component {
                         </div>
                     </Link>
                     <div className="modify-btn">
-                        <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn navbar-btn edit-btn grey darken-4  ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event) => this.editPage(event)}>
+                        <button type="button" 
+                            onMouseEnter={this.hoverEditBtn.bind(this)} 
+                            onMouseLeave={this.notHoverEditBtn.bind(this)} 
+                            className={`btn page-edit-btn grey darken-4  ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} 
+                            onClick={(event) => this.editPage(event)}>
                             <i className="small material-icons">edit</i>
                         </button>
 
-                        <div className="navbar-btn" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
+                        <div className="page-delete-btn" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
                             <ModalNav
                                 callback={() => this.deletePage()}
                                 name={this.props.pageObj.page_name}

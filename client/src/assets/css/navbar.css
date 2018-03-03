@@ -80,11 +80,44 @@ ul > li {
 
 .binderTitle{
     cursor: pointer;
+    position: relative;
+    padding-bottom: 2%;
 }
 
-.modify-btn{
-    display: flex;
-    justify-content: flex-end;
+.binder-edit-btn{
+    position: absolute;
+    right: 14%;
+    top: 4%;
+}
+
+.binder-delete-btn{
+    position: absolute;
+    top: 4%;
+    right: 2%;
+}
+
+.tab-edit-btn{
+    position: absolute;
+    right: 16%;
+    top: 3%;
+}
+
+.tab-delete-btn{
+    position: absolute;
+    top: 3%;
+    right: 2%;
+}
+
+.page-edit-btn{
+    position: absolute;
+    right: 18%;
+    bottom: 2%;
+}
+
+.page-delete-btn{
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
 }
 
 .binderWrap{
@@ -108,11 +141,13 @@ ul > li {
 .tabTitle{
     border-top: outset 3px #546e7a;
     cursor: pointer;   
+    position: relative;
+    padding-bottom: 2%;
 }
 
 .pageBody{
     border: 1px inset #696969;
-    padding: 2% 0%; 
+    padding: 3% 0%; 
     margin-left: 10%;
     width: 90%;
     cursor: pointer;
@@ -122,8 +157,12 @@ ul > li {
 .pageLink, .page-btn, .delete-btn, .edit-btn {
     display: inline-block;
 }
+.btn.binder-edit-btn{
+    padding-left: 8px;
+    padding-right: 2px;
+}
 
-.btn.delete-btn, .btn.edit-btn, .btn.edit-mode-btn{
+.btn.delete-btn, .btn.tab-edit-btn, .btn.page-edit-btn{
     padding-right: 0px;
     padding-left: 6px;
 }
@@ -189,6 +228,8 @@ ul > li {
 
 .pageLink{
     padding-left: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
     font-size: 1rem;
     overflow-wrap: break-word;
 }
@@ -206,8 +247,8 @@ ul > li {
     overflow-wrap: break-word;
 }
 
-.navbar-btn {
-    margin: 1%;
+.pageList{
+    position: relative;
 }
 
 .pageList.whiteFont>a {
