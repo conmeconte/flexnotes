@@ -197,8 +197,6 @@ class Page extends Component {
                             </ModalNav>
                         </div>
                     </div>
-
-
                 </div>
             );
         }

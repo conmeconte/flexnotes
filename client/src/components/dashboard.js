@@ -72,7 +72,7 @@ class Dashboard extends Component {
       let mobilePanel = {};
       switch (mobilePanelIndex) {
         case 1:
-          mobilePanel = <NavBar />;
+          mobilePanel = <NavBar mobile={true}/>;
           break;
         case 2:
           mobilePanel = <Video />;
@@ -118,7 +118,7 @@ class Dashboard extends Component {
     } else {
       dashboard = (
         <div id="dashboard-container" className="row">
-          <NavBar toggleTour={this.toggleTour} />
+          <NavBar toggleTour={this.toggleTour} mobile={false} />
           <Panel />
           <Tour
             steps={steps}
