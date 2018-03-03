@@ -186,9 +186,11 @@ class Tab extends Component {
 
 
         let page_list = page_arr_obj.map((item, index) => {
+            let page_url =  url + '/' + item._id;
             return (
                 <div key={index}>
                     <Page pageObj={item} tabID={this.props.tabObj._id} />
+                    <Route path={`/main/${page_url}`} component={Page} /> 
                 </div>
             );
         });
@@ -203,7 +205,8 @@ class Tab extends Component {
                     </ul>
                     <button className="btn add-btn-page waves-effect waves-light" onClick={this.addPage}>
                         New Page</button>
-                    <Route path={`/main/${url}` + "/:page"} component={Page} />
+                        <Route path={`/main/${url}`} component={Tab} />
+                    {/* <Route path={`/main/${url}` + "/:page"} component={Page} /> */}
                 </div>
             </div>
         );

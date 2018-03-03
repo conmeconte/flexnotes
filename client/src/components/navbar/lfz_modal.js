@@ -48,6 +48,11 @@ class LfzModal extends Component {
             password: e.target.value
         });
     }
+    keyPressed(event) {
+        if (event.key === 'Enter') {
+            this.handleConfirm();
+        }
+    }
     render(){
         console.log('lfzmodal', this.props);
         const {visible, response} = this.state;
@@ -69,6 +74,7 @@ class LfzModal extends Component {
                                     type="password"
                                     placeholder="Enter Password"
                                     onChange={(e)=>this.handleForm(e)}
+                                    onKeyPress={this.keyPressed.bind(this)}
                                     />
                                 <div className="red-text">{response}</div>
                                 </div>
