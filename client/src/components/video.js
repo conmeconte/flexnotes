@@ -83,10 +83,11 @@ class Video extends Component {
         }
       }
       const currentPage = page_arr_obj[pageIndex];
+
       if (
         pageIndex !== null &&
         currentPage.hasOwnProperty('video') &&
-        currentPage.video[0].hasOwnProperty('videoId')
+        currentPage.video.length >= 1
       ) {
         this.props.setVideoUrl(currentPage.video[0].videoId, interface_obj);
         this.props.slideOutVideoSearch(false, 'translateY(-119px)');

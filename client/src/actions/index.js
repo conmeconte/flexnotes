@@ -179,7 +179,17 @@ export function slideOutSlidesSearch(toggleBool, slide) {
 
 //Video Action Creators
 export const getSavedVideoTitle = videoUrl => async dispatch => {
-  if (videoUrl.indexOf('feature') !== -1) {
+  if (videoUrl.indexOf('player_embedded') !== -1) {
+    let videoId = videoUrl.split('=');
+    videoId = videoId[2];
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
+    );
+    dispatch({
+      type: types.GET_SAVED_VIDEO_TITLE,
+      payload: response.data.items[0].snippet.title
+    });
+  } else if (videoUrl.indexOf('feature') !== -1) {
     let videoLink = videoUrl;
     let videoId = videoLink.split('=');
     videoId = videoId[1].split('&');
@@ -215,7 +225,17 @@ export const getSavedVideoTitle = videoUrl => async dispatch => {
   }
 };
 export const getSavedVideoImg = videoUrl => async dispatch => {
-  if (videoUrl.indexOf('feature') !== -1) {
+  if (videoUrl.indexOf('player_embedded') !== -1) {
+    let videoId = videoUrl.split('=');
+    videoId = videoId[2];
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
+    );
+    dispatch({
+      type: types.GET_SAVED_VIDEO_IMAGE,
+      payload: response.data.items[0].snippet.thumbnails.default.url
+    });
+  } else if (videoUrl.indexOf('feature') !== -1) {
     let videoLink = videoUrl;
     let videoId = videoLink.split('=');
     videoId = videoId[1].split('&');
@@ -339,6 +359,43 @@ export function addVideoToDatabase(
   if (!videoUrl) {
     return {
       type: types.NO_VIDEO_LINK
+    };
+  } else if (videoUrl.indexOf('player_embedded') !== -1) {
+    let videoId = videoUrl.split('=');
+    videoId = videoId[2];
+    let videoLink = `https://www.youtube.com/embed/${videoId}`;
+    return async dispatch => {
+      try {
+        const response = await axios.post('/api/video', {
+          video: {
+            videoTitle: videoTitle,
+            videoId: videoId,
+            videoURL: videoLink,
+            videoImg: videoImg
+          },
+          binderID: interfaceObj.binder_id,
+          tabID: interfaceObj.tab_id,
+          pageID: interfaceObj.page_id
+        });
+        console.log(response);
+        dispatch({
+          type: types.ADD_VIDEO_TO_DATABASE,
+          payload: {
+            videoInfo: {
+              videoTitle: videoTitle,
+              videoId: videoId,
+              videoURL: videoLink,
+              videoImg: videoImg
+            },
+            updatedPlaylist: response.data.video
+          }
+        });
+      } catch (error) {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Add to Playlist Failed.'
+        });
+      }
     };
   } else if (videoUrl.indexOf('feature') !== -1) {
     let videoLink = videoUrl;
