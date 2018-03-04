@@ -25,6 +25,7 @@ class Dashboard extends Component {
 
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
     this.mobileSelectComponent = this.mobileSelectComponent.bind(this);
+    this.toggleTour = this.toggleTour.bind(this);
     this.binderId = null;
     this.tabId = null;
     this.pageId = null;
@@ -38,8 +39,6 @@ class Dashboard extends Component {
       isTourOpen: false,
       width: window.innerWidth
     });
-
-    this.toggleTour = this.toggleTour.bind(this);
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
 
@@ -51,7 +50,7 @@ class Dashboard extends Component {
       if (this.props.binder !== nextProps.binder) {
         this.updatePlaylistComponent(nextProps);
       }
-      if (this.props.interface.page_id === nextProps.interface.page_id) {
+      if (this.props.interface.page_id !== nextProps.interface.page_id) {
         this.updatePlaylistComponent(nextProps);
       }
     }
@@ -100,7 +99,7 @@ class Dashboard extends Component {
       });
     } else {
       this.setState({
-        isTourOpen: true,
+        isTourOpen: true
       });
     }
   }
@@ -218,11 +217,9 @@ class Dashboard extends Component {
                 <ul className="mobileNav">
                     <li
                         className="mobileLink navLink"
-                        onClick={() => this.mobileSelectComponent(1)}
-                    >
+                        onClick={() => this.mobileSelectComponent(1)}>
                         <div
-                            className={`${mobilePanelIndex === 1 ? 'activeMobile' : ''}`}
-                        >
+                            className={`${mobilePanelIndex === 1 ? 'activeMobile' : ''}`}>
                             <i className="small material-icons">dehaze</i>
                             <br />Menu
                         </div>
@@ -237,11 +234,9 @@ class Dashboard extends Component {
                                 this.pageId
                             );
                             this.props.setVideoUrl(this.props.playlistItems[0].videoId);
-                        }}
-                    >
+                        }}>
                         <div
-                            className={`${mobilePanelIndex === 2 ? 'activeMobile' : ''}`}
-                        >
+                            className={`${mobilePanelIndex === 2 ? 'activeMobile' : ''}`}>
                             <i className="small material-icons mobile-icon">
                                 video_library
                             </i>
@@ -250,11 +245,9 @@ class Dashboard extends Component {
                     </li>
                     <li
                         className="mobileLink slideLink"
-                        onClick={() => this.mobileSelectComponent(3)}
-                    >
+                        onClick={() => this.mobileSelectComponent(3)}>
                         <div
-                            className={`${mobilePanelIndex === 3 ? 'activeMobile' : ''}`}
-                        >
+                            className={`${mobilePanelIndex === 3 ? 'activeMobile' : ''}`}>
                             <i className="small material-icons mobile-icon">video_label</i>
                             <br />Slides
                         </div>

@@ -17,15 +17,18 @@ class LfzModal extends Component {
     }
     componentWillReceiveProps(nextProps) {
         if(this.props.interface_obj.lfz_response !== nextProps.interface_obj.lfz_response ){
-            if(nextProps.interface_obj.lfz_response === false)
+            console.log('')
+            if(nextProps.interface_obj.lfz_response === false) {
             this.setState({
                 response: 'Incorrect Password!'
             });
-        } else if(nextProps.interface_obj.lfz_response === true){
-            this.setState({
-                visible: false,
-                response: ''
-            });
+            }
+            else if(nextProps.interface_obj.lfz_response === true){
+                this.setState({
+                    visible: false,
+                    response: ''
+                });
+            }
         }
     }
 
@@ -56,7 +59,7 @@ class LfzModal extends Component {
     }
     render(){
         const {visible, response} = this.state;
-        
+        console.log('lfz props', this.props);
         const button = (
             <img className="lfzLogo" src={lfzLogo} onClick={()=>this.setState({visible: true})}/> 
         );
