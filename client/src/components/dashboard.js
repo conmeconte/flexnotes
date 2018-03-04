@@ -25,6 +25,7 @@ class Dashboard extends Component {
 
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
     this.mobileSelectComponent = this.mobileSelectComponent.bind(this);
+    this.toggleTour = this.toggleTour.bind(this);
     this.binderId = null;
     this.tabId = null;
     this.pageId = null;
@@ -38,11 +39,8 @@ class Dashboard extends Component {
       isTourOpen: false,
       width: window.innerWidth
     });
-
-    this.toggleTour = this.toggleTour.bind(this);
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
-
   // componentWillReceiveProps(nextProps) {
   //   // const { interface } = this.props;
   //   const { width } = this.state;
@@ -76,7 +74,6 @@ class Dashboard extends Component {
   //         break;
   //       }
   //     }
-
   //     this.binderId = nextProps.binder.binderObj._id;
   //     this.tabId = tab_arr_obj[tabIndex]._id;
   //     this.pageId = page_arr_obj[pageIndex]._id;
@@ -217,7 +214,6 @@ class Dashboard extends Component {
           mobilePanel = <Notes />;
           break;
       }
-
       dashboard = (
         <div className="mobilePanel-container">
           {mobilePanel}

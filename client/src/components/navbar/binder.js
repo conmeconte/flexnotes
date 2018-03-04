@@ -155,7 +155,6 @@ class Binder extends Component {
 
     render() {
         const { active, editable, binderName, hover, editHover, deleteHover, binderHover } = this.state;
-      
         if(!this.props.binderObj){
 
             return null;

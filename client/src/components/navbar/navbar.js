@@ -27,6 +27,9 @@ class NavBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        // if (nextProps.interface.page_id !== this.props.interface.page_id) {
+        //     this.props.updateBinderArray();
+        // }
         if (nextProps.interface.pull_from_db !== this.props.interface.pull_from_db) {
             if(nextProps.interface.pull_from_db){
                 this.props.updateBinderArray();
