@@ -96,15 +96,12 @@ class VideoContainer extends Component {
         </div>
         <div id="video-container" className="video-container">
           <div className="resize-blocker" />
-
-          {this.props.playlistItems.length !== 1
-            ? <iframe
-                allowFullScreen
-                id="video-iframe"
-                src={this.props.videoLink}
-                className="video-iframe"
-              />
-            : ''}
+          <iframe
+            allowFullScreen
+            id="video-iframe"
+            src={this.props.videoLink}
+            className="video-iframe"
+          />
         </div>
       </div>
     );
