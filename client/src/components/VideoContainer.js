@@ -28,6 +28,7 @@ class VideoContainer extends Component {
     if (!youtubeLinkInput || youtubeLinkInput.indexOf('youtu') === -1) {
       return;
     }
+
     this.props.playPastedLinkVideo(values['youtube-url']);
     this.props.getSavedVideoImg(values['youtube-url']).then(() => {
       this.props.getSavedVideoTitle(values['youtube-url']).then(() => {
@@ -41,6 +42,7 @@ class VideoContainer extends Component {
     });
   }
   render() {
+    console.log(this.props.videoLink);
     return (
       <div className="iframe-wrapper">
         <form
@@ -96,12 +98,15 @@ class VideoContainer extends Component {
         </div>
         <div id="video-container" className="video-container">
           <div className="resize-blocker" />
-          <iframe
-            allowFullScreen
-            id="video-iframe"
-            src={this.props.videoLink}
-            className="video-iframe"
-          />
+          {this.props.playlistItems.length >= 1 &&
+          this.props.playlistItems[0].videoId !== undefined
+            ? <iframe
+                allowFullScreen
+                id="video-iframe"
+                src={this.props.videoLink}
+                className="video-iframe"
+              />
+            : 'No video available. Please add one through a Youtube search or paste a valid link.'}
         </div>
       </div>
     );
