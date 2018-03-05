@@ -59,7 +59,6 @@ class LfzModal extends Component {
     }
     render(){
         const {visible, response} = this.state;
-        console.log('lfz props', this.props);
         const button = (
             <img className="lfzLogo" src={lfzLogo} onClick={()=>this.setState({visible: true})}/> 
         );

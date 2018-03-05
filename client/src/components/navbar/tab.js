@@ -36,6 +36,13 @@ class Tab extends Component {
                 open: true
             });
         }
+        if (this.props.hasOwnProperty("tabObj")) {
+            if (this.props.interface.tab_id === this.props.tabObj._id) {
+                this.setState({
+                    open: true
+                });
+            }
+        }
     }
     addPage() {
         this.props.addPage(this.props.interface.binder_id, this.props.tabObj._id);
