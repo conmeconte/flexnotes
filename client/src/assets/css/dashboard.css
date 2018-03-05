@@ -1,32 +1,35 @@
-/*#dashboard-container {*/
-    /*background-color: #6d7993;*/
-    /*padding: 0.5% 0.5% 0.5% 0;*/
-/*}*/
+.mobilePanel-container {
+    background-color: white;
+}
 
 .mobileNav {
-    position: fixed;
-    bottom: -2.2%;
-    width: 100%;
+    width: 90%;
     height: 8vh;
-    background-color: white;
-} 
-
-.mobileNav> li{
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin: 0.6% 0;
+    position: absolute;
+    bottom: -0.05%;
+    left: 0;
 }
+
 .mobileLink{
-    width: 22%;
     font-weight: bold;
 }
+
 .navLink{
-    margin-left: 12%;
+    margin-left: 10%;
 }
 
 .activeMobile {
     color: #0288d1;
-
 }
 
-.mobile-icon.material-icons {
-    padding-left: 3%;
+
+/*------------ MOBILE TOUR ------------*/
+
+.reactour__helper.reactour__helper--is-open.sc-ifAKCX.cfrXTn {
+   margin-left: -20% !important;
 }

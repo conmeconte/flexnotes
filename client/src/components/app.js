@@ -32,10 +32,11 @@ class App extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.auth === false){
-            this.props.fetchSampleUser();
+        if(nextProps.auth !== this.props.auth){
+            if(nextProps.auth === false){
+                this.props.fetchSampleUser();
+            }
         }
-
     }
 
     render() {

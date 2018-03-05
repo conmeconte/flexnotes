@@ -36,6 +36,13 @@ class Tab extends Component {
                 open: true
             });
         }
+        if (this.props.hasOwnProperty("tabObj")) {
+            if (this.props.interface.tab_id === this.props.tabObj._id) {
+                this.setState({
+                    open: true
+                });
+            }
+        }
     }
     addPage() {
         this.props.addPage(this.props.interface.binder_id, this.props.tabObj._id);
@@ -150,26 +157,39 @@ class Tab extends Component {
                              onKeyPress={this.keyPressed.bind(this)}
                              value={tabName}
                              />
-                <button type="button" className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.notEditTabs(event)}>
+                <button type="button" 
+                    className={`btn edit-mode-btn green darken-1 ${editable ? 'visible' : 'hidden'}`} 
+                    onClick={(event)=>this.notEditTabs(event)}>
                 <i className="small material-icons">check</i></button>
                  
-                <button type="button" className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} onClick={(event)=>this.cancelTabEdit(event)}>
+                <button type="button" 
+                    className={`btn edit-mode-btn red darken-1 ${editable ? 'visible' : 'hidden'}`} 
+                    onClick={(event)=>this.cancelTabEdit(event)}>
                 <i className="small material-icons">close</i></button>
             </div>              
             );
         } else {
             tab_title = (
-                <div className="tabTitle" onClick={() => this.handleClick()} onMouseEnter={this.hover.bind(this)} onMouseLeave={this.notHover.bind(this)}>
+                <div className="tabTitle" 
+                    onClick={() => this.handleClick()} 
+                    onMouseEnter={this.hover.bind(this)} 
+                    onMouseLeave={this.notHover.bind(this)}>
                     <Link to={`/main/${url}`} style={{ textDecoration: 'none' }} >
                         <div className="tabLink" >
                             {this.props.tabObj.tab_name}
                         </div>
                     </Link>
                     <div className="modify-btn">
-                        <button type="button" onMouseEnter={this.hoverEditBtn.bind(this)} onMouseLeave={this.notHoverEditBtn.bind(this)} className={`btn navbar-btn edit-btn grey darken-4 ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} onClick={(event) => this.editTabs(event)}>
+                        <button type="button" 
+                            onMouseEnter={this.hoverEditBtn.bind(this)} 
+                            onMouseLeave={this.notHoverEditBtn.bind(this)} 
+                            className={`btn tab-edit-btn grey darken-4 ${editHover ? 'fullOpacity' : ''} ${hover ? 'visibleHover' : 'hiddenHover'}`} 
+                            onClick={(event) => this.editTabs(event)}>
                             <i className="small material-icons">edit</i>
                         </button>
-                        <div className="navbar-btn" onMouseEnter={this.hoverDeleteBtn.bind(this)} onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
+                        <div className="tab-delete-btn" 
+                            onMouseEnter={this.hoverDeleteBtn.bind(this)} 
+                            onMouseLeave={this.notHoverDeleteBtn.bind(this)}>
                             <ModalNav
                                 callback={() => this.deleteTab(this.props.interface.binder_id)}
                                 name={this.props.tabObj.tab_name}
@@ -186,9 +206,11 @@ class Tab extends Component {
 
 
         let page_list = page_arr_obj.map((item, index) => {
+            let page_url =  url + '/' + item._id;
             return (
                 <div key={index}>
                     <Page pageObj={item} tabID={this.props.tabObj._id} />
+                    <Route path={`/main/${page_url}`} component={Page} /> 
                 </div>
             );
         });
@@ -203,7 +225,7 @@ class Tab extends Component {
                     </ul>
                     <button className="btn add-btn-page waves-effect waves-light" onClick={this.addPage}>
                         New Page</button>
-                    <Route path={`/main/${url}` + "/:page"} component={Page} />
+                        <Route path={`/main/${url}`} component={Tab} />
                 </div>
             </div>
         );

@@ -30,7 +30,10 @@ export default function(state = DEFAULT_STATE, action) {
     case types.GET_VIDEO_RESULTS:
       return { ...state, results: action.payload };
     case types.ADD_VIDEO_TO_DATABASE:
-      return { ...state, addedVideo: [action.payload, ...state.addedVideo] };
+      return {
+        ...state,
+        addedVideo: action.payload.updatedPlaylist
+      };
     case types.GET_RESULT_STYLES:
       return {
         ...state,
@@ -73,6 +76,11 @@ export default function(state = DEFAULT_STATE, action) {
         ...state,
         savedVideoTitle: action.payload
       };
+    case types.DELETE_FROM_PLAYLIST:
+      return {
+        ...state,
+        addedVideo: action.payload
+      };
     case types.GET_SAVED_VIDEO_IMAGE:
       return {
         ...state,
@@ -82,6 +90,11 @@ export default function(state = DEFAULT_STATE, action) {
       return {
         ...state,
         addedVideo: action.payload
+      };
+    case types.GET_VIDEO_PLAYLIST:
+      return {
+        ...state,
+        addedVideo: action.payload.data.video
       };
     case types.TOGGLE_PLAYLIST:
       return {

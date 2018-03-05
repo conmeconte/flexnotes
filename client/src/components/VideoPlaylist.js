@@ -22,6 +22,9 @@ class VideoPlaylist extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { interface_obj } = this.props;
+    if (this.props.binderObj !== nextProps.binderObj) {
+      this.updatePlaylistComponent(nextProps);
+    }
     if (interface_obj.page_id === nextProps.interface_obj.page_id) {
       this.updatePlaylistComponent(nextProps);
     }
@@ -49,48 +52,46 @@ class VideoPlaylist extends Component {
       this.binderId = nextProps.binderObj._id;
       this.tabId = tab_arr_obj[tabIndex]._id;
       this.pageId = page_arr_obj[pageIndex]._id;
-      this.currentVideoList = page_arr_obj[pageIndex].video;
+      this.currentVideoList = page_arr_obj[pageIndex].video._id;
     }
   }
   render() {
     const { playlistStyles } = this.props;
-    let createPlaylist;
-    if (this.props.playlistItems) {
-      createPlaylist = this.props.playlistItems.map((item, index) => {
-        if (!item.hasOwnProperty('videoId')) {
-          return;
-        }
-        return (
-          <li className="result-item collection-item col s12" key={index}>
-            <div className="row list-item-wrap-container">
-              <div className="row list-item-wrap-container col s12">
-                <img src={item.videoImg} />
-                <div className="col s9 video-contents">
-                  {item.videoTitle}
-                </div>
+    const createPlaylist = this.props.playlistItems.map((item, index) => {
+      if (!item.hasOwnProperty('videoId')) {
+        return;
+      }
+      return (
+        <li className="result-item collection-item col s12" key={index}>
+          <div className="row list-item-wrap-container">
+            <div className="row list-item-wrap-container col s12">
+              <img src={item.videoImg} />
+              <div className="col s9 video-contents">
+                {item.videoTitle}
               </div>
-              <button
-                className="btn btn-small playlist-play col s1 playlist-play"
-                onClick={() => {
-                  this.props.playVideo(item.videoId);
-                  this.props.togglePlaylist(this.props.playlistStyles);
-                }}
-              >
-                <i className="material-icons">play_arrow</i>
-              </button>
-              <button
-                onClick={() => {
-                  this.deleteVideo(item._id);
-                }}
-                className="btn btn-small playlist-delete col s1"
-              >
-                <i className="material-icons">delete_forever</i>
-              </button>
             </div>
-          </li>
-        );
-      });
-    }
+            <button
+              className="btn btn-small playlist-play col s1 playlist-play"
+              onClick={() => {
+                this.props.playVideo(item.videoId);
+                this.props.togglePlaylist(this.props.playlistStyles);
+              }}
+            >
+              <i className="material-icons">play_arrow</i>
+            </button>
+            <button
+              onClick={() => {
+                this.deleteVideo(item._id);
+              }}
+              className="btn btn-small playlist-delete col s1"
+            >
+              <i className="material-icons">delete_forever</i>
+            </button>
+          </div>
+        </li>
+      );
+    });
+
     return (
       <div style={playlistStyles} className="video-playlist-panel">
         <i
@@ -103,7 +104,7 @@ class VideoPlaylist extends Component {
         </i>
         <ul className="video-playlist collection">
           <h4>Video Playlist</h4>
-          {createPlaylist}
+          {this.props.playlistItems ? createPlaylist : ''}
         </ul>
       </div>
     );

@@ -21,10 +21,6 @@ export default function(state = DEFAULT_STATE, action) {
       return { binderObj: action.payload };
     case types.UPDATE_BINDER_OBJ:
       return { binderObj: action.payload };
-    case types.DELETE_FROM_PLAYLIST:
-      return {
-        binderObj: action.payload.res.data
-      };
     default:
       return state;
   }

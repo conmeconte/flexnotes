@@ -1,58 +1,72 @@
 .notes-parent-panel {
-    height: 99%;
+    height: 100%;
     box-sizing: border-box;
     background-color: ghostwhite;
-    /*box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3);*/
+
 }
 
 .text-editor {
     height: 100%;
+    overflow: hidden;
+    margin-bottom: -500em;
 }
 
 .editor {
-    padding-left: 1vmin;
     padding-top: 2vmin;
+    padding-left: 2vmin;
+    padding-right: 2vmin;
     height: 100%;
 }
 
-.notes-component-toolbar {
-    height: 11.5%;
-
+code {
+    display: inline-block;
+    background-color: #d5d5d5;
+    color: #0288d1;
+    padding: 0 0.5em;
+    font-family: 'Overpass Mono' !important;
 }
-.notes-component.fifth-step{
-    height: 88%; 
-    overflow-y: auto;
 
+blockquote {
+    border-left: 5px solid #0288d1 !important;
+    color: #0288d1;
+    font-style: italic;
+    margin: 0 !important;
+}
+
+.notes-component.fifth-step{
+    height: 88%;
+    overflow-y: auto;
 }
 
 .toolbar {
     width: 100%;
-    height: 100%;
     position: relative;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    /* background-color: #b0bec5; */
     background-color: #455a64;
     box-shadow: 0 5px 5px #999;
     z-index: 1;
-    padding: 1.5% 1% 1% 1%;
+    padding: 0 1em;
 }
 
 .stylingButtons {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-between;
     height: 40%;
-    width: 60%;
+    width: 100%;
+    padding-top: 1.5em;
 }
 
 .styleSquare {
-    height: 80%;
+    height: 2.5em;
+    width: 2.5em;
     cursor: pointer;
     color: white;
+    text-align: center;
 }
 
 .styleSquare:hover{
@@ -61,48 +75,107 @@
 }
 
 .material-icons.notesIcons {
-    font-size: 3vmin;
+    font-size: 2.5em;
     margin: 0;
 }
 
-.search-box {
-    /* margin-top: 5px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between; */
-    height: 40%;
-    width: 60%;
-    margin-right: 20%;
-    display: inline-block;
-}
-
 .search-input.keyword {
-    /* width: 250px !important;
-    height: 30px !important;
-    padding-left: 5px !important;
-    background-color: white !important;
-    border: 3px inset gray !important; */
     background-color: #eceff1;
-    height: 100%; 
+    height: 2.5em;
+    width: 20em;
+    padding-left: 2%;
+    margin-top: 0;
 }
 
-.saveNotes.btn {
-    /* width: 130px !important;
-    height: 35px !important;
-    font-weight: 600 !important;
-    border: 3px outset gray !important; */
-    color:white; 
-    width: 20%;
-    background-color: #0393d7;
-    height: 40%; 
+.link, .image {
+    margin-top: 0;
 }
 
-.saveNotes.btn:hover{
-    background-color: #01579b;
+@media only screen and (max-width: 1426px) {
+    .styleSquare {
+        height: 2.3em;
+        width: 2.3em;
+    }
+
+    .material-icons.notesIcons {
+        font-size: 2.3em;
+    }
+
+    .search-input.keyword {
+        height: 2.3em;
+        margin-left: 0;
+    }
 }
 
-.saveNotes:active {
-    border: 2px outset gray !important;
-    transform: translateY(4px);
+@media only screen and (max-width: 1385px) {
+    .search-input.keyword {
+        margin-top: 0.7em;
+    }
+}
+
+@media only screen and (max-width: 974px) {
+    .stylingButtons {
+        justify-content: flex-start;
+    }
+
+    .search-input.keyword {
+        width: 17em;
+    }
+
+    .material-icons.image {
+        margin-top: 0.3em;
+    }
+}
+
+@media only screen and (max-width: 935px) {
+    .material-icons.link {
+        margin-top: 0.3em;
+    }
+}
+
+@media only screen and (max-width: 919px) {
+    .search-input.keyword {
+        margin-top: 0.7em;
+    }
+
+    .material-icons.image, .material-icons.link {
+        margin-top: 0;
+    }
+}
+
+@media only screen and (max-width: 830px) {
+    .search-input.keyword {
+        width: 13em;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .stylingButtons {
+        justify-content: space-between;
+    }
+
+    .search-input.keyword {
+        margin-top: 0;
+    }
+}
+
+@media only screen and (max-width: 574px) {
+    .search-input.keyword {
+        margin-top: 0.7em;
+        width: 20em;
+    }
+}
+
+@media only screen and (max-width: 382px) {
+    .stylingButtons {
+        justify-content: flex-start;
+    }
+
+    .material-icons.image {
+        margin-top: 0.3em;
+    }
+}
+
+.reactour-portal {
+    z-index: -100;
 }

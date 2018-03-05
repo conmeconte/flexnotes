@@ -54,14 +54,6 @@
     /* width: 98%; */
 }
 
-
-/* Notes Component*/
-/* .notes-component{
-    height: auto !important; 
-
-} */
-
-
 ::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -82,14 +74,6 @@
     background-color: #e0e0e0;
 }
 
-/* .notes-parent-panel{
-    overflow-x: unset;
-    overflow-y: scroll;
-} */
-/* .notes-parent-panel{
-    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
-    width: 99%; 
-} */
 /* .toolbar{
     width: 97.8%;
 } */
