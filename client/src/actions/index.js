@@ -189,11 +189,23 @@ export const getSavedVideoTitle = videoUrl => async dispatch => {
       type: types.GET_SAVED_VIDEO_TITLE,
       payload: response.data.items[0].snippet.title
     });
-  } else if (videoUrl.indexOf('feature') !== -1) {
+  } else if (videoUrl.indexOf('&feature=youtu.be') !== -1) {
     let videoLink = videoUrl;
     let videoId = videoLink.split('=');
     videoId = videoId[1].split('&');
     videoId = videoId[0];
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
+    );
+    dispatch({
+      type: types.GET_SAVED_VIDEO_TITLE,
+      payload: response.data.items[0].snippet.title
+    });
+  } else if (videoUrl.indexOf('feature') !== -1) {
+    let videoLink = videoUrl;
+    let videoId = videoLink.split('&');
+    videoId = videoId[0].split('/');
+    videoId = videoId[4];
     const response = await axios.get(
       `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
     );
@@ -235,11 +247,25 @@ export const getSavedVideoImg = videoUrl => async dispatch => {
       type: types.GET_SAVED_VIDEO_IMAGE,
       payload: response.data.items[0].snippet.thumbnails.default.url
     });
-  } else if (videoUrl.indexOf('feature') !== -1) {
+  } else if (videoUrl.indexOf('&feature=youtu.be') !== -1) {
     let videoLink = videoUrl;
     let videoId = videoLink.split('=');
     videoId = videoId[1].split('&');
     videoId = videoId[0];
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
+    );
+    dispatch({
+      type: types.GET_SAVED_VIDEO_IMAGE,
+      payload: response.data.items[0].snippet.thumbnails.default.url
+    });
+  } else if (videoUrl.indexOf('feature') !== -1) {
+    let videoLink = videoUrl;
+    let videoId = videoLink.split('&');
+    videoId = videoId[0].split('/');
+    videoId = videoId[4];
+    console.log(videoId);
+    // let videoId = videoLink.split('&feature');
     const response = await axios.get(
       `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
     );
@@ -397,12 +423,52 @@ export function addVideoToDatabase(
         });
       }
     };
-  } else if (videoUrl.indexOf('feature') !== -1) {
+  } else if (videoUrl.indexOf('&feature=youtu.be') !== -1) {
     let videoLink = videoUrl;
     let videoId = videoLink.split('=');
     videoId = videoId[1].split('&');
     videoId = videoId[0];
     videoLink = `https://www.youtube.com/embed/${videoId}`;
+    return async dispatch => {
+      try {
+        const response = await axios.post('/api/video', {
+          video: {
+            videoTitle: videoTitle,
+            videoId: videoId,
+            videoURL: videoLink,
+            videoImg: videoImg
+          },
+          binderID: interfaceObj.binder_id,
+          tabID: interfaceObj.tab_id,
+          pageID: interfaceObj.page_id
+        });
+        console.log(response);
+        dispatch({
+          type: types.ADD_VIDEO_TO_DATABASE,
+          payload: {
+            videoInfo: {
+              videoTitle: videoTitle,
+              videoId: videoId,
+              videoURL: videoLink,
+              videoImg: videoImg
+            },
+            updatedPlaylist: response.data.video
+          }
+        });
+      } catch (error) {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Add to Playlist Failed.'
+        });
+      }
+    };
+  } else if (videoUrl.indexOf('feature') !== -1) {
+    let videoLink = videoUrl;
+    let videoId = videoLink.split('&');
+    videoId = videoId[0].split('/');
+    videoId = videoId[4];
+    videoLink = videoLink.split('&');
+    videoLink = videoLink[0];
     return async dispatch => {
       try {
         const response = await axios.post('/api/video', {

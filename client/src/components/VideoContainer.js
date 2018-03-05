@@ -28,6 +28,7 @@ class VideoContainer extends Component {
     if (!youtubeLinkInput || youtubeLinkInput.indexOf('youtu') === -1) {
       return;
     }
+
     this.props.playPastedLinkVideo(values['youtube-url']);
     this.props.getSavedVideoImg(values['youtube-url']).then(() => {
       this.props.getSavedVideoTitle(values['youtube-url']).then(() => {
@@ -41,7 +42,7 @@ class VideoContainer extends Component {
     });
   }
   render() {
-    console.log('PLAYLIST ITEMS: ', this.props.playlistItems[0]);
+    console.log(this.props.videoLink);
     return (
       <div className="iframe-wrapper">
         <form
