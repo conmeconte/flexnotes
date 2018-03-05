@@ -175,3 +175,7 @@ blockquote {
         margin-top: 0.3em;
     }
 }
+
+.reactour-portal {
+    z-index: -100;
+}
