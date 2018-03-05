@@ -12,6 +12,10 @@
     /* margin: 1% auto 0% auto; */
 }
 
+.navLink{
+    margin-left: 10%;
+}
+
 .mobileLink{
     font-weight: bold;
 }
