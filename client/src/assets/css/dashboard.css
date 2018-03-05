@@ -9,17 +9,27 @@
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: nowrap;
-    /* margin: 1% auto 0% auto; */
-}
-
-.navLink{
-    margin-left: 10%;
+    margin: 0.6% 0;
+    position: absolute;
+    bottom: -0.05%;
+    left: 0;
 }
 
 .mobileLink{
     font-weight: bold;
 }
 
+.navLink{
+    margin-left: 10%;
+}
+
 .activeMobile {
     color: #0288d1;
+}
+
+
+/*------------ MOBILE TOUR ------------*/
+
+.reactour__helper.reactour__helper--is-open.sc-ifAKCX.cfrXTn {
+   margin-left: -20% !important;
 }
