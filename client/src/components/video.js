@@ -43,6 +43,40 @@ class Video extends Component {
     }
     this.props.getVideoResults(videos);
   }
+  componentWillMount() {
+    let { tab_arr_obj } = this.props.binderObj;
+    let { interface_obj } = this.props;
+    if (tab_arr_obj) {
+      let tabArrLength = tab_arr_obj.length;
+      let tabIndex = null;
+      let pageIndex = null;
+      for (let i = 0; i < tabArrLength; i++) {
+        if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+          tabIndex = i;
+          break;
+        }
+      }
+      const { page_arr_obj } = tab_arr_obj[tabIndex];
+      for (let i = 0; i < page_arr_obj.length; i++) {
+        if (interface_obj.page_id === page_arr_obj[i]._id) {
+          pageIndex = i;
+          break;
+        }
+      }
+      if (
+        typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined' ||
+        typeof page_arr_obj[pageIndex].video[0].videoURL === ''
+      ) {
+        // return;
+        this.props.setVideoUrl('', interface_obj);
+      } else {
+        this.props.setVideoUrl(
+          page_arr_obj[pageIndex].video[0].videoURL,
+          interface_obj
+        );
+      }
+    }
+  }
   componentWillReceiveProps(nextProps) {
     const { interface_obj } = this.props;
     if (interface_obj.page_id !== nextProps.interface_obj.page_id) {
@@ -147,7 +181,7 @@ class Video extends Component {
             <Results results={this.props.videoResults} />
           </div>
         </div>
-        <VideoPlaylist videoPlaylist={this.props.playlistItems} />
+        <VideoPlaylist />
         <div id="video-wrapper" className="video-wrapper third-step">
           <VideoContainer />
         </div>
