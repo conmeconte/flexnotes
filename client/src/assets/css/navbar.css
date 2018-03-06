@@ -496,6 +496,10 @@ footer {
     .logoImage{
         width: 6%;
     }
+
+    .pageLink{
+        padding-bottom: 5%;
+    }
 }
 
 @media (max-width: 480px) {
