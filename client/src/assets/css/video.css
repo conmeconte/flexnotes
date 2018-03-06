@@ -294,9 +294,12 @@ button.close {
 .video-btn:hover {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
 }
-@media (max-width: 767px) and (orientation: portrait) {
+@media screen and (max-width: 375px) and (orientation: portrait) {
   .video-container iframe {
-    height: 80vh;
+    height: 82vh;
+  }
+  .video-container#video-container {
+    height: 95%;
   }
   #video-iframe {
     top: 2vh;
@@ -320,5 +323,23 @@ button.close {
   }
   .playlist-logo-container {
     top: 9vh;
+  }
+  .video-slide-out-input {
+    height: 17vh;
+    top: 4vh;
+  }
+}
+
+@media screen and (max-width: 667px) and (orientation: landscape) {
+  .video-container#video-container {
+    text-align: center;
+    height: 80%;
+    padding-bottom: 0;
+    position: relative;
+    top: -13vh;
+  }
+  .video-slide-out-input {
+    height: 25vh;
+    top: -3vh;
   }
 }

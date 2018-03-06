@@ -81,7 +81,7 @@ class VideoContainer extends Component {
         <form
           onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}
           style={this.props.slideOutStyles}
-          className="row slide-out-input"
+          className="row video-slide-out-input slide-out-input"
         >
           <Field name="youtube-url" component={this.renderInput} />
           <div className="col s3 youtube-search-buttons">
