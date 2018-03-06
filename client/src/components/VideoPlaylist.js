@@ -23,13 +23,13 @@ class VideoPlaylist extends Component {
   componentWillReceiveProps(nextProps) {
     const { interface_obj } = this.props;
     if (this.props.binderObj !== nextProps.binderObj) {
-      this.updatePlaylistComponent(nextProps);
+      this.getCurrentVideoData(nextProps);
     }
     if (interface_obj.page_id === nextProps.interface_obj.page_id) {
-      this.updatePlaylistComponent(nextProps);
+      this.getCurrentVideoData(nextProps);
     }
   }
-  updatePlaylistComponent(nextProps) {
+  getCurrentVideoData(nextProps) {
     let { tab_arr_obj } = nextProps.binderObj;
     let { interface_obj } = nextProps;
     if (tab_arr_obj) {

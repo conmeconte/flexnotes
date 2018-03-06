@@ -480,6 +480,28 @@ footer {
 
 }
 
+@media screen and (max-width: 767px) and (orientation:landscape){
+    .binder-container{
+        height: 50vh;
+        margin-top: 3%;
+    }
+    footer{
+        height: 10%;   
+    }
+
+    .lfzLogo{
+        width: 8%;
+    }
+
+    .logoImage{
+        width: 6%;
+    }
+
+    .pageLink{
+        padding-bottom: 5%;
+    }
+}
+
 @media (max-width: 480px) {
     /* footer {
         height: 70px;
