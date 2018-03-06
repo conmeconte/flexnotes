@@ -444,7 +444,7 @@ footer {
         font-size: 3em;
     }
     .logoImage {
-        width: 10%;
+        width: 8%;
         margin-left: 2%;
     }
     header{
@@ -490,15 +490,31 @@ footer {
     }
 
     .lfzLogo{
-        width: 8%;
+        width: 7%;
+        padding-top: 1%;
     }
 
     .logoImage{
-        width: 6%;
+        width: 5%;
     }
 
     .pageLink{
-        padding-bottom: 5%;
+        padding-bottom: 3%;
+    }
+
+    .binder-edit-btn{
+        right: 9%;
+    }
+    .tab-edit-btn{
+        right: 11%;
+    }
+    .page-edit-btn{
+        right: 12%;
+    }
+
+    .pageBody{
+        padding: 0;
+        padding-bottom: 2%;
     }
 }
 
