@@ -508,6 +508,45 @@ export function addVideoToDatabase(
         });
       }
     };
+  } else if (videoUrl.indexOf('&t') !== -1) {
+    let videoLink = videoUrl;
+    let videoId = videoLink.split('&t');
+    videoId = videoId[0].split('=');
+    videoId = videoId[1];
+    videoLink = `https://www.youtube.com/embed/${videoId}`;
+    return async dispatch => {
+      try {
+        const response = await axios.post('/api/video', {
+          video: {
+            videoTitle: videoTitle,
+            videoId: videoId,
+            videoURL: videoLink,
+            videoImg: videoImg
+          },
+          binderID: interfaceObj.binder_id,
+          tabID: interfaceObj.tab_id,
+          pageID: interfaceObj.page_id
+        });
+        console.log('DATA RESPONSE FROM ADD: ', response);
+        dispatch({
+          type: types.ADD_VIDEO_TO_DATABASE,
+          payload: {
+            videoInfo: {
+              videoTitle: videoTitle,
+              videoId: videoId,
+              videoURL: videoLink,
+              videoImg: videoImg
+            },
+            updatedPlaylist: response.data.video
+          }
+        });
+      } catch (error) {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Add to Playlist Failed.'
+        });
+      }
+    };
   } else if (videoUrl.indexOf('&') !== -1 || videoUrl.indexOf('=') !== -1) {
     let videoLink = videoUrl;
     let videoId = videoLink.split('&')[0];
