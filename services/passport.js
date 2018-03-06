@@ -1,5 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const LocalStrategy= require('passport-local').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
 const fs            = require('fs');
@@ -19,6 +20,74 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(
+    new LocalStrategy(
+        async function(username, password, done) {
+        const existingUser = await User.findOne({ userName: 'sampleUser' });
+        // if (err) { return done(err); }
+        if (!existingUser) {
+            const defaultBinder = new Binder({binder_name: "Binder"});
+            defaultBinder.tab_arr_obj.push(new Tab({tab_name :"Tab"}));
+            defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({
+                page_name : "Page",
+                page_color: 'orange',
+                notes:{
+                    document:{
+                        content: "{\"kind\":\"value\",\"document\":{\"kind\":\"document\",\"data\":{},\"nodes\":[{\"kind\":\"block\",\"type\":\"heading-one\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Welcome to FlexNotes!\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"FlexNotes was designed to help students keep all their class information in one place for easy access and review.\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"You can start by separating each subject into binders and then organize your notes into tabs and pages.\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Each page will have a space for you to save any slides and videos from class as well as a notepad where you can type up your notes.\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Don't have any class videos? No problem! You can search YouTube directly from your page and find videos that can help reinforce what you have learned so far!\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"image\",\"isVoid\":true,\"data\":{\"src\":\"https://www.ccc.edu/menu/PublishingImages/laptop%20discount%20program.jpg\"},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\" \",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\" \",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]}]}}"
+                    }
+                }
+            })
+            );
+            defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ "videoURL": "https://www.youtube.com/embed/9hkYrKYu7tI", "videoId" : "9hkYrKYu7tI" }));
+            defaultBinder.tab_arr_obj[0].page_arr_obj[0].lecture_slides={"lec_id": "https://docs.google.com/presentation/d/1ijcyjcRNCHacUGmsqU_x-hx4xlMe0NVjTg2QcQ7BpgM/embed"}
+            
+            const user = await new User({
+                googleId: 'sample',
+                userName: 'sampleUser',
+                password: 'samplePw',
+                binder_arr_obj: [defaultBinder]
+            }).save()
+            return done(null, user);
+            // return done(null, false); 
+        }
+        // if (!existingUser.verifyPassword(password)) { return done(null, false); }
+        
+        //delete user and recreate; 
+        await existingUser.remove();
+        await existingUser.save();
+
+
+        const defaultBinder = new Binder({binder_name: "Binder"});
+        defaultBinder.tab_arr_obj.push(new Tab({tab_name :"Tab"}));
+        defaultBinder.tab_arr_obj[0].page_arr_obj.push(new Page({
+            page_name : "Page",
+            page_color: 'orange',
+            notes:{
+                document:{
+                    content: "{\"kind\":\"value\",\"document\":{\"kind\":\"document\",\"data\":{},\"nodes\":[{\"kind\":\"block\",\"type\":\"heading-one\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Welcome to FlexNotes!\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"FlexNotes was designed to help students keep all their class information in one place for easy access and review.\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"You can start by separating each subject into binders and then organize your notes into tabs and pages.\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Each page will have a space for you to save any slides and videos from class as well as a notepad where you can type up your notes.\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"Don't have any class videos? No problem! You can search YouTube directly from your page and find videos that can help reinforce what you have learned so far!\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"image\",\"isVoid\":true,\"data\":{\"src\":\"https://www.ccc.edu/menu/PublishingImages/laptop%20discount%20program.jpg\"},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\" \",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\" \",\"marks\":[]}]}]},{\"kind\":\"block\",\"type\":\"paragraph\",\"isVoid\":false,\"data\":{},\"nodes\":[{\"kind\":\"text\",\"leaves\":[{\"kind\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]}]}}"
+                }
+            }
+        })
+        );
+        defaultBinder.tab_arr_obj[0].page_arr_obj[0].video.push(new Video({ "videoURL": "https://www.youtube.com/embed/9hkYrKYu7tI", "videoId" : "9hkYrKYu7tI" }));
+        defaultBinder.tab_arr_obj[0].page_arr_obj[0].lecture_slides={"lec_id": "https://docs.google.com/presentation/d/1ijcyjcRNCHacUGmsqU_x-hx4xlMe0NVjTg2QcQ7BpgM/embed"}
+        
+        const user = await new User({
+            googleId: 'sample',
+            userName: 'sampleUser',
+            password: 'samplePw',
+            binder_arr_obj: [defaultBinder]
+        }).save()
+        return done(null, user);
+      
+    }
+  )
+);
+
+
+
+
+
+passport.use(
     new GoogleStrategy(
         {
             clientID: keys.googleClientID,
@@ -34,7 +103,7 @@ passport.use(
                     if (err) console.log('writing log failed'); 
                     console.log('User Login Updated!');
                 });
-                return done(null, existingUser);
+                return done(null, existingUser); // first argument is an error obj, sencond is the user record
             }
             //no user record in db make a new record
             const defaultBinder = new Binder({binder_name: "Binder"});

@@ -2,7 +2,10 @@ const passport = require('passport');
 const fs = require('fs');
 const path= require('path');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const LocalStrategy= require('passport-local').Strategy;
 const keys = require('../config/keys');
+const { User, Binder, Tab, Page, Note, Video } = require('../models');
+
 
 
 
@@ -20,6 +23,13 @@ module.exports = app => {
             res.redirect('/main');
 
     });
+
+    app.post('/auth/sample', passport.authenticate('local', {successRedirect: '/main', failureRedirect: '/'}),
+        (req, res)=>{
+            console.log(req.user); 
+            res.redirect('/main'); 
+        }
+    );
 
     app.get('/api/logout', (req, res, next) => {
         let loginLog= {Date: new Date().toLocaleString(),user: `user ${req.user.userName} has logged out`};

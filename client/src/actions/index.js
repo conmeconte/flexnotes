@@ -7,9 +7,15 @@ export const fetchUser = () => async dispatch => {
 
   dispatch({ type: types.FETCH_USER, payload: res.data });
 };
-export const fetchSampleUser = () => async dispatch => {
-  const res = await axios.get('/api/sample');
-  dispatch({ type: types.FETCH_SAMPLE_USER, payload: res.data });
+export const fetchSampleUser = async () =>{
+  const res = await axios.post('/auth/sample', {
+    username: 'sample',
+    password: 'samplePw'
+  });
+  console.log('reached back')
+  window.location= '/main';
+  // window.location.href = 'http://localhost:3000/main'
+  // dispatch({ type: types.FETCH_SAMPLE_USER, payload: res.data });
 };
 
 //PANEL SPECs Action Creator

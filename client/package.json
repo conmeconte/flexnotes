@@ -2,9 +2,10 @@
   "name": "FlexNotes",
   "version": "1.0.0",
   "proxy": {
-    "/auth/google": {
+    "/auth/*": {
       "target": "http://localhost:9000"
     },
+
     "/userInfo": {
       "target": "http://localhost:9000"
     },
