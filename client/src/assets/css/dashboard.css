@@ -27,6 +27,12 @@
     color: #0288d1;
 }
 
+@media screen and (max-width: 767px) and (orientation:landscape){
+    .mobileNav{
+        height: initial;
+    }
+}
+
 
 /*------------ MOBILE TOUR ------------*/
 
