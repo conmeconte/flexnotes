@@ -18,6 +18,7 @@ export const fetchSampleUser = () => dispatch =>{
     // window.location.href = 'http://localhost:3000/main'
     dispatch({ type: types.FETCH_SAMPLE_USER, payload: res });
   }).catch(err=>{
+    //axios call not receive a res but sample user logged in, so redirect as err occurs
     window.location= '/main';
     console.log('reached back');
     dispatch({
