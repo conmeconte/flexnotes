@@ -7,13 +7,13 @@ export const fetchUser = () => async dispatch => {
 
   dispatch({ type: types.FETCH_USER, payload: res.data });
 };
-export const fetchSampleUser = async () =>{
+export const fetchSampleUser = async () => {
   const res = await axios.post('/auth/sample', {
     username: 'sample',
     password: 'samplePw'
   });
-  console.log('reached back')
-  window.location= '/main';
+  console.log('reached back');
+  window.location = '/main';
   // window.location.href = 'http://localhost:3000/main'
   // dispatch({ type: types.FETCH_SAMPLE_USER, payload: res.data });
 };
@@ -601,7 +601,6 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
-
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
