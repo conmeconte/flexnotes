@@ -27,7 +27,7 @@ module.exports = app => {
     app.post('/auth/sample', passport.authenticate('local', {successRedirect: '/main', failureRedirect: '/'}),
         (req, res)=>{
             console.log(req.user); 
-            res.redirect('/main'); 
+            // res.redirect('/main');  axios calls don't allow redirect
         }
     );
 
@@ -39,6 +39,7 @@ module.exports = app => {
         });
     
         req.logout();
+        
         res.redirect('/'); //nothing will be sent out since logged out
     });
 

@@ -7,15 +7,25 @@ export const fetchUser = () => async dispatch => {
 
   dispatch({ type: types.FETCH_USER, payload: res.data });
 };
-export const fetchSampleUser = async () =>{
-  const res = await axios.post('/auth/sample', {
+
+export const fetchSampleUser = () => dispatch =>{
+  console.log('fetchUser called')
+  axios.post('/auth/sample', {
     username: 'sample',
     password: 'samplePw'
-  });
-  console.log('reached back')
-  window.location= '/main';
-  // window.location.href = 'http://localhost:3000/main'
-  // dispatch({ type: types.FETCH_SAMPLE_USER, payload: res.data });
+  }).then(()=>{
+
+    // window.location.href = 'http://localhost:3000/main'
+    dispatch({ type: types.FETCH_SAMPLE_USER, payload: res });
+  }).catch(err=>{
+    window.location= '/main';
+    console.log('reached back');
+    dispatch({
+      type: types.AXIOS_ERROR,
+      msg: 'Failed to update Top Left Panel Height'
+    });
+  })
+  
 };
 
 //PANEL SPECs Action Creator
