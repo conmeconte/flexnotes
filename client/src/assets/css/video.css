@@ -330,7 +330,7 @@ button.close {
   }
 }
 
-@media screen and (max-width: 667px) and (orientation: landscape) {
+@media screen and (max-width: 740px) and (orientation: landscape) {
   .video-container#video-container {
     text-align: center;
     height: 80%;
