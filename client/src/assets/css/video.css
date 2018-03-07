@@ -213,6 +213,9 @@ button.close {
   align-items: center;
   margin-left: 0;
 }
+.list-item-wrap-container {
+  padding: 10px 0;
+}
 .list-item-wrap-container img {
   max-width: 35%;
 }

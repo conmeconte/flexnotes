@@ -6,7 +6,7 @@ import axios from 'axios';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import keys from '../../../config/keys';
+import keys from '../config/keys';
 class Video extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +24,7 @@ class Video extends Component {
     const ROOT_URL = 'https://www.googleapis.com/youtube/v3/search';
     const params = {
       part: 'snippet',
-      key: keys.videoKey,
+      key: keys.YOUTUBE_API_KEY,
       q: values.video,
       type: 'video',
       maxResults: 50,
