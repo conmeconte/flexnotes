@@ -1,57 +1,57 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 button {
-    outline: none;
+  outline: none;
 }
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /* Resizable Panel */
 .Resizer {
-    background: #000;
-    opacity: .2;
-    z-index: 1;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding;
-    background-clip: padding-box;
+  background: #000;
+  opacity: .2;
+  z-index: 1;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
 }
 
 .Resizer:hover {
-    -webkit-transition: all 2s ease;
-    transition: all 2s ease;
+  -webkit-transition: all 2s ease;
+  transition: all 2s ease;
 }
 
 .Resizer.horizontal {
-    height: 11px;
-    margin: -5px 0;
-    border-top: 5px solid rgba(255, 255, 255, 0);
-    border-bottom: 5px solid rgba(255, 255, 255, 0);
-    cursor: row-resize;
-    width: 90vw;
+  height: 11px;
+  margin: -5px 0;
+  border-top: 5px solid rgba(255, 255, 255, 0);
+  border-bottom: 5px solid rgba(255, 255, 255, 0);
+  cursor: row-resize;
+  width: 90vw;
 }
 
 .Resizer.horizontal:hover {
-    border-top: 5px solid rgba(0, 0, 0, 0.5);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+  border-top: 5px solid rgba(0, 0, 0, 0.5);
+  border-bottom: 5px solid rgba(0, 0, 0, 0.5);
 }
 
 .Resizer.vertical {
-    width: 11px;
-    margin: 0 -5px;
-    border-left: 5px solid rgba(255, 255, 255, 0);
-    border-right: 5px solid rgba(255, 255, 255, 0);
-    cursor: col-resize;
+  width: 11px;
+  margin: 0 -5px;
+  border-left: 5px solid rgba(255, 255, 255, 0);
+  border-right: 5px solid rgba(255, 255, 255, 0);
+  cursor: col-resize;
 }
 
 .Resizer.vertical:hover {
-    border-left: 5px solid rgba(0, 0, 0, 0.5);
-    border-right: 5px solid rgba(0, 0, 0, 0.5);
+  border-left: 5px solid rgba(0, 0, 0, 0.5);
+  border-right: 5px solid rgba(0, 0, 0, 0.5);
 }
 
 .Resizer.disabled {
@@ -62,73 +62,73 @@ body {
   border-color: transparent;
 }
 .SplitPane.width-w-nav.vertical {
-    left: auto !important;
-    width: 83%
+  left: auto !important;
+  width: 83%;
 }
 
 .container-fluid {
-    padding: 0;
+  padding: 0;
 }
 
 .panelOptions {
-    float: right;
-    display: flex;
-    flex-direction: row;
+  float: right;
+  display: flex;
+  flex-direction: row;
 }
 
 .panelOptions:last-child {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .optionsTitle {
-    color: #31C3E7;
-    margin: 6px 10px 0 0;
+  color: #31c3e7;
+  margin: 6px 10px 0 0;
 }
 
 .layoutBtn {
-    color: #ffffff;
-    background-color: #31C3E7;
-    border: 1px solid #31C3E7;
-    border-radius: 3px;
-    margin-right: 5px;
-    font-size: 18px;
-    margin-top: 5px;
-    transition: 0.2s;
+  color: #ffffff;
+  background-color: #31c3e7;
+  border: 1px solid #31c3e7;
+  border-radius: 3px;
+  margin-right: 5px;
+  font-size: 18px;
+  margin-top: 5px;
+  transition: 0.2s;
 }
 
 .layoutBtn:hover {
-    background-color: #ffffff;
-    border: 2px solid #31C3E7;
-    color: #31C3E7;
+  background-color: #ffffff;
+  border: 2px solid #31c3e7;
+  color: #31c3e7;
 }
 
-.full_width.width-w-nav{
-    width: 100% !important;
+.full_width.width-w-nav {
+  width: 100% !important;
 }
 
 .input-field input[type=text]:focus {
-    border-bottom: 1px solid #96858F !important;
-    box-shadow: 0 1px 0 0 #96858F !important;
-  }
+  border-bottom: 1px solid #96858f !important;
+  box-shadow: 0 1px 0 0 #96858f !important;
+}
 .resize-blocker {
-    position:absolute;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    z-index: 8000;
-    display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  z-index: 8000;
+  display: none;
 }
 .resize-blocker2 {
-    position:absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    z-index: 8000;
-    display: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  z-index: 8000;
+  display: none;
 }
 
 .Pane.vertical.Pane2 {
-    background-color: ghostwhite;
-    border-left: 1px solid black;
+  background-color: ghostwhite;
+  border-left: 1px solid black;
 }

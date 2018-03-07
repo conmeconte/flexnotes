@@ -11,6 +11,7 @@
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/client/src"
         },
+
 {
     "type": "node",
     "request": "attach",
@@ -22,7 +23,7 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/app.js"
-        },
+        }
 
     ]
 }

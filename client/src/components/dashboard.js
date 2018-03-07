@@ -41,45 +41,45 @@ class Dashboard extends Component {
     });
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
-  // componentWillReceiveProps(nextProps) {
-  //   // const { interface } = this.props;
-  //   const { width } = this.state;
-  //   const isMobile = width <= 767;
-  //   if (isMobile) {
-  //     if (this.props.binder !== nextProps.binder) {
-  //       this.updatePlaylistComponent(nextProps);
-  //     }
-  //     if (this.props.interface.page_id !== nextProps.interface.page_id) {
-  //       this.updatePlaylistComponent(nextProps);
-  //     }
-  //   }
-  // }
-  // updatePlaylistComponent(nextProps) {
-  //   let { tab_arr_obj } = nextProps.binder.binderObj;
-  //   // let { interface_obj } = nextProps;
-  //   if (tab_arr_obj) {
-  //     let tabArrLength = tab_arr_obj.length;
-  //     let tabIndex = null;
-  //     let pageIndex = null;
-  //     for (let i = 0; i < tabArrLength; i++) {
-  //       if (nextProps.interface.tab_id === tab_arr_obj[i]._id) {
-  //         tabIndex = i;
-  //         break;
-  //       }
-  //     }
-  //     const { page_arr_obj } = tab_arr_obj[tabIndex];
-  //     for (let i = 0; i < page_arr_obj.length; i++) {
-  //       if (nextProps.interface.page_id === page_arr_obj[i]._id) {
-  //         pageIndex = i;
-  //         break;
-  //       }
-  //     }
-  //     this.binderId = nextProps.binder.binderObj._id;
-  //     this.tabId = tab_arr_obj[tabIndex]._id;
-  //     this.pageId = page_arr_obj[pageIndex]._id;
-  //     this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    // const { interface } = this.props;
+    const { width } = this.state;
+    const isMobile = width <= 767;
+    if (isMobile) {
+      if (this.props.binder !== nextProps.binder) {
+        this.updatePlaylistComponent(nextProps);
+      }
+      if (this.props.interface.page_id !== nextProps.interface.page_id) {
+        this.updatePlaylistComponent(nextProps);
+      }
+    }
+  }
+  updatePlaylistComponent(nextProps) {
+    let { tab_arr_obj } = nextProps.binder.binderObj;
+    // let { interface_obj } = nextProps;
+    if (tab_arr_obj) {
+      let tabArrLength = tab_arr_obj.length;
+      let tabIndex = null;
+      let pageIndex = null;
+      for (let i = 0; i < tabArrLength; i++) {
+        if (nextProps.interface.tab_id === tab_arr_obj[i]._id) {
+          tabIndex = i;
+          break;
+        }
+      }
+      const { page_arr_obj } = tab_arr_obj[tabIndex];
+      for (let i = 0; i < page_arr_obj.length; i++) {
+        if (nextProps.interface.page_id === page_arr_obj[i]._id) {
+          pageIndex = i;
+          break;
+        }
+      }
+      this.binderId = nextProps.binder.binderObj._id;
+      this.tabId = tab_arr_obj[tabIndex]._id;
+      this.pageId = page_arr_obj[pageIndex]._id;
+      this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
+    }
+  }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
@@ -233,11 +233,11 @@ class Dashboard extends Component {
               className="mobileLink videoLink"
               onClick={() => {
                 this.mobileSelectComponent(2);
-                // this.props.getVideoPlaylist(
-                //   this.binderId,
-                //   this.tabId,
-                //   this.pageId
-                // );
+                this.props.getVideoPlaylist(
+                  this.binderId,
+                  this.tabId,
+                  this.pageId
+                );
                 // this.props.setVideoUrl(this.props.playlistItems[0].videoId);
               }}
             >

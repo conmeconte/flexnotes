@@ -22,13 +22,11 @@ class VideoContainer extends Component {
       </div>
     );
   }
-
   handleYouTubeUrl(values) {
     const youtubeLinkInput = values['youtube-url'];
     if (!youtubeLinkInput || youtubeLinkInput.indexOf('youtu') === -1) {
       return;
     }
-
     this.props.playPastedLinkVideo(values['youtube-url']);
     this.props.getSavedVideoImg(values['youtube-url']).then(() => {
       this.props.getSavedVideoTitle(values['youtube-url']).then(() => {
@@ -42,13 +40,12 @@ class VideoContainer extends Component {
     });
   }
   render() {
-    console.log(this.props.videoLink);
     return (
       <div className="iframe-wrapper">
         <form
           onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}
           style={this.props.slideOutStyles}
-          className="row slide-out-input"
+          className="row video-slide-out-input slide-out-input"
         >
           <Field name="youtube-url" component={this.renderInput} />
           <div className="col s3 youtube-search-buttons">
@@ -98,8 +95,8 @@ class VideoContainer extends Component {
         </div>
         <div id="video-container" className="video-container">
           <div className="resize-blocker" />
-          {this.props.playlistItems.length >= 1 &&
-          this.props.playlistItems[0].videoId !== undefined
+          {this.props.currentPlaylistItems.length >= 1 &&
+          this.props.currentPlaylistItems[0].videoId !== undefined
             ? <iframe
                 allowFullScreen
                 id="video-iframe"
@@ -115,20 +112,16 @@ class VideoContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    pastedVideoUrl: state.videoResults.videoLink,
-    videoLink: state.video.videoLink,
     binderTabPageIds: state.interface,
     resultsStyles: state.video.resultsStyles,
     toggleResultsBool: state.video.toggleResults,
     opacityContainer: state.video.opacityDisplay,
-    interface_obj: state.interface,
     slideOutStyles: state.video.videoLinkSlideOut,
     toggleSlideOut: state.video.toggleSlideOut,
-    url: state.url,
     savedVideoTitle: state.video.savedVideoTitle,
     savedVideoImage: state.video.savedVideoImage,
     playlistStyles: state.video.playlistStyles,
-    playlistItems: state.video.addedVideo
+    videoLink: state.video.videoLink
   };
 }
 
