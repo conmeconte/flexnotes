@@ -40,6 +40,7 @@ class VideoContainer extends Component {
     });
   }
   render() {
+    console.log(this.props.videoLink);
     return (
       <div className="iframe-wrapper">
         <form

@@ -80,7 +80,7 @@ class Video extends Component {
         this.props.setVideoUrl('', interface_obj);
       } else {
         this.props.setVideoUrl(
-          page_arr_obj[pageIndex].video[0].videoURL,
+          page_arr_obj[pageIndex].video[0].videoId,
           interface_obj
         );
       }
@@ -230,7 +230,8 @@ function mapStateToProps(state) {
     slideOutStyles: state.video.videoLinkSlideOut,
     toggleSlideOut: state.video.toggleSlideOut,
     playlistStyles: state.video.playlistStyles,
-    playlistItems: state.video.addedVideo
+    playlistItems: state.video.addedVideo,
+    videoLink: state.video.videoLink
   };
 }
 
