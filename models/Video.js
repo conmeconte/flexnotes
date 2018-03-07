@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const videoPlayList = require('./VideoPlayList');
 
-
 /* Video Schema */
 
 const videoSchemaNew = new Schema({
-    videoId: String,
-    videoURL: String,
-    videoTitle: String 
+  videoId: String,
+  videoURL: String,
+  videoTitle: String,
+  videoImg: String
 });
 
 module.exports = videoSchemaNew;

@@ -1,6 +1,7 @@
 body {
     box-sizing: border-box;
 }
+
 .top-background-layer {
     background-color: #000;
     opacity: 0.4;
@@ -35,7 +36,18 @@ body {
     position: relative;
     top: 13vh;
     box-shadow: 0 4px 2px -2px #0393d7;
-    border-radius: 5px;
+    /* #border-radius: 5px; */
+}
+.btn.sample{
+    margin-top: 25px;
+    border-radius: 2px;
+    width: 40%;
+    background-color: #0393d7;
+
+}
+
+.btn.sample > a {
+    color: white;
 }
 .blur {
     position: absolute;
@@ -51,6 +63,7 @@ body {
 }
 .title-container h1 {
     line-height: 8vh;
+    letter-spacing: 3.5px;
 }
 .google-div,
 .info {
@@ -71,7 +84,7 @@ body {
 .info h3 {
     position: relative;
     top: 5vh;
-    font-size: 4vmin;
+    font-size: 2rem;
 }
 .google-div {
     color: #fff;
@@ -93,8 +106,8 @@ body {
     text-align: left;
     line-height: 5.5vh;
     width: 70%;
-    margin: 0 auto;
-    font-size: 3vmin;
+    margin: 15px auto;
+    font-size: 1.25rem;
 }
 .item-list li {
     white-space: nowrap;
@@ -108,6 +121,7 @@ body {
 
 .flex {
     color: #0393d7; 
+    font-style: italic;
 }
 .user-circle {
     border: 3px solid #fff;
@@ -125,10 +139,11 @@ body {
     top: 2vh;
 }
 .login-logout-container button {
-    height: 4vmin;
+    /* height: 4vmin;  */
+    width: 20%;
     font-size: 1.5vmin;
     background-color: #96858F;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     border: none;
 }
 .login-logout-container button i {
@@ -155,11 +170,11 @@ a.landing-login-text {
     color: #0393d7; 
 }
 .email-wrapper {
-    position: relative;
-    text-align: center;
-    top: 30%;
+    position: fixed;
+    bottom: 0;
     color: #fff;
-    font-size: 2em;
+    font-size: 1.9em;
+    width: 100%;
 }
 .email-wrapper a {
     color: #0393d7;
@@ -174,13 +189,14 @@ a.landing-login-text {
 .dash-btn {
     background-color: #0393d7;
 }
-.dash-btn:hover {
-    background-color: #74636D;
+.dash-btn:hover, .btn.sample:hover {
+    background-color: #01579b;
 }
 .btn-wrapper button {
     margin-right: 5px;
 }
 
 .landingLogo {
-    height: 41px;
+    width: 2.9vw;
+    margin-right: .5%;
 }

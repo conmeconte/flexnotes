@@ -54,14 +54,6 @@
     /* width: 98%; */
 }
 
-
-/* Notes Component*/
-/* .notes-component{
-    height: auto !important; 
-
-} */
-
-
 ::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -82,14 +74,6 @@
     background-color: #e0e0e0;
 }
 
-/* .notes-parent-panel{
-    overflow-x: unset;
-    overflow-y: scroll;
-} */
-/* .notes-parent-panel{
-    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
-    width: 99%; 
-} */
 /* .toolbar{
     width: 97.8%;
 } */
@@ -101,12 +85,36 @@
 
 /* Small tablet to big tablet: from 768px to 1023px */
 @media only screen and (max-width: 1023px) {
-
+    .login-container {
+        height: 70vh;
+    }
+    .info, .google-div {
+        width: 100%;
+        height: 50%;
+        display: block;
+    }
+    .logOutBtn {
+        width: 115px;
+        height: 36px;
+        font-size: 1rem;
+    }
 
 }
 
 /* Small phones to small tablets  from 481px to 767px*/ 
 @media only screen and (max-width: 767px) {
+.landingLogo {
+    width: 5vw;
+}
+
+.item-list {
+    font-size: 2.5vw;
+}
+
+.mobilePanel-container {
+    height: 90vh;
+}
+
 
 .SplitPane.width-w-nav{
     -webkit-box-orient: vertical !important;
@@ -147,5 +155,17 @@
 
 /* Small phones: from 0 to 480px */
 @media only screen and (max-width: 480px) {
-
+    .login-container {
+        height: 66vh;
+    }
+    .material-icons.landing {
+        font-size: 5vw;
+    }
+    .item-list {
+        font-size: 3vw;
+        margin: 15px 0 0 3%;
+    }
+    .btn.sample > a {
+        font-size: 0.97rem;
+    }
 }
