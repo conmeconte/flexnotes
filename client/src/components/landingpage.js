@@ -29,6 +29,8 @@ class LandingPage extends Component {
                 return <div className="dashboard-button"><a href="/main#"><button className="btn btn-sm dash-btn waves-effect waves-light ">Back to Dashboard</button></a></div>
         }
     }
+
+
     render() {
         return (
             <div className="main-login-container">
@@ -71,7 +73,7 @@ class LandingPage extends Component {
                             <div className="login-info">
                                 <h3>{!this.props.auth ? 'Sign In' : 'Sign Out'} <span className={!this.props.auth ? 'glyphicon glyphicon-user' : ''}></span></h3>
                                 <div className="login-logout-container"><Login /></div>
-                                <button className="btn sample"><a href="/main">Try it!</a></button>
+                                <button onClick={this.props.fetchSampleUser} className="btn sample">Try it!</button>
                             </div>
                         </div>
                     </div>

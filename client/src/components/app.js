@@ -31,13 +31,13 @@ class App extends Component {
         this.props.fetchUser();
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.auth !== this.props.auth){
-            if(nextProps.auth === false){
-                this.props.fetchSampleUser();
-            }
-        }
-    }
+    // componentWillReceiveProps(nextProps){
+    //     if(nextProps.auth !== this.props.auth){
+    //         if(nextProps.auth === false){
+    //             this.props.fetchSampleUser();
+    //         }
+    //     }
+    // }
 
     render() {
         return (
@@ -63,5 +63,5 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, { fetchUser, fetchSampleUser })(App);
+export default connect(mapStateToProps, { fetchUser })(App);
 

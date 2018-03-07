@@ -431,7 +431,7 @@ footer {
         display: none;
     }
     .binder-container {
-        height: 70vh;
+        height: 73vh;
     }
     .navbar.s2, header{
         width: 100%;
@@ -444,7 +444,7 @@ footer {
         font-size: 3em;
     }
     .logoImage {
-        width: 10%;
+        width: 8%;
         margin-left: 2%;
     }
     header{
@@ -480,6 +480,44 @@ footer {
 
 }
 
+@media screen and (max-width: 767px) and (orientation:landscape){
+    .binder-container{
+        height: 50vh;
+        margin-top: 3%;
+    }
+    footer{
+        height: 10%;   
+    }
+
+    .lfzLogo{
+        width: 7%;
+        padding-top: 1%;
+    }
+
+    .logoImage{
+        width: 5%;
+    }
+
+    .pageLink{
+        padding-bottom: 3%;
+    }
+
+    .binder-edit-btn{
+        right: 9%;
+    }
+    .tab-edit-btn{
+        right: 11%;
+    }
+    .page-edit-btn{
+        right: 12%;
+    }
+
+    .pageBody{
+        padding: 0;
+        padding-bottom: 2%;
+    }
+}
+
 @media (max-width: 480px) {
     /* footer {
         height: 70px;
@@ -499,8 +537,4 @@ footer {
 
 .bIMCVx:focus {
     background-color: white;
-}
-
-.mobile-icon {
-
 }

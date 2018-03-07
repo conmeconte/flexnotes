@@ -9,7 +9,8 @@ const binderSchemaNew = require('./Binder');
 const userSchemaNew = new Schema({
     googleId: String, 
     userName: String,
-    binder_arr_obj : [binderSchemaNew]
+    binder_arr_obj : [binderSchemaNew],
+    password: String
 });
 
 module.exports = userSchemaNew;

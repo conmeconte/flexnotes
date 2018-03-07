@@ -7,9 +7,26 @@ export const fetchUser = () => async dispatch => {
 
   dispatch({ type: types.FETCH_USER, payload: res.data });
 };
-export const fetchSampleUser = () => async dispatch => {
-  const res = await axios.get('/api/sample');
-  dispatch({ type: types.FETCH_SAMPLE_USER, payload: res.data });
+
+export const fetchSampleUser = () => dispatch =>{
+  console.log('fetchUser called')
+  axios.post('/auth/sample', {
+    username: 'sample',
+    password: 'samplePw'
+  }).then(()=>{
+
+    // window.location.href = 'http://localhost:3000/main'
+    dispatch({ type: types.FETCH_SAMPLE_USER, payload: res });
+  }).catch(err=>{
+    //axios call not receive a res but sample user logged in, so redirect as err occurs
+    window.location= '/main';
+    console.log('reached back');
+    dispatch({
+      type: types.AXIOS_ERROR,
+      msg: 'Failed to update Top Left Panel Height'
+    });
+  })
+  
 };
 
 //PANEL SPECs Action Creator
@@ -502,6 +519,45 @@ export function addVideoToDatabase(
         });
       }
     };
+  } else if (videoUrl.indexOf('&t') !== -1) {
+    let videoLink = videoUrl;
+    let videoId = videoLink.split('&t');
+    videoId = videoId[0].split('=');
+    videoId = videoId[1];
+    videoLink = `https://www.youtube.com/embed/${videoId}`;
+    return async dispatch => {
+      try {
+        const response = await axios.post('/api/video', {
+          video: {
+            videoTitle: videoTitle,
+            videoId: videoId,
+            videoURL: videoLink,
+            videoImg: videoImg
+          },
+          binderID: interfaceObj.binder_id,
+          tabID: interfaceObj.tab_id,
+          pageID: interfaceObj.page_id
+        });
+        console.log('DATA RESPONSE FROM ADD: ', response);
+        dispatch({
+          type: types.ADD_VIDEO_TO_DATABASE,
+          payload: {
+            videoInfo: {
+              videoTitle: videoTitle,
+              videoId: videoId,
+              videoURL: videoLink,
+              videoImg: videoImg
+            },
+            updatedPlaylist: response.data.video
+          }
+        });
+      } catch (error) {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Add to Playlist Failed.'
+        });
+      }
+    };
   } else if (videoUrl.indexOf('&') !== -1 || videoUrl.indexOf('=') !== -1) {
     let videoLink = videoUrl;
     let videoId = videoLink.split('&')[0];
@@ -595,7 +651,6 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
-
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
