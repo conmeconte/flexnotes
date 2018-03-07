@@ -233,11 +233,11 @@ class Dashboard extends Component {
               className="mobileLink videoLink"
               onClick={() => {
                 this.mobileSelectComponent(2);
-                // this.props.getVideoPlaylist(
-                //   this.binderId,
-                //   this.tabId,
-                //   this.pageId
-                // );
+                this.props.getVideoPlaylist(
+                  this.binderId,
+                  this.tabId,
+                  this.pageId
+                );
                 // this.props.setVideoUrl(this.props.playlistItems[0].videoId);
               }}
             >

@@ -10,36 +10,12 @@ import keys from '../../../config/keys';
 class Video extends Component {
   constructor(props) {
     super(props);
+    this.interface_obj = null;
     this.binderId = null;
     this.tabId = null;
     this.pageId = null;
     this.currentVideoList = null;
-  }
-  updatePlaylistComponent(nextProps) {
-    let { tab_arr_obj } = nextProps.binder.binderObj;
-    // let { interface_obj } = nextProps;
-    if (tab_arr_obj) {
-      let tabArrLength = tab_arr_obj.length;
-      let tabIndex = null;
-      let pageIndex = null;
-      for (let i = 0; i < tabArrLength; i++) {
-        if (nextProps.interface.tab_id === tab_arr_obj[i]._id) {
-          tabIndex = i;
-          break;
-        }
-      }
-      const { page_arr_obj } = tab_arr_obj[tabIndex];
-      for (let i = 0; i < page_arr_obj.length; i++) {
-        if (nextProps.interface.page_id === page_arr_obj[i]._id) {
-          pageIndex = i;
-          break;
-        }
-      }
-      this.binderId = nextProps.binder.binderObj._id;
-      this.tabId = tab_arr_obj[tabIndex]._id;
-      this.pageId = page_arr_obj[pageIndex]._id;
-      this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
-    }
+    this.currentPlaylistItems = [];
   }
   async search(values) {
     if (!values.video) {
@@ -104,7 +80,7 @@ class Video extends Component {
         this.props.setVideoUrl('', interface_obj);
       } else {
         this.props.setVideoUrl(
-          page_arr_obj[pageIndex].video[0].videoURL,
+          page_arr_obj[pageIndex].video[0].videoId,
           interface_obj
         );
       }
@@ -119,19 +95,6 @@ class Video extends Component {
     if (interface_obj.page_id !== nextProps.interface_obj.page_id) {
       this.updateVideoComponent(nextProps);
     }
-  }
-  renderInput({ input }) {
-    return (
-      <div id="input-field" className="col s12 input-field">
-        <input
-          type="text"
-          {...input}
-          id="query"
-          placeholder="Search and save from Youtube Search.."
-          className="form-control"
-        />
-      </div>
-    );
   }
   updateVideoComponent(nextProps) {
     let { tab_arr_obj } = nextProps.binderObj;
@@ -162,12 +125,31 @@ class Video extends Component {
       ) {
         this.props.setVideoUrl(currentPage.video[0].videoId, interface_obj);
         this.props.slideOutVideoSearch(false, 'translateY(-119px)');
+        // this.props.setVideoPlaylist(currentPage.video);
+        this.binderId = nextProps.binderObj._id;
+        this.tabId = tab_arr_obj[tabIndex]._id;
+        this.pageId = page_arr_obj[pageIndex]._id;
+        this.currentVideoList = page_arr_obj[pageIndex].video._id;
+        this.currentPlaylistItems = page_arr_obj[pageIndex].video;
+        this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
       } else {
         this.props.setVideoUrl('', interface_obj);
         this.props.slideOutVideoSearch(true, 'translateY(27px)');
       }
-      this.props.setVideoPlaylist(currentPage.video);
     }
+  }
+  renderInput({ input }) {
+    return (
+      <div id="input-field" className="col s12 input-field">
+        <input
+          type="text"
+          {...input}
+          id="query"
+          placeholder="Search and save from Youtube Search.."
+          className="form-control"
+        />
+      </div>
+    );
   }
   render() {
     const { resultsVideoUrl, playlistStyles } = this.props;
@@ -218,9 +200,14 @@ class Video extends Component {
             <Results results={this.props.videoResults} />
           </div>
         </div>
-        <VideoPlaylist />
+        <VideoPlaylist
+          binderId={this.binderId}
+          tabId={this.tabId}
+          pageId={this.pageId}
+          currentPlaylistItems={this.props.playlistItems}
+        />
         <div id="video-wrapper" className="video-wrapper third-step">
-          <VideoContainer />
+          <VideoContainer currentPlaylistItems={this.props.playlistItems} />
         </div>
       </div>
     );
@@ -243,7 +230,8 @@ function mapStateToProps(state) {
     slideOutStyles: state.video.videoLinkSlideOut,
     toggleSlideOut: state.video.toggleSlideOut,
     playlistStyles: state.video.playlistStyles,
-    playlistItems: state.video.addedVideo
+    playlistItems: state.video.addedVideo,
+    videoLink: state.video.videoLink
   };
 }
 
