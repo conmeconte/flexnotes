@@ -477,7 +477,7 @@ class Notes extends Component {
             case 'link': {
                 const { data } = node;
                 const href = data.get('href');
-                return <a {...attributes} href={href}>{children}</a>
+                return <a {...attributes} href={href} title="Right-click on link to open">{children}</a>
             }
             case 'image': {
                 const src = node.data.get('src');
