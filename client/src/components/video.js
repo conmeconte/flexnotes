@@ -8,6 +8,39 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import keys from '../../../config/keys';
 class Video extends Component {
+  constructor(props) {
+    super(props);
+    this.binderId = null;
+    this.tabId = null;
+    this.pageId = null;
+    this.currentVideoList = null;
+  }
+  updatePlaylistComponent(nextProps) {
+    let { tab_arr_obj } = nextProps.binder.binderObj;
+    // let { interface_obj } = nextProps;
+    if (tab_arr_obj) {
+      let tabArrLength = tab_arr_obj.length;
+      let tabIndex = null;
+      let pageIndex = null;
+      for (let i = 0; i < tabArrLength; i++) {
+        if (nextProps.interface.tab_id === tab_arr_obj[i]._id) {
+          tabIndex = i;
+          break;
+        }
+      }
+      const { page_arr_obj } = tab_arr_obj[tabIndex];
+      for (let i = 0; i < page_arr_obj.length; i++) {
+        if (nextProps.interface.page_id === page_arr_obj[i]._id) {
+          pageIndex = i;
+          break;
+        }
+      }
+      this.binderId = nextProps.binder.binderObj._id;
+      this.tabId = tab_arr_obj[tabIndex]._id;
+      this.pageId = page_arr_obj[pageIndex]._id;
+      this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
+    }
+  }
   async search(values) {
     if (!values.video) {
       return;
@@ -76,6 +109,10 @@ class Video extends Component {
         );
       }
     }
+  }
+  shouldComponentUpdate() {
+    this.props.updateBinderArray();
+    return true;
   }
   componentWillReceiveProps(nextProps) {
     const { interface_obj } = this.props;
