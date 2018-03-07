@@ -43,15 +43,15 @@ class Dashboard extends Component {
   }
   componentWillReceiveProps(nextProps) {
     // const { interface } = this.props;
-
     const { width } = this.state;
     const isMobile = width <= 767;
-
-    if (this.props.binder !== nextProps.binder) {
-      this.updatePlaylistComponent(nextProps);
-    }
-    if (this.props.interface.page_id !== nextProps.interface.page_id) {
-      this.updatePlaylistComponent(nextProps);
+    if (isMobile) {
+      if (this.props.binder !== nextProps.binder) {
+        this.updatePlaylistComponent(nextProps);
+      }
+      if (this.props.interface.page_id !== nextProps.interface.page_id) {
+        this.updatePlaylistComponent(nextProps);
+      }
     }
   }
   updatePlaylistComponent(nextProps) {
