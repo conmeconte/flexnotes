@@ -21,7 +21,7 @@ class ThreePanel extends Component {
   }
   componentDidMount() {
     const { width } = this.state;
-    if (width <= 767) {
+    if (width >= 767) {
       document
         .querySelector('.Resizer.vertical')
         .addEventListener('mousedown', function() {
