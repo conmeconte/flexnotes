@@ -517,6 +517,8 @@ class Notes extends Component {
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
+                    <h4 className="saveNotes" >{this.state.save ? "Saved" : "Saving..."}</h4>
+                    
                 </div>
             </div>
 
