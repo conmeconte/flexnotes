@@ -425,6 +425,30 @@ footer {
     background-color: #01579b;
 }
 
+@media (max-width: 1280px){
+    .binder-edit-btn{
+
+        right: 22%;
+    }
+    .tab-edit-btn{
+        right: 24%;
+    }
+    .page-edit-btn{
+        right: 27%;
+    }
+
+    .binderTitle{
+        padding-bottom: 10%;
+    }
+
+    .tabLink{
+        padding-bottom: 10%;
+    }
+
+    .pageLink{
+        padding-bottom: 15%;
+    }
+}
 
 @media (max-width: 767px){
     .hideNavbar.btn, .navbarShow.btn {
