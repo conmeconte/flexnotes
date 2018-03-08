@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
@@ -38,21 +39,11 @@ const initialValue = Value.fromJSON({
     }
 });
 
-const saveStyle = {
-    true: {
-        // backgroundColor: "#ffffff",
-        color: "#00cc00"
-    },
-    false: {
-        color: "#ffffff"
-    }
-};
-
 // --------------------------- UNDO AND REDO  ---------------------------
 
 const ToolbarButton = props => (
     <span title={props.icon} className="styleSquare" onMouseDown={props.onMouseDown}>
-        <span className="material-icons">{props.icon}</span>
+        <span className="material-icons notesIcons">{props.icon}</span>
     </span>
 );
 
@@ -103,15 +94,20 @@ const schema = {
 
 class Notes extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: initialValue,
+            save: false
+        };
 
-    state = {
-        value: initialValue,
-        save: false
-    };
-
+        this.submitNotes = this.submitNotes.bind(this);
+        this.submitNotes = _.debounce(this.submitNotes, 1300);
+    }
 
     onChange = ({ value }) => {
         this.setState({ value, save: false });
+        this.submitNotes();
     };
 
     submitNotes() {
@@ -128,14 +124,12 @@ class Notes extends Component {
                 ...value,
                 save: true
             })
-            );
+        );
     }
-
 
     componentWillMount() {
         let { tab_arr_obj } = this.props.binderObj;
         let { interface_obj } = this.props;
-
         if (tab_arr_obj) {
             let tabArrLength = tab_arr_obj.length;
             let tabIndex = null;
@@ -167,13 +161,12 @@ class Notes extends Component {
             }
         }
     }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-            //     this.props.updateBinderArray();
-            // }else{
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
-            // console.log('notes nextProps:', nextProps.binderObj);
+
             if (tab_arr_obj) {
                 let tabArrLength = tab_arr_obj.length;
                 let tabIndex = null;
@@ -191,7 +184,7 @@ class Notes extends Component {
                         break;
                     }
                 }
-                if (pageIndex !==null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
                     const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
                     this.setState({
                         value: Value.fromJSON(lastContent),
@@ -203,7 +196,7 @@ class Notes extends Component {
                         save: false
                     })
                 }
-            } 
+            }
         }
     }
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
@@ -301,7 +294,7 @@ class Notes extends Component {
 
         return (
             <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons">{icon}</span>
+                <span className="material-icons notesIcons">{icon}</span>
             </span>
         )
     };
@@ -312,7 +305,7 @@ class Notes extends Component {
 
         return (
             <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons">{icon}</span>
+                <span className="material-icons notesIcons">{icon}</span>
             </span>
         )
     };
@@ -484,7 +477,7 @@ class Notes extends Component {
             case 'link': {
                 const { data } = node;
                 const href = data.get('href');
-                return <a {...attributes} href={href}>{children}</a>
+                return <a {...attributes} href={href} title="Right-click on link to open">{children}</a>
             }
             case 'image': {
                 const src = node.data.get('src');
@@ -514,21 +507,19 @@ class Notes extends Component {
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
                     <span className="styleSquare" title="link" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
-                        <span className="material-icons">link</span>
+                        <span className="material-icons notesIcons link">link</span>
                     </span>
                     <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
-                        <span className="material-icons">image</span>
+                        <span className="material-icons notesIcons image">image</span>
                     </span>
-                </div>
-                <div className="search-box">
                     <input
                         className="search-input keyword"
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
+                    <h4 className="saveNotes" >{this.state.save ? "Saved" : "Saving..."}</h4>
+                    
                 </div>
-                <button style={saveStyle[this.state.save]} className="saveNotes btn waves-effect waves-light" onClick={this.submitNotes.bind(this)}>{this.state.save ? "Saved" : "Save Changes"}</button>
-
             </div>
 
         )

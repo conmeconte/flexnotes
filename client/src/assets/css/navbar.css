@@ -33,10 +33,25 @@ a {
     width: 10%;
     height: 100vh;
     box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);
-    /*overflow-y:scroll;*/
     background-color: #eceff1;
 }
 
+.lfzLogo{
+    width: 2.5%;
+    position: absolute;
+    left: 13%;
+    filter: drop-shadow(1px 1px 1px #333333);
+}
+
+.lfzLogo:hover{
+    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);
+    cursor: pointer;
+}
+
+.lfzLogo:active{
+    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);
+    transform: translateY(2px);
+}
 
 ul > li {
     list-style: none;
@@ -47,7 +62,6 @@ ul > li {
     border: 1px solid #747474;
     border-radius: 3px;
     background-color: white;
-    /* #background-image: url("../../assets/images/concrete-wall-3.png");    */
     width: 75%;
     height: 80px;
     margin-left: 10%;
@@ -66,31 +80,49 @@ ul > li {
 }
 
 .binderTitle{
-    #margin-top: 1%;
-    #border-top: solid 4px #white;
-    #background-color: #96858f;
     cursor: pointer;
-    #border-top-left-radius: 5px;
-    
+    position: relative;
+    padding-bottom: 2%;
 }
 
-.modify-btn{
-    display: flex;
-    justify-content: flex-end;
+.binder-edit-btn{
+    position: absolute;
+    right: 14%;
+    top: 4%;
 }
 
-.editMode > .edit_input {
-    margin-bottom: 2% !important;
+.binder-delete-btn{
+    position: absolute;
+    top: 4%;
+    right: 2%;
 }
 
-.binderBody{
-    #border: solid 1px teal;
+.tab-edit-btn{
+    position: absolute;
+    right: 16%;
+    top: 3%;
+}
+
+.tab-delete-btn{
+    position: absolute;
+    top: 3%;
+    right: 2%;
+}
+
+.page-edit-btn{
+    position: absolute;
+    right: 18%;
+    bottom: 2%;
+}
+
+.page-delete-btn{
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
 }
 
 .binderWrap{
-    #background-color: #96858f;
      width: 100%;
-     
      margin-top: 0;
      margin-bottom: 2%;
      box-shadow: 1px 1px 1px #747474;
@@ -101,7 +133,6 @@ ul > li {
 }
 
 .tabWrap{
-    #background-color: #9099a2;
     width: 90%;
     margin-left: 10%;
     box-shadow: 1px 1px 1px #747474;
@@ -110,19 +141,14 @@ ul > li {
 
 .tabTitle{
     border-top: outset 3px #546e7a;
-    #border-bottom: outset 2px #607d8b;
     cursor: pointer;   
-}
-
-.tabBody{
-    #width: 95%;
-    #border: solid 1px magenta;
+    position: relative;
+    padding-bottom: 2%;
 }
 
 .pageBody{
     border: 1px inset #696969;
-    #background-color: #d5d5d5;
-    padding: 2% 0%; 
+    padding: 3% 0%; 
     margin-left: 10%;
     width: 90%;
     cursor: pointer;
@@ -131,6 +157,15 @@ ul > li {
 
 .pageLink, .page-btn, .delete-btn, .edit-btn {
     display: inline-block;
+}
+.btn.binder-edit-btn{
+    padding-left: 8px;
+    padding-right: 2px;
+}
+
+.btn.delete-btn, .btn.tab-edit-btn, .btn.page-edit-btn{
+    padding-right: 0px;
+    padding-left: 6px;
 }
 
 .add-btn-page.btn  {
@@ -183,7 +218,6 @@ ul > li {
 }
 
 
-
 .hiddenHover{
     opacity: 0.3;
     visibility: hidden;
@@ -195,6 +229,8 @@ ul > li {
 
 .pageLink{
     padding-left: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
     font-size: 1rem;
     overflow-wrap: break-word;
 }
@@ -212,12 +248,8 @@ ul > li {
     overflow-wrap: break-word;
 }
 
-.navbar-btn {
-    margin: 1%;
-}
-
-.edit-btn.navbar-btn {
-    #margin-left: 3%;
+.pageList{
+    position: relative;
 }
 
 .pageList.whiteFont>a {
@@ -235,7 +267,6 @@ ul > li {
     color: #fafafa;
     background-color: #0288d1;
     margin-bottom: 5%;
-    #font-weight: 400;
     padding-left: 10px;
     padding-right: 6px;
 
@@ -255,14 +286,12 @@ ul > li {
     left: -13px;
 }
 .navbarShow.btn{
-
     position: absolute;
     z-index: 100;
 }
 
 .textLight{
     color: white;
-    
 }
 
 .card-action.modal-nav{
@@ -304,50 +333,41 @@ ul > li {
     padding-right: 3px;
 }
 .navbarShow.btn:hover{
-    background-color: #37474f;
+    background-color: #01579b;
 }
 
 .hideNavbar.btn:hover {
-    background-color: #37474f;
+    background-color: #01579b;
 }
 
 .edit-mode-btn {
     margin: 1%;
 }
 
-input.edit_input_binder{
-    font-size: 1.75rem !important;
+input#edit_input_binder{
+    font-size: 1.75rem;
     color: #fafafa;
     margin-left: 2%;
     
 }
 
-input.edit_input_binder:focus, input.edit_input_tab:focus, {
-    border-bottom: 1px solid #0288d1 !important;
-    padding-left: 2%;
-}
-
-input.edit_input_page:focus {
-    border-bottom: 1px solid #fafafa !important;
-    padding-left: 2%;
-}
-
-input.edit_input_page::selection{
+input#edit_input_page::selection{
     background-color: #fafafa;
     color: black;
     font-weight: 500;
 }
 
-input.edit_input_tab{
+input#edit_input_tab{
     padding-left: 3%;
-    font-size: 1.5rem !important;
+    font-size: 1.5rem;
     color: black;
 }
 
-input.edit_input_page{
+input#edit_input_page{
     padding-left: 5%;
-    font-size: 1rem !important;
+    font-size: 1rem;
     color: #fafafa;
+    
 }
 
 .binder-container {
@@ -355,6 +375,7 @@ input.edit_input_page{
     height: 80vh;
     overflow: auto;
 }
+
 
 /* --------------------- HEADER AND FOOTER ---------------------*/
 
@@ -365,16 +386,20 @@ header {
 
 header > h1 {
     margin-left: 2px;
-    font-size: 2.6vw;
+    font-size: 2vw;
     display: inline;
+    font-weight: 800;
+    letter-spacing: 3.5px;
 }
 
 .dashFlex {
     color: #0288d1;
+    font-style: italic;
 }
 
 .logoImage {
-    width: 3.25vw;
+    width: 1.8vw;
+    margin-right: 1%;
 }
 
 footer {
@@ -387,16 +412,153 @@ footer {
 
 .startTour.btn, .logoutBtn.btn {
     width: 40%;
+    height: 35px;
+    font-size: 90%;
     background-color: #0288d1;;
     color: #fafafa;
     padding: 0 4%;
     margin: 3% 4% 0 4%;
-    font-size: .75vw;
     font-weight: 500;
 }
 
 .startTour.btn:hover, .logoutBtn.btn:hover {
-    background-color: #37474f;
+    background-color: #01579b;
 }
 
+@media (max-width: 1280px){
+    .binder-edit-btn{
 
+        right: 22%;
+    }
+    .tab-edit-btn{
+        right: 24%;
+    }
+    .page-edit-btn{
+        right: 27%;
+    }
+
+    .binderTitle{
+        padding-bottom: 10%;
+    }
+
+    .tabLink{
+        padding-bottom: 10%;
+    }
+
+    .pageLink{
+        padding-bottom: 15%;
+    }
+}
+
+@media (max-width: 767px){
+    .hideNavbar.btn, .navbarShow.btn {
+        display: none;
+    }
+    .binder-container {
+        height: 73vh;
+    }
+    .navbar.s2, header{
+        width: 100%;
+    }
+    .visibleHover, .hiddenHover{
+        visibility: visible;
+        opacity: .8;
+    }
+    header > h1 {
+        font-size: 3em;
+    }
+    .logoImage {
+        width: 8%;
+        margin-left: 2%;
+    }
+    header{
+        height: 8vh;
+    }
+    footer{
+        /* padding-bottom: 2%; */
+        height: 8vh;
+    }
+    .startTour.btn, .logoutBtn.btn {
+        font-size: 1em;
+        margin: 2% 4%;
+    }
+
+    .lfzLogo{
+        width: 10%;
+        left: 85%;
+        top: 1.5%;
+
+    }
+    .modal-content.modal-nav{
+        position: absolute;
+        width: 90%;
+        left: 5%;
+    }
+    .pageLink{
+        padding-bottom: 15%;
+    }
+
+    .page-edit-btn, .page-delete-btn{
+        bottom: 0%;
+    }
+
+}
+
+@media screen and (max-width: 767px) and (orientation:landscape){
+    .binder-container{
+        height: 50vh;
+        margin-top: 3%;
+    }
+    footer{
+        height: 10%;   
+    }
+
+    .lfzLogo{
+        width: 7%;
+        padding-top: 1%;
+    }
+
+    .logoImage{
+        width: 5%;
+    }
+
+    .pageLink{
+        padding-bottom: 3%;
+    }
+
+    .binder-edit-btn{
+        right: 9%;
+    }
+    .tab-edit-btn{
+        right: 11%;
+    }
+    .page-edit-btn{
+        right: 12%;
+    }
+
+    .pageBody{
+        padding: 0;
+        padding-bottom: 2%;
+    }
+}
+
+@media (max-width: 480px) {
+    /* footer {
+        height: 70px;
+    } */
+    .startTour.btn, .logoutBtn.btn {
+        margin: 3% 4% 0 4%;
+        
+    }
+}
+
+/*--------------- reactour ---------------*/
+
+.dIYoXw {
+    background-color: white;
+    height: 0;
+}
+
+.bIMCVx:focus {
+    background-color: white;
+}

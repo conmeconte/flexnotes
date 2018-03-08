@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import Binder from './binder';
 import Login from '../login';
+import LfzModal from './lfz_modal';
 import logo from '../../assets/images/logo.png';
 
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, deleteBinder, addBinder, updateBinderObj, minNav, showNav, editable, notEditable } from '../../actions';
+import { updateBinderArray, addBinder, updateBinderObj, minNav, showNav, editable, notEditable } from '../../actions';
 
-import FlexNotesTour from '../react_tour';
+import TourButton from '../react_tour';
+import { isImage } from 'is-image';
+
+
 
 class NavBar extends Component {
     constructor(props) {
@@ -20,50 +24,46 @@ class NavBar extends Component {
         this.addBinder = this.addBinder.bind(this);
         this.editMode = this.editMode.bind(this);
         this.notEditable = this.notEditable.bind(this);
-        this.deleteBinder = this.deleteBinder.bind(this);
+    }
+
+    componentDidMount(){
+        if(!this.props.mobile && this.props.index === 0){            
+            this.setState({
+                open: true
+            });
+        }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.interface.pull_from_db || nextProps.interface.page_id !== this.props.interface.page_id) {
-            //console.log("update binder array");
-            this.props.updateBinderArray();
+        // if (nextProps.interface.page_id !== this.props.interface.page_id) {
+        //     this.props.updateBinderArray();
+        // }
+        if (nextProps.interface.pull_from_db !== this.props.interface.pull_from_db) {
+            if(nextProps.interface.pull_from_db){
+                this.props.updateBinderArray();
+            }
         }
 
-        if (nextProps.interface.sent_to_db || this.props.interface.sent_to_db) {
-            //console.log("sent to db = true");
-            for (let i = 0; i < this.props.binderArr.length; i++) {
-                if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
-                    let binderObj = this.props.binderArr[i];
-                    //console.log("binder object: ", binderObj);
-                    this.props.updateBinderObj(binderObj);
+        if (nextProps.interface.sent_to_db !== this.props.interface.sent_to_db) {
+            if(nextProps.interface.sent_to_db){
+                for (let i = 0; i < this.props.binderArr.length; i++) {
+                    if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
+                        let binderObj = this.props.binderArr[i];
+                        this.props.updateBinderObj(binderObj);
+                    }
                 }
             }
-
+        }
+        if(this.props.mobile !== nextProps.mobile){
+            if(nextProps.mobile){
+                this.props.showNav();
+            }
         }
     }
+
     addBinder() {
-        //console.log('add Binder');
         this.props.addBinder();
     }
-
-    deleteBinder(delete_id) {
-        //console.log('delete button clicked, binder_id: ', delete_id);
-        if (this.props.binderArr.length === 1) {
-            console.log('can not delete last binder');
-        } else {
-            this.props.deleteBinder(delete_id);
-        }
-
-        // const { binder_arr_obj } = this.state;
-        // console.log(binder_arr_obj);
-        // let deleteIndex = 0;
-        // for (deleteIndex; deleteIndex < binder_arr_obj.length; deleteIndex++) {
-        //     if (binder_arr_obj[deleteIndex].binder_id === delete_id) {
-        //         binder_arr_obj.splice(deleteIndex, 1);
-        //     }
-        // }
-    }
-
     editMode() {
         if (this.props.interface.editable) {
             this.props.notEditable();
@@ -72,38 +72,22 @@ class NavBar extends Component {
         }
 
     }
-
-    editName() {
-        console.log('editname');
-
-    }
-
     hideNav() {
         this.props.minNav();
     }
-
     openNav() {
         this.props.showNav();
     }
 
     notEditable() {
-        console.log("editable should be false");
         this.setState({
             editable: false
         });
     }
 
-    hoverBinder() {
-
-    }
-
-    notHoverBinder() {
-
-    }
-
     render() {
-        //console.log("navbar props:", this.props);
         let editableText = '';
+        const { updateRoutes } = this.state;
 
         if (this.props.interface.editable) {
             editableText = 'Done';
@@ -112,44 +96,36 @@ class NavBar extends Component {
         }
 
         let binder = this.props.binderArr.map((item, index) => {
-
             return (
-                <div key={index} onMouseEnter={this.hoverBinder.bind(this)} onMouseLeave={this.notHoverBinder.bind(this)} className="binderWrap blue-grey darken-3">
+                <div key={index} className="binderWrap blue-grey darken-2">
                     <Binder index={index} binderObj={item} />
-
+                    <Route path={`/main/${item._id}`} component={Binder} />
                 </div>
             );
         });
 
-
-
         return (
             <div>
-
-
-                <button className={`navbarShow btn ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} onClick={this.openNav.bind(this)}>
+                <button className={`navbarShow btn ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} 
+                    onClick={this.openNav.bind(this)}>
                     <i className="small material-icons">chevron_right</i>
                 </button>
+                     
                 <div className={`navbar col s2 ${this.props.interface.navbar_min ? 'hidden' : 'visible'}`}>
-
                     <header>
                         <img className="logoImage" src={logo} /><h1><span className="dashFlex">Flex</span>Notes</h1>
                     </header>
                     <button className='btn hideNavbar' onClick={this.hideNav.bind(this)}>
                         <i className="small material-icons">chevron_left</i>
                     </button>
-                    {/* <button className={`editMode btn ${this.props.interface.editable ? 'editing':'' }`} onClick={this.editMode.bind(this)}>
-                    {editableText}
-                </button> */}
+                    <LfzModal/>
                     <section className="second-step binder-container">
                         {binder}
                         <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
                             New Binder</button>
-                        <Route path={'/main/:binder'} component={Binder} />
                     </section>
-
                     <footer>
-                        <FlexNotesTour toggleTour={this.props.toggleTour} />
+                        <TourButton toggleTour={this.props.toggleTour}/>
                         <Login />
                     </footer>
                 </div>
@@ -159,7 +135,6 @@ class NavBar extends Component {
 }
 
 function mapStateToProps(state) {
-    //console.log('binder mstp', state);
     return {
         binderArr: state.binderArray.binderArr,
         binder: state.binder.binderObj,
@@ -167,4 +142,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { editable, notEditable, updateBinderArray, deleteBinder, addBinder, updateBinderObj, minNav, showNav })(NavBar);
+export default connect(mapStateToProps, { editable, notEditable, updateBinderArray, addBinder, updateBinderObj, minNav, showNav })(NavBar);
