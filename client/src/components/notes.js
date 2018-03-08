@@ -461,7 +461,7 @@ class Notes extends Component {
             case 'bold': return <strong>{children}</strong>;
             case 'code': return <code>{children}</code>;
             case 'italic': return <em>{children}</em>;
-            case 'underlined': return <u>{children}</u>
+            case 'underlined': return <u>{children}</u>;
         }
     };
 
@@ -472,12 +472,17 @@ class Notes extends Component {
             case 'bulleted-list': return <ul {...attributes}>{children}</ul>;
             case 'heading-one': return <h5 {...attributes}>{children}</h5>;
             // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
+
+            case 'justifyLeft': return <div style={{ textAlign: 'left' }}>{children}</div>;
+            case 'justifyCenter': return <div style={{ textAlign: 'center' }}>{children}</div>;
+            case 'justifyRight': return <div style={{ textAlign: 'right' }}>{children}</div>;
+
             case 'list-item': return <li {...attributes}>{children}</li>;
             case 'numbered-list': return <ol {...attributes}>{children}</ol>;
             case 'link': {
                 const { data } = node;
                 const href = data.get('href');
-                return <a {...attributes} href={href} title="Right-click on link to open">{children}</a>
+                return <a {...attributes} href={href} title="right-click on link to open">{children}</a>
             }
             case 'image': {
                 const src = node.data.get('src');
@@ -500,6 +505,9 @@ class Notes extends Component {
                     {this.renderMarkButton('bold', 'format_bold')}
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
+                    {this.renderBlockButton('justifyLeft', 'format_align_left')}
+                    {this.renderBlockButton('justifyCenter', 'format_align_center')}
+                    {this.renderBlockButton('justifyRight', 'format_align_right')}
                     {this.renderMarkButton('code', 'code')}
                     {this.renderBlockButton('heading-one', 'format_size')}
                     {/*{this.renderBlockButton('heading-two', 'title')}*/}
