@@ -85,10 +85,18 @@ blockquote {
     width: 20em;
     padding-left: 2%;
     margin-top: 0;
+    margin-bottom: 0;
 }
 
 .link, .image {
     margin-top: 0;
+}
+
+.saveNotes {
+    display: inline-block;
+    color: white;
+    margin: 1% 45%;
+    width: 95%;
 }
 
 @media only screen and (max-width: 1426px) {
