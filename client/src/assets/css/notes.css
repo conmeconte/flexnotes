@@ -184,6 +184,71 @@ blockquote {
     }
 }
 
-.reactour-portal {
-    z-index: -100;
+
+
+
+
+
+
+
+
+/* The dropdown container */
+.colorOptions {
+    float: left;
+    overflow: hidden;
+}
+
+/* Dropdown button */
+.colorOptions .colorDropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
+}
+
+/* Dropdown content (hidden by default) */
+.fontColor-options {
+    display: none;
+    position: absolute;
+    height: 10em;
+    width: 20em;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    background-color: darkgray;
+    padding: 0.3em 0.5em;
+}
+
+/* Links inside the dropdown */
+.fontColor-options .fontColor {
+    float: none;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.fontColor-options .fontColor:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.colorOptions:hover .fontColor-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.fontColor {
+    width: 0.5em;
+    height: 0.5em;
+    margin: 0.2em 0;
+}
+
+.fontOptions {
+    display: inline-block;
 }
