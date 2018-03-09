@@ -124,7 +124,10 @@ class Notes extends Component {
                 ...value,
                 save: true
             })
-        );
+        ).catch((err)=>{
+            console.log("not logged in: ", err); 
+            window.location = '/';
+        })
     }
 
     componentWillMount() {
