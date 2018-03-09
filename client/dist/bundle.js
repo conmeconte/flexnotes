@@ -28881,7 +28881,10 @@ var Notes = function (_Component) {
                 pageID: interface_obj.page_id
             }).then(this.setState(_extends({}, value, {
                 save: true
-            })));
+            }))).catch(function (err) {
+                console.log("not logged in: ", err);
+                window.location = '/';
+            });
         }
     }, {
         key: 'componentWillMount',
