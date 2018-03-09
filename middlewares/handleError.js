@@ -1,5 +1,6 @@
 const fs            = require('fs');
 const path = require('path');
+
 exports.logError = function (err, req, res, next){
     if (!err) {
         next()
