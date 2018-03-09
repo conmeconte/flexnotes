@@ -29372,6 +29372,26 @@ var _initialiseProps = function _initialiseProps() {
                     children
                 );
             // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
+
+            case 'justifyLeft':
+                return _react2.default.createElement(
+                    'div',
+                    { style: { textAlign: 'left' } },
+                    children
+                );
+            case 'justifyCenter':
+                return _react2.default.createElement(
+                    'div',
+                    { style: { textAlign: 'center' } },
+                    children
+                );
+            case 'justifyRight':
+                return _react2.default.createElement(
+                    'div',
+                    { style: { textAlign: 'right' } },
+                    children
+                );
+
             case 'list-item':
                 return _react2.default.createElement(
                     'li',
@@ -29391,7 +29411,7 @@ var _initialiseProps = function _initialiseProps() {
                     var href = data.get('href');
                     return _react2.default.createElement(
                         'a',
-                        _extends({}, attributes, { href: href, title: 'Right-click on link to open' }),
+                        _extends({}, attributes, { href: href, title: 'right-click on link to open' }),
                         children
                     );
                 }
@@ -29417,6 +29437,9 @@ var _initialiseProps = function _initialiseProps() {
                 _this2.renderMarkButton('bold', 'format_bold'),
                 _this2.renderMarkButton('italic', 'format_italic'),
                 _this2.renderMarkButton('underlined', 'format_underlined'),
+                _this2.renderBlockButton('justifyLeft', 'format_align_left'),
+                _this2.renderBlockButton('justifyCenter', 'format_align_center'),
+                _this2.renderBlockButton('justifyRight', 'format_align_right'),
                 _this2.renderMarkButton('code', 'code'),
                 _this2.renderBlockButton('heading-one', 'format_size'),
                 _this2.renderBlockButton('block-quote', 'format_quote'),
@@ -29443,12 +29466,12 @@ var _initialiseProps = function _initialiseProps() {
                     className: 'search-input keyword',
                     placeholder: 'Search keywords...',
                     onChange: _this2.onInputChange
-                }),
-                _react2.default.createElement(
-                    'h4',
-                    { className: 'saveNotes' },
-                    _this2.state.save ? "Saved" : "Saving..."
-                )
+                })
+            ),
+            _react2.default.createElement(
+                'h6',
+                { className: 'saveNotes' },
+                _this2.state.save ? "Notes saved" : "Saving notes..."
             )
         );
     };
@@ -111441,7 +111464,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n\r\n}\r\n\r\n.text-editor {\r\n    height: 100%;\r\n    overflow: hidden;\r\n    margin-bottom: -500em;\r\n}\r\n\r\n.editor {\r\n    padding-top: 2vmin;\r\n    padding-left: 2vmin;\r\n    padding-right: 2vmin;\r\n    height: 100%;\r\n}\r\n\r\ncode {\r\n    display: inline-block;\r\n    background-color: #d5d5d5;\r\n    color: #0288d1;\r\n    padding: 0 0.5em;\r\n    font-family: 'Overpass Mono' !important;\r\n}\r\n\r\nblockquote {\r\n    border-left: 5px solid #0288d1 !important;\r\n    color: #0288d1;\r\n    font-style: italic;\r\n    margin: 0 !important;\r\n}\r\n\r\n.notes-component.fifth-step{\r\n    height: 88%;\r\n    overflow-y: auto;\r\n}\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    position: relative;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #455a64;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    padding: 0 1em;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: wrap;\r\n    justify-content: space-between;\r\n    height: 40%;\r\n    width: 100%;\r\n    padding-top: 1.5em;\r\n}\r\n\r\n.styleSquare {\r\n    height: 2.5em;\r\n    width: 2.5em;\r\n    cursor: pointer;\r\n    color: white;\r\n    text-align: center;\r\n}\r\n\r\n.styleSquare:hover{\r\n    background-color: ghostwhite;\r\n    color: #01579b;\r\n}\r\n\r\n.material-icons.notesIcons {\r\n    font-size: 2.5em;\r\n    margin: 0;\r\n}\r\n\r\n.search-input.keyword {\r\n    background-color: #eceff1;\r\n    height: 2.5em;\r\n    width: 20em;\r\n    padding-left: 2%;\r\n    margin-top: 0;\r\n}\r\n\r\n.link, .image {\r\n    margin-top: 0;\r\n}\r\n\r\n@media only screen and (max-width: 1426px) {\r\n    .styleSquare {\r\n        height: 2.3em;\r\n        width: 2.3em;\r\n    }\r\n\r\n    .material-icons.notesIcons {\r\n        font-size: 2.3em;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        height: 2.3em;\r\n        margin-left: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 1385px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 974px) {\r\n    .stylingButtons {\r\n        justify-content: flex-start;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        width: 17em;\r\n    }\r\n\r\n    .material-icons.image {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 935px) {\r\n    .material-icons.link {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 919px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n\r\n    .material-icons.image, .material-icons.link {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 830px) {\r\n    .search-input.keyword {\r\n        width: 13em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n    .stylingButtons {\r\n        justify-content: space-between;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 574px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n        width: 20em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 382px) {\r\n    .stylingButtons {\r\n        justify-content: flex-start;\r\n    }\r\n\r\n    .material-icons.image {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n.reactour-portal {\r\n    z-index: -100;\r\n}", ""]);
+exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n\r\n}\r\n\r\n.text-editor {\r\n    height: 100%;\r\n    overflow: hidden;\r\n    margin-bottom: -500em;\r\n}\r\n\r\n.editor {\r\n    padding-top: 2vmin;\r\n    padding-left: 2vmin;\r\n    padding-right: 2vmin;\r\n    height: 100%;\r\n}\r\n\r\ncode {\r\n    display: inline-block;\r\n    background-color: #d5d5d5;\r\n    color: #0288d1;\r\n    padding: 0 0.5em;\r\n    font-family: 'Overpass Mono' !important;\r\n}\r\n\r\nblockquote {\r\n    border-left: 5px solid #0288d1 !important;\r\n    color: #0288d1;\r\n    font-style: italic;\r\n    margin: 0 !important;\r\n}\r\n\r\n.notes-component.fifth-step{\r\n    height: 88%;\r\n    overflow-y: auto;\r\n}\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    position: relative;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #455a64;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    padding: 0 1em;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: wrap;\r\n    justify-content: space-between;\r\n    height: 40%;\r\n    width: 100%;\r\n    padding-top: 1.5em;\r\n}\r\n\r\n.styleSquare {\r\n    height: 2.5em;\r\n    width: 2.5em;\r\n    cursor: pointer;\r\n    color: white;\r\n    text-align: center;\r\n}\r\n\r\n.styleSquare:hover{\r\n    background-color: ghostwhite;\r\n    color: #01579b;\r\n}\r\n\r\n.material-icons.notesIcons {\r\n    font-size: 2.5em;\r\n    margin: 0;\r\n}\r\n\r\n.search-input.keyword {\r\n    background-color: #eceff1;\r\n    height: 2.5em;\r\n    width: 20em;\r\n    padding-left: 2%;\r\n    margin-top: 0;\r\n    margin-bottom: 0;\r\n}\r\n\r\n.link, .image {\r\n    margin-top: 0;\r\n}\r\n\r\n.saveNotes {\r\n    display: inline-block;\r\n    color: white;\r\n    margin: 1% 45%;\r\n    width: 95%;\r\n}\r\n\r\n@media only screen and (max-width: 1426px) {\r\n    .styleSquare {\r\n        height: 2.3em;\r\n        width: 2.3em;\r\n    }\r\n\r\n    .material-icons.notesIcons {\r\n        font-size: 2.3em;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        height: 2.3em;\r\n        margin-left: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 1385px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 974px) {\r\n    .stylingButtons {\r\n        justify-content: flex-start;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        width: 17em;\r\n    }\r\n\r\n    .material-icons.image {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 935px) {\r\n    .material-icons.link {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 919px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n\r\n    .material-icons.image, .material-icons.link {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 830px) {\r\n    .search-input.keyword {\r\n        width: 13em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n    .stylingButtons {\r\n        justify-content: space-between;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 574px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n        width: 20em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 382px) {\r\n    .stylingButtons {\r\n        justify-content: flex-start;\r\n    }\r\n\r\n    .material-icons.image {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n.reactour-portal {\r\n    z-index: -100;\r\n}", ""]);
 
 // exports
 
