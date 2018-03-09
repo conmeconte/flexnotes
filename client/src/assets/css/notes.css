@@ -184,6 +184,106 @@ blockquote {
     }
 }
 
-.reactour-portal {
-    z-index: -100;
+
+
+
+
+
+
+
+
+/* The dropdown container */
+.colorOptions {
+    float: left;
+    overflow: hidden;
+}
+
+/* Dropdown button */
+.colorOptions .colorDropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
+}
+
+/* Dropdown content (hidden by default) */
+.fontColor-options {
+    display: none;
+    position: absolute;
+    height: 3.8em;
+    width: 6em;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    background-color: darkgray;
+    padding: 0.3em 0 0 0.3em;
+
+}
+
+/* Links inside the dropdown */
+.fontColor-options .fontColor {
+    float: none;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.fontColor-options {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.colorOptions:hover .fontColor-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.fontColor {
+    width: 1.8em;
+    height: 1.8em;
+    padding-right: 1%;
+    margin: 0;
+}
+
+.redFont .colorCircles {
+    color: #FF0000;
+    font-size: 150%;
+}
+
+.orangeFont .colorCircles {
+    color: #FF7F00;
+    font-size: 150%;
+}
+
+.yellowFont .colorCircles {
+    color: #FFFF00;
+    font-size: 150%;
+}
+
+.greenFont .colorCircles {
+    color: #00FF00;
+    font-size: 150%;
+}
+
+.blueFont .colorCircles {
+    color: #0000FF;
+    font-size: 150%;
+}
+
+.violetFont .colorCircles {
+    color: #9400D3;
+    font-size: 150%;
+}
+
+.fontOptions {
+    display: inline-block;
+}
+
+.colorCircles:hover {
+    cursor: pointer
 }

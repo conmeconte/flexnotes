@@ -125,7 +125,7 @@ class Notes extends Component {
                 save: true
             })
         ).catch((err)=>{
-            console.log("not logged in: ", err); 
+            console.log("not logged in: ", err);
             window.location = '/';
         })
     }
@@ -229,6 +229,22 @@ class Notes extends Component {
             return
         }
 
+        let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+
+        if(colors[0]){
+            mark = 'red'
+        } else if(colors[1]){
+            mark = 'orange'
+        } else if(colors[2]){
+            mark = 'yellow'
+        } else if(colors[3]){
+            mark = 'green'
+        } else if(colors[4]){
+            mark = 'blue'
+        } else if(colors[5]){
+            mark = 'purple'
+        }
+
         event.preventDefault();
         change.toggleMark(mark);
         return true
@@ -296,8 +312,8 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons notesIcons">{icon}</span>
+            <span  onMouseDown={onMouseDown} data-active={isActive}>
+                <span className="material-icons notesIcons colorCircles">{icon}</span>
             </span>
         )
     };
@@ -465,6 +481,13 @@ class Notes extends Component {
             case 'code': return <code>{children}</code>;
             case 'italic': return <em>{children}</em>;
             case 'underlined': return <u>{children}</u>;
+
+            case 'red': return <span style={{ color: '#FF0000' }}>{children}</span>;
+            case 'orange': return <span style={{ color: '#FF7F00' }}>{children}</span>;
+            case 'yellow': return <span style={{ color: '#FFFF00' }}>{children}</span>;
+            case 'green': return <span style={{ color: '#00FF00' }}>{children}</span>;
+            case 'blue': return <span style={{ color: '#0000FF' }}>{children}</span>;
+            case 'purple': return <span style={{ color: '#9400D3' }}>{children}</span>;
         }
     };
 
@@ -479,6 +502,7 @@ class Notes extends Component {
             case 'justifyLeft': return <div style={{ textAlign: 'left' }}>{children}</div>;
             case 'justifyCenter': return <div style={{ textAlign: 'center' }}>{children}</div>;
             case 'justifyRight': return <div style={{ textAlign: 'right' }}>{children}</div>;
+            case 'justifyFull': return <div style={{ textAlign: 'justify' }}>{children}</div>;
 
             case 'list-item': return <li {...attributes}>{children}</li>;
             case 'numbered-list': return <ol {...attributes}>{children}</ol>;
@@ -495,6 +519,7 @@ class Notes extends Component {
                     <img src={src} className={className} style={style} {...attributes} />
                 )
             }
+
         }
     };
 
@@ -511,6 +536,7 @@ class Notes extends Component {
                     {this.renderBlockButton('justifyLeft', 'format_align_left')}
                     {this.renderBlockButton('justifyCenter', 'format_align_center')}
                     {this.renderBlockButton('justifyRight', 'format_align_right')}
+                    {this.renderBlockButton('justifyFull', 'format_align_justify')}
                     {this.renderMarkButton('code', 'code')}
                     {this.renderBlockButton('heading-one', 'format_size')}
                     {/*{this.renderBlockButton('heading-two', 'title')}*/}
@@ -523,15 +549,28 @@ class Notes extends Component {
                     <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
                         <span className="material-icons notesIcons image">image</span>
                     </span>
+                </div>
+                <div>
                     <input
                         className="search-input keyword"
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
+
+                    <div className="colorOptions">
+                        <span className="colorDropbtn styleSquare" title="font color"><i className="material-icons notesIcons">format_color_text</i></span>
+                        <div className="fontColor-options">
+                            <p className="fontColor redFont">{this.renderMarkButton('red', 'lens')}</p>
+                            <p className="fontColor orangeFont">{this.renderMarkButton('orange', 'lens')}</p>
+                            <p className="fontColor yellowFont">{this.renderMarkButton('yellow', 'lens')}</p>
+                            <p className="fontColor greenFont">{this.renderMarkButton('green', 'lens')}</p>
+                            <p className="fontColor blueFont">{this.renderMarkButton('blue', 'lens')}</p>
+                            <p className="fontColor violetFont">{this.renderMarkButton('purple', 'lens')}</p>
+                        </div>
+                    </div>
                 </div>
                 <h6 className="saveNotes" >{this.state.save ? "Notes saved" : "Saving notes..."}</h6>
             </div>
-
         )
     };
 
