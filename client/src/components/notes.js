@@ -125,7 +125,10 @@ class Notes extends Component {
                 ...value,
                 save: true
             })
-        );
+        ).catch((err)=>{
+            console.log("not logged in: ", err);
+            window.location = '/';
+        })
     }
 
     componentWillMount() {
@@ -230,6 +233,22 @@ class Notes extends Component {
             return
         }
 
+        let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+
+        if(colors[0]){
+            mark = 'red'
+        } else if(colors[1]){
+            mark = 'orange'
+        } else if(colors[2]){
+            mark = 'yellow'
+        } else if(colors[3]){
+            mark = 'green'
+        } else if(colors[4]){
+            mark = 'blue'
+        } else if(colors[5]){
+            mark = 'purple'
+        }
+
         event.preventDefault();
         change.toggleMark(mark);
         return true
@@ -297,8 +316,8 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons notesIcons">{icon}</span>
+            <span onMouseDown={onMouseDown} data-active={isActive}>
+                <span className="material-icons notesIcons colorCircles richText">{icon}</span>
             </span>
         )
     };
@@ -467,6 +486,12 @@ class Notes extends Component {
             case 'italic': return <em>{children}</em>;
             case 'underlined': return <u>{children}</u>;
             case 'tab': return <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{children}</span>;
+            case 'red': return <span style={{ color: '#FF0000' }}>{children}</span>;
+            case 'orange': return <span style={{ color: '#FF7F00' }}>{children}</span>;
+            case 'yellow': return <span style={{ color: '#FFFF00' }}>{children}</span>;
+            case 'green': return <span style={{ color: '#00FF00' }}>{children}</span>;
+            case 'blue': return <span style={{ color: '#0000FF' }}>{children}</span>;
+            case 'purple': return <span style={{ color: '#9400D3' }}>{children}</span>;
         }
     };
 
@@ -477,12 +502,18 @@ class Notes extends Component {
             case 'bulleted-list': return <ul {...attributes}>{children}</ul>;
             case 'heading-one': return <h5 {...attributes}>{children}</h5>;
             // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
+
+            case 'justifyLeft': return <div style={{ textAlign: 'left' }}>{children}</div>;
+            case 'justifyCenter': return <div style={{ textAlign: 'center' }}>{children}</div>;
+            case 'justifyRight': return <div style={{ textAlign: 'right' }}>{children}</div>;
+            case 'justifyFull': return <div style={{ textAlign: 'justify' }}>{children}</div>;
+
             case 'list-item': return <li {...attributes}>{children}</li>;
             case 'numbered-list': return <ol {...attributes}>{children}</ol>;
             case 'link': {
                 const { data } = node;
                 const href = data.get('href');
-                return <a {...attributes} href={href}>{children}</a>
+                return <a {...attributes} href={href} title="right-click on link to open">{children}</a>
             }
             case 'image': {
                 const src = node.data.get('src');
@@ -492,6 +523,7 @@ class Notes extends Component {
                     <img src={src} className={className} style={style} {...attributes} />
                 )
             }
+
         }
     };
 
@@ -505,6 +537,10 @@ class Notes extends Component {
                     {this.renderMarkButton('bold', 'format_bold')}
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
+                    {this.renderBlockButton('justifyLeft', 'format_align_left')}
+                    {this.renderBlockButton('justifyCenter', 'format_align_center')}
+                    {this.renderBlockButton('justifyRight', 'format_align_right')}
+                    {this.renderBlockButton('justifyFull', 'format_align_justify')}
                     {this.renderMarkButton('code', 'code')}
                     {this.renderBlockButton('heading-one', 'format_size')}
                     {/*{this.renderBlockButton('heading-two', 'title')}*/}
@@ -517,14 +553,28 @@ class Notes extends Component {
                     <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
                         <span className="material-icons notesIcons image">image</span>
                     </span>
+                </div>
+                <div>
                     <input
                         className="search-input keyword"
                         placeholder="Search keywords..."
                         onChange={this.onInputChange}
                     />
-                </div>
-            </div>
 
+                    <div className="colorOptions">
+                        <span className="colorDropbtn" title="font color"><i className="material-icons fontColorIcon notesIcons">format_color_text</i></span>
+                        <div className="fontColor-options">
+                            <p className="fontColor redFont">{this.renderMarkButton('red', 'lens')}</p>
+                            <p className="fontColor orangeFont">{this.renderMarkButton('orange', 'lens')}</p>
+                            <p className="fontColor yellowFont">{this.renderMarkButton('yellow', 'lens')}</p>
+                            <p className="fontColor greenFont">{this.renderMarkButton('green', 'lens')}</p>
+                            <p className="fontColor blueFont">{this.renderMarkButton('blue', 'lens')}</p>
+                            <p className="fontColor violetFont">{this.renderMarkButton('purple', 'lens')}</p>
+                        </div>
+                    </div>
+                </div>
+                <h6 className="saveNotes" >{this.state.save ? "Notes saved" : "Saving notes..."}</h6>
+            </div>
         )
     };
 

@@ -32,10 +32,18 @@ class Binder extends Component {
     }
 
     componentDidMount() {
-        if (this.props.index === 0) {
-            this.setState({
-                active: true
-            });
+        if (this.props.hasOwnProperty("binderObj")) {
+            if (this.props.interface.binder_id === this.props.binderObj._id) {
+                this.setState({
+                    active: true
+
+                });
+            } else {
+                this.setState({
+                    active: false
+
+                });
+            }
         }
     }
 
@@ -154,8 +162,8 @@ class Binder extends Component {
     }
 
     render() {
+        
         const { active, editable, binderName, hover, editHover, deleteHover, binderHover } = this.state;
-      
         if(!this.props.binderObj){
 
             return null;

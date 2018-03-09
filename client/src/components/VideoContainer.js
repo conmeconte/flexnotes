@@ -22,7 +22,6 @@ class VideoContainer extends Component {
       </div>
     );
   }
-
   handleYouTubeUrl(values) {
     const youtubeLinkInput = values['youtube-url'];
     if (!youtubeLinkInput || youtubeLinkInput.indexOf('youtu') === -1) {
@@ -46,7 +45,7 @@ class VideoContainer extends Component {
         <form
           onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}
           style={this.props.slideOutStyles}
-          className="row slide-out-input"
+          className="row video-slide-out-input slide-out-input"
         >
           <Field name="youtube-url" component={this.renderInput} />
           <div className="col s3 youtube-search-buttons">
@@ -96,15 +95,15 @@ class VideoContainer extends Component {
         </div>
         <div id="video-container" className="video-container">
           <div className="resize-blocker" />
-
-          {this.props.playlistItems.length !== 1
+          {this.props.currentPlaylistItems.length >= 1 &&
+          this.props.currentPlaylistItems[0].videoId !== undefined
             ? <iframe
                 allowFullScreen
                 id="video-iframe"
                 src={this.props.videoLink}
                 className="video-iframe"
               />
-            : ''}
+            : 'No video available. Please add one through a Youtube search or paste a valid link.'}
         </div>
       </div>
     );
@@ -113,20 +112,16 @@ class VideoContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    pastedVideoUrl: state.videoResults.videoLink,
-    videoLink: state.video.videoLink,
     binderTabPageIds: state.interface,
     resultsStyles: state.video.resultsStyles,
     toggleResultsBool: state.video.toggleResults,
     opacityContainer: state.video.opacityDisplay,
-    interface_obj: state.interface,
     slideOutStyles: state.video.videoLinkSlideOut,
     toggleSlideOut: state.video.toggleSlideOut,
-    url: state.url,
     savedVideoTitle: state.video.savedVideoTitle,
     savedVideoImage: state.video.savedVideoImage,
     playlistStyles: state.video.playlistStyles,
-    playlistItems: state.video.addedVideo
+    videoLink: state.video.videoLink
   };
 }
 
