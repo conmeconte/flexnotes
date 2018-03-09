@@ -229,7 +229,7 @@ class Notes extends Component {
             return
         }
 
-        let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'black'];
+        let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
         if(colors[0]){
             mark = 'red'
@@ -243,8 +243,6 @@ class Notes extends Component {
             mark = 'blue'
         } else if(colors[5]){
             mark = 'purple'
-        } else if(colors[6]){
-            mark = 'black'
         }
 
         event.preventDefault();
@@ -314,8 +312,8 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span className="styleSquare" title={type} onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons notesIcons">{icon}</span>
+            <span  onMouseDown={onMouseDown} data-active={isActive}>
+                <span className="material-icons notesIcons colorCircles">{icon}</span>
             </span>
         )
     };
@@ -490,7 +488,6 @@ class Notes extends Component {
             case 'green': return <span style={{ color: '#00FF00' }}>{children}</span>;
             case 'blue': return <span style={{ color: '#0000FF' }}>{children}</span>;
             case 'purple': return <span style={{ color: '#9400D3' }}>{children}</span>;
-            case 'black': return <span style={{ color: '#000000' }}>{children}</span>;
         }
     };
 
@@ -522,7 +519,7 @@ class Notes extends Component {
                     <img src={src} className={className} style={style} {...attributes} />
                 )
             }
-            
+
         }
     };
 
@@ -561,15 +558,14 @@ class Notes extends Component {
                     />
 
                     <div className="colorOptions">
-                        <span className="colorDropbtn styleSquare"><i className="material-icons notesIcons">format_color_text</i></span>
+                        <span className="colorDropbtn styleSquare" title="font color"><i className="material-icons notesIcons">format_color_text</i></span>
                         <div className="fontColor-options">
-                            <p className="fontColor red">{this.renderMarkButton('red', 'lens')}</p>
-                            <p className="fontColor orange">{this.renderMarkButton('orange', 'lens')}</p>
-                            <p className="fontColor yellow">{this.renderMarkButton('yellow', 'lens')}</p>
-                            <p className="fontColor green">{this.renderMarkButton('green', 'lens')}</p>
-                            <p className="fontColor blue">{this.renderMarkButton('blue', 'lens')}</p>
-                            <p className="fontColor purple">{this.renderMarkButton('purple', 'lens')}</p>
-                            <p className="fontColor black">{this.renderMarkButton('black', 'lens')}</p>
+                            <p className="fontColor redFont">{this.renderMarkButton('red', 'lens')}</p>
+                            <p className="fontColor orangeFont">{this.renderMarkButton('orange', 'lens')}</p>
+                            <p className="fontColor yellowFont">{this.renderMarkButton('yellow', 'lens')}</p>
+                            <p className="fontColor greenFont">{this.renderMarkButton('green', 'lens')}</p>
+                            <p className="fontColor blueFont">{this.renderMarkButton('blue', 'lens')}</p>
+                            <p className="fontColor violetFont">{this.renderMarkButton('purple', 'lens')}</p>
                         </div>
                     </div>
                 </div>
