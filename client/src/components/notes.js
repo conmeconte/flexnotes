@@ -312,8 +312,8 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span  onMouseDown={onMouseDown} data-active={isActive}>
-                <span className="material-icons notesIcons colorCircles">{icon}</span>
+            <span onMouseDown={onMouseDown} data-active={isActive}>
+                <span className="material-icons notesIcons colorCircles richText">{icon}</span>
             </span>
         )
     };
@@ -558,7 +558,7 @@ class Notes extends Component {
                     />
 
                     <div className="colorOptions">
-                        <span className="colorDropbtn styleSquare" title="font color"><i className="material-icons notesIcons">format_color_text</i></span>
+                        <span className="colorDropbtn" title="font color"><i className="material-icons fontColorIcon notesIcons">format_color_text</i></span>
                         <div className="fontColor-options">
                             <p className="fontColor redFont">{this.renderMarkButton('red', 'lens')}</p>
                             <p className="fontColor orangeFont">{this.renderMarkButton('orange', 'lens')}</p>

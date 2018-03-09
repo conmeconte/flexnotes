@@ -69,7 +69,11 @@ blockquote {
     text-align: center;
 }
 
-.styleSquare:hover{
+.richText, .fontColorIcon {
+    color: white;
+}
+
+.styleSquare:hover, .richText:hover, .fontColorIcon:hover {
     background-color: ghostwhite;
     color: #01579b;
 }
