@@ -17,6 +17,7 @@
 
 .mobileLink{
     font-weight: bold;
+    cursor: pointer;
 }
 
 .navLink{
