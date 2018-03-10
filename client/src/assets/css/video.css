@@ -252,12 +252,20 @@ button.close {
 .video-playlist-panel {
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: #d5d5d5;
+  border: 1px solid #000;
   position: absolute;
   z-index: 3500;
   transition: 0.4s;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
+}
+.no-videos {
+  position: relative;
+  top: 27%;
+  color: #5d5d5d;
+  font-weight: bold;
+  text-shadow: 0.3px 0.3px #5d5d5d;
 }
 .close-playlist {
   position: absolute;
@@ -268,6 +276,7 @@ button.close {
   margin-right: 0;
   color: rgb(2, 136, 209);
   transition: 0.2s;
+  font-size: 2.1em;
 }
 
 .video-playlist {
