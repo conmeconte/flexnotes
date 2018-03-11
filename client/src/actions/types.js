@@ -51,5 +51,6 @@ export default {
   HIDE_NAV: 'hide_nav',
   SHOW_NAV: 'show_nav',
   EDITABLE: 'editable',
-  NOT_EDITABLE: 'not_editable'
+  NOT_EDITABLE: 'not_editable',
+  CLEAR_LOADER: 'clear_loader'
 };
