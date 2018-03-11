@@ -746,7 +746,6 @@ export function playVideo(id) {
   };
 }
 export function playPastedLinkVideo(url) {
-  debugger;
   if (!url) {
     return {
       type: types.NO_VIDEO_LINK
