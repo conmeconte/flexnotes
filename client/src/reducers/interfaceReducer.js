@@ -34,15 +34,10 @@ export default function (state = DEFAULT_STATE, action) {
         case types.SELECT_PAGE:
             return {...state, binder_id: action.payload.binder_id, tab_id: action.payload.tab_id, page_id: action.payload.page_id };
         case types.ADD_BINDER:
-            return { ...state, pull_from_db: true };
         case types.DELETE_BINDER:
-            return { ...state, pull_from_db: true };
         case types.ADD_TAB:
-            return { ...state, pull_from_db: true };
         case types.DELETE_TAB:
-            return { ...state, pull_from_db: true };
         case types.ADD_PAGE:
-            return { ...state, pull_from_db: true };
         case types.DELETE_PAGE:
             return { ...state, pull_from_db: true };
         case types.UPDATE_BINDER_ARRAY:

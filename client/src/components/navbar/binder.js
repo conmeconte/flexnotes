@@ -165,7 +165,6 @@ class Binder extends Component {
         
         const { active, editable, binderName, hover, editHover, deleteHover, binderHover } = this.state;
         if(!this.props.binderObj){
-
             return null;
         } 
 
@@ -256,7 +255,7 @@ class Binder extends Component {
                     {tab_link}
                     <button className="btn add-btn-tab waves-effect waves-light" onClick={this.addTab}>
                         New Tab</button>
-                        
+                     <Loader/>   
                 </div>
             </div>
         );

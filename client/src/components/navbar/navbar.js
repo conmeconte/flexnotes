@@ -35,9 +35,6 @@ class NavBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // if (nextProps.interface.page_id !== this.props.interface.page_id) {
-        //     this.props.updateBinderArray();
-        // }
         if (nextProps.interface.pull_from_db !== this.props.interface.pull_from_db) {
             if(nextProps.interface.pull_from_db){
                 this.props.updateBinderArray();
@@ -118,7 +115,7 @@ class NavBar extends Component {
                     <button className='btn hideNavbar' onClick={this.hideNav.bind(this)}>
                         <i className="small material-icons">chevron_left</i>
                     </button>
-                    <LfzModal/>
+                    {/* <LfzModal/> */}
                     <section className="second-step binder-container">
                         {binder}
                         <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
