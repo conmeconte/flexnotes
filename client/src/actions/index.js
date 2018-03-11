@@ -398,14 +398,14 @@ export function addVideoToDatabase(
   videoImg,
   interfaceObj
 ) {
+  debugger;
   if (!videoUrl) {
     return {
       type: types.NO_VIDEO_LINK
     };
   } else if (videoUrl.indexOf('player_embedded') !== -1) {
     let videoId = videoUrl.split('=');
-    videoId = videoId[1].split('&');
-    videoId = videoId[0];
+    videoId = videoId[2];
     let videoLink = `https://www.youtube.com/embed/${videoId}`;
     return async dispatch => {
       try {
