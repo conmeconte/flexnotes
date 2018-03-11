@@ -1114,3 +1114,9 @@ export function notEditable() {
     type: types.NOT_EDITABLE
   };
 }
+
+export function clearLoader(){
+  return{
+    type: types.CLEAR_LOADER
+  };
+}
