@@ -398,7 +398,6 @@ export function addVideoToDatabase(
   videoImg,
   interfaceObj
 ) {
-  debugger;
   if (!videoUrl) {
     return {
       type: types.NO_VIDEO_LINK
