@@ -74,10 +74,17 @@ class Dashboard extends Component {
           break;
         }
       }
-      this.binderId = nextProps.binder.binderObj._id;
-      this.tabId = tab_arr_obj[tabIndex]._id;
-      this.pageId = page_arr_obj[pageIndex]._id;
-      this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
+      const currentPage = page_arr_obj[pageIndex];
+      if (
+        pageIndex !== null &&
+        currentPage.hasOwnProperty('video') &&
+        currentPage.video.length >= 1
+      ) {
+        this.binderId = nextProps.binder.binderObj._id;
+        this.tabId = tab_arr_obj[tabIndex]._id;
+        this.pageId = page_arr_obj[pageIndex]._id;
+        this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
+      }
     }
   }
 
