@@ -17,6 +17,7 @@ const isBoldHotkey = isKeyHotkey('mod+b');
 const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
+const isTabHotkey = isKeyHotkey('tab');
 
 const initialValue = Value.fromJSON({
     document: {
@@ -202,6 +203,7 @@ class Notes extends Component {
             }
         }
     }
+
     // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
     hasMark = (type) => {
@@ -225,6 +227,11 @@ class Notes extends Component {
             mark = 'underlined'
         } else if (isCodeHotkey(event)) {
             mark = 'code'
+        } else if (isTabHotkey(event)) {
+            mark = 'tab'
+            event.preventDefault();
+            change.insertText("     ");
+            return true
         } else {
             return
         }
@@ -481,7 +488,7 @@ class Notes extends Component {
             case 'code': return <code>{children}</code>;
             case 'italic': return <em>{children}</em>;
             case 'underlined': return <u>{children}</u>;
-
+            // case 'tab': return <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{children}</span>;
             case 'red': return <span style={{ color: '#FF0000' }}>{children}</span>;
             case 'orange': return <span style={{ color: '#FF7F00' }}>{children}</span>;
             case 'yellow': return <span style={{ color: '#FFFF00' }}>{children}</span>;

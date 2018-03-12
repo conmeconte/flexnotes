@@ -63,7 +63,13 @@ class VideoPlaylist extends Component {
         </i>
         <ul className="video-playlist collection">
           <h4>Video Playlist</h4>
-          {createPlaylist ? createPlaylist : ''}
+          {this.props.currentPlaylistItems.length >= 1 &&
+          this.props.currentPlaylistItems[0].videoId !== undefined
+            ? createPlaylist
+            : <div className="no-videos">
+                Currently, no videos on playlist. Please add a video by pasting
+                a link or saving through a video search.
+              </div>}
         </ul>
       </div>
     );

@@ -90,8 +90,8 @@ class VideoContainer extends Component {
           }}
         >
           {!this.props.toggleSlideOut
-            ? <i className="material-icons">keyboard_arrow_up</i>
-            : <i className="material-icons">keyboard_arrow_down</i>}
+            ? <i className="material-icons">remove</i>
+            : <i className="material-icons">add</i>}
         </div>
         <div id="video-container" className="video-container">
           <div className="resize-blocker" />
@@ -100,10 +100,13 @@ class VideoContainer extends Component {
             ? <iframe
                 allowFullScreen
                 id="video-iframe"
-                src={this.props.videoLink}
+                src={this.props.currentPlaylistItems[0].videoURL}
                 className="video-iframe"
               />
-            : 'No video available. Please add one through a Youtube search or paste a valid link.'}
+            : <div className="no-videos">
+                Currently, no videos on playlist. Please add a video by pasting
+                a link or saving through a video search.
+              </div>}
         </div>
       </div>
     );

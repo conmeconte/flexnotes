@@ -420,23 +420,6 @@ module.exports = reactProdInvariant;
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(130)('wks');
-var uid = __webpack_require__(72);
-var Symbol = __webpack_require__(5).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -452,6 +435,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__(130)('wks');
+var uid = __webpack_require__(72);
+var Symbol = __webpack_require__(5).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
 
 
 /***/ }),
@@ -5841,6 +5841,7 @@ exports.minNav = minNav;
 exports.showNav = showNav;
 exports.editable = editable;
 exports.notEditable = notEditable;
+exports.clearLoader = clearLoader;
 
 var _axios = __webpack_require__(118);
 
@@ -7283,6 +7284,12 @@ function editable() {
 function notEditable() {
   return {
     type: _types2.default.NOT_EDITABLE
+  };
+}
+
+function clearLoader() {
+  return {
+    type: _types2.default.CLEAR_LOADER
   };
 }
 
@@ -9215,7 +9222,7 @@ if (__webpack_require__(14)) {
   var gOPN = __webpack_require__(77).f;
   var getIterFn = __webpack_require__(198);
   var uid = __webpack_require__(72);
-  var wks = __webpack_require__(11);
+  var wks = __webpack_require__(12);
   var createArrayMethod = __webpack_require__(45);
   var createArrayIncludes = __webpack_require__(131);
   var speciesConstructor = __webpack_require__(138);
@@ -10095,7 +10102,8 @@ exports.default = {
   HIDE_NAV: 'hide_nav',
   SHOW_NAV: 'show_nav',
   EDITABLE: 'editable',
-  NOT_EDITABLE: 'not_editable'
+  NOT_EDITABLE: 'not_editable',
+  CLEAR_LOADER: 'clear_loader'
 };
 
 /***/ }),
@@ -12361,7 +12369,7 @@ var meta = module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.31 Array.prototype[@@unscopables]
-var UNSCOPABLES = __webpack_require__(11)('unscopables');
+var UNSCOPABLES = __webpack_require__(12)('unscopables');
 var ArrayProto = Array.prototype;
 if (ArrayProto[UNSCOPABLES] == undefined) __webpack_require__(28)(ArrayProto, UNSCOPABLES, {});
 module.exports = function (key) {
@@ -13330,7 +13338,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 var global = __webpack_require__(5);
 var dP = __webpack_require__(15);
 var DESCRIPTORS = __webpack_require__(14);
-var SPECIES = __webpack_require__(11)('species');
+var SPECIES = __webpack_require__(12)('species');
 
 module.exports = function (KEY) {
   var C = global[KEY];
@@ -15896,7 +15904,7 @@ module.exports = getNative;
 
 var def = __webpack_require__(15).f;
 var has = __webpack_require__(27);
-var TAG = __webpack_require__(11)('toStringTag');
+var TAG = __webpack_require__(12)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -17832,7 +17840,7 @@ exports.f = {}.propertyIsEnumerable;
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = __webpack_require__(37);
-var TAG = __webpack_require__(11)('toStringTag');
+var TAG = __webpack_require__(12)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
 
@@ -20887,7 +20895,7 @@ module.exports = Array.isArray || function isArray(arg) {
 // 7.2.8 IsRegExp(argument)
 var isObject = __webpack_require__(8);
 var cof = __webpack_require__(37);
-var MATCH = __webpack_require__(11)('match');
+var MATCH = __webpack_require__(12)('match');
 module.exports = function (it) {
   var isRegExp;
   return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : cof(it) == 'RegExp');
@@ -20898,7 +20906,7 @@ module.exports = function (it) {
 /* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR = __webpack_require__(11)('iterator');
+var ITERATOR = __webpack_require__(12)('iterator');
 var SAFE_CLOSING = false;
 
 try {
@@ -20952,7 +20960,7 @@ var hide = __webpack_require__(28);
 var redefine = __webpack_require__(29);
 var fails = __webpack_require__(7);
 var defined = __webpack_require__(42);
-var wks = __webpack_require__(11);
+var wks = __webpack_require__(12);
 
 module.exports = function (KEY, length, exec) {
   var SYMBOL = wks(KEY);
@@ -20984,7 +20992,7 @@ module.exports = function (KEY, length, exec) {
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject = __webpack_require__(4);
 var aFunction = __webpack_require__(24);
-var SPECIES = __webpack_require__(11)('species');
+var SPECIES = __webpack_require__(12)('species');
 module.exports = function (O, D) {
   var C = anObject(O).constructor;
   var S;
@@ -24052,7 +24060,7 @@ var Iterators = __webpack_require__(90);
 var $iterCreate = __webpack_require__(193);
 var setToStringTag = __webpack_require__(88);
 var getPrototypeOf = __webpack_require__(33);
-var ITERATOR = __webpack_require__(11)('iterator');
+var ITERATOR = __webpack_require__(12)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -24126,7 +24134,7 @@ var setToStringTag = __webpack_require__(88);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(28)(IteratorPrototype, __webpack_require__(11)('iterator'), function () { return this; });
+__webpack_require__(28)(IteratorPrototype, __webpack_require__(12)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -24152,7 +24160,7 @@ module.exports = function (that, searchString, NAME) {
 /* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MATCH = __webpack_require__(11)('match');
+var MATCH = __webpack_require__(12)('match');
 module.exports = function (KEY) {
   var re = /./;
   try {
@@ -24172,7 +24180,7 @@ module.exports = function (KEY) {
 
 // check on default Array iterator
 var Iterators = __webpack_require__(90);
-var ITERATOR = __webpack_require__(11)('iterator');
+var ITERATOR = __webpack_require__(12)('iterator');
 var ArrayProto = Array.prototype;
 
 module.exports = function (it) {
@@ -24200,7 +24208,7 @@ module.exports = function (object, index, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(108);
-var ITERATOR = __webpack_require__(11)('iterator');
+var ITERATOR = __webpack_require__(12)('iterator');
 var Iterators = __webpack_require__(90);
 module.exports = __webpack_require__(40).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
@@ -27480,7 +27488,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _reactRouterDom = __webpack_require__(66);
 
@@ -27717,7 +27725,7 @@ var _actions = __webpack_require__(20);
 
 var actions = _interopRequireWildcard(_actions);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _reduxForm = __webpack_require__(153);
 
@@ -28738,7 +28746,7 @@ var _slate = __webpack_require__(49);
 
 var _isHotkey = __webpack_require__(444);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -28768,6 +28776,7 @@ var isBoldHotkey = (0, _isHotkey.isKeyHotkey)('mod+b');
 var isItalicHotkey = (0, _isHotkey.isKeyHotkey)('mod+i');
 var isUnderlinedHotkey = (0, _isHotkey.isKeyHotkey)('mod+u');
 var isCodeHotkey = (0, _isHotkey.isKeyHotkey)('mod+`');
+var isTabHotkey = (0, _isHotkey.isKeyHotkey)('tab');
 
 var initialValue = _slate.Value.fromJSON({
     document: {
@@ -28965,6 +28974,7 @@ var Notes = function (_Component) {
                 }
             }
         }
+
         // --------------------------- RICH TEXT TOOLBAR  ---------------------------
 
         // --------------------------- UNDO AND REDO  ---------------------------
@@ -29049,8 +29059,29 @@ var _initialiseProps = function _initialiseProps() {
             mark = 'underlined';
         } else if (isCodeHotkey(event)) {
             mark = 'code';
+        } else if (isTabHotkey(event)) {
+            mark = 'tab';
+            event.preventDefault();
+            change.insertText("     ");
+            return true;
         } else {
             return;
+        }
+
+        var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+
+        if (colors[0]) {
+            mark = 'red';
+        } else if (colors[1]) {
+            mark = 'orange';
+        } else if (colors[2]) {
+            mark = 'yellow';
+        } else if (colors[3]) {
+            mark = 'green';
+        } else if (colors[4]) {
+            mark = 'blue';
+        } else if (colors[5]) {
+            mark = 'purple';
         }
 
         event.preventDefault();
@@ -29115,10 +29146,10 @@ var _initialiseProps = function _initialiseProps() {
 
         return _react2.default.createElement(
             'span',
-            { className: 'styleSquare', title: type, onMouseDown: onMouseDown, 'data-active': isActive },
+            { onMouseDown: onMouseDown, 'data-active': isActive },
             _react2.default.createElement(
                 'span',
-                { className: 'material-icons notesIcons' },
+                { className: 'material-icons notesIcons colorCircles richText' },
                 icon
             )
         );
@@ -29346,6 +29377,43 @@ var _initialiseProps = function _initialiseProps() {
                     null,
                     children
                 );
+            // case 'tab': return <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{children}</span>;
+            case 'red':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { color: '#FF0000' } },
+                    children
+                );
+            case 'orange':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { color: '#FF7F00' } },
+                    children
+                );
+            case 'yellow':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { color: '#FFFF00' } },
+                    children
+                );
+            case 'green':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { color: '#00FF00' } },
+                    children
+                );
+            case 'blue':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { color: '#0000FF' } },
+                    children
+                );
+            case 'purple':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { color: '#9400D3' } },
+                    children
+                );
         }
     };
 
@@ -29394,6 +29462,12 @@ var _initialiseProps = function _initialiseProps() {
                     { style: { textAlign: 'right' } },
                     children
                 );
+            case 'justifyFull':
+                return _react2.default.createElement(
+                    'div',
+                    { style: { textAlign: 'justify' } },
+                    children
+                );
 
             case 'list-item':
                 return _react2.default.createElement(
@@ -29425,6 +29499,7 @@ var _initialiseProps = function _initialiseProps() {
                     var style = { display: 'block' };
                     return _react2.default.createElement('img', _extends({ src: src, className: className, style: style }, attributes));
                 }
+
         }
     };
 
@@ -29443,6 +29518,7 @@ var _initialiseProps = function _initialiseProps() {
                 _this2.renderBlockButton('justifyLeft', 'format_align_left'),
                 _this2.renderBlockButton('justifyCenter', 'format_align_center'),
                 _this2.renderBlockButton('justifyRight', 'format_align_right'),
+                _this2.renderBlockButton('justifyFull', 'format_align_justify'),
                 _this2.renderMarkButton('code', 'code'),
                 _this2.renderBlockButton('heading-one', 'format_size'),
                 _this2.renderBlockButton('block-quote', 'format_quote'),
@@ -29464,12 +29540,63 @@ var _initialiseProps = function _initialiseProps() {
                         { className: 'material-icons notesIcons image' },
                         'image'
                     )
-                ),
+                )
+            ),
+            _react2.default.createElement(
+                'div',
+                null,
                 _react2.default.createElement('input', {
                     className: 'search-input keyword',
                     placeholder: 'Search keywords...',
                     onChange: _this2.onInputChange
-                })
+                }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'colorOptions' },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'colorDropbtn', title: 'font color' },
+                        _react2.default.createElement(
+                            'i',
+                            { className: 'material-icons fontColorIcon notesIcons' },
+                            'format_color_text'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'fontColor-options' },
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fontColor redFont' },
+                            _this2.renderMarkButton('red', 'lens')
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fontColor orangeFont' },
+                            _this2.renderMarkButton('orange', 'lens')
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fontColor yellowFont' },
+                            _this2.renderMarkButton('yellow', 'lens')
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fontColor greenFont' },
+                            _this2.renderMarkButton('green', 'lens')
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fontColor blueFont' },
+                            _this2.renderMarkButton('blue', 'lens')
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fontColor violetFont' },
+                            _this2.renderMarkButton('purple', 'lens')
+                        )
+                    )
+                )
             ),
             _react2.default.createElement(
                 'h6',
@@ -31866,7 +31993,7 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -31883,7 +32010,7 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _actions = __webpack_require__(20);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _reduxForm = __webpack_require__(153);
 
@@ -31898,212 +32025,236 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var Slides = function (_Component) {
-    _inherits(Slides, _Component);
+  _inherits(Slides, _Component);
 
-    function Slides() {
-        _classCallCheck(this, Slides);
+  function Slides() {
+    _classCallCheck(this, Slides);
 
-        return _possibleConstructorReturn(this, (Slides.__proto__ || Object.getPrototypeOf(Slides)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Slides.__proto__ || Object.getPrototypeOf(Slides)).apply(this, arguments));
+  }
+
+  _createClass(Slides, [{
+    key: 'renderInput',
+    value: function renderInput(props) {
+      var input = props.input,
+          _props$meta = props.meta,
+          touched = _props$meta.touched,
+          error = _props$meta.error;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'col s8 input-field' },
+        _react2.default.createElement('input', _extends({
+          id: 'slides-input',
+          className: 'slides-input form-control'
+        }, input, {
+          type: 'text',
+          placeholder: 'Paste a Google Slides URL...'
+        })),
+        _react2.default.createElement(
+          'p',
+          { className: 'red-text' },
+          _react2.default.createElement(
+            'em',
+            null,
+            touched && error ? error : ''
+          )
+        )
+      );
     }
-
-    _createClass(Slides, [{
-        key: 'renderInput',
-        value: function renderInput(props) {
-            var input = props.input,
-                _props$meta = props.meta,
-                touched = _props$meta.touched,
-                error = _props$meta.error;
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'col s8 input-field' },
-                _react2.default.createElement('input', _extends({ id: 'slides-input', className: 'slides-input form-control' }, input, { type: 'text', placeholder: 'Paste a Google Slides URL...' })),
-                _react2.default.createElement(
-                    'p',
-                    { className: 'red-text' },
-                    _react2.default.createElement(
-                        'em',
-                        null,
-                        touched && error ? error : ''
-                    )
-                )
-            );
-        }
-    }, {
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-                var tab_arr_obj = nextProps.binderObj.tab_arr_obj;
-                var interface_obj = nextProps.interface_obj;
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+        var tab_arr_obj = nextProps.binderObj.tab_arr_obj;
+        var interface_obj = nextProps.interface_obj;
 
 
-                if (tab_arr_obj) {
-                    var tabArrLength = tab_arr_obj.length;
-                    var tabIndex = null;
-                    var pageIndex = null;
-                    for (var i = 0; i < tabArrLength; i++) {
-                        if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                            tabIndex = i;
-                            break;
-                        }
-                    }
-                    var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
-
-                    for (var _i = 0; _i < page_arr_obj.length; _i++) {
-                        if (interface_obj.page_id === page_arr_obj[_i]._id) {
-                            pageIndex = _i;
-                            break;
-                        }
-                    }
-                    if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
-                        this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id);
-                        this.props.slideOutSlidesSearch(false, 'translateY(-100px)');
-                    } else {
-                        this.props.resetSlidesURL('');
-                        this.props.slideOutSlidesSearch(true, 'translateY(0px)');
-                        //return;
-                    }
-                }
+        if (tab_arr_obj) {
+          var tabArrLength = tab_arr_obj.length;
+          var tabIndex = null;
+          var pageIndex = null;
+          for (var i = 0; i < tabArrLength; i++) {
+            if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+              tabIndex = i;
+              break;
             }
-        }
-    }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            var tab_arr_obj = this.props.binderObj.tab_arr_obj;
-            var interface_obj = this.props.interface_obj;
+          }
+          var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
 
-
-            if (tab_arr_obj) {
-                var tabArrLength = tab_arr_obj.length;
-                var tabIndex = null;
-                var pageIndex = null;
-                for (var i = 0; i < tabArrLength; i++) {
-                    if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                        tabIndex = i;
-                        break;
-                    }
-                }
-                var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
-
-                for (var _i2 = 0; _i2 < page_arr_obj.length; _i2++) {
-                    if (interface_obj.page_id === page_arr_obj[_i2]._id) {
-                        pageIndex = _i2;
-                        break;
-                    }
-                }
-                if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("lecture_slides")) {
-                    this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id);
-                } else {
-                    this.props.resetSlidesURL('');
-                }
+          for (var _i = 0; _i < page_arr_obj.length; _i++) {
+            if (interface_obj.page_id === page_arr_obj[_i]._id) {
+              pageIndex = _i;
+              break;
             }
+          }
+          if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty('lecture_slides')) {
+            this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id);
+            this.props.slideOutSlidesSearch(false, 'translateY(-100px)');
+          } else {
+            this.props.resetSlidesURL('');
+            this.props.slideOutSlidesSearch(true, 'translateY(0px)');
+            //return;
+          }
         }
-    }, {
-        key: 'setURLinReduxForm',
-        value: function setURLinReduxForm(values) {
-            if (values.url.indexOf('presentation/d/') != -1 || values.url.indexOf('presentation/d/e') != -1) {
-                if (values.url.indexOf('presentation/d/e/') !== -1) {
-                    var urlSplit1 = values.url.split("presentation/d/e/");
-                    var urlSplit2 = urlSplit1[1].split('/');
-                    var presentationID = urlSplit2[0];
-                    var slidesURL = 'https://docs.google.com/presentation/d/e/' + presentationID + '/embed';
-                    this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
-                } else if (values.url.indexOf('presentation/d/') !== -1) {
-                    var _urlSplit = values.url.split("presentation/d/");
-                    var _urlSplit2 = _urlSplit[1].split('/');
-                    var _presentationID = _urlSplit2[0];
-                    var _slidesURL = 'https://docs.google.com/presentation/d/' + _presentationID + '/embed';
-                    this.props.setSlidesUrl(_slidesURL, this.props.interface_obj);
-                    this.props.reset();
-                }
-            } else {
-                return;
+      }
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var tab_arr_obj = this.props.binderObj.tab_arr_obj;
+      var interface_obj = this.props.interface_obj;
+
+
+      if (tab_arr_obj) {
+        var tabArrLength = tab_arr_obj.length;
+        var tabIndex = null;
+        var pageIndex = null;
+        for (var i = 0; i < tabArrLength; i++) {
+          if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+            tabIndex = i;
+            break;
+          }
+        }
+        var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
+
+        for (var _i2 = 0; _i2 < page_arr_obj.length; _i2++) {
+          if (interface_obj.page_id === page_arr_obj[_i2]._id) {
+            pageIndex = _i2;
+            break;
+          }
+        }
+        if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty('lecture_slides')) {
+          this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id);
+        } else {
+          this.props.resetSlidesURL('');
+        }
+      }
+    }
+  }, {
+    key: 'setURLinReduxForm',
+    value: function setURLinReduxForm(values) {
+      if (values.url.indexOf('presentation/d/') != -1 || values.url.indexOf('presentation/d/e') != -1) {
+        if (values.url.indexOf('presentation/d/e/') !== -1) {
+          var urlSplit1 = values.url.split('presentation/d/e/');
+          var urlSplit2 = urlSplit1[1].split('/');
+          var presentationID = urlSplit2[0];
+          var slidesURL = 'https://docs.google.com/presentation/d/e/' + presentationID + '/embed';
+          this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
+        } else if (values.url.indexOf('presentation/d/') !== -1) {
+          var _urlSplit = values.url.split('presentation/d/');
+          var _urlSplit2 = _urlSplit[1].split('/');
+          var _presentationID = _urlSplit2[0];
+          var _slidesURL = 'https://docs.google.com/presentation/d/' + _presentationID + '/embed';
+          this.props.setSlidesUrl(_slidesURL, this.props.interface_obj);
+          this.props.reset();
+        }
+      } else {
+        return;
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var toggleSlideOut = this.props.toggleLectureSlideOut;
+      var slideOutStyles = this.props.lectureSlideOutStyles;
+      return _react2.default.createElement(
+        'div',
+        { className: 'slides-div fourth-step' },
+        _react2.default.createElement(
+          'form',
+          {
+            style: slideOutStyles,
+            className: 'form-horizontal slide-out-input',
+            onSubmit: this.props.handleSubmit(this.setURLinReduxForm.bind(this))
+          },
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(_reduxForm.Field, { name: 'url', component: this.renderInput }),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn green darken-1 col s2 slidesBtn' },
+              _react2.default.createElement(
+                'i',
+                { style: { marginRight: '0px' }, className: 'material-icons' },
+                'check'
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          {
+            className: 'arrow-container-slides',
+            onClick: function onClick() {
+              _this2.props.slideOutSlidesSearch(toggleSlideOut, slideOutStyles);
             }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
+          },
+          !toggleSlideOut ? _react2.default.createElement(
+            'i',
+            { className: 'material-icons' },
+            'remove'
+          ) : _react2.default.createElement(
+            'i',
+            { className: 'material-icons' },
+            'add'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'slides-container' },
+          _react2.default.createElement('div', { className: 'resize-blocker2' }),
+          this.props.slide_input ? _react2.default.createElement('iframe', {
+            src: this.props.slide_input,
+            frameBorder: '0',
+            className: 'slides-iframe',
+            allowFullScreen: true
+          }) : ''
+        )
+      );
+    }
+  }]);
 
-            var toggleSlideOut = this.props.toggleLectureSlideOut;
-            var slideOutStyles = this.props.lectureSlideOutStyles;
-            return _react2.default.createElement(
-                'div',
-                { className: 'slides-div fourth-step' },
-                _react2.default.createElement(
-                    'form',
-                    { style: slideOutStyles, className: 'form-horizontal slide-out-input', onSubmit: this.props.handleSubmit(this.setURLinReduxForm.bind(this)) },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'row' },
-                        _react2.default.createElement(_reduxForm.Field, { name: 'url', component: this.renderInput }),
-                        _react2.default.createElement(
-                            'button',
-                            { className: 'btn green darken-1 col s2 slidesBtn' },
-                            _react2.default.createElement(
-                                'i',
-                                { style: { marginRight: "0px" }, className: 'material-icons' },
-                                'check'
-                            )
-                        )
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'arrow-container-slides', onClick: function onClick() {
-                            _this2.props.slideOutSlidesSearch(toggleSlideOut, slideOutStyles);
-                        } },
-                    !toggleSlideOut ? _react2.default.createElement(
-                        'i',
-                        { className: 'material-icons' },
-                        'keyboard_arrow_up'
-                    ) : _react2.default.createElement(
-                        'i',
-                        { className: 'material-icons' },
-                        'keyboard_arrow_down'
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'slides-container' },
-                    _react2.default.createElement('div', { className: 'resize-blocker2' }),
-                    this.props.slide_input ? _react2.default.createElement('iframe', { src: this.props.slide_input, frameBorder: '0', className: 'slides-iframe', allowFullScreen: true }) : ""
-                )
-            );
-        }
-    }]);
-
-    return Slides;
+  return Slides;
 }(_react.Component);
 
 function validate(values) {
-    var errors = {};
-    var valuesStr = values.url;
-    // console.log('VALIDATE slides:', valuesStr);
-    if (valuesStr) {
-        if (valuesStr.indexOf('docs.google.com/presentation/d/') === -1) {
-            errors.url = "Please paste a valid Google Slides URL";
-        }
+  var errors = {};
+  var valuesStr = values.url;
+  // console.log('VALIDATE slides:', valuesStr);
+  if (valuesStr) {
+    if (valuesStr.indexOf('docs.google.com/presentation/d/') === -1) {
+      errors.url = 'Please paste a valid Google Slides URL';
     }
-    return errors;
+  }
+  return errors;
 }
 
 Slides = (0, _reduxForm.reduxForm)({
-    form: 'add-slides-url',
-    validate: validate
+  form: 'add-slides-url',
+  validate: validate
 })(Slides);
 
 function mapStateToProps(state) {
-    return {
-        slide_input: state.slides.input,
-        interface_obj: state.interface,
-        binderObj: state.binder.binderObj,
-        toggleLectureSlideOut: state.slides.toggleLectureSlideOut,
-        lectureSlideOutStyles: state.slides.slideLinkSlideOut
-    };
-};
+  return {
+    slide_input: state.slides.input,
+    interface_obj: state.interface,
+    binderObj: state.binder.binderObj,
+    toggleLectureSlideOut: state.slides.toggleLectureSlideOut,
+    lectureSlideOutStyles: state.slides.slideLinkSlideOut
+  };
+}
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { setSlidesUrl: _actions.setSlidesUrl, updateBinderArray: _actions.updateBinderArray, getSlidesURL: _actions.getSlidesURL, resetSlidesURL: _actions.resetSlidesURL, slideOutSlidesSearch: _actions.slideOutSlidesSearch })(Slides);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, {
+  setSlidesUrl: _actions.setSlidesUrl,
+  updateBinderArray: _actions.updateBinderArray,
+  getSlidesURL: _actions.getSlidesURL,
+  resetSlidesURL: _actions.resetSlidesURL,
+  slideOutSlidesSearch: _actions.slideOutSlidesSearch
+})(Slides);
 
 /***/ }),
 /* 277 */
@@ -32206,7 +32357,7 @@ var ModalNav = function (_Component) {
                 this.props.children ? this.props.children : ''
             );
 
-            if (this.state.visible) {
+            if (visible) {
                 return _react2.default.createElement(
                     'span',
                     null,
@@ -32251,39 +32402,101 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = __webpack_require__(11);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Loader = function Loader() {
-    return _react2.default.createElement(
-        "div",
-        { className: "preloader-wrapper small active" },
-        _react2.default.createElement(
-            "div",
-            { className: "spinner-layer spinner-blue-only" },
-            _react2.default.createElement(
-                "div",
-                { className: "circle-clipper left" },
-                _react2.default.createElement("div", { className: "circle" })
-            ),
-            _react2.default.createElement(
-                "div",
-                { className: "gap-patch" },
-                _react2.default.createElement("div", { className: "circle" })
-            ),
-            _react2.default.createElement(
-                "div",
-                { className: "circle-clipper right" },
-                _react2.default.createElement("div", { className: "circle" })
-            )
-        )
-    );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-exports.default = Loader;
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Loader = function (_Component) {
+    _inherits(Loader, _Component);
+
+    function Loader(props) {
+        _classCallCheck(this, Loader);
+
+        var _this = _possibleConstructorReturn(this, (Loader.__proto__ || Object.getPrototypeOf(Loader)).call(this, props));
+
+        _this.state = {
+            visible: false
+        };
+        return _this;
+    }
+
+    _createClass(Loader, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            if (this.props.interface !== nextProps.interface) {
+                if (nextProps.interface.sent_to_db === true || nextProps.interface.pull_from_db === true) {
+                    this.setState({
+                        visible: true
+                    });
+                } else {
+                    this.setState({
+                        visible: false
+                    });
+                }
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var visible = this.state.visible;
+
+
+            if (visible) {
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'loader-container' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'preloader-wrapper small active' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'spinner-layer spinner-blue-only' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'circle-clipper left' },
+                                _react2.default.createElement('div', { className: 'circle' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'gap-patch' },
+                                _react2.default.createElement('div', { className: 'circle' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'circle-clipper right' },
+                                _react2.default.createElement('div', { className: 'circle' })
+                            )
+                        )
+                    )
+                );
+            } else {
+                return _react2.default.createElement('div', null);
+            }
+        }
+    }]);
+
+    return Loader;
+}(_react.Component);
+
+function mapStateToProps(state) {
+    return {
+        interface: state.interface
+    };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(Loader);
 
 /***/ }),
 /* 279 */
@@ -32363,7 +32576,7 @@ module.exports = !__webpack_require__(14) && !__webpack_require__(7)(function ()
 /* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(11);
+exports.f = __webpack_require__(12);
 
 
 /***/ }),
@@ -33154,7 +33367,7 @@ var isArray = __webpack_require__(133);
 var isObject = __webpack_require__(8);
 var toLength = __webpack_require__(16);
 var ctx = __webpack_require__(36);
-var IS_CONCAT_SPREADABLE = __webpack_require__(11)('isConcatSpreadable');
+var IS_CONCAT_SPREADABLE = __webpack_require__(12)('isConcatSpreadable');
 
 function flattenIntoArray(target, original, source, sourceLen, start, depth, mapper, thisArg) {
   var targetIndex = start;
@@ -62580,7 +62793,7 @@ var $fails = __webpack_require__(7);
 var shared = __webpack_require__(130);
 var setToStringTag = __webpack_require__(88);
 var uid = __webpack_require__(72);
-var wks = __webpack_require__(11);
+var wks = __webpack_require__(12);
 var wksExt = __webpack_require__(281);
 var wksDefine = __webpack_require__(181);
 var enumKeys = __webpack_require__(467);
@@ -63042,7 +63255,7 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(185).set });
 // 19.1.3.6 Object.prototype.toString()
 var classof = __webpack_require__(108);
 var test = {};
-test[__webpack_require__(11)('toStringTag')] = 'z';
+test[__webpack_require__(12)('toStringTag')] = 'z';
 if (test + '' != '[object z]') {
   __webpack_require__(29)(Object.prototype, 'toString', function toString() {
     return '[object ' + classof(this) + ']';
@@ -63090,7 +63303,7 @@ NAME in FProto || __webpack_require__(14) && dP(FProto, NAME, {
 
 var isObject = __webpack_require__(8);
 var getPrototypeOf = __webpack_require__(33);
-var HAS_INSTANCE = __webpack_require__(11)('hasInstance');
+var HAS_INSTANCE = __webpack_require__(12)('hasInstance');
 var FunctionProto = Function.prototype;
 // 19.2.3.6 Function.prototype[@@hasInstance](V)
 if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(15).f(FunctionProto, HAS_INSTANCE, { value: function (O) {
@@ -64200,7 +64413,7 @@ if (new Date(NaN) + '' != INVALID_DATE) {
 /* 547 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var TO_PRIMITIVE = __webpack_require__(11)('toPrimitive');
+var TO_PRIMITIVE = __webpack_require__(12)('toPrimitive');
 var proto = Date.prototype;
 
 if (!(TO_PRIMITIVE in proto)) __webpack_require__(28)(proto, TO_PRIMITIVE, __webpack_require__(548));
@@ -64410,7 +64623,7 @@ $export($export.P + $export.F * !STRICT, 'Array', {
 
 var isObject = __webpack_require__(8);
 var isArray = __webpack_require__(133);
-var SPECIES = __webpack_require__(11)('species');
+var SPECIES = __webpack_require__(12)('species');
 
 module.exports = function (original) {
   var C;
@@ -64671,7 +64884,7 @@ var re2 = /a/g;
 var CORRECT_NEW = new $RegExp(re1) !== re1;
 
 if (__webpack_require__(14) && (!CORRECT_NEW || __webpack_require__(7)(function () {
-  re2[__webpack_require__(11)('match')] = false;
+  re2[__webpack_require__(12)('match')] = false;
   // RegExp constructor can alter flags and IsRegExp works correct with @@match
   return $RegExp(re1) != re1 || $RegExp(re2) == re2 || $RegExp(re1, 'i') != '/a/i';
 }))) {
@@ -64894,7 +65107,7 @@ var USE_NATIVE = !!function () {
   try {
     // correct subclassing with @@species support
     var promise = $Promise.resolve(1);
-    var FakePromise = (promise.constructor = {})[__webpack_require__(11)('species')] = function (exec) {
+    var FakePromise = (promise.constructor = {})[__webpack_require__(12)('species')] = function (exec) {
       exec(empty, empty);
     };
     // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
@@ -66558,7 +66771,7 @@ var $export = __webpack_require__(0);
 var global = __webpack_require__(5);
 var core = __webpack_require__(40);
 var microtask = __webpack_require__(203)();
-var OBSERVABLE = __webpack_require__(11)('observable');
+var OBSERVABLE = __webpack_require__(12)('observable');
 var aFunction = __webpack_require__(24);
 var anObject = __webpack_require__(4);
 var anInstance = __webpack_require__(79);
@@ -66801,7 +67014,7 @@ var redefine = __webpack_require__(29);
 var global = __webpack_require__(5);
 var hide = __webpack_require__(28);
 var Iterators = __webpack_require__(90);
-var wks = __webpack_require__(11);
+var wks = __webpack_require__(12);
 var ITERATOR = wks('iterator');
 var TO_STRING_TAG = wks('toStringTag');
 var ArrayValues = Iterators.Array;
@@ -67646,7 +67859,7 @@ var _reactDom = __webpack_require__(110);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _redux = __webpack_require__(115);
 
@@ -80303,7 +80516,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(66);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _index = __webpack_require__(20);
 
@@ -84265,7 +84478,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(66);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -84547,7 +84760,7 @@ var _notes2 = _interopRequireDefault(_notes);
 
 var _reactRouterDom = __webpack_require__(66);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -84640,10 +84853,13 @@ var Dashboard = function (_Component) {
             break;
           }
         }
-        this.binderId = nextProps.binder.binderObj._id;
-        this.tabId = tab_arr_obj[tabIndex]._id;
-        this.pageId = page_arr_obj[pageIndex]._id;
-        this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
+        var currentPage = page_arr_obj[pageIndex];
+        if (pageIndex !== null && currentPage.hasOwnProperty('video') && currentPage.video.length >= 1) {
+          this.binderId = nextProps.binder.binderObj._id;
+          this.tabId = tab_arr_obj[tabIndex]._id;
+          this.pageId = page_arr_obj[pageIndex]._id;
+          this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
+        }
       }
     }
   }, {
@@ -84931,7 +85147,7 @@ var _axios = __webpack_require__(118);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _index = __webpack_require__(20);
 
@@ -85139,7 +85355,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -89565,7 +89781,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -89686,7 +89902,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _reduxForm = __webpack_require__(153);
 
@@ -89829,11 +90045,11 @@ var VideoContainer = function (_Component) {
           !this.props.toggleSlideOut ? _react2.default.createElement(
             'i',
             { className: 'material-icons' },
-            'keyboard_arrow_up'
+            'remove'
           ) : _react2.default.createElement(
             'i',
             { className: 'material-icons' },
-            'keyboard_arrow_down'
+            'add'
           )
         ),
         _react2.default.createElement(
@@ -89845,7 +90061,11 @@ var VideoContainer = function (_Component) {
             id: 'video-iframe',
             src: this.props.videoLink,
             className: 'video-iframe'
-          }) : 'No video available. Please add one through a Youtube search or paste a valid link.'
+          }) : _react2.default.createElement(
+            'div',
+            { className: 'no-videos' },
+            'Currently, no videos on playlist. Please add a video by pasting a link or saving through a video search.'
+          )
         )
       );
     }
@@ -90460,7 +90680,7 @@ var createField = function createField(structure) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createFieldProps__ = __webpack_require__(382);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__events_onChangeValue__ = __webpack_require__(383);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_eventConsts__ = __webpack_require__(871);
@@ -93292,7 +93512,7 @@ var createFields = function createFields(structure) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createFieldProps__ = __webpack_require__(382);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__structure_plain__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__events_onChangeValue__ = __webpack_require__(383);
@@ -93725,7 +93945,7 @@ var createFieldArray = function createFieldArray(structure) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_redux__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__createFieldArrayProps__ = __webpack_require__(956);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__structure_plain__ = __webpack_require__(6);
@@ -94639,7 +94859,7 @@ var createFormValueSelector = function createFormValueSelector(_ref) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_prefixName__ = __webpack_require__(120);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -95290,7 +95510,7 @@ var createHasSubmitFailed = function createHasSubmitFailed(_ref) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_redux__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_redux__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_redux__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__actions__ = __webpack_require__(376);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__asyncValidation__ = __webpack_require__(1017);
@@ -98007,7 +98227,7 @@ function createDeleteInWithCleanUp(_ref) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(11);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -98055,7 +98275,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -98169,7 +98389,11 @@ var VideoPlaylist = function (_Component) {
             null,
             'Video Playlist'
           ),
-          createPlaylist ? createPlaylist : ''
+          this.props.currentPlaylistItems.length >= 1 && this.props.currentPlaylistItems[0].videoId !== undefined ? createPlaylist : _react2.default.createElement(
+            'div',
+            { className: 'no-videos' },
+            'Currently, no videos on playlist. Please add a video by pasting a link or saving through a video search.'
+          )
         )
       );
     }
@@ -111467,7 +111691,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n\r\n}\r\n\r\n.text-editor {\r\n    height: 100%;\r\n    overflow: hidden;\r\n    margin-bottom: -500em;\r\n}\r\n\r\n.editor {\r\n    padding-top: 2vmin;\r\n    padding-left: 2vmin;\r\n    padding-right: 2vmin;\r\n    height: 100%;\r\n}\r\n\r\ncode {\r\n    display: inline-block;\r\n    background-color: #d5d5d5;\r\n    color: #0288d1;\r\n    padding: 0 0.5em;\r\n    font-family: 'Overpass Mono' !important;\r\n}\r\n\r\nblockquote {\r\n    border-left: 5px solid #0288d1 !important;\r\n    color: #0288d1;\r\n    font-style: italic;\r\n    margin: 0 !important;\r\n}\r\n\r\n.notes-component.fifth-step{\r\n    height: 88%;\r\n    overflow-y: auto;\r\n}\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    position: relative;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #455a64;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    padding: 0 1em;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: wrap;\r\n    justify-content: space-between;\r\n    height: 40%;\r\n    width: 100%;\r\n    padding-top: 1.5em;\r\n}\r\n\r\n.styleSquare {\r\n    height: 2.5em;\r\n    width: 2.5em;\r\n    cursor: pointer;\r\n    color: white;\r\n    text-align: center;\r\n}\r\n\r\n.styleSquare:hover{\r\n    background-color: ghostwhite;\r\n    color: #01579b;\r\n}\r\n\r\n.material-icons.notesIcons {\r\n    font-size: 2.5em;\r\n    margin: 0;\r\n}\r\n\r\n.search-input.keyword {\r\n    background-color: #eceff1;\r\n    height: 2.5em;\r\n    width: 20em;\r\n    padding-left: 2%;\r\n    margin-top: 0;\r\n    margin-bottom: 0;\r\n}\r\n\r\n.link, .image {\r\n    margin-top: 0;\r\n}\r\n\r\n.saveNotes {\r\n    display: inline-block;\r\n    color: white;\r\n    margin: 1% 45%;\r\n    width: 95%;\r\n}\r\n\r\n@media only screen and (max-width: 1426px) {\r\n    .styleSquare {\r\n        height: 2.3em;\r\n        width: 2.3em;\r\n    }\r\n\r\n    .material-icons.notesIcons {\r\n        font-size: 2.3em;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        height: 2.3em;\r\n        margin-left: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 1385px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 974px) {\r\n    .stylingButtons {\r\n        justify-content: flex-start;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        width: 17em;\r\n    }\r\n\r\n    .material-icons.image {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 935px) {\r\n    .material-icons.link {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 919px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n\r\n    .material-icons.image, .material-icons.link {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 830px) {\r\n    .search-input.keyword {\r\n        width: 13em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n    .stylingButtons {\r\n        justify-content: space-between;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 574px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n        width: 20em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 382px) {\r\n    .stylingButtons {\r\n        justify-content: flex-start;\r\n    }\r\n\r\n    .material-icons.image {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n.reactour-portal {\r\n    z-index: -100;\r\n}", ""]);
+exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n\r\n}\r\n\r\n.text-editor {\r\n    height: 100%;\r\n    overflow: hidden;\r\n    margin-bottom: -500em;\r\n}\r\n\r\n.editor {\r\n    padding-top: 2vmin;\r\n    padding-left: 2vmin;\r\n    padding-right: 2vmin;\r\n    height: 100%;\r\n}\r\n\r\ncode {\r\n    display: inline-block;\r\n    background-color: #d5d5d5;\r\n    color: #0288d1;\r\n    padding: 0 0.5em;\r\n    font-family: 'Overpass Mono' !important;\r\n}\r\n\r\nblockquote {\r\n    border-left: 5px solid #0288d1 !important;\r\n    color: #0288d1;\r\n    font-style: italic;\r\n    margin: 0 !important;\r\n}\r\n\r\n.notes-component.fifth-step{\r\n    height: 88%;\r\n    overflow-y: auto;\r\n}\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    position: relative;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #455a64;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    padding: 0 1em;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: wrap;\r\n    justify-content: space-between;\r\n    height: 40%;\r\n    width: 100%;\r\n    padding-top: 1.5em;\r\n}\r\n\r\n.styleSquare {\r\n    height: 2.5em;\r\n    width: 2.5em;\r\n    cursor: pointer;\r\n    color: white;\r\n    text-align: center;\r\n}\r\n\r\n.richText, .fontColorIcon {\r\n    color: white;\r\n}\r\n\r\n.styleSquare:hover, .richText:hover, .fontColorIcon:hover {\r\n    background-color: ghostwhite;\r\n    color: #01579b;\r\n}\r\n\r\n.material-icons.notesIcons {\r\n    font-size: 2.5em;\r\n    margin: 0;\r\n}\r\n\r\n.search-input.keyword {\r\n    background-color: #eceff1;\r\n    height: 2.5em;\r\n    width: 20em;\r\n    padding-left: 2%;\r\n    margin-top: 0;\r\n    margin-bottom: 0;\r\n}\r\n\r\n.link, .image {\r\n    margin-top: 0;\r\n}\r\n\r\n.saveNotes {\r\n    display: inline-block;\r\n    color: white;\r\n    margin: 1% 45%;\r\n    width: 95%;\r\n}\r\n\r\n@media only screen and (max-width: 1426px) {\r\n    .styleSquare {\r\n        height: 2.3em;\r\n        width: 2.3em;\r\n    }\r\n\r\n    .material-icons.notesIcons {\r\n        font-size: 2.3em;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        height: 2.3em;\r\n        margin-left: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 1385px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 974px) {\r\n    .stylingButtons {\r\n        justify-content: flex-start;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        width: 17em;\r\n    }\r\n\r\n    .material-icons.image {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 935px) {\r\n    .material-icons.link {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 919px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n\r\n    .material-icons.image, .material-icons.link {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 830px) {\r\n    .search-input.keyword {\r\n        width: 13em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n    .stylingButtons {\r\n        justify-content: space-between;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 574px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n        width: 20em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 382px) {\r\n    .stylingButtons {\r\n        justify-content: flex-start;\r\n    }\r\n\r\n    .material-icons.image {\r\n        margin-top: 0.3em;\r\n    }\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n/* The dropdown container */\r\n.colorOptions {\r\n    float: left;\r\n    overflow: hidden;\r\n}\r\n\r\n/* Dropdown button */\r\n.colorOptions .colorDropbtn {\r\n    font-size: 16px;\r\n    border: none;\r\n    outline: none;\r\n    padding: 14px 16px;\r\n    background-color: inherit;\r\n    font-family: inherit; /* Important for vertical align on mobile phones */\r\n    margin: 0; /* Important for vertical align on mobile phones */\r\n}\r\n\r\n/* Dropdown content (hidden by default) */\r\n.fontColor-options {\r\n    display: none;\r\n    position: absolute;\r\n    height: 3.8em;\r\n    width: 6em;\r\n    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);\r\n    z-index: 1;\r\n    background-color: darkgray;\r\n    padding: 0.3em 0 0 0.3em;\r\n\r\n}\r\n\r\n/* Links inside the dropdown */\r\n.fontColor-options .fontColor {\r\n    float: none;\r\n    text-decoration: none;\r\n    display: block;\r\n    text-align: left;\r\n}\r\n\r\n/* Add a grey background color to dropdown links on hover */\r\n.fontColor-options {\r\n    background-color: #ddd;\r\n}\r\n\r\n/* Show the dropdown menu on hover */\r\n.colorOptions:hover .fontColor-options {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.fontColor {\r\n    width: 1.8em;\r\n    height: 1.8em;\r\n    padding-right: 1%;\r\n    margin: 0;\r\n}\r\n\r\n.redFont .colorCircles {\r\n    color: #FF0000;\r\n    font-size: 150%;\r\n}\r\n\r\n.orangeFont .colorCircles {\r\n    color: #FF7F00;\r\n    font-size: 150%;\r\n}\r\n\r\n.yellowFont .colorCircles {\r\n    color: #FFFF00;\r\n    font-size: 150%;\r\n}\r\n\r\n.greenFont .colorCircles {\r\n    color: #00FF00;\r\n    font-size: 150%;\r\n}\r\n\r\n.blueFont .colorCircles {\r\n    color: #0000FF;\r\n    font-size: 150%;\r\n}\r\n\r\n.violetFont .colorCircles {\r\n    color: #9400D3;\r\n    font-size: 150%;\r\n}\r\n\r\n.fontOptions {\r\n    display: inline-block;\r\n}\r\n\r\n.colorCircles:hover {\r\n    cursor: pointer\r\n}", ""]);
 
 // exports
 
@@ -111584,7 +111808,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -111740,13 +111964,17 @@ var _lfz_modal = __webpack_require__(1182);
 
 var _lfz_modal2 = _interopRequireDefault(_lfz_modal);
 
+var _loader = __webpack_require__(278);
+
+var _loader2 = _interopRequireDefault(_loader);
+
 var _logo = __webpack_require__(369);
 
 var _logo2 = _interopRequireDefault(_logo);
 
 var _reactRouterDom = __webpack_require__(66);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -111794,9 +112022,6 @@ var NavBar = function (_Component) {
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            // if (nextProps.interface.page_id !== this.props.interface.page_id) {
-            //     this.props.updateBinderArray();
-            // }
             if (nextProps.interface.pull_from_db !== this.props.interface.pull_from_db) {
                 if (nextProps.interface.pull_from_db) {
                     this.props.updateBinderArray();
@@ -111811,6 +112036,7 @@ var NavBar = function (_Component) {
                             this.props.updateBinderObj(binderObj);
                         }
                     }
+                    this.props.clearLoader();
                 }
             }
             if (this.props.mobile !== nextProps.mobile) {
@@ -111875,6 +112101,7 @@ var NavBar = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
+                _react2.default.createElement(_loader2.default, null),
                 _react2.default.createElement(
                     'button',
                     { className: 'navbarShow btn ' + (this.props.interface.navbar_min ? 'visible' : 'hidden'),
@@ -111912,7 +112139,6 @@ var NavBar = function (_Component) {
                             'chevron_left'
                         )
                     ),
-                    _react2.default.createElement(_lfz_modal2.default, null),
                     _react2.default.createElement(
                         'section',
                         { className: 'second-step binder-container' },
@@ -111945,7 +112171,7 @@ function mapStateToProps(state) {
     };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { editable: _actions.editable, notEditable: _actions.notEditable, updateBinderArray: _actions.updateBinderArray, addBinder: _actions.addBinder, updateBinderObj: _actions.updateBinderObj, minNav: _actions.minNav, showNav: _actions.showNav })(NavBar);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { editable: _actions.editable, notEditable: _actions.notEditable, updateBinderArray: _actions.updateBinderArray, addBinder: _actions.addBinder, updateBinderObj: _actions.updateBinderObj, minNav: _actions.minNav, showNav: _actions.showNav, clearLoader: _actions.clearLoader })(NavBar);
 
 /***/ }),
 /* 1178 */
@@ -111966,7 +112192,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(66);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -111977,10 +112203,6 @@ var _tab2 = _interopRequireDefault(_tab);
 var _modal_nav = __webpack_require__(277);
 
 var _modal_nav2 = _interopRequireDefault(_modal_nav);
-
-var _loader = __webpack_require__(278);
-
-var _loader2 = _interopRequireDefault(_loader);
 
 __webpack_require__(459);
 
@@ -112180,7 +112402,6 @@ var Binder = function (_Component) {
                 binderHover = _state.binderHover;
 
             if (!this.props.binderObj) {
-
                 return null;
             }
 
@@ -112353,7 +112574,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(66);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -112716,7 +112937,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(66);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -113037,7 +113258,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, "a {\r\n    color: white;\r\n}\r\n\r\n.modal-content.modal-nav{\r\n    position: absolute;\r\n    width: 20%;\r\n    top: 40%;\r\n    left: 35%;\r\n    z-index: 5000;\r\n}\r\n\r\n.confirm-modal.modal-nav{\r\n    display: flex;\r\n    height: 100vh;\r\n    width: 100vw;\r\n    position: fixed;\r\n    background-color: rgba(0, 0, 0, 0.9);\r\n    top: 0;\r\n    left: 0;\r\n    z-index: 4000;\r\n}\r\n\r\n.nav_binder, .nav_tab, .nav_page {\r\n    display: inline-block;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.navbar.s2{\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 10%;\r\n    height: 100vh;\r\n    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);\r\n    background-color: #eceff1;\r\n}\r\n\r\n.lfzLogo{\r\n    width: 2.5%;\r\n    position: absolute;\r\n    left: 13%;\r\n    filter: drop-shadow(1px 1px 1px #333333);\r\n}\r\n\r\n.lfzLogo:hover{\r\n    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);\r\n    cursor: pointer;\r\n}\r\n\r\n.lfzLogo:active{\r\n    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);\r\n    transform: translateY(2px);\r\n}\r\n\r\nul > li {\r\n    list-style: none;\r\n\r\n}\r\n\r\n.binder_wrap{\r\n    border: 1px solid #747474;\r\n    border-radius: 3px;\r\n    background-color: white;\r\n    width: 75%;\r\n    height: 80px;\r\n    margin-left: 10%;\r\n    margin-bottom: 2%;\r\n    overflow-y: scroll;\r\n    box-sizing: content-box;\r\n    box-shadow: -5px .5px .5px #333333;\r\n}\r\n\r\n.visible, .edit-btn.visible, .delete-btn.visible, .navbarShow.visible{\r\n    display: inline;\r\n}\r\n\r\n.hidden, .edit-btn.hidden, .delete-btn.hidden, .navbarShow.hidden{\r\n    display: none;\r\n}\r\n\r\n.binderTitle{\r\n    cursor: pointer;\r\n    position: relative;\r\n    padding-bottom: 2%;\r\n}\r\n\r\n.binder-edit-btn{\r\n    position: absolute;\r\n    right: 14%;\r\n    top: 4%;\r\n}\r\n\r\n.binder-delete-btn{\r\n    position: absolute;\r\n    top: 4%;\r\n    right: 2%;\r\n}\r\n\r\n.tab-edit-btn{\r\n    position: absolute;\r\n    right: 16%;\r\n    top: 3%;\r\n}\r\n\r\n.tab-delete-btn{\r\n    position: absolute;\r\n    top: 3%;\r\n    right: 2%;\r\n}\r\n\r\n.page-edit-btn{\r\n    position: absolute;\r\n    right: 18%;\r\n    bottom: 2%;\r\n}\r\n\r\n.page-delete-btn{\r\n    position: absolute;\r\n    bottom: 2%;\r\n    right: 2%;\r\n}\r\n\r\n.binderWrap{\r\n     width: 100%;\r\n     margin-top: 0;\r\n     margin-bottom: 2%;\r\n     box-shadow: 1px 1px 1px #747474;\r\n}\r\n\r\n.binderBorderTop{\r\n    border-top: 5px ridge #90a4ae;\r\n}\r\n\r\n.tabWrap{\r\n    width: 90%;\r\n    margin-left: 10%;\r\n    box-shadow: 1px 1px 1px #747474;\r\n    \r\n}\r\n\r\n.tabTitle{\r\n    border-top: outset 3px #546e7a;\r\n    cursor: pointer;   \r\n    position: relative;\r\n    padding-bottom: 2%;\r\n}\r\n\r\n.pageBody{\r\n    border: 1px inset #696969;\r\n    padding: 3% 0%; \r\n    margin-left: 10%;\r\n    width: 90%;\r\n    cursor: pointer;\r\n    box-shadow: -1px 1px 1px #747474;\r\n}\r\n\r\n.pageLink, .page-btn, .delete-btn, .edit-btn {\r\n    display: inline-block;\r\n}\r\n.btn.binder-edit-btn{\r\n    padding-left: 8px;\r\n    padding-right: 2px;\r\n}\r\n\r\n.btn.delete-btn, .btn.tab-edit-btn, .btn.page-edit-btn{\r\n    padding-right: 0px;\r\n    padding-left: 6px;\r\n}\r\n\r\n.add-btn-page.btn  {\r\n    margin-bottom: 8%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n    background-color: #546e7a; \r\n}\r\n\r\n.add-btn-page.btn:hover, .add-btn-page.btn:focus  {\r\n    background-color: #fafafa;\r\n    color: black;\r\n}\r\n\r\n.add-btn-tab.btn  {\r\n    margin-top: 3%;\r\n    margin-bottom: 5%;\r\n    background-color: #455a64;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n}\r\n\r\n.add-btn-tab.btn:hover, .add-btn-tab.btn:focus  {\r\n    background-color: #b0bec5;\r\n    color: black;\r\n    \r\n}\r\n\r\n.add-btn-binder.btn  {\r\n    margin-top: 3%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n    background-color: #455a64;\r\n    box-shadow: 1px 1px 1px #747474;\r\n    margin-bottom: 5%;\r\n}\r\n\r\n.add-btn-binder.btn:hover, .add-btn-binder.btn:hover{\r\n    background-color: #cfd8dc;\r\n    color: black;\r\n    border-bottom: solid 1px #78909c;\r\n}\r\n\r\n.visibleHover{\r\n    visibility: visible;\r\n    opacity: 0.3;\r\n}\r\n\r\n\r\n.hiddenHover{\r\n    opacity: 0.3;\r\n    visibility: hidden;\r\n}\r\n\r\n.fullOpacity{\r\n    opacity: 1;\r\n}\r\n\r\n.pageLink{\r\n    padding-left: 5%;\r\n    padding-top: 2%;\r\n    padding-bottom: 2%;\r\n    font-size: 1rem;\r\n    overflow-wrap: break-word;\r\n}\r\n\r\n.tabLink{\r\n    padding-left: 3%;\r\n    font-size: 1.5rem;\r\n    color: black;\r\n    overflow-wrap: break-word;\r\n}\r\n.binderLink{\r\n    padding-left: 3%;\r\n    font-size: 1.75rem;\r\n    color: #fafafa;\r\n    overflow-wrap: break-word;\r\n}\r\n\r\n.pageList{\r\n    position: relative;\r\n}\r\n\r\n.pageList.whiteFont>a {\r\n    color: white;\r\n}\r\n\r\n.pageList.blackFont>a {\r\n    color: black;\r\n}\r\n\r\n.delete-btn {\r\n    background-color: red;\r\n}\r\n.hideNavbar.btn{\r\n    color: #fafafa;\r\n    background-color: #0288d1;\r\n    margin-bottom: 5%;\r\n    padding-left: 10px;\r\n    padding-right: 6px;\r\n\r\n}\r\n.navbarShow.btn {\r\n    height: 51%;\r\n    width: 0.75%;\r\n    padding: 0;\r\n    top: 50%;\r\n    padding-left: 10px;\r\n    padding-right: 6px;\r\n  transform: translateY(-50%);\r\n  background-color: #0288d1;\r\n}\r\n.navbarShow.btn i {\r\n    position: relative;\r\n    left: -13px;\r\n}\r\n.navbarShow.btn{\r\n    position: absolute;\r\n    z-index: 100;\r\n}\r\n\r\n.textLight{\r\n    color: white;\r\n}\r\n\r\n.card-action.modal-nav{\r\n    display: flex;\r\n    justify-content: space-between;\r\n}\r\n\r\n.card-action.modal-nav > button.grey{\r\n    color: black;\r\n}\r\n\r\n.borderDark{\r\n    border-top: ridge 5px #78909c;\r\n}\r\n\r\n.textDark{\r\n    color: black;\r\n    \r\n}\r\n.editMode.btn{\r\n    margin-left: 5%;\r\n}\r\n\r\n.editMode.btn:focus{\r\n    background-color: #d5d5d5;\r\n}\r\n\r\n.editMode.btn:hover{\r\n    background-color: #2bbbad;\r\n}\r\n\r\n.editMode.btn.editing{\r\n    background-color: #2bbbad;\r\n    color: white;\r\n}\r\n\r\n.btn.done-editing{\r\n    padding-left: 5px;\r\n    padding-right: 3px;\r\n}\r\n.navbarShow.btn:hover{\r\n    background-color: #01579b;\r\n}\r\n\r\n.hideNavbar.btn:hover {\r\n    background-color: #01579b;\r\n}\r\n\r\n.edit-mode-btn {\r\n    margin: 1%;\r\n}\r\n\r\ninput#edit_input_binder{\r\n    font-size: 1.75rem;\r\n    color: #fafafa;\r\n    margin-left: 2%;\r\n    \r\n}\r\n\r\ninput#edit_input_page::selection{\r\n    background-color: #fafafa;\r\n    color: black;\r\n    font-weight: 500;\r\n}\r\n\r\ninput#edit_input_tab{\r\n    padding-left: 3%;\r\n    font-size: 1.5rem;\r\n    color: black;\r\n}\r\n\r\ninput#edit_input_page{\r\n    padding-left: 5%;\r\n    font-size: 1rem;\r\n    color: #fafafa;\r\n    \r\n}\r\n\r\n.binder-container {\r\n    margin-top: 0;\r\n    height: 80vh;\r\n    overflow: auto;\r\n}\r\n\r\n\r\n/* --------------------- HEADER AND FOOTER ---------------------*/\r\n\r\nheader {\r\n    margin: 2% 0 2% 0;\r\n    width: 15.6vw;\r\n}\r\n\r\nheader > h1 {\r\n    margin-left: 2px;\r\n    font-size: 2vw;\r\n    display: inline;\r\n    font-weight: 800;\r\n    letter-spacing: 3.5px;\r\n}\r\n\r\n.dashFlex {\r\n    color: #0288d1;\r\n    font-style: italic;\r\n}\r\n\r\n.logoImage {\r\n    width: 1.8vw;\r\n    margin-right: 1%;\r\n}\r\n\r\nfooter {\r\n    width: 100%;\r\n    z-index: 2;\r\n    position: relative;\r\n    bottom: 1.5vh;\r\n    background-color: #eceff1;\r\n}\r\n\r\n.startTour.btn, .logoutBtn.btn {\r\n    width: 40%;\r\n    height: 35px;\r\n    font-size: 90%;\r\n    background-color: #0288d1;;\r\n    color: #fafafa;\r\n    padding: 0 4%;\r\n    margin: 3% 4% 0 4%;\r\n    font-weight: 500;\r\n}\r\n\r\n.startTour.btn:hover, .logoutBtn.btn:hover {\r\n    background-color: #01579b;\r\n}\r\n\r\n@media (max-width: 1280px){\r\n    .binder-edit-btn{\r\n\r\n        right: 22%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 24%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 27%;\r\n    }\r\n\r\n    .binderTitle{\r\n        padding-bottom: 10%;\r\n    }\r\n\r\n    .tabLink{\r\n        padding-bottom: 10%;\r\n    }\r\n\r\n    .pageLink{\r\n        padding-bottom: 15%;\r\n    }\r\n}\r\n\r\n@media (max-width: 767px){\r\n    .hideNavbar.btn, .navbarShow.btn {\r\n        display: none;\r\n    }\r\n    .binder-container {\r\n        height: 73vh;\r\n    }\r\n    .navbar.s2, header{\r\n        width: 100%;\r\n    }\r\n    .visibleHover, .hiddenHover{\r\n        visibility: visible;\r\n        opacity: .8;\r\n    }\r\n    header > h1 {\r\n        font-size: 3em;\r\n    }\r\n    .logoImage {\r\n        width: 8%;\r\n        margin-left: 2%;\r\n    }\r\n    header{\r\n        height: 8vh;\r\n    }\r\n    footer{\r\n        /* padding-bottom: 2%; */\r\n        height: 8vh;\r\n    }\r\n    .startTour.btn, .logoutBtn.btn {\r\n        font-size: 1em;\r\n        margin: 2% 4%;\r\n    }\r\n\r\n    .lfzLogo{\r\n        width: 10%;\r\n        left: 85%;\r\n        top: 1.5%;\r\n\r\n    }\r\n    .modal-content.modal-nav{\r\n        position: absolute;\r\n        width: 90%;\r\n        left: 5%;\r\n    }\r\n    .pageLink{\r\n        padding-bottom: 15%;\r\n    }\r\n\r\n    .page-edit-btn, .page-delete-btn{\r\n        bottom: 0%;\r\n    }\r\n\r\n}\r\n\r\n@media screen and (max-width: 767px) and (orientation:landscape){\r\n    .binder-container{\r\n        height: 50vh;\r\n        margin-top: 3%;\r\n    }\r\n    footer{\r\n        height: 10%;   \r\n    }\r\n\r\n    .lfzLogo{\r\n        width: 7%;\r\n        padding-top: 1%;\r\n    }\r\n\r\n    .logoImage{\r\n        width: 5%;\r\n    }\r\n\r\n    .pageLink{\r\n        padding-bottom: 3%;\r\n    }\r\n\r\n    .binder-edit-btn{\r\n        right: 9%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 11%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 12%;\r\n    }\r\n\r\n    .pageBody{\r\n        padding: 0;\r\n        padding-bottom: 2%;\r\n    }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n    /* footer {\r\n        height: 70px;\r\n    } */\r\n    .startTour.btn, .logoutBtn.btn {\r\n        margin: 3% 4% 0 4%;\r\n        \r\n    }\r\n}\r\n\r\n/*--------------- reactour ---------------*/\r\n\r\n.dIYoXw {\r\n    background-color: white;\r\n    height: 0;\r\n}\r\n\r\n.bIMCVx:focus {\r\n    background-color: white;\r\n}", ""]);
+exports.push([module.i, "a {\r\n    color: white;\r\n}\r\n\r\n.modal-content.modal-nav{\r\n    position: absolute;\r\n    width: 20%;\r\n    top: 40%;\r\n    left: 35%;\r\n    z-index: 5000;\r\n}\r\n\r\n.confirm-modal.modal-nav{\r\n    display: flex;\r\n    height: 100vh;\r\n    width: 100vw;\r\n    position: fixed;\r\n    background-color: rgba(0, 0, 0, 0.9);\r\n    top: 0;\r\n    left: 0;\r\n    z-index: 4000;\r\n}\r\n\r\n.nav_binder, .nav_tab, .nav_page {\r\n    display: inline-block;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.navbar.s2{\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 10%;\r\n    height: 100vh;\r\n    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);\r\n    background-color: #eceff1;\r\n}\r\n\r\n.lfzLogo{\r\n    width: 2.5%;\r\n    position: absolute;\r\n    left: 13%;\r\n    filter: drop-shadow(1px 1px 1px #333333);\r\n}\r\n\r\n.lfzLogo:hover{\r\n    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);\r\n    cursor: pointer;\r\n}\r\n\r\n.lfzLogo:active{\r\n    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);\r\n    transform: translateY(2px);\r\n}\r\n\r\nul > li {\r\n    list-style: none;\r\n\r\n}\r\n\r\n.binder_wrap{\r\n    border: 1px solid #747474;\r\n    border-radius: 3px;\r\n    background-color: white;\r\n    width: 75%;\r\n    height: 80px;\r\n    margin-left: 10%;\r\n    margin-bottom: 2%;\r\n    overflow-y: scroll;\r\n    box-sizing: content-box;\r\n    box-shadow: -5px .5px .5px #333333;\r\n}\r\n\r\n.visible, .edit-btn.visible, .delete-btn.visible, .navbarShow.visible{\r\n    display: inline;\r\n}\r\n\r\n.hidden, .edit-btn.hidden, .delete-btn.hidden, .navbarShow.hidden{\r\n    display: none;\r\n}\r\n\r\n.binderTitle{\r\n    cursor: pointer;\r\n    position: relative;\r\n    padding-bottom: 2%;\r\n}\r\n\r\n.binder-edit-btn{\r\n    position: absolute;\r\n    right: 14%;\r\n    top: 4%;\r\n}\r\n\r\n.binder-delete-btn{\r\n    position: absolute;\r\n    top: 4%;\r\n    right: 2%;\r\n}\r\n\r\n.tab-edit-btn{\r\n    position: absolute;\r\n    right: 16%;\r\n    top: 3%;\r\n}\r\n\r\n.tab-delete-btn{\r\n    position: absolute;\r\n    top: 3%;\r\n    right: 2%;\r\n}\r\n\r\n.page-edit-btn{\r\n    position: absolute;\r\n    right: 18%;\r\n    bottom: 2%;\r\n}\r\n\r\n.page-delete-btn{\r\n    position: absolute;\r\n    bottom: 2%;\r\n    right: 2%;\r\n}\r\n\r\n.binderWrap{\r\n     width: 100%;\r\n     margin-top: 0;\r\n     margin-bottom: 2%;\r\n     box-shadow: 1px 1px 1px #747474;\r\n}\r\n\r\n.binderBorderTop{\r\n    border-top: 5px ridge #90a4ae;\r\n}\r\n\r\n.tabWrap{\r\n    width: 90%;\r\n    margin-left: 10%;\r\n    box-shadow: 1px 1px 1px #747474;\r\n    \r\n}\r\n\r\n.tabTitle{\r\n    border-top: outset 3px #546e7a;\r\n    cursor: pointer;   \r\n    position: relative;\r\n    padding-bottom: 2%;\r\n}\r\n\r\n.pageBody{\r\n    border: 1px inset #696969;\r\n    padding: 3% 0%; \r\n    margin-left: 10%;\r\n    width: 90%;\r\n    cursor: pointer;\r\n    box-shadow: -1px 1px 1px #747474;\r\n}\r\n\r\n.pageLink, .page-btn, .delete-btn, .edit-btn {\r\n    display: inline-block;\r\n}\r\n.btn.binder-edit-btn{\r\n    padding-left: 8px;\r\n    padding-right: 2px;\r\n}\r\n\r\n.btn.delete-btn, .btn.tab-edit-btn, .btn.page-edit-btn{\r\n    padding-right: 0px;\r\n    padding-left: 6px;\r\n}\r\n\r\n.add-btn-page.btn  {\r\n    margin-bottom: 8%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n    background-color: #546e7a; \r\n}\r\n\r\n.add-btn-page.btn:hover, .add-btn-page.btn:focus  {\r\n    background-color: #fafafa;\r\n    color: black;\r\n}\r\n\r\n.add-btn-tab.btn  {\r\n    margin-top: 3%;\r\n    margin-bottom: 5%;\r\n    background-color: #455a64;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n}\r\n\r\n.add-btn-tab.btn:hover, .add-btn-tab.btn:focus  {\r\n    background-color: #b0bec5;\r\n    color: black;\r\n    \r\n}\r\n\r\n.add-btn-binder.btn  {\r\n    margin-top: 3%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n    background-color: #455a64;\r\n    box-shadow: 1px 1px 1px #747474;\r\n    margin-bottom: 5%;\r\n}\r\n\r\n.add-btn-binder.btn:hover, .add-btn-binder.btn:hover{\r\n    background-color: #cfd8dc;\r\n    color: black;\r\n    border-bottom: solid 1px #78909c;\r\n}\r\n\r\n.visibleHover{\r\n    visibility: visible;\r\n    opacity: 0.3;\r\n}\r\n\r\n\r\n.hiddenHover{\r\n    opacity: 0.3;\r\n    visibility: hidden;\r\n}\r\n\r\n.fullOpacity{\r\n    opacity: 1;\r\n}\r\n\r\n.pageLink{\r\n    padding-left: 5%;\r\n    padding-top: 2%;\r\n    padding-bottom: 2%;\r\n    font-size: 1rem;\r\n    overflow-wrap: break-word;\r\n}\r\n\r\n.tabLink{\r\n    padding-left: 3%;\r\n    font-size: 1.5rem;\r\n    color: black;\r\n    overflow-wrap: break-word;\r\n}\r\n.binderLink{\r\n    padding-left: 3%;\r\n    font-size: 1.75rem;\r\n    color: #fafafa;\r\n    overflow-wrap: break-word;\r\n}\r\n\r\n.pageList{\r\n    position: relative;\r\n}\r\n\r\n.pageList.whiteFont>a {\r\n    color: white;\r\n}\r\n\r\n.pageList.blackFont>a {\r\n    color: black;\r\n}\r\n\r\n.delete-btn {\r\n    background-color: red;\r\n}\r\n.hideNavbar.btn{\r\n    color: #fafafa;\r\n    background-color: #0288d1;\r\n    margin-bottom: 5%;\r\n    padding-left: 10px;\r\n    padding-right: 6px;\r\n\r\n}\r\n.navbarShow.btn {\r\n    height: 51%;\r\n    width: 0.75%;\r\n    padding: 0;\r\n    top: 50%;\r\n    padding-left: 10px;\r\n    padding-right: 6px;\r\n  transform: translateY(-50%);\r\n  background-color: #0288d1;\r\n}\r\n.navbarShow.btn i {\r\n    position: relative;\r\n    left: -13px;\r\n}\r\n.navbarShow.btn{\r\n    position: absolute;\r\n    z-index: 100;\r\n}\r\n\r\n.textLight{\r\n    color: white;\r\n}\r\n\r\n.card-action.modal-nav{\r\n    display: flex;\r\n    justify-content: space-between;\r\n}\r\n\r\n.card-action.modal-nav > button.grey{\r\n    color: black;\r\n}\r\n\r\n.borderDark{\r\n    border-top: ridge 5px #78909c;\r\n}\r\n\r\n.textDark{\r\n    color: black;\r\n    \r\n}\r\n.editMode.btn{\r\n    margin-left: 5%;\r\n}\r\n\r\n.editMode.btn:focus{\r\n    background-color: #d5d5d5;\r\n}\r\n\r\n.editMode.btn:hover{\r\n    background-color: #2bbbad;\r\n}\r\n\r\n.editMode.btn.editing{\r\n    background-color: #2bbbad;\r\n    color: white;\r\n}\r\n\r\n.btn.done-editing{\r\n    padding-left: 5px;\r\n    padding-right: 3px;\r\n}\r\n.navbarShow.btn:hover{\r\n    background-color: #01579b;\r\n}\r\n\r\n.hideNavbar.btn:hover {\r\n    background-color: #01579b;\r\n}\r\n\r\n.edit-mode-btn {\r\n    margin: 1%;\r\n}\r\n\r\ninput#edit_input_binder{\r\n    font-size: 1.75rem;\r\n    color: #fafafa;\r\n    margin-left: 2%;\r\n    \r\n}\r\n\r\ninput#edit_input_page::selection{\r\n    background-color: #fafafa;\r\n    color: black;\r\n    font-weight: 500;\r\n}\r\n\r\ninput#edit_input_tab{\r\n    padding-left: 3%;\r\n    font-size: 1.5rem;\r\n    color: black;\r\n}\r\n\r\ninput#edit_input_page{\r\n    padding-left: 5%;\r\n    font-size: 1rem;\r\n    color: #fafafa;\r\n    \r\n}\r\n\r\n.binder-container {\r\n    margin-top: 0;\r\n    height: 80vh;\r\n    overflow: auto;\r\n}\r\n\r\n\r\n/* --------------------- HEADER AND FOOTER ---------------------*/\r\n\r\nheader {\r\n    margin: 2% 0 2% 0;\r\n    width: 15.6vw;\r\n}\r\n\r\nheader > h1 {\r\n    margin-left: 2px;\r\n    font-size: 2vw;\r\n    display: inline;\r\n    font-weight: 800;\r\n    letter-spacing: 3.5px;\r\n}\r\n\r\n.dashFlex {\r\n    color: #0288d1;\r\n    font-style: italic;\r\n}\r\n\r\n.logoImage {\r\n    width: 1.8vw;\r\n    margin-right: 1%;\r\n}\r\n\r\nfooter {\r\n    width: 100%;\r\n    z-index: 2;\r\n    position: relative;\r\n    bottom: 1.5vh;\r\n    background-color: #eceff1;\r\n}\r\n\r\n.startTour.btn, .logoutBtn.btn {\r\n    width: 40%;\r\n    height: 35px;\r\n    font-size: 90%;\r\n    background-color: #0288d1;;\r\n    color: #fafafa;\r\n    padding: 0 4%;\r\n    margin: 3% 4% 0 4%;\r\n    font-weight: 500;\r\n}\r\n\r\n.startTour.btn:hover, .logoutBtn.btn:hover {\r\n    background-color: #01579b;\r\n}\r\n\r\n@media (max-width: 1280px){\r\n    .binder-edit-btn{\r\n\r\n        right: 22%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 24%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 27%;\r\n    }\r\n\r\n    .binderTitle{\r\n        padding-bottom: 10%;\r\n    }\r\n\r\n    .tabLink{\r\n        padding-bottom: 10%;\r\n    }\r\n\r\n    .pageLink{\r\n        padding-bottom: 15%;\r\n    }\r\n}\r\n\r\n@media (max-width: 767px){\r\n    .hideNavbar.btn, .navbarShow.btn {\r\n        display: none;\r\n    }\r\n    .binder-container {\r\n        height: 73vh;\r\n    }\r\n    .navbar.s2, header{\r\n        width: 100%;\r\n    }\r\n    .visibleHover, .hiddenHover{\r\n        visibility: visible;\r\n        opacity: .8;\r\n    }\r\n    header > h1 {\r\n        font-size: 3em;\r\n    }\r\n    .logoImage {\r\n        width: 8%;\r\n        margin-left: 2%;\r\n    }\r\n    header{\r\n        height: 8vh;\r\n    }\r\n    footer{\r\n        /* padding-bottom: 2%; */\r\n        height: 8vh;\r\n    }\r\n    .startTour.btn, .logoutBtn.btn {\r\n        font-size: 1em;\r\n        margin: 2% 4%;\r\n    }\r\n\r\n    .lfzLogo{\r\n        width: 10%;\r\n        left: 85%;\r\n        top: 1.5%;\r\n\r\n    }\r\n    .modal-content.modal-nav{\r\n        position: absolute;\r\n        width: 90%;\r\n        left: 5%;\r\n    }\r\n\r\n    .binderTitle{\r\n        padding-bottom: 2%;\r\n    }\r\n\r\n    .tabLink{\r\n        padding-bottom: 2%;\r\n    }\r\n    .pageLink{\r\n        padding-bottom: 12%;\r\n    }\r\n    .pageBody{\r\n        padding: 1% 0%;\r\n    }\r\n\r\n    .page-edit-btn, .page-delete-btn{\r\n        bottom: 0%;\r\n    }\r\n\r\n    .binder-edit-btn{\r\n        right: 8%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 10%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 11%;\r\n    }\r\n\r\n}\r\n\r\n@media screen and (max-width: 767px) and (orientation:landscape){\r\n    .binder-container{\r\n        height: 50vh;\r\n        margin-top: 3%;\r\n    }\r\n    footer{\r\n        height: 10%;   \r\n    }\r\n\r\n    .lfzLogo{\r\n        width: 7%;\r\n        padding-top: 1%;\r\n    }\r\n\r\n    .logoImage{\r\n        width: 5%;\r\n    }\r\n\r\n    .pageLink{\r\n        padding-bottom: 3%;\r\n    }\r\n\r\n    .binder-edit-btn{\r\n        right: 9%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 11%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 12%;\r\n    }\r\n\r\n    .pageBody{\r\n        padding: 0;\r\n        padding-bottom: 2%;\r\n    }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n    /* footer {\r\n        height: 70px;\r\n    } */\r\n\r\n    .pageLink{\r\n        padding-bottom: 15%;\r\n    }\r\n    .startTour.btn, .logoutBtn.btn {\r\n        margin: 3% 4% 0 4%;\r\n        \r\n    }\r\n\r\n    .binder-edit-btn{\r\n        right: 15%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 17%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 18%;\r\n    }\r\n}\r\n\r\n/*--------------- reactour ---------------*/\r\n\r\n.dIYoXw {\r\n    background-color: white;\r\n    height: 0;\r\n}\r\n\r\n.bIMCVx:focus {\r\n    background-color: white;\r\n}", ""]);
 
 // exports
 
@@ -113059,7 +113280,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(11);
 
 var _actions = __webpack_require__(20);
 
@@ -116949,7 +117170,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, ".mobilePanel-container {\r\n    background-color: white;\r\n}\r\n\r\n.mobileNav {\r\n    width: 90%;\r\n    height: 8vh;\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    flex-wrap: nowrap;\r\n    margin: 0.6% 0;\r\n    position: absolute;\r\n    bottom: -0.05%;\r\n    left: 0;\r\n}\r\n\r\n.mobileLink{\r\n    font-weight: bold;\r\n}\r\n\r\n.navLink{\r\n    margin-left: 10%;\r\n}\r\n\r\n.activeMobile {\r\n    color: #0288d1;\r\n}\r\n\r\n@media screen and (max-width: 767px) and (orientation:landscape){\r\n    .mobileNav{\r\n        height: initial;\r\n    }\r\n}\r\n\r\n\r\n/*------------ MOBILE TOUR ------------*/\r\n\r\n.reactour__helper.reactour__helper--is-open.sc-ifAKCX.cfrXTn {\r\n   margin-left: -20% !important;\r\n}", ""]);
+exports.push([module.i, ".mobilePanel-container {\r\n    background-color: white;\r\n}\r\n\r\n.mobileNav {\r\n    width: 90%;\r\n    height: 8vh;\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    flex-wrap: nowrap;\r\n    margin: 0.6% 0;\r\n    position: absolute;\r\n    bottom: -0.05%;\r\n    left: 0;\r\n}\r\n\r\n.mobileLink{\r\n    font-weight: bold;\r\n    cursor: pointer;\r\n}\r\n\r\n.navLink{\r\n    margin-left: 10%;\r\n}\r\n\r\n.activeMobile {\r\n    color: #0288d1;\r\n}\r\n\r\n@media screen and (max-width: 767px) and (orientation:landscape){\r\n    .mobileNav{\r\n        height: initial;\r\n    }\r\n}\r\n\r\n\r\n/*------------ MOBILE TOUR ------------*/\r\n\r\n.reactour__helper.reactour__helper--is-open.sc-ifAKCX.cfrXTn {\r\n   margin-left: -20% !important;\r\n}\r\n\r\n.loader-container{\r\n    display: flex;\r\n    height: 100vh;\r\n    width: 100vw;\r\n    position: fixed;\r\n    background-color: rgba(0, 0, 0, 0.8);\r\n    top: 0;\r\n    left: 0;\r\n    z-index: 4000;\r\n}\r\n\r\n.preloader-wrapper.active{\r\n    position: absolute;\r\n    top: 40%;\r\n    left: 5%;\r\n}\r\n\r\n@media (max-width: 767px){\r\n    .preloader-wrapper.active{\r\n        position: absolute;\r\n        top: 40%;\r\n        left: 50%;\r\n    }\r\n\r\n}", ""]);
 
 // exports
 
@@ -117324,7 +117545,7 @@ exports = module.exports = __webpack_require__(52)(undefined);
 
 
 // module
-exports.push([module.i, ".main {\r\n  color: #000;\r\n  font-family: Arial, Helvetica, sans-serif;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0 auto;\r\n}\r\n.opacity {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  /*height: 100%;*/\r\n  background-color: #000;\r\n  display: block;\r\n  z-index: 2;\r\n  opacity: 0.6;\r\n}\r\n.search-button-input {\r\n  padding-top: 1vh;\r\n}\r\n\r\n.vid-container {\r\n  z-index: 1;\r\n}\r\n.video-wrapper#video-wrapper {\r\n  height: 100%;\r\n}\r\n.video-container#video-container {\r\n  text-align: center;\r\n  height: 90%;\r\n  padding-bottom: 0;\r\n  position: relative;\r\n  top: -3vh;\r\n}\r\n\r\n.video-container#video-container .row form {\r\n  width: 80%;\r\n  display: inline-block;\r\n}\r\n.video-items {\r\n  list-style-type: none;\r\n  position: relative;\r\n  top: 1vh;\r\n  font-weight: bold;\r\n}\r\n.video-description {\r\n  font-style: italic;\r\n}\r\n.youtube-search-buttons {\r\n  position: relative;\r\n  top: 3vh;\r\n}\r\nbutton.close {\r\n  color: #fff;\r\n  position: relative;\r\n  top: -3.5vh;\r\n  left: 6vh;\r\n}\r\n.results-container {\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 3;\r\n  overflow: auto;\r\n  transition: 0.4s;\r\n}\r\n.results-container li,\r\n.results-container button {\r\n  display: inline-block;\r\n}\r\n.results-container.sidebar {\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  background-color: rgba(255, 255, 255, 0.97);\r\n  width: 100%;\r\n  border-left: 1px solid #e4e4e4;\r\n  z-index: 5000;\r\n}\r\n.row.results-input-container {\r\n  margin-left: 0;\r\n  margin-right: 0;\r\n}\r\n.result-item.collection-item,\r\n.list-item-wrapper {\r\n  background-color: transparent;\r\n}\r\n#search {\r\n  position: absolute;\r\n  color: #fff;\r\n  right: 20px;\r\n  top: 15px;\r\n}\r\n.video-parent-panel {\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: #d5d5d5;\r\n}\r\n.video-embed-wrapper {\r\n  height: 100%;\r\n  text-align: center;\r\n}\r\n\r\n.video-container iframe {\r\n  position: relative;\r\n  height: 100%;\r\n  display: inline-block;\r\n}\r\n.video-iframe {\r\n  display: inline-block;\r\n  position: relative;\r\n  top: 1vh;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  z-index: 1;\r\n  border: none;\r\n}\r\n.video-btn i {\r\n  margin: 0 -1px;\r\n  width: 45px;\r\n}\r\n\r\n#query {\r\n  padding-left: 8px;\r\n}\r\n.list-item-wrapper {\r\n  padding: 10px 5px;\r\n}\r\n.results-btn {\r\n  padding: 0 1vmin;\r\n}\r\n.collection {\r\n  border: none;\r\n}\r\n.vid-left-arrow,\r\n.vid-right-arrow {\r\n  background-color: #0288d1;\r\n}\r\n.iframe-wrapper {\r\n  height: 100%;\r\n  position: relative;\r\n  top: -4vh;\r\n}\r\n.row {\r\n  margin-bottom: 0;\r\n}\r\n.btn-wrapper {\r\n  white-space: nowrap;\r\n}\r\n.btn-wrapper button {\r\n  padding: 0;\r\n  width: 45px;\r\n}\r\n.slide-out-input {\r\n  transition: 0.2s;\r\n  background-color: #fff;\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n  z-index: 30;\r\n  position: relative;\r\n}\r\n.arrow-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  right: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n.playlist-logo-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  left: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n\r\n.arrow-container-slides .material-icons {\r\n  margin-right: 0;\r\n}\r\n.btn-success,\r\n.btn-primary {\r\n  margin: 0.2vmin;\r\n  position: relative;\r\n  top: 1vh;\r\n}\r\n\r\n#youtube-play {\r\n  padding: 0px 5px;\r\n  position: relative;\r\n  right: 1vw;\r\n}\r\n.red-text {\r\n  color: red;\r\n}\r\n.Pane.horizontal.Pane2 {\r\n  height: 325px;\r\n}\r\n.video-container iframe,\r\n.slides-iframe {\r\n  width: 93%;\r\n  top: -8vh;\r\n}\r\n#video-iframe {\r\n  top: 0vh;\r\n  /* height: 90% */\r\n}\r\n#video-container {\r\n  height: 90%;\r\n  top: -3vh;\r\n}\r\n.list-item-wrap-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-left: 0;\r\n}\r\n.list-item-wrap-container {\r\n  padding: 10px 0;\r\n}\r\n.list-item-wrap-container img {\r\n  max-width: 35%;\r\n}\r\n.list-item-wrap-container button i {\r\n  margin-right: auto;\r\n}\r\n.list-item-wrap-container .btn-small {\r\n  padding: 0 0.1em;\r\n}\r\n.btn-small {\r\n  padding: 0 0.8rem;\r\n}\r\n\r\n.playlist-play {\r\n  background-color: #0288d1;\r\n}\r\n.playlist-delete {\r\n  background-color: #d32f2f;\r\n}\r\n.list-item-wrapper {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.col.s3 {\r\n  margin-left: 0;\r\n}\r\n#search-input-container {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.video-description {\r\n  display: none;\r\n}\r\n.video-playlist-panel {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: #fff;\r\n  position: absolute;\r\n  z-index: 3500;\r\n  transition: 0.4s;\r\n  overflow-y: scroll;\r\n  overflow-x: hidden;\r\n}\r\n.close-playlist {\r\n  position: absolute;\r\n  right: 4px;\r\n  top: 4px;\r\n}\r\n.playlist-logo-container i {\r\n  margin-right: 0;\r\n  color: rgb(2, 136, 209);\r\n  transition: 0.2s;\r\n}\r\n\r\n.video-playlist {\r\n  position: relative;\r\n  top: 2vh;\r\n  left: 0.5vw;\r\n}\r\n.playlist-logo-container i:hover {\r\n  color: #0073b2;\r\n}\r\n.close-playlist-icon:hover {\r\n  cursor: pointer;\r\n}\r\n.playlist-play:hover {\r\n  background-color: #0073b2;\r\n}\r\n.playlist-delete:hover {\r\n  background-color: #b71c1c;\r\n}\r\n.playlist-delete:focus {\r\n  background-color: #d32f2f;\r\n}\r\n.vid-right-arrow:hover,\r\n.vid-left-arrow:hover {\r\n  background-color: #0288d1;\r\n}\r\n.video-btn:hover {\r\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n}\r\n@media screen and (max-width: 375px) and (orientation: portrait) {\r\n  .video-container iframe {\r\n    height: 82vh;\r\n  }\r\n  .video-container#video-container {\r\n    height: 95%;\r\n  }\r\n  #video-iframe {\r\n    top: 2vh;\r\n  }\r\n  .iframe-wrapper {\r\n    height: 92vh;\r\n    top: -9vh;\r\n  }\r\n  .arrow-container {\r\n    top: 9vh;\r\n  }\r\n  .input-field,\r\n  .youtube-search-buttons {\r\n    position: relative;\r\n  }\r\n  .input-field {\r\n    top: 3vh;\r\n  }\r\n  .youtube-search-buttons {\r\n    top: 6vh;\r\n  }\r\n  .playlist-logo-container {\r\n    top: 9vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 17vh;\r\n    top: 4vh;\r\n  }\r\n}\r\n\r\n@media screen and (max-width: 740px) and (orientation: landscape) {\r\n  .video-container#video-container {\r\n    text-align: center;\r\n    height: 80%;\r\n    padding-bottom: 0;\r\n    position: relative;\r\n    top: -13vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 25vh;\r\n    top: -3vh;\r\n  }\r\n}\r\n", ""]);
+exports.push([module.i, ".main {\r\n  color: #000;\r\n  font-family: Arial, Helvetica, sans-serif;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0 auto;\r\n}\r\n.opacity {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  /*height: 100%;*/\r\n  background-color: #000;\r\n  display: block;\r\n  z-index: 2;\r\n  opacity: 0.6;\r\n}\r\n.search-button-input {\r\n  padding-top: 1vh;\r\n}\r\n\r\n.vid-container {\r\n  z-index: 1;\r\n}\r\n.video-wrapper#video-wrapper {\r\n  height: 100%;\r\n}\r\n.video-container#video-container {\r\n  text-align: center;\r\n  height: 90%;\r\n  padding-bottom: 0;\r\n  position: relative;\r\n  top: -3vh;\r\n}\r\n\r\n.video-container#video-container .row form {\r\n  width: 80%;\r\n  display: inline-block;\r\n}\r\n.video-items {\r\n  list-style-type: none;\r\n  position: relative;\r\n  top: 1vh;\r\n  font-weight: bold;\r\n}\r\n.video-description {\r\n  font-style: italic;\r\n}\r\n.youtube-search-buttons {\r\n  position: relative;\r\n  top: 3vh;\r\n}\r\nbutton.close {\r\n  color: #fff;\r\n  position: relative;\r\n  top: -3.5vh;\r\n  left: 6vh;\r\n}\r\n.results-container {\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 3;\r\n  overflow: auto;\r\n  transition: 0.4s;\r\n}\r\n.results-container li,\r\n.results-container button {\r\n  display: inline-block;\r\n}\r\n.results-container.sidebar {\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  background-color: rgba(255, 255, 255, 0.97);\r\n  width: 100%;\r\n  border-left: 1px solid #e4e4e4;\r\n  z-index: 5000;\r\n}\r\n.row.results-input-container {\r\n  margin-left: 0;\r\n  margin-right: 0;\r\n}\r\n.result-item.collection-item,\r\n.list-item-wrapper {\r\n  background-color: transparent;\r\n}\r\n#search {\r\n  position: absolute;\r\n  color: #fff;\r\n  right: 20px;\r\n  top: 15px;\r\n}\r\n.video-parent-panel {\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: #d5d5d5;\r\n}\r\n.video-embed-wrapper {\r\n  height: 100%;\r\n  text-align: center;\r\n}\r\n\r\n.video-container iframe {\r\n  position: relative;\r\n  height: 100%;\r\n  display: inline-block;\r\n}\r\n.video-iframe {\r\n  display: inline-block;\r\n  position: relative;\r\n  top: 1vh;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  z-index: 1;\r\n  border: none;\r\n}\r\n.video-btn i {\r\n  margin: 0 -1px;\r\n  width: 45px;\r\n}\r\n\r\n#query {\r\n  padding-left: 8px;\r\n}\r\n.list-item-wrapper {\r\n  padding: 10px 5px;\r\n}\r\n.results-btn {\r\n  padding: 0 1vmin;\r\n}\r\n.collection {\r\n  border: none;\r\n}\r\n.vid-left-arrow,\r\n.vid-right-arrow {\r\n  background-color: #0288d1;\r\n}\r\n.iframe-wrapper {\r\n  height: 100%;\r\n  position: relative;\r\n  top: -4vh;\r\n}\r\n.row {\r\n  margin-bottom: 0;\r\n}\r\n.btn-wrapper {\r\n  white-space: nowrap;\r\n}\r\n.btn-wrapper button {\r\n  padding: 0;\r\n  width: 45px;\r\n}\r\n.slide-out-input {\r\n  transition: 0.2s;\r\n  background-color: #fff;\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n  z-index: 30;\r\n  position: relative;\r\n}\r\n.arrow-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  right: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n.playlist-logo-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  left: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n\r\n.arrow-container-slides .material-icons {\r\n  margin-right: 0;\r\n}\r\n.btn-success,\r\n.btn-primary {\r\n  margin: 0.2vmin;\r\n  position: relative;\r\n  top: 1vh;\r\n}\r\n\r\n#youtube-play {\r\n  padding: 0px 5px;\r\n  position: relative;\r\n  right: 1vw;\r\n}\r\n.red-text {\r\n  color: red;\r\n}\r\n.Pane.horizontal.Pane2 {\r\n  height: 325px;\r\n}\r\n.video-container iframe,\r\n.slides-iframe {\r\n  width: 93%;\r\n  top: -8vh;\r\n}\r\n#video-iframe {\r\n  top: 0vh;\r\n  /* height: 90% */\r\n}\r\n#video-container {\r\n  height: 90%;\r\n  top: -3vh;\r\n}\r\n.list-item-wrap-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-left: 0;\r\n}\r\n.list-item-wrap-container {\r\n  padding: 10px 0;\r\n}\r\n.list-item-wrap-container img {\r\n  max-width: 35%;\r\n}\r\n.list-item-wrap-container button i {\r\n  margin-right: auto;\r\n}\r\n.list-item-wrap-container .btn-small {\r\n  padding: 0 0.1em;\r\n}\r\n.btn-small {\r\n  padding: 0 0.8rem;\r\n}\r\n\r\n.playlist-play {\r\n  background-color: #0288d1;\r\n}\r\n.playlist-delete {\r\n  background-color: #d32f2f;\r\n}\r\n.list-item-wrapper {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.col.s3 {\r\n  margin-left: 0;\r\n}\r\n#search-input-container {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.video-description {\r\n  display: none;\r\n}\r\n.video-playlist-panel {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: #d5d5d5;\r\n  border: 1px solid #000;\r\n  position: absolute;\r\n  z-index: 3500;\r\n  transition: 0.4s;\r\n  overflow-y: auto;\r\n  overflow-x: hidden;\r\n}\r\n.no-videos {\r\n  position: relative;\r\n  top: 27%;\r\n  color: #5d5d5d;\r\n  font-weight: bold;\r\n  text-shadow: 0.3px 0.3px #5d5d5d;\r\n}\r\n.close-playlist {\r\n  position: absolute;\r\n  right: 4px;\r\n  top: 4px;\r\n}\r\n.playlist-logo-container i {\r\n  margin-right: 0;\r\n  color: rgb(2, 136, 209);\r\n  transition: 0.2s;\r\n  font-size: 2.1em;\r\n}\r\n\r\n.video-playlist {\r\n  position: relative;\r\n  top: 2vh;\r\n  left: 0.5vw;\r\n}\r\n.playlist-logo-container i:hover {\r\n  color: #0073b2;\r\n}\r\n.close-playlist-icon:hover {\r\n  cursor: pointer;\r\n}\r\n.playlist-play:hover {\r\n  background-color: #0073b2;\r\n}\r\n.playlist-delete:hover {\r\n  background-color: #b71c1c;\r\n}\r\n.playlist-delete:focus {\r\n  background-color: #d32f2f;\r\n}\r\n.vid-right-arrow:hover,\r\n.vid-left-arrow:hover {\r\n  background-color: #0288d1;\r\n}\r\n.video-btn:hover {\r\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n}\r\n@media screen and (max-width: 375px) and (orientation: portrait) {\r\n  .video-container iframe {\r\n    height: 82vh;\r\n  }\r\n  .video-container#video-container {\r\n    height: 95%;\r\n  }\r\n  #video-iframe {\r\n    top: 2vh;\r\n  }\r\n  .iframe-wrapper {\r\n    height: 92vh;\r\n    top: -9vh;\r\n  }\r\n  .arrow-container {\r\n    top: 9vh;\r\n  }\r\n  .input-field,\r\n  .youtube-search-buttons {\r\n    position: relative;\r\n  }\r\n  .input-field {\r\n    top: 3vh;\r\n  }\r\n  .youtube-search-buttons {\r\n    top: 6vh;\r\n  }\r\n  .playlist-logo-container {\r\n    top: 9vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 17vh;\r\n    top: 4vh;\r\n  }\r\n}\r\n\r\n@media screen and (max-width: 740px) and (orientation: landscape) {\r\n  .video-container#video-container {\r\n    text-align: center;\r\n    height: 80%;\r\n    padding-bottom: 0;\r\n    position: relative;\r\n    top: -13vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 25vh;\r\n    top: -3vh;\r\n  }\r\n}\r\n", ""]);
 
 // exports
 
@@ -117712,15 +117933,10 @@ exports.default = function () {
         case _types2.default.SELECT_PAGE:
             return _extends({}, state, { binder_id: action.payload.binder_id, tab_id: action.payload.tab_id, page_id: action.payload.page_id });
         case _types2.default.ADD_BINDER:
-            return _extends({}, state, { pull_from_db: true });
         case _types2.default.DELETE_BINDER:
-            return _extends({}, state, { pull_from_db: true });
         case _types2.default.ADD_TAB:
-            return _extends({}, state, { pull_from_db: true });
         case _types2.default.DELETE_TAB:
-            return _extends({}, state, { pull_from_db: true });
         case _types2.default.ADD_PAGE:
-            return _extends({}, state, { pull_from_db: true });
         case _types2.default.DELETE_PAGE:
             return _extends({}, state, { pull_from_db: true });
         case _types2.default.UPDATE_BINDER_ARRAY:
@@ -117734,8 +117950,6 @@ exports.default = function () {
             return _extends({}, state, { pull_from_db: true });
         case _types2.default.AXIOS_ERROR:
             return _extends({}, state, { axios_error_response: action.msg });
-        case _types2.default.UPDATE_BINDER_OBJ:
-            return _extends({}, state, { sent_to_db: false });
         case _types2.default.HIDE_NAV:
             return _extends({}, state, { navbar_min: true });
         case _types2.default.SHOW_NAV:
@@ -117748,6 +117962,8 @@ exports.default = function () {
             return _extends({}, state, { lfz_response: true });
         case _types2.default.LFZ_WRONG_PASSWORD:
             return _extends({}, state, { lfz_response: false });
+        case _types2.default.CLEAR_LOADER:
+            return _extends({}, state, { sent_to_db: false });
         default:
             return state;
     }
