@@ -86,10 +86,10 @@ class Video extends Component {
       }
     }
   }
-  shouldComponentUpdate() {
-    this.props.updateBinderArray();
-    return true;
-  }
+  // shouldComponentUpdate() {
+  //   this.props.updateBinderArray();
+  //   return true;
+  // }
   componentWillReceiveProps(nextProps) {
     const { interface_obj } = this.props;
     if (interface_obj.page_id !== nextProps.interface_obj.page_id) {
