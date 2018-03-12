@@ -85,7 +85,6 @@ class NavBar extends Component {
     }
 
     render() {
-        console.log('navbar props', this.props);
         let editableText = '';
         const { updateRoutes } = this.state;
 
