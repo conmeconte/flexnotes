@@ -100,7 +100,7 @@ class VideoContainer extends Component {
             ? <iframe
                 allowFullScreen
                 id="video-iframe"
-                src={this.props.videoLink}
+                src={this.props.currentPlaylistItems[0].videoURL}
                 className="video-iframe"
               />
             : <div className="no-videos">
