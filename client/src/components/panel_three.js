@@ -23,7 +23,6 @@ class ThreePanel extends Component {
     this.resizeBlockerDisplayNone = this.resizeBlockerDisplayNone.bind(this);
   }
   componentDidMount() {
-    console.log('resizer',resizer);
     const { width } = this.state;
     if (width > 767) {
         document
