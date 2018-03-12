@@ -4,6 +4,9 @@ import * as actions from '../actions';
 
 class VideoPlaylist extends Component {
   deleteVideo(videoId) {
+    console.log('BINDER: ', this.props.binderId);
+    console.log('TAB: ', this.props.tabId);
+    console.log('PAGE: ', this.props.pageId);
     this.props.removeVideoFromPlaylist(
       this.props.binderId,
       this.props.tabId,
