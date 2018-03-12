@@ -494,12 +494,33 @@ footer {
         width: 90%;
         left: 5%;
     }
+
+    .binderTitle{
+        padding-bottom: 2%;
+    }
+
+    .tabLink{
+        padding-bottom: 2%;
+    }
     .pageLink{
-        padding-bottom: 15%;
+        padding-bottom: 12%;
+    }
+    .pageBody{
+        padding: 1% 0%;
     }
 
     .page-edit-btn, .page-delete-btn{
         bottom: 0%;
+    }
+
+    .binder-edit-btn{
+        right: 8%;
+    }
+    .tab-edit-btn{
+        right: 10%;
+    }
+    .page-edit-btn{
+        right: 11%;
     }
 
 }
@@ -546,9 +567,23 @@ footer {
     /* footer {
         height: 70px;
     } */
+
+    .pageLink{
+        padding-bottom: 15%;
+    }
     .startTour.btn, .logoutBtn.btn {
         margin: 3% 4% 0 4%;
         
+    }
+
+    .binder-edit-btn{
+        right: 15%;
+    }
+    .tab-edit-btn{
+        right: 17%;
+    }
+    .page-edit-btn{
+        right: 18%;
     }
 }
 

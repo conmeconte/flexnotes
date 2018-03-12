@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import Binder from './binder';
 import Login from '../login';
 import LfzModal from './lfz_modal';
+import Loader from '../loader';
 import logo from '../../assets/images/logo.png';
 
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, addBinder, updateBinderObj, minNav, showNav, editable, notEditable } from '../../actions';
+import { updateBinderArray, addBinder, updateBinderObj, minNav, showNav, editable, notEditable, clearLoader } from '../../actions';
 
 import TourButton from '../react_tour';
 import { isImage } from 'is-image';
@@ -35,9 +36,6 @@ class NavBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // if (nextProps.interface.page_id !== this.props.interface.page_id) {
-        //     this.props.updateBinderArray();
-        // }
         if (nextProps.interface.pull_from_db !== this.props.interface.pull_from_db) {
             if(nextProps.interface.pull_from_db){
                 this.props.updateBinderArray();
@@ -52,6 +50,7 @@ class NavBar extends Component {
                         this.props.updateBinderObj(binderObj);
                     }
                 }
+                this.props.clearLoader();
             }
         }
         if(this.props.mobile !== nextProps.mobile){
@@ -86,6 +85,7 @@ class NavBar extends Component {
     }
 
     render() {
+        console.log('navbar props', this.props);
         let editableText = '';
         const { updateRoutes } = this.state;
 
@@ -106,6 +106,7 @@ class NavBar extends Component {
 
         return (
             <div>
+                <Loader/>
                 <button className={`navbarShow btn ${this.props.interface.navbar_min ? 'visible' : 'hidden'}`} 
                     onClick={this.openNav.bind(this)}>
                     <i className="small material-icons">chevron_right</i>
@@ -118,7 +119,7 @@ class NavBar extends Component {
                     <button className='btn hideNavbar' onClick={this.hideNav.bind(this)}>
                         <i className="small material-icons">chevron_left</i>
                     </button>
-                    <LfzModal/>
+                    {/* <LfzModal/> */}
                     <section className="second-step binder-container">
                         {binder}
                         <button className="btn add-btn-binder waves-effect waves-light" onClick={this.addBinder}>
@@ -142,4 +143,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { editable, notEditable, updateBinderArray, addBinder, updateBinderObj, minNav, showNav })(NavBar);
+export default connect(mapStateToProps, { editable, notEditable, updateBinderArray, addBinder, updateBinderObj, minNav, showNav, clearLoader })(NavBar);
