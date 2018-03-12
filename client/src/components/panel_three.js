@@ -18,53 +18,45 @@ class ThreePanel extends Component {
     this.state = {
       width: window.innerWidth
     };
+
+    this.resizeBlocker = this.resizeBlocker.bind(this);
+    this.resizeBlockerDisplayNone = this.resizeBlockerDisplayNone.bind(this);
   }
   componentDidMount() {
-    const resizer = document.querySelector('.resize-blocker') !== null;
-    const resizer2 = document.querySelector('.resize-blocker2') !== null;
     console.log('resizer',resizer);
     const { width } = this.state;
     if (width > 767) {
-      if(resizer && resizer2){
         document
         .querySelector('.Resizer.vertical')
-        .addEventListener('mousedown', function() {
-          document.querySelector('.resize-blocker').style.display = 'block';
-          document.querySelector('.resize-blocker2').style.display = 'block';
-        });
+        .addEventListener('mousedown', this.resizeBlocker);
       document
         .querySelector('.Resizer.horizontal')
-        .addEventListener('mousedown', function() {
-          document.querySelector('.resize-blocker').style.display = 'block';
-          document.querySelector('.resize-blocker2').style.display = 'block';
-        });
-      document.querySelector('body').addEventListener('mouseup', function() {
-        document.querySelector('.resize-blocker').style.display = 'none';
-        document.querySelector('.resize-blocker2').style.display = 'none';
-      });
-      }
+        .addEventListener('mousedown', this.resizeBlocker);
+      document.querySelector('body').addEventListener('mouseup', this.resizeBlockerDisplayNone);
     }
-    //return true;
   }
+
+  resizeBlocker(){
+    document.querySelector('.resize-blocker').style.display = 'block';
+    document.querySelector('.resize-blocker2').style.display = 'block';
+  }
+
+  resizeBlockerDisplayNone(){
+    document.querySelector('.resize-blocker').style.display = 'none';
+    document.querySelector('.resize-blocker2').style.display = 'none';
+  }
+
   componentWillUnmount() {
     document
     .querySelector('.Resizer.vertical')
-    .removeEventListener('mousedown', function() {
-      document.querySelector('.resize-blocker');
-      document.querySelector('.resize-blocker2');
-    });
+    .removeEventListener('mousedown', this.resizeBlocker);
   document
-    .querySelector('.Resizer.horizontal')
-    .removeEventListener('mousedown', function() {
-      document.querySelector('.resize-blocker');
-      document.querySelector('.resize-blocker2');
-    });
-  document.querySelector('body').removeEventListener('mouseup', function() {
-    document.querySelector('.resize-blocker');
-    document.querySelector('.resize-blocker2');
-  });
+    .querySelector('.Resizer.horizontal') 
+    .removeEventListener('mousedown', this.resizeBlocker);
+  document.querySelector('body').removeEventListener('mouseup', this.resizeBlockerDisplayNone);
   }
   render() {
+
     // const loTLHsave = _.debounce((size) => {
     //     this.logTopLeftHeight(size);
     // }, 300);
