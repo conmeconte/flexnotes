@@ -6,7 +6,6 @@ import { fetchUser, fetchSampleUser } from '../actions/index';
 import LandingPage from './landingpage';
 import Dashboard from './dashboard';
 import 'normalize.css/normalize.css';
-import '../assets/css/safari.css';
 import 'materialize-css/dist/css/materialize.min.css';
 import '../assets/css/landing-page.css';
 import '../assets/css/modal.css';

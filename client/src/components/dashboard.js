@@ -222,7 +222,7 @@ class Dashboard extends Component {
           break;
       }
       dashboard = (
-        <div className="mobilePanel-container">
+        <div className="mobilePanel-container mobilePanel-container-safari">
           {mobilePanel}
           <ul className="mobileNav">
             <li
