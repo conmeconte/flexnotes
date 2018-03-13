@@ -282,8 +282,6 @@ export const getSavedVideoImg = videoUrl => async dispatch => {
     let videoId = videoLink.split('&');
     videoId = videoId[0].split('/');
     videoId = videoId[4];
-    console.log(videoId);
-    // let videoId = videoLink.split('&feature');
     const response = await axios.get(
       `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
     );
@@ -421,7 +419,6 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
-        console.log(response);
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
@@ -460,7 +457,6 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
-        console.log(response);
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
@@ -500,7 +496,6 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
-        console.log(response);
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
@@ -539,7 +534,6 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
-        console.log('DATA RESPONSE FROM ADD: ', response);
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
@@ -577,7 +571,6 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
-        console.log('DATA RESPONSE FROM ADD: ', response);
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
@@ -615,7 +608,6 @@ export function addVideoToDatabase(
           tabID: interfaceObj.tab_id,
           pageID: interfaceObj.page_id
         });
-        console.log('DATA RESPONSE FROM ADD: ', response);
         dispatch({
           type: types.ADD_VIDEO_TO_DATABASE,
           payload: {
@@ -756,6 +748,46 @@ export function playPastedLinkVideo(url) {
   if (!url) {
     return {
       type: types.NO_VIDEO_LINK
+    };
+  } else if (url.indexOf('player_embedded') !== -1) {
+    let videoId = url.split('=');
+    videoId = videoId[2];
+    videoId = `https://www.youtube.com/embed/${videoId}`;
+    return {
+      type: types.PLAY_PASTED_VIDEO_LINK,
+      payload: videoId
+    };
+  } else if (url.indexOf('&feature=youtu.be') !== -1) {
+    let videoLink = url;
+    let videoId = videoLink.split('=');
+    videoId = videoId[1].split('&');
+    videoId = videoId[0];
+    videoId = `https://www.youtube.com/embed/${videoId}`;
+    return {
+      type: types.PLAY_PASTED_VIDEO_LINK,
+      payload: videoId
+    };
+  } else if (url.indexOf('feature') !== -1) {
+    let videoLink = url;
+    let videoId = videoLink.split('&');
+    videoId = videoId[0].split('/');
+    videoId = videoId[4];
+    videoId = videoLink.split('&');
+    videoId = videoLink[0];
+    videoId = `https://www.youtube.com/embed/${videoId}`;
+    return {
+      type: types.PLAY_PASTED_VIDEO_LINK,
+      payload: videoId
+    };
+  } else if (url.indexOf('&t') !== -1) {
+    let videoLink = url;
+    let videoId = videoLink.split('&t');
+    videoId = videoId[0].split('=');
+    videoId = videoId[1];
+    videoId = `https://www.youtube.com/embed/${videoId}`;
+    return {
+      type: types.PLAY_PASTED_VIDEO_LINK,
+      payload: videoId
     };
   } else if (url.indexOf('&') !== -1 || url.indexOf('=') !== -1) {
     let videoId = url;
@@ -1112,5 +1144,11 @@ export function editable() {
 export function notEditable() {
   return {
     type: types.NOT_EDITABLE
+  };
+}
+
+export function clearLoader() {
+  return {
+    type: types.CLEAR_LOADER
   };
 }

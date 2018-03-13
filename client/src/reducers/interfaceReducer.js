@@ -34,15 +34,10 @@ export default function (state = DEFAULT_STATE, action) {
         case types.SELECT_PAGE:
             return {...state, binder_id: action.payload.binder_id, tab_id: action.payload.tab_id, page_id: action.payload.page_id };
         case types.ADD_BINDER:
-            return { ...state, pull_from_db: true };
         case types.DELETE_BINDER:
-            return { ...state, pull_from_db: true };
         case types.ADD_TAB:
-            return { ...state, pull_from_db: true };
         case types.DELETE_TAB:
-            return { ...state, pull_from_db: true };
         case types.ADD_PAGE:
-            return { ...state, pull_from_db: true };
         case types.DELETE_PAGE:
             return { ...state, pull_from_db: true };
         case types.UPDATE_BINDER_ARRAY:
@@ -56,8 +51,6 @@ export default function (state = DEFAULT_STATE, action) {
             return { ...state, pull_from_db: true};
         case types.AXIOS_ERROR:
             return { ...state, axios_error_response: action.msg };
-        case types.UPDATE_BINDER_OBJ:
-            return {...state, sent_to_db: false};
         case types.HIDE_NAV:
             return {...state, navbar_min: true};
         case types.SHOW_NAV:
@@ -70,6 +63,8 @@ export default function (state = DEFAULT_STATE, action) {
             return {...state, lfz_response: true};
         case types.LFZ_WRONG_PASSWORD:
             return {...state, lfz_response: false};
+        case types.CLEAR_LOADER:
+            return {...state, sent_to_db: false}
         default:
             return state;
     }

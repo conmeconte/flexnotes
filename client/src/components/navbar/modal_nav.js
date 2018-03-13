@@ -47,7 +47,7 @@ export default class ModalNav extends Component {
             </button>
         );
 
-        if(this.state.visible){
+        if(visible){
             return(
                 <span>
                     {button}
