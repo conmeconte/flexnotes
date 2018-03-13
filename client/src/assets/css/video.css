@@ -320,9 +320,6 @@ button.close {
   .video-container#video-container {
     height: 95%;
   }
-  #video-iframe {
-    top: 2vh;
-  }
   .iframe-wrapper {
     height: 92vh;
     top: -9vh;
