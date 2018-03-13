@@ -142,13 +142,69 @@
     height: 45vh; 
 }
 .Resizer.vertical {
-    display:none; 
+    display:none;
 }
 
-.navbar.col-xs-2{
-
 }
 
+@media only screen
+    and (max-width: 767px)
+    and (orientation: landscape) {
+    .title-container {
+        position: relative;
+        top: 10px;
+    }
+    .login-container {
+        height: 76vh;
+        top: 10px;
+    }
+    .login-info-h3 {
+        display: none;
+    }
+    .login-info {
+        position: relative;
+        height: 75px;
+    }
+    .login-logout-container {
+        position: relative;
+        top: 9vh;
+        display: inline;
+        margin: 0px;
+    }
+    .btn.sample {
+        position: relative;
+        border-radius: 2px;
+        /* width: 50%; */
+        margin-left: 15px;
+        height: 35px;
+        top: 5.5vh;
+        background-color: #0393d7;
+    }
+    .slides-container {
+        position: relative;
+        top: -63px;
+        height: 82%;
+        width: 100%;
+        background-color: #d5d5d5;
+    }
+    /*.video-container iframe, */ .slides-iframe {
+        width: 100%;
+        top: -8vh;
+    }
+    .slides-iframe {
+        top: 0vh;
+        bottom: 0;
+        /* right: 0; */
+        z-index: 1;
+        /* width: 95%; */
+        height: 100%;
+        margin: 0 auto;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+        box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+        left: 0;
+    }
 }
 
 
@@ -167,5 +223,27 @@
     }
     .btn.sample > a {
         font-size: 0.97rem;
+    }
+    .slides-container {
+        height: 95%;
+        width: 100%;
+        top: -60px;
+        position: relative;
+        background-color: #d5d5d5;
+    }
+    .slides-iframe {
+        /* position: relative; */
+        top: 0;
+        /* bottom: 21px; */
+        right: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+        box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+        left: 0;
     }
 }
