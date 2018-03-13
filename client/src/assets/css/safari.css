@@ -1,0 +1,16 @@
+@media not all and (min-resolution: .001dpcm) {
+  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+    .binder-container {
+      height: 65vh;
+    }
+    .mobilePanel-container {
+      height: 75vh;
+    }
+    .video-container iframe {
+      height: 70vh;
+    }
+    .slides-div {
+      height: 75vh;
+    }
+  }
+}
