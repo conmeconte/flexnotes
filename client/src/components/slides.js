@@ -143,7 +143,7 @@ class Slides extends Component {
             <Field name="url" component={this.renderInput} />
             <button className="btn green darken-1 col s2 slidesBtn">
               <i style={{ marginRight: '0px' }} className="material-icons">
-                check
+                add
               </i>
             </button>
           </div>
@@ -162,11 +162,11 @@ class Slides extends Component {
           <div className="resize-blocker2" />
           {this.props.slide_input
             ? <iframe
-                src={this.props.slide_input}
-                frameBorder="0"
-                className="slides-iframe"
-                allowFullScreen
-              />
+              src={this.props.slide_input}
+              frameBorder="0"
+              className="slides-iframe"
+              allowFullScreen
+            />
             : ''}
         </div>
       </div>
