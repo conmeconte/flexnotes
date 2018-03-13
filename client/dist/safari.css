@@ -1,16 +1,27 @@
 @media not all and (min-resolution: .001dpcm) {
   @supports (-webkit-appearance: none) and (stroke-color: transparent) {
-    .binder-container {
-      height: 65vh;
+    .binder-container-safari {
+      height: 60vh;
     }
-    .mobilePanel-container {
+    .mobilePanel-container-safari {
       height: 75vh;
     }
-    .video-container iframe {
+    .video-container-safari iframe {
       height: 70vh;
     }
-    .slides-div {
+    .slides-div-safari {
       height: 75vh;
+    }
+    @media (max-height: 414px) and (orientation: landscape) {
+      .mobilePanel-container-safari {
+        height: 80vh;
+      }
+      .binder-container-safari {
+        height: 50vh;
+      }
+      .video-container-safari iframe {
+        height: 70vh;
+      }
     }
   }
 }
