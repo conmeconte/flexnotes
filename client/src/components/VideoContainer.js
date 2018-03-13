@@ -93,7 +93,10 @@ class VideoContainer extends Component {
             ? <i className="material-icons">remove</i>
             : <i className="material-icons">add</i>}
         </div>
-        <div id="video-container" className="video-container">
+        <div
+          id="video-container"
+          className="video-container video-container-safari"
+        >
           <div className="resize-blocker" />
           {this.props.currentPlaylistItems.length >= 1 &&
           this.props.currentPlaylistItems[0].videoId !== undefined

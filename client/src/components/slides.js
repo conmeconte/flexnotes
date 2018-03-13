@@ -133,7 +133,7 @@ class Slides extends Component {
     const toggleSlideOut = this.props.toggleLectureSlideOut;
     const slideOutStyles = this.props.lectureSlideOutStyles;
     return (
-      <div className="slides-div fourth-step">
+      <div className="slides-div slides-div-safari fourth-step">
         <form
           style={slideOutStyles}
           className="form-horizontal slide-out-input"
