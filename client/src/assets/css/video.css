@@ -312,6 +312,10 @@ button.close {
 .video-btn:hover {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);
 }
+.input-field {
+  position: relative;
+  top: 1vh;
+}
 @media screen and (max-width: 375px) and (orientation: portrait) {
   .video-container iframe {
     width: 100%;
@@ -327,7 +331,6 @@ button.close {
   .arrow-container {
     top: 9vh;
   }
-  .input-field,
   .youtube-search-buttons {
     position: relative;
   }
