@@ -28,7 +28,7 @@ class Loader extends Component {
 
         if(visible){
             return (
-                <div className="loader-container">
+                <div className="loader-container col s2">
                     <div className="preloader-wrapper small active">
                         <div className="spinner-layer spinner-blue-only">
                         <div className="circle-clipper left">
