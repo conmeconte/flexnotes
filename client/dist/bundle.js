@@ -32193,7 +32193,7 @@ var Slides = function (_Component) {
       var slideOutStyles = this.props.lectureSlideOutStyles;
       return _react2.default.createElement(
         'div',
-        { className: 'slides-div fourth-step' },
+        { className: 'slides-div slides-div-safari fourth-step' },
         _react2.default.createElement(
           'form',
           {
@@ -32211,7 +32211,7 @@ var Slides = function (_Component) {
               _react2.default.createElement(
                 'i',
                 { style: { marginRight: '0px' }, className: 'material-icons' },
-                'check'
+                'add'
               )
             )
           )
@@ -84695,7 +84695,7 @@ var LandingPage = function (_Component) {
                                 { className: 'login-info' },
                                 _react2.default.createElement(
                                     'h3',
-                                    null,
+                                    { className: 'login-info-h3' },
                                     !this.props.auth ? 'Sign In' : 'Sign Out',
                                     ' ',
                                     _react2.default.createElement('span', { className: !this.props.auth ? 'glyphicon glyphicon-user' : '' })
@@ -85017,7 +85017,7 @@ var Dashboard = function (_Component) {
         }
         dashboard = _react2.default.createElement(
           'div',
-          { className: 'mobilePanel-container' },
+          { className: 'mobilePanel-container mobilePanel-container-safari' },
           mobilePanel,
           _react2.default.createElement(
             'ul',
@@ -90098,7 +90098,10 @@ var VideoContainer = function (_Component) {
         ),
         _react2.default.createElement(
           'div',
-          { id: 'video-container', className: 'video-container' },
+          {
+            id: 'video-container',
+            className: 'video-container video-container-safari'
+          },
           _react2.default.createElement('div', { className: 'resize-blocker' }),
           this.props.currentPlaylistItems.length >= 1 && this.props.currentPlaylistItems[0].videoId !== undefined ? _react2.default.createElement('iframe', {
             allowFullScreen: true,
@@ -111987,7 +111990,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, { setTopLeftHeight: 
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -112037,185 +112040,201 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var NavBar = function (_Component) {
-    _inherits(NavBar, _Component);
+  _inherits(NavBar, _Component);
 
-    function NavBar(props) {
-        _classCallCheck(this, NavBar);
+  function NavBar(props) {
+    _classCallCheck(this, NavBar);
 
-        var _this = _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
 
-        _this.state = {
-            active: false
-        };
+    _this.state = {
+      active: false
+    };
 
-        _this.addBinder = _this.addBinder.bind(_this);
-        _this.editMode = _this.editMode.bind(_this);
-        _this.notEditable = _this.notEditable.bind(_this);
-        return _this;
+    _this.addBinder = _this.addBinder.bind(_this);
+    _this.editMode = _this.editMode.bind(_this);
+    _this.notEditable = _this.notEditable.bind(_this);
+    return _this;
+  }
+
+  _createClass(NavBar, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (!this.props.mobile && this.props.index === 0) {
+        this.setState({
+          open: true
+        });
+      }
     }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.interface.pull_from_db !== this.props.interface.pull_from_db) {
+        if (nextProps.interface.pull_from_db) {
+          this.props.updateBinderArray();
+        }
+      }
 
-    _createClass(NavBar, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            if (!this.props.mobile && this.props.index === 0) {
-                this.setState({
-                    open: true
-                });
+      if (nextProps.interface.sent_to_db !== this.props.interface.sent_to_db) {
+        if (nextProps.interface.sent_to_db) {
+          for (var i = 0; i < this.props.binderArr.length; i++) {
+            if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
+              var binderObj = this.props.binderArr[i];
+              this.props.updateBinderObj(binderObj);
             }
+          }
+          this.props.clearLoader();
         }
-    }, {
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            if (nextProps.interface.pull_from_db !== this.props.interface.pull_from_db) {
-                if (nextProps.interface.pull_from_db) {
-                    this.props.updateBinderArray();
-                }
-            }
-
-            if (nextProps.interface.sent_to_db !== this.props.interface.sent_to_db) {
-                if (nextProps.interface.sent_to_db) {
-                    for (var i = 0; i < this.props.binderArr.length; i++) {
-                        if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
-                            var binderObj = this.props.binderArr[i];
-                            this.props.updateBinderObj(binderObj);
-                        }
-                    }
-                    this.props.clearLoader();
-                }
-            }
-            if (this.props.mobile !== nextProps.mobile) {
-                if (nextProps.mobile) {
-                    this.props.showNav();
-                }
-            }
+      }
+      if (this.props.mobile !== nextProps.mobile) {
+        if (nextProps.mobile) {
+          this.props.showNav();
         }
-    }, {
-        key: 'addBinder',
-        value: function addBinder() {
-            this.props.addBinder();
-        }
-    }, {
-        key: 'editMode',
-        value: function editMode() {
-            if (this.props.interface.editable) {
-                this.props.notEditable();
-            } else {
-                this.props.editable();
-            }
-        }
-    }, {
-        key: 'hideNav',
-        value: function hideNav() {
-            this.props.minNav();
-        }
-    }, {
-        key: 'openNav',
-        value: function openNav() {
-            this.props.showNav();
-        }
-    }, {
-        key: 'notEditable',
-        value: function notEditable() {
-            this.setState({
-                editable: false
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var editableText = '';
-            var updateRoutes = this.state.updateRoutes;
+      }
+    }
+  }, {
+    key: 'addBinder',
+    value: function addBinder() {
+      this.props.addBinder();
+    }
+  }, {
+    key: 'editMode',
+    value: function editMode() {
+      if (this.props.interface.editable) {
+        this.props.notEditable();
+      } else {
+        this.props.editable();
+      }
+    }
+  }, {
+    key: 'hideNav',
+    value: function hideNav() {
+      this.props.minNav();
+    }
+  }, {
+    key: 'openNav',
+    value: function openNav() {
+      this.props.showNav();
+    }
+  }, {
+    key: 'notEditable',
+    value: function notEditable() {
+      this.setState({
+        editable: false
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var editableText = '';
+      var updateRoutes = this.state.updateRoutes;
 
 
-            if (this.props.interface.editable) {
-                editableText = 'Done';
-            } else {
-                editableText = 'Edit';
-            }
+      if (this.props.interface.editable) {
+        editableText = 'Done';
+      } else {
+        editableText = 'Edit';
+      }
 
-            var binder = this.props.binderArr.map(function (item, index) {
-                return _react2.default.createElement(
-                    'div',
-                    { key: index, className: 'binderWrap blue-grey darken-2' },
-                    _react2.default.createElement(_binder2.default, { index: index, binderObj: item }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/main/' + item._id, component: _binder2.default })
-                );
-            });
+      var binder = this.props.binderArr.map(function (item, index) {
+        return _react2.default.createElement(
+          'div',
+          { key: index, className: 'binderWrap blue-grey darken-2' },
+          _react2.default.createElement(_binder2.default, { index: index, binderObj: item }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/main/' + item._id, component: _binder2.default })
+        );
+      });
 
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(_loader2.default, null),
-                _react2.default.createElement(
-                    'button',
-                    { className: 'navbarShow btn ' + (this.props.interface.navbar_min ? 'visible' : 'hidden'),
-                        onClick: this.openNav.bind(this) },
-                    _react2.default.createElement(
-                        'i',
-                        { className: 'small material-icons' },
-                        'chevron_right'
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'navbar col s2 ' + (this.props.interface.navbar_min ? 'hidden' : 'visible') },
-                    _react2.default.createElement(
-                        'header',
-                        null,
-                        _react2.default.createElement('img', { className: 'logoImage', src: _logo2.default }),
-                        _react2.default.createElement(
-                            'h1',
-                            null,
-                            _react2.default.createElement(
-                                'span',
-                                { className: 'dashFlex' },
-                                'Flex'
-                            ),
-                            'Notes'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { className: 'btn hideNavbar', onClick: this.hideNav.bind(this) },
-                        _react2.default.createElement(
-                            'i',
-                            { className: 'small material-icons' },
-                            'chevron_left'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'section',
-                        { className: 'second-step binder-container' },
-                        binder,
-                        _react2.default.createElement(
-                            'button',
-                            { className: 'btn add-btn-binder waves-effect waves-light', onClick: this.addBinder },
-                            'New Binder'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'footer',
-                        null,
-                        _react2.default.createElement(_react_tour2.default, { toggleTour: this.props.toggleTour }),
-                        _react2.default.createElement(_login2.default, null)
-                    )
-                )
-            );
-        }
-    }]);
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_loader2.default, null),
+        _react2.default.createElement(
+          'button',
+          {
+            className: 'navbarShow btn ' + (this.props.interface.navbar_min ? 'visible' : 'hidden'),
+            onClick: this.openNav.bind(this)
+          },
+          _react2.default.createElement(
+            'i',
+            { className: 'small material-icons' },
+            'chevron_right'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          {
+            className: 'navbar col s2 ' + (this.props.interface.navbar_min ? 'hidden' : 'visible')
+          },
+          _react2.default.createElement(
+            'header',
+            null,
+            _react2.default.createElement('img', { className: 'logoImage', src: _logo2.default }),
+            _react2.default.createElement(
+              'h1',
+              null,
+              _react2.default.createElement(
+                'span',
+                { className: 'dashFlex' },
+                'Flex'
+              ),
+              'Notes'
+            )
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn hideNavbar', onClick: this.hideNav.bind(this) },
+            _react2.default.createElement(
+              'i',
+              { className: 'small material-icons' },
+              'chevron_left'
+            )
+          ),
+          _react2.default.createElement(
+            'section',
+            { className: 'second-step binder-container binder-container-safari' },
+            binder,
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'btn add-btn-binder waves-effect waves-light',
+                onClick: this.addBinder
+              },
+              'New Binder'
+            )
+          ),
+          _react2.default.createElement(
+            'footer',
+            null,
+            _react2.default.createElement(_react_tour2.default, { toggleTour: this.props.toggleTour }),
+            _react2.default.createElement(_login2.default, null)
+          )
+        )
+      );
+    }
+  }]);
 
-    return NavBar;
+  return NavBar;
 }(_react.Component);
 
 function mapStateToProps(state) {
-    return {
-        binderArr: state.binderArray.binderArr,
-        binder: state.binder.binderObj,
-        interface: state.interface
-    };
+  return {
+    binderArr: state.binderArray.binderArr,
+    binder: state.binder.binderObj,
+    interface: state.interface
+  };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { editable: _actions.editable, notEditable: _actions.notEditable, updateBinderArray: _actions.updateBinderArray, addBinder: _actions.addBinder, updateBinderObj: _actions.updateBinderObj, minNav: _actions.minNav, showNav: _actions.showNav, clearLoader: _actions.clearLoader })(NavBar);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, {
+  editable: _actions.editable,
+  notEditable: _actions.notEditable,
+  updateBinderArray: _actions.updateBinderArray,
+  addBinder: _actions.addBinder,
+  updateBinderObj: _actions.updateBinderObj,
+  minNav: _actions.minNav,
+  showNav: _actions.showNav,
+  clearLoader: _actions.clearLoader
+})(NavBar);
 
 /***/ }),
 /* 1178 */
@@ -117634,7 +117653,7 @@ exports = module.exports = __webpack_require__(40)(undefined);
 
 
 // module
-exports.push([module.i, ".main {\r\n  color: #000;\r\n  font-family: Arial, Helvetica, sans-serif;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0 auto;\r\n}\r\n.opacity {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  /*height: 100%;*/\r\n  background-color: #000;\r\n  display: block;\r\n  z-index: 2;\r\n  opacity: 0.6;\r\n}\r\n.search-button-input {\r\n  padding-top: 1vh;\r\n}\r\n\r\n.vid-container {\r\n  z-index: 1;\r\n}\r\n.video-wrapper#video-wrapper {\r\n  height: 100%;\r\n}\r\n.video-container#video-container {\r\n  text-align: center;\r\n  height: 90%;\r\n  padding-bottom: 0;\r\n  position: relative;\r\n  top: -3vh;\r\n}\r\n\r\n.video-container#video-container .row form {\r\n  width: 80%;\r\n  display: inline-block;\r\n}\r\n.video-items {\r\n  list-style-type: none;\r\n  position: relative;\r\n  top: 1vh;\r\n  font-weight: bold;\r\n}\r\n.video-description {\r\n  font-style: italic;\r\n}\r\n.youtube-search-buttons {\r\n  position: relative;\r\n  top: 3vh;\r\n}\r\nbutton.close {\r\n  color: #fff;\r\n  position: relative;\r\n  top: -3.5vh;\r\n  left: 6vh;\r\n}\r\n.results-container {\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 3;\r\n  overflow: auto;\r\n  transition: 0.4s;\r\n}\r\n.results-container li,\r\n.results-container button {\r\n  display: inline-block;\r\n}\r\n.results-container.sidebar {\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  background-color: rgba(255, 255, 255, 0.97);\r\n  width: 100%;\r\n  border-left: 1px solid #e4e4e4;\r\n  z-index: 5000;\r\n}\r\n.row.results-input-container {\r\n  margin-left: 0;\r\n  margin-right: 0;\r\n}\r\n.result-item.collection-item,\r\n.list-item-wrapper {\r\n  background-color: transparent;\r\n}\r\n#search {\r\n  position: absolute;\r\n  color: #fff;\r\n  right: 20px;\r\n  top: 15px;\r\n}\r\n.video-parent-panel {\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: #d5d5d5;\r\n}\r\n.video-embed-wrapper {\r\n  height: 100%;\r\n  text-align: center;\r\n}\r\n\r\n.video-container iframe {\r\n  position: relative;\r\n  height: 100%;\r\n  display: inline-block;\r\n}\r\n.video-iframe {\r\n  display: inline-block;\r\n  position: relative;\r\n  top: 1vh;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  z-index: 1;\r\n  border: none;\r\n}\r\n.video-btn i {\r\n  margin: 0 -1px;\r\n  width: 45px;\r\n}\r\n\r\n#query {\r\n  padding-left: 8px;\r\n}\r\n.list-item-wrapper {\r\n  padding: 10px 5px;\r\n}\r\n.results-btn {\r\n  padding: 0 1vmin;\r\n}\r\n.collection {\r\n  border: none;\r\n}\r\n.vid-left-arrow,\r\n.vid-right-arrow {\r\n  background-color: #0288d1;\r\n}\r\n.iframe-wrapper {\r\n  height: 100%;\r\n  position: relative;\r\n  top: -4vh;\r\n}\r\n.row {\r\n  margin-bottom: 0;\r\n}\r\n.btn-wrapper {\r\n  white-space: nowrap;\r\n}\r\n.btn-wrapper button {\r\n  padding: 0;\r\n  width: 45px;\r\n}\r\n.slide-out-input {\r\n  transition: 0.2s;\r\n  background-color: #fff;\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n  z-index: 30;\r\n  position: relative;\r\n}\r\n.arrow-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  right: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n.playlist-logo-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  left: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n\r\n.arrow-container-slides .material-icons {\r\n  margin-right: 0;\r\n}\r\n.btn-success,\r\n.btn-primary {\r\n  margin: 0.2vmin;\r\n  position: relative;\r\n  top: 1vh;\r\n}\r\n\r\n#youtube-play {\r\n  padding: 0px 5px;\r\n  position: relative;\r\n  right: 1vw;\r\n}\r\n.red-text {\r\n  color: red;\r\n}\r\n.Pane.horizontal.Pane2 {\r\n  height: 325px;\r\n}\r\n.video-container iframe,\r\n.slides-iframe {\r\n  width: 93%;\r\n  top: -8vh;\r\n}\r\n#video-iframe {\r\n  top: 0vh;\r\n  /* height: 90% */\r\n}\r\n#video-container {\r\n  height: 90%;\r\n  top: -3vh;\r\n}\r\n.list-item-wrap-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-left: 0;\r\n}\r\n.list-item-wrap-container {\r\n  padding: 10px 0;\r\n}\r\n.list-item-wrap-container img {\r\n  max-width: 35%;\r\n}\r\n.list-item-wrap-container button i {\r\n  margin-right: auto;\r\n}\r\n.list-item-wrap-container .btn-small {\r\n  padding: 0 0.1em;\r\n}\r\n.btn-small {\r\n  padding: 0 0.8rem;\r\n}\r\n\r\n.playlist-play {\r\n  background-color: #0288d1;\r\n}\r\n.playlist-delete {\r\n  background-color: #d32f2f;\r\n}\r\n.list-item-wrapper {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.col.s3 {\r\n  margin-left: 0;\r\n}\r\n#search-input-container {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.video-description {\r\n  display: none;\r\n}\r\n.video-playlist-panel {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: #d5d5d5;\r\n  border: 1px solid #000;\r\n  position: absolute;\r\n  z-index: 3500;\r\n  transition: 0.4s;\r\n  overflow-y: auto;\r\n  overflow-x: hidden;\r\n}\r\n.no-videos {\r\n  position: relative;\r\n  top: 27%;\r\n  color: #5d5d5d;\r\n  font-weight: bold;\r\n  text-shadow: 0.3px 0.3px #5d5d5d;\r\n}\r\n.close-playlist {\r\n  position: absolute;\r\n  right: 4px;\r\n  top: 4px;\r\n}\r\n.playlist-logo-container i {\r\n  margin-right: 0;\r\n  color: rgb(2, 136, 209);\r\n  transition: 0.2s;\r\n  font-size: 2.1em;\r\n}\r\n\r\n.video-playlist {\r\n  position: relative;\r\n  top: 2vh;\r\n  left: 0.5vw;\r\n}\r\n.playlist-logo-container i:hover {\r\n  color: #0073b2;\r\n}\r\n.close-playlist-icon:hover {\r\n  cursor: pointer;\r\n}\r\n.playlist-play:hover {\r\n  background-color: #0073b2;\r\n}\r\n.playlist-delete:hover {\r\n  background-color: #b71c1c;\r\n}\r\n.playlist-delete:focus {\r\n  background-color: #d32f2f;\r\n}\r\n.vid-right-arrow:hover,\r\n.vid-left-arrow:hover {\r\n  background-color: #0288d1;\r\n}\r\n.video-btn:hover {\r\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n}\r\n@media screen and (max-width: 375px) and (orientation: portrait) {\r\n  .video-container iframe {\r\n    height: 82vh;\r\n  }\r\n  .video-container#video-container {\r\n    height: 95%;\r\n  }\r\n  #video-iframe {\r\n    top: 2vh;\r\n  }\r\n  .iframe-wrapper {\r\n    height: 92vh;\r\n    top: -9vh;\r\n  }\r\n  .arrow-container {\r\n    top: 9vh;\r\n  }\r\n  .input-field,\r\n  .youtube-search-buttons {\r\n    position: relative;\r\n  }\r\n  .input-field {\r\n    top: 3vh;\r\n  }\r\n  .youtube-search-buttons {\r\n    top: 6vh;\r\n  }\r\n  .playlist-logo-container {\r\n    top: 9vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 17vh;\r\n    top: 4vh;\r\n  }\r\n}\r\n\r\n@media screen and (max-width: 740px) and (orientation: landscape) {\r\n  .video-container#video-container {\r\n    text-align: center;\r\n    height: 80%;\r\n    padding-bottom: 0;\r\n    position: relative;\r\n    top: -13vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 25vh;\r\n    top: -3vh;\r\n  }\r\n}\r\n", ""]);
+exports.push([module.i, ".main {\r\n  color: #000;\r\n  font-family: Arial, Helvetica, sans-serif;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0 auto;\r\n}\r\n.opacity {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  /*height: 100%;*/\r\n  background-color: #000;\r\n  display: block;\r\n  z-index: 2;\r\n  opacity: 0.6;\r\n}\r\n.search-button-input {\r\n  padding-top: 1vh;\r\n}\r\n\r\n.vid-container {\r\n  z-index: 1;\r\n}\r\n.video-wrapper#video-wrapper {\r\n  height: 100%;\r\n}\r\n.video-container#video-container {\r\n  text-align: center;\r\n  height: 90%;\r\n  padding-bottom: 0;\r\n  position: relative;\r\n  top: -3vh;\r\n  -moz-box-sizing: border-box;\r\n  box-sizing: border-box;\r\n  -webkit-box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2),\r\n    0 6px 20px 5px rgba(0, 0, 0, 0.19);\r\n  box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2),\r\n    0 6px 20px 5px rgba(0, 0, 0, 0.19);\r\n}\r\n\r\n.video-container#video-container .row form {\r\n  width: 80%;\r\n  display: inline-block;\r\n}\r\n.video-items {\r\n  list-style-type: none;\r\n  position: relative;\r\n  top: 1vh;\r\n  font-weight: bold;\r\n}\r\n.video-description {\r\n  font-style: italic;\r\n}\r\n.youtube-search-buttons {\r\n  position: relative;\r\n  top: 3vh;\r\n}\r\nbutton.close {\r\n  color: #fff;\r\n  position: relative;\r\n  top: -3.5vh;\r\n  left: 6vh;\r\n}\r\n.results-container {\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 3;\r\n  overflow: auto;\r\n  transition: 0.4s;\r\n}\r\n.results-container li,\r\n.results-container button {\r\n  display: inline-block;\r\n}\r\n.results-container.sidebar {\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  background-color: rgba(255, 255, 255, 0.97);\r\n  width: 100%;\r\n  border-left: 1px solid #e4e4e4;\r\n  z-index: 5000;\r\n}\r\n.row.results-input-container {\r\n  margin-left: 0;\r\n  margin-right: 0;\r\n}\r\n.result-item.collection-item,\r\n.list-item-wrapper {\r\n  background-color: transparent;\r\n}\r\n#search {\r\n  position: absolute;\r\n  color: #fff;\r\n  right: 20px;\r\n  top: 15px;\r\n}\r\n.video-parent-panel {\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: #d5d5d5;\r\n}\r\n.video-embed-wrapper {\r\n  height: 100%;\r\n  text-align: center;\r\n}\r\n\r\n.video-container iframe {\r\n  position: relative;\r\n  height: 100%;\r\n  display: inline-block;\r\n}\r\n.video-iframe {\r\n  display: inline-block;\r\n  position: relative;\r\n  top: 1vh;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  z-index: 1;\r\n  border: none;\r\n}\r\n.video-btn i {\r\n  margin: 0 -1px;\r\n  width: 45px;\r\n}\r\n\r\n#query {\r\n  padding-left: 8px;\r\n}\r\n.list-item-wrapper {\r\n  padding: 10px 5px;\r\n}\r\n.results-btn {\r\n  padding: 0 1vmin;\r\n}\r\n.collection {\r\n  border: none;\r\n}\r\n.vid-left-arrow,\r\n.vid-right-arrow {\r\n  background-color: #0288d1;\r\n}\r\n.iframe-wrapper {\r\n  height: 100%;\r\n  position: relative;\r\n  top: -4vh;\r\n}\r\n.row {\r\n  margin-bottom: 0;\r\n}\r\n.btn-wrapper {\r\n  white-space: nowrap;\r\n}\r\n.btn-wrapper button {\r\n  padding: 0;\r\n  width: 45px;\r\n}\r\n.slide-out-input {\r\n  transition: 0.2s;\r\n  background-color: #fff;\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n  z-index: 30;\r\n  position: relative;\r\n}\r\n.arrow-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  right: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n.playlist-logo-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  left: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n\r\n.arrow-container-slides .material-icons {\r\n  margin-right: 0;\r\n}\r\n.btn-success,\r\n.btn-primary {\r\n  margin: 0.2vmin;\r\n  position: relative;\r\n  top: 1vh;\r\n}\r\n\r\n#youtube-play {\r\n  padding: 0px 5px;\r\n  position: relative;\r\n  right: 1vw;\r\n}\r\n.red-text {\r\n  color: red;\r\n}\r\n.Pane.horizontal.Pane2 {\r\n  height: 325px;\r\n}\r\n.video-container iframe,\r\n.slides-iframe {\r\n  width: 93%;\r\n  top: -8vh;\r\n}\r\n#video-iframe {\r\n  top: 0vh;\r\n  /* height: 90% */\r\n}\r\n#video-container {\r\n  height: 90%;\r\n  top: -3vh;\r\n}\r\n.list-item-wrap-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-left: 0;\r\n}\r\n.list-item-wrap-container {\r\n  padding: 10px 0;\r\n}\r\n.list-item-wrap-container img {\r\n  max-width: 35%;\r\n}\r\n.list-item-wrap-container button i {\r\n  margin-right: auto;\r\n}\r\n.list-item-wrap-container .btn-small {\r\n  padding: 0 0.1em;\r\n}\r\n.btn-small {\r\n  padding: 0 0.8rem;\r\n}\r\n\r\n.playlist-play {\r\n  background-color: #0288d1;\r\n}\r\n.playlist-delete {\r\n  background-color: #d32f2f;\r\n}\r\n.list-item-wrapper {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.col.s3 {\r\n  margin-left: 0;\r\n}\r\n#search-input-container {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.video-description {\r\n  display: none;\r\n}\r\n.video-playlist-panel {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: #d5d5d5;\r\n  border: 1px solid #000;\r\n  position: absolute;\r\n  z-index: 3500;\r\n  transition: 0.4s;\r\n  overflow-y: auto;\r\n  overflow-x: hidden;\r\n}\r\n.no-videos {\r\n  position: relative;\r\n  top: 27%;\r\n  color: #5d5d5d;\r\n  font-weight: bold;\r\n  text-shadow: 0.3px 0.3px #5d5d5d;\r\n}\r\n.close-playlist {\r\n  position: absolute;\r\n  right: 4px;\r\n  top: 4px;\r\n}\r\n.playlist-logo-container i {\r\n  margin-right: 0;\r\n  color: rgb(2, 136, 209);\r\n  transition: 0.2s;\r\n  font-size: 2.1em;\r\n}\r\n\r\n.video-playlist {\r\n  position: relative;\r\n  top: 2vh;\r\n  left: 0.5vw;\r\n}\r\n.playlist-logo-container i:hover {\r\n  color: #0073b2;\r\n}\r\n.close-playlist-icon:hover {\r\n  cursor: pointer;\r\n}\r\n.playlist-play:hover {\r\n  background-color: #0073b2;\r\n}\r\n.playlist-delete:hover {\r\n  background-color: #b71c1c;\r\n}\r\n.playlist-delete:focus {\r\n  background-color: #d32f2f;\r\n}\r\n.vid-right-arrow:hover,\r\n.vid-left-arrow:hover {\r\n  background-color: #0288d1;\r\n}\r\n.video-btn:hover {\r\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n}\r\n.input-field {\r\n  position: relative;\r\n  top: 1vh;\r\n}\r\n@media screen and (max-width: 375px) and (orientation: portrait) {\r\n  .video-container iframe {\r\n    width: 100%;\r\n    height: 85vh;\r\n  }\r\n  .video-container#video-container {\r\n    height: 95%;\r\n  }\r\n  .iframe-wrapper {\r\n    height: 92vh;\r\n    top: -9vh;\r\n  }\r\n  .arrow-container {\r\n    top: 9vh;\r\n  }\r\n  .youtube-search-buttons {\r\n    position: relative;\r\n  }\r\n  .input-field {\r\n    top: 3vh;\r\n  }\r\n  .youtube-search-buttons {\r\n    top: 6vh;\r\n  }\r\n  .playlist-logo-container {\r\n    top: 9vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 17vh;\r\n    top: 4vh;\r\n  }\r\n}\r\n\r\n@media screen and (max-width: 740px) and (orientation: landscape) {\r\n  .video-container#video-container {\r\n    text-align: center;\r\n    height: 81%;\r\n    padding-bottom: 0;\r\n    position: relative;\r\n    top: -13vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 25vh;\r\n    top: -3vh;\r\n  }\r\n  .video-container iframe {\r\n    width: 100%;\r\n  }\r\n}\r\n", ""]);
 
 // exports
 
