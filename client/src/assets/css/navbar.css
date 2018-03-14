@@ -272,7 +272,7 @@ ul > li {
 
 }
 .navbarShow.btn {
-    height: 51%;
+    height: 90%;
     width: 0.75%;
     padding: 0;
     top: 50%;
@@ -373,7 +373,7 @@ input#edit_input_page{
 .binder-container {
     margin-top: 0;
     height: 80vh;
-    overflow: auto;
+    overflow-y: scroll;
 }
 
 
