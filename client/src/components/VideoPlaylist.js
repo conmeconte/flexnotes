@@ -30,7 +30,6 @@ class VideoPlaylist extends Component {
     this.props.playPastedLinkVideo(values['youtube-url']);
     this.props.getSavedVideoImg(values['youtube-url']).then(() => {
       this.props.getSavedVideoTitle(values['youtube-url']).then(() => {
-        debugger;
         this.props.addVideoToDatabase(
           values['youtube-url'],
           this.props.savedVideoTitle,
