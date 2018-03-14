@@ -25,7 +25,7 @@ class ThreePanel extends Component {
   componentDidMount() {
     const { width } = this.state;
     if (width > 767) {
-        document
+      document
         .querySelector('.Resizer.vertical')
         .addEventListener('mousedown', this.resizeBlocker);
       document
@@ -35,27 +35,27 @@ class ThreePanel extends Component {
     }
   }
 
-  resizeBlocker(){
+  resizeBlocker() {
     document.querySelector('.resize-blocker').style.display = 'block';
     document.querySelector('.resize-blocker2').style.display = 'block';
   }
 
-  resizeBlockerDisplayNone(){
+  resizeBlockerDisplayNone() {
     document.querySelector('.resize-blocker').style.display = 'none';
     document.querySelector('.resize-blocker2').style.display = 'none';
   }
 
   componentWillUnmount() {
     document
-    .querySelector('.Resizer.vertical')
-    .removeEventListener('mousedown', this.resizeBlocker);
-  document
-    .querySelector('.Resizer.horizontal') 
-    .removeEventListener('mousedown', this.resizeBlocker);
-  document.querySelector('body').removeEventListener('mouseup', this.resizeBlockerDisplayNone);
+      .querySelector('.Resizer.vertical')
+      .removeEventListener('mousedown', this.resizeBlocker);
+    document
+      .querySelector('.Resizer.horizontal')
+      .removeEventListener('mousedown', this.resizeBlocker);
+    document.querySelector('body').removeEventListener('mouseup', this.resizeBlockerDisplayNone);
   }
   render() {
-
+    const { width } = this.state;
     // const loTLHsave = _.debounce((size) => {
     //     this.logTopLeftHeight(size);
     // }, 300);
@@ -99,8 +99,8 @@ class ThreePanel extends Component {
       >
         <SplitPane
           split="horizontal"
-          minSize={400}
-          maxSize={600}
+          minSize={0}
+          maxSize={width}
           defaultSize={450}
         >
           <div className="video-parent-panel">
