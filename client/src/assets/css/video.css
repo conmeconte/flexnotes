@@ -255,6 +255,9 @@ button.close {
 .video-description {
   display: none;
 }
+.video-playlist {
+  margin: 0;
+}
 .video-playlist-panel {
   width: 100%;
   height: 100%;
@@ -277,18 +280,22 @@ button.close {
   position: absolute;
   right: 4px;
   top: 4px;
+  z-index: 200;
+}
+.video-playlist-title {
+  margin: 0;
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
+.video-playlist-input::placeholder {
+  color: #000;
 }
 .playlist-logo-container i {
   margin-right: 0;
   color: rgb(2, 136, 209);
   transition: 0.2s;
   font-size: 2.1em;
-}
-
-.video-playlist {
-  position: relative;
-  top: 2vh;
-  left: 0.5vw;
 }
 .playlist-logo-container i:hover {
   color: #0073b2;
