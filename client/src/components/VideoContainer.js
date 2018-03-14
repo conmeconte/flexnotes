@@ -116,21 +116,6 @@ class VideoContainer extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    binderTabPageIds: state.interface,
-    resultsStyles: state.video.resultsStyles,
-    toggleResultsBool: state.video.toggleResults,
-    opacityContainer: state.video.opacityDisplay,
-    slideOutStyles: state.video.videoLinkSlideOut,
-    toggleSlideOut: state.video.toggleSlideOut,
-    savedVideoTitle: state.video.savedVideoTitle,
-    savedVideoImage: state.video.savedVideoImage,
-    playlistStyles: state.video.playlistStyles,
-    videoLink: state.video.videoLink
-  };
-}
-
 function validate(values) {
   const error = {};
   const youtubeLinkValue = values['youtube-url'];
@@ -146,5 +131,20 @@ VideoContainer = reduxForm({
   form: 'youtube-url',
   validate
 })(VideoContainer);
+
+function mapStateToProps(state) {
+  return {
+    binderTabPageIds: state.interface,
+    resultsStyles: state.video.resultsStyles,
+    toggleResultsBool: state.video.toggleResults,
+    opacityContainer: state.video.opacityDisplay,
+    slideOutStyles: state.video.videoLinkSlideOut,
+    toggleSlideOut: state.video.toggleSlideOut,
+    savedVideoTitle: state.video.savedVideoTitle,
+    savedVideoImage: state.video.savedVideoImage,
+    playlistStyles: state.video.playlistStyles,
+    videoLink: state.video.videoLink
+  };
+}
 
 export default connect(mapStateToProps, actions)(VideoContainer);
