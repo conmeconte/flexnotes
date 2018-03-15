@@ -5,7 +5,7 @@ import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import { connect } from 'react-redux';
-import { updateBinderArray } from '../actions';
+import { updateBinderArray, saveNotes } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
@@ -104,9 +104,10 @@ class Notes extends Component {
 
         this.submitNotes = this.submitNotes.bind(this);
         this.submitNotes = _.debounce(this.submitNotes, 1300);
+        this.onChange = this.onChange.bind(this);
     }
 
-    onChange = ({ value }) => {
+    onChange({ value }) {
         this.setState({ value, save: false });
         this.submitNotes();
     };
@@ -115,20 +116,25 @@ class Notes extends Component {
         let { interface_obj } = this.props;
         const { value } = this.state;
         const content = JSON.stringify(value.toJSON());
-        axios.put('/api/note', {
-            document: { content },
-            binderID: interface_obj.binder_id,
-            tabID: interface_obj.tab_id,
-            pageID: interface_obj.page_id
-        }).then(
-            this.setState({
-                ...value,
-                save: true
-            })
-        ).catch((err)=>{
-            console.log("not logged in: ", err);
-            window.location = '/';
+        this.props.saveNotes(content, interface_obj);
+        this.setState({
+            ...value,
+            save: true
         })
+        // axios.put('/api/note', {
+        //     document: { content },
+        //     binderID: interface_obj.binder_id,
+        //     tabID: interface_obj.tab_id,
+        //     pageID: interface_obj.page_id
+        // }).then(
+        //     this.setState({
+        //         ...value,
+        //         save: true
+        //     })
+        // ).catch((err) => {
+        //     console.log("not logged in: ", err);
+        //     window.location = '/';
+        // })
     }
 
     componentWillMount() {
@@ -152,7 +158,7 @@ class Notes extends Component {
                 }
             }
             if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
-                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.notes);
                 this.setState({
                     value: Value.fromJSON(lastContent),
                     save: false
@@ -189,7 +195,8 @@ class Notes extends Component {
                     }
                 }
                 if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
-                    const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                    const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.notes);
+                    console.log("NOTES LAST CONTENT:", lastContent.document.nodes["0"].nodes["0"].leaves["0"]);
                     this.setState({
                         value: Value.fromJSON(lastContent),
                         save: false
@@ -238,17 +245,17 @@ class Notes extends Component {
 
         let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
-        if(colors[0]){
+        if (colors[0]) {
             mark = 'red'
-        } else if(colors[1]){
+        } else if (colors[1]) {
             mark = 'orange'
-        } else if(colors[2]){
+        } else if (colors[2]) {
             mark = 'yellow'
-        } else if(colors[3]){
+        } else if (colors[3]) {
             mark = 'green'
-        } else if(colors[4]){
+        } else if (colors[4]) {
             mark = 'blue'
-        } else if(colors[5]){
+        } else if (colors[5]) {
             mark = 'purple'
         }
 
@@ -616,5 +623,5 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateBinderArray })(Notes);
+export default connect(mapStateToProps, { updateBinderArray, saveNotes })(Notes);
 
