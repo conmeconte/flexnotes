@@ -136,6 +136,29 @@ export function getPanelNum(num) {
   };
 }
 
+// Notes Action Creator
+export function saveNotes(notes, interface_obj) {
+  return dispatch => {
+    axios.put('/api/note', {
+      document: { notes },
+      binderID: interface_obj.binder_id,
+      tabID: interface_obj.tab_id,
+      pageID: interface_obj.page_id
+    }).then((resp) => {
+      console.log('saveNotes RESP: ', resp.data.notes.document.notes);
+      dispatch({
+        type: types.SAVE_NOTES,
+      });
+    })
+      .catch(error => {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Failed to Save Notes'
+        });
+      });
+  };
+}
+
 //Lecture Slides Action Creator
 
 export function setSlidesUrl(slidesURL, interfaceObj) {
