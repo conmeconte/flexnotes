@@ -584,13 +584,8 @@ class Notes extends Component {
                     {this.renderMarkButton('bold', 'format_bold')}
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
-                    {this.renderBlockButton('justifyLeft', 'format_align_left')}
-                    {this.renderBlockButton('justifyCenter', 'format_align_center')}
-                    {this.renderBlockButton('justifyRight', 'format_align_right')}
-                    {this.renderBlockButton('justifyFull', 'format_align_justify')}
                     {this.renderMarkButton('code', 'code')}
-                    {this.renderBlockButton('heading-one', 'format_size')}
-                    {/*{this.renderBlockButton('heading-two', 'title')}*/}
+
                     {this.renderBlockButton('block-quote', 'format_quote')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
@@ -601,12 +596,14 @@ class Notes extends Component {
                         <span className="material-icons notesIcons image">image</span>
                     </span>
                 </div>
-                <div>
-                    <input
-                        className="search-input keyword"
-                        placeholder="Search keywords..."
-                        onChange={this.onInputChange}
-                    />
+                <div className="stylingButtons secondRow">
+                    {this.renderBlockButton('justifyLeft', 'format_align_left')}
+                    {this.renderBlockButton('justifyCenter', 'format_align_center')}
+                    {this.renderBlockButton('justifyRight', 'format_align_right')}
+                    {this.renderBlockButton('justifyFull', 'format_align_justify')}
+
+                    {this.renderBlockButton('heading-one', 'format_size')}
+                    {/*{this.renderBlockButton('heading-two', 'title')}*/}
 
                     <div className="colorOptions">
                         <span className="colorDropbtn" title="font color"><i className="material-icons fontColorIcon notesIcons">format_color_text</i></span>
@@ -619,6 +616,12 @@ class Notes extends Component {
                             <p className="fontColor violetFont">{this.renderMarkButton('purple', 'lens')}</p>
                         </div>
                     </div>
+
+                    <input
+                        className="search-input keyword"
+                        placeholder="Search keywords..."
+                        onChange={this.onInputChange}
+                    />
                 </div>
                 <h6 className="saveNotes" >{this.state.save ? "Notes saved" : ""}</h6>
             </div>
