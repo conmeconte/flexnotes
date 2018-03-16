@@ -49,10 +49,14 @@ class NavBar extends Component {
       }
     }
 
+    // if(nextProps.interface.binder_id !== this.props.interface.binder_id){
+    //   this.props.updateBinderArray();
+    // }
+
     if (nextProps.interface.sent_to_db !== this.props.interface.sent_to_db) {
       if (nextProps.interface.sent_to_db) {
-        for (let i = 0; i < this.props.binderArr.length; i++) {
-          if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
+        for (let i = 0; i < nextProps.binderArr.length; i++) {
+          if (nextProps.binderArr[i]._id === nextProps.interface.binder_id) {
             let binderObj = nextProps.binderArr[i];
             this.props.updateBinderObj(binderObj);
           }
@@ -91,7 +95,7 @@ class NavBar extends Component {
   }
 
   render() {
-    //console.log('navbar props', this.props);
+    console.log('navbar props', this.props);
     let editableText = '';
     const { updateRoutes } = this.state;
 
