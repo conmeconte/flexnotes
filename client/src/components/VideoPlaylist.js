@@ -68,6 +68,7 @@ class VideoPlaylist extends Component {
                 className="btn btn-small playlist-play col s1 playlist-play"
                 onClick={() => {
                   this.props.playVideo(item.videoId);
+                  this.props.setVideoUrl(item.videoId);
                   this.props.togglePlaylist(this.props.playlistStyles);
                 }}
               >

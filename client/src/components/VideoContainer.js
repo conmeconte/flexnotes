@@ -4,6 +4,10 @@ import { Field, reduxForm } from 'redux-form';
 import * as actions from '../actions';
 
 class VideoContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.currentVideoList = this.props.currentPlaylistItems;
+  }
   renderInput({ input, type, meta: { error, touched } }) {
     return (
       <div className="col s8 input-field">
@@ -103,7 +107,7 @@ class VideoContainer extends Component {
             ? <iframe
                 allowFullScreen
                 id="video-iframe"
-                src={this.props.currentPlaylistItems[0].videoURL}
+                src={this.props.videoLink}
                 className="video-iframe"
               />
             : <div className="no-videos">
