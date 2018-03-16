@@ -18,6 +18,12 @@
     height: 100%;
 }
 
+.notesUnorderedList li::before {
+    content: "•";
+    padding: 0 8px 0 28px;
+    color: rgba(0,0,0,0.87);
+}
+
 code {
     display: inline-block;
     background-color: #d5d5d5;

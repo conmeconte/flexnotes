@@ -100,7 +100,7 @@ class Notes extends Component {
         this.state = {
             value: initialValue,
             save: true,
-            isReadOnly: true
+            isReadOnly: false
         };
 
         this.submitNotes = this.submitNotes.bind(this);
@@ -366,7 +366,7 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span onMouseDown={onMouseDown} data-active={isActive}>
+            <span onMouseDown={onMouseDown} data-active={isActive} title={type}>
                 <span className="material-icons notesIcons colorCircles richText">{icon}</span>
             </span>
         )
@@ -562,16 +562,17 @@ class Notes extends Component {
         const { attributes, children, node, isSelected } = props;
         switch (node.type) {
             case 'block-quote': return <blockquote {...attributes}>{children}</blockquote>;
-            case 'bulleted-list': return <ul {...attributes}>{children}</ul>;
+
             case 'heading-one': return <h5 {...attributes}>{children}</h5>;
             // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
 
-            case 'justifyLeft': return <div style={{ textAlign: 'left' }}>{children}</div>;
-            case 'justifyCenter': return <div style={{ textAlign: 'center' }}>{children}</div>;
-            case 'justifyRight': return <div style={{ textAlign: 'right' }}>{children}</div>;
-            case 'justifyFull': return <div style={{ textAlign: 'justify' }}>{children}</div>;
+            case 'left': return <div style={{ textAlign: 'left' }}>{children}</div>;
+            case 'center': return <div style={{ textAlign: 'center' }}>{children}</div>;
+            case 'right': return <div style={{ textAlign: 'right' }}>{children}</div>;
+            case 'justify': return <div style={{ textAlign: 'justify' }}>{children}</div>;
 
             case 'list-item': return <li {...attributes}>{children}</li>;
+            case 'bulleted-list': return <ul className="notesUnorderedList" {...attributes}>{children}</ul>;
             case 'numbered-list': return <ol {...attributes}>{children}</ol>;
             case 'link': {
                 const { data } = node;
@@ -597,34 +598,23 @@ class Notes extends Component {
                 <div className="stylingButtons">
                     <ToolbarButton icon="undo" onMouseDown={this.onClickUndo} />
                     <ToolbarButton icon="redo" onMouseDown={this.onClickRedo} />
-                    {this.renderMarkButton('bold', 'format_bold')}
-                    {this.renderMarkButton('italic', 'format_italic')}
-                    {this.renderMarkButton('underlined', 'format_underlined')}
-                    {this.renderMarkButton('code', 'code')}
 
+                    {this.renderMarkButton('code', 'code')}
                     {this.renderBlockButton('block-quote', 'format_quote')}
-                    {this.renderBlockButton('numbered-list', 'format_list_numbered')}
-                    {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
                     <span className="styleSquare" title="link" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
                         <span className="material-icons notesIcons link">link</span>
                     </span>
                     <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
                         <span className="material-icons notesIcons image">image</span>
                     </span>
+                    {this.renderBlockButton('numbered-list', 'format_list_numbered')}
+                    {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
                     <span className="styleSquare" title="read only" onClick={this.toggleReadOnly}>
                         <span className="material-icons notesIcons">{this.state.isReadOnly ? 'lock' : 'lock_open'}</span>
                     </span>
                 </div>
 
                 <div className="stylingButtons secondRow">
-                    {this.renderBlockButton('justifyLeft', 'format_align_left')}
-                    {this.renderBlockButton('justifyCenter', 'format_align_center')}
-                    {this.renderBlockButton('justifyRight', 'format_align_right')}
-                    {this.renderBlockButton('justifyFull', 'format_align_justify')}
-
-                    {this.renderBlockButton('heading-one', 'format_size')}
-                    {/*{this.renderBlockButton('heading-two', 'title')}*/}
-
                     <div className="colorOptions">
                         <span className="colorDropbtn" title="font color"><i className="material-icons fontColorIcon notesIcons">format_color_text</i></span>
                         <div className="fontColor-options">
@@ -636,6 +626,18 @@ class Notes extends Component {
                             <p className="fontColor violetFont">{this.renderMarkButton('purple', 'lens')}</p>
                         </div>
                     </div>
+
+                    {this.renderMarkButton('bold', 'format_bold')}
+                    {this.renderMarkButton('italic', 'format_italic')}
+                    {this.renderMarkButton('underlined', 'format_underlined')}
+
+                    {this.renderBlockButton('heading-one', 'format_size')}
+                    {/*{this.renderBlockButton('heading-two', 'title')}*/}
+
+                    {this.renderBlockButton('left', 'format_align_left')}
+                    {this.renderBlockButton('center', 'format_align_center')}
+                    {this.renderBlockButton('right', 'format_align_right')}
+                    {this.renderBlockButton('justify', 'format_align_justify')}
 
                     <input
                         className="search-input keyword"
