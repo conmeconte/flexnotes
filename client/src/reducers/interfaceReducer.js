@@ -67,9 +67,12 @@ export default function (state = DEFAULT_STATE, action) {
         case types.CLEAR_LOADER:
             return {...state, sent_to_db: false};
         case types.SAVE_NOTES:
+            return {...state, save_notes: true, pull_from_db: true};
+        case types.AUTO_SAVE_NOTES:
+        //case types.UPDATE_BINDER_OBJ:
             return {...state, save_notes: true};
         case types.NOT_SAVE_NOTES:
-            return {...state, save_notes: false}
+            return {...state, save_notes: false};
         default:
             return state;
     }

@@ -149,6 +149,7 @@ export function saveNotes(val, interface_obj) {
       //console.log('saveNotes RESP: ', resp.data);
       let payload = {
         notes: resp.data.notes,
+        binderID: interface_obj.binder_id,
         tabID: interface_obj.tab_id,
         pageID: interface_obj.page_id
       };
@@ -157,6 +158,39 @@ export function saveNotes(val, interface_obj) {
 
       dispatch({
         type: types.SAVE_NOTES,
+        payload: payload
+      });
+    })
+      .catch(error => {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Failed to Save Notes'
+        });
+      });
+  };
+}
+
+export function autoSaveNotes(val, interface_obj) {
+  const content = JSON.stringify(val.toJSON());
+  return dispatch => {
+    axios.put('/api/note', {
+      document: { content },
+      binderID: interface_obj.binder_id,
+      tabID: interface_obj.tab_id,
+      pageID: interface_obj.page_id
+    }).then((resp) => {
+      //console.log('saveNotes RESP: ', resp.data);
+      let payload = {
+        notes: resp.data.notes,
+        binderID: interface_obj.binder_id,
+        tabID: interface_obj.tab_id,
+        pageID: interface_obj.page_id
+      };
+      //console.log('save notes payload', payload);
+
+
+      dispatch({
+        type: types.AUTO_SAVE_NOTES,
         payload: payload
       });
     })
