@@ -598,15 +598,16 @@ class Notes extends Component {
                 <div className="stylingButtons">
                     <ToolbarButton icon="undo" onMouseDown={this.onClickUndo} />
                     <ToolbarButton icon="redo" onMouseDown={this.onClickRedo} />
-
-                    {this.renderMarkButton('code', 'code')}
-                    {this.renderBlockButton('block-quote', 'format_quote')}
                     <span className="styleSquare" title="link" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
                         <span className="material-icons notesIcons link">link</span>
                     </span>
                     <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
                         <span className="material-icons notesIcons image">image</span>
                     </span>
+                    {this.renderBlockButton('left', 'format_align_left')}
+                    {this.renderBlockButton('center', 'format_align_center')}
+                    {this.renderBlockButton('right', 'format_align_right')}
+                    {this.renderBlockButton('justify', 'format_align_justify')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
                     <span className="styleSquare" title="read only" onClick={this.toggleReadOnly}>
@@ -630,14 +631,11 @@ class Notes extends Component {
                     {this.renderMarkButton('bold', 'format_bold')}
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
-
                     {this.renderBlockButton('heading-one', 'format_size')}
                     {/*{this.renderBlockButton('heading-two', 'title')}*/}
+                    {this.renderMarkButton('code', 'code')}
+                    {this.renderBlockButton('block-quote', 'format_quote')}
 
-                    {this.renderBlockButton('left', 'format_align_left')}
-                    {this.renderBlockButton('center', 'format_align_center')}
-                    {this.renderBlockButton('right', 'format_align_right')}
-                    {this.renderBlockButton('justify', 'format_align_justify')}
 
                     <input
                         className="search-input keyword"
