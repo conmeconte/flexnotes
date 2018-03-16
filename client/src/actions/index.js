@@ -152,7 +152,7 @@ export function saveNotes(val, interface_obj) {
         tabID: interface_obj.tab_id,
         pageID: interface_obj.page_id
       };
-      console.log('save notes payload', payload);
+      //console.log('save notes payload', payload);
 
 
       dispatch({
@@ -167,6 +167,12 @@ export function saveNotes(val, interface_obj) {
         });
       });
   };
+}
+
+export function notesUpdated(){
+  return {
+    type: types.NOT_SAVE_NOTES
+  }
 }
 
 //Lecture Slides Action Creator
@@ -981,6 +987,7 @@ export function addPage(binder_id, tab_id) {
         tabID: tab_id
       })
       .then(resp => {
+        console.log('addpage', resp);
         dispatch({
           type: types.ADD_PAGE,
           payload: resp
@@ -1186,8 +1193,3 @@ export function clearLoader() {
   };
 }
 
-export function notesUpdated(){
-  return {
-    type: types.NOTES_UPDATED
-  }
-}

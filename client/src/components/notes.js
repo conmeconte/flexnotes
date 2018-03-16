@@ -5,7 +5,7 @@ import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import { connect } from 'react-redux';
-import { updateBinderArray, saveNotes } from '../actions';
+import { saveNotes, notesUpdated } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
@@ -109,18 +109,20 @@ class Notes extends Component {
 
     onChange({ value }) {
         this.setState({ value, save: false });
+        
         this.submitNotes();
     };
 
     submitNotes() {
         let { interface_obj } = this.props;
         const { value } = this.state;
+        this.props.notesUpdated();
         // const content = JSON.stringify(value.toJSON());
         this.props.saveNotes(value, interface_obj);
-        this.setState({
-            ...value,
-            save: true
-        })
+        // this.setState({
+        //     ...value,
+        //     save: true
+        // })
         // axios.put('/api/note', {
         //     document: { content },
         //     binderID: interface_obj.binder_id,
@@ -173,6 +175,16 @@ class Notes extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if(nextProps.interface_obj.save_notes !== this.props.interface_obj.save_notes){
+            if(nextProps.interface_obj.save_notes){
+                const { value } = this.state;
+                this.setState({
+                    ...value,
+                    save: true
+                });
+            }
+        }
+
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
@@ -623,5 +635,5 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateBinderArray, saveNotes })(Notes);
+export default connect(mapStateToProps, { saveNotes, notesUpdated })(Notes);
 

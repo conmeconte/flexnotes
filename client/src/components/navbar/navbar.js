@@ -15,8 +15,7 @@ import {
   showNav,
   editable,
   notEditable,
-  clearLoader,
-  notesUpdated
+  clearLoader
 } from '../../actions';
 
 import TourButton from '../react_tour';
@@ -50,17 +49,11 @@ class NavBar extends Component {
       }
     }
 
-    // if(nextProps.interface.page_id !== this.props.interface.page_id){
-    //   if(nextProps.interface.saved_notes){
-    //     this.props.notesUpdated();
-    //   }
-    // }
-
     if (nextProps.interface.sent_to_db !== this.props.interface.sent_to_db) {
       if (nextProps.interface.sent_to_db) {
         for (let i = 0; i < this.props.binderArr.length; i++) {
           if (this.props.binderArr[i]._id === nextProps.interface.binder_id) {
-            let binderObj = this.props.binderArr[i];
+            let binderObj = nextProps.binderArr[i];
             this.props.updateBinderObj(binderObj);
           }
         }
@@ -98,7 +91,7 @@ class NavBar extends Component {
   }
 
   render() {
-    console.log('navbar props', this.props);
+    //console.log('navbar props', this.props);
     let editableText = '';
     const { updateRoutes } = this.state;
 
@@ -179,6 +172,5 @@ export default connect(mapStateToProps, {
   updateBinderObj,
   minNav,
   showNav,
-  clearLoader,
-  notesUpdated
+  clearLoader
 })(NavBar);

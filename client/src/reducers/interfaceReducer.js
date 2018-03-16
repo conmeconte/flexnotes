@@ -9,7 +9,7 @@ const DEFAULT_STATE = {
     user_name: {},
     pull_from_db: false,
     sent_to_db: false,
-    saved_notes: false,
+    save_notes: false,
     axios_error_response: '',
     lfz_response: ''
 }
@@ -67,9 +67,9 @@ export default function (state = DEFAULT_STATE, action) {
         case types.CLEAR_LOADER:
             return {...state, sent_to_db: false};
         case types.SAVE_NOTES:
-            return {...state, saved_notes: true};
-        case types.NOTES_UPDATED:
-            return {...state, save_notes: false, pull_from_db: true}
+            return {...state, save_notes: true};
+        case types.NOT_SAVE_NOTES:
+            return {...state, save_notes: false}
         default:
             return state;
     }

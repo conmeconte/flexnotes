@@ -41,7 +41,7 @@ export default {
   TOGGLE_SLIDE_OUT_MENU: 'toggle_slide_out_menu',
   RESET_SLIDES_URL: 'reset_slides_url',
   SAVE_NOTES: 'save_notes',
-  NOTES_UPDATED: 'notes_updated',
+  NOT_SAVE_NOTES: 'note_save_notes',
   PANEL_TOP_LEFT_HEIGHT: 'panel_top_left_height',
   PANEL_TOP_LEFT_WIDTH: 'panel_top_left_width',
   PANEL_TOP_RIGHT_HEIGHT: 'panel_top_right_height',
