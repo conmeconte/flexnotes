@@ -1175,3 +1175,9 @@ export function clearLoader() {
     type: types.CLEAR_LOADER
   };
 }
+
+export function notesUpdated(){
+  return {
+    type: types.NOTES_UPDATED
+  }
+}

@@ -15,7 +15,8 @@ import {
   showNav,
   editable,
   notEditable,
-  clearLoader
+  clearLoader,
+  notesUpdated
 } from '../../actions';
 
 import TourButton from '../react_tour';
@@ -43,11 +44,15 @@ class NavBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.interface.pull_from_db !== this.props.interface.pull_from_db
-    ) {
+    if (nextProps.interface.pull_from_db !== this.props.interface.pull_from_db) {
       if (nextProps.interface.pull_from_db) {
         this.props.updateBinderArray();
+      }
+    }
+
+    if(nextProps.interface.page_id !== this.props.interface.page_id){
+      if(nextProps.interface.saved_notes){
+        this.props.notesUpdated();
       }
     }
 
@@ -173,5 +178,6 @@ export default connect(mapStateToProps, {
   updateBinderObj,
   minNav,
   showNav,
-  clearLoader
+  clearLoader,
+  notesUpdated
 })(NavBar);
