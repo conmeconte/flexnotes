@@ -99,7 +99,8 @@ class Notes extends Component {
         super(props);
         this.state = {
             value: initialValue,
-            save: true
+            save: true,
+            isReadOnly: true
         };
 
         this.submitNotes = this.submitNotes.bind(this);
@@ -107,6 +108,8 @@ class Notes extends Component {
         this.notesChange = this.notesChange.bind(this);
         // this.notesChange = _.debounce(this.notesChange, 1000);
         this.onChange = this.onChange.bind(this);
+
+        this.toggleReadOnly = this.toggleReadOnly.bind(this)
     }
 
     onChange({ value }) {
@@ -522,6 +525,20 @@ class Notes extends Component {
         }
     };
 
+    // --------------------------- READ ONLY  ---------------------------
+
+    toggleReadOnly = () => {
+        if (this.state.isReadOnly) {
+            this.setState({
+                isReadOnly: false
+            });
+        } else {
+            this.setState({
+                isReadOnly: true
+            });
+        }
+    }
+
     // --------------------------- ALL  ---------------------------
 
     renderMark = (props) => {
@@ -532,7 +549,6 @@ class Notes extends Component {
             case 'code': return <code>{children}</code>;
             case 'italic': return <em>{children}</em>;
             case 'underlined': return <u>{children}</u>;
-            // case 'tab': return <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{children}</span>;
             case 'red': return <span style={{ color: '#FF0000' }}>{children}</span>;
             case 'orange': return <span style={{ color: '#FF7F00' }}>{children}</span>;
             case 'yellow': return <span style={{ color: '#FFFF00' }}>{children}</span>;
@@ -560,7 +576,7 @@ class Notes extends Component {
             case 'link': {
                 const { data } = node;
                 const href = data.get('href');
-                return <a {...attributes} href={href} title="right-click on link to open">{children}</a>
+                return <a {...attributes} href={href} target="_blank" title="right-click on link to open">{children}</a>
             }
             case 'image': {
                 const src = node.data.get('src');
@@ -595,7 +611,11 @@ class Notes extends Component {
                     <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
                         <span className="material-icons notesIcons image">image</span>
                     </span>
+                    <span className="styleSquare" title="read only" onClick={this.toggleReadOnly}>
+                        <span className="material-icons notesIcons">{this.state.isReadOnly ? 'lock' : 'lock_open'}</span>
+                    </span>
                 </div>
+
                 <div className="stylingButtons secondRow">
                     {this.renderBlockButton('justifyLeft', 'format_align_left')}
                     {this.renderBlockButton('justifyCenter', 'format_align_center')}
@@ -647,6 +667,7 @@ class Notes extends Component {
                         onPaste={this.onPaste}
                         renderNode={this.renderNode}
                         renderMark={this.renderMark}
+                        readOnly={this.state.isReadOnly}
                         spellCheck
                     />
                 </div>
