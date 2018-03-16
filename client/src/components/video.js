@@ -77,12 +77,9 @@ class Video extends Component {
         typeof page_arr_obj[pageIndex].video[0].videoURL === ''
       ) {
         // return;
-        this.props.setVideoUrl('', interface_obj);
+        this.props.setVideoUrl('');
       } else {
-        this.props.setVideoUrl(
-          page_arr_obj[pageIndex].video[0].videoId,
-          interface_obj
-        );
+        this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoId);
       }
     }
   }
@@ -123,7 +120,7 @@ class Video extends Component {
         currentPage.hasOwnProperty('video') &&
         currentPage.video.length >= 1
       ) {
-        this.props.setVideoUrl(currentPage.video[0].videoId, interface_obj);
+        // this.props.setVideoUrl(currentPage.video[0].videoId, interface_obj);
         this.props.slideOutVideoSearch(false, 'translateY(-119px)');
         // this.props.setVideoPlaylist(currentPage.video);
         this.binderId = nextProps.binderObj._id;
@@ -131,7 +128,11 @@ class Video extends Component {
         this.pageId = page_arr_obj[pageIndex]._id;
         this.currentVideoList = page_arr_obj[pageIndex].video._id;
         this.currentPlaylistItems = page_arr_obj[pageIndex].video;
-        this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
+        this.props
+          .getVideoPlaylist(this.binderId, this.tabId, this.pageId)
+          .then(() => {
+            this.props.setVideoUrl(this.props.playlistItems[0].videoId);
+          });
       } else {
         this.props.setVideoUrl('', interface_obj);
         this.props.slideOutVideoSearch(true, 'translateY(27px)');

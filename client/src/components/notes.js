@@ -5,7 +5,7 @@ import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import { connect } from 'react-redux';
-import { updateBinderArray } from '../actions';
+import { saveNotes, notesUpdated, autoSaveNotes } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
@@ -99,36 +99,55 @@ class Notes extends Component {
         super(props);
         this.state = {
             value: initialValue,
-            save: false
+            save: true,
+            isReadOnly: false
         };
 
         this.submitNotes = this.submitNotes.bind(this);
-        this.submitNotes = _.debounce(this.submitNotes, 1300);
+        this.submitNotes = _.debounce(this.submitNotes, 2000);
+        this.notesChange = this.notesChange.bind(this);
+        // this.notesChange = _.debounce(this.notesChange, 1000);
+        this.onChange = this.onChange.bind(this);
+
+        this.toggleReadOnly = this.toggleReadOnly.bind(this)
     }
 
-    onChange = ({ value }) => {
+    onChange({ value }) {
         this.setState({ value, save: false });
+        this.notesChange();
         this.submitNotes();
     };
+
+    notesChange(){
+        if(this.props.interface_obj.save_notes === true){
+            this.props.notesUpdated();
+        }
+    }
 
     submitNotes() {
         let { interface_obj } = this.props;
         const { value } = this.state;
-        const content = JSON.stringify(value.toJSON());
-        axios.put('/api/note', {
-            document: { content },
-            binderID: interface_obj.binder_id,
-            tabID: interface_obj.tab_id,
-            pageID: interface_obj.page_id
-        }).then(
-            this.setState({
-                ...value,
-                save: true
-            })
-        ).catch((err)=>{
-            console.log("not logged in: ", err);
-            window.location = '/';
-        })
+        
+        // const content = JSON.stringify(value.toJSON());
+        this.props.autoSaveNotes(value, interface_obj);
+        // this.setState({
+        //     ...value,
+        //     save: true
+        // })
+        // axios.put('/api/note', {
+        //     document: { content },
+        //     binderID: interface_obj.binder_id,
+        //     tabID: interface_obj.tab_id,
+        //     pageID: interface_obj.page_id
+        // }).then(
+        //     this.setState({
+        //         ...value,
+        //         save: true
+        //     })
+        // ).catch((err) => {
+        //     console.log("not logged in: ", err);
+        //     window.location = '/';
+        // })
     }
 
     componentWillMount() {
@@ -155,19 +174,46 @@ class Notes extends Component {
                 const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
                 this.setState({
                     value: Value.fromJSON(lastContent),
-                    save: false
+                    save: true
                 })
             } else {
                 this.setState({
                     value: initialValue,
-                    save: false
+                    save: true
                 })
             }
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    // componentDidUpdate(prevState){
+    //     if(prevState.save !== this.state.save){
+    //         if(this.state.save === false){
+    //             this.props.notesUpdated();
+    //         }
+    //     }
+    // }
+
+    componentWillReceiveProps(nextProps, nextState) {
+        
+        if(nextProps.interface_obj.save_notes !== this.props.interface_obj.save_notes){
+            //if(nextProps.interface_obj.save_notes === true && nextState.save === false){
+                //this.props.notesUpdated();
+                //const { value } = this.state;
+                // this.setState({
+                //     //...value,
+                //     save: true
+                // });
+            //}
+        }
+
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
+            if(this.props.interface_obj.save_notes === false){
+                const { value } = this.state;
+                //console.log('notes cwrp');
+                this.props.saveNotes(value, this.props.interface_obj);
+            }
+
+            //this.props.notesUpdated();
             let { tab_arr_obj } = nextProps.binderObj;
             let { interface_obj } = nextProps;
 
@@ -190,6 +236,7 @@ class Notes extends Component {
                 }
                 if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
                     const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                    //console.log("NOTES LAST CONTENT:", lastContent.document.nodes["0"].nodes["0"].leaves["0"]);
                     this.setState({
                         value: Value.fromJSON(lastContent),
                         save: false
@@ -238,17 +285,17 @@ class Notes extends Component {
 
         let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
-        if(colors[0]){
+        if (colors[0]) {
             mark = 'red'
-        } else if(colors[1]){
+        } else if (colors[1]) {
             mark = 'orange'
-        } else if(colors[2]){
+        } else if (colors[2]) {
             mark = 'yellow'
-        } else if(colors[3]){
+        } else if (colors[3]) {
             mark = 'green'
-        } else if(colors[4]){
+        } else if (colors[4]) {
             mark = 'blue'
-        } else if(colors[5]){
+        } else if (colors[5]) {
             mark = 'purple'
         }
 
@@ -319,7 +366,7 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span onMouseDown={onMouseDown} data-active={isActive}>
+            <span onMouseDown={onMouseDown} data-active={isActive} title={type}>
                 <span className="material-icons notesIcons colorCircles richText">{icon}</span>
             </span>
         )
@@ -478,6 +525,20 @@ class Notes extends Component {
         }
     };
 
+    // --------------------------- READ ONLY  ---------------------------
+
+    toggleReadOnly = () => {
+        if (this.state.isReadOnly) {
+            this.setState({
+                isReadOnly: false
+            });
+        } else {
+            this.setState({
+                isReadOnly: true
+            });
+        }
+    }
+
     // --------------------------- ALL  ---------------------------
 
     renderMark = (props) => {
@@ -488,7 +549,6 @@ class Notes extends Component {
             case 'code': return <code>{children}</code>;
             case 'italic': return <em>{children}</em>;
             case 'underlined': return <u>{children}</u>;
-            // case 'tab': return <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{children}</span>;
             case 'red': return <span style={{ color: '#FF0000' }}>{children}</span>;
             case 'orange': return <span style={{ color: '#FF7F00' }}>{children}</span>;
             case 'yellow': return <span style={{ color: '#FFFF00' }}>{children}</span>;
@@ -502,21 +562,22 @@ class Notes extends Component {
         const { attributes, children, node, isSelected } = props;
         switch (node.type) {
             case 'block-quote': return <blockquote {...attributes}>{children}</blockquote>;
-            case 'bulleted-list': return <ul {...attributes}>{children}</ul>;
+
             case 'heading-one': return <h5 {...attributes}>{children}</h5>;
             // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
 
-            case 'justifyLeft': return <div style={{ textAlign: 'left' }}>{children}</div>;
-            case 'justifyCenter': return <div style={{ textAlign: 'center' }}>{children}</div>;
-            case 'justifyRight': return <div style={{ textAlign: 'right' }}>{children}</div>;
-            case 'justifyFull': return <div style={{ textAlign: 'justify' }}>{children}</div>;
+            case 'left': return <div style={{ textAlign: 'left' }}>{children}</div>;
+            case 'center': return <div style={{ textAlign: 'center' }}>{children}</div>;
+            case 'right': return <div style={{ textAlign: 'right' }}>{children}</div>;
+            case 'justify': return <div style={{ textAlign: 'justify' }}>{children}</div>;
 
             case 'list-item': return <li {...attributes}>{children}</li>;
+            case 'bulleted-list': return <ul className="notesUnorderedList" {...attributes}>{children}</ul>;
             case 'numbered-list': return <ol {...attributes}>{children}</ol>;
             case 'link': {
                 const { data } = node;
                 const href = data.get('href');
-                return <a {...attributes} href={href} title="right-click on link to open">{children}</a>
+                return <a {...attributes} href={href} target="_blank" title="right-click on link to open">{children}</a>
             }
             case 'image': {
                 const src = node.data.get('src');
@@ -537,33 +598,24 @@ class Notes extends Component {
                 <div className="stylingButtons">
                     <ToolbarButton icon="undo" onMouseDown={this.onClickUndo} />
                     <ToolbarButton icon="redo" onMouseDown={this.onClickRedo} />
-                    {this.renderMarkButton('bold', 'format_bold')}
-                    {this.renderMarkButton('italic', 'format_italic')}
-                    {this.renderMarkButton('underlined', 'format_underlined')}
-                    {this.renderBlockButton('justifyLeft', 'format_align_left')}
-                    {this.renderBlockButton('justifyCenter', 'format_align_center')}
-                    {this.renderBlockButton('justifyRight', 'format_align_right')}
-                    {this.renderBlockButton('justifyFull', 'format_align_justify')}
-                    {this.renderMarkButton('code', 'code')}
-                    {this.renderBlockButton('heading-one', 'format_size')}
-                    {/*{this.renderBlockButton('heading-two', 'title')}*/}
-                    {this.renderBlockButton('block-quote', 'format_quote')}
-                    {this.renderBlockButton('numbered-list', 'format_list_numbered')}
-                    {/*{this.renderBlockButton('bulleted-list', 'format_list_bulleted')}*/}
                     <span className="styleSquare" title="link" onMouseDown={this.onClickLink} data-active={this.hasLinks}>
                         <span className="material-icons notesIcons link">link</span>
                     </span>
                     <span className="styleSquare" title="image" onMouseDown={this.onClickImage}>
                         <span className="material-icons notesIcons image">image</span>
                     </span>
+                    {this.renderBlockButton('left', 'format_align_left')}
+                    {this.renderBlockButton('center', 'format_align_center')}
+                    {this.renderBlockButton('right', 'format_align_right')}
+                    {this.renderBlockButton('justify', 'format_align_justify')}
+                    {this.renderBlockButton('numbered-list', 'format_list_numbered')}
+                    {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
+                    <span className="styleSquare" title="read only" onClick={this.toggleReadOnly}>
+                        <span className="material-icons notesIcons">{this.state.isReadOnly ? 'lock' : 'lock_open'}</span>
+                    </span>
                 </div>
-                <div>
-                    <input
-                        className="search-input keyword"
-                        placeholder="Search keywords..."
-                        onChange={this.onInputChange}
-                    />
 
+                <div className="stylingButtons secondRow">
                     <div className="colorOptions">
                         <span className="colorDropbtn" title="font color"><i className="material-icons fontColorIcon notesIcons">format_color_text</i></span>
                         <div className="fontColor-options">
@@ -575,8 +627,23 @@ class Notes extends Component {
                             <p className="fontColor violetFont">{this.renderMarkButton('purple', 'lens')}</p>
                         </div>
                     </div>
+
+                    {this.renderMarkButton('bold', 'format_bold')}
+                    {this.renderMarkButton('italic', 'format_italic')}
+                    {this.renderMarkButton('underlined', 'format_underlined')}
+                    {this.renderBlockButton('heading-one', 'format_size')}
+                    {/*{this.renderBlockButton('heading-two', 'title')}*/}
+                    {this.renderMarkButton('code', 'code')}
+                    {this.renderBlockButton('block-quote', 'format_quote')}
+
+
+                    <input
+                        className="search-input keyword"
+                        placeholder="Search keywords..."
+                        onChange={this.onInputChange}
+                    />
                 </div>
-                <h6 className="saveNotes" >{this.state.save ? "Notes saved" : "Saving notes..."}</h6>
+                <h6 className="saveNotes" >{this.state.save ? "Notes saved" : ""}</h6>
             </div>
         )
     };
@@ -600,6 +667,7 @@ class Notes extends Component {
                         onPaste={this.onPaste}
                         renderNode={this.renderNode}
                         renderMark={this.renderMark}
+                        readOnly={this.state.isReadOnly}
                         spellCheck
                     />
                 </div>
@@ -616,5 +684,5 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateBinderArray })(Notes);
+export default connect(mapStateToProps, { saveNotes, notesUpdated, autoSaveNotes })(Notes);
 

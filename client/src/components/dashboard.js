@@ -168,39 +168,46 @@ class Dashboard extends Component {
       {
         selector: '.first-step',
         content: 'Welcome to FlexNotes!',
+        position: 'center',
         style: { textAlign: 'center' }
       },
       {
         selector: '.second-step',
         content:
           'This is the navbar. It helps you organize your notes into binders, tabs and pages.',
-        style: { textAlign: 'center', marginTop: '18em' }
+        position: 'center',
+        style: { textAlign: 'center'}
       },
       {
         selector: '.navLink',
         content:
-          'This is the menu. This will open the navbar so you can navigate through your binders, tabs and pages.',
-        style: { textAlign: 'center', marginLeft: '1em' }
+          'This opens your binders. It will help you navigate through them, their tabs and their pages.',
+        position: 'center',
+        style: { textAlign: 'center', marginTop: '15em'}
       },
       {
         selector: '.videoLink',
         content:
           'This opens your video panel where you can save class videos and search YouTube!',
-        style: { textAlign: 'center', marginLeft: '11em' }
+        position: 'center',
+        style: { textAlign: 'center', marginTop: '15em'}
       },
       {
         selector: '.slideLink',
         content: 'You can access your class slides here.',
-        style: { textAlign: 'center', marginLeft: '5em' }
+        position: 'center',
+        style: { textAlign: 'center', marginTop: '15em'}
       },
       {
         selector: '.notesLink',
         content: 'Your notes are found here.',
-        style: { textAlign: 'center', marginLeft: '-3em' }
+        position: 'center',
+        style: { textAlign: 'center', marginTop: '15em'}
       },
       {
         selector: '.last-step',
         content: 'Happy note-taking!',
+        position: 'center',
         style: { textAlign: 'center' }
       }
     ];
@@ -222,7 +229,7 @@ class Dashboard extends Component {
           break;
       }
       dashboard = (
-        <div className="mobilePanel-container">
+        <div className="mobilePanel-container mobilePanel-container-safari">
           {mobilePanel}
           <ul className="mobileNav">
             <li
@@ -232,8 +239,8 @@ class Dashboard extends Component {
               <div
                 className={`${mobilePanelIndex === 1 ? 'activeMobile' : ''}`}
               >
-                <i className="small material-icons">dehaze</i>
-                <br />Menu
+                <i className="small material-icons">storage</i>
+                <br />Binders
               </div>
             </li>
             <li
@@ -254,7 +261,7 @@ class Dashboard extends Component {
                 <i className="small material-icons mobile-icon">
                   video_library
                 </i>
-                <br />Video
+                <br />Videos
               </div>
             </li>
             <li
@@ -295,6 +302,7 @@ class Dashboard extends Component {
       <div>
         {dashboard}
         <Tour
+          startAt={0}
           steps={isMobile ? mobileSteps : desktopSteps}
           isOpen={this.state.isTourOpen}
           onRequestClose={this.toggleTour}

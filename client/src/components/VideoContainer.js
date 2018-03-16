@@ -4,6 +4,10 @@ import { Field, reduxForm } from 'redux-form';
 import * as actions from '../actions';
 
 class VideoContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.currentVideoList = this.props.currentPlaylistItems;
+  }
   renderInput({ input, type, meta: { error, touched } }) {
     return (
       <div className="col s8 input-field">
@@ -93,14 +97,17 @@ class VideoContainer extends Component {
             ? <i className="material-icons">remove</i>
             : <i className="material-icons">add</i>}
         </div>
-        <div id="video-container" className="video-container">
+        <div
+          id="video-container"
+          className="video-container video-container-safari"
+        >
           <div className="resize-blocker" />
           {this.props.currentPlaylistItems.length >= 1 &&
           this.props.currentPlaylistItems[0].videoId !== undefined
             ? <iframe
                 allowFullScreen
                 id="video-iframe"
-                src={this.props.currentPlaylistItems[0].videoURL}
+                src={this.props.videoLink}
                 className="video-iframe"
               />
             : <div className="no-videos">
@@ -111,21 +118,6 @@ class VideoContainer extends Component {
       </div>
     );
   }
-}
-
-function mapStateToProps(state) {
-  return {
-    binderTabPageIds: state.interface,
-    resultsStyles: state.video.resultsStyles,
-    toggleResultsBool: state.video.toggleResults,
-    opacityContainer: state.video.opacityDisplay,
-    slideOutStyles: state.video.videoLinkSlideOut,
-    toggleSlideOut: state.video.toggleSlideOut,
-    savedVideoTitle: state.video.savedVideoTitle,
-    savedVideoImage: state.video.savedVideoImage,
-    playlistStyles: state.video.playlistStyles,
-    videoLink: state.video.videoLink
-  };
 }
 
 function validate(values) {
@@ -143,5 +135,20 @@ VideoContainer = reduxForm({
   form: 'youtube-url',
   validate
 })(VideoContainer);
+
+function mapStateToProps(state) {
+  return {
+    binderTabPageIds: state.interface,
+    resultsStyles: state.video.resultsStyles,
+    toggleResultsBool: state.video.toggleResults,
+    opacityContainer: state.video.opacityDisplay,
+    slideOutStyles: state.video.videoLinkSlideOut,
+    toggleSlideOut: state.video.toggleSlideOut,
+    savedVideoTitle: state.video.savedVideoTitle,
+    savedVideoImage: state.video.savedVideoImage,
+    playlistStyles: state.video.playlistStyles,
+    videoLink: state.video.videoLink
+  };
+}
 
 export default connect(mapStateToProps, actions)(VideoContainer);

@@ -18,12 +18,19 @@
     height: 100%;
 }
 
+.notesUnorderedList li::before {
+    content: "•";
+    padding: 0 8px 0 28px;
+    color: rgba(0,0,0,0.87);
+}
+
 code {
     display: inline-block;
     background-color: #d5d5d5;
     color: #0288d1;
     padding: 0 0.5em;
-    font-family: 'Overpass Mono' !important;
+    font-family: 'Overpass Mono', sans-serif !important;
+    line-height: 1.56;
 }
 
 blockquote {
@@ -54,8 +61,8 @@ blockquote {
 .stylingButtons {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-wrap: nowrap;
+    justify-content: space-around;
     height: 40%;
     width: 100%;
     padding-top: 1.5em;
@@ -86,7 +93,7 @@ blockquote {
 .search-input.keyword {
     background-color: #eceff1;
     height: 2.5em;
-    width: 20em;
+    width: 18em;
     padding-left: 2%;
     margin-top: 0;
     margin-bottom: 0;
@@ -115,33 +122,6 @@ blockquote {
 
     .search-input.keyword {
         height: 2.3em;
-        margin-left: 0;
-    }
-}
-
-@media only screen and (max-width: 1385px) {
-    .search-input.keyword {
-        margin-top: 0.7em;
-    }
-}
-
-@media only screen and (max-width: 974px) {
-    .stylingButtons {
-        justify-content: flex-start;
-    }
-
-    .search-input.keyword {
-        width: 17em;
-    }
-
-    .material-icons.image {
-        margin-top: 0.3em;
-    }
-}
-
-@media only screen and (max-width: 935px) {
-    .material-icons.link {
-        margin-top: 0.3em;
     }
 }
 
@@ -171,49 +151,41 @@ blockquote {
     }
 }
 
-@media only screen and (max-width: 574px) {
+@media only screen and (max-width: 500px) {
+    .colorOptions {
+        margin-right: 0.5em;
+    }
+}
+
+@media only screen and (max-width: 430px) {
+    .stylingButtons.secondRow {
+        flex-wrap: wrap;
+    }
+}
+
+@media only screen and (max-width: 422px) {
     .search-input.keyword {
-        margin-top: 0.7em;
-        width: 20em;
+        margin-top: 1em;
     }
 }
 
-@media only screen and (max-width: 382px) {
-    .stylingButtons {
-        justify-content: flex-start;
-    }
+/*--------------------------- FONT COLOR ---------------------------*/
 
-    .material-icons.image {
-        margin-top: 0.3em;
-    }
-}
-
-
-
-
-
-
-
-
-
-/* The dropdown container */
 .colorOptions {
     float: left;
     overflow: hidden;
 }
 
-/* Dropdown button */
 .colorOptions .colorDropbtn {
     font-size: 16px;
     border: none;
     outline: none;
-    padding: 14px 16px;
+    /*padding: 14px 16px;*/
     background-color: inherit;
-    font-family: inherit; /* Important for vertical align on mobile phones */
-    margin: 0; /* Important for vertical align on mobile phones */
+    font-family: inherit;
+    margin: 0;
 }
 
-/* Dropdown content (hidden by default) */
 .fontColor-options {
     display: none;
     position: absolute;
@@ -226,7 +198,6 @@ blockquote {
 
 }
 
-/* Links inside the dropdown */
 .fontColor-options .fontColor {
     float: none;
     text-decoration: none;
@@ -234,12 +205,10 @@ blockquote {
     text-align: left;
 }
 
-/* Add a grey background color to dropdown links on hover */
 .fontColor-options {
     background-color: #ddd;
 }
 
-/* Show the dropdown menu on hover */
 .colorOptions:hover .fontColor-options {
     display: flex;
     flex-direction: row;

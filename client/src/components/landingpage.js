@@ -71,7 +71,7 @@ class LandingPage extends Component {
                         </div>
                         <div className="google-div">
                             <div className="login-info">
-                                <h3>{!this.props.auth ? 'Sign In' : 'Sign Out'} <span className={!this.props.auth ? 'glyphicon glyphicon-user' : ''}></span></h3>
+                                <h3 className="login-info-h3">{!this.props.auth ? 'Sign In' : 'Sign Out'} <span className={!this.props.auth ? 'glyphicon glyphicon-user' : ''}></span></h3>
                                 <div className="login-logout-container"><Login /></div>
                                 <button onClick={this.props.fetchSampleUser} className="btn sample">Try it!</button>
                             </div>

@@ -24,6 +24,10 @@
     margin-left: 10%;
 }
 
+.mobileLink > div > i {
+    margin-left: 10%;
+}
+
 .activeMobile {
     color: #0288d1;
 }
@@ -44,9 +48,8 @@
 .loader-container{
     display: flex;
     height: 100vh;
-    width: 100vw;
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.7);
     top: 0;
     left: 0;
     z-index: 4000;
@@ -55,13 +58,14 @@
 .preloader-wrapper.active{
     position: absolute;
     top: 40%;
-    left: 5%;
+    left: 40%;
 }
 
 @media (max-width: 767px){
+    .loader-container{
+        width: 100vw;
+    }
     .preloader-wrapper.active{
-        position: absolute;
-        top: 40%;
         left: 50%;
     }
 

@@ -136,6 +136,81 @@ export function getPanelNum(num) {
   };
 }
 
+// Notes Action Creator
+export function saveNotes(val, interface_obj) {
+  const content = JSON.stringify(val.toJSON());
+  return dispatch => {
+    axios
+      .put('/api/note', {
+        document: { content },
+        binderID: interface_obj.binder_id,
+        tabID: interface_obj.tab_id,
+        pageID: interface_obj.page_id
+      })
+      .then(resp => {
+        //console.log('saveNotes RESP: ', resp.data);
+        let payload = {
+          notes: resp.data.notes,
+          binderID: interface_obj.binder_id,
+          tabID: interface_obj.tab_id,
+          pageID: interface_obj.page_id
+        };
+        //console.log('save notes payload', payload);
+
+        dispatch({
+          type: types.SAVE_NOTES,
+          payload: payload
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Failed to Save Notes'
+        });
+      });
+  };
+}
+
+export function autoSaveNotes(val, interface_obj) {
+  const content = JSON.stringify(val.toJSON());
+  return dispatch => {
+    axios
+      .put('/api/note', {
+        document: { content },
+        binderID: interface_obj.binder_id,
+        tabID: interface_obj.tab_id,
+        pageID: interface_obj.page_id
+      })
+      .then(resp => {
+        //console.log('saveNotes RESP: ', resp.data);
+        let payload = {
+          notes: resp.data.notes,
+          binderID: interface_obj.binder_id,
+          tabID: interface_obj.tab_id,
+          pageID: interface_obj.page_id
+        };
+        //console.log('save notes payload', payload);
+
+        dispatch({
+          type: types.AUTO_SAVE_NOTES,
+          payload: payload
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: types.AXIOS_ERROR,
+          msg: 'Failed to Save Notes'
+        });
+      });
+  };
+}
+
+export function notesUpdated() {
+  return {
+    type: types.NOT_SAVE_NOTES
+  };
+}
+
 //Lecture Slides Action Creator
 
 export function setSlidesUrl(slidesURL, interfaceObj) {
@@ -821,7 +896,7 @@ export function grabVideoUrl(videoLink) {
     payload: videoLink
   };
 }
-export function setVideoUrl(id, interfaceObj) {
+export function setVideoUrl(id) {
   return {
     type: types.SET_VIDEO_URL,
     payload: `https://www.youtube.com/embed/${id}`
@@ -948,6 +1023,7 @@ export function addPage(binder_id, tab_id) {
         tabID: tab_id
       })
       .then(resp => {
+        console.log('addpage', resp);
         dispatch({
           type: types.ADD_PAGE,
           payload: resp
