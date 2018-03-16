@@ -799,7 +799,6 @@ export function emptyVideoSlideOut(toggleBool, slide) {
   };
 }
 export function playVideo(id) {
-  debugger;
   if (id.indexOf('youtube') !== -1) {
     let videoId = id;
     videoId = id.split('/');
