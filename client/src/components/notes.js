@@ -233,7 +233,7 @@ class Notes extends Component {
                 }
                 if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
                     const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
-                    console.log("NOTES LAST CONTENT:", lastContent.document.nodes["0"].nodes["0"].leaves["0"]);
+                    //console.log("NOTES LAST CONTENT:", lastContent.document.nodes["0"].nodes["0"].leaves["0"]);
                     this.setState({
                         value: Value.fromJSON(lastContent),
                         save: false
