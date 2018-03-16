@@ -137,15 +137,16 @@ export function getPanelNum(num) {
 }
 
 // Notes Action Creator
-export function saveNotes(notes, interface_obj) {
+export function saveNotes(val, interface_obj) {
+  const content = JSON.stringify(val.toJSON());
   return dispatch => {
     axios.put('/api/note', {
-      document: { notes },
+      document: { content },
       binderID: interface_obj.binder_id,
       tabID: interface_obj.tab_id,
       pageID: interface_obj.page_id
     }).then((resp) => {
-      console.log('saveNotes RESP: ', resp.data.notes.document.notes);
+      console.log('saveNotes RESP: ', resp.data.notes.document.content);
       dispatch({
         type: types.SAVE_NOTES,
       });

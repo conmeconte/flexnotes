@@ -115,8 +115,8 @@ class Notes extends Component {
     submitNotes() {
         let { interface_obj } = this.props;
         const { value } = this.state;
-        const content = JSON.stringify(value.toJSON());
-        this.props.saveNotes(content, interface_obj);
+        // const content = JSON.stringify(value.toJSON());
+        this.props.saveNotes(value, interface_obj);
         this.setState({
             ...value,
             save: true
@@ -158,7 +158,7 @@ class Notes extends Component {
                 }
             }
             if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
-                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.notes);
+                const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
                 this.setState({
                     value: Value.fromJSON(lastContent),
                     save: false
@@ -195,7 +195,7 @@ class Notes extends Component {
                     }
                 }
                 if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
-                    const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.notes);
+                    const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
                     console.log("NOTES LAST CONTENT:", lastContent.document.nodes["0"].nodes["0"].leaves["0"]);
                     this.setState({
                         value: Value.fromJSON(lastContent),
