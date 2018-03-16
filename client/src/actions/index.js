@@ -146,9 +146,18 @@ export function saveNotes(val, interface_obj) {
       tabID: interface_obj.tab_id,
       pageID: interface_obj.page_id
     }).then((resp) => {
-      console.log('saveNotes RESP: ', resp.data.notes.document.content);
+      //console.log('saveNotes RESP: ', resp.data);
+      let payload = {
+        notes: resp.data.notes,
+        tabID: interface_obj.tab_id,
+        pageID: interface_obj.page_id
+      };
+      console.log('save notes payload', payload);
+
+
       dispatch({
         type: types.SAVE_NOTES,
+        payload: payload
       });
     })
       .catch(error => {
@@ -1175,4 +1184,10 @@ export function clearLoader() {
   return {
     type: types.CLEAR_LOADER
   };
+}
+
+export function notesUpdated(){
+  return {
+    type: types.NOTES_UPDATED
+  }
 }

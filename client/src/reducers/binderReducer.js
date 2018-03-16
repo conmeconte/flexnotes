@@ -21,6 +21,24 @@ export default function(state = DEFAULT_STATE, action) {
       return { binderObj: action.payload };
     case types.UPDATE_BINDER_OBJ:
       return { binderObj: action.payload };
+    case types.SAVE_NOTES:
+      let newBinderObj = state.binderObj;
+      let tabIndex = null;
+      let pageIndex = null;
+      for (let i = 0; i < state.binderObj.tab_arr_obj.length; i++) {
+        if (state.binderObj.tab_arr_obj[i]._id === action.payload.tabID) {
+          tabIndex = i;
+          break;
+        }
+      }
+      for (let i = 0; i < state.binderObj.tab_arr_obj[tabIndex].page_arr_obj.length; i++) {
+        if (state.binderObj.tab_arr_obj[tabIndex].page_arr_obj[i]._id === action.payload.pageID) {
+          pageIndex = i;
+          break;
+        }
+      }
+      newBinderObj.tab_arr_obj[tabIndex].page_arr_obj[pageIndex].notes = action.payload.notes;
+      return{binderObj: newBinderObj};
     default:
       return state;
   }
