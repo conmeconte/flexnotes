@@ -302,7 +302,7 @@ class Notes extends Component {
             return
         }
 
-        let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+        let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'background'];
 
         if (colors[0]) {
             mark = 'red'
@@ -316,6 +316,8 @@ class Notes extends Component {
             mark = 'blue'
         } else if (colors[5]) {
             mark = 'purple'
+        } else if (colors[6]) {
+            mark = 'highlight'
         }
 
         event.preventDefault();
@@ -682,6 +684,7 @@ class Notes extends Component {
                         </div>
                     </div>
 
+                    {this.renderMarkButton('highlight', 'edit')}
                     {this.renderMarkButton('bold', 'format_bold')}
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
