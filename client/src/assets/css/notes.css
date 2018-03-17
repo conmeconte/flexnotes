@@ -5,6 +5,10 @@
 
 }
 
+.emoji {
+    font-size: 2em;
+}
+
 .text-editor {
     height: 100%;
     overflow: hidden;
@@ -61,8 +65,8 @@ blockquote {
 .stylingButtons {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: space-between;
     height: 40%;
     width: 100%;
     padding-top: 1.5em;
@@ -76,11 +80,11 @@ blockquote {
     text-align: center;
 }
 
-.richText, .fontColorIcon {
+.richText, .fontColorIcon, .emojiIcon {
     color: white;
 }
 
-.styleSquare:hover, .richText:hover, .fontColorIcon:hover {
+.styleSquare:hover, .richText:hover, .fontColorIcon:hover, .emojiIcon:hover {
     background-color: ghostwhite;
     color: #01579b;
 }
@@ -152,16 +156,16 @@ blockquote {
 }
 
 @media only screen and (max-width: 500px) {
-    .colorOptions {
+    .hoverOptions {
         margin-right: 0.5em;
     }
 }
 
-@media only screen and (max-width: 430px) {
-    .stylingButtons.secondRow {
-        flex-wrap: wrap;
-    }
-}
+/*@media only screen and (max-width: 430px) {*/
+    /*.stylingButtons.secondRow {*/
+        /*flex-wrap: wrap;*/
+    /*}*/
+/*}*/
 
 @media only screen and (max-width: 422px) {
     .search-input.keyword {
@@ -169,14 +173,14 @@ blockquote {
     }
 }
 
-/*--------------------------- FONT COLOR ---------------------------*/
+/*--------------------------- HOVER OPTIONS ---------------------------*/
 
-.colorOptions {
+.hoverOptions {
     float: left;
     overflow: hidden;
 }
 
-.colorOptions .colorDropbtn {
+.hoverOptions .hoverDropbtn {
     font-size: 16px;
     border: none;
     outline: none;
@@ -191,11 +195,18 @@ blockquote {
     position: absolute;
     height: 3.8em;
     width: 6em;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
-    background-color: darkgray;
+    background-color: #ddd;
     padding: 0.3em 0 0 0.3em;
 
+}
+
+.emoji-options {
+    display: none;
+    position: absolute;
+    height: 23.7em;
+    width: 2.5em;
+    background-color: #ddd;
+    padding: 0.3em 0 0 0.3em;
 }
 
 .fontColor-options .fontColor {
@@ -205,18 +216,20 @@ blockquote {
     text-align: left;
 }
 
-.fontColor-options {
-    background-color: #ddd;
-}
 
-.colorOptions:hover .fontColor-options {
+
+.hoverOptions:hover .fontColor-options {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
-.fontColor {
+.hoverOptions:hover .emoji-options {
+    display: block;
+}
+
+.fontColor, .emojis {
     width: 1.8em;
     height: 1.8em;
     padding-right: 1%;
@@ -259,4 +272,8 @@ blockquote {
 
 .colorCircles:hover {
     cursor: pointer
+}
+
+.textAreaEmoji {
+    cursor: pointer;
 }
