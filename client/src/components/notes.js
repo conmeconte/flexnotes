@@ -40,6 +40,25 @@ const initialValue = Value.fromJSON({
     }
 });
 
+// --------------------------- EMOJIS  ---------------------------
+
+const EMOJIS = [
+    '😃',
+    '😬',
+    '😂',
+    '😎',
+    '😍',
+    '😴',
+    '👍',
+    '👌',
+    '💋',
+    '⁉️',
+    '❤️',
+    '💩'
+]
+
+const noop = e => e.preventDefault();
+
 // --------------------------- UNDO AND REDO  ---------------------------
 
 const ToolbarButton = props => (
@@ -451,35 +470,35 @@ class Notes extends Component {
 
     // --------------------------- SEARCH HIGHLIGHTING  ---------------------------
 
-    onInputChange = (event) => {
-        const { value } = this.state;
-        const string = event.target.value;
-        const texts = value.document.getTexts();
-        const decorations = [];
-
-        texts.forEach((node) => {
-            const { key, text } = node;
-            const parts = text.split(string);
-            let offset = 0;
-
-            parts.forEach((part, i) => {
-                if (i !== 0) {
-                    decorations.push({
-                        anchorKey: key,
-                        anchorOffset: offset - string.length,
-                        focusKey: key,
-                        focusOffset: offset,
-                        marks: [{ type: 'highlight' }],
-                    })
-                }
-
-                offset = offset + part.length + string.length
-            })
-        });
-
-        const change = value.change().setValue({ decorations });
-        this.onChange(change)
-    };
+    // onInputChange = (event) => {
+    //     const { value } = this.state;
+    //     const string = event.target.value;
+    //     const texts = value.document.getTexts();
+    //     const decorations = [];
+    //
+    //     texts.forEach((node) => {
+    //         const { key, text } = node;
+    //         const parts = text.split(string);
+    //         let offset = 0;
+    //
+    //         parts.forEach((part, i) => {
+    //             if (i !== 0) {
+    //                 decorations.push({
+    //                     anchorKey: key,
+    //                     anchorOffset: offset - string.length,
+    //                     focusKey: key,
+    //                     focusOffset: offset,
+    //                     marks: [{ type: 'highlight' }],
+    //                 })
+    //             }
+    //
+    //             offset = offset + part.length + string.length
+    //         })
+    //     });
+    //
+    //     const change = value.change().setValue({ decorations });
+    //     this.onChange(change)
+    // };
 
     // --------------------------- IMAGES  ---------------------------
 
@@ -537,6 +556,26 @@ class Notes extends Component {
                 isReadOnly: true
             });
         }
+    };
+
+
+    // --------------------------- EMOJIS  ---------------------------
+
+    onClickEmoji = (e, code) => {
+        e.preventDefault()
+        const { value } = this.state
+        const change = value.change()
+
+        change
+            .insertInline({
+                type: 'emoji',
+                isVoid: true,
+                data: { code },
+            })
+            .collapseToStartOfNextText()
+            .focus()
+
+        this.onChange(change)
     }
 
     // --------------------------- ALL  ---------------------------
@@ -587,6 +626,20 @@ class Notes extends Component {
                     <img src={src} className={className} style={style} {...attributes} />
                 )
             }
+            case 'emoji': {
+                const { data } = node
+                const code = data.get('code')
+                return (
+                    <span
+                        className={`emoji ${isSelected ? 'selected' : ''}`}
+                        {...props.attributes}
+                        contentEditable={false}
+                        onDrop={noop}
+                    >
+            {code}
+          </span>
+                )
+            }
 
         }
     };
@@ -610,14 +663,15 @@ class Notes extends Component {
                     {this.renderBlockButton('justify', 'format_align_justify')}
                     {this.renderBlockButton('numbered-list', 'format_list_numbered')}
                     {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
+
                     <span className="styleSquare" title="read only" onClick={this.toggleReadOnly}>
                         <span className="material-icons notesIcons">{this.state.isReadOnly ? 'lock' : 'lock_open'}</span>
                     </span>
                 </div>
 
                 <div className="stylingButtons secondRow">
-                    <div className="colorOptions">
-                        <span className="colorDropbtn" title="font color"><i className="material-icons fontColorIcon notesIcons">format_color_text</i></span>
+                    <div className="hoverOptions">
+                        <span className="hoverDropbtn" title="font color"><i className="material-icons fontColorIcon notesIcons">format_color_text</i></span>
                         <div className="fontColor-options">
                             <p className="fontColor redFont">{this.renderMarkButton('red', 'lens')}</p>
                             <p className="fontColor orangeFont">{this.renderMarkButton('orange', 'lens')}</p>
@@ -637,11 +691,25 @@ class Notes extends Component {
                     {this.renderBlockButton('block-quote', 'format_quote')}
 
 
-                    <input
-                        className="search-input keyword"
-                        placeholder="Search keywords..."
-                        onChange={this.onInputChange}
-                    />
+                    {/*<input*/}
+                        {/*className="search-input keyword"*/}
+                        {/*placeholder="Search keywords..."*/}
+                        {/*onChange={this.onInputChange}*/}
+                    {/*/>*/}
+
+                    <div className="hoverOptions">
+                        <span className="hoverDropbtn" title="emoji"><i className="material-icons emojiIcon notesIcons">insert_emoticon</i></span>
+                        <div className="emoji-options">
+                            <p className="emojis">{EMOJIS.map((emoji, i) => {
+                                const onMouseDown = e => this.onClickEmoji(e, emoji)
+                                return (
+                                    <span key={i} className="button" onMouseDown={onMouseDown}>
+                                        <span className="material-icons textAreaEmoji">{emoji}</span>
+                                    </span>
+                                )
+                            })}</p>
+                        </div>
+                    </div>
                 </div>
                 <h6 className="saveNotes" >{this.state.save ? "Notes saved" : ""}</h6>
             </div>
