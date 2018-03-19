@@ -128,15 +128,20 @@ class Video extends Component {
         this.pageId = page_arr_obj[pageIndex]._id;
         this.currentVideoList = page_arr_obj[pageIndex].video._id;
         this.currentPlaylistItems = page_arr_obj[pageIndex].video;
-        this.props
-          .getVideoPlaylist(this.binderId, this.tabId, this.pageId)
-          .then(() => {
-            this.props.setVideoUrl(this.props.playlistItems[0].videoId);
-          });
       } else {
         this.props.setVideoUrl('', interface_obj);
         this.props.slideOutVideoSearch(true, 'translateY(27px)');
+        this.binderId = nextProps.binderObj._id;
+        this.tabId = tab_arr_obj[tabIndex]._id;
+        this.pageId = page_arr_obj[pageIndex]._id;
+        this.currentVideoList = page_arr_obj[pageIndex].video._id;
+        this.currentPlaylistItems = page_arr_obj[pageIndex].video;
       }
+      this.props
+        .getVideoPlaylist(this.binderId, this.tabId, this.pageId)
+        .then(() => {
+          this.props.setVideoUrl(this.props.playlistItems[0].videoId);
+        });
     }
   }
   renderInput({ input }) {
