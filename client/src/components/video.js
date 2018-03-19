@@ -158,7 +158,6 @@ class Video extends Component {
     );
   }
   render() {
-    console.log('PLAYLIST ITEMS: ', this.props.playlistItems);
     const { resultsVideoUrl, playlistStyles } = this.props;
     return (
       <div className="main">
