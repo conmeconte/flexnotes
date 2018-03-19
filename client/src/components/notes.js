@@ -47,13 +47,13 @@ const EMOJIS = [
     '😬',
     '😂',
     '😎',
+    '🤯',
     '😍',
-    '😴',
     '👍',
     '👌',
     '💋',
-    '⁉️',
     '❤️',
+    '⁉️',
     '💩'
 ]
 
@@ -295,7 +295,6 @@ class Notes extends Component {
             mark = 'code'
         } else if (isTabHotkey(event)) {
             mark = 'tab'
-            event.preventDefault();
             change.insertText("     ");
             return true
         } else {
@@ -414,8 +413,8 @@ class Notes extends Component {
         const onMouseDown = event => this.onClickMark(event, type);
 
         return (
-            <span onMouseDown={onMouseDown} data-active={isActive} title={type}>
-                <span className={fontStyle}>{fontStyle}</span>
+            <span onMouseDown={onMouseDown} data-active={isActive} title={type} className="fontStyleButton">
+                <span>{fontStyle}</span>
             </span>
         )
     };
@@ -672,8 +671,8 @@ class Notes extends Component {
                         contentEditable={false}
                         onDrop={noop}
                     >
-            {code}
-          </span>
+                        {code}
+                    </span>
                 )
             }
 
@@ -706,16 +705,15 @@ class Notes extends Component {
                 </div>
 
                 <div className="stylingButtons secondRow">
-
                     <div className="font-dropdown">
-                        <span className="material-icons notesIcons richText">font_download</span>
+                        <span className="material-icons notesIcons richText" title="font">font_download</span>
                         <div className="font-styles">
-                            <p>{this.renderFontButton('arial', 'Arial')}</p>
-                            <p>{this.renderFontButton('comic sans', 'Comic Sans')}</p>
-                            <p>{this.renderFontButton('courier new', 'Courier New')}</p>
-                            <p>{this.renderFontButton('impact', 'Impact')}</p>
-                            <p>{this.renderFontButton('roboto', 'Roboto')}</p>
-                            <p>{this.renderFontButton('times new roman', 'Times New Roman')}</p>
+                            <p className="fonts arial">{this.renderFontButton('arial', 'Arial')}</p>
+                            <p className="fonts comic">{this.renderFontButton('comic sans', 'Comic Sans')}</p>
+                            <p className="fonts courier">{this.renderFontButton('courier new', 'Courier New')}</p>
+                            <p className="fonts impact">{this.renderFontButton('impact', 'Impact')}</p>
+                            <p className="fonts roboto">{this.renderFontButton('roboto', 'Roboto')}</p>
+                            <p className="fonts times">{this.renderFontButton('times new roman', 'Times New Roman')}</p>
                         </div>
                     </div>
 
@@ -739,8 +737,7 @@ class Notes extends Component {
                     {/*{this.renderBlockButton('heading-two', 'title')}*/}
                     {this.renderMarkButton('code', 'code')}
                     {this.renderBlockButton('block-quote', 'format_quote')}
-
-
+                    
                     {/*<input*/}
                         {/*className="search-input keyword"*/}
                         {/*placeholder="Search keywords..."*/}
