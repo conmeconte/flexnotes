@@ -47,13 +47,13 @@ const EMOJIS = [
     '😬',
     '😂',
     '😎',
+    '🤯',
     '😍',
-    '😴',
     '👍',
     '👌',
     '💋',
-    '⁉️',
     '❤️',
+    '⁉️',
     '💩'
 ]
 
@@ -128,7 +128,7 @@ class Notes extends Component {
         // this.notesChange = _.debounce(this.notesChange, 1000);
         this.onChange = this.onChange.bind(this);
 
-        this.toggleReadOnly = this.toggleReadOnly.bind(this)
+        this.toggleReadOnly = this.toggleReadOnly.bind(this);
     }
 
     onChange({ value }) {
@@ -214,16 +214,16 @@ class Notes extends Component {
 
     componentWillReceiveProps(nextProps, nextState) {
         
-        if(nextProps.interface_obj.save_notes !== this.props.interface_obj.save_notes){
-            //if(nextProps.interface_obj.save_notes === true && nextState.save === false){
-                //this.props.notesUpdated();
-                //const { value } = this.state;
-                // this.setState({
-                //     //...value,
-                //     save: true
-                // });
-            //}
-        }
+        // if(nextProps.interface_obj.save_notes !== this.props.interface_obj.save_notes){
+        //     if(nextProps.interface_obj.save_notes === true && nextState.save === false){
+        //         this.props.notesUpdated();
+        //         const { value } = this.state;
+        //         this.setState({
+        //             //...value,
+        //             save: true
+        //         });
+        //     }
+        // }
 
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
             if(this.props.interface_obj.save_notes === false){
@@ -295,7 +295,6 @@ class Notes extends Component {
             mark = 'code'
         } else if (isTabHotkey(event)) {
             mark = 'tab'
-            event.preventDefault();
             change.insertText("     ");
             return true
         } else {
@@ -318,6 +317,22 @@ class Notes extends Component {
             mark = 'purple'
         } else if (colors[6]) {
             mark = 'highlight'
+        }
+
+        let fonts = ["arial", "comic sans", "courier new", "impact", "roboto", "times new roman"];
+
+        if (fonts[0]) {
+            mark = 'arial'
+        } else if (fonts[1]) {
+            mark = 'comic sans'
+        } else if (fonts[2]) {
+            mark = 'courier new'
+        } else if (fonts[3]) {
+            mark = 'impact'
+        } else if (fonts[4]) {
+            mark = 'roboto'
+        } else if (fonts[5]) {
+            mark = 'times new roman'
         }
 
         event.preventDefault();
@@ -389,6 +404,17 @@ class Notes extends Component {
         return (
             <span onMouseDown={onMouseDown} data-active={isActive} title={type}>
                 <span className="material-icons notesIcons colorCircles richText">{icon}</span>
+            </span>
+        )
+    };
+
+    renderFontButton = (type, fontStyle) => {
+        const isActive = this.hasMark(type);
+        const onMouseDown = event => this.onClickMark(event, type);
+
+        return (
+            <span onMouseDown={onMouseDown} data-active={isActive} title={type} className="fontStyleButton">
+                <span>{fontStyle}</span>
             </span>
         )
     };
@@ -560,7 +586,6 @@ class Notes extends Component {
         }
     };
 
-
     // --------------------------- EMOJIS  ---------------------------
 
     onClickEmoji = (e, code) => {
@@ -578,7 +603,7 @@ class Notes extends Component {
             .focus()
 
         this.onChange(change)
-    }
+    };
 
     // --------------------------- ALL  ---------------------------
 
@@ -590,12 +615,20 @@ class Notes extends Component {
             case 'code': return <code>{children}</code>;
             case 'italic': return <em>{children}</em>;
             case 'underlined': return <u>{children}</u>;
+
             case 'red': return <span style={{ color: '#FF0000' }}>{children}</span>;
             case 'orange': return <span style={{ color: '#FF7F00' }}>{children}</span>;
             case 'yellow': return <span style={{ color: '#FFFF00' }}>{children}</span>;
             case 'green': return <span style={{ color: '#00FF00' }}>{children}</span>;
             case 'blue': return <span style={{ color: '#0000FF' }}>{children}</span>;
             case 'purple': return <span style={{ color: '#9400D3' }}>{children}</span>;
+
+            case 'arial': return <span style={{ fontFamily: 'Arial' }}>{children}</span>;
+            case 'comic sans': return <span style={{ fontFamily: 'Comic Sans MS' }}>{children}</span>;
+            case 'courier new': return <span style={{ fontFamily: 'Courier New' }}>{children}</span>;
+            case 'impact': return <span style={{ fontFamily: 'Impact' }}>{children}</span>;
+            case 'roboto': return <span style={{ fontFamily: 'Roboto' }}>{children}</span>;
+            case 'times new roman': return <span style={{ fontFamily: 'Times New Roman' }}>{children}</span>;
         }
     };
 
@@ -638,8 +671,8 @@ class Notes extends Component {
                         contentEditable={false}
                         onDrop={noop}
                     >
-            {code}
-          </span>
+                        {code}
+                    </span>
                 )
             }
 
@@ -672,6 +705,18 @@ class Notes extends Component {
                 </div>
 
                 <div className="stylingButtons secondRow">
+                    <div className="font-dropdown">
+                        <span className="material-icons notesIcons richText" title="font">font_download</span>
+                        <div className="font-styles">
+                            <p className="fonts arial">{this.renderFontButton('arial', 'Arial')}</p>
+                            <p className="fonts comic">{this.renderFontButton('comic sans', 'Comic Sans')}</p>
+                            <p className="fonts courier">{this.renderFontButton('courier new', 'Courier New')}</p>
+                            <p className="fonts impact">{this.renderFontButton('impact', 'Impact')}</p>
+                            <p className="fonts roboto">{this.renderFontButton('roboto', 'Roboto')}</p>
+                            <p className="fonts times">{this.renderFontButton('times new roman', 'Times New Roman')}</p>
+                        </div>
+                    </div>
+
                     <div className="hoverOptions">
                         <span className="hoverDropbtn" title="font color"><i className="material-icons fontColorIcon notesIcons">format_color_text</i></span>
                         <div className="fontColor-options">
@@ -692,8 +737,7 @@ class Notes extends Component {
                     {/*{this.renderBlockButton('heading-two', 'title')}*/}
                     {this.renderMarkButton('code', 'code')}
                     {this.renderBlockButton('block-quote', 'format_quote')}
-
-
+                    
                     {/*<input*/}
                         {/*className="search-input keyword"*/}
                         {/*placeholder="Search keywords..."*/}
@@ -728,6 +772,7 @@ class Notes extends Component {
                     <Editor
                         className="editor"
                         style={{ overflowY: scroll }}
+                        style={{ fontFamily: this.fontStyle}}
                         placeholder="Enter notes..."
                         value={this.state.value}
                         onChange={this.onChange}

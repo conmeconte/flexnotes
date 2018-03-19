@@ -2,7 +2,6 @@
     height: 100%;
     box-sizing: border-box;
     background-color: ghostwhite;
-
 }
 
 .emoji {
@@ -12,7 +11,13 @@
 .text-editor {
     height: 100%;
     overflow: hidden;
-    margin-bottom: -500em;
+    /*margin-bottom: -500em;*/
+    /*font-size: 18px;*/
+}
+
+.fontOptions {
+    height: 40px;
+    width: 15%;
 }
 
 .editor {
@@ -173,7 +178,7 @@ blockquote {
     }
 }
 
-/*--------------------------- HOVER OPTIONS ---------------------------*/
+/*--------------------------- COLOR/EMOJI OPTIONS ---------------------------*/
 
 .hoverOptions {
     float: left;
@@ -184,29 +189,24 @@ blockquote {
     font-size: 16px;
     border: none;
     outline: none;
-    /*padding: 14px 16px;*/
-    background-color: inherit;
-    font-family: inherit;
     margin: 0;
 }
 
-.fontColor-options {
+.fontColor-options, .emoji-options {
     display: none;
     position: absolute;
+    background-color: white;
+    padding: 0.3em 0 0 0.3em;
+}
+
+.fontColor-options {
     height: 3.8em;
     width: 6em;
-    background-color: #ddd;
-    padding: 0.3em 0 0 0.3em;
-
 }
 
 .emoji-options {
-    display: none;
-    position: absolute;
-    height: 23.7em;
+    height: 23em;
     width: 2.5em;
-    background-color: #ddd;
-    padding: 0.3em 0 0 0.3em;
 }
 
 .fontColor-options .fontColor {
@@ -215,8 +215,6 @@ blockquote {
     display: block;
     text-align: left;
 }
-
-
 
 .hoverOptions:hover .fontColor-options {
     display: flex;
@@ -276,4 +274,61 @@ blockquote {
 
 .textAreaEmoji {
     cursor: pointer;
+}
+
+/*--------------------------- FONT OPTIONS ---------------------------*/
+
+.font-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.font-styles {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 150px;
+    z-index: 1;
+}
+
+.font-dropdown:hover .font-styles {
+    display: block;
+    cursor: pointer;
+}
+
+.font-dropdown p:hover {
+    display: block;
+    cursor: pointer;
+    background-color: #455a64;
+    color: white;
+}
+
+.fonts {
+    margin: 0;
+    padding: 1.5em 1em;
+    line-height: 0;
+}
+
+.arial {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.comic {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.courier {
+    font-family: "Courier New", Courier, monospace;
+}
+
+.impact {
+    font-family: Impact, Charcoal, sans-serif;
+}
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+.times {
+    font-family: "Times New Roman", Times, serif;
 }
