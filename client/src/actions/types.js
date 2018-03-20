@@ -31,7 +31,6 @@ export default {
   GET_SAVED_VIDEO_IMAGE: 'get_saved_video_image',
   SET_VIDEO_PLAYLIST: 'set_video_playlist',
   GET_RESULT_STYLES: 'get_result_styles',
-  GET_OPACITY_DISPLAY: 'get_opacity_display',
   TOGGLE_RESULTS: 'toggle_results',
   TOGGLE_VIDEO_SLIDE_OUT: 'toggle_video_slide_out',
   EMPTY_VIDEO_SLIDE_OUT: 'empty_video_slide_out',

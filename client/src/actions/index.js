@@ -394,7 +394,8 @@ export function getVideoResults(videos) {
     payload: videos
   };
 }
-export function getResultStyles(styles, visible) {
+export function getResultStyles(visible) {
+  let styles;
   if (!visible) {
     styles = {
       transform: 'translateX(-100%)'
@@ -409,21 +410,7 @@ export function getResultStyles(styles, visible) {
     payload: styles
   };
 }
-export function getOpacityDisplay(styles, visible) {
-  if (!visible) {
-    styles = {
-      display: 'none'
-    };
-  } else {
-    styles = {
-      display: 'block'
-    };
-  }
-  return {
-    type: types.GET_OPACITY_DISPLAY,
-    payload: styles
-  };
-}
+
 export function toggleResults(visible) {
   let toggleResults = !visible;
   return {
@@ -767,11 +754,12 @@ export function removeVideoFromPlaylist(
       });
   };
 }
-export function slideOutVideoSearch(visible, slide) {
+export function slideOutVideoSearch(visible) {
   let toggleSlideOut = visible;
   var slideOutStyles;
   if (toggleSlideOut) {
-    (slideOutStyles = 'translateY(27px)'), (toggleSlideOut = false);
+    slideOutStyles = 'translateY(27px)';
+    toggleSlideOut = false;
   } else {
     slideOutStyles = 'translateY(-119px)';
     toggleSlideOut = true;

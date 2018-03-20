@@ -6,7 +6,8 @@ class Results extends Component {
   handlePlayVideo(videoUrl, videoTitle, videoImg, interfaceObj) {
     this.props.playVideo(videoUrl);
     this.props.addVideoToDatabase(videoUrl, videoTitle, videoImg, interfaceObj);
-    this.props.slideOutVideoSearch(false, '');
+    this.props.slideOutVideoSearch(false);
+    this.props.getResultStyles(false);
   }
   render() {
     const { results } = this.props;

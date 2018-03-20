@@ -15,9 +15,6 @@ const DEFAULT_STATE = {
   playlistStyles: {
     transform: 'translateY(-100%)'
   },
-  opacityDisplay: {
-    display: 'none'
-  },
   videoLink: '',
   videoLinkSlideOut: {
     transform: 'translateY(-119px)'
@@ -44,8 +41,6 @@ export default function(state = DEFAULT_STATE, action) {
       return { ...state, videoLink: action.payload };
     case types.TOGGLE_RESULTS:
       return { ...state, toggleResults: !state.toggleResults };
-    case types.GET_OPACITY_DISPLAY:
-      return { ...state, opacityDisplay: action.payload };
     case types.TOGGLE_MODAL:
       return { ...state, addVideoModal: { display: action.payload } };
     case types.PLAY_PASTED_VIDEO_LINK:

@@ -140,7 +140,9 @@ class Video extends Component {
       this.props
         .getVideoPlaylist(this.binderId, this.tabId, this.pageId)
         .then(() => {
-          this.props.setVideoUrl(this.props.playlistItems[0].videoId);
+          if (this.props.playlistItems.length > 0) {
+            this.props.setVideoUrl(this.props.playlistItems[0].videoId);
+          }
         });
     }
   }
@@ -183,18 +185,10 @@ class Video extends Component {
                 >
                   <i className="material-icons">search</i>
                 </button>
-
                 <button
                   className="btn results-btn vid-right-arrow video-btn"
                   onClick={() => {
-                    this.props.getResultStyles(
-                      this.props.resultsStyles,
-                      this.props.toggleResultsBool
-                    );
-                    this.props.getOpacityDisplay(
-                      this.props.opacityContainer,
-                      this.props.toggleResultsBool
-                    );
+                    this.props.getResultStyles(this.props.toggleResultsBool);
                   }}
                 >
                   <i className="material-icons">close</i>
@@ -210,7 +204,6 @@ class Video extends Component {
           binderId={this.props.interface_obj.binder_id}
           tabId={this.props.interface_obj.tab_id}
           pageId={this.props.interface_obj.page_id}
-          currentPlaylistItems={this.props.playlistItems}
         />
         <div id="video-wrapper" className="video-wrapper third-step">
           <VideoContainer currentPlaylistItems={this.props.playlistItems} />
@@ -229,7 +222,6 @@ function mapStateToProps(state) {
     pastedVideoUrl: state.videoResults.videoLink,
     videoResults: state.video.results,
     resultsStyles: state.video.resultsStyles,
-    opacityContainer: state.video.opacityDisplay,
     toggleResultsBool: state.video.toggleResults,
     interface_obj: state.interface,
     binderObj: state.binder.binderObj,

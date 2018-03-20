@@ -61,14 +61,7 @@ class VideoContainer extends Component {
                 type="button"
                 className="btn vidList vid-left-arrow video-btn"
                 onClick={() => {
-                  this.props.getResultStyles(
-                    this.props.resultsStyles,
-                    this.props.toggleResultsBool
-                  );
-                  this.props.getOpacityDisplay(
-                    this.props.opacityContainer,
-                    this.props.toggleResultsBool
-                  );
+                  this.props.getResultStyles(this.props.toggleResultsBool);
                 }}
               >
                 <i className="fa fa-youtube" aria-hidden="true" />
@@ -87,10 +80,7 @@ class VideoContainer extends Component {
         <div
           className="arrow-container"
           onClick={() => {
-            this.props.slideOutVideoSearch(
-              this.props.toggleSlideOut,
-              this.props.slideOutStyles
-            );
+            this.props.slideOutVideoSearch(this.props.toggleSlideOut);
           }}
         >
           {!this.props.toggleSlideOut
@@ -141,7 +131,6 @@ function mapStateToProps(state) {
     binderTabPageIds: state.interface,
     resultsStyles: state.video.resultsStyles,
     toggleResultsBool: state.video.toggleResults,
-    opacityContainer: state.video.opacityDisplay,
     slideOutStyles: state.video.videoLinkSlideOut,
     toggleSlideOut: state.video.toggleSlideOut,
     savedVideoTitle: state.video.savedVideoTitle,
