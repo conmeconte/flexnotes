@@ -4,49 +4,14 @@
     background-color: ghostwhite;
 }
 
-.emoji {
-    font-size: 2em;
-}
-
 .text-editor {
     height: 100%;
     overflow: hidden;
-    /*margin-bottom: -500em;*/
-    /*font-size: 18px;*/
-}
-
-.fontOptions {
-    height: 40px;
-    width: 15%;
 }
 
 .editor {
-    padding-top: 2vmin;
-    padding-left: 2vmin;
-    padding-right: 2vmin;
+    padding: 2vmin 2vmin 0 2vmin;
     height: 100%;
-}
-
-.notesUnorderedList li::before {
-    content: "•";
-    padding: 0 8px 0 28px;
-    color: rgba(0,0,0,0.87);
-}
-
-code {
-    display: inline-block;
-    background-color: #d5d5d5;
-    color: #0288d1;
-    padding: 0 0.5em;
-    font-family: 'Overpass Mono', sans-serif !important;
-    line-height: 1.56;
-}
-
-blockquote {
-    border-left: 5px solid #0288d1 !important;
-    color: #0288d1;
-    font-style: italic;
-    margin: 0 !important;
 }
 
 .notes-component.fifth-step{
@@ -177,6 +142,40 @@ blockquote {
         margin-top: 1em;
     }
 }
+
+/*--------------------------- OUTPUT ---------------------------*/
+
+.emoji {
+    font-size: 2em;
+}
+
+strong {
+    font-weight: 900 !important;
+}
+
+.notesUnorderedList li::before {
+    content: "•";
+    padding: 0 8px 0 28px;
+    color: rgba(0,0,0,0.87);
+}
+
+code {
+    display: inline-block;
+    background-color: #d5d5d5;
+    color: #0288d1;
+    padding: 0 0.5em;
+    font-family: 'Overpass Mono', sans-serif !important;
+    line-height: 1.56;
+}
+
+blockquote {
+    border-left: 5px solid #0288d1 !important;
+    color: #0288d1;
+    font-style: italic;
+    margin: 0 !important;
+}
+
+
 
 /*--------------------------- COLOR/EMOJI OPTIONS ---------------------------*/
 

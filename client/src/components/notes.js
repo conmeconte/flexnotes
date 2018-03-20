@@ -304,15 +304,15 @@ class Notes extends Component {
         let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'background'];
 
         if (colors[0]) {
-            mark = 'red'
+            mark = 'red';
         } else if (colors[1]) {
-            mark = 'orange'
+            mark = 'orange';
         } else if (colors[2]) {
             mark = 'yellow'
         } else if (colors[3]) {
             mark = 'green'
         } else if (colors[4]) {
-            mark = 'blue'
+            mark = 'blue';
         } else if (colors[5]) {
             mark = 'purple'
         } else if (colors[6]) {
@@ -737,7 +737,7 @@ class Notes extends Component {
                     {/*{this.renderBlockButton('heading-two', 'title')}*/}
                     {this.renderMarkButton('code', 'code')}
                     {this.renderBlockButton('block-quote', 'format_quote')}
-                    
+
                     {/*<input*/}
                         {/*className="search-input keyword"*/}
                         {/*placeholder="Search keywords..."*/}
