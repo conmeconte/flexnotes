@@ -83,10 +83,6 @@ class Video extends Component {
       }
     }
   }
-  // shouldComponentUpdate() {
-  //   this.props.updateBinderArray();
-  //   return true;
-  // }
   componentWillReceiveProps(nextProps) {
     const { interface_obj } = this.props;
     if (interface_obj.page_id !== nextProps.interface_obj.page_id) {
@@ -207,7 +203,12 @@ class Video extends Component {
           currentPlaylistItems={this.props.playlistItems}
         />
         <div id="video-wrapper" className="video-wrapper third-step">
-          <VideoContainer currentPlaylistItems={this.props.playlistItems} />
+          <VideoContainer
+            binderId={this.props.interface_obj.binder_id}
+            tabId={this.props.interface_obj.tab_id}
+            pageId={this.props.interface_obj.page_id}
+            currentPlaylistItems={this.props.playlistItems}
+          />
         </div>
       </div>
     );

@@ -3,9 +3,17 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class Results extends Component {
-  handlePlayVideo(videoUrl, videoTitle, videoImg, interfaceObj) {
-    this.props.playVideo(videoUrl);
-    this.props.addVideoToDatabase(videoUrl, videoTitle, videoImg, interfaceObj);
+  handlePlayVideo(videoId, videoTitle, videoImg, interfaceObj) {
+    this.props.playVideo(videoId);
+    this.props
+      .addVideoToDatabase(videoId, videoTitle, videoImg, interfaceObj)
+      .then(() => {
+        this.props.getVideoPlaylist(
+          interfaceObj.binder_id,
+          interfaceObj.tab_id,
+          interfaceObj.page_id
+        );
+      });
     this.props.slideOutVideoSearch(false);
     this.props.getResultStyles(false);
   }
@@ -30,7 +38,7 @@ class Results extends Component {
               className="btn red darken-3 right video-btn"
               onClick={() => {
                 this.handlePlayVideo(
-                  item.url,
+                  item.videoId,
                   item.videoTitle,
                   item.thumbnails.default.url,
                   this.props.interface_obj

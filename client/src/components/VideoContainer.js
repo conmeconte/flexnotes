@@ -27,22 +27,68 @@ class VideoContainer extends Component {
     );
   }
   handleYouTubeUrl(values) {
-    const youtubeLinkInput = values['youtube-url'];
-    if (!youtubeLinkInput || youtubeLinkInput.indexOf('youtu') === -1) {
+    const url = values['youtube-url'];
+    var videoId;
+    var videoLink;
+    if (!url) {
       return;
+    } else if (url.indexOf('player_embedded') !== -1) {
+      videoId = url.split('=');
+      videoId = videoId[2];
+    } else if (url.indexOf('&feature=youtu.be') !== -1) {
+      videoLink = url;
+      videoId = videoLink.split('=');
+      videoId = videoId[1].split('&');
+      videoId = videoId[0];
+    } else if (url.indexOf('feature') !== -1) {
+      videoLink = url;
+      videoId = videoLink.split('&');
+      videoId = videoId[0].split('/');
+      videoId = videoId[4];
+      videoId = videoLink.split('&');
+      videoId = videoLink[0];
+    } else if (url.indexOf('&t') !== -1) {
+      videoId = videoLink.split('&t');
+      videoId = videoId[0].split('=');
+      videoId = videoId[1];
+    } else if (url.indexOf('&') !== -1 || url.indexOf('=') !== -1) {
+      videoId = url;
+      videoId = videoId.split('&')[0];
+      videoId = videoId.split('=')[1];
+    } else if (url.indexOf('youtu.be') !== -1) {
+      videoId = url;
+      videoId = url.split('/');
+      videoId = videoId[3];
+    } else {
+      videoId = url;
     }
-    this.props.playPastedLinkVideo(values['youtube-url']);
-    this.props.getSavedVideoImg(values['youtube-url']).then(() => {
-      this.props.getSavedVideoTitle(values['youtube-url']).then(() => {
-        this.props.addVideoToDatabase(
-          values['youtube-url'],
-          this.props.savedVideoTitle,
-          this.props.savedVideoImage,
-          this.props.binderTabPageIds
-        );
+    this.props.playPastedLinkVideo(videoId);
+    this.props.getSavedVideoImg(videoId).then(() => {
+      this.props.getSavedVideoTitle(videoId).then(() => {
+        this.props
+          .addVideoToDatabase(
+            videoId,
+            this.props.savedVideoTitle,
+            this.props.savedVideoImage,
+            this.props.binderTabPageIds
+          )
+          .then(() => {
+            this.props
+              .getVideoPlaylist(
+                this.props.binderId,
+                this.props.tabId,
+                this.props.pageId
+              )
+              .then(() => {
+                this.props.setVideoUrl(
+                  this.props.currentPlaylistItems[0].videoId
+                );
+              });
+          });
       });
     });
   }
+
   render() {
     return (
       <div className="iframe-wrapper">
