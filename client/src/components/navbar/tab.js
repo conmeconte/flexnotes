@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectTab, addPage, updateBinderArray, editTab, deleteTab } from '../../actions';
+import { selectTab, addPage, updateBinderArray, editTab, deleteTab, showLoader } from '../../actions';
 
 import Page from './page';
 import ModalNav from './modal_nav';
@@ -45,6 +45,7 @@ class Tab extends Component {
         }
     }
     addPage() {
+        this.props.showLoader();
         this.props.addPage(this.props.interface.binder_id, this.props.tabObj._id);
     }
 
@@ -58,6 +59,7 @@ class Tab extends Component {
 
     notEditTabs() {
         const { tabName } = this.state;
+        this.props.showLoader();
         this.props.editTab(this.props.binder._id, this.props.tabObj._id, tabName);
         this.setState({
             editable: false,
@@ -75,6 +77,7 @@ class Tab extends Component {
         if (this.props.binder.tab_arr_obj.length === 1) {
             console.log('can not delete last tab');
         } else {
+            this.props.showLoader();
             this.props.deleteTab(this.props.interface.binder_id, this.props.tabObj._id);
         }
     }
@@ -241,4 +244,4 @@ function mapStateToProps(state) {
         interface: state.interface
     }
 }
-export default withRouter(connect(mapStateToProps, { selectTab, addPage, deleteTab, editTab, updateBinderArray })(Tab));
+export default withRouter(connect(mapStateToProps, { selectTab, addPage, deleteTab, editTab, updateBinderArray, showLoader })(Tab));

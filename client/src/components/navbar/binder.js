@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateBinderArray, selectBinder, addTab, deleteBinder, editBinder } from '../../actions';
+import { updateBinderArray, selectBinder, addTab, deleteBinder, editBinder, showLoader } from '../../actions';
 
 import Tab from './tab';
 import ModalNav from './modal_nav';
@@ -65,6 +65,7 @@ class Binder extends Component {
     }
 
     addTab() {
+        this.props.showLoader();
         this.props.addTab(this.props.binderObj._id);
     }
 
@@ -73,6 +74,7 @@ class Binder extends Component {
             console.log('can not delete last binder');
             return;
         }
+        this.props.showLoader();
         this.props.deleteBinder(delete_id);
         this.setState({
             deleteHover: false
@@ -90,6 +92,7 @@ class Binder extends Component {
     notEditable(event) {
         event.stopPropagation();
         const { binderName } = this.state;
+        this.props.showLoader();
         this.props.editBinder(this.props.binderObj._id, binderName);
         this.setState({
             editable: false,
@@ -267,6 +270,6 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, { updateBinderArray, selectBinder, addTab, deleteBinder, editBinder })(Binder));
+export default withRouter(connect(mapStateToProps, { showLoader, updateBinderArray, selectBinder, addTab, deleteBinder, editBinder })(Binder));
 
 

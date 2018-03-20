@@ -9,7 +9,7 @@ export const fetchUser = () => async dispatch => {
 };
 
 export const fetchSampleUser = () => dispatch => {
-  console.log('fetchUser called');
+  //console.log('fetchUser called');
   axios
     .post('/auth/sample', {
       username: 'sample',
@@ -22,7 +22,7 @@ export const fetchSampleUser = () => dispatch => {
     .catch(err => {
       //axios call not receive a res but sample user logged in, so redirect as err occurs
       window.location = '/main';
-      console.log('reached back');
+      //console.log('reached back');
       dispatch({
         type: types.AXIOS_ERROR,
         msg: 'Failed to update Top Left Panel Height'
@@ -33,7 +33,7 @@ export const fetchSampleUser = () => dispatch => {
 //PANEL SPECs Action Creator
 
 export function setTopLeftHeight(num, interfaceObj) {
-  console.log('panel 3 settopleft: ', num / window.innerHeight);
+  //console.log('panel 3 settopleft: ', num / window.innerHeight);
   return dispatch => {
     axios
       .put('/api/page', {
@@ -590,7 +590,6 @@ export function addPage(binder_id, tab_id) {
         tabID: tab_id
       })
       .then(resp => {
-        console.log('addpage', resp);
         dispatch({
           type: types.ADD_PAGE,
           payload: resp
@@ -651,7 +650,6 @@ export function deletePage(binder_id, tab_id, page_id) {
         {}
       )
       .then(resp => {
-        console.log('response data: ', resp.data);
         dispatch({
           type: types.DELETE_PAGE,
           payload: resp.data
@@ -721,7 +719,6 @@ export function editPage(binder_id, tab_id, page_id, page_name) {
         page_name: page_name
       })
       .then(resp => {
-        console.log('edit page resp: ', resp);
         dispatch({
           type: types.EDIT_PAGE,
           payload: resp.data
@@ -743,7 +740,7 @@ export function addLfzBinder(password) {
         pw: password
       })
       .then(resp => {
-        console.log('lfz import', resp);
+
 
         if (resp.data.hasOwnProperty('success')) {
           console.log('lfz incorrect pw', resp);
