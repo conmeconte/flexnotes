@@ -205,12 +205,6 @@ export function autoSaveNotes(val, interface_obj) {
   };
 }
 
-export function notesUpdated() {
-  return {
-    type: types.NOT_SAVE_NOTES
-  };
-}
-
 //Lecture Slides Action Creator
 
 export function setSlidesUrl(slidesURL, interfaceObj) {
