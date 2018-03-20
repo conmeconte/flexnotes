@@ -2,13 +2,11 @@
     height: 100%;
     box-sizing: border-box;
     background-color: ghostwhite;
-    overflow: hidden;
 }
 
 .text-editor {
     height: 100%;
-    overflow: auto;
-    padding-bottom: 1%;
+    overflow: hidden;
 }
 
 .editor {
@@ -132,12 +130,6 @@
         margin-right: 0.5em;
     }
 }
-
-/*@media only screen and (max-width: 430px) {*/
-    /*.stylingButtons.secondRow {*/
-        /*flex-wrap: wrap;*/
-    /*}*/
-/*}*/
 
 @media only screen and (max-width: 422px) {
     .search-input.keyword {
