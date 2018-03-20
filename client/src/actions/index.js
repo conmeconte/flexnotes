@@ -790,6 +790,12 @@ export function notEditable() {
   };
 }
 
+export function showLoader() {
+  return {
+    type: types.SHOW_LOADER
+  };
+}
+
 export function clearLoader() {
   return {
     type: types.CLEAR_LOADER

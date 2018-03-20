@@ -5,7 +5,7 @@ import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import { connect } from 'react-redux';
-import { saveNotes, autoSaveNotes } from '../actions';
+import { saveNotes, autoSaveNotes, showLoader } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
@@ -204,6 +204,7 @@ class Notes extends Component {
                     const prevContent = page_arr_obj[pageIndex].notes.document.content;
                     const stateValue = JSON.stringify(value.toJSON());
                     if(stateValue !== prevContent){
+                        this.props.showLoader();
                         this.props.saveNotes(value, this.props.interface_obj);
                     }
                 }
@@ -740,5 +741,5 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { saveNotes, autoSaveNotes })(Notes);
+export default connect(mapStateToProps, { saveNotes, autoSaveNotes, showLoader })(Notes);
 

@@ -11,7 +11,7 @@ class Loader extends Component {
 
     componentWillReceiveProps(nextProps){
         if(this.props.interface !== nextProps.interface){
-            if(nextProps.interface.sent_to_db === true || nextProps.interface.pull_from_db === true){
+            if(nextProps.interface.show_loader === true){
                 this.setState({
                     visible: true
                 });

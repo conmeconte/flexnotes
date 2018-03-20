@@ -52,5 +52,6 @@ export default {
   SHOW_NAV: 'show_nav',
   EDITABLE: 'editable',
   NOT_EDITABLE: 'not_editable',
+  SHOW_LOADER: 'show_loader',
   CLEAR_LOADER: 'clear_loader'
 };
