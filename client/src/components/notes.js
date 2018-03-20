@@ -5,7 +5,7 @@ import { Editor, getEventRange, getEventTransfer } from 'slate-react';
 import { Block, Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import { connect } from 'react-redux';
-import { saveNotes, notesUpdated, autoSaveNotes } from '../actions';
+import { saveNotes, autoSaveNotes } from '../actions';
 import isImage from 'is-image'
 import isUrl from 'is-url'
 
@@ -124,8 +124,6 @@ class Notes extends Component {
 
         this.submitNotes = this.submitNotes.bind(this);
         this.submitNotes = _.debounce(this.submitNotes, 2000);
-        this.notesChange = this.notesChange.bind(this);
-        // this.notesChange = _.debounce(this.notesChange, 1000);
         this.onChange = this.onChange.bind(this);
 
         this.toggleReadOnly = this.toggleReadOnly.bind(this);
@@ -133,40 +131,16 @@ class Notes extends Component {
 
     onChange({ value }) {
         this.setState({ value, save: false });
-        this.notesChange();
         this.submitNotes();
     };
 
-    notesChange(){
-        if(this.props.interface_obj.save_notes === true){
-            this.props.notesUpdated();
-        }
-    }
 
     submitNotes() {
         let { interface_obj } = this.props;
         const { value } = this.state;
-        
-        // const content = JSON.stringify(value.toJSON());
+
         this.props.autoSaveNotes(value, interface_obj);
-        // this.setState({
-        //     ...value,
-        //     save: true
-        // })
-        // axios.put('/api/note', {
-        //     document: { content },
-        //     binderID: interface_obj.binder_id,
-        //     tabID: interface_obj.tab_id,
-        //     pageID: interface_obj.page_id
-        // }).then(
-        //     this.setState({
-        //         ...value,
-        //         save: true
-        //     })
-        // ).catch((err) => {
-        //     console.log("not logged in: ", err);
-        //     window.location = '/';
-        // })
+
     }
 
     componentWillMount() {
@@ -204,32 +178,35 @@ class Notes extends Component {
         }
     }
 
-    // componentDidUpdate(prevState){
-    //     if(prevState.save !== this.state.save){
-    //         if(this.state.save === false){
-    //             this.props.notesUpdated();
-    //         }
-    //     }
-    // }
-
     componentWillReceiveProps(nextProps, nextState) {
-        
-        // if(nextProps.interface_obj.save_notes !== this.props.interface_obj.save_notes){
-        //     if(nextProps.interface_obj.save_notes === true && nextState.save === false){
-        //         this.props.notesUpdated();
-        //         const { value } = this.state;
-        //         this.setState({
-        //             //...value,
-        //             save: true
-        //         });
-        //     }
-        // }
 
         if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-            if(this.props.interface_obj.save_notes === false){
-                const { value } = this.state;
-                //console.log('notes cwrp');
-                this.props.saveNotes(value, this.props.interface_obj);
+            const { value } = this.state;
+
+            if (this.props.binderObj.tab_arr_obj) {
+                let tabArrLength = this.props.binderObj.tab_arr_obj.length;
+                let tabIndex = null;
+                let pageIndex = null;
+                for (let i = 0; i < tabArrLength; i++) {
+                    if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+                        tabIndex = i;
+                        break;
+                    }
+                }
+                let { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+                for (let i = 0; i < page_arr_obj.length; i++) {
+                    if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+                        pageIndex = i;
+                        break;
+                    }
+                }
+                if (pageIndex !== null && this.props.binderObj.tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                    const prevContent = page_arr_obj[pageIndex].notes.document.content;
+                    const stateValue = JSON.stringify(value.toJSON());
+                    if(stateValue !== prevContent){
+                        this.props.saveNotes(value, this.props.interface_obj);
+                    }
+                }
             }
 
             //this.props.notesUpdated();
@@ -257,13 +234,13 @@ class Notes extends Component {
                     const lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
                     //console.log("NOTES LAST CONTENT:", lastContent.document.nodes["0"].nodes["0"].leaves["0"]);
                     this.setState({
-                        value: Value.fromJSON(lastContent),
-                        save: false
+                        value: Value.fromJSON(lastContent)
+                        //save: false
                     })
                 } else {
                     this.setState({
-                        value: initialValue,
-                        save: false
+                        value: initialValue
+                        //save: false
                     })
                 }
             }
@@ -763,5 +740,5 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { saveNotes, notesUpdated, autoSaveNotes })(Notes);
+export default connect(mapStateToProps, { saveNotes, autoSaveNotes })(Notes);
 

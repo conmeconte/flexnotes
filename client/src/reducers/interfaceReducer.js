@@ -9,7 +9,7 @@ const DEFAULT_STATE = {
     user_name: {},
     pull_from_db: false,
     sent_to_db: false,
-    save_notes: false,
+    save_notes: true,
     axios_error_response: '',
     lfz_response: ''
 }
@@ -49,6 +49,7 @@ export default function (state = DEFAULT_STATE, action) {
         case types.PANEL_TOP_LEFT_WIDTH:
         case types.PANEL_TOP_RIGHT_HEIGHT:
         case types.NUM_OF_PANELS:
+        case types.SAVE_NOTES:
             return { ...state, pull_from_db: true};
         case types.AXIOS_ERROR:
             return { ...state, axios_error_response: action.msg };
@@ -66,13 +67,6 @@ export default function (state = DEFAULT_STATE, action) {
             return {...state, lfz_response: false};
         case types.CLEAR_LOADER:
             return {...state, sent_to_db: false};
-        case types.SAVE_NOTES:
-            return {...state, save_notes: true, pull_from_db: true};
-        case types.AUTO_SAVE_NOTES:
-        //case types.UPDATE_BINDER_OBJ:
-            return {...state, save_notes: true};
-        case types.NOT_SAVE_NOTES:
-            return {...state, save_notes: false};
         default:
             return state;
     }
