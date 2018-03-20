@@ -727,15 +727,9 @@ export function addVideoToDatabase(
     };
   }
 }
-export function removeVideoFromPlaylist(
-  binderId,
-  tabId,
-  pageId,
-  videoId,
-  videoIndex
-) {
-  return dispatch => {
-    const response = axios
+export function removeVideoFromPlaylist(binderId, tabId, pageId, videoId) {
+  return async dispatch => {
+    const response = await axios
       .delete(
         `/api/video?binderID=${binderId}&tabID=${tabId}&pageID=${pageId}&videoId=${videoId}`,
         {}

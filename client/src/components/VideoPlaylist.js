@@ -78,19 +78,26 @@ class VideoPlaylist extends Component {
       // });
     }
   }
-  deleteVideo(videoId) {
-    this.props.removeVideoFromPlaylist(
-      this.props.binderId,
-      this.props.tabId,
-      this.props.pageId,
-      videoId
-    );
+  async deleteVideo(videoId) {
     this.props
-      .getVideoPlaylist(this.binderId, this.tabId, this.pageId)
+      .removeVideoFromPlaylist(
+        this.props.binderId,
+        this.props.tabId,
+        this.props.pageId,
+        videoId
+      )
       .then(() => {
-        if (this.props.playlistItems.length > 0) {
-          this.props.setVideoUrl(this.props.playlistItems[0].videoId);
-        }
+        this.props
+          .getVideoPlaylist(
+            this.props.binderId,
+            this.props.tabId,
+            this.props.pageId
+          )
+          .then(() => {
+            if (this.props.playlistItems.length > 0) {
+              this.props.setVideoUrl(this.props.playlistItems[0].videoId);
+            }
+          });
       });
   }
   render() {
