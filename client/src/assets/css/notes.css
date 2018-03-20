@@ -2,11 +2,13 @@
     height: 100%;
     box-sizing: border-box;
     background-color: ghostwhite;
+    overflow: hidden;
 }
 
 .text-editor {
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
+    padding-bottom: 1%;
 }
 
 .editor {
@@ -175,8 +177,6 @@ blockquote {
     margin: 0 !important;
 }
 
-
-
 /*--------------------------- COLOR/EMOJI OPTIONS ---------------------------*/
 
 .hoverOptions {
@@ -195,17 +195,19 @@ blockquote {
     display: none;
     position: absolute;
     background-color: white;
-    padding: 0.3em 0 0 0.3em;
+
 }
 
 .fontColor-options {
     height: 3.8em;
     width: 6em;
+    padding: 0.3em 0 0 0.3em;
 }
 
 .emoji-options {
-    height: 23em;
-    width: 2.5em;
+    height: 23.5em;
+    width: 2.6em;
+    padding: 0.3em 0 0 0.4em;
 }
 
 .fontColor-options .fontColor {

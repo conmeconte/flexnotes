@@ -670,7 +670,7 @@ class Notes extends Component {
 
                 <div className="stylingButtons secondRow">
                     <div className="font-dropdown">
-                        <span className="material-icons notesIcons richText" title="font">font_download</span>
+                        <span className="material-icons notesIcons richText">font_download</span>
                         <div className="font-styles">
                             <p className="fonts arial">{this.renderFontButton('arial', 'Arial')}</p>
                             <p className="fonts comic">{this.renderFontButton('comic sans', 'Comic Sans')}</p>
@@ -682,7 +682,7 @@ class Notes extends Component {
                     </div>
 
                     <div className="hoverOptions">
-                        <span className="hoverDropbtn" title="font color"><i className="material-icons fontColorIcon notesIcons">format_color_text</i></span>
+                        <span className="hoverDropbtn"><i className="material-icons fontColorIcon notesIcons">format_color_text</i></span>
                         <div className="fontColor-options">
                             <p className="fontColor redFont">{this.renderMarkButton('red', 'lens')}</p>
                             <p className="fontColor orangeFont">{this.renderMarkButton('orange', 'lens')}</p>
@@ -708,7 +708,7 @@ class Notes extends Component {
                     {/*/>*/}
 
                     <div className="hoverOptions">
-                        <span className="hoverDropbtn" title="emoji"><i className="material-icons emojiIcon notesIcons">insert_emoticon</i></span>
+                        <span className="hoverDropbtn"><i className="material-icons emojiIcon notesIcons">insert_emoticon</i></span>
                         <div className="emoji-options">
                             <p className="emojis">{EMOJIS.map((emoji, i) => {
                                 const onMouseDown = e => this.onClickEmoji(e, emoji)
