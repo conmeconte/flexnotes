@@ -204,6 +204,7 @@ class Video extends Component {
           binderId={this.props.interface_obj.binder_id}
           tabId={this.props.interface_obj.tab_id}
           pageId={this.props.interface_obj.page_id}
+          currentPlaylistItems={this.props.playlistItems}
         />
         <div id="video-wrapper" className="video-wrapper third-step">
           <VideoContainer currentPlaylistItems={this.props.playlistItems} />
