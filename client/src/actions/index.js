@@ -284,6 +284,7 @@ export const getSavedVideoImg = videoId => async dispatch => {
   const response = await axios.get(
     `https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=${videoId}&key=${keys.YOUTUBE_API_KEY}`
   );
+
   dispatch({
     type: types.GET_SAVED_VIDEO_IMAGE,
     payload: response.data.items[0].snippet.thumbnails.default.url

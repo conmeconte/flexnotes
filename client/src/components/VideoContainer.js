@@ -40,6 +40,11 @@ class VideoContainer extends Component {
       videoId = videoLink.split('=');
       videoId = videoId[1].split('&');
       videoId = videoId[0];
+    } else if (url.indexOf('&feature') !== -1) {
+      videoLink = url;
+      videoId = videoLink.split('/');
+      videoId = videoId[4].split('&');
+      videoId = videoId[0];
     } else if (url.indexOf('feature') !== -1) {
       videoLink = url;
       videoId = videoLink.split('&');
@@ -48,6 +53,7 @@ class VideoContainer extends Component {
       videoId = videoLink.split('&');
       videoId = videoLink[0];
     } else if (url.indexOf('&t') !== -1) {
+      videoLink = url;
       videoId = videoLink.split('&t');
       videoId = videoId[0].split('=');
       videoId = videoId[1];
