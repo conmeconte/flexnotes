@@ -189,23 +189,27 @@ class Notes extends Component {
                 let pageIndex = null;
                 for (let i = 0; i < tabArrLength; i++) {
                     if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
-                        tabIndex = i;
-                        break;
+                        if(this.props.interface_obj.tab_id === nextProps.binderObj.tab_arr_obj[i]._id){
+                            tabIndex = i;
+                            break;
+                        }
                     }
                 }
-                let { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
-                for (let i = 0; i < page_arr_obj.length; i++) {
-                    if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
-                        pageIndex = i;
-                        break;
+                if(tabIndex !== null){
+                    let { page_arr_obj } = this.props.binderObj.tab_arr_obj[tabIndex];
+                    for (let i = 0; i < page_arr_obj.length; i++) {
+                        if (this.props.interface_obj.page_id === page_arr_obj[i]._id) {
+                            pageIndex = i;
+                            break;
+                        }
                     }
-                }
-                if (pageIndex !== null && this.props.binderObj.tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
-                    const prevContent = page_arr_obj[pageIndex].notes.document.content;
-                    const stateValue = JSON.stringify(value.toJSON());
-                    if(stateValue !== prevContent){
-                        this.props.showLoader();
-                        this.props.saveNotes(value, this.props.interface_obj);
+                    if (pageIndex !== null && this.props.binderObj.tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                        const prevContent = page_arr_obj[pageIndex].notes.document.content;
+                        const stateValue = JSON.stringify(value.toJSON());
+                        if(stateValue !== prevContent){
+                            this.props.showLoader();
+                            this.props.saveNotes(value, this.props.interface_obj);
+                        }
                     }
                 }
             }

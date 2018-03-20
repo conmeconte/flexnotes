@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Link, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectPage, deletePage, editPage } from '../../actions';
+import { selectPage, deletePage, editPage, showLoader } from '../../actions';
 
 import ModalNav from './modal_nav';
 import Loader from '../loader';
@@ -39,6 +39,7 @@ class Page extends Component {
 
     notEditPage() {
         const { pageName } = this.state;
+        this.props.showLoader();
         this.props.editPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id, pageName);
         this.setState({
             editable: false,
@@ -62,6 +63,7 @@ class Page extends Component {
         if (this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length === 1) {
             console.log('can not delete last page');
         } else {
+            this.props.showLoader();
             this.props.deletePage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id);
 
         }
@@ -227,4 +229,4 @@ function mapStateToProps(state) {
         interface: state.interface
     }
 }
-export default withRouter(connect(mapStateToProps, { selectPage, deletePage, editPage })(Page));
+export default withRouter(connect(mapStateToProps, { selectPage, deletePage, editPage, showLoader })(Page));

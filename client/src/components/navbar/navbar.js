@@ -15,7 +15,8 @@ import {
   showNav,
   editable,
   notEditable,
-  clearLoader
+  clearLoader,
+  showLoader
 } from '../../actions';
 
 import TourButton from '../react_tour';
@@ -54,14 +55,16 @@ class NavBar extends Component {
     // }
 
     if (nextProps.interface.sent_to_db !== this.props.interface.sent_to_db) {
+      //this.props.clearLoader();
       if (nextProps.interface.sent_to_db) {
+        this.props.clearLoader();
         for (let i = 0; i < nextProps.binderArr.length; i++) {
           if (nextProps.binderArr[i]._id === nextProps.interface.binder_id) {
             let binderObj = nextProps.binderArr[i];
             this.props.updateBinderObj(binderObj);
           }
         }
-        this.props.clearLoader();
+        //this.props.clearLoader();
       }
     }
     if (this.props.mobile !== nextProps.mobile) {
@@ -72,6 +75,7 @@ class NavBar extends Component {
   }
 
   addBinder() {
+    this.props.showLoader();
     this.props.addBinder();
   }
   editMode() {
@@ -176,5 +180,6 @@ export default connect(mapStateToProps, {
   updateBinderObj,
   minNav,
   showNav,
-  clearLoader
+  clearLoader,
+  showLoader
 })(NavBar);

@@ -41,9 +41,9 @@ export default function (state = DEFAULT_STATE, action) {
         case types.DELETE_TAB:
         case types.ADD_PAGE:
         case types.DELETE_PAGE:
-            return { ...state, pull_from_db: true, show_loader: true };
+            return { ...state, pull_from_db: true};
         case types.UPDATE_BINDER_ARRAY:
-            return { ...state, pull_from_db: false,  sent_to_db: true, show_loader: false };
+            return { ...state, pull_from_db: false,  sent_to_db: true};
         case types.ADD_TO_PLAYLIST:
         case types.SET_SLIDES_URL:
         case types.PANEL_TOP_LEFT_HEIGHT:
