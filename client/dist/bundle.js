@@ -28017,13 +28017,18 @@ var Video = function (_Component) {
           this.pageId = page_arr_obj[pageIndex]._id;
           this.currentVideoList = page_arr_obj[pageIndex].video._id;
           this.currentPlaylistItems = page_arr_obj[pageIndex].video;
-          this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId).then(function () {
-            _this2.props.setVideoUrl(_this2.props.playlistItems[0].videoId);
-          });
         } else {
           this.props.setVideoUrl('', interface_obj);
           this.props.slideOutVideoSearch(true, 'translateY(27px)');
+          this.binderId = nextProps.binderObj._id;
+          this.tabId = tab_arr_obj[tabIndex]._id;
+          this.pageId = page_arr_obj[pageIndex]._id;
+          this.currentVideoList = page_arr_obj[pageIndex].video._id;
+          this.currentPlaylistItems = page_arr_obj[pageIndex].video;
         }
+        this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId).then(function () {
+          _this2.props.setVideoUrl(_this2.props.playlistItems[0].videoId);
+        });
       }
     }
   }, {
@@ -28903,6 +28908,14 @@ var initialValue = _slate.Value.fromJSON({
     }
 });
 
+// --------------------------- EMOJIS  ---------------------------
+
+var EMOJIS = ['😃', '😬', '😂', '😎', '🤯', '😍', '👍', '👌', '💋', '❤️', '⁉️', '💩'];
+
+var noop = function noop(e) {
+    return e.preventDefault();
+};
+
 // --------------------------- UNDO AND REDO  ---------------------------
 
 var ToolbarButton = function ToolbarButton(props) {
@@ -29087,16 +29100,16 @@ var Notes = function (_Component) {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps, nextState) {
 
-            if (nextProps.interface_obj.save_notes !== this.props.interface_obj.save_notes) {
-                //if(nextProps.interface_obj.save_notes === true && nextState.save === false){
-                //this.props.notesUpdated();
-                //const { value } = this.state;
-                // this.setState({
-                //     //...value,
-                //     save: true
-                // });
-                //}
-            }
+            // if(nextProps.interface_obj.save_notes !== this.props.interface_obj.save_notes){
+            //     if(nextProps.interface_obj.save_notes === true && nextState.save === false){
+            //         this.props.notesUpdated();
+            //         const { value } = this.state;
+            //         this.setState({
+            //             //...value,
+            //             save: true
+            //         });
+            //     }
+            // }
 
             if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
                 if (this.props.interface_obj.save_notes === false) {
@@ -29154,9 +29167,41 @@ var Notes = function (_Component) {
 
         // --------------------------- SEARCH HIGHLIGHTING  ---------------------------
 
+        // onInputChange = (event) => {
+        //     const { value } = this.state;
+        //     const string = event.target.value;
+        //     const texts = value.document.getTexts();
+        //     const decorations = [];
+        //
+        //     texts.forEach((node) => {
+        //         const { key, text } = node;
+        //         const parts = text.split(string);
+        //         let offset = 0;
+        //
+        //         parts.forEach((part, i) => {
+        //             if (i !== 0) {
+        //                 decorations.push({
+        //                     anchorKey: key,
+        //                     anchorOffset: offset - string.length,
+        //                     focusKey: key,
+        //                     focusOffset: offset,
+        //                     marks: [{ type: 'highlight' }],
+        //                 })
+        //             }
+        //
+        //             offset = offset + part.length + string.length
+        //         })
+        //     });
+        //
+        //     const change = value.change().setValue({ decorations });
+        //     this.onChange(change)
+        // };
+
         // --------------------------- IMAGES  ---------------------------
 
         // --------------------------- READ ONLY  ---------------------------
+
+        // --------------------------- EMOJIS  ---------------------------
 
         // --------------------------- ALL  ---------------------------
 
@@ -29178,15 +29223,8 @@ var Notes = function (_Component) {
                     { className: 'notes-component fifth-step' },
                     _react2.default.createElement(_slateReact.Editor, (_React$createElement = {
                         className: 'editor',
-                        style: { overflowY: scroll },
-                        placeholder: 'Enter notes...',
-                        value: this.state.value,
-                        onChange: this.onChange,
-                        onKeyDown: this.onKeyDown,
-                        schema: schema,
-                        onDrop: this.onDropOrPaste,
-                        onPaste: this.onDropOrPaste
-                    }, _defineProperty(_React$createElement, 'onPaste', this.onPaste), _defineProperty(_React$createElement, 'renderNode', this.renderNode), _defineProperty(_React$createElement, 'renderMark', this.renderMark), _defineProperty(_React$createElement, 'readOnly', this.state.isReadOnly), _defineProperty(_React$createElement, 'spellCheck', true), _React$createElement))
+                        style: { overflowY: scroll }
+                    }, _defineProperty(_React$createElement, 'style', { fontFamily: this.fontStyle }), _defineProperty(_React$createElement, 'placeholder', 'Enter notes...'), _defineProperty(_React$createElement, 'value', this.state.value), _defineProperty(_React$createElement, 'onChange', this.onChange), _defineProperty(_React$createElement, 'onKeyDown', this.onKeyDown), _defineProperty(_React$createElement, 'schema', schema), _defineProperty(_React$createElement, 'onDrop', this.onDropOrPaste), _defineProperty(_React$createElement, 'onPaste', this.onDropOrPaste), _defineProperty(_React$createElement, 'onPaste', this.onPaste), _defineProperty(_React$createElement, 'renderNode', this.renderNode), _defineProperty(_React$createElement, 'renderMark', this.renderMark), _defineProperty(_React$createElement, 'readOnly', this.state.isReadOnly), _defineProperty(_React$createElement, 'spellCheck', true), _React$createElement))
                 )
             );
         }
@@ -29227,27 +29265,10 @@ var _initialiseProps = function _initialiseProps() {
             mark = 'code';
         } else if (isTabHotkey(event)) {
             mark = 'tab';
-            event.preventDefault();
             change.insertText("     ");
             return true;
         } else {
             return;
-        }
-
-        var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
-
-        if (colors[0]) {
-            mark = 'red';
-        } else if (colors[1]) {
-            mark = 'orange';
-        } else if (colors[2]) {
-            mark = 'yellow';
-        } else if (colors[3]) {
-            mark = 'green';
-        } else if (colors[4]) {
-            mark = 'blue';
-        } else if (colors[5]) {
-            mark = 'purple';
         }
 
         event.preventDefault();
@@ -29317,6 +29338,23 @@ var _initialiseProps = function _initialiseProps() {
                 'span',
                 { className: 'material-icons notesIcons colorCircles richText' },
                 icon
+            )
+        );
+    };
+
+    this.renderFontButton = function (type, fontStyle) {
+        var isActive = _this2.hasMark(type);
+        var onMouseDown = function onMouseDown(event) {
+            return _this2.onClickMark(event, type);
+        };
+
+        return _react2.default.createElement(
+            'span',
+            { onMouseDown: onMouseDown, 'data-active': isActive, title: type, className: 'fontStyleButton' },
+            _react2.default.createElement(
+                'span',
+                null,
+                fontStyle
             )
         );
     };
@@ -29399,39 +29437,6 @@ var _initialiseProps = function _initialiseProps() {
 
         change.call(wrapLink, text);
         return true;
-    };
-
-    this.onInputChange = function (event) {
-        var value = _this2.state.value;
-
-        var string = event.target.value;
-        var texts = value.document.getTexts();
-        var decorations = [];
-
-        texts.forEach(function (node) {
-            var key = node.key,
-                text = node.text;
-
-            var parts = text.split(string);
-            var offset = 0;
-
-            parts.forEach(function (part, i) {
-                if (i !== 0) {
-                    decorations.push({
-                        anchorKey: key,
-                        anchorOffset: offset - string.length,
-                        focusKey: key,
-                        focusOffset: offset,
-                        marks: [{ type: 'highlight' }]
-                    });
-                }
-
-                offset = offset + part.length + string.length;
-            });
-        });
-
-        var change = value.change().setValue({ decorations: decorations });
-        _this2.onChange(change);
     };
 
     this.onClickImage = function (event) {
@@ -29520,6 +29525,23 @@ var _initialiseProps = function _initialiseProps() {
         }
     };
 
+    this.onClickEmoji = function (e, code) {
+        e.preventDefault();
+        var value = _this2.state.value;
+
+        var change = value.change();
+
+        change.insertInline({
+            type: 'emoji',
+            isVoid: true,
+            data: { code: code }
+        })
+        // .collapseToStartOfNextText()
+        .focus();
+
+        _this2.onChange(change);
+    };
+
     this.renderMark = function (props) {
         var children = props.children,
             mark = props.mark;
@@ -29555,6 +29577,14 @@ var _initialiseProps = function _initialiseProps() {
                     null,
                     children
                 );
+
+            case 'header':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { fontSize: '1.5em' } },
+                    children
+                );
+
             case 'red':
                 return _react2.default.createElement(
                     'span',
@@ -29591,6 +29621,43 @@ var _initialiseProps = function _initialiseProps() {
                     { style: { color: '#9400D3' } },
                     children
                 );
+
+            case 'arial':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { fontFamily: 'Arial' } },
+                    children
+                );
+            case 'comic sans':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { fontFamily: 'Comic Sans MS' } },
+                    children
+                );
+            case 'courier new':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { fontFamily: 'Courier New' } },
+                    children
+                );
+            case 'impact':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { fontFamily: 'Impact' } },
+                    children
+                );
+            case 'roboto':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { fontFamily: 'Roboto' } },
+                    children
+                );
+            case 'times new roman':
+                return _react2.default.createElement(
+                    'span',
+                    { style: { fontFamily: 'Times New Roman' } },
+                    children
+                );
         }
     };
 
@@ -29607,15 +29674,6 @@ var _initialiseProps = function _initialiseProps() {
                     attributes,
                     children
                 );
-
-            case 'heading-one':
-                return _react2.default.createElement(
-                    'h5',
-                    attributes,
-                    children
-                );
-            // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
-
             case 'left':
                 return _react2.default.createElement(
                     'div',
@@ -29677,6 +29735,22 @@ var _initialiseProps = function _initialiseProps() {
                     var style = { display: 'block' };
                     return _react2.default.createElement('img', _extends({ src: src, className: className, style: style }, attributes));
                 }
+            case 'emoji':
+                {
+                    var _data = node.data;
+
+                    var code = _data.get('code');
+                    return _react2.default.createElement(
+                        'span',
+                        _extends({
+                            className: 'emoji ' + (isSelected ? 'selected' : '')
+                        }, props.attributes, {
+                            contentEditable: false,
+                            onDrop: noop
+                        }),
+                        code
+                    );
+                }
 
         }
     };
@@ -29729,10 +29803,53 @@ var _initialiseProps = function _initialiseProps() {
                 { className: 'stylingButtons secondRow' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'colorOptions' },
+                    { className: 'font-dropdown' },
                     _react2.default.createElement(
                         'span',
-                        { className: 'colorDropbtn', title: 'font color' },
+                        { className: 'material-icons notesIcons richText', title: 'font' },
+                        'font_download'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'font-styles' },
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fonts arial' },
+                            _this2.renderFontButton('arial', 'Arial')
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fonts comic' },
+                            _this2.renderFontButton('comic sans', 'Comic Sans')
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fonts courier' },
+                            _this2.renderFontButton('courier new', 'Courier New')
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fonts impact' },
+                            _this2.renderFontButton('impact', 'Impact')
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fonts roboto' },
+                            _this2.renderFontButton('roboto', 'Roboto')
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'fonts times' },
+                            _this2.renderFontButton('times new roman', 'Times New Roman')
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'hoverOptions' },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'hoverDropbtn', title: 'font color' },
                         _react2.default.createElement(
                             'i',
                             { className: 'material-icons fontColorIcon notesIcons' },
@@ -29774,17 +29891,48 @@ var _initialiseProps = function _initialiseProps() {
                         )
                     )
                 ),
+                _this2.renderMarkButton('highlight', 'edit'),
                 _this2.renderMarkButton('bold', 'format_bold'),
                 _this2.renderMarkButton('italic', 'format_italic'),
                 _this2.renderMarkButton('underlined', 'format_underlined'),
-                _this2.renderBlockButton('heading-one', 'format_size'),
+                _this2.renderMarkButton('header', 'format_size'),
                 _this2.renderMarkButton('code', 'code'),
                 _this2.renderBlockButton('block-quote', 'format_quote'),
-                _react2.default.createElement('input', {
-                    className: 'search-input keyword',
-                    placeholder: 'Search keywords...',
-                    onChange: _this2.onInputChange
-                })
+                _react2.default.createElement(
+                    'div',
+                    { className: 'hoverOptions' },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'hoverDropbtn', title: 'emoji' },
+                        _react2.default.createElement(
+                            'i',
+                            { className: 'material-icons emojiIcon notesIcons' },
+                            'insert_emoticon'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'emoji-options' },
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'emojis' },
+                            EMOJIS.map(function (emoji, i) {
+                                var onMouseDown = function onMouseDown(e) {
+                                    return _this2.onClickEmoji(e, emoji);
+                                };
+                                return _react2.default.createElement(
+                                    'span',
+                                    { key: i, className: 'button', onMouseDown: onMouseDown },
+                                    _react2.default.createElement(
+                                        'span',
+                                        { className: 'material-icons textAreaEmoji' },
+                                        emoji
+                                    )
+                                );
+                            })
+                        )
+                    )
+                )
             ),
             _react2.default.createElement(
                 'h6',
@@ -112001,7 +112149,7 @@ exports = module.exports = __webpack_require__(40)(undefined);
 
 
 // module
-exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n\r\n}\r\n\r\n.text-editor {\r\n    height: 100%;\r\n    overflow: hidden;\r\n    margin-bottom: -500em;\r\n}\r\n\r\n.editor {\r\n    padding-top: 2vmin;\r\n    padding-left: 2vmin;\r\n    padding-right: 2vmin;\r\n    height: 100%;\r\n}\r\n\r\n.notesUnorderedList li::before {\r\n    content: \"\\2022\";\r\n    padding: 0 8px 0 28px;\r\n    color: rgba(0,0,0,0.87);\r\n}\r\n\r\ncode {\r\n    display: inline-block;\r\n    background-color: #d5d5d5;\r\n    color: #0288d1;\r\n    padding: 0 0.5em;\r\n    font-family: 'Overpass Mono', sans-serif !important;\r\n    line-height: 1.56;\r\n}\r\n\r\nblockquote {\r\n    border-left: 5px solid #0288d1 !important;\r\n    color: #0288d1;\r\n    font-style: italic;\r\n    margin: 0 !important;\r\n}\r\n\r\n.notes-component.fifth-step{\r\n    height: 88%;\r\n    overflow-y: auto;\r\n}\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    position: relative;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #455a64;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    padding: 0 1em;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    justify-content: space-around;\r\n    height: 40%;\r\n    width: 100%;\r\n    padding-top: 1.5em;\r\n}\r\n\r\n.styleSquare {\r\n    height: 2.5em;\r\n    width: 2.5em;\r\n    cursor: pointer;\r\n    color: white;\r\n    text-align: center;\r\n}\r\n\r\n.richText, .fontColorIcon {\r\n    color: white;\r\n}\r\n\r\n.styleSquare:hover, .richText:hover, .fontColorIcon:hover {\r\n    background-color: ghostwhite;\r\n    color: #01579b;\r\n}\r\n\r\n.material-icons.notesIcons {\r\n    font-size: 2.5em;\r\n    margin: 0;\r\n}\r\n\r\n.search-input.keyword {\r\n    background-color: #eceff1;\r\n    height: 2.5em;\r\n    width: 18em;\r\n    padding-left: 2%;\r\n    margin-top: 0;\r\n    margin-bottom: 0;\r\n}\r\n\r\n.link, .image {\r\n    margin-top: 0;\r\n}\r\n\r\n.saveNotes {\r\n    display: inline-block;\r\n    color: white;\r\n    margin: 1% 45%;\r\n    width: 95%;\r\n}\r\n\r\n@media only screen and (max-width: 1426px) {\r\n    .styleSquare {\r\n        height: 2.3em;\r\n        width: 2.3em;\r\n    }\r\n\r\n    .material-icons.notesIcons {\r\n        font-size: 2.3em;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        height: 2.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 919px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n\r\n    .material-icons.image, .material-icons.link {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 830px) {\r\n    .search-input.keyword {\r\n        width: 13em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n    .stylingButtons {\r\n        justify-content: space-between;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 500px) {\r\n    .colorOptions {\r\n        margin-right: 0.5em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 430px) {\r\n    .stylingButtons.secondRow {\r\n        flex-wrap: wrap;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 422px) {\r\n    .search-input.keyword {\r\n        margin-top: 1em;\r\n    }\r\n}\r\n\r\n/*--------------------------- FONT COLOR ---------------------------*/\r\n\r\n.colorOptions {\r\n    float: left;\r\n    overflow: hidden;\r\n}\r\n\r\n.colorOptions .colorDropbtn {\r\n    font-size: 16px;\r\n    border: none;\r\n    outline: none;\r\n    /*padding: 14px 16px;*/\r\n    background-color: inherit;\r\n    font-family: inherit;\r\n    margin: 0;\r\n}\r\n\r\n.fontColor-options {\r\n    display: none;\r\n    position: absolute;\r\n    height: 3.8em;\r\n    width: 6em;\r\n    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);\r\n    z-index: 1;\r\n    background-color: darkgray;\r\n    padding: 0.3em 0 0 0.3em;\r\n\r\n}\r\n\r\n.fontColor-options .fontColor {\r\n    float: none;\r\n    text-decoration: none;\r\n    display: block;\r\n    text-align: left;\r\n}\r\n\r\n.fontColor-options {\r\n    background-color: #ddd;\r\n}\r\n\r\n.colorOptions:hover .fontColor-options {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.fontColor {\r\n    width: 1.8em;\r\n    height: 1.8em;\r\n    padding-right: 1%;\r\n    margin: 0;\r\n}\r\n\r\n.redFont .colorCircles {\r\n    color: #FF0000;\r\n    font-size: 150%;\r\n}\r\n\r\n.orangeFont .colorCircles {\r\n    color: #FF7F00;\r\n    font-size: 150%;\r\n}\r\n\r\n.yellowFont .colorCircles {\r\n    color: #FFFF00;\r\n    font-size: 150%;\r\n}\r\n\r\n.greenFont .colorCircles {\r\n    color: #00FF00;\r\n    font-size: 150%;\r\n}\r\n\r\n.blueFont .colorCircles {\r\n    color: #0000FF;\r\n    font-size: 150%;\r\n}\r\n\r\n.violetFont .colorCircles {\r\n    color: #9400D3;\r\n    font-size: 150%;\r\n}\r\n\r\n.fontOptions {\r\n    display: inline-block;\r\n}\r\n\r\n.colorCircles:hover {\r\n    cursor: pointer\r\n}", ""]);
+exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n}\r\n\r\n.text-editor {\r\n    height: 100%;\r\n    overflow: hidden;\r\n}\r\n\r\n.editor {\r\n    padding: 2vmin 2vmin 0 2vmin;\r\n    height: 100%;\r\n}\r\n\r\n.notes-component.fifth-step{\r\n    height: 88%;\r\n    overflow-y: auto;\r\n}\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    position: relative;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #455a64;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    padding: 0 1em;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: wrap;\r\n    justify-content: space-between;\r\n    height: 40%;\r\n    width: 100%;\r\n    padding-top: 1.5em;\r\n}\r\n\r\n.styleSquare {\r\n    height: 2.5em;\r\n    width: 2.5em;\r\n    cursor: pointer;\r\n    color: white;\r\n    text-align: center;\r\n}\r\n\r\n.richText, .fontColorIcon, .emojiIcon {\r\n    color: white;\r\n}\r\n\r\n.styleSquare:hover, .richText:hover, .fontColorIcon:hover, .emojiIcon:hover {\r\n    background-color: ghostwhite;\r\n    color: #01579b;\r\n}\r\n\r\n.material-icons.notesIcons {\r\n    font-size: 2.5em;\r\n    margin: 0;\r\n}\r\n\r\n.search-input.keyword {\r\n    background-color: #eceff1;\r\n    height: 2.5em;\r\n    width: 18em;\r\n    padding-left: 2%;\r\n    margin-top: 0;\r\n    margin-bottom: 0;\r\n}\r\n\r\n.link, .image {\r\n    margin-top: 0;\r\n}\r\n\r\n.saveNotes {\r\n    display: inline-block;\r\n    color: white;\r\n    margin: 1% 45%;\r\n    width: 95%;\r\n}\r\n\r\n@media only screen and (max-width: 1426px) {\r\n    .styleSquare {\r\n        height: 2.3em;\r\n        width: 2.3em;\r\n    }\r\n\r\n    .material-icons.notesIcons {\r\n        font-size: 2.3em;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        height: 2.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 919px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n\r\n    .material-icons.image, .material-icons.link {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 830px) {\r\n    .search-input.keyword {\r\n        width: 13em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n    .stylingButtons {\r\n        justify-content: space-between;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 500px) {\r\n    .hoverOptions {\r\n        margin-right: 0.5em;\r\n    }\r\n}\r\n\r\n/*@media only screen and (max-width: 430px) {*/\r\n    /*.stylingButtons.secondRow {*/\r\n        /*flex-wrap: wrap;*/\r\n    /*}*/\r\n/*}*/\r\n\r\n@media only screen and (max-width: 422px) {\r\n    .search-input.keyword {\r\n        margin-top: 1em;\r\n    }\r\n}\r\n\r\n/*--------------------------- OUTPUT ---------------------------*/\r\n\r\n.emoji {\r\n    font-size: 2em;\r\n}\r\n\r\nstrong {\r\n    font-weight: 900 !important;\r\n}\r\n\r\n.notesUnorderedList li::before {\r\n    content: \"\\2022\";\r\n    padding: 0 8px 0 28px;\r\n    color: rgba(0,0,0,0.87);\r\n}\r\n\r\ncode {\r\n    display: inline-block;\r\n    background-color: #d5d5d5;\r\n    color: #0288d1;\r\n    padding: 0 0.5em;\r\n    font-family: 'Overpass Mono', sans-serif !important;\r\n    line-height: 1.56;\r\n}\r\n\r\nblockquote {\r\n    border-left: 5px solid #0288d1 !important;\r\n    color: #0288d1;\r\n    font-style: italic;\r\n    margin: 0 !important;\r\n}\r\n\r\n\r\n\r\n/*--------------------------- COLOR/EMOJI OPTIONS ---------------------------*/\r\n\r\n.hoverOptions {\r\n    float: left;\r\n    overflow: hidden;\r\n}\r\n\r\n.hoverOptions .hoverDropbtn {\r\n    font-size: 16px;\r\n    border: none;\r\n    outline: none;\r\n    margin: 0;\r\n}\r\n\r\n.fontColor-options, .emoji-options {\r\n    display: none;\r\n    position: absolute;\r\n    background-color: white;\r\n    padding: 0.3em 0 0 0.3em;\r\n}\r\n\r\n.fontColor-options {\r\n    height: 3.8em;\r\n    width: 6em;\r\n}\r\n\r\n.emoji-options {\r\n    height: 23em;\r\n    width: 2.5em;\r\n}\r\n\r\n.fontColor-options .fontColor {\r\n    float: none;\r\n    text-decoration: none;\r\n    display: block;\r\n    text-align: left;\r\n}\r\n\r\n.hoverOptions:hover .fontColor-options {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.hoverOptions:hover .emoji-options {\r\n    display: block;\r\n}\r\n\r\n.fontColor, .emojis {\r\n    width: 1.8em;\r\n    height: 1.8em;\r\n    padding-right: 1%;\r\n    margin: 0;\r\n}\r\n\r\n.redFont .colorCircles {\r\n    color: #FF0000;\r\n    font-size: 150%;\r\n}\r\n\r\n.orangeFont .colorCircles {\r\n    color: #FF7F00;\r\n    font-size: 150%;\r\n}\r\n\r\n.yellowFont .colorCircles {\r\n    color: #FFFF00;\r\n    font-size: 150%;\r\n}\r\n\r\n.greenFont .colorCircles {\r\n    color: #00FF00;\r\n    font-size: 150%;\r\n}\r\n\r\n.blueFont .colorCircles {\r\n    color: #0000FF;\r\n    font-size: 150%;\r\n}\r\n\r\n.violetFont .colorCircles {\r\n    color: #9400D3;\r\n    font-size: 150%;\r\n}\r\n\r\n.fontOptions {\r\n    display: inline-block;\r\n}\r\n\r\n.colorCircles:hover {\r\n    cursor: pointer\r\n}\r\n\r\n.textAreaEmoji {\r\n    cursor: pointer;\r\n}\r\n\r\n/*--------------------------- FONT OPTIONS ---------------------------*/\r\n\r\n.font-dropdown {\r\n    position: relative;\r\n    display: inline-block;\r\n}\r\n\r\n.font-styles {\r\n    display: none;\r\n    position: absolute;\r\n    background-color: white;\r\n    min-width: 150px;\r\n    z-index: 1;\r\n}\r\n\r\n.font-dropdown:hover .font-styles {\r\n    display: block;\r\n    cursor: pointer;\r\n}\r\n\r\n.font-dropdown p:hover {\r\n    display: block;\r\n    cursor: pointer;\r\n    background-color: #455a64;\r\n    color: white;\r\n}\r\n\r\n.fonts {\r\n    margin: 0;\r\n    padding: 1.5em 1em;\r\n    line-height: 0;\r\n}\r\n\r\n.arial {\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n.comic {\r\n    font-family: \"Comic Sans MS\", cursive, sans-serif;\r\n}\r\n\r\n.courier {\r\n    font-family: \"Courier New\", Courier, monospace;\r\n}\r\n\r\n.impact {\r\n    font-family: Impact, Charcoal, sans-serif;\r\n}\r\n\r\n.roboto {\r\n    font-family: 'Roboto', sans-serif;\r\n}\r\n\r\n.times {\r\n    font-family: \"Times New Roman\", Times, serif;\r\n}", ""]);
 
 // exports
 
