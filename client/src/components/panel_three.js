@@ -99,8 +99,8 @@ class ThreePanel extends Component {
       >
         <SplitPane
           split="horizontal"
-          minSize={0}
-          maxSize={width}
+          minSize={50}
+          maxSize={window.innerHeight - 50}
           defaultSize={450}
         >
           <div className="video-parent-panel">
