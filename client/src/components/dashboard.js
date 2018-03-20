@@ -8,7 +8,7 @@ import Notes from './notes';
 
 import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getDataObject, getVideoPlaylist, setVideoUrl } from '../actions';
+import { getDataObject } from '../actions';
 
 import Tour from 'reactour';
 
@@ -29,7 +29,6 @@ class Dashboard extends Component {
     this.binderId = null;
     this.tabId = null;
     this.pageId = null;
-    this.currentVideoList = null;
   }
 
   componentWillMount() {
@@ -42,50 +41,8 @@ class Dashboard extends Component {
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
   componentWillReceiveProps(nextProps) {
-    // const { interface } = this.props;
     const { width } = this.state;
     const isMobile = width <= 767;
-    if (isMobile) {
-      if (this.props.binder !== nextProps.binder) {
-        this.updatePlaylistComponent(nextProps);
-      }
-      if (this.props.interface.page_id !== nextProps.interface.page_id) {
-        this.updatePlaylistComponent(nextProps);
-      }
-    }
-  }
-  updatePlaylistComponent(nextProps) {
-    let { tab_arr_obj } = nextProps.binder.binderObj;
-    // let { interface_obj } = nextProps;
-    if (tab_arr_obj) {
-      let tabArrLength = tab_arr_obj.length;
-      let tabIndex = null;
-      let pageIndex = null;
-      for (let i = 0; i < tabArrLength; i++) {
-        if (nextProps.interface.tab_id === tab_arr_obj[i]._id) {
-          tabIndex = i;
-          break;
-        }
-      }
-      const { page_arr_obj } = tab_arr_obj[tabIndex];
-      for (let i = 0; i < page_arr_obj.length; i++) {
-        if (nextProps.interface.page_id === page_arr_obj[i]._id) {
-          pageIndex = i;
-          break;
-        }
-      }
-      const currentPage = page_arr_obj[pageIndex];
-      if (
-        pageIndex !== null &&
-        currentPage.hasOwnProperty('video') &&
-        currentPage.video.length >= 1
-      ) {
-        this.binderId = nextProps.binder.binderObj._id;
-        this.tabId = tab_arr_obj[tabIndex]._id;
-        this.pageId = page_arr_obj[pageIndex]._id;
-        this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -176,33 +133,33 @@ class Dashboard extends Component {
         content:
           'This is the navbar. It helps you organize your notes into binders, tabs and pages.',
         position: 'center',
-        style: { textAlign: 'center'}
+        style: { textAlign: 'center' }
       },
       {
         selector: '.navLink',
         content:
           'This opens your binders. It will help you navigate through them, their tabs and their pages.',
         position: 'center',
-        style: { textAlign: 'center', marginTop: '15em'}
+        style: { textAlign: 'center', marginTop: '15em' }
       },
       {
         selector: '.videoLink',
         content:
           'This opens your video panel where you can save class videos and search YouTube!',
         position: 'center',
-        style: { textAlign: 'center', marginTop: '15em'}
+        style: { textAlign: 'center', marginTop: '15em' }
       },
       {
         selector: '.slideLink',
         content: 'You can access your class slides here.',
         position: 'center',
-        style: { textAlign: 'center', marginTop: '15em'}
+        style: { textAlign: 'center', marginTop: '15em' }
       },
       {
         selector: '.notesLink',
         content: 'Your notes are found here.',
         position: 'center',
-        style: { textAlign: 'center', marginTop: '15em'}
+        style: { textAlign: 'center', marginTop: '15em' }
       },
       {
         selector: '.last-step',
@@ -247,12 +204,6 @@ class Dashboard extends Component {
               className="mobileLink videoLink"
               onClick={() => {
                 this.mobileSelectComponent(2);
-                this.props.getVideoPlaylist(
-                  this.binderId,
-                  this.tabId,
-                  this.pageId
-                );
-                // this.props.setVideoUrl(this.props.playlistItems[0].videoId);
               }}
             >
               <div
@@ -316,13 +267,10 @@ function mapStateToProps(state) {
   return {
     binderArr: state.binderArray.binderArr,
     binder: state.binder,
-    interface: state.interface,
-    playlistItems: state.video.addedVideo
+    interface: state.interface
   };
 }
 
 export default connect(mapStateToProps, {
-  getDataObject,
-  getVideoPlaylist,
-  setVideoUrl
+  getDataObject
 })(Dashboard);
