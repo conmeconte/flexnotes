@@ -55,7 +55,7 @@ const EMOJIS = [
     '❤️',
     '⁉️',
     '💩'
-]
+];
 
 const noop = e => e.preventDefault();
 
@@ -294,45 +294,11 @@ class Notes extends Component {
         } else if (isCodeHotkey(event)) {
             mark = 'code'
         } else if (isTabHotkey(event)) {
-            mark = 'tab'
+            mark = 'tab';
             change.insertText("     ");
             return true
         } else {
             return
-        }
-
-        let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'background'];
-
-        if (colors[0]) {
-            mark = 'red';
-        } else if (colors[1]) {
-            mark = 'orange';
-        } else if (colors[2]) {
-            mark = 'yellow'
-        } else if (colors[3]) {
-            mark = 'green'
-        } else if (colors[4]) {
-            mark = 'blue';
-        } else if (colors[5]) {
-            mark = 'purple'
-        } else if (colors[6]) {
-            mark = 'highlight'
-        }
-
-        let fonts = ["arial", "comic sans", "courier new", "impact", "roboto", "times new roman"];
-
-        if (fonts[0]) {
-            mark = 'arial'
-        } else if (fonts[1]) {
-            mark = 'comic sans'
-        } else if (fonts[2]) {
-            mark = 'courier new'
-        } else if (fonts[3]) {
-            mark = 'impact'
-        } else if (fonts[4]) {
-            mark = 'roboto'
-        } else if (fonts[5]) {
-            mark = 'times new roman'
         }
 
         event.preventDefault();
@@ -559,7 +525,7 @@ class Notes extends Component {
                     editor.change((c) => {
                         c.call(insertImage, reader.result, target)
                     })
-                })
+                });
 
                 reader.readAsDataURL(file)
             }
@@ -589,9 +555,9 @@ class Notes extends Component {
     // --------------------------- EMOJIS  ---------------------------
 
     onClickEmoji = (e, code) => {
-        e.preventDefault()
-        const { value } = this.state
-        const change = value.change()
+        e.preventDefault();
+        const { value } = this.state;
+        const change = value.change();
 
         change
             .insertInline({
@@ -599,8 +565,8 @@ class Notes extends Component {
                 isVoid: true,
                 data: { code },
             })
-            .collapseToStartOfNextText()
-            .focus()
+            // .collapseToStartOfNextText()
+            .focus();
 
         this.onChange(change)
     };
@@ -615,6 +581,8 @@ class Notes extends Component {
             case 'code': return <code>{children}</code>;
             case 'italic': return <em>{children}</em>;
             case 'underlined': return <u>{children}</u>;
+
+            case 'header': return <span style={{ fontSize: '1.5em' }}>{children}</span>;
 
             case 'red': return <span style={{ color: '#FF0000' }}>{children}</span>;
             case 'orange': return <span style={{ color: '#FF7F00' }}>{children}</span>;
@@ -636,10 +604,6 @@ class Notes extends Component {
         const { attributes, children, node, isSelected } = props;
         switch (node.type) {
             case 'block-quote': return <blockquote {...attributes}>{children}</blockquote>;
-
-            case 'heading-one': return <h5 {...attributes}>{children}</h5>;
-            // case 'heading-two': return <h2 {...attributes}>{children}</h4>;
-
             case 'left': return <div style={{ textAlign: 'left' }}>{children}</div>;
             case 'center': return <div style={{ textAlign: 'center' }}>{children}</div>;
             case 'right': return <div style={{ textAlign: 'right' }}>{children}</div>;
@@ -733,8 +697,7 @@ class Notes extends Component {
                     {this.renderMarkButton('bold', 'format_bold')}
                     {this.renderMarkButton('italic', 'format_italic')}
                     {this.renderMarkButton('underlined', 'format_underlined')}
-                    {this.renderBlockButton('heading-one', 'format_size')}
-                    {/*{this.renderBlockButton('heading-two', 'title')}*/}
+                    {this.renderMarkButton('header', 'format_size')}
                     {this.renderMarkButton('code', 'code')}
                     {this.renderBlockButton('block-quote', 'format_quote')}
 
