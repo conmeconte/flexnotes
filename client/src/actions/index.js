@@ -295,45 +295,10 @@ export function getVideoResults(videos) {
     payload: videos
   };
 }
-export function getResultStyles(visible) {
-  let styles;
-  if (!visible) {
-    styles = {
-      transform: 'translateX(-100%)'
-    };
-  } else {
-    styles = {
-      transform: 'translateX(0%)'
-    };
-  }
-  return {
-    type: types.GET_RESULT_STYLES,
-    payload: styles
-  };
-}
-
-export function toggleResults(visible) {
-  let toggleResults = !visible;
-  return {
-    type: types.TOGGLE_RESULTS,
-    payload: toggleResults
-  };
-}
 export function setVideoPlaylist(videos) {
   return {
     type: types.SET_VIDEO_PLAYLIST,
     payload: videos
-  };
-}
-export function togglePlaylist(playlistStyle) {
-  if (playlistStyle === 'translateY(-100%)') {
-    playlistStyle = 'translateY(0%)';
-  } else {
-    playlistStyle = 'translateY(-100%)';
-  }
-  return {
-    type: types.TOGGLE_PLAYLIST,
-    payload: playlistStyle
   };
 }
 export function getVideoPlaylist(binderID, tabID, pageID) {
@@ -361,7 +326,6 @@ export function addVideoToDatabase(
   videoImg,
   interfaceObj
 ) {
-  debugger;
   return async dispatch => {
     try {
       const response = await axios.post('/api/video', {
@@ -416,6 +380,34 @@ export function removeVideoFromPlaylist(binderId, tabId, pageId, videoId) {
       });
   };
 }
+export function grabVideoUrl(videoLink) {
+  return {
+    type: types.GRAB_VIDEO_URL,
+    payload: videoLink
+  };
+}
+export function setVideoUrl(id) {
+  return {
+    type: types.SET_VIDEO_URL,
+    payload: `https://www.youtube.com/embed/${id}`
+  };
+}
+export function playVideo(videoId) {
+  return {
+    type: types.PLAY_VIDEO,
+    payload: {
+      videoLink: `https://www.youtube.com/embed/${videoId}`,
+      resultsContainer: { style: { transform: 'translateY(0px)' } }
+    }
+  };
+}
+export function playPastedLinkVideo(id) {
+  const videoId = `https://www.youtube.com/embed/${videoId}`;
+  return {
+    type: types.PLAY_PASTED_VIDEO_LINK,
+    payload: videoId
+  };
+}
 export function slideOutVideoSearch(visible) {
   let toggleSlideOut = visible;
   var slideOutStyles;
@@ -448,32 +440,38 @@ export function emptyVideoSlideOut(toggleBool, slide) {
     }
   };
 }
-export function playVideo(videoId) {
+export function getResultStyles(visible) {
+  let styles;
+  if (!visible) {
+    styles = {
+      transform: 'translateX(-100%)'
+    };
+  } else {
+    styles = {
+      transform: 'translateX(0%)'
+    };
+  }
   return {
-    type: types.PLAY_VIDEO,
-    payload: {
-      videoLink: `https://www.youtube.com/embed/${videoId}`,
-      resultsContainer: { style: { transform: 'translateY(0px)' } }
-    }
+    type: types.GET_RESULT_STYLES,
+    payload: styles
   };
 }
-export function playPastedLinkVideo(id) {
-  const videoId = `https://www.youtube.com/embed/${videoId}`;
+export function toggleResults(visible) {
+  let toggleResults = !visible;
   return {
-    type: types.PLAY_PASTED_VIDEO_LINK,
-    payload: videoId
+    type: types.TOGGLE_RESULTS,
+    payload: toggleResults
   };
 }
-export function grabVideoUrl(videoLink) {
+export function togglePlaylist(playlistStyle) {
+  if (playlistStyle === 'translateY(-100%)') {
+    playlistStyle = 'translateY(0%)';
+  } else {
+    playlistStyle = 'translateY(-100%)';
+  }
   return {
-    type: types.GRAB_VIDEO_URL,
-    payload: videoLink
-  };
-}
-export function setVideoUrl(id) {
-  return {
-    type: types.SET_VIDEO_URL,
-    payload: `https://www.youtube.com/embed/${id}`
+    type: types.TOGGLE_PLAYLIST,
+    payload: playlistStyle
   };
 }
 // END OF VIDEO ACTION CREATORS
