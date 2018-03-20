@@ -4,6 +4,10 @@ import { Field, reduxForm } from 'redux-form';
 import * as actions from '../actions';
 
 class VideoPlaylist extends Component {
+  constructor(props) {
+    super(props);
+    this.deleteVideo = this.deleteVideo.bind(this);
+  }
   renderInput({ input, type, meta: { error, touched } }) {
     return (
       <div className="col s9 input-field">
@@ -39,6 +43,41 @@ class VideoPlaylist extends Component {
       });
     });
   }
+  componentWillReceiveProps(nextProps) {
+    this.updateVideoComponent(nextProps);
+  }
+  updateVideoComponent(nextProps) {
+    let { tab_arr_obj } = nextProps.binderObj;
+    let { interface_obj } = nextProps;
+    if (tab_arr_obj) {
+      let tabArrLength = tab_arr_obj.length;
+      let tabIndex = null;
+      let pageIndex = null;
+      for (let i = 0; i < tabArrLength; i++) {
+        if (interface_obj.tab_id === tab_arr_obj[i]._id) {
+          tabIndex = i;
+          break;
+        }
+      }
+      const { page_arr_obj } = tab_arr_obj[tabIndex];
+      for (let i = 0; i < page_arr_obj.length; i++) {
+        if (interface_obj.page_id === page_arr_obj[i]._id) {
+          pageIndex = i;
+          break;
+        }
+      }
+      const currentPage = page_arr_obj[pageIndex];
+      this.binderId = nextProps.binderObj._id;
+      this.tabId = tab_arr_obj[tabIndex]._id;
+      this.pageId = page_arr_obj[pageIndex]._id;
+      this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
+      // .then(() => {
+      //   if (this.props.playlistItems.length > 0) {
+      //     this.props.setVideoUrl(this.props.playlistItems[0].videoId);
+      //   }
+      // });
+    }
+  }
   deleteVideo(videoId) {
     this.props.removeVideoFromPlaylist(
       this.props.binderId,
@@ -46,12 +85,19 @@ class VideoPlaylist extends Component {
       this.props.pageId,
       videoId
     );
+    this.props
+      .getVideoPlaylist(this.binderId, this.tabId, this.pageId)
+      .then(() => {
+        if (this.props.playlistItems.length > 0) {
+          this.props.setVideoUrl(this.props.playlistItems[0].videoId);
+        }
+      });
   }
   render() {
     const { playlistStyles } = this.props;
     let createPlaylist = '';
-    if (this.props.currentPlaylistItems.length !== 0) {
-      createPlaylist = this.props.currentPlaylistItems.map((item, index) => {
+    if (this.props.playlistItems.length !== 0) {
+      createPlaylist = this.props.playlistItems.map((item, index) => {
         if (!item.hasOwnProperty('videoId')) {
           return;
         }
@@ -114,8 +160,8 @@ class VideoPlaylist extends Component {
               </div>
             </div>
           </form>
-          {this.props.currentPlaylistItems.length >= 1 &&
-          this.props.currentPlaylistItems[0].videoId !== undefined
+          {this.props.playlistItems.length >= 1 &&
+          this.props.playlistItems[0].videoId !== undefined
             ? createPlaylist
             : <div className="no-videos">
                 Currently, no videos on playlist. Please add a video by pasting
@@ -150,7 +196,8 @@ function mapStateToProps(state) {
     binderObj: state.binder.binderObj,
     binderTabPageIds: state.interface,
     savedVideoTitle: state.video.savedVideoTitle,
-    savedVideoImage: state.video.savedVideoImage
+    savedVideoImage: state.video.savedVideoImage,
+    playlistItems: state.video.addedVideo
   };
 }
 
