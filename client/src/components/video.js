@@ -16,6 +16,9 @@ class Video extends Component {
     this.pageId = null;
     this.currentVideoList = null;
     this.currentPlaylistItems = [];
+    this.state = {
+      width: window.innerWidth
+    };
   }
   async search(values) {
     if (!values.video) {
@@ -53,6 +56,12 @@ class Video extends Component {
     this.props.getVideoResults(videos);
   }
   componentWillMount() {
+    const { width } = this.state;
+    const isMobile = width <= 767;
+    if (isMobile) {
+      this.updateVideoComponent(this.props);
+      return;
+    }
     let { tab_arr_obj } = this.props.binderObj;
     let { interface_obj } = this.props;
     if (tab_arr_obj) {
@@ -72,17 +81,19 @@ class Video extends Component {
           break;
         }
       }
+
       if (
+        page_arr_obj[pageIndex].video.length === 0 ||
         typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined' ||
         typeof page_arr_obj[pageIndex].video[0].videoURL === ''
       ) {
-        // return;
         this.props.setVideoUrl('');
       } else {
         this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoId);
       }
     }
   }
+
   componentWillReceiveProps(nextProps) {
     const { interface_obj } = this.props;
     if (interface_obj.page_id !== nextProps.interface_obj.page_id) {
@@ -116,9 +127,7 @@ class Video extends Component {
         currentPage.hasOwnProperty('video') &&
         currentPage.video.length >= 1
       ) {
-        // this.props.setVideoUrl(currentPage.video[0].videoId, interface_obj);
         this.props.slideOutVideoSearch(false, 'translateY(-119px)');
-        // this.props.setVideoPlaylist(currentPage.video);
         this.binderId = nextProps.binderObj._id;
         this.tabId = tab_arr_obj[tabIndex]._id;
         this.pageId = page_arr_obj[pageIndex]._id;
