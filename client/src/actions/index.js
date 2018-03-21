@@ -368,11 +368,9 @@ export function grabVideoUrl(videoLink) {
   };
 }
 export function setVideoUrl(id) {
-  return async dispatch => {
-    dispatch({
-      type: types.SET_VIDEO_URL,
-      payload: `https://www.youtube.com/embed/${id}`
-    });
+  return {
+    type: types.SET_VIDEO_URL,
+    payload: `https://www.youtube.com/embed/${id}`
   };
 }
 export function playVideo(videoId) {
