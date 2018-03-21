@@ -93,6 +93,8 @@ class VideoPlaylist extends Component {
           });
       });
     });
+    this.props.reset();
+    this.props.togglePlaylist('translateY(0%)');
   }
 
   deleteVideo(videoId) {
@@ -141,7 +143,7 @@ class VideoPlaylist extends Component {
                 onClick={() => {
                   this.props.playVideo(item.videoId);
                   this.props.setVideoUrl(item.videoId);
-                  this.props.togglePlaylist(this.props.playlistStyles);
+                  this.props.togglePlaylist('translateY(0%)');
                 }}
               >
                 <i className="material-icons">play_arrow</i>

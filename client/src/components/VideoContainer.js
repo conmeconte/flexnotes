@@ -8,6 +8,7 @@ class VideoContainer extends Component {
     super(props);
     this.currentVideoList = this.props.currentPlaylistItems;
   }
+
   renderInput({ input, type, meta: { error, touched } }) {
     return (
       <div className="col s8 input-field">
@@ -93,6 +94,8 @@ class VideoContainer extends Component {
           });
       });
     });
+    this.props.reset();
+    this.props.slideOutVideoSearch(false);
   }
 
   render() {
