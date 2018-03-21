@@ -95,6 +95,7 @@ class VideoPlaylist extends Component {
     });
     this.props.reset();
     this.props.togglePlaylist('translateY(0%)');
+    this.props.slideOutVideoSearch(false);
   }
 
   deleteVideo(videoId) {
