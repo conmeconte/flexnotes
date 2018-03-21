@@ -5804,26 +5804,23 @@ exports.setNumOfPanels = setNumOfPanels;
 exports.getPanelNum = getPanelNum;
 exports.saveNotes = saveNotes;
 exports.autoSaveNotes = autoSaveNotes;
-exports.notesUpdated = notesUpdated;
 exports.setSlidesUrl = setSlidesUrl;
 exports.getSlidesURL = getSlidesURL;
 exports.resetSlidesURL = resetSlidesURL;
-exports.slideOutSlidesSearch = slideOutSlidesSearch;
 exports.getVideoResults = getVideoResults;
-exports.getResultStyles = getResultStyles;
-exports.getOpacityDisplay = getOpacityDisplay;
-exports.toggleResults = toggleResults;
 exports.setVideoPlaylist = setVideoPlaylist;
-exports.togglePlaylist = togglePlaylist;
 exports.getVideoPlaylist = getVideoPlaylist;
 exports.addVideoToDatabase = addVideoToDatabase;
 exports.removeVideoFromPlaylist = removeVideoFromPlaylist;
-exports.slideOutVideoSearch = slideOutVideoSearch;
-exports.emptyVideoSlideOut = emptyVideoSlideOut;
-exports.playVideo = playVideo;
-exports.playPastedLinkVideo = playPastedLinkVideo;
 exports.grabVideoUrl = grabVideoUrl;
 exports.setVideoUrl = setVideoUrl;
+exports.playVideo = playVideo;
+exports.playPastedLinkVideo = playPastedLinkVideo;
+exports.slideOutVideoSearch = slideOutVideoSearch;
+exports.emptyVideoSlideOut = emptyVideoSlideOut;
+exports.getResultStyles = getResultStyles;
+exports.toggleResults = toggleResults;
+exports.togglePlaylist = togglePlaylist;
 exports.getDataObject = getDataObject;
 exports.updateBinderArray = updateBinderArray;
 exports.updateBinderObj = updateBinderObj;
@@ -5844,6 +5841,7 @@ exports.minNav = minNav;
 exports.showNav = showNav;
 exports.editable = editable;
 exports.notEditable = notEditable;
+exports.showLoader = showLoader;
 exports.clearLoader = clearLoader;
 
 var _axios = __webpack_require__(118);
@@ -5895,7 +5893,7 @@ var fetchUser = exports.fetchUser = function fetchUser() {
 
 var fetchSampleUser = exports.fetchSampleUser = function fetchSampleUser() {
   return function (dispatch) {
-    console.log('fetchUser called');
+    //console.log('fetchUser called');
     _axios2.default.post('/auth/sample', {
       username: 'sample',
       password: 'samplePw'
@@ -5905,7 +5903,7 @@ var fetchSampleUser = exports.fetchSampleUser = function fetchSampleUser() {
     }).catch(function (err) {
       //axios call not receive a res but sample user logged in, so redirect as err occurs
       window.location = '/main';
-      console.log('reached back');
+      //console.log('reached back');
       dispatch({
         type: _types2.default.AXIOS_ERROR,
         msg: 'Failed to update Top Left Panel Height'
@@ -5917,7 +5915,7 @@ var fetchSampleUser = exports.fetchSampleUser = function fetchSampleUser() {
 //PANEL SPECs Action Creator
 
 function setTopLeftHeight(num, interfaceObj) {
-  console.log('panel 3 settopleft: ', num / window.innerHeight);
+  //console.log('panel 3 settopleft: ', num / window.innerHeight);
   return function (dispatch) {
     _axios2.default.put('/api/page', {
       top_left_panel_height: num,
@@ -6071,12 +6069,6 @@ function autoSaveNotes(val, interface_obj) {
   };
 }
 
-function notesUpdated() {
-  return {
-    type: _types2.default.NOT_SAVE_NOTES
-  };
-}
-
 //Lecture Slides Action Creator
 
 function setSlidesUrl(slidesURL, interfaceObj) {
@@ -6116,141 +6108,30 @@ function resetSlidesURL(slidesURL) {
     payload: slidesURL
   };
 }
-function slideOutSlidesSearch(toggleBool, slide) {
-  var toggleSlideOut = toggleBool;
-  var slideOutStyles;
-  if (toggleSlideOut) {
-    slideOutStyles = 'translateY(0px)';
-    toggleSlideOut = false;
-  } else {
-    slideOutStyles = 'translateY(-100px)';
-    toggleSlideOut = true;
-  }
-  return {
-    type: _types2.default.TOGGLE_SLIDE_OUT_MENU,
-    payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut: toggleSlideOut }
-  };
-}
+
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
-var getSavedVideoTitle = exports.getSavedVideoTitle = function getSavedVideoTitle(videoUrl) {
+var getSavedVideoTitle = exports.getSavedVideoTitle = function getSavedVideoTitle(videoId) {
   return function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch) {
-      var videoId, response, videoLink, _videoId, _response, _videoLink, _videoId2, _response2, _videoLink2, _videoId3, _response3, _videoId4, _response4;
-
+      var response;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              if (!(videoUrl.indexOf('player_embedded') !== -1)) {
-                _context2.next = 9;
-                break;
-              }
-
-              videoId = videoUrl.split('=');
-
-              videoId = videoId[2];
-              _context2.next = 5;
+              _context2.next = 2;
               return _axios2.default.get('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' + videoId + '&key=' + _keys2.default.YOUTUBE_API_KEY);
 
-            case 5:
+            case 2:
               response = _context2.sent;
 
               dispatch({
                 type: _types2.default.GET_SAVED_VIDEO_TITLE,
                 payload: response.data.items[0].snippet.title
               });
-              _context2.next = 47;
-              break;
 
-            case 9:
-              if (!(videoUrl.indexOf('&feature=youtu.be') !== -1)) {
-                _context2.next = 20;
-                break;
-              }
-
-              videoLink = videoUrl;
-              _videoId = videoLink.split('=');
-
-              _videoId = _videoId[1].split('&');
-              _videoId = _videoId[0];
-              _context2.next = 16;
-              return _axios2.default.get('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' + _videoId + '&key=' + _keys2.default.YOUTUBE_API_KEY);
-
-            case 16:
-              _response = _context2.sent;
-
-              dispatch({
-                type: _types2.default.GET_SAVED_VIDEO_TITLE,
-                payload: _response.data.items[0].snippet.title
-              });
-              _context2.next = 47;
-              break;
-
-            case 20:
-              if (!(videoUrl.indexOf('feature') !== -1)) {
-                _context2.next = 31;
-                break;
-              }
-
-              _videoLink = videoUrl;
-              _videoId2 = _videoLink.split('&');
-
-              _videoId2 = _videoId2[0].split('/');
-              _videoId2 = _videoId2[4];
-              _context2.next = 27;
-              return _axios2.default.get('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' + _videoId2 + '&key=' + _keys2.default.YOUTUBE_API_KEY);
-
-            case 27:
-              _response2 = _context2.sent;
-
-              dispatch({
-                type: _types2.default.GET_SAVED_VIDEO_TITLE,
-                payload: _response2.data.items[0].snippet.title
-              });
-              _context2.next = 47;
-              break;
-
-            case 31:
-              if (!(videoUrl.indexOf('youtu.be') !== -1)) {
-                _context2.next = 41;
-                break;
-              }
-
-              _videoLink2 = videoUrl;
-              _videoId3 = videoUrl.split('/');
-
-              _videoId3 = _videoId3[3];
-              _context2.next = 37;
-              return _axios2.default.get('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' + _videoId3 + '&key=' + _keys2.default.YOUTUBE_API_KEY);
-
-            case 37:
-              _response3 = _context2.sent;
-
-              dispatch({
-                type: _types2.default.GET_SAVED_VIDEO_TITLE,
-                payload: _response3.data.items[0].snippet.title
-              });
-              _context2.next = 47;
-              break;
-
-            case 41:
-              _videoId4 = videoUrl.split('=');
-
-              _videoId4 = _videoId4[1];
-              _context2.next = 45;
-              return _axios2.default.get('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' + _videoId4 + '&key=' + _keys2.default.YOUTUBE_API_KEY);
-
-            case 45:
-              _response4 = _context2.sent;
-
-              dispatch({
-                type: _types2.default.GET_SAVED_VIDEO_TITLE,
-                payload: _response4.data.items[0].snippet.title
-              });
-
-            case 47:
+            case 4:
             case 'end':
               return _context2.stop();
           }
@@ -6263,124 +6144,27 @@ var getSavedVideoTitle = exports.getSavedVideoTitle = function getSavedVideoTitl
     };
   }();
 };
-var getSavedVideoImg = exports.getSavedVideoImg = function getSavedVideoImg(videoUrl) {
+var getSavedVideoImg = exports.getSavedVideoImg = function getSavedVideoImg(videoId) {
   return function () {
     var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(dispatch) {
-      var videoId, response, videoLink, _videoId5, _response5, _videoLink3, _videoId6, _response6, _videoLink4, _videoId7, _response7, _videoId8, _response8;
-
+      var response;
       return regeneratorRuntime.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              if (!(videoUrl.indexOf('player_embedded') !== -1)) {
-                _context3.next = 9;
-                break;
-              }
-
-              videoId = videoUrl.split('=');
-
-              videoId = videoId[2];
-              _context3.next = 5;
+              _context3.next = 2;
               return _axios2.default.get('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' + videoId + '&key=' + _keys2.default.YOUTUBE_API_KEY);
 
-            case 5:
+            case 2:
               response = _context3.sent;
+
 
               dispatch({
                 type: _types2.default.GET_SAVED_VIDEO_IMAGE,
                 payload: response.data.items[0].snippet.thumbnails.default.url
               });
-              _context3.next = 47;
-              break;
 
-            case 9:
-              if (!(videoUrl.indexOf('&feature=youtu.be') !== -1)) {
-                _context3.next = 20;
-                break;
-              }
-
-              videoLink = videoUrl;
-              _videoId5 = videoLink.split('=');
-
-              _videoId5 = _videoId5[1].split('&');
-              _videoId5 = _videoId5[0];
-              _context3.next = 16;
-              return _axios2.default.get('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' + _videoId5 + '&key=' + _keys2.default.YOUTUBE_API_KEY);
-
-            case 16:
-              _response5 = _context3.sent;
-
-              dispatch({
-                type: _types2.default.GET_SAVED_VIDEO_IMAGE,
-                payload: _response5.data.items[0].snippet.thumbnails.default.url
-              });
-              _context3.next = 47;
-              break;
-
-            case 20:
-              if (!(videoUrl.indexOf('feature') !== -1)) {
-                _context3.next = 31;
-                break;
-              }
-
-              _videoLink3 = videoUrl;
-              _videoId6 = _videoLink3.split('&');
-
-              _videoId6 = _videoId6[0].split('/');
-              _videoId6 = _videoId6[4];
-              _context3.next = 27;
-              return _axios2.default.get('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' + _videoId6 + '&key=' + _keys2.default.YOUTUBE_API_KEY);
-
-            case 27:
-              _response6 = _context3.sent;
-
-              dispatch({
-                type: _types2.default.GET_SAVED_VIDEO_IMAGE,
-                payload: _response6.data.items[0].snippet.thumbnails.default.url
-              });
-              _context3.next = 47;
-              break;
-
-            case 31:
-              if (!(videoUrl.indexOf('youtu.be') !== -1)) {
-                _context3.next = 41;
-                break;
-              }
-
-              _videoLink4 = videoUrl;
-              _videoId7 = videoUrl.split('/');
-
-              _videoId7 = _videoId7[3];
-              _context3.next = 37;
-              return _axios2.default.get('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' + _videoId7 + '&key=' + _keys2.default.YOUTUBE_API_KEY);
-
-            case 37:
-              _response7 = _context3.sent;
-
-
-              dispatch({
-                type: _types2.default.GET_SAVED_VIDEO_IMAGE,
-                payload: _response7.data.items[0].snippet.thumbnails.default.url
-              });
-              _context3.next = 47;
-              break;
-
-            case 41:
-              _videoId8 = videoUrl.split('=');
-
-              _videoId8 = _videoId8[1];
-              _context3.next = 45;
-              return _axios2.default.get('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' + _videoId8 + '&key=' + _keys2.default.YOUTUBE_API_KEY);
-
-            case 45:
-              _response8 = _context3.sent;
-
-              dispatch({
-                type: _types2.default.GET_SAVED_VIDEO_IMAGE,
-                payload: _response8.data.items[0].snippet.thumbnails.default.url
-              });
-
-            case 47:
+            case 4:
             case 'end':
               return _context3.stop();
           }
@@ -6399,58 +6183,10 @@ function getVideoResults(videos) {
     payload: videos
   };
 }
-function getResultStyles(styles, visible) {
-  if (!visible) {
-    styles = {
-      transform: 'translateX(-100%)'
-    };
-  } else {
-    styles = {
-      transform: 'translateX(0%)'
-    };
-  }
-  return {
-    type: _types2.default.GET_RESULT_STYLES,
-    payload: styles
-  };
-}
-function getOpacityDisplay(styles, visible) {
-  if (!visible) {
-    styles = {
-      display: 'none'
-    };
-  } else {
-    styles = {
-      display: 'block'
-    };
-  }
-  return {
-    type: _types2.default.GET_OPACITY_DISPLAY,
-    payload: styles
-  };
-}
-function toggleResults(visible) {
-  var toggleResults = !visible;
-  return {
-    type: _types2.default.TOGGLE_RESULTS,
-    payload: toggleResults
-  };
-}
 function setVideoPlaylist(videos) {
   return {
     type: _types2.default.SET_VIDEO_PLAYLIST,
     payload: videos
-  };
-}
-function togglePlaylist(playlistStyle) {
-  if (playlistStyle === 'translateY(-100%)') {
-    playlistStyle = 'translateY(0%)';
-  } else {
-    playlistStyle = 'translateY(-100%)';
-  }
-  return {
-    type: _types2.default.TOGGLE_PLAYLIST,
-    payload: playlistStyle
   };
 }
 function getVideoPlaylist(binderID, tabID, pageID) {
@@ -6494,492 +6230,143 @@ function getVideoPlaylist(binderID, tabID, pageID) {
     };
   }();
 }
-function addVideoToDatabase(videoUrl, videoTitle, videoImg, interfaceObj) {
+function addVideoToDatabase(videoId, videoTitle, videoImg, interfaceObj) {
   var _this2 = this;
 
-  if (!videoUrl) {
-    return {
-      type: _types2.default.NO_VIDEO_LINK
-    };
-  } else if (videoUrl.indexOf('player_embedded') !== -1) {
-    var videoId = videoUrl.split('=');
-    videoId = videoId[2];
-    var videoLink = 'https://www.youtube.com/embed/' + videoId;
-    return function () {
-      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(dispatch) {
-        var response;
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
-                return _axios2.default.post('/api/video', {
-                  video: {
+  return function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(dispatch) {
+      var response;
+      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.prev = 0;
+              _context5.next = 3;
+              return _axios2.default.post('/api/video', {
+                video: {
+                  videoTitle: videoTitle,
+                  videoId: videoId,
+                  videoURL: 'https://www.youtube.com/embed/' + videoId,
+                  videoImg: videoImg
+                },
+                binderID: interfaceObj.binder_id,
+                tabID: interfaceObj.tab_id,
+                pageID: interfaceObj.page_id
+              });
+
+            case 3:
+              response = _context5.sent;
+
+              dispatch({
+                type: _types2.default.ADD_VIDEO_TO_DATABASE,
+                payload: {
+                  videoInfo: {
                     videoTitle: videoTitle,
                     videoId: videoId,
                     videoURL: videoLink,
                     videoImg: videoImg
                   },
-                  binderID: interfaceObj.binder_id,
-                  tabID: interfaceObj.tab_id,
-                  pageID: interfaceObj.page_id
-                });
+                  updatedPlaylist: response.data.video
+                }
+              });
+              _context5.next = 10;
+              break;
 
-              case 3:
-                response = _context5.sent;
+            case 7:
+              _context5.prev = 7;
+              _context5.t0 = _context5['catch'](0);
 
-                dispatch({
-                  type: _types2.default.ADD_VIDEO_TO_DATABASE,
-                  payload: {
-                    videoInfo: {
-                      videoTitle: videoTitle,
-                      videoId: videoId,
-                      videoURL: videoLink,
-                      videoImg: videoImg
-                    },
-                    updatedPlaylist: response.data.video
-                  }
-                });
-                _context5.next = 10;
-                break;
+              dispatch({
+                type: _types2.default.AXIOS_ERROR,
+                msg: 'Add to Playlist Failed.'
+              });
 
-              case 7:
-                _context5.prev = 7;
-                _context5.t0 = _context5['catch'](0);
-
-                dispatch({
-                  type: _types2.default.AXIOS_ERROR,
-                  msg: 'Add to Playlist Failed.'
-                });
-
-              case 10:
-              case 'end':
-                return _context5.stop();
-            }
+            case 10:
+            case 'end':
+              return _context5.stop();
           }
-        }, _callee5, _this2, [[0, 7]]);
-      }));
+        }
+      }, _callee5, _this2, [[0, 7]]);
+    }));
 
-      return function (_x5) {
-        return _ref5.apply(this, arguments);
-      };
-    }();
-  } else if (videoUrl.indexOf('&feature=youtu.be') !== -1) {
-    var _videoLink5 = videoUrl;
-    var _videoId9 = _videoLink5.split('=');
-    _videoId9 = _videoId9[1].split('&');
-    _videoId9 = _videoId9[0];
-    _videoLink5 = 'https://www.youtube.com/embed/' + _videoId9;
-    return function () {
-      var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
-        var response;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
-                return _axios2.default.post('/api/video', {
-                  video: {
-                    videoTitle: videoTitle,
-                    videoId: _videoId9,
-                    videoURL: _videoLink5,
-                    videoImg: videoImg
-                  },
-                  binderID: interfaceObj.binder_id,
-                  tabID: interfaceObj.tab_id,
-                  pageID: interfaceObj.page_id
-                });
-
-              case 3:
-                response = _context6.sent;
-
-                dispatch({
-                  type: _types2.default.ADD_VIDEO_TO_DATABASE,
-                  payload: {
-                    videoInfo: {
-                      videoTitle: videoTitle,
-                      videoId: _videoId9,
-                      videoURL: _videoLink5,
-                      videoImg: videoImg
-                    },
-                    updatedPlaylist: response.data.video
-                  }
-                });
-                _context6.next = 10;
-                break;
-
-              case 7:
-                _context6.prev = 7;
-                _context6.t0 = _context6['catch'](0);
-
-                dispatch({
-                  type: _types2.default.AXIOS_ERROR,
-                  msg: 'Add to Playlist Failed.'
-                });
-
-              case 10:
-              case 'end':
-                return _context6.stop();
-            }
-          }
-        }, _callee6, _this2, [[0, 7]]);
-      }));
-
-      return function (_x6) {
-        return _ref6.apply(this, arguments);
-      };
-    }();
-  } else if (videoUrl.indexOf('feature') !== -1) {
-    var _videoLink6 = videoUrl;
-    var _videoId10 = _videoLink6.split('&');
-    _videoId10 = _videoId10[0].split('/');
-    _videoId10 = _videoId10[4];
-    _videoLink6 = _videoLink6.split('&');
-    _videoLink6 = _videoLink6[0];
-    return function () {
-      var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(dispatch) {
-        var response;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                _context7.prev = 0;
-                _context7.next = 3;
-                return _axios2.default.post('/api/video', {
-                  video: {
-                    videoTitle: videoTitle,
-                    videoId: _videoId10,
-                    videoURL: _videoLink6,
-                    videoImg: videoImg
-                  },
-                  binderID: interfaceObj.binder_id,
-                  tabID: interfaceObj.tab_id,
-                  pageID: interfaceObj.page_id
-                });
-
-              case 3:
-                response = _context7.sent;
-
-                dispatch({
-                  type: _types2.default.ADD_VIDEO_TO_DATABASE,
-                  payload: {
-                    videoInfo: {
-                      videoTitle: videoTitle,
-                      videoId: _videoId10,
-                      videoURL: _videoLink6,
-                      videoImg: videoImg
-                    },
-                    updatedPlaylist: response.data.video
-                  }
-                });
-                _context7.next = 10;
-                break;
-
-              case 7:
-                _context7.prev = 7;
-                _context7.t0 = _context7['catch'](0);
-
-                dispatch({
-                  type: _types2.default.AXIOS_ERROR,
-                  msg: 'Add to Playlist Failed.'
-                });
-
-              case 10:
-              case 'end':
-                return _context7.stop();
-            }
-          }
-        }, _callee7, _this2, [[0, 7]]);
-      }));
-
-      return function (_x7) {
-        return _ref7.apply(this, arguments);
-      };
-    }();
-  } else if (videoUrl.indexOf('&t') !== -1) {
-    var _videoLink7 = videoUrl;
-    var _videoId11 = _videoLink7.split('&t');
-    _videoId11 = _videoId11[0].split('=');
-    _videoId11 = _videoId11[1];
-    _videoLink7 = 'https://www.youtube.com/embed/' + _videoId11;
-    return function () {
-      var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(dispatch) {
-        var response;
-        return regeneratorRuntime.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                _context8.prev = 0;
-                _context8.next = 3;
-                return _axios2.default.post('/api/video', {
-                  video: {
-                    videoTitle: videoTitle,
-                    videoId: _videoId11,
-                    videoURL: _videoLink7,
-                    videoImg: videoImg
-                  },
-                  binderID: interfaceObj.binder_id,
-                  tabID: interfaceObj.tab_id,
-                  pageID: interfaceObj.page_id
-                });
-
-              case 3:
-                response = _context8.sent;
-
-                dispatch({
-                  type: _types2.default.ADD_VIDEO_TO_DATABASE,
-                  payload: {
-                    videoInfo: {
-                      videoTitle: videoTitle,
-                      videoId: _videoId11,
-                      videoURL: _videoLink7,
-                      videoImg: videoImg
-                    },
-                    updatedPlaylist: response.data.video
-                  }
-                });
-                _context8.next = 10;
-                break;
-
-              case 7:
-                _context8.prev = 7;
-                _context8.t0 = _context8['catch'](0);
-
-                dispatch({
-                  type: _types2.default.AXIOS_ERROR,
-                  msg: 'Add to Playlist Failed.'
-                });
-
-              case 10:
-              case 'end':
-                return _context8.stop();
-            }
-          }
-        }, _callee8, _this2, [[0, 7]]);
-      }));
-
-      return function (_x8) {
-        return _ref8.apply(this, arguments);
-      };
-    }();
-  } else if (videoUrl.indexOf('&') !== -1 || videoUrl.indexOf('=') !== -1) {
-    var _videoLink8 = videoUrl;
-    var _videoId12 = _videoLink8.split('&')[0];
-    _videoId12 = _videoLink8.split('=')[1];
-    _videoLink8 = 'https://www.youtube.com/embed/' + _videoId12;
-    return function () {
-      var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(dispatch) {
-        var response;
-        return regeneratorRuntime.wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                _context9.prev = 0;
-                _context9.next = 3;
-                return _axios2.default.post('/api/video', {
-                  video: {
-                    videoTitle: videoTitle,
-                    videoId: _videoId12,
-                    videoURL: _videoLink8,
-                    videoImg: videoImg
-                  },
-                  binderID: interfaceObj.binder_id,
-                  tabID: interfaceObj.tab_id,
-                  pageID: interfaceObj.page_id
-                });
-
-              case 3:
-                response = _context9.sent;
-
-                dispatch({
-                  type: _types2.default.ADD_VIDEO_TO_DATABASE,
-                  payload: {
-                    videoInfo: {
-                      videoTitle: videoTitle,
-                      videoId: _videoId12,
-                      videoURL: _videoLink8,
-                      videoImg: videoImg
-                    },
-                    updatedPlaylist: response.data.video
-                  }
-                });
-                _context9.next = 10;
-                break;
-
-              case 7:
-                _context9.prev = 7;
-                _context9.t0 = _context9['catch'](0);
-
-                dispatch({
-                  type: _types2.default.AXIOS_ERROR,
-                  msg: 'Add to Playlist Failed.'
-                });
-
-              case 10:
-              case 'end':
-                return _context9.stop();
-            }
-          }
-        }, _callee9, _this2, [[0, 7]]);
-      }));
-
-      return function (_x9) {
-        return _ref9.apply(this, arguments);
-      };
-    }();
-  } else if (videoUrl.indexOf('youtu.be') !== -1) {
-    var _videoLink9 = videoUrl;
-    var _videoId13 = videoUrl.split('/');
-    _videoId13 = _videoId13[3];
-    _videoLink9 = 'https://www.youtube.com/embed/' + _videoId13;
-    return function () {
-      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(dispatch) {
-        var response;
-        return regeneratorRuntime.wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                _context10.prev = 0;
-                _context10.next = 3;
-                return _axios2.default.post('/api/video', {
-                  video: {
-                    videoTitle: videoTitle,
-                    videoId: _videoId13,
-                    videoURL: _videoLink9,
-                    videoImg: videoImg
-                  },
-                  binderID: interfaceObj.binder_id,
-                  tabID: interfaceObj.tab_id,
-                  pageID: interfaceObj.page_id
-                });
-
-              case 3:
-                response = _context10.sent;
-
-                dispatch({
-                  type: _types2.default.ADD_VIDEO_TO_DATABASE,
-                  payload: {
-                    videoInfo: {
-                      videoTitle: videoTitle,
-                      videoId: _videoId13,
-                      videoURL: _videoLink9,
-                      videoImg: videoImg
-                    },
-                    updatedPlaylist: response.data.video
-                  }
-                });
-                _context10.next = 10;
-                break;
-
-              case 7:
-                _context10.prev = 7;
-                _context10.t0 = _context10['catch'](0);
-
-                dispatch({
-                  type: _types2.default.AXIOS_ERROR,
-                  msg: 'Add to Playlist Failed.'
-                });
-
-              case 10:
-              case 'end':
-                return _context10.stop();
-            }
-          }
-        }, _callee10, _this2, [[0, 7]]);
-      }));
-
-      return function (_x10) {
-        return _ref10.apply(this, arguments);
-      };
-    }();
-  } else {
-    var _videoLink10 = videoUrl;
-    var _videoId14 = _videoLink10.split('/');
-    _videoId14 = _videoId14[4];
-    return function () {
-      var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(dispatch) {
-        var response;
-        return regeneratorRuntime.wrap(function _callee11$(_context11) {
-          while (1) {
-            switch (_context11.prev = _context11.next) {
-              case 0:
-                _context11.prev = 0;
-                _context11.next = 3;
-                return _axios2.default.post('/api/video', {
-                  video: {
-                    videoTitle: videoTitle,
-                    videoId: _videoId14,
-                    videoURL: _videoLink10,
-                    videoImg: videoImg
-                  },
-                  binderID: interfaceObj.binder_id,
-                  tabID: interfaceObj.tab_id,
-                  pageID: interfaceObj.page_id
-                });
-
-              case 3:
-                response = _context11.sent;
-
-                dispatch({
-                  type: _types2.default.ADD_VIDEO_TO_DATABASE,
-                  payload: {
-                    videoInfo: {
-                      videoTitle: videoTitle,
-                      videoId: _videoId14,
-                      videoURL: _videoLink10,
-                      videoImg: videoImg
-                    },
-                    updatedPlaylist: response.data.video
-                  }
-                });
-                _context11.next = 10;
-                break;
-
-              case 7:
-                _context11.prev = 7;
-                _context11.t0 = _context11['catch'](0);
-
-                dispatch({
-                  type: _types2.default.AXIOS_ERROR,
-                  msg: 'Add to Playlist Failed.'
-                });
-
-              case 10:
-              case 'end':
-                return _context11.stop();
-            }
-          }
-        }, _callee11, _this2, [[0, 7]]);
-      }));
-
-      return function (_x11) {
-        return _ref11.apply(this, arguments);
-      };
-    }();
-  }
+    return function (_x5) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
 }
-function removeVideoFromPlaylist(binderId, tabId, pageId, videoId, videoIndex) {
-  return function (dispatch) {
-    var response = _axios2.default.delete('/api/video?binderID=' + binderId + '&tabID=' + tabId + '&pageID=' + pageId + '&videoId=' + videoId, {}).then(function (res) {
-      dispatch({
-        type: _types2.default.DELETE_FROM_PLAYLIST,
-        payload: res.data.video
-      });
-    }).catch(function (error) {
-      dispatch({
-        type: _types2.default.AXIOS_ERROR,
-        msg: 'Add to Playlist Failed.'
-      });
-    });
+function removeVideoFromPlaylist(binderId, tabId, pageId, videoId) {
+  var _this3 = this;
+
+  return function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
+      var response;
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return _axios2.default.delete('/api/video?binderID=' + binderId + '&tabID=' + tabId + '&pageID=' + pageId + '&videoId=' + videoId, {}).then(function (res) {
+                dispatch({
+                  type: _types2.default.DELETE_FROM_PLAYLIST,
+                  payload: res.data.video
+                });
+              }).catch(function (error) {
+                dispatch({
+                  type: _types2.default.AXIOS_ERROR,
+                  msg: 'Add to Playlist Failed.'
+                });
+              });
+
+            case 2:
+              response = _context6.sent;
+
+            case 3:
+            case 'end':
+              return _context6.stop();
+          }
+        }
+      }, _callee6, _this3);
+    }));
+
+    return function (_x6) {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+}
+function grabVideoUrl(videoLink) {
+  return {
+    type: _types2.default.GRAB_VIDEO_URL,
+    payload: videoLink
   };
 }
-function slideOutVideoSearch(visible, slide) {
+function setVideoUrl(id) {
+  return {
+    type: _types2.default.SET_VIDEO_URL,
+    payload: 'https://www.youtube.com/embed/' + id
+  };
+}
+function playVideo(videoId) {
+  return {
+    type: _types2.default.PLAY_VIDEO,
+    payload: {
+      videoLink: 'https://www.youtube.com/embed/' + videoId,
+      resultsContainer: { style: { transform: 'translateY(0px)' } }
+    }
+  };
+}
+function playPastedLinkVideo(id) {
+  var videoId = 'https://www.youtube.com/embed/' + videoId;
+  return {
+    type: _types2.default.PLAY_PASTED_VIDEO_LINK,
+    payload: videoId
+  };
+}
+function slideOutVideoSearch(visible) {
   var toggleSlideOut = visible;
   var slideOutStyles;
   if (toggleSlideOut) {
-    slideOutStyles = 'translateY(27px)', toggleSlideOut = false;
+    slideOutStyles = 'translateY(27px)';
+    toggleSlideOut = false;
   } else {
     slideOutStyles = 'translateY(-119px)';
     toggleSlideOut = true;
@@ -7006,108 +6393,38 @@ function emptyVideoSlideOut(toggleBool, slide) {
     }
   };
 }
-function playVideo(id) {
-  if (id.indexOf('youtube') !== -1) {
-    var videoId = id;
-    videoId = id.split('/');
-    videoId = videoId[4];
-    return {
-      type: _types2.default.PLAY_VIDEO,
-      payload: {
-        videoLink: 'https://www.youtube.com/embed/' + videoId,
-        resultsContainer: { style: { transform: 'translateY(0px)' } }
-      }
-    };
-  }
-  return {
-    type: _types2.default.PLAY_VIDEO,
-    payload: {
-      videoLink: 'https://www.youtube.com/embed/' + id,
-      resultsContainer: { style: { transform: 'translateY(0px)' } }
-    }
-  };
-}
-function playPastedLinkVideo(url) {
-  if (!url) {
-    return {
-      type: _types2.default.NO_VIDEO_LINK
-    };
-  } else if (url.indexOf('player_embedded') !== -1) {
-    var videoId = url.split('=');
-    videoId = videoId[2];
-    videoId = 'https://www.youtube.com/embed/' + videoId;
-    return {
-      type: _types2.default.PLAY_PASTED_VIDEO_LINK,
-      payload: videoId
-    };
-  } else if (url.indexOf('&feature=youtu.be') !== -1) {
-    var videoLink = url;
-    var _videoId15 = videoLink.split('=');
-    _videoId15 = _videoId15[1].split('&');
-    _videoId15 = _videoId15[0];
-    _videoId15 = 'https://www.youtube.com/embed/' + _videoId15;
-    return {
-      type: _types2.default.PLAY_PASTED_VIDEO_LINK,
-      payload: _videoId15
-    };
-  } else if (url.indexOf('feature') !== -1) {
-    var _videoLink11 = url;
-    var _videoId16 = _videoLink11.split('&');
-    _videoId16 = _videoId16[0].split('/');
-    _videoId16 = _videoId16[4];
-    _videoId16 = _videoLink11.split('&');
-    _videoId16 = _videoLink11[0];
-    _videoId16 = 'https://www.youtube.com/embed/' + _videoId16;
-    return {
-      type: _types2.default.PLAY_PASTED_VIDEO_LINK,
-      payload: _videoId16
-    };
-  } else if (url.indexOf('&t') !== -1) {
-    var _videoLink12 = url;
-    var _videoId17 = _videoLink12.split('&t');
-    _videoId17 = _videoId17[0].split('=');
-    _videoId17 = _videoId17[1];
-    _videoId17 = 'https://www.youtube.com/embed/' + _videoId17;
-    return {
-      type: _types2.default.PLAY_PASTED_VIDEO_LINK,
-      payload: _videoId17
-    };
-  } else if (url.indexOf('&') !== -1 || url.indexOf('=') !== -1) {
-    var _videoId18 = url;
-    _videoId18 = _videoId18.split('&')[0];
-    _videoId18 = _videoId18.split('=')[1];
-    _videoId18 = 'https://www.youtube.com/embed/' + _videoId18;
-    return {
-      type: _types2.default.PLAY_PASTED_VIDEO_LINK,
-      payload: _videoId18
-    };
-  } else if (url.indexOf('youtu.be') !== -1) {
-    var _videoId19 = url;
-    _videoId19 = url.split('/');
-    _videoId19 = _videoId19[3];
-    _videoId19 = 'https://www.youtube.com/embed/' + _videoId19;
-    return {
-      type: _types2.default.PLAY_PASTED_VIDEO_LINK,
-      payload: _videoId19
+function getResultStyles(visible) {
+  var styles = void 0;
+  if (!visible) {
+    styles = {
+      transform: 'translateX(-100%)'
     };
   } else {
-    var _videoId20 = url;
-    return {
-      type: _types2.default.PLAY_PASTED_VIDEO_LINK,
-      payload: _videoId20
+    styles = {
+      transform: 'translateX(0%)'
     };
   }
-}
-function grabVideoUrl(videoLink) {
   return {
-    type: _types2.default.GRAB_VIDEO_URL,
-    payload: videoLink
+    type: _types2.default.GET_RESULT_STYLES,
+    payload: styles
   };
 }
-function setVideoUrl(id) {
+function toggleResults(visible) {
+  var toggleResults = !visible;
   return {
-    type: _types2.default.SET_VIDEO_URL,
-    payload: 'https://www.youtube.com/embed/' + id
+    type: _types2.default.TOGGLE_RESULTS,
+    payload: toggleResults
+  };
+}
+function togglePlaylist(playlistStyle) {
+  if (playlistStyle === 'translateY(-100%)') {
+    playlistStyle = 'translateY(0%)';
+  } else {
+    playlistStyle = 'translateY(-100%)';
+  }
+  return {
+    type: _types2.default.TOGGLE_PLAYLIST,
+    payload: playlistStyle
   };
 }
 // END OF VIDEO ACTION CREATORS
@@ -7217,7 +6534,6 @@ function addPage(binder_id, tab_id) {
       binderID: binder_id,
       tabID: tab_id
     }).then(function (resp) {
-      console.log('addpage', resp);
       dispatch({
         type: _types2.default.ADD_PAGE,
         payload: resp
@@ -7266,7 +6582,6 @@ function deleteTab(binder_id, tab_id) {
 function deletePage(binder_id, tab_id, page_id) {
   return function (dispatch) {
     var test = _axios2.default.delete('/api/page?binderID=' + binder_id + '&tabID=' + tab_id + '&pageID=' + page_id, {}).then(function (resp) {
-      console.log('response data: ', resp.data);
       dispatch({
         type: _types2.default.DELETE_PAGE,
         payload: resp.data
@@ -7327,7 +6642,6 @@ function editPage(binder_id, tab_id, page_id, page_name) {
       pageID: page_id,
       page_name: page_name
     }).then(function (resp) {
-      console.log('edit page resp: ', resp);
       dispatch({
         type: _types2.default.EDIT_PAGE,
         payload: resp.data
@@ -7346,8 +6660,6 @@ function addLfzBinder(password) {
     var test = _axios2.default.post('/api/lfz', {
       pw: password
     }).then(function (resp) {
-      console.log('lfz import', resp);
-
       if (resp.data.hasOwnProperty('success')) {
         console.log('lfz incorrect pw', resp);
         dispatch({
@@ -7389,6 +6701,12 @@ function editable() {
 function notEditable() {
   return {
     type: _types2.default.NOT_EDITABLE
+  };
+}
+
+function showLoader() {
+  return {
+    type: _types2.default.SHOW_LOADER
   };
 }
 
@@ -10187,7 +9505,6 @@ exports.default = {
   GET_SAVED_VIDEO_IMAGE: 'get_saved_video_image',
   SET_VIDEO_PLAYLIST: 'set_video_playlist',
   GET_RESULT_STYLES: 'get_result_styles',
-  GET_OPACITY_DISPLAY: 'get_opacity_display',
   TOGGLE_RESULTS: 'toggle_results',
   TOGGLE_VIDEO_SLIDE_OUT: 'toggle_video_slide_out',
   EMPTY_VIDEO_SLIDE_OUT: 'empty_video_slide_out',
@@ -10198,7 +9515,6 @@ exports.default = {
   RESET_SLIDES_URL: 'reset_slides_url',
   SAVE_NOTES: 'save_notes',
   AUTO_SAVE_NOTES: 'auto_save_notes',
-  NOT_SAVE_NOTES: 'note_save_notes',
   PANEL_TOP_LEFT_HEIGHT: 'panel_top_left_height',
   PANEL_TOP_LEFT_WIDTH: 'panel_top_left_width',
   PANEL_TOP_RIGHT_HEIGHT: 'panel_top_right_height',
@@ -10210,6 +9526,7 @@ exports.default = {
   SHOW_NAV: 'show_nav',
   EDITABLE: 'editable',
   NOT_EDITABLE: 'not_editable',
+  SHOW_LOADER: 'show_loader',
   CLEAR_LOADER: 'clear_loader'
 };
 
@@ -27866,6 +27183,9 @@ var Video = function (_Component) {
     _this.pageId = null;
     _this.currentVideoList = null;
     _this.currentPlaylistItems = [];
+    _this.state = {
+      width: window.innerWidth
+    };
     return _this;
   }
 
@@ -27937,6 +27257,13 @@ var Video = function (_Component) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
+      var width = this.state.width;
+
+      var isMobile = width <= 767;
+      if (isMobile) {
+        this.updateVideoComponent(this.props);
+        return;
+      }
       var tab_arr_obj = this.props.binderObj.tab_arr_obj;
       var interface_obj = this.props.interface_obj;
 
@@ -27958,19 +27285,14 @@ var Video = function (_Component) {
             break;
           }
         }
-        if (typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined' || typeof page_arr_obj[pageIndex].video[0].videoURL === '') {
-          // return;
+
+        if (page_arr_obj[pageIndex].video.length === 0 || typeof page_arr_obj[pageIndex].video[0].videoURL === 'undefined' || typeof page_arr_obj[pageIndex].video[0].videoURL === '') {
           this.props.setVideoUrl('');
         } else {
           this.props.setVideoUrl(page_arr_obj[pageIndex].video[0].videoId);
         }
       }
     }
-    // shouldComponentUpdate() {
-    //   this.props.updateBinderArray();
-    //   return true;
-    // }
-
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
@@ -28009,9 +27331,6 @@ var Video = function (_Component) {
         var currentPage = page_arr_obj[pageIndex];
 
         if (pageIndex !== null && currentPage.hasOwnProperty('video') && currentPage.video.length >= 1) {
-          // this.props.setVideoUrl(currentPage.video[0].videoId, interface_obj);
-          this.props.slideOutVideoSearch(false, 'translateY(-119px)');
-          // this.props.setVideoPlaylist(currentPage.video);
           this.binderId = nextProps.binderObj._id;
           this.tabId = tab_arr_obj[tabIndex]._id;
           this.pageId = page_arr_obj[pageIndex]._id;
@@ -28019,7 +27338,6 @@ var Video = function (_Component) {
           this.currentPlaylistItems = page_arr_obj[pageIndex].video;
         } else {
           this.props.setVideoUrl('', interface_obj);
-          this.props.slideOutVideoSearch(true, 'translateY(27px)');
           this.binderId = nextProps.binderObj._id;
           this.tabId = tab_arr_obj[tabIndex]._id;
           this.pageId = page_arr_obj[pageIndex]._id;
@@ -28027,7 +27345,13 @@ var Video = function (_Component) {
           this.currentPlaylistItems = page_arr_obj[pageIndex].video;
         }
         this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId).then(function () {
-          _this2.props.setVideoUrl(_this2.props.playlistItems[0].videoId);
+          if (_this2.props.playlistItems.length > 0) {
+            _this2.props.setVideoUrl(_this2.props.playlistItems[0].videoId);
+            _this2.props.slideOutVideoSearch(false);
+          }
+          if (_this2.props.playlistItems[0].videoId === undefined) {
+            _this2.props.slideOutVideoSearch(true);
+          }
         });
       }
     }
@@ -28101,8 +27425,7 @@ var Video = function (_Component) {
                   {
                     className: 'btn results-btn vid-right-arrow video-btn',
                     onClick: function onClick() {
-                      _this3.props.getResultStyles(_this3.props.resultsStyles, _this3.props.toggleResultsBool);
-                      _this3.props.getOpacityDisplay(_this3.props.opacityContainer, _this3.props.toggleResultsBool);
+                      _this3.props.getResultStyles(_this3.props.toggleResultsBool);
                     }
                   },
                   _react2.default.createElement(
@@ -28129,7 +27452,12 @@ var Video = function (_Component) {
         _react2.default.createElement(
           'div',
           { id: 'video-wrapper', className: 'video-wrapper third-step' },
-          _react2.default.createElement(_VideoContainer2.default, { currentPlaylistItems: this.props.playlistItems })
+          _react2.default.createElement(_VideoContainer2.default, {
+            binderId: this.props.interface_obj.binder_id,
+            tabId: this.props.interface_obj.tab_id,
+            pageId: this.props.interface_obj.page_id,
+            currentPlaylistItems: this.props.playlistItems
+          })
         )
       );
     }
@@ -28147,7 +27475,6 @@ function mapStateToProps(state) {
     pastedVideoUrl: state.videoResults.videoLink,
     videoResults: state.video.results,
     resultsStyles: state.video.resultsStyles,
-    opacityContainer: state.video.opacityDisplay,
     toggleResultsBool: state.video.toggleResults,
     interface_obj: state.interface,
     binderObj: state.binder.binderObj,
@@ -28997,8 +28324,6 @@ var Notes = function (_Component) {
 
         _this.submitNotes = _this.submitNotes.bind(_this);
         _this.submitNotes = _lodash2.default.debounce(_this.submitNotes, 2000);
-        _this.notesChange = _this.notesChange.bind(_this);
-        // this.notesChange = _.debounce(this.notesChange, 1000);
         _this.onChange = _this.onChange.bind(_this);
 
         _this.toggleReadOnly = _this.toggleReadOnly.bind(_this);
@@ -29011,15 +28336,7 @@ var Notes = function (_Component) {
             var value = _ref2.value;
 
             this.setState({ value: value, save: false });
-            this.notesChange();
             this.submitNotes();
-        }
-    }, {
-        key: 'notesChange',
-        value: function notesChange() {
-            if (this.props.interface_obj.save_notes === true) {
-                this.props.notesUpdated();
-            }
         }
     }, {
         key: 'submitNotes',
@@ -29027,27 +28344,8 @@ var Notes = function (_Component) {
             var interface_obj = this.props.interface_obj;
             var value = this.state.value;
 
-            // const content = JSON.stringify(value.toJSON());
 
             this.props.autoSaveNotes(value, interface_obj);
-            // this.setState({
-            //     ...value,
-            //     save: true
-            // })
-            // axios.put('/api/note', {
-            //     document: { content },
-            //     binderID: interface_obj.binder_id,
-            //     tabID: interface_obj.tab_id,
-            //     pageID: interface_obj.page_id
-            // }).then(
-            //     this.setState({
-            //         ...value,
-            //         save: true
-            //     })
-            // ).catch((err) => {
-            //     console.log("not logged in: ", err);
-            //     window.location = '/';
-            // })
         }
     }, {
         key: 'componentWillMount',
@@ -29087,36 +28385,44 @@ var Notes = function (_Component) {
                 }
             }
         }
-
-        // componentDidUpdate(prevState){
-        //     if(prevState.save !== this.state.save){
-        //         if(this.state.save === false){
-        //             this.props.notesUpdated();
-        //         }
-        //     }
-        // }
-
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps, nextState) {
 
-            // if(nextProps.interface_obj.save_notes !== this.props.interface_obj.save_notes){
-            //     if(nextProps.interface_obj.save_notes === true && nextState.save === false){
-            //         this.props.notesUpdated();
-            //         const { value } = this.state;
-            //         this.setState({
-            //             //...value,
-            //             save: true
-            //         });
-            //     }
-            // }
-
             if (nextProps.interface_obj.page_id !== this.props.interface_obj.page_id) {
-                if (this.props.interface_obj.save_notes === false) {
-                    var value = this.state.value;
-                    //console.log('notes cwrp');
+                var value = this.state.value;
 
-                    this.props.saveNotes(value, this.props.interface_obj);
+
+                if (this.props.binderObj.tab_arr_obj) {
+                    var tabArrLength = this.props.binderObj.tab_arr_obj.length;
+                    var tabIndex = null;
+                    var pageIndex = null;
+                    for (var i = 0; i < tabArrLength; i++) {
+                        if (this.props.interface_obj.tab_id === this.props.binderObj.tab_arr_obj[i]._id) {
+                            if (this.props.interface_obj.tab_id === nextProps.binderObj.tab_arr_obj[i]._id) {
+                                tabIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                    if (tabIndex !== null) {
+                        var page_arr_obj = this.props.binderObj.tab_arr_obj[tabIndex].page_arr_obj;
+
+                        for (var _i2 = 0; _i2 < page_arr_obj.length; _i2++) {
+                            if (this.props.interface_obj.page_id === page_arr_obj[_i2]._id) {
+                                pageIndex = _i2;
+                                break;
+                            }
+                        }
+                        if (pageIndex !== null && this.props.binderObj.tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
+                            var prevContent = page_arr_obj[pageIndex].notes.document.content;
+                            var stateValue = JSON.stringify(value.toJSON());
+                            if (stateValue !== prevContent) {
+                                this.props.showLoader();
+                                this.props.saveNotes(value, this.props.interface_obj);
+                            }
+                        }
+                    }
                 }
 
                 //this.props.notesUpdated();
@@ -29125,34 +28431,34 @@ var Notes = function (_Component) {
 
 
                 if (tab_arr_obj) {
-                    var tabArrLength = tab_arr_obj.length;
-                    var tabIndex = null;
-                    var pageIndex = null;
-                    for (var i = 0; i < tabArrLength; i++) {
-                        if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-                            tabIndex = i;
+                    var _tabArrLength = tab_arr_obj.length;
+                    var _tabIndex = null;
+                    var _pageIndex = null;
+                    for (var _i3 = 0; _i3 < _tabArrLength; _i3++) {
+                        if (interface_obj.tab_id === tab_arr_obj[_i3]._id) {
+                            _tabIndex = _i3;
                             break;
                         }
                     }
-                    var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
+                    var _page_arr_obj = tab_arr_obj[_tabIndex].page_arr_obj;
 
-                    for (var _i2 = 0; _i2 < page_arr_obj.length; _i2++) {
-                        if (interface_obj.page_id === page_arr_obj[_i2]._id) {
-                            pageIndex = _i2;
+                    for (var _i4 = 0; _i4 < _page_arr_obj.length; _i4++) {
+                        if (interface_obj.page_id === _page_arr_obj[_i4]._id) {
+                            _pageIndex = _i4;
                             break;
                         }
                     }
-                    if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty("notes")) {
-                        var lastContent = JSON.parse(page_arr_obj[pageIndex].notes.document.content);
+                    if (_pageIndex !== null && tab_arr_obj[_tabIndex].page_arr_obj[_pageIndex].hasOwnProperty("notes")) {
+                        var lastContent = JSON.parse(_page_arr_obj[_pageIndex].notes.document.content);
                         //console.log("NOTES LAST CONTENT:", lastContent.document.nodes["0"].nodes["0"].leaves["0"]);
                         this.setState({
-                            value: _slate.Value.fromJSON(lastContent),
-                            save: false
+                            value: _slate.Value.fromJSON(lastContent)
+                            //save: false
                         });
                     } else {
                         this.setState({
-                            value: initialValue,
-                            save: false
+                            value: initialValue
+                            //save: false
                         });
                     }
                 }
@@ -29806,7 +29112,7 @@ var _initialiseProps = function _initialiseProps() {
                     { className: 'font-dropdown' },
                     _react2.default.createElement(
                         'span',
-                        { className: 'material-icons notesIcons richText', title: 'font' },
+                        { className: 'material-icons notesIcons richText' },
                         'font_download'
                     ),
                     _react2.default.createElement(
@@ -29849,7 +29155,7 @@ var _initialiseProps = function _initialiseProps() {
                     { className: 'hoverOptions' },
                     _react2.default.createElement(
                         'span',
-                        { className: 'hoverDropbtn', title: 'font color' },
+                        { className: 'hoverDropbtn' },
                         _react2.default.createElement(
                             'i',
                             { className: 'material-icons fontColorIcon notesIcons' },
@@ -29903,7 +29209,7 @@ var _initialiseProps = function _initialiseProps() {
                     { className: 'hoverOptions' },
                     _react2.default.createElement(
                         'span',
-                        { className: 'hoverDropbtn', title: 'emoji' },
+                        { className: 'hoverDropbtn' },
                         _react2.default.createElement(
                             'i',
                             { className: 'material-icons emojiIcon notesIcons' },
@@ -29950,7 +29256,7 @@ function mapStateToProps(state) {
     };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { saveNotes: _actions.saveNotes, notesUpdated: _actions.notesUpdated, autoSaveNotes: _actions.autoSaveNotes })(Notes);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { saveNotes: _actions.saveNotes, autoSaveNotes: _actions.autoSaveNotes, showLoader: _actions.showLoader })(Notes);
 
 /***/ }),
 /* 256 */
@@ -32363,10 +31669,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Slides = function (_Component) {
   _inherits(Slides, _Component);
 
-  function Slides() {
+  function Slides(props) {
     _classCallCheck(this, Slides);
 
-    return _possibleConstructorReturn(this, (Slides.__proto__ || Object.getPrototypeOf(Slides)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Slides.__proto__ || Object.getPrototypeOf(Slides)).call(this, props));
+
+    _this.state = {
+      slideOutStyles: {
+        transform: 'translateY(0%)'
+      },
+      isOut: true
+    };
+    _this.toggleSlideOut = _this.toggleSlideOut.bind(_this);
+    return _this;
   }
 
   _createClass(Slides, [{
@@ -32426,11 +31741,10 @@ var Slides = function (_Component) {
           }
           if (pageIndex !== null && tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty('lecture_slides')) {
             this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id);
-            this.props.slideOutSlidesSearch(false, 'translateY(-100px)');
+            this.toggleSlideOut(true);
           } else {
             this.props.resetSlidesURL('');
-            this.props.slideOutSlidesSearch(true, 'translateY(0px)');
-            //return;
+            this.toggleSlideOut(false);
           }
         }
       }
@@ -32462,8 +31776,10 @@ var Slides = function (_Component) {
         }
         if (tab_arr_obj[tabIndex].page_arr_obj[pageIndex].hasOwnProperty('lecture_slides')) {
           this.props.getSlidesURL(tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id);
+          this.toggleSlideOut(true);
         } else {
           this.props.resetSlidesURL('');
+          this.toggleSlideOut(false);
         }
       }
     }
@@ -32483,19 +31799,38 @@ var Slides = function (_Component) {
           var _presentationID = _urlSplit2[0];
           var _slidesURL = 'https://docs.google.com/presentation/d/' + _presentationID + '/embed';
           this.props.setSlidesUrl(_slidesURL, this.props.interface_obj);
-          this.props.reset();
         }
+        this.toggleSlideOut(true);
+        this.props.reset();
       } else {
         return;
       }
+    }
+  }, {
+    key: 'toggleSlideOut',
+    value: function toggleSlideOut(isOut) {
+      var slideOutStyles;
+      if (isOut) {
+        slideOutStyles = 'translateY(-100%)';
+      } else {
+        slideOutStyles = 'translateY(0%)';
+      }
+      this.setState({
+        slideOutStyles: {
+          transform: slideOutStyles
+        },
+        isOut: !isOut
+      });
     }
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      var toggleSlideOut = this.props.toggleLectureSlideOut;
-      var slideOutStyles = this.props.lectureSlideOutStyles;
+      var _state = this.state,
+          slideOutStyles = _state.slideOutStyles,
+          isOut = _state.isOut;
+
       return _react2.default.createElement(
         'div',
         { className: 'slides-div slides-div-safari fourth-step' },
@@ -32524,12 +31859,12 @@ var Slides = function (_Component) {
         _react2.default.createElement(
           'div',
           {
-            className: 'arrow-container-slides',
             onClick: function onClick() {
-              _this2.props.slideOutSlidesSearch(toggleSlideOut, slideOutStyles);
-            }
+              _this2.toggleSlideOut(isOut);
+            },
+            className: 'arrow-container-slides'
           },
-          !toggleSlideOut ? _react2.default.createElement(
+          isOut ? _react2.default.createElement(
             'i',
             { className: 'material-icons' },
             'remove'
@@ -32578,9 +31913,7 @@ function mapStateToProps(state) {
   return {
     slide_input: state.slides.input,
     interface_obj: state.interface,
-    binderObj: state.binder.binderObj,
-    toggleLectureSlideOut: state.slides.toggleLectureSlideOut,
-    lectureSlideOutStyles: state.slides.slideLinkSlideOut
+    binderObj: state.binder.binderObj
   };
 }
 
@@ -32588,8 +31921,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, {
   setSlidesUrl: _actions.setSlidesUrl,
   updateBinderArray: _actions.updateBinderArray,
   getSlidesURL: _actions.getSlidesURL,
-  resetSlidesURL: _actions.resetSlidesURL,
-  slideOutSlidesSearch: _actions.slideOutSlidesSearch
+  resetSlidesURL: _actions.resetSlidesURL
 })(Slides);
 
 /***/ }),
@@ -32772,7 +32104,7 @@ var Loader = function (_Component) {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
             if (this.props.interface !== nextProps.interface) {
-                if (nextProps.interface.sent_to_db === true || nextProps.interface.pull_from_db === true) {
+                if (nextProps.interface.show_loader === true) {
                     this.setState({
                         visible: true
                     });
@@ -85135,7 +84467,6 @@ var Dashboard = function (_Component) {
     _this.binderId = null;
     _this.tabId = null;
     _this.pageId = null;
-    _this.currentVideoList = null;
     return _this;
   }
 
@@ -85153,51 +84484,9 @@ var Dashboard = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      // const { interface } = this.props;
       var width = this.state.width;
 
       var isMobile = width <= 767;
-      if (isMobile) {
-        if (this.props.binder !== nextProps.binder) {
-          this.updatePlaylistComponent(nextProps);
-        }
-        if (this.props.interface.page_id !== nextProps.interface.page_id) {
-          this.updatePlaylistComponent(nextProps);
-        }
-      }
-    }
-  }, {
-    key: 'updatePlaylistComponent',
-    value: function updatePlaylistComponent(nextProps) {
-      var tab_arr_obj = nextProps.binder.binderObj.tab_arr_obj;
-      // let { interface_obj } = nextProps;
-
-      if (tab_arr_obj) {
-        var tabArrLength = tab_arr_obj.length;
-        var tabIndex = null;
-        var pageIndex = null;
-        for (var i = 0; i < tabArrLength; i++) {
-          if (nextProps.interface.tab_id === tab_arr_obj[i]._id) {
-            tabIndex = i;
-            break;
-          }
-        }
-        var page_arr_obj = tab_arr_obj[tabIndex].page_arr_obj;
-
-        for (var _i = 0; _i < page_arr_obj.length; _i++) {
-          if (nextProps.interface.page_id === page_arr_obj[_i]._id) {
-            pageIndex = _i;
-            break;
-          }
-        }
-        var currentPage = page_arr_obj[pageIndex];
-        if (pageIndex !== null && currentPage.hasOwnProperty('video') && currentPage.video.length >= 1) {
-          this.binderId = nextProps.binder.binderObj._id;
-          this.tabId = tab_arr_obj[tabIndex]._id;
-          this.pageId = page_arr_obj[pageIndex]._id;
-          this.props.getVideoPlaylist(this.binderId, this.tabId, this.pageId);
-        }
-      }
     }
   }, {
     key: 'componentWillUnmount',
@@ -85362,8 +84651,6 @@ var Dashboard = function (_Component) {
                 className: 'mobileLink videoLink',
                 onClick: function onClick() {
                   _this2.mobileSelectComponent(2);
-                  _this2.props.getVideoPlaylist(_this2.binderId, _this2.tabId, _this2.pageId);
-                  // this.props.setVideoUrl(this.props.playlistItems[0].videoId);
                 }
               },
               _react2.default.createElement(
@@ -85456,15 +84743,12 @@ function mapStateToProps(state) {
   return {
     binderArr: state.binderArray.binderArr,
     binder: state.binder,
-    interface: state.interface,
-    playlistItems: state.video.addedVideo
+    interface: state.interface
   };
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, {
-  getDataObject: _actions.getDataObject,
-  getVideoPlaylist: _actions.getVideoPlaylist,
-  setVideoUrl: _actions.setVideoUrl
+  getDataObject: _actions.getDataObject
 })(Dashboard);
 
 /***/ }),
@@ -85831,8 +85115,8 @@ var ThreePanel = function (_Component) {
           _reactSplitPane2.default,
           {
             split: 'horizontal',
-            minSize: 0,
-            maxSize: width,
+            minSize: 50,
+            maxSize: window.innerHeight - 50,
             defaultSize: 450
           },
           _react2.default.createElement(
@@ -90165,15 +89449,20 @@ var Results = function (_Component) {
 
   _createClass(Results, [{
     key: 'handlePlayVideo',
-    value: function handlePlayVideo(videoUrl, videoTitle, videoImg, interfaceObj) {
-      this.props.playVideo(videoUrl);
-      this.props.addVideoToDatabase(videoUrl, videoTitle, videoImg, interfaceObj);
-      this.props.slideOutVideoSearch(false, '');
+    value: function handlePlayVideo(videoId, videoTitle, videoImg, interfaceObj) {
+      var _this2 = this;
+
+      this.props.playVideo(videoId);
+      this.props.addVideoToDatabase(videoId, videoTitle, videoImg, interfaceObj).then(function () {
+        _this2.props.getVideoPlaylist(interfaceObj.binder_id, interfaceObj.tab_id, interfaceObj.page_id);
+      });
+      this.props.slideOutVideoSearch(false);
+      this.props.getResultStyles(false);
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var results = this.props.results;
 
@@ -90208,7 +89497,7 @@ var Results = function (_Component) {
                 id: 'youtube-play',
                 className: 'btn red darken-3 right video-btn',
                 onClick: function onClick() {
-                  _this2.handlePlayVideo(item.url, item.videoTitle, item.thumbnails.default.url, _this2.props.interface_obj);
+                  _this3.handlePlayVideo(item.videoId, item.videoTitle, item.thumbnails.default.url, _this3.props.interface_obj);
                 }
               },
               _react2.default.createElement(
@@ -90323,16 +89612,59 @@ var VideoContainer = function (_Component) {
     value: function handleYouTubeUrl(values) {
       var _this2 = this;
 
-      var youtubeLinkInput = values['youtube-url'];
-      if (!youtubeLinkInput || youtubeLinkInput.indexOf('youtu') === -1) {
+      var url = values['youtube-url'];
+      var videoId;
+      var videoLink;
+      if (!url) {
         return;
+      } else if (url.indexOf('player_embedded') !== -1) {
+        videoId = url.split('=');
+        videoId = videoId[2];
+      } else if (url.indexOf('&feature=youtu.be') !== -1) {
+        videoLink = url;
+        videoId = videoLink.split('=');
+        videoId = videoId[1].split('&');
+        videoId = videoId[0];
+      } else if (url.indexOf('&feature') !== -1) {
+        videoLink = url;
+        videoId = videoLink.split('/');
+        videoId = videoId[4].split('&');
+        videoId = videoId[0];
+      } else if (url.indexOf('feature') !== -1) {
+        videoLink = url;
+        videoId = videoLink.split('&');
+        videoId = videoId[0].split('/');
+        videoId = videoId[4];
+        videoId = videoLink.split('&');
+        videoId = videoLink[0];
+      } else if (url.indexOf('&t') !== -1) {
+        videoLink = url;
+        videoId = videoLink.split('&t');
+        videoId = videoId[0].split('=');
+        videoId = videoId[1];
+      } else if (url.indexOf('&') !== -1 || url.indexOf('=') !== -1) {
+        videoId = url;
+        videoId = videoId.split('&')[0];
+        videoId = videoId.split('=')[1];
+      } else if (url.indexOf('youtu.be') !== -1) {
+        videoId = url;
+        videoId = url.split('/');
+        videoId = videoId[3];
+      } else {
+        videoId = url;
       }
-      this.props.playPastedLinkVideo(values['youtube-url']);
-      this.props.getSavedVideoImg(values['youtube-url']).then(function () {
-        _this2.props.getSavedVideoTitle(values['youtube-url']).then(function () {
-          _this2.props.addVideoToDatabase(values['youtube-url'], _this2.props.savedVideoTitle, _this2.props.savedVideoImage, _this2.props.binderTabPageIds);
+      this.props.playPastedLinkVideo(videoId);
+      this.props.getSavedVideoImg(videoId).then(function () {
+        _this2.props.getSavedVideoTitle(videoId).then(function () {
+          _this2.props.addVideoToDatabase(videoId, _this2.props.savedVideoTitle, _this2.props.savedVideoImage, _this2.props.binderTabPageIds).then(function () {
+            _this2.props.getVideoPlaylist(_this2.props.binderId, _this2.props.tabId, _this2.props.pageId).then(function () {
+              _this2.props.setVideoUrl(_this2.props.currentPlaylistItems[0].videoId);
+            });
+          });
         });
       });
+      this.props.reset();
+      this.props.slideOutVideoSearch(false);
     }
   }, {
     key: 'render',
@@ -90371,8 +89703,7 @@ var VideoContainer = function (_Component) {
                   type: 'button',
                   className: 'btn vidList vid-left-arrow video-btn',
                   onClick: function onClick() {
-                    _this3.props.getResultStyles(_this3.props.resultsStyles, _this3.props.toggleResultsBool);
-                    _this3.props.getOpacityDisplay(_this3.props.opacityContainer, _this3.props.toggleResultsBool);
+                    _this3.props.getResultStyles(_this3.props.toggleResultsBool);
                   }
                 },
                 _react2.default.createElement('i', { className: 'fa fa-youtube', 'aria-hidden': 'true' })
@@ -90399,7 +89730,7 @@ var VideoContainer = function (_Component) {
           {
             className: 'arrow-container',
             onClick: function onClick() {
-              _this3.props.slideOutVideoSearch(_this3.props.toggleSlideOut, _this3.props.slideOutStyles);
+              _this3.props.slideOutVideoSearch(_this3.props.toggleSlideOut);
             }
           },
           !this.props.toggleSlideOut ? _react2.default.createElement(
@@ -90458,7 +89789,6 @@ function mapStateToProps(state) {
     binderTabPageIds: state.interface,
     resultsStyles: state.video.resultsStyles,
     toggleResultsBool: state.video.toggleResults,
-    opacityContainer: state.video.opacityDisplay,
     slideOutStyles: state.video.videoLinkSlideOut,
     toggleSlideOut: state.video.toggleSlideOut,
     savedVideoTitle: state.video.savedVideoTitle,
@@ -98661,10 +97991,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var VideoPlaylist = function (_Component) {
   _inherits(VideoPlaylist, _Component);
 
-  function VideoPlaylist() {
+  function VideoPlaylist(props) {
     _classCallCheck(this, VideoPlaylist);
 
-    return _possibleConstructorReturn(this, (VideoPlaylist.__proto__ || Object.getPrototypeOf(VideoPlaylist)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (VideoPlaylist.__proto__ || Object.getPrototypeOf(VideoPlaylist)).call(this, props));
+
+    _this.deleteVideo = _this.deleteVideo.bind(_this);
+    return _this;
   }
 
   _createClass(VideoPlaylist, [{
@@ -98701,26 +98034,78 @@ var VideoPlaylist = function (_Component) {
     value: function handleYouTubeUrl(values) {
       var _this2 = this;
 
-      var youtubeLinkInput = values['youtube-url'];
-      if (!youtubeLinkInput || youtubeLinkInput.indexOf('youtu') === -1) {
+      var url = values['youtube-url'];
+      var videoId;
+      var videoLink;
+      if (!url) {
         return;
+      } else if (url.indexOf('player_embedded') !== -1) {
+        videoId = url.split('=');
+        videoId = videoId[2];
+      } else if (url.indexOf('&feature=youtu.be') !== -1) {
+        videoLink = url;
+        videoId = videoLink.split('=');
+        videoId = videoId[1].split('&');
+        videoId = videoId[0];
+      } else if (url.indexOf('&feature') !== -1) {
+        videoLink = url;
+        videoId = videoLink.split('/');
+        videoId = videoId[4].split('&');
+        videoId = videoId[0];
+      } else if (url.indexOf('feature') !== -1) {
+        videoLink = url;
+        videoId = videoLink.split('&');
+        videoId = videoId[0].split('/');
+        videoId = videoId[4];
+        videoId = videoLink.split('&');
+        videoId = videoLink[0];
+      } else if (url.indexOf('&t') !== -1) {
+        videoLink = url;
+        videoId = videoLink.split('&t');
+        videoId = videoId[0].split('=');
+        videoId = videoId[1];
+      } else if (url.indexOf('&') !== -1 || url.indexOf('=') !== -1) {
+        videoId = url;
+        videoId = videoId.split('&')[0];
+        videoId = videoId.split('=')[1];
+      } else if (url.indexOf('youtu.be') !== -1) {
+        videoId = url;
+        videoId = url.split('/');
+        videoId = videoId[3];
+      } else {
+        videoId = url;
       }
-      this.props.playPastedLinkVideo(values['youtube-url']);
-      this.props.getSavedVideoImg(values['youtube-url']).then(function () {
-        _this2.props.getSavedVideoTitle(values['youtube-url']).then(function () {
-          _this2.props.addVideoToDatabase(values['youtube-url'], _this2.props.savedVideoTitle, _this2.props.savedVideoImage, _this2.props.binderTabPageIds);
+      this.props.playPastedLinkVideo(videoId);
+      this.props.getSavedVideoImg(videoId).then(function () {
+        _this2.props.getSavedVideoTitle(videoId).then(function () {
+          _this2.props.addVideoToDatabase(videoId, _this2.props.savedVideoTitle, _this2.props.savedVideoImage, _this2.props.binderTabPageIds).then(function () {
+            _this2.props.getVideoPlaylist(_this2.props.binderId, _this2.props.tabId, _this2.props.pageId).then(function () {
+              _this2.props.setVideoUrl(_this2.props.currentPlaylistItems[0].videoId);
+            });
+          });
         });
       });
+      this.props.reset();
+      this.props.togglePlaylist('translateY(0%)');
+      this.props.slideOutVideoSearch(false);
     }
   }, {
     key: 'deleteVideo',
     value: function deleteVideo(videoId) {
-      this.props.removeVideoFromPlaylist(this.props.binderId, this.props.tabId, this.props.pageId, videoId);
+      var _this3 = this;
+
+      this.props.removeVideoFromPlaylist(this.props.binderId, this.props.tabId, this.props.pageId, videoId).then(function () {
+        _this3.props.getVideoPlaylist(_this3.props.binderId, _this3.props.tabId, _this3.props.pageId).then(function () {
+          if (_this3.props.currentPlaylistItems.length > 0) {
+            _this3.props.setVideoUrl(_this3.props.currentPlaylistItems[0].videoId);
+          }
+        });
+      });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var playlistStyles = this.props.playlistStyles;
 
@@ -98751,9 +98136,9 @@ var VideoPlaylist = function (_Component) {
                 {
                   className: 'btn btn-small playlist-play col s1 playlist-play',
                   onClick: function onClick() {
-                    _this3.props.playVideo(item.videoId);
-                    _this3.props.setVideoUrl(item.videoId);
-                    _this3.props.togglePlaylist(_this3.props.playlistStyles);
+                    _this4.props.playVideo(item.videoId);
+                    _this4.props.setVideoUrl(item.videoId);
+                    _this4.props.togglePlaylist('translateY(0%)');
                   }
                 },
                 _react2.default.createElement(
@@ -98766,7 +98151,7 @@ var VideoPlaylist = function (_Component) {
                 'button',
                 {
                   onClick: function onClick() {
-                    _this3.deleteVideo(item._id);
+                    _this4.deleteVideo(item._id);
                   },
                   className: 'btn btn-small playlist-delete col s1'
                 },
@@ -98788,7 +98173,7 @@ var VideoPlaylist = function (_Component) {
           'i',
           {
             onClick: function onClick() {
-              _this3.props.togglePlaylist(_this3.props.playlistStyles);
+              _this4.props.togglePlaylist(_this4.props.playlistStyles);
             },
             className: 'material-icons close-playlist-icon close-playlist'
           },
@@ -112149,7 +111534,7 @@ exports = module.exports = __webpack_require__(40)(undefined);
 
 
 // module
-exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n}\r\n\r\n.text-editor {\r\n    height: 100%;\r\n    overflow: hidden;\r\n}\r\n\r\n.editor {\r\n    padding: 2vmin 2vmin 0 2vmin;\r\n    height: 100%;\r\n}\r\n\r\n.notes-component.fifth-step{\r\n    height: 88%;\r\n    overflow-y: auto;\r\n}\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    position: relative;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #455a64;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    padding: 0 1em;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: wrap;\r\n    justify-content: space-between;\r\n    height: 40%;\r\n    width: 100%;\r\n    padding-top: 1.5em;\r\n}\r\n\r\n.styleSquare {\r\n    height: 2.5em;\r\n    width: 2.5em;\r\n    cursor: pointer;\r\n    color: white;\r\n    text-align: center;\r\n}\r\n\r\n.richText, .fontColorIcon, .emojiIcon {\r\n    color: white;\r\n}\r\n\r\n.styleSquare:hover, .richText:hover, .fontColorIcon:hover, .emojiIcon:hover {\r\n    background-color: ghostwhite;\r\n    color: #01579b;\r\n}\r\n\r\n.material-icons.notesIcons {\r\n    font-size: 2.5em;\r\n    margin: 0;\r\n}\r\n\r\n.search-input.keyword {\r\n    background-color: #eceff1;\r\n    height: 2.5em;\r\n    width: 18em;\r\n    padding-left: 2%;\r\n    margin-top: 0;\r\n    margin-bottom: 0;\r\n}\r\n\r\n.link, .image {\r\n    margin-top: 0;\r\n}\r\n\r\n.saveNotes {\r\n    display: inline-block;\r\n    color: white;\r\n    margin: 1% 45%;\r\n    width: 95%;\r\n}\r\n\r\n@media only screen and (max-width: 1426px) {\r\n    .styleSquare {\r\n        height: 2.3em;\r\n        width: 2.3em;\r\n    }\r\n\r\n    .material-icons.notesIcons {\r\n        font-size: 2.3em;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        height: 2.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 919px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n\r\n    .material-icons.image, .material-icons.link {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 830px) {\r\n    .search-input.keyword {\r\n        width: 13em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n    .stylingButtons {\r\n        justify-content: space-between;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 500px) {\r\n    .hoverOptions {\r\n        margin-right: 0.5em;\r\n    }\r\n}\r\n\r\n/*@media only screen and (max-width: 430px) {*/\r\n    /*.stylingButtons.secondRow {*/\r\n        /*flex-wrap: wrap;*/\r\n    /*}*/\r\n/*}*/\r\n\r\n@media only screen and (max-width: 422px) {\r\n    .search-input.keyword {\r\n        margin-top: 1em;\r\n    }\r\n}\r\n\r\n/*--------------------------- OUTPUT ---------------------------*/\r\n\r\n.emoji {\r\n    font-size: 2em;\r\n}\r\n\r\nstrong {\r\n    font-weight: 900 !important;\r\n}\r\n\r\n.notesUnorderedList li::before {\r\n    content: \"\\2022\";\r\n    padding: 0 8px 0 28px;\r\n    color: rgba(0,0,0,0.87);\r\n}\r\n\r\ncode {\r\n    display: inline-block;\r\n    background-color: #d5d5d5;\r\n    color: #0288d1;\r\n    padding: 0 0.5em;\r\n    font-family: 'Overpass Mono', sans-serif !important;\r\n    line-height: 1.56;\r\n}\r\n\r\nblockquote {\r\n    border-left: 5px solid #0288d1 !important;\r\n    color: #0288d1;\r\n    font-style: italic;\r\n    margin: 0 !important;\r\n}\r\n\r\n\r\n\r\n/*--------------------------- COLOR/EMOJI OPTIONS ---------------------------*/\r\n\r\n.hoverOptions {\r\n    float: left;\r\n    overflow: hidden;\r\n}\r\n\r\n.hoverOptions .hoverDropbtn {\r\n    font-size: 16px;\r\n    border: none;\r\n    outline: none;\r\n    margin: 0;\r\n}\r\n\r\n.fontColor-options, .emoji-options {\r\n    display: none;\r\n    position: absolute;\r\n    background-color: white;\r\n    padding: 0.3em 0 0 0.3em;\r\n}\r\n\r\n.fontColor-options {\r\n    height: 3.8em;\r\n    width: 6em;\r\n}\r\n\r\n.emoji-options {\r\n    height: 23em;\r\n    width: 2.5em;\r\n}\r\n\r\n.fontColor-options .fontColor {\r\n    float: none;\r\n    text-decoration: none;\r\n    display: block;\r\n    text-align: left;\r\n}\r\n\r\n.hoverOptions:hover .fontColor-options {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.hoverOptions:hover .emoji-options {\r\n    display: block;\r\n}\r\n\r\n.fontColor, .emojis {\r\n    width: 1.8em;\r\n    height: 1.8em;\r\n    padding-right: 1%;\r\n    margin: 0;\r\n}\r\n\r\n.redFont .colorCircles {\r\n    color: #FF0000;\r\n    font-size: 150%;\r\n}\r\n\r\n.orangeFont .colorCircles {\r\n    color: #FF7F00;\r\n    font-size: 150%;\r\n}\r\n\r\n.yellowFont .colorCircles {\r\n    color: #FFFF00;\r\n    font-size: 150%;\r\n}\r\n\r\n.greenFont .colorCircles {\r\n    color: #00FF00;\r\n    font-size: 150%;\r\n}\r\n\r\n.blueFont .colorCircles {\r\n    color: #0000FF;\r\n    font-size: 150%;\r\n}\r\n\r\n.violetFont .colorCircles {\r\n    color: #9400D3;\r\n    font-size: 150%;\r\n}\r\n\r\n.fontOptions {\r\n    display: inline-block;\r\n}\r\n\r\n.colorCircles:hover {\r\n    cursor: pointer\r\n}\r\n\r\n.textAreaEmoji {\r\n    cursor: pointer;\r\n}\r\n\r\n/*--------------------------- FONT OPTIONS ---------------------------*/\r\n\r\n.font-dropdown {\r\n    position: relative;\r\n    display: inline-block;\r\n}\r\n\r\n.font-styles {\r\n    display: none;\r\n    position: absolute;\r\n    background-color: white;\r\n    min-width: 150px;\r\n    z-index: 1;\r\n}\r\n\r\n.font-dropdown:hover .font-styles {\r\n    display: block;\r\n    cursor: pointer;\r\n}\r\n\r\n.font-dropdown p:hover {\r\n    display: block;\r\n    cursor: pointer;\r\n    background-color: #455a64;\r\n    color: white;\r\n}\r\n\r\n.fonts {\r\n    margin: 0;\r\n    padding: 1.5em 1em;\r\n    line-height: 0;\r\n}\r\n\r\n.arial {\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n.comic {\r\n    font-family: \"Comic Sans MS\", cursive, sans-serif;\r\n}\r\n\r\n.courier {\r\n    font-family: \"Courier New\", Courier, monospace;\r\n}\r\n\r\n.impact {\r\n    font-family: Impact, Charcoal, sans-serif;\r\n}\r\n\r\n.roboto {\r\n    font-family: 'Roboto', sans-serif;\r\n}\r\n\r\n.times {\r\n    font-family: \"Times New Roman\", Times, serif;\r\n}", ""]);
+exports.push([module.i, ".notes-parent-panel {\r\n    height: 100%;\r\n    box-sizing: border-box;\r\n    background-color: ghostwhite;\r\n}\r\n\r\n.text-editor {\r\n    height: 100%;\r\n    overflow: hidden;\r\n}\r\n\r\n.editor {\r\n    padding: 2vmin 2vmin 0 2vmin;\r\n    height: 100%;\r\n}\r\n\r\n.notes-component.fifth-step{\r\n    height: 88%;\r\n    overflow-y: auto;\r\n}\r\n\r\n.toolbar {\r\n    width: 100%;\r\n    position: relative;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #455a64;\r\n    box-shadow: 0 5px 5px #999;\r\n    z-index: 1;\r\n    padding: 0 1em;\r\n}\r\n\r\n.stylingButtons {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    justify-content: space-between;\r\n    height: 40%;\r\n    width: 100%;\r\n    padding-top: 1.5em;\r\n}\r\n\r\n.styleSquare {\r\n    height: 2.5em;\r\n    width: 2.5em;\r\n    cursor: pointer;\r\n    color: white;\r\n    text-align: center;\r\n}\r\n\r\n.richText, .fontColorIcon, .emojiIcon {\r\n    color: white;\r\n}\r\n\r\n.styleSquare:hover, .richText:hover, .fontColorIcon:hover, .emojiIcon:hover {\r\n    background-color: ghostwhite;\r\n    color: #01579b;\r\n}\r\n\r\n.material-icons.notesIcons {\r\n    font-size: 2.5em;\r\n    margin: 0;\r\n}\r\n\r\n.search-input.keyword {\r\n    background-color: #eceff1;\r\n    height: 2.5em;\r\n    width: 18em;\r\n    padding-left: 2%;\r\n    margin-top: 0;\r\n    margin-bottom: 0;\r\n}\r\n\r\n.link, .image {\r\n    margin-top: 0;\r\n}\r\n\r\n.saveNotes {\r\n    display: inline-block;\r\n    color: white;\r\n    margin: 1% 45%;\r\n    width: 95%;\r\n}\r\n\r\n@media only screen and (max-width: 1426px) {\r\n    .styleSquare {\r\n        height: 2.3em;\r\n        width: 2.3em;\r\n    }\r\n\r\n    .material-icons.notesIcons {\r\n        font-size: 2.3em;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        height: 2.3em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 919px) {\r\n    .search-input.keyword {\r\n        margin-top: 0.7em;\r\n    }\r\n\r\n    .material-icons.image, .material-icons.link {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 830px) {\r\n    .search-input.keyword {\r\n        width: 13em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n    .stylingButtons {\r\n        justify-content: space-between;\r\n    }\r\n\r\n    .search-input.keyword {\r\n        margin-top: 0;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 500px) {\r\n    .hoverOptions {\r\n        margin-right: 0.5em;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 422px) {\r\n    .search-input.keyword {\r\n        margin-top: 1em;\r\n    }\r\n}\r\n\r\n/*--------------------------- OUTPUT ---------------------------*/\r\n\r\n.emoji {\r\n    font-size: 2em;\r\n}\r\n\r\nstrong {\r\n    font-weight: 900 !important;\r\n}\r\n\r\n.notesUnorderedList li::before {\r\n    content: \"\\2022\";\r\n    padding: 0 8px 0 28px;\r\n    color: rgba(0,0,0,0.87);\r\n}\r\n\r\ncode {\r\n    display: inline-block;\r\n    background-color: #d5d5d5;\r\n    color: #0288d1;\r\n    padding: 0 0.5em;\r\n    font-family: 'Overpass Mono', sans-serif !important;\r\n    line-height: 1.56;\r\n}\r\n\r\nblockquote {\r\n    border-left: 5px solid #0288d1 !important;\r\n    color: #0288d1;\r\n    font-style: italic;\r\n    margin: 0 !important;\r\n}\r\n\r\n/*--------------------------- COLOR/EMOJI OPTIONS ---------------------------*/\r\n\r\n.hoverOptions {\r\n    float: left;\r\n    overflow: hidden;\r\n}\r\n\r\n.hoverOptions .hoverDropbtn {\r\n    font-size: 16px;\r\n    border: none;\r\n    outline: none;\r\n    margin: 0;\r\n}\r\n\r\n.fontColor-options, .emoji-options {\r\n    display: none;\r\n    position: absolute;\r\n    background-color: white;\r\n\r\n}\r\n\r\n.fontColor-options {\r\n    height: 3.8em;\r\n    width: 6em;\r\n    padding: 0.3em 0 0 0.3em;\r\n}\r\n\r\n.emoji-options {\r\n    height: 23.5em;\r\n    width: 2.6em;\r\n    padding: 0.3em 0 0 0.4em;\r\n}\r\n\r\n.fontColor-options .fontColor {\r\n    float: none;\r\n    text-decoration: none;\r\n    display: block;\r\n    text-align: left;\r\n}\r\n\r\n.hoverOptions:hover .fontColor-options {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.hoverOptions:hover .emoji-options {\r\n    display: block;\r\n}\r\n\r\n.fontColor, .emojis {\r\n    width: 1.8em;\r\n    height: 1.8em;\r\n    padding-right: 1%;\r\n    margin: 0;\r\n}\r\n\r\n.redFont .colorCircles {\r\n    color: #FF0000;\r\n    font-size: 150%;\r\n}\r\n\r\n.orangeFont .colorCircles {\r\n    color: #FF7F00;\r\n    font-size: 150%;\r\n}\r\n\r\n.yellowFont .colorCircles {\r\n    color: #FFFF00;\r\n    font-size: 150%;\r\n}\r\n\r\n.greenFont .colorCircles {\r\n    color: #00FF00;\r\n    font-size: 150%;\r\n}\r\n\r\n.blueFont .colorCircles {\r\n    color: #0000FF;\r\n    font-size: 150%;\r\n}\r\n\r\n.violetFont .colorCircles {\r\n    color: #9400D3;\r\n    font-size: 150%;\r\n}\r\n\r\n.fontOptions {\r\n    display: inline-block;\r\n}\r\n\r\n.colorCircles:hover {\r\n    cursor: pointer\r\n}\r\n\r\n.textAreaEmoji {\r\n    cursor: pointer;\r\n}\r\n\r\n/*--------------------------- FONT OPTIONS ---------------------------*/\r\n\r\n.font-dropdown {\r\n    position: relative;\r\n    display: inline-block;\r\n}\r\n\r\n.font-styles {\r\n    display: none;\r\n    position: absolute;\r\n    background-color: white;\r\n    min-width: 150px;\r\n    z-index: 1;\r\n}\r\n\r\n.font-dropdown:hover .font-styles {\r\n    display: block;\r\n    cursor: pointer;\r\n}\r\n\r\n.font-dropdown p:hover {\r\n    display: block;\r\n    cursor: pointer;\r\n    background-color: #455a64;\r\n    color: white;\r\n}\r\n\r\n.fonts {\r\n    margin: 0;\r\n    padding: 1.5em 1em;\r\n    line-height: 0;\r\n}\r\n\r\n.arial {\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n.comic {\r\n    font-family: \"Comic Sans MS\", cursive, sans-serif;\r\n}\r\n\r\n.courier {\r\n    font-family: \"Courier New\", Courier, monospace;\r\n}\r\n\r\n.impact {\r\n    font-family: Impact, Charcoal, sans-serif;\r\n}\r\n\r\n.roboto {\r\n    font-family: 'Roboto', sans-serif;\r\n}\r\n\r\n.times {\r\n    font-family: \"Times New Roman\", Times, serif;\r\n}", ""]);
 
 // exports
 
@@ -112491,14 +111876,16 @@ var NavBar = function (_Component) {
       // }
 
       if (nextProps.interface.sent_to_db !== this.props.interface.sent_to_db) {
+        //this.props.clearLoader();
         if (nextProps.interface.sent_to_db) {
+          this.props.clearLoader();
           for (var i = 0; i < nextProps.binderArr.length; i++) {
             if (nextProps.binderArr[i]._id === nextProps.interface.binder_id) {
               var binderObj = nextProps.binderArr[i];
               this.props.updateBinderObj(binderObj);
             }
           }
-          this.props.clearLoader();
+          //this.props.clearLoader();
         }
       }
       if (this.props.mobile !== nextProps.mobile) {
@@ -112510,6 +111897,7 @@ var NavBar = function (_Component) {
   }, {
     key: 'addBinder',
     value: function addBinder() {
+      this.props.showLoader();
       this.props.addBinder();
     }
   }, {
@@ -112649,7 +112037,8 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, {
   updateBinderObj: _actions.updateBinderObj,
   minNav: _actions.minNav,
   showNav: _actions.showNav,
-  clearLoader: _actions.clearLoader
+  clearLoader: _actions.clearLoader,
+  showLoader: _actions.showLoader
 })(NavBar);
 
 /***/ }),
@@ -112759,6 +112148,7 @@ var Binder = function (_Component) {
     }, {
         key: 'addTab',
         value: function addTab() {
+            this.props.showLoader();
             this.props.addTab(this.props.binderObj._id);
         }
     }, {
@@ -112768,6 +112158,7 @@ var Binder = function (_Component) {
                 console.log('can not delete last binder');
                 return;
             }
+            this.props.showLoader();
             this.props.deleteBinder(delete_id);
             this.setState({
                 deleteHover: false
@@ -112788,6 +112179,7 @@ var Binder = function (_Component) {
             event.stopPropagation();
             var binderName = this.state.binderName;
 
+            this.props.showLoader();
             this.props.editBinder(this.props.binderObj._id, binderName);
             this.setState({
                 editable: false,
@@ -113032,7 +112424,7 @@ function mapStateToProps(state) {
     };
 }
 
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, { updateBinderArray: _actions.updateBinderArray, selectBinder: _actions.selectBinder, addTab: _actions.addTab, deleteBinder: _actions.deleteBinder, editBinder: _actions.editBinder })(Binder));
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, { showLoader: _actions.showLoader, updateBinderArray: _actions.updateBinderArray, selectBinder: _actions.selectBinder, addTab: _actions.addTab, deleteBinder: _actions.deleteBinder, editBinder: _actions.editBinder })(Binder));
 
 /***/ }),
 /* 1179 */
@@ -113122,6 +112514,7 @@ var Tab = function (_Component) {
     }, {
         key: 'addPage',
         value: function addPage() {
+            this.props.showLoader();
             this.props.addPage(this.props.interface.binder_id, this.props.tabObj._id);
         }
     }, {
@@ -113138,6 +112531,7 @@ var Tab = function (_Component) {
         value: function notEditTabs() {
             var tabName = this.state.tabName;
 
+            this.props.showLoader();
             this.props.editTab(this.props.binder._id, this.props.tabObj._id, tabName);
             this.setState({
                 editable: false,
@@ -113157,6 +112551,7 @@ var Tab = function (_Component) {
             if (this.props.binder.tab_arr_obj.length === 1) {
                 console.log('can not delete last tab');
             } else {
+                this.props.showLoader();
                 this.props.deleteTab(this.props.interface.binder_id, this.props.tabObj._id);
             }
         }
@@ -113395,7 +112790,7 @@ function mapStateToProps(state) {
         interface: state.interface
     };
 }
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, { selectTab: _actions.selectTab, addPage: _actions.addPage, deleteTab: _actions.deleteTab, editTab: _actions.editTab, updateBinderArray: _actions.updateBinderArray })(Tab));
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, { selectTab: _actions.selectTab, addPage: _actions.addPage, deleteTab: _actions.deleteTab, editTab: _actions.editTab, updateBinderArray: _actions.updateBinderArray, showLoader: _actions.showLoader })(Tab));
 
 /***/ }),
 /* 1180 */
@@ -113479,6 +112874,7 @@ var Page = function (_Component) {
         value: function notEditPage() {
             var pageName = this.state.pageName;
 
+            this.props.showLoader();
             this.props.editPage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id, pageName);
             this.setState({
                 editable: false,
@@ -113504,6 +112900,7 @@ var Page = function (_Component) {
             if (this.props.binder.tab_arr_obj[deleteIndex].page_arr_obj.length === 1) {
                 console.log('can not delete last page');
             } else {
+                this.props.showLoader();
                 this.props.deletePage(this.props.interface.binder_id, this.props.tabID, this.props.pageObj._id);
             }
         }
@@ -113726,7 +113123,7 @@ function mapStateToProps(state) {
         interface: state.interface
     };
 }
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, { selectPage: _actions.selectPage, deletePage: _actions.deletePage, editPage: _actions.editPage })(Page));
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, { selectPage: _actions.selectPage, deletePage: _actions.deletePage, editPage: _actions.editPage, showLoader: _actions.showLoader })(Page));
 
 /***/ }),
 /* 1181 */
@@ -118197,8 +117594,6 @@ exports.default = function () {
       return _extends({}, state, { videoLink: action.payload });
     case _types2.default.TOGGLE_RESULTS:
       return _extends({}, state, { toggleResults: !state.toggleResults });
-    case _types2.default.GET_OPACITY_DISPLAY:
-      return _extends({}, state, { opacityDisplay: action.payload });
     case _types2.default.TOGGLE_MODAL:
       return _extends({}, state, { addVideoModal: { display: action.payload } });
     case _types2.default.PLAY_PASTED_VIDEO_LINK:
@@ -118272,9 +117667,6 @@ var DEFAULT_STATE = {
   },
   playlistStyles: {
     transform: 'translateY(-100%)'
-  },
-  opacityDisplay: {
-    display: 'none'
   },
   videoLink: '',
   videoLinkSlideOut: {
@@ -118492,7 +117884,8 @@ exports.default = function () {
         case _types2.default.PANEL_TOP_LEFT_WIDTH:
         case _types2.default.PANEL_TOP_RIGHT_HEIGHT:
         case _types2.default.NUM_OF_PANELS:
-            return _extends({}, state, { pull_from_db: true });
+        case _types2.default.SAVE_NOTES:
+            return _extends({}, state, { pull_from_db: true, show_loader: true });
         case _types2.default.AXIOS_ERROR:
             return _extends({}, state, { axios_error_response: action.msg });
         case _types2.default.HIDE_NAV:
@@ -118507,15 +117900,10 @@ exports.default = function () {
             return _extends({}, state, { lfz_response: true });
         case _types2.default.LFZ_WRONG_PASSWORD:
             return _extends({}, state, { lfz_response: false });
+        case _types2.default.SHOW_LOADER:
+            return _extends({}, state, { show_loader: true });
         case _types2.default.CLEAR_LOADER:
-            return _extends({}, state, { sent_to_db: false });
-        case _types2.default.SAVE_NOTES:
-            return _extends({}, state, { save_notes: true, pull_from_db: true });
-        case _types2.default.AUTO_SAVE_NOTES:
-            //case types.UPDATE_BINDER_OBJ:
-            return _extends({}, state, { save_notes: true });
-        case _types2.default.NOT_SAVE_NOTES:
-            return _extends({}, state, { save_notes: false });
+            return _extends({}, state, { sent_to_db: false, show_loader: false });
         default:
             return state;
     }
@@ -118536,9 +117924,10 @@ var DEFAULT_STATE = {
     user_name: {},
     pull_from_db: false,
     sent_to_db: false,
-    save_notes: false,
+    save_notes: true,
     axios_error_response: '',
-    lfz_response: ''
+    lfz_response: '',
+    show_loader: false
 };
 
 /***/ }),
@@ -118549,26 +117938,22 @@ var DEFAULT_STATE = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 exports.default = function () {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-    var action = arguments[1];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  var action = arguments[1];
 
-    switch (action.type) {
-        case _types2.default.SET_SLIDES_URL:
-            return { input: action.payload };
-        case _types2.default.GET_SLIDES_URL:
-        case _types2.default.RESET_SLIDES_URL:
-            return { input: action.payload };
-        case _types2.default.TOGGLE_SLIDE_OUT_MENU:
-            return _extends({}, state, { slideLinkSlideOut: { transform: action.payload.slideOutStyles.transform }, toggleLectureSlideOut: action.payload.toggleSlideOut });
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case _types2.default.SET_SLIDES_URL:
+      return { input: action.payload };
+    case _types2.default.GET_SLIDES_URL:
+    case _types2.default.RESET_SLIDES_URL:
+      return { input: action.payload };
+    default:
+      return state;
+  }
 };
 
 var _types = __webpack_require__(59);
@@ -118578,14 +117963,8 @@ var _types2 = _interopRequireDefault(_types);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var DEFAULT_STATE = {
-    input: '',
-    slideLinkSlideOut: {
-        transform: 'translateY(-100px)'
-    },
-    toggleLectureSlideOut: true
+  input: ''
 };
-
-;
 
 /***/ }),
 /* 1242 */
