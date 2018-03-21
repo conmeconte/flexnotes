@@ -41,6 +41,9 @@ export default function (state = DEFAULT_STATE, action) {
         case types.DELETE_TAB:
         case types.ADD_PAGE:
         case types.DELETE_PAGE:
+        case types.EDIT_BINDER:
+        case types.EDIT_TAB:
+        case types.EDIT_PAGE:
             return { ...state, pull_from_db: true};
         case types.UPDATE_BINDER_ARRAY:
             return { ...state, pull_from_db: false,  sent_to_db: true};

@@ -506,6 +506,7 @@ footer {
         padding-bottom: 12%;
     }
     .pageBody{
+        word-break: break-word;
         padding: 1% 0%;
     }
 
