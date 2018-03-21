@@ -127,7 +127,6 @@ class Video extends Component {
         currentPage.hasOwnProperty('video') &&
         currentPage.video.length >= 1
       ) {
-        this.props.slideOutVideoSearch(false, 'translateY(-119px)');
         this.binderId = nextProps.binderObj._id;
         this.tabId = tab_arr_obj[tabIndex]._id;
         this.pageId = page_arr_obj[pageIndex]._id;
@@ -135,7 +134,6 @@ class Video extends Component {
         this.currentPlaylistItems = page_arr_obj[pageIndex].video;
       } else {
         this.props.setVideoUrl('', interface_obj);
-        this.props.slideOutVideoSearch(true, 'translateY(27px)');
         this.binderId = nextProps.binderObj._id;
         this.tabId = tab_arr_obj[tabIndex]._id;
         this.pageId = page_arr_obj[pageIndex]._id;
@@ -147,6 +145,10 @@ class Video extends Component {
         .then(() => {
           if (this.props.playlistItems.length > 0) {
             this.props.setVideoUrl(this.props.playlistItems[0].videoId);
+            this.props.slideOutVideoSearch(false);
+          }
+          if (this.props.playlistItems[0].videoId === undefined) {
+            this.props.slideOutVideoSearch(true);
           }
         });
     }

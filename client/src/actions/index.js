@@ -247,21 +247,7 @@ export function resetSlidesURL(slidesURL) {
     payload: slidesURL
   };
 }
-export function slideOutSlidesSearch(toggleBool, slide) {
-  let toggleSlideOut = toggleBool;
-  var slideOutStyles;
-  if (toggleSlideOut) {
-    slideOutStyles = 'translateY(0px)';
-    toggleSlideOut = false;
-  } else {
-    slideOutStyles = 'translateY(-100px)';
-    toggleSlideOut = true;
-  }
-  return {
-    type: types.TOGGLE_SLIDE_OUT_MENU,
-    payload: { slideOutStyles: { transform: slideOutStyles }, toggleSlideOut }
-  };
-}
+
 // End of Lecture Slides Action Creators
 
 //Video Action Creators
@@ -740,8 +726,6 @@ export function addLfzBinder(password) {
         pw: password
       })
       .then(resp => {
-
-
         if (resp.data.hasOwnProperty('success')) {
           console.log('lfz incorrect pw', resp);
           dispatch({

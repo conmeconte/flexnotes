@@ -5,13 +5,22 @@ import {
   setSlidesUrl,
   getSlidesURL,
   updateBinderArray,
-  resetSlidesURL,
-  slideOutSlidesSearch
+  resetSlidesURL
 } from '../actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
 class Slides extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      slideOutStyles: {
+        transform: 'translateY(0%)'
+      },
+      isOut: true
+    };
+    this.toggleSlideOut = this.toggleSlideOut.bind(this);
+  }
   renderInput(props) {
     const { input, meta: { touched, error } } = props;
     return (
@@ -62,15 +71,15 @@ class Slides extends Component {
           this.props.getSlidesURL(
             tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id
           );
-          this.props.slideOutSlidesSearch(false, 'translateY(-100px)');
+          this.toggleSlideOut(true);
         } else {
           this.props.resetSlidesURL('');
-          this.props.slideOutSlidesSearch(true, 'translateY(0px)');
-          //return;
+          this.toggleSlideOut(false);
         }
       }
     }
   }
+
   componentWillMount() {
     let { tab_arr_obj } = this.props.binderObj;
     let { interface_obj } = this.props;
@@ -100,8 +109,10 @@ class Slides extends Component {
         this.props.getSlidesURL(
           tab_arr_obj[tabIndex].page_arr_obj[pageIndex].lecture_slides.lec_id
         );
+        this.toggleSlideOut(true);
       } else {
         this.props.resetSlidesURL('');
+        this.toggleSlideOut(false);
       }
     }
   }
@@ -122,16 +133,29 @@ class Slides extends Component {
         let presentationID = urlSplit2[0];
         const slidesURL = `https://docs.google.com/presentation/d/${presentationID}/embed`;
         this.props.setSlidesUrl(slidesURL, this.props.interface_obj);
-        this.props.reset();
       }
+      this.toggleSlideOut(true);
+      this.props.reset();
     } else {
       return;
     }
   }
-
+  toggleSlideOut(isOut) {
+    var slideOutStyles;
+    if (isOut) {
+      slideOutStyles = 'translateY(-100%)';
+    } else {
+      slideOutStyles = 'translateY(0%)';
+    }
+    this.setState({
+      slideOutStyles: {
+        transform: slideOutStyles
+      },
+      isOut: !isOut
+    });
+  }
   render() {
-    const toggleSlideOut = this.props.toggleLectureSlideOut;
-    const slideOutStyles = this.props.lectureSlideOutStyles;
+    const { slideOutStyles, isOut } = this.state;
     return (
       <div className="slides-div slides-div-safari fourth-step">
         <form
@@ -149,12 +173,12 @@ class Slides extends Component {
           </div>
         </form>
         <div
-          className="arrow-container-slides"
           onClick={() => {
-            this.props.slideOutSlidesSearch(toggleSlideOut, slideOutStyles);
+            this.toggleSlideOut(isOut);
           }}
+          className="arrow-container-slides"
         >
-          {!toggleSlideOut
+          {isOut
             ? <i className="material-icons">remove</i>
             : <i className="material-icons">add</i>}
         </div>
@@ -162,11 +186,11 @@ class Slides extends Component {
           <div className="resize-blocker2" />
           {this.props.slide_input
             ? <iframe
-              src={this.props.slide_input}
-              frameBorder="0"
-              className="slides-iframe"
-              allowFullScreen
-            />
+                src={this.props.slide_input}
+                frameBorder="0"
+                className="slides-iframe"
+                allowFullScreen
+              />
             : ''}
         </div>
       </div>
@@ -195,9 +219,7 @@ function mapStateToProps(state) {
   return {
     slide_input: state.slides.input,
     interface_obj: state.interface,
-    binderObj: state.binder.binderObj,
-    toggleLectureSlideOut: state.slides.toggleLectureSlideOut,
-    lectureSlideOutStyles: state.slides.slideLinkSlideOut
+    binderObj: state.binder.binderObj
   };
 }
 
@@ -205,6 +227,5 @@ export default connect(mapStateToProps, {
   setSlidesUrl,
   updateBinderArray,
   getSlidesURL,
-  resetSlidesURL,
-  slideOutSlidesSearch
+  resetSlidesURL
 })(Slides);
