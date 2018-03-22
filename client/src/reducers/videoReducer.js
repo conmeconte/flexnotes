@@ -6,9 +6,6 @@ const DEFAULT_STATE = {
   savedVideoTitle: '',
   savedVideoImage: '',
   toggleResults: true,
-  addVideoModal: {
-    display: 'none'
-  },
   resultsStyles: {
     transform: 'translateX(-100%)'
   },
@@ -16,6 +13,7 @@ const DEFAULT_STATE = {
     transform: 'translateY(-100%)'
   },
   videoLink: '',
+  videoId: '',
   videoLinkSlideOut: {
     transform: 'translateY(-119px)'
   },
@@ -24,25 +22,35 @@ const DEFAULT_STATE = {
 
 export default function(state = DEFAULT_STATE, action) {
   switch (action.type) {
-    case types.GET_VIDEO_RESULTS:
-      return { ...state, results: action.payload };
     case types.ADD_VIDEO_TO_DATABASE:
       return {
         ...state,
         addedVideo: action.payload.updatedPlaylist
       };
-    case types.GET_RESULT_STYLES:
+    case types.DELETE_FROM_PLAYLIST:
       return {
         ...state,
-        resultsStyles: action.payload,
-        toggleResults: !state.toggleResults
+        addedVideo: action.payload
       };
-    case types.GRAB_VIDEO_URL:
+    case types.GET_VIDEO_RESULTS:
+      return { ...state, results: action.payload };
+    case types.SET_VIDEO_PLAYLIST:
+      return {
+        ...state,
+        addedVideo: action.payload
+      };
+    case types.GET_VIDEO_PLAYLIST:
+      return {
+        ...state,
+        addedVideo: action.payload.data.video
+      };
+    case types.HANDLE_YOUTUBE_URL:
+      return {
+        ...state,
+        videoId: action.payload
+      };
+    case types.SET_VIDEO_URL:
       return { ...state, videoLink: action.payload };
-    case types.TOGGLE_RESULTS:
-      return { ...state, toggleResults: !state.toggleResults };
-    case types.TOGGLE_MODAL:
-      return { ...state, addVideoModal: { display: action.payload } };
     case types.PLAY_PASTED_VIDEO_LINK:
       return { ...state, videoLink: action.payload };
     case types.PLAY_VIDEO:
@@ -51,10 +59,24 @@ export default function(state = DEFAULT_STATE, action) {
         videoLink: action.payload.videoLink,
         resultsStyles: { transform: 'translateX(-100%)' }
       };
-    case types.NO_VIDEO_LINK:
-      return { ...state };
-    case types.SET_VIDEO_URL:
-      return { ...state, videoLink: action.payload };
+    case types.GET_SAVED_VIDEO_TITLE:
+      return {
+        ...state,
+        savedVideoTitle: action.payload
+      };
+
+    case types.GET_SAVED_VIDEO_IMAGE:
+      return {
+        ...state,
+        savedVideoImage: action.payload
+      };
+    case types.TOGGLE_PLAYLIST:
+      return {
+        ...state,
+        playlistStyles: {
+          transform: action.payload
+        }
+      };
     case types.TOGGLE_VIDEO_SLIDE_OUT:
       return {
         ...state,
@@ -66,38 +88,18 @@ export default function(state = DEFAULT_STATE, action) {
         ...state,
         videoLinkSlideOut: action.payload.slideOutStyles.style
       };
-    case types.GET_SAVED_VIDEO_TITLE:
+    case types.GET_RESULT_STYLES:
       return {
         ...state,
-        savedVideoTitle: action.payload
+        resultsStyles: action.payload,
+        toggleResults: !state.toggleResults
       };
-    case types.DELETE_FROM_PLAYLIST:
-      return {
-        ...state,
-        addedVideo: action.payload
-      };
-    case types.GET_SAVED_VIDEO_IMAGE:
-      return {
-        ...state,
-        savedVideoImage: action.payload
-      };
-    case types.SET_VIDEO_PLAYLIST:
-      return {
-        ...state,
-        addedVideo: action.payload
-      };
-    case types.GET_VIDEO_PLAYLIST:
-      return {
-        ...state,
-        addedVideo: action.payload.data.video
-      };
-    case types.TOGGLE_PLAYLIST:
-      return {
-        ...state,
-        playlistStyles: {
-          transform: action.payload
-        }
-      };
+    case types.TOGGLE_RESULTS:
+      return { ...state, toggleResults: !state.toggleResults };
+    case types.GRAB_VIDEO_URL:
+      return { ...state, videoLink: action.payload };
+    case types.NO_VIDEO_LINK:
+      return { ...state };
     default:
       return state;
   }
