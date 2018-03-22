@@ -47,8 +47,6 @@ class Video extends Component {
         videoTitle: currentVideo.snippet.title,
         videoId: currentVideo.id.videoId,
         url: `https://www.youtube.com/embed/${currentVideo.id.videoId}`,
-        description: currentVideo.snippet.description,
-        channelId: currentVideo.snippet.channelId,
         thumbnails: currentVideo.snippet.thumbnails
       };
       videos.push(vidObject);
@@ -232,17 +230,12 @@ Video = reduxForm({
 
 function mapStateToProps(state) {
   return {
-    pastedVideoUrl: state.videoResults.videoLink,
     videoResults: state.video.results,
     resultsStyles: state.video.resultsStyles,
     toggleResultsBool: state.video.toggleResults,
     interface_obj: state.interface,
     binderObj: state.binder.binderObj,
-    slideOutStyles: state.video.videoLinkSlideOut,
-    toggleSlideOut: state.video.toggleSlideOut,
-    playlistStyles: state.video.playlistStyles,
-    playlistItems: state.video.addedVideo,
-    videoLink: state.video.videoLink
+    playlistItems: state.video.addedVideo
   };
 }
 

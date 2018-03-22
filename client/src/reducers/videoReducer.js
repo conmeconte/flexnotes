@@ -1,23 +1,24 @@
 import types from '../actions/types';
 
 const DEFAULT_STATE = {
+  videoLink: '',
+  videoId: '',
   results: [],
   addedVideo: [],
   savedVideoTitle: '',
   savedVideoImage: '',
   toggleResults: true,
+  toggleSlideOut: true,
   resultsStyles: {
     transform: 'translateX(-100%)'
   },
   playlistStyles: {
     transform: 'translateY(-100%)'
   },
-  videoLink: '',
-  videoId: '',
+
   videoLinkSlideOut: {
     transform: 'translateY(-119px)'
-  },
-  toggleSlideOut: true
+  }
 };
 
 export default function(state = DEFAULT_STATE, action) {
