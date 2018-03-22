@@ -182,8 +182,6 @@ VideoPlaylist = reduxForm({
 function mapStateToProps(state) {
   return {
     playlistStyles: state.video.playlistStyles,
-    interface_obj: state.interface,
-    binderObj: state.binder.binderObj,
     binderTabPageIds: state.interface,
     savedVideoTitle: state.video.savedVideoTitle,
     savedVideoImage: state.video.savedVideoImage,

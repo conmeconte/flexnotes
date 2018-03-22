@@ -146,7 +146,6 @@ VideoContainer = reduxForm({
 function mapStateToProps(state) {
   return {
     binderTabPageIds: state.interface,
-    resultsStyles: state.video.resultsStyles,
     toggleResultsBool: state.video.toggleResults,
     slideOutStyles: state.video.videoLinkSlideOut,
     toggleSlideOut: state.video.toggleSlideOut,
