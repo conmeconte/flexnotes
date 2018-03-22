@@ -6,7 +6,11 @@ import * as actions from '../actions';
 class VideoPlaylist extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      deletedVideoList: {}
+    };
     this.deleteVideo = this.deleteVideo.bind(this);
+    this.incrementDeleteCounter = this.incrementDeleteCounter.bind(this);
   }
   renderInput({ input, type, meta: { error, touched } }) {
     return (
@@ -58,34 +62,52 @@ class VideoPlaylist extends Component {
     this.props.togglePlaylist('translateY(0%)');
     this.props.slideOutVideoSearch(false);
   }
-
+  incrementDeleteCounter(videoId) {
+    const { deletedVideoList } = this.state;
+    if (deletedVideoList[videoId] !== undefined) {
+      deletedVideoList[videoId] += 1;
+    } else {
+      deletedVideoList[videoId] = 1;
+    }
+    this.setState({
+      deletedVideoList
+    });
+  }
   deleteVideo(videoId) {
-    this.props
-      .removeVideoFromPlaylist(
-        this.props.binderId,
-        this.props.tabId,
-        this.props.pageId,
-        videoId
-      )
-      .then(() => {
+    const { deletedVideoList } = this.state;
+    for (var key in deletedVideoList) {
+      if (deletedVideoList[key] > 1) {
+        return;
+      } else {
         this.props
-          .getVideoPlaylist(
+          .removeVideoFromPlaylist(
             this.props.binderId,
             this.props.tabId,
-            this.props.pageId
+            this.props.pageId,
+            videoId
           )
           .then(() => {
-            if (this.props.currentPlaylistItems.length > 0) {
-              this.props.setVideoUrl(
-                this.props.currentPlaylistItems[0].videoId
-              );
-            }
+            this.props
+              .getVideoPlaylist(
+                this.props.binderId,
+                this.props.tabId,
+                this.props.pageId
+              )
+              .then(() => {
+                if (this.props.currentPlaylistItems.length > 0) {
+                  this.props.setVideoUrl(
+                    this.props.currentPlaylistItems[0].videoId
+                  );
+                }
+              });
           });
-      });
+      }
+    }
   }
   render() {
     const { playlistStyles } = this.props;
     let createPlaylist = '';
+    console.log(this.state);
     if (this.props.currentPlaylistItems.length !== 0) {
       createPlaylist = this.props.currentPlaylistItems.map((item, index) => {
         if (!item.hasOwnProperty('videoId')) {
@@ -112,6 +134,7 @@ class VideoPlaylist extends Component {
               </button>
               <button
                 onClick={() => {
+                  this.incrementDeleteCounter(item._id);
                   this.deleteVideo(item._id);
                 }}
                 className="btn btn-small playlist-delete col s1"
