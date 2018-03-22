@@ -107,7 +107,6 @@ class VideoPlaylist extends Component {
   render() {
     const { playlistStyles } = this.props;
     let createPlaylist = '';
-    console.log(this.state);
     if (this.props.currentPlaylistItems.length !== 0) {
       createPlaylist = this.props.currentPlaylistItems.map((item, index) => {
         if (!item.hasOwnProperty('videoId')) {
