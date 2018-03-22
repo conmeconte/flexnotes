@@ -455,6 +455,55 @@ export function togglePlaylist(playlistStyle) {
     payload: playlistStyle
   };
 }
+export function handleYouTubeUrl(values) {
+  return async dispatch => {
+    const url = values['youtube-url'];
+    var videoId;
+    var videoLink;
+    if (!url) {
+      return;
+    } else if (url.indexOf('player_embedded') !== -1) {
+      videoId = url.split('=');
+      videoId = videoId[2];
+    } else if (url.indexOf('&feature=youtu.be') !== -1) {
+      videoLink = url;
+      videoId = videoLink.split('=');
+      videoId = videoId[1].split('&');
+      videoId = videoId[0];
+    } else if (url.indexOf('&feature') !== -1) {
+      videoLink = url;
+      videoId = videoLink.split('/');
+      videoId = videoId[4].split('&');
+      videoId = videoId[0];
+    } else if (url.indexOf('feature') !== -1) {
+      videoLink = url;
+      videoId = videoLink.split('&');
+      videoId = videoId[0].split('/');
+      videoId = videoId[4];
+      videoId = videoLink.split('&');
+      videoId = videoLink[0];
+    } else if (url.indexOf('&t') !== -1) {
+      videoLink = url;
+      videoId = videoLink.split('&t');
+      videoId = videoId[0].split('=');
+      videoId = videoId[1];
+    } else if (url.indexOf('&') !== -1 || url.indexOf('=') !== -1) {
+      videoId = url;
+      videoId = videoId.split('&')[0];
+      videoId = videoId.split('=')[1];
+    } else if (url.indexOf('youtu.be') !== -1) {
+      videoId = url;
+      videoId = url.split('/');
+      videoId = videoId[3];
+    } else {
+      videoId = url;
+    }
+    dispatch({
+      type: types.HANDLE_YOUTUBE_URL,
+      payload: videoId
+    });
+  };
+}
 // END OF VIDEO ACTION CREATORS
 
 export function getDataObject() {

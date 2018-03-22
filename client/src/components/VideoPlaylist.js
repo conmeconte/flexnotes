@@ -26,71 +26,32 @@ class VideoPlaylist extends Component {
       </div>
     );
   }
-  handleYouTubeUrl(values) {
-    const url = values['youtube-url'];
-    var videoId;
-    var videoLink;
-    if (!url) {
-      return;
-    } else if (url.indexOf('player_embedded') !== -1) {
-      videoId = url.split('=');
-      videoId = videoId[2];
-    } else if (url.indexOf('&feature=youtu.be') !== -1) {
-      videoLink = url;
-      videoId = videoLink.split('=');
-      videoId = videoId[1].split('&');
-      videoId = videoId[0];
-    } else if (url.indexOf('&feature') !== -1) {
-      videoLink = url;
-      videoId = videoLink.split('/');
-      videoId = videoId[4].split('&');
-      videoId = videoId[0];
-    } else if (url.indexOf('feature') !== -1) {
-      videoLink = url;
-      videoId = videoLink.split('&');
-      videoId = videoId[0].split('/');
-      videoId = videoId[4];
-      videoId = videoLink.split('&');
-      videoId = videoLink[0];
-    } else if (url.indexOf('&t') !== -1) {
-      videoLink = url;
-      videoId = videoLink.split('&t');
-      videoId = videoId[0].split('=');
-      videoId = videoId[1];
-    } else if (url.indexOf('&') !== -1 || url.indexOf('=') !== -1) {
-      videoId = url;
-      videoId = videoId.split('&')[0];
-      videoId = videoId.split('=')[1];
-    } else if (url.indexOf('youtu.be') !== -1) {
-      videoId = url;
-      videoId = url.split('/');
-      videoId = videoId[3];
-    } else {
-      videoId = url;
-    }
-    this.props.playPastedLinkVideo(videoId);
-    this.props.getSavedVideoImg(videoId).then(() => {
-      this.props.getSavedVideoTitle(videoId).then(() => {
-        this.props
-          .addVideoToDatabase(
-            videoId,
-            this.props.savedVideoTitle,
-            this.props.savedVideoImage,
-            this.props.binderTabPageIds
-          )
-          .then(() => {
-            this.props
-              .getVideoPlaylist(
-                this.props.binderId,
-                this.props.tabId,
-                this.props.pageId
-              )
-              .then(() => {
-                this.props.setVideoUrl(
-                  this.props.currentPlaylistItems[0].videoId
-                );
-              });
-          });
+  handleVideoInput(values) {
+    this.props.handleYouTubeUrl(values).then(() => {
+      this.props.playPastedLinkVideo(this.props.videoId);
+      this.props.getSavedVideoImg(this.props.videoId).then(() => {
+        this.props.getSavedVideoTitle(this.props.videoId).then(() => {
+          this.props
+            .addVideoToDatabase(
+              this.props.videoId,
+              this.props.savedVideoTitle,
+              this.props.savedVideoImage,
+              this.props.binderTabPageIds
+            )
+            .then(() => {
+              this.props
+                .getVideoPlaylist(
+                  this.props.binderId,
+                  this.props.tabId,
+                  this.props.pageId
+                )
+                .then(() => {
+                  this.props.setVideoUrl(
+                    this.props.currentPlaylistItems[0].videoId
+                  );
+                });
+            });
+        });
       });
     });
     this.props.reset();
@@ -175,7 +136,7 @@ class VideoPlaylist extends Component {
         </i>
         <ul className="video-playlist collection">
           <form
-            onSubmit={this.props.handleSubmit(this.handleYouTubeUrl.bind(this))}
+            onSubmit={this.props.handleSubmit(this.handleVideoInput.bind(this))}
             style={this.props.slideOutStyles}
             className="row"
           >
@@ -225,7 +186,8 @@ function mapStateToProps(state) {
     binderObj: state.binder.binderObj,
     binderTabPageIds: state.interface,
     savedVideoTitle: state.video.savedVideoTitle,
-    savedVideoImage: state.video.savedVideoImage
+    savedVideoImage: state.video.savedVideoImage,
+    videoId: state.video.videoId
   };
 }
 
