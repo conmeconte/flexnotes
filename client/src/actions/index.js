@@ -497,6 +497,8 @@ export function handleYouTubeUrl(values) {
       videoId = videoId[3];
     } else {
       videoId = url;
+      videoId = videoId.split('/');
+      videoId = videoId[4];
     }
     dispatch({
       type: types.HANDLE_YOUTUBE_URL,

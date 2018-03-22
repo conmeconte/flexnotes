@@ -145,7 +145,10 @@ class Video extends Component {
             this.props.setVideoUrl(this.props.playlistItems[0].videoId);
             this.props.slideOutVideoSearch(false);
           }
-          if (this.props.playlistItems[0].videoId === undefined) {
+          if (
+            this.props.playlistItems.length <= 0 ||
+            this.props.playlistItems[0].videoId === undefined
+          ) {
             this.props.slideOutVideoSearch(true);
           }
         });
