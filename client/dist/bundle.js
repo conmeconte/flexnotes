@@ -5821,6 +5821,7 @@ exports.emptyVideoSlideOut = emptyVideoSlideOut;
 exports.getResultStyles = getResultStyles;
 exports.toggleResults = toggleResults;
 exports.togglePlaylist = togglePlaylist;
+exports.handleYouTubeUrl = handleYouTubeUrl;
 exports.getDataObject = getDataObject;
 exports.updateBinderArray = updateBinderArray;
 exports.updateBinderObj = updateBinderObj;
@@ -6426,6 +6427,82 @@ function togglePlaylist(playlistStyle) {
     type: _types2.default.TOGGLE_PLAYLIST,
     payload: playlistStyle
   };
+}
+function handleYouTubeUrl(values) {
+  var _this4 = this;
+
+  return function () {
+    var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(dispatch) {
+      var url, videoId, videoLink;
+      return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              url = values['youtube-url'];
+
+              if (url) {
+                _context7.next = 5;
+                break;
+              }
+
+              return _context7.abrupt('return');
+
+            case 5:
+              if (url.indexOf('player_embedded') !== -1) {
+                videoId = url.split('=');
+                videoId = videoId[2];
+              } else if (url.indexOf('&feature=youtu.be') !== -1) {
+                videoLink = url;
+                videoId = videoLink.split('=');
+                videoId = videoId[1].split('&');
+                videoId = videoId[0];
+              } else if (url.indexOf('&feature') !== -1) {
+                videoLink = url;
+                videoId = videoLink.split('/');
+                videoId = videoId[4].split('&');
+                videoId = videoId[0];
+              } else if (url.indexOf('feature') !== -1) {
+                videoLink = url;
+                videoId = videoLink.split('&');
+                videoId = videoId[0].split('/');
+                videoId = videoId[4];
+                videoId = videoLink.split('&');
+                videoId = videoLink[0];
+              } else if (url.indexOf('&t') !== -1) {
+                videoLink = url;
+                videoId = videoLink.split('&t');
+                videoId = videoId[0].split('=');
+                videoId = videoId[1];
+              } else if (url.indexOf('&') !== -1 || url.indexOf('=') !== -1) {
+                videoId = url;
+                videoId = videoId.split('&')[0];
+                videoId = videoId.split('=')[1];
+              } else if (url.indexOf('youtu.be') !== -1) {
+                videoId = url;
+                videoId = url.split('/');
+                videoId = videoId[3];
+              } else {
+                videoId = url;
+              }
+
+            case 6:
+              dispatch({
+                type: _types2.default.HANDLE_YOUTUBE_URL,
+                payload: videoId
+              });
+
+            case 7:
+            case 'end':
+              return _context7.stop();
+          }
+        }
+      }, _callee7, _this4);
+    }));
+
+    return function (_x7) {
+      return _ref7.apply(this, arguments);
+    };
+  }();
 }
 // END OF VIDEO ACTION CREATORS
 
@@ -9499,6 +9576,7 @@ exports.default = {
   PLAY_VIDEO: 'play_video',
   ADD_VIDEO_TO_DATABASE: 'add_video_to_database',
   TOGGLE_PLAYLIST: 'toggle_playlist',
+  HANDLE_YOUTUBE_URL: 'handle_youtube_url',
   GET_SAVED_VIDEO_TITLE: 'get_saved_video_title',
   DELETE_FROM_PLAYLIST: 'delete_from_playlist',
   GET_VIDEO_PLAYLIST: 'get_video_playlist',
@@ -27231,8 +27309,6 @@ var Video = function (_Component) {
                     videoTitle: currentVideo.snippet.title,
                     videoId: currentVideo.id.videoId,
                     url: 'https://www.youtube.com/embed/' + currentVideo.id.videoId,
-                    description: currentVideo.snippet.description,
-                    channelId: currentVideo.snippet.channelId,
                     thumbnails: currentVideo.snippet.thumbnails
                   };
 
@@ -27472,17 +27548,12 @@ Video = (0, _reduxForm.reduxForm)({
 
 function mapStateToProps(state) {
   return {
-    pastedVideoUrl: state.videoResults.videoLink,
     videoResults: state.video.results,
     resultsStyles: state.video.resultsStyles,
     toggleResultsBool: state.video.toggleResults,
     interface_obj: state.interface,
     binderObj: state.binder.binderObj,
-    slideOutStyles: state.video.videoLinkSlideOut,
-    toggleSlideOut: state.video.toggleSlideOut,
-    playlistStyles: state.video.playlistStyles,
-    playlistItems: state.video.addedVideo,
-    videoLink: state.video.videoLink
+    playlistItems: state.video.addedVideo
   };
 }
 
@@ -89608,61 +89679,23 @@ var VideoContainer = function (_Component) {
       );
     }
   }, {
-    key: 'handleYouTubeUrl',
-    value: function handleYouTubeUrl(values) {
+    key: 'handleVideoInput',
+    value: function handleVideoInput(values) {
       var _this2 = this;
 
-      var url = values['youtube-url'];
-      var videoId;
-      var videoLink;
-      if (!url) {
-        return;
-      } else if (url.indexOf('player_embedded') !== -1) {
-        videoId = url.split('=');
-        videoId = videoId[2];
-      } else if (url.indexOf('&feature=youtu.be') !== -1) {
-        videoLink = url;
-        videoId = videoLink.split('=');
-        videoId = videoId[1].split('&');
-        videoId = videoId[0];
-      } else if (url.indexOf('&feature') !== -1) {
-        videoLink = url;
-        videoId = videoLink.split('/');
-        videoId = videoId[4].split('&');
-        videoId = videoId[0];
-      } else if (url.indexOf('feature') !== -1) {
-        videoLink = url;
-        videoId = videoLink.split('&');
-        videoId = videoId[0].split('/');
-        videoId = videoId[4];
-        videoId = videoLink.split('&');
-        videoId = videoLink[0];
-      } else if (url.indexOf('&t') !== -1) {
-        videoLink = url;
-        videoId = videoLink.split('&t');
-        videoId = videoId[0].split('=');
-        videoId = videoId[1];
-      } else if (url.indexOf('&') !== -1 || url.indexOf('=') !== -1) {
-        videoId = url;
-        videoId = videoId.split('&')[0];
-        videoId = videoId.split('=')[1];
-      } else if (url.indexOf('youtu.be') !== -1) {
-        videoId = url;
-        videoId = url.split('/');
-        videoId = videoId[3];
-      } else {
-        videoId = url;
-      }
-      this.props.playPastedLinkVideo(videoId);
-      this.props.getSavedVideoImg(videoId).then(function () {
-        _this2.props.getSavedVideoTitle(videoId).then(function () {
-          _this2.props.addVideoToDatabase(videoId, _this2.props.savedVideoTitle, _this2.props.savedVideoImage, _this2.props.binderTabPageIds).then(function () {
-            _this2.props.getVideoPlaylist(_this2.props.binderId, _this2.props.tabId, _this2.props.pageId).then(function () {
-              _this2.props.setVideoUrl(_this2.props.currentPlaylistItems[0].videoId);
+      this.props.handleYouTubeUrl(values).then(function () {
+        _this2.props.playPastedLinkVideo(_this2.props.videoId);
+        _this2.props.getSavedVideoImg(_this2.props.videoId).then(function () {
+          _this2.props.getSavedVideoTitle(_this2.props.videoId).then(function () {
+            _this2.props.addVideoToDatabase(_this2.props.videoId, _this2.props.savedVideoTitle, _this2.props.savedVideoImage, _this2.props.binderTabPageIds).then(function () {
+              _this2.props.getVideoPlaylist(_this2.props.binderId, _this2.props.tabId, _this2.props.pageId).then(function () {
+                _this2.props.setVideoUrl(_this2.props.currentPlaylistItems[0].videoId);
+              });
             });
           });
         });
       });
+
       this.props.reset();
       this.props.slideOutVideoSearch(false);
     }
@@ -89677,7 +89710,7 @@ var VideoContainer = function (_Component) {
         _react2.default.createElement(
           'form',
           {
-            onSubmit: this.props.handleSubmit(this.handleYouTubeUrl.bind(this)),
+            onSubmit: this.props.handleSubmit(this.handleVideoInput.bind(this)),
             style: this.props.slideOutStyles,
             className: 'row video-slide-out-input slide-out-input'
           },
@@ -89787,14 +89820,14 @@ VideoContainer = (0, _reduxForm.reduxForm)({
 function mapStateToProps(state) {
   return {
     binderTabPageIds: state.interface,
-    resultsStyles: state.video.resultsStyles,
     toggleResultsBool: state.video.toggleResults,
     slideOutStyles: state.video.videoLinkSlideOut,
     toggleSlideOut: state.video.toggleSlideOut,
     savedVideoTitle: state.video.savedVideoTitle,
     savedVideoImage: state.video.savedVideoImage,
     playlistStyles: state.video.playlistStyles,
-    videoLink: state.video.videoLink
+    videoLink: state.video.videoLink,
+    videoId: state.video.videoId
   };
 }
 
@@ -97996,7 +98029,11 @@ var VideoPlaylist = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (VideoPlaylist.__proto__ || Object.getPrototypeOf(VideoPlaylist)).call(this, props));
 
+    _this.state = {
+      deletedVideoList: {}
+    };
     _this.deleteVideo = _this.deleteVideo.bind(_this);
+    _this.incrementDeleteCounter = _this.incrementDeleteCounter.bind(_this);
     return _this;
   }
 
@@ -98030,57 +98067,18 @@ var VideoPlaylist = function (_Component) {
       );
     }
   }, {
-    key: 'handleYouTubeUrl',
-    value: function handleYouTubeUrl(values) {
+    key: 'handleVideoInput',
+    value: function handleVideoInput(values) {
       var _this2 = this;
 
-      var url = values['youtube-url'];
-      var videoId;
-      var videoLink;
-      if (!url) {
-        return;
-      } else if (url.indexOf('player_embedded') !== -1) {
-        videoId = url.split('=');
-        videoId = videoId[2];
-      } else if (url.indexOf('&feature=youtu.be') !== -1) {
-        videoLink = url;
-        videoId = videoLink.split('=');
-        videoId = videoId[1].split('&');
-        videoId = videoId[0];
-      } else if (url.indexOf('&feature') !== -1) {
-        videoLink = url;
-        videoId = videoLink.split('/');
-        videoId = videoId[4].split('&');
-        videoId = videoId[0];
-      } else if (url.indexOf('feature') !== -1) {
-        videoLink = url;
-        videoId = videoLink.split('&');
-        videoId = videoId[0].split('/');
-        videoId = videoId[4];
-        videoId = videoLink.split('&');
-        videoId = videoLink[0];
-      } else if (url.indexOf('&t') !== -1) {
-        videoLink = url;
-        videoId = videoLink.split('&t');
-        videoId = videoId[0].split('=');
-        videoId = videoId[1];
-      } else if (url.indexOf('&') !== -1 || url.indexOf('=') !== -1) {
-        videoId = url;
-        videoId = videoId.split('&')[0];
-        videoId = videoId.split('=')[1];
-      } else if (url.indexOf('youtu.be') !== -1) {
-        videoId = url;
-        videoId = url.split('/');
-        videoId = videoId[3];
-      } else {
-        videoId = url;
-      }
-      this.props.playPastedLinkVideo(videoId);
-      this.props.getSavedVideoImg(videoId).then(function () {
-        _this2.props.getSavedVideoTitle(videoId).then(function () {
-          _this2.props.addVideoToDatabase(videoId, _this2.props.savedVideoTitle, _this2.props.savedVideoImage, _this2.props.binderTabPageIds).then(function () {
-            _this2.props.getVideoPlaylist(_this2.props.binderId, _this2.props.tabId, _this2.props.pageId).then(function () {
-              _this2.props.setVideoUrl(_this2.props.currentPlaylistItems[0].videoId);
+      this.props.handleYouTubeUrl(values).then(function () {
+        _this2.props.playPastedLinkVideo(_this2.props.videoId);
+        _this2.props.getSavedVideoImg(_this2.props.videoId).then(function () {
+          _this2.props.getSavedVideoTitle(_this2.props.videoId).then(function () {
+            _this2.props.addVideoToDatabase(_this2.props.videoId, _this2.props.savedVideoTitle, _this2.props.savedVideoImage, _this2.props.binderTabPageIds).then(function () {
+              _this2.props.getVideoPlaylist(_this2.props.binderId, _this2.props.tabId, _this2.props.pageId).then(function () {
+                _this2.props.setVideoUrl(_this2.props.currentPlaylistItems[0].videoId);
+              });
             });
           });
         });
@@ -98090,17 +98088,39 @@ var VideoPlaylist = function (_Component) {
       this.props.slideOutVideoSearch(false);
     }
   }, {
+    key: 'incrementDeleteCounter',
+    value: function incrementDeleteCounter(videoId) {
+      var deletedVideoList = this.state.deletedVideoList;
+
+      if (deletedVideoList[videoId] !== undefined) {
+        deletedVideoList[videoId] += 1;
+      } else {
+        deletedVideoList[videoId] = 1;
+      }
+      this.setState({
+        deletedVideoList: deletedVideoList
+      });
+    }
+  }, {
     key: 'deleteVideo',
     value: function deleteVideo(videoId) {
       var _this3 = this;
 
-      this.props.removeVideoFromPlaylist(this.props.binderId, this.props.tabId, this.props.pageId, videoId).then(function () {
-        _this3.props.getVideoPlaylist(_this3.props.binderId, _this3.props.tabId, _this3.props.pageId).then(function () {
-          if (_this3.props.currentPlaylistItems.length > 0) {
-            _this3.props.setVideoUrl(_this3.props.currentPlaylistItems[0].videoId);
-          }
-        });
-      });
+      var deletedVideoList = this.state.deletedVideoList;
+
+      for (var key in deletedVideoList) {
+        if (deletedVideoList[key] > 1) {
+          return;
+        } else {
+          this.props.removeVideoFromPlaylist(this.props.binderId, this.props.tabId, this.props.pageId, videoId).then(function () {
+            _this3.props.getVideoPlaylist(_this3.props.binderId, _this3.props.tabId, _this3.props.pageId).then(function () {
+              if (_this3.props.currentPlaylistItems.length > 0) {
+                _this3.props.setVideoUrl(_this3.props.currentPlaylistItems[0].videoId);
+              }
+            });
+          });
+        }
+      }
     }
   }, {
     key: 'render',
@@ -98151,6 +98171,7 @@ var VideoPlaylist = function (_Component) {
                 'button',
                 {
                   onClick: function onClick() {
+                    _this4.incrementDeleteCounter(item._id);
                     _this4.deleteVideo(item._id);
                   },
                   className: 'btn btn-small playlist-delete col s1'
@@ -98185,7 +98206,7 @@ var VideoPlaylist = function (_Component) {
           _react2.default.createElement(
             'form',
             {
-              onSubmit: this.props.handleSubmit(this.handleYouTubeUrl.bind(this)),
+              onSubmit: this.props.handleSubmit(this.handleVideoInput.bind(this)),
               style: this.props.slideOutStyles,
               className: 'row'
             },
@@ -98245,11 +98266,10 @@ VideoPlaylist = (0, _reduxForm.reduxForm)({
 function mapStateToProps(state) {
   return {
     playlistStyles: state.video.playlistStyles,
-    interface_obj: state.interface,
-    binderObj: state.binder.binderObj,
     binderTabPageIds: state.interface,
     savedVideoTitle: state.video.savedVideoTitle,
-    savedVideoImage: state.video.savedVideoImage
+    savedVideoImage: state.video.savedVideoImage,
+    videoId: state.video.videoId
   };
 }
 
@@ -113134,7 +113154,7 @@ exports = module.exports = __webpack_require__(40)(undefined);
 
 
 // module
-exports.push([module.i, "a {\r\n    color: white;\r\n}\r\n\r\n.modal-content.modal-nav{\r\n    position: absolute;\r\n    width: 20%;\r\n    top: 40%;\r\n    left: 35%;\r\n    z-index: 5000;\r\n}\r\n\r\n.confirm-modal.modal-nav{\r\n    display: flex;\r\n    height: 100vh;\r\n    width: 100vw;\r\n    position: fixed;\r\n    background-color: rgba(0, 0, 0, 0.9);\r\n    top: 0;\r\n    left: 0;\r\n    z-index: 4000;\r\n}\r\n\r\n.nav_binder, .nav_tab, .nav_page {\r\n    display: inline-block;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.navbar.s2{\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 10%;\r\n    height: 100vh;\r\n    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);\r\n    background-color: #eceff1;\r\n}\r\n\r\n.lfzLogo{\r\n    width: 2.5%;\r\n    position: absolute;\r\n    left: 13%;\r\n    filter: drop-shadow(1px 1px 1px #333333);\r\n}\r\n\r\n.lfzLogo:hover{\r\n    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);\r\n    cursor: pointer;\r\n}\r\n\r\n.lfzLogo:active{\r\n    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);\r\n    transform: translateY(2px);\r\n}\r\n\r\nul > li {\r\n    list-style: none;\r\n\r\n}\r\n\r\n.binder_wrap{\r\n    border: 1px solid #747474;\r\n    border-radius: 3px;\r\n    background-color: white;\r\n    width: 75%;\r\n    height: 80px;\r\n    margin-left: 10%;\r\n    margin-bottom: 2%;\r\n    overflow-y: scroll;\r\n    box-sizing: content-box;\r\n    box-shadow: -5px .5px .5px #333333;\r\n}\r\n\r\n.visible, .edit-btn.visible, .delete-btn.visible, .navbarShow.visible{\r\n    display: inline;\r\n}\r\n\r\n.hidden, .edit-btn.hidden, .delete-btn.hidden, .navbarShow.hidden{\r\n    display: none;\r\n}\r\n\r\n.binderTitle{\r\n    cursor: pointer;\r\n    position: relative;\r\n    padding-bottom: 2%;\r\n}\r\n\r\n.binder-edit-btn{\r\n    position: absolute;\r\n    right: 14%;\r\n    top: 4%;\r\n}\r\n\r\n.binder-delete-btn{\r\n    position: absolute;\r\n    top: 4%;\r\n    right: 2%;\r\n}\r\n\r\n.tab-edit-btn{\r\n    position: absolute;\r\n    right: 16%;\r\n    top: 3%;\r\n}\r\n\r\n.tab-delete-btn{\r\n    position: absolute;\r\n    top: 3%;\r\n    right: 2%;\r\n}\r\n\r\n.page-edit-btn{\r\n    position: absolute;\r\n    right: 18%;\r\n    bottom: 2%;\r\n}\r\n\r\n.page-delete-btn{\r\n    position: absolute;\r\n    bottom: 2%;\r\n    right: 2%;\r\n}\r\n\r\n.binderWrap{\r\n     width: 100%;\r\n     margin-top: 0;\r\n     margin-bottom: 2%;\r\n     box-shadow: 1px 1px 1px #747474;\r\n}\r\n\r\n.binderBorderTop{\r\n    border-top: 5px ridge #90a4ae;\r\n}\r\n\r\n.tabWrap{\r\n    width: 90%;\r\n    margin-left: 10%;\r\n    box-shadow: 1px 1px 1px #747474;\r\n    \r\n}\r\n\r\n.tabTitle{\r\n    border-top: outset 3px #546e7a;\r\n    cursor: pointer;   \r\n    position: relative;\r\n    padding-bottom: 2%;\r\n}\r\n\r\n.pageBody{\r\n    border: 1px inset #696969;\r\n    padding: 3% 0%; \r\n    margin-left: 10%;\r\n    width: 90%;\r\n    cursor: pointer;\r\n    box-shadow: -1px 1px 1px #747474;\r\n}\r\n\r\n.pageLink, .page-btn, .delete-btn, .edit-btn {\r\n    display: inline-block;\r\n}\r\n.btn.binder-edit-btn{\r\n    padding-left: 8px;\r\n    padding-right: 2px;\r\n}\r\n\r\n.btn.delete-btn, .btn.tab-edit-btn, .btn.page-edit-btn{\r\n    padding-right: 0px;\r\n    padding-left: 6px;\r\n}\r\n\r\n.add-btn-page.btn  {\r\n    margin-bottom: 8%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n    background-color: #546e7a; \r\n}\r\n\r\n.add-btn-page.btn:hover, .add-btn-page.btn:focus  {\r\n    background-color: #fafafa;\r\n    color: black;\r\n}\r\n\r\n.add-btn-tab.btn  {\r\n    margin-top: 3%;\r\n    margin-bottom: 5%;\r\n    background-color: #455a64;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n}\r\n\r\n.add-btn-tab.btn:hover, .add-btn-tab.btn:focus  {\r\n    background-color: #b0bec5;\r\n    color: black;\r\n    \r\n}\r\n\r\n.add-btn-binder.btn  {\r\n    margin-top: 3%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n    background-color: #455a64;\r\n    box-shadow: 1px 1px 1px #747474;\r\n    margin-bottom: 5%;\r\n}\r\n\r\n.add-btn-binder.btn:hover, .add-btn-binder.btn:hover{\r\n    background-color: #cfd8dc;\r\n    color: black;\r\n    border-bottom: solid 1px #78909c;\r\n}\r\n\r\n.visibleHover{\r\n    visibility: visible;\r\n    opacity: 0.3;\r\n}\r\n\r\n\r\n.hiddenHover{\r\n    opacity: 0.3;\r\n    visibility: hidden;\r\n}\r\n\r\n.fullOpacity{\r\n    opacity: 1;\r\n}\r\n\r\n.pageLink{\r\n    padding-left: 5%;\r\n    padding-top: 2%;\r\n    padding-bottom: 2%;\r\n    font-size: 1rem;\r\n    overflow-wrap: break-word;\r\n}\r\n\r\n.tabLink{\r\n    padding-left: 3%;\r\n    font-size: 1.5rem;\r\n    color: black;\r\n    overflow-wrap: break-word;\r\n}\r\n.binderLink{\r\n    padding-left: 3%;\r\n    font-size: 1.75rem;\r\n    color: #fafafa;\r\n    overflow-wrap: break-word;\r\n}\r\n\r\n.pageList{\r\n    position: relative;\r\n}\r\n\r\n.pageList.whiteFont>a {\r\n    color: white;\r\n}\r\n\r\n.pageList.blackFont>a {\r\n    color: black;\r\n}\r\n\r\n.delete-btn {\r\n    background-color: red;\r\n}\r\n.hideNavbar.btn{\r\n    color: #fafafa;\r\n    background-color: #0288d1;\r\n    margin-bottom: 5%;\r\n    padding-left: 10px;\r\n    padding-right: 6px;\r\n\r\n}\r\n.navbarShow.btn {\r\n    height: 90%;\r\n    width: 0.75%;\r\n    padding: 0;\r\n    top: 50%;\r\n    padding-left: 10px;\r\n    padding-right: 6px;\r\n  transform: translateY(-50%);\r\n  background-color: #0288d1;\r\n}\r\n.navbarShow.btn i {\r\n    position: relative;\r\n    left: -13px;\r\n}\r\n.navbarShow.btn{\r\n    position: absolute;\r\n    z-index: 100;\r\n}\r\n\r\n.textLight{\r\n    color: white;\r\n}\r\n\r\n.card-action.modal-nav{\r\n    display: flex;\r\n    justify-content: space-between;\r\n}\r\n\r\n.card-action.modal-nav > button.grey{\r\n    color: black;\r\n}\r\n\r\n.borderDark{\r\n    border-top: ridge 5px #78909c;\r\n}\r\n\r\n.textDark{\r\n    color: black;\r\n    \r\n}\r\n.editMode.btn{\r\n    margin-left: 5%;\r\n}\r\n\r\n.editMode.btn:focus{\r\n    background-color: #d5d5d5;\r\n}\r\n\r\n.editMode.btn:hover{\r\n    background-color: #2bbbad;\r\n}\r\n\r\n.editMode.btn.editing{\r\n    background-color: #2bbbad;\r\n    color: white;\r\n}\r\n\r\n.btn.done-editing{\r\n    padding-left: 5px;\r\n    padding-right: 3px;\r\n}\r\n.navbarShow.btn:hover{\r\n    background-color: #01579b;\r\n}\r\n\r\n.hideNavbar.btn:hover {\r\n    background-color: #01579b;\r\n}\r\n\r\n.edit-mode-btn {\r\n    margin: 1%;\r\n}\r\n\r\ninput#edit_input_binder{\r\n    font-size: 1.75rem;\r\n    color: #fafafa;\r\n    margin-left: 2%;\r\n    \r\n}\r\n\r\ninput#edit_input_page::selection{\r\n    background-color: #fafafa;\r\n    color: black;\r\n    font-weight: 500;\r\n}\r\n\r\ninput#edit_input_tab{\r\n    padding-left: 3%;\r\n    font-size: 1.5rem;\r\n    color: black;\r\n}\r\n\r\ninput#edit_input_page{\r\n    padding-left: 5%;\r\n    font-size: 1rem;\r\n    color: #fafafa;\r\n    \r\n}\r\n\r\n.binder-container {\r\n    margin-top: 0;\r\n    height: 80vh;\r\n    overflow-y: scroll;\r\n}\r\n\r\n\r\n/* --------------------- HEADER AND FOOTER ---------------------*/\r\n\r\nheader {\r\n    margin: 2% 0 2% 0;\r\n    width: 15.6vw;\r\n}\r\n\r\nheader > h1 {\r\n    margin-left: 2px;\r\n    font-size: 2vw;\r\n    display: inline;\r\n    font-weight: 800;\r\n    letter-spacing: 3.5px;\r\n}\r\n\r\n.dashFlex {\r\n    color: #0288d1;\r\n    font-style: italic;\r\n}\r\n\r\n.logoImage {\r\n    width: 1.8vw;\r\n    margin-right: 1%;\r\n}\r\n\r\nfooter {\r\n    width: 100%;\r\n    z-index: 2;\r\n    position: relative;\r\n    bottom: 1.5vh;\r\n    background-color: #eceff1;\r\n}\r\n\r\n.startTour.btn, .logoutBtn.btn {\r\n    width: 40%;\r\n    height: 35px;\r\n    font-size: 90%;\r\n    background-color: #0288d1;;\r\n    color: #fafafa;\r\n    padding: 0 4%;\r\n    margin: 3% 4% 0 4%;\r\n    font-weight: 500;\r\n}\r\n\r\n.startTour.btn:hover, .logoutBtn.btn:hover {\r\n    background-color: #01579b;\r\n}\r\n\r\n@media (max-width: 1280px){\r\n    .binder-edit-btn{\r\n\r\n        right: 22%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 24%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 27%;\r\n    }\r\n\r\n    .binderTitle{\r\n        padding-bottom: 10%;\r\n    }\r\n\r\n    .tabLink{\r\n        padding-bottom: 10%;\r\n    }\r\n\r\n    .pageLink{\r\n        padding-bottom: 15%;\r\n    }\r\n}\r\n\r\n@media (max-width: 767px){\r\n    .hideNavbar.btn, .navbarShow.btn {\r\n        display: none;\r\n    }\r\n    .binder-container {\r\n        height: 73vh;\r\n    }\r\n    .navbar.s2, header{\r\n        width: 100%;\r\n    }\r\n    .visibleHover, .hiddenHover{\r\n        visibility: visible;\r\n        opacity: .8;\r\n    }\r\n    header > h1 {\r\n        font-size: 3em;\r\n    }\r\n    .logoImage {\r\n        width: 8%;\r\n        margin-left: 2%;\r\n    }\r\n    header{\r\n        height: 8vh;\r\n    }\r\n    footer{\r\n        /* padding-bottom: 2%; */\r\n        height: 8vh;\r\n    }\r\n    .startTour.btn, .logoutBtn.btn {\r\n        font-size: 1em;\r\n        margin: 2% 4%;\r\n    }\r\n\r\n    .lfzLogo{\r\n        width: 10%;\r\n        left: 85%;\r\n        top: 1.5%;\r\n\r\n    }\r\n    .modal-content.modal-nav{\r\n        position: absolute;\r\n        width: 90%;\r\n        left: 5%;\r\n    }\r\n\r\n    .binderTitle{\r\n        padding-bottom: 2%;\r\n    }\r\n\r\n    .tabLink{\r\n        padding-bottom: 2%;\r\n    }\r\n    .pageLink{\r\n        padding-bottom: 12%;\r\n    }\r\n    .pageBody{\r\n        padding: 1% 0%;\r\n    }\r\n\r\n    .page-edit-btn, .page-delete-btn{\r\n        bottom: 0%;\r\n    }\r\n\r\n    .binder-edit-btn{\r\n        right: 8%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 10%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 11%;\r\n    }\r\n\r\n}\r\n\r\n@media screen and (max-width: 767px) and (orientation:landscape){\r\n    .binder-container{\r\n        height: 50vh;\r\n        margin-top: 3%;\r\n    }\r\n    footer{\r\n        height: 10%;   \r\n    }\r\n\r\n    .lfzLogo{\r\n        width: 7%;\r\n        padding-top: 1%;\r\n    }\r\n\r\n    .logoImage{\r\n        width: 5%;\r\n    }\r\n\r\n    .pageLink{\r\n        padding-bottom: 3%;\r\n    }\r\n\r\n    .binder-edit-btn{\r\n        right: 9%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 11%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 12%;\r\n    }\r\n\r\n    .pageBody{\r\n        padding: 0;\r\n        padding-bottom: 2%;\r\n    }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n    /* footer {\r\n        height: 70px;\r\n    } */\r\n\r\n    .pageLink{\r\n        padding-bottom: 15%;\r\n    }\r\n    .startTour.btn, .logoutBtn.btn {\r\n        margin: 3% 4% 0 4%;\r\n        \r\n    }\r\n\r\n    .binder-edit-btn{\r\n        right: 15%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 17%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 18%;\r\n    }\r\n}\r\n\r\n/*--------------- reactour ---------------*/\r\n\r\n.dIYoXw {\r\n    background-color: white;\r\n    height: 0;\r\n}\r\n\r\n.bIMCVx:focus {\r\n    background-color: white;\r\n}", ""]);
+exports.push([module.i, "a {\r\n    color: white;\r\n}\r\n\r\n.modal-content.modal-nav{\r\n    position: absolute;\r\n    width: 20%;\r\n    top: 40%;\r\n    left: 35%;\r\n    z-index: 5000;\r\n}\r\n\r\n.confirm-modal.modal-nav{\r\n    display: flex;\r\n    height: 100vh;\r\n    width: 100vw;\r\n    position: fixed;\r\n    background-color: rgba(0, 0, 0, 0.9);\r\n    top: 0;\r\n    left: 0;\r\n    z-index: 4000;\r\n}\r\n\r\n.nav_binder, .nav_tab, .nav_page {\r\n    display: inline-block;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.navbar.s2{\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 10%;\r\n    height: 100vh;\r\n    box-shadow: 5px 0 10px 1px rgba(0, 0, 0, 0.15);\r\n    background-color: #eceff1;\r\n}\r\n\r\n.lfzLogo{\r\n    width: 2.5%;\r\n    position: absolute;\r\n    left: 13%;\r\n    filter: drop-shadow(1px 1px 1px #333333);\r\n}\r\n\r\n.lfzLogo:hover{\r\n    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);\r\n    cursor: pointer;\r\n}\r\n\r\n.lfzLogo:active{\r\n    filter: brightness(150%) drop-shadow(1px 1px 1px #333333);\r\n    transform: translateY(2px);\r\n}\r\n\r\nul > li {\r\n    list-style: none;\r\n\r\n}\r\n\r\n.binder_wrap{\r\n    border: 1px solid #747474;\r\n    border-radius: 3px;\r\n    background-color: white;\r\n    width: 75%;\r\n    height: 80px;\r\n    margin-left: 10%;\r\n    margin-bottom: 2%;\r\n    overflow-y: scroll;\r\n    box-sizing: content-box;\r\n    box-shadow: -5px .5px .5px #333333;\r\n}\r\n\r\n.visible, .edit-btn.visible, .delete-btn.visible, .navbarShow.visible{\r\n    display: inline;\r\n}\r\n\r\n.hidden, .edit-btn.hidden, .delete-btn.hidden, .navbarShow.hidden{\r\n    display: none;\r\n}\r\n\r\n.binderTitle{\r\n    cursor: pointer;\r\n    position: relative;\r\n    padding-bottom: 2%;\r\n}\r\n\r\n.binder-edit-btn{\r\n    position: absolute;\r\n    right: 14%;\r\n    top: 4%;\r\n}\r\n\r\n.binder-delete-btn{\r\n    position: absolute;\r\n    top: 4%;\r\n    right: 2%;\r\n}\r\n\r\n.tab-edit-btn{\r\n    position: absolute;\r\n    right: 16%;\r\n    top: 3%;\r\n}\r\n\r\n.tab-delete-btn{\r\n    position: absolute;\r\n    top: 3%;\r\n    right: 2%;\r\n}\r\n\r\n.page-edit-btn{\r\n    position: absolute;\r\n    right: 18%;\r\n    bottom: 2%;\r\n}\r\n\r\n.page-delete-btn{\r\n    position: absolute;\r\n    bottom: 2%;\r\n    right: 2%;\r\n}\r\n\r\n.binderWrap{\r\n     width: 100%;\r\n     margin-top: 0;\r\n     margin-bottom: 2%;\r\n     box-shadow: 1px 1px 1px #747474;\r\n}\r\n\r\n.binderBorderTop{\r\n    border-top: 5px ridge #90a4ae;\r\n}\r\n\r\n.tabWrap{\r\n    width: 90%;\r\n    margin-left: 10%;\r\n    box-shadow: 1px 1px 1px #747474;\r\n    \r\n}\r\n\r\n.tabTitle{\r\n    border-top: outset 3px #546e7a;\r\n    cursor: pointer;   \r\n    position: relative;\r\n    padding-bottom: 2%;\r\n}\r\n\r\n.pageBody{\r\n    border: 1px inset #696969;\r\n    padding: 3% 0%; \r\n    margin-left: 10%;\r\n    width: 90%;\r\n    cursor: pointer;\r\n    box-shadow: -1px 1px 1px #747474;\r\n}\r\n\r\n.pageLink, .page-btn, .delete-btn, .edit-btn {\r\n    display: inline-block;\r\n}\r\n.btn.binder-edit-btn{\r\n    padding-left: 8px;\r\n    padding-right: 2px;\r\n}\r\n\r\n.btn.delete-btn, .btn.tab-edit-btn, .btn.page-edit-btn{\r\n    padding-right: 0px;\r\n    padding-left: 6px;\r\n}\r\n\r\n.add-btn-page.btn  {\r\n    margin-bottom: 8%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n    background-color: #546e7a; \r\n}\r\n\r\n.add-btn-page.btn:hover, .add-btn-page.btn:focus  {\r\n    background-color: #fafafa;\r\n    color: black;\r\n}\r\n\r\n.add-btn-tab.btn  {\r\n    margin-top: 3%;\r\n    margin-bottom: 5%;\r\n    background-color: #455a64;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n}\r\n\r\n.add-btn-tab.btn:hover, .add-btn-tab.btn:focus  {\r\n    background-color: #b0bec5;\r\n    color: black;\r\n    \r\n}\r\n\r\n.add-btn-binder.btn  {\r\n    margin-top: 3%;\r\n    padding: 0;\r\n    width: 100%;\r\n    font-weight: 500;\r\n    background-color: #455a64;\r\n    box-shadow: 1px 1px 1px #747474;\r\n    margin-bottom: 5%;\r\n}\r\n\r\n.add-btn-binder.btn:hover, .add-btn-binder.btn:hover{\r\n    background-color: #cfd8dc;\r\n    color: black;\r\n    border-bottom: solid 1px #78909c;\r\n}\r\n\r\n.visibleHover{\r\n    visibility: visible;\r\n    opacity: 0.3;\r\n}\r\n\r\n\r\n.hiddenHover{\r\n    opacity: 0.3;\r\n    visibility: hidden;\r\n}\r\n\r\n.fullOpacity{\r\n    opacity: 1;\r\n}\r\n\r\n.pageLink{\r\n    padding-left: 5%;\r\n    padding-top: 2%;\r\n    padding-bottom: 2%;\r\n    font-size: 1rem;\r\n    overflow-wrap: break-word;\r\n}\r\n\r\n.tabLink{\r\n    padding-left: 3%;\r\n    font-size: 1.5rem;\r\n    color: black;\r\n    overflow-wrap: break-word;\r\n}\r\n.binderLink{\r\n    padding-left: 3%;\r\n    font-size: 1.75rem;\r\n    color: #fafafa;\r\n    overflow-wrap: break-word;\r\n}\r\n\r\n.pageList{\r\n    position: relative;\r\n}\r\n\r\n.pageList.whiteFont>a {\r\n    color: white;\r\n}\r\n\r\n.pageList.blackFont>a {\r\n    color: black;\r\n}\r\n\r\n.delete-btn {\r\n    background-color: red;\r\n}\r\n.hideNavbar.btn{\r\n    color: #fafafa;\r\n    background-color: #0288d1;\r\n    margin-bottom: 5%;\r\n    padding-left: 10px;\r\n    padding-right: 6px;\r\n\r\n}\r\n.navbarShow.btn {\r\n    height: 90%;\r\n    width: 0.75%;\r\n    padding: 0;\r\n    top: 50%;\r\n    padding-left: 10px;\r\n    padding-right: 6px;\r\n  transform: translateY(-50%);\r\n  background-color: #0288d1;\r\n}\r\n.navbarShow.btn i {\r\n    position: relative;\r\n    left: -13px;\r\n}\r\n.navbarShow.btn{\r\n    position: absolute;\r\n    z-index: 100;\r\n}\r\n\r\n.textLight{\r\n    color: white;\r\n}\r\n\r\n.card-action.modal-nav{\r\n    display: flex;\r\n    justify-content: space-between;\r\n}\r\n\r\n.card-action.modal-nav > button.grey{\r\n    color: black;\r\n}\r\n\r\n.borderDark{\r\n    border-top: ridge 5px #78909c;\r\n}\r\n\r\n.textDark{\r\n    color: black;\r\n    \r\n}\r\n.editMode.btn{\r\n    margin-left: 5%;\r\n}\r\n\r\n.editMode.btn:focus{\r\n    background-color: #d5d5d5;\r\n}\r\n\r\n.editMode.btn:hover{\r\n    background-color: #2bbbad;\r\n}\r\n\r\n.editMode.btn.editing{\r\n    background-color: #2bbbad;\r\n    color: white;\r\n}\r\n\r\n.btn.done-editing{\r\n    padding-left: 5px;\r\n    padding-right: 3px;\r\n}\r\n.navbarShow.btn:hover{\r\n    background-color: #01579b;\r\n}\r\n\r\n.hideNavbar.btn:hover {\r\n    background-color: #01579b;\r\n}\r\n\r\n.edit-mode-btn {\r\n    margin: 1%;\r\n}\r\n\r\ninput#edit_input_binder{\r\n    font-size: 1.75rem;\r\n    color: #fafafa;\r\n    margin-left: 2%;\r\n    \r\n}\r\n\r\ninput#edit_input_page::selection{\r\n    background-color: #fafafa;\r\n    color: black;\r\n    font-weight: 500;\r\n}\r\n\r\ninput#edit_input_tab{\r\n    padding-left: 3%;\r\n    font-size: 1.5rem;\r\n    color: black;\r\n}\r\n\r\ninput#edit_input_page{\r\n    padding-left: 5%;\r\n    font-size: 1rem;\r\n    color: #fafafa;\r\n    \r\n}\r\n\r\n.binder-container {\r\n    margin-top: 0;\r\n    height: 80vh;\r\n    overflow-y: scroll;\r\n}\r\n\r\n\r\n/* --------------------- HEADER AND FOOTER ---------------------*/\r\n\r\nheader {\r\n    margin: 2% 0 2% 0;\r\n    width: 15.6vw;\r\n}\r\n\r\nheader > h1 {\r\n    margin-left: 2px;\r\n    font-size: 2vw;\r\n    display: inline;\r\n    font-weight: 800;\r\n    letter-spacing: 3.5px;\r\n}\r\n\r\n.dashFlex {\r\n    color: #0288d1;\r\n    font-style: italic;\r\n}\r\n\r\n.logoImage {\r\n    width: 1.8vw;\r\n    margin-right: 1%;\r\n}\r\n\r\nfooter {\r\n    width: 100%;\r\n    z-index: 2;\r\n    position: relative;\r\n    bottom: 1.5vh;\r\n    background-color: #eceff1;\r\n}\r\n\r\n.startTour.btn, .logoutBtn.btn {\r\n    width: 40%;\r\n    height: 35px;\r\n    font-size: 90%;\r\n    background-color: #0288d1;;\r\n    color: #fafafa;\r\n    padding: 0 4%;\r\n    margin: 3% 4% 0 4%;\r\n    font-weight: 500;\r\n}\r\n\r\n.startTour.btn:hover, .logoutBtn.btn:hover {\r\n    background-color: #01579b;\r\n}\r\n\r\n@media (max-width: 1280px){\r\n    .binder-edit-btn{\r\n\r\n        right: 22%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 24%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 27%;\r\n    }\r\n\r\n    .binderTitle{\r\n        padding-bottom: 10%;\r\n    }\r\n\r\n    .tabLink{\r\n        padding-bottom: 10%;\r\n    }\r\n\r\n    .pageLink{\r\n        padding-bottom: 15%;\r\n    }\r\n}\r\n\r\n@media (max-width: 767px){\r\n    .hideNavbar.btn, .navbarShow.btn {\r\n        display: none;\r\n    }\r\n    .binder-container {\r\n        height: 73vh;\r\n    }\r\n    .navbar.s2, header{\r\n        width: 100%;\r\n    }\r\n    .visibleHover, .hiddenHover{\r\n        visibility: visible;\r\n        opacity: .8;\r\n    }\r\n    header > h1 {\r\n        font-size: 3em;\r\n    }\r\n    .logoImage {\r\n        width: 8%;\r\n        margin-left: 2%;\r\n    }\r\n    header{\r\n        height: 8vh;\r\n    }\r\n    footer{\r\n        /* padding-bottom: 2%; */\r\n        height: 8vh;\r\n    }\r\n    .startTour.btn, .logoutBtn.btn {\r\n        font-size: 1em;\r\n        margin: 2% 4%;\r\n    }\r\n\r\n    .lfzLogo{\r\n        width: 10%;\r\n        left: 85%;\r\n        top: 1.5%;\r\n\r\n    }\r\n    .modal-content.modal-nav{\r\n        position: absolute;\r\n        width: 90%;\r\n        left: 5%;\r\n    }\r\n\r\n    .binderTitle{\r\n        padding-bottom: 2%;\r\n    }\r\n\r\n    .tabLink{\r\n        padding-bottom: 2%;\r\n    }\r\n    .pageLink{\r\n        padding-bottom: 12%;\r\n    }\r\n    .pageBody{\r\n        word-break: break-word;\r\n        padding: 1% 0%;\r\n    }\r\n\r\n    .page-edit-btn, .page-delete-btn{\r\n        bottom: 0%;\r\n    }\r\n\r\n    .binder-edit-btn{\r\n        right: 8%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 10%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 11%;\r\n    }\r\n\r\n}\r\n\r\n@media screen and (max-width: 767px) and (orientation:landscape){\r\n    .binder-container{\r\n        height: 50vh;\r\n        margin-top: 3%;\r\n    }\r\n    footer{\r\n        height: 10%;   \r\n    }\r\n\r\n    .lfzLogo{\r\n        width: 7%;\r\n        padding-top: 1%;\r\n    }\r\n\r\n    .logoImage{\r\n        width: 5%;\r\n    }\r\n\r\n    .pageLink{\r\n        padding-bottom: 3%;\r\n    }\r\n\r\n    .binder-edit-btn{\r\n        right: 9%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 11%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 12%;\r\n    }\r\n\r\n    .pageBody{\r\n        padding: 0;\r\n        padding-bottom: 2%;\r\n    }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n    /* footer {\r\n        height: 70px;\r\n    } */\r\n\r\n    .pageLink{\r\n        padding-bottom: 15%;\r\n    }\r\n    .startTour.btn, .logoutBtn.btn {\r\n        margin: 3% 4% 0 4%;\r\n        \r\n    }\r\n\r\n    .binder-edit-btn{\r\n        right: 15%;\r\n    }\r\n    .tab-edit-btn{\r\n        right: 17%;\r\n    }\r\n    .page-edit-btn{\r\n        right: 18%;\r\n    }\r\n}\r\n\r\n/*--------------- reactour ---------------*/\r\n\r\n.dIYoXw {\r\n    background-color: white;\r\n    height: 0;\r\n}\r\n\r\n.bIMCVx:focus {\r\n    background-color: white;\r\n}", ""]);
 
 // exports
 
@@ -117466,7 +117486,7 @@ exports = module.exports = __webpack_require__(40)(undefined);
 
 
 // module
-exports.push([module.i, ".main {\r\n  color: #000;\r\n  font-family: Arial, Helvetica, sans-serif;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0 auto;\r\n}\r\n.opacity {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  /*height: 100%;*/\r\n  background-color: #000;\r\n  display: block;\r\n  z-index: 2;\r\n  opacity: 0.6;\r\n}\r\n.search-button-input {\r\n  padding-top: 1vh;\r\n}\r\n\r\n.vid-container {\r\n  z-index: 1;\r\n}\r\n.video-wrapper#video-wrapper {\r\n  height: 100%;\r\n}\r\n.video-container#video-container {\r\n  text-align: center;\r\n  height: 90%;\r\n  padding-bottom: 0;\r\n  position: relative;\r\n  top: -3vh;\r\n  -moz-box-sizing: border-box;\r\n  box-sizing: border-box;\r\n  -webkit-box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2),\r\n    0 6px 20px 5px rgba(0, 0, 0, 0.19);\r\n  box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2),\r\n    0 6px 20px 5px rgba(0, 0, 0, 0.19);\r\n}\r\n\r\n.video-container#video-container .row form {\r\n  width: 80%;\r\n  display: inline-block;\r\n}\r\n.video-items {\r\n  list-style-type: none;\r\n  position: relative;\r\n  top: 1vh;\r\n  font-weight: bold;\r\n}\r\n.video-description {\r\n  font-style: italic;\r\n}\r\n.youtube-search-buttons {\r\n  position: relative;\r\n  top: 3vh;\r\n}\r\nbutton.close {\r\n  color: #fff;\r\n  position: relative;\r\n  top: -3.5vh;\r\n  left: 6vh;\r\n}\r\n.results-container {\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 3;\r\n  overflow: auto;\r\n  transition: 0.4s;\r\n}\r\n.results-container li,\r\n.results-container button {\r\n  display: inline-block;\r\n}\r\n.results-container.sidebar {\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  background-color: rgba(255, 255, 255, 0.97);\r\n  width: 100%;\r\n  border-left: 1px solid #e4e4e4;\r\n  z-index: 5000;\r\n}\r\n.row.results-input-container {\r\n  margin-left: 0;\r\n  margin-right: 0;\r\n}\r\n.result-item.collection-item,\r\n.list-item-wrapper {\r\n  background-color: transparent;\r\n}\r\n#search {\r\n  position: absolute;\r\n  color: #fff;\r\n  right: 20px;\r\n  top: 15px;\r\n}\r\n.video-parent-panel {\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: #d5d5d5;\r\n}\r\n.video-embed-wrapper {\r\n  height: 100%;\r\n  text-align: center;\r\n}\r\n\r\n.video-container iframe {\r\n  position: relative;\r\n  height: 100%;\r\n  display: inline-block;\r\n}\r\n.video-iframe {\r\n  display: inline-block;\r\n  position: relative;\r\n  top: 1vh;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  z-index: 1;\r\n  border: none;\r\n}\r\n.video-btn i {\r\n  margin: 0 -1px;\r\n  width: 45px;\r\n}\r\n\r\n#query {\r\n  padding-left: 8px;\r\n}\r\n.list-item-wrapper {\r\n  padding: 10px 5px;\r\n}\r\n.results-btn {\r\n  padding: 0 1vmin;\r\n}\r\n.collection {\r\n  border: none;\r\n}\r\n.vid-left-arrow,\r\n.vid-right-arrow {\r\n  background-color: #0288d1;\r\n}\r\n.iframe-wrapper {\r\n  height: 100%;\r\n  position: relative;\r\n  top: -4vh;\r\n}\r\n.row {\r\n  margin-bottom: 0;\r\n}\r\n.btn-wrapper {\r\n  white-space: nowrap;\r\n}\r\n.btn-wrapper button {\r\n  padding: 0;\r\n  width: 45px;\r\n}\r\n.slide-out-input {\r\n  transition: 0.2s;\r\n  background-color: #fff;\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n  z-index: 30;\r\n  position: relative;\r\n}\r\n.arrow-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  right: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n.playlist-logo-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  left: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n\r\n.arrow-container-slides .material-icons {\r\n  margin-right: 0;\r\n}\r\n.btn-success,\r\n.btn-primary {\r\n  margin: 0.2vmin;\r\n  position: relative;\r\n  top: 1vh;\r\n}\r\n\r\n#youtube-play {\r\n  padding: 0px 5px;\r\n  position: relative;\r\n  right: 1vw;\r\n}\r\n.red-text {\r\n  color: red;\r\n}\r\n.Pane.horizontal.Pane2 {\r\n  height: 325px;\r\n}\r\n.video-container iframe,\r\n.slides-iframe {\r\n  width: 93%;\r\n  top: -8vh;\r\n}\r\n#video-iframe {\r\n  top: 0vh;\r\n  /* height: 90% */\r\n}\r\n#video-container {\r\n  height: 90%;\r\n  top: -3vh;\r\n}\r\n.list-item-wrap-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-left: 0;\r\n}\r\n.list-item-wrap-container {\r\n  padding: 10px 0;\r\n}\r\n.list-item-wrap-container img {\r\n  max-width: 35%;\r\n}\r\n.list-item-wrap-container button i {\r\n  margin-right: auto;\r\n}\r\n.list-item-wrap-container .btn-small {\r\n  padding: 0 0.1em;\r\n}\r\n.btn-small {\r\n  padding: 0 0.8rem;\r\n}\r\n\r\n.playlist-play {\r\n  background-color: #0288d1;\r\n}\r\n.playlist-delete {\r\n  background-color: #d32f2f;\r\n}\r\n.list-item-wrapper {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.col.s3 {\r\n  margin-left: 0;\r\n}\r\n#search-input-container {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.video-description {\r\n  display: none;\r\n}\r\n.video-playlist {\r\n  margin: 0;\r\n}\r\n.video-playlist-panel {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: #d5d5d5;\r\n  border: 1px solid #000;\r\n  position: absolute;\r\n  z-index: 3500;\r\n  transition: 0.4s;\r\n  overflow-y: auto;\r\n  overflow-x: hidden;\r\n}\r\n.no-videos {\r\n  position: relative;\r\n  top: 27%;\r\n  color: #5d5d5d;\r\n  font-weight: bold;\r\n  text-shadow: 0.3px 0.3px #5d5d5d;\r\n}\r\n.close-playlist {\r\n  position: absolute;\r\n  right: 4px;\r\n  top: 4px;\r\n  z-index: 200;\r\n}\r\n.video-playlist-title {\r\n  margin: 0;\r\n  position: relative;\r\n  top: 10px;\r\n  left: 10px;\r\n}\r\n.video-playlist-input::placeholder {\r\n  color: #000;\r\n}\r\n.playlist-logo-container i {\r\n  margin-right: 0;\r\n  color: rgb(2, 136, 209);\r\n  transition: 0.2s;\r\n  font-size: 2.1em;\r\n}\r\n.playlist-logo-container i:hover {\r\n  color: #0073b2;\r\n}\r\n.close-playlist-icon:hover {\r\n  cursor: pointer;\r\n}\r\n.playlist-play:hover {\r\n  background-color: #0073b2;\r\n}\r\n.playlist-delete:hover {\r\n  background-color: #b71c1c;\r\n}\r\n.playlist-delete:focus {\r\n  background-color: #d32f2f;\r\n}\r\n.vid-right-arrow:hover,\r\n.vid-left-arrow:hover {\r\n  background-color: #0288d1;\r\n}\r\n.video-btn:hover {\r\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n}\r\n.input-field {\r\n  position: relative;\r\n  top: 1vh;\r\n}\r\n@media screen and (max-width: 375px) and (orientation: portrait) {\r\n  .video-container iframe {\r\n    width: 100%;\r\n    height: 85vh;\r\n  }\r\n  .video-container#video-container {\r\n    height: 95%;\r\n  }\r\n  .iframe-wrapper {\r\n    height: 92vh;\r\n    top: -9vh;\r\n  }\r\n  .arrow-container {\r\n    top: 9vh;\r\n  }\r\n  .youtube-search-buttons {\r\n    position: relative;\r\n  }\r\n  .input-field {\r\n    top: 3vh;\r\n  }\r\n  .youtube-search-buttons {\r\n    top: 6vh;\r\n  }\r\n  .playlist-logo-container {\r\n    top: 9vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 17vh;\r\n    top: 4vh;\r\n  }\r\n}\r\n\r\n@media screen and (max-width: 740px) and (orientation: landscape) {\r\n  .video-container#video-container {\r\n    text-align: center;\r\n    height: 81%;\r\n    padding-bottom: 0;\r\n    position: relative;\r\n    top: -13vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 25vh;\r\n    top: -3vh;\r\n  }\r\n  .video-container iframe {\r\n    width: 100%;\r\n  }\r\n}\r\n", ""]);
+exports.push([module.i, ".main {\r\n  color: #000;\r\n  font-family: Arial, Helvetica, sans-serif;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0 auto;\r\n}\r\n.opacity {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  /*height: 100%;*/\r\n  background-color: #000;\r\n  display: block;\r\n  z-index: 2;\r\n  opacity: 0.6;\r\n}\r\n.search-button-input {\r\n  padding-top: 1vh;\r\n}\r\n\r\n.vid-container {\r\n  z-index: 1;\r\n}\r\n.video-wrapper#video-wrapper {\r\n  height: 100%;\r\n}\r\n.video-container#video-container {\r\n  overflow: hidden;\r\n  text-align: center;\r\n  height: 100%;\r\n  padding-bottom: 0;\r\n  position: relative;\r\n  top: -3vh;\r\n  -moz-box-sizing: border-box;\r\n  box-sizing: border-box;\r\n  -webkit-box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2),\r\n    0 6px 20px 5px rgba(0, 0, 0, 0.19);\r\n  box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2),\r\n    0 6px 20px 5px rgba(0, 0, 0, 0.19);\r\n}\r\n\r\n.video-container#video-container .row form {\r\n  width: 80%;\r\n  display: inline-block;\r\n}\r\n.video-items {\r\n  list-style-type: none;\r\n  position: relative;\r\n  top: 1vh;\r\n  font-weight: bold;\r\n}\r\n.video-description {\r\n  font-style: italic;\r\n}\r\n.youtube-search-buttons {\r\n  position: relative;\r\n  top: 3vh;\r\n}\r\nbutton.close {\r\n  color: #fff;\r\n  position: relative;\r\n  top: -3.5vh;\r\n  left: 6vh;\r\n}\r\n.results-container {\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 3;\r\n  overflow: auto;\r\n  transition: 0.4s;\r\n}\r\n.results-container li,\r\n.results-container button {\r\n  display: inline-block;\r\n}\r\n.results-container.sidebar {\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  background-color: rgba(255, 255, 255, 0.97);\r\n  width: 100%;\r\n  border-left: 1px solid #e4e4e4;\r\n  z-index: 5000;\r\n}\r\n.row.results-input-container {\r\n  margin-left: 0;\r\n  margin-right: 0;\r\n}\r\n.result-item.collection-item,\r\n.list-item-wrapper {\r\n  background-color: transparent;\r\n}\r\n#search {\r\n  position: absolute;\r\n  color: #fff;\r\n  right: 20px;\r\n  top: 15px;\r\n}\r\n.video-parent-panel {\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: #d5d5d5;\r\n}\r\n.video-embed-wrapper {\r\n  height: 100%;\r\n  text-align: center;\r\n}\r\n\r\n.video-container iframe {\r\n  position: relative;\r\n  height: 100%;\r\n  display: inline-block;\r\n}\r\n.video-iframe {\r\n  display: inline-block;\r\n  position: relative;\r\n  top: 1vh;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  border: none;\r\n}\r\n.video-btn i {\r\n  margin: 0 -1px;\r\n  width: 45px;\r\n}\r\n\r\n#query {\r\n  padding-left: 8px;\r\n}\r\n.list-item-wrapper {\r\n  padding: 10px 5px;\r\n}\r\n.results-btn {\r\n  padding: 0 1vmin;\r\n}\r\n.collection {\r\n  border: none;\r\n}\r\n.vid-left-arrow,\r\n.vid-right-arrow {\r\n  background-color: #0288d1;\r\n}\r\n.iframe-wrapper {\r\n  height: 100%;\r\n  position: relative;\r\n  top: -4vh;\r\n}\r\n.row {\r\n  margin-bottom: 0;\r\n}\r\n.btn-wrapper {\r\n  white-space: nowrap;\r\n}\r\n.btn-wrapper button {\r\n  padding: 0;\r\n  width: 45px;\r\n}\r\n.slide-out-input {\r\n  transition: 0.2s;\r\n  background-color: #fff;\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\r\n  z-index: 30;\r\n  position: relative;\r\n}\r\n.arrow-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  right: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n.playlist-logo-container {\r\n  position: absolute;\r\n  top: 4vh;\r\n  left: 4px;\r\n  z-index: 3000;\r\n  cursor: pointer;\r\n}\r\n\r\n.arrow-container-slides .material-icons {\r\n  margin-right: 0;\r\n}\r\n.btn-success,\r\n.btn-primary {\r\n  margin: 0.2vmin;\r\n  position: relative;\r\n  top: 1vh;\r\n}\r\n\r\n#youtube-play {\r\n  padding: 0px 5px;\r\n  position: relative;\r\n  right: 1vw;\r\n}\r\n.red-text {\r\n  color: red;\r\n}\r\n.Pane.horizontal.Pane2 {\r\n  height: 325px;\r\n}\r\n.video-container iframe {\r\n  height: 90%;\r\n  width: 93%;\r\n}\r\n.slides-iframe {\r\n  width: 93%;\r\n  top: -8vh;\r\n}\r\n#video-iframe {\r\n  top: 3px;\r\n}\r\n#video-container {\r\n  height: 90%;\r\n  top: -3vh;\r\n}\r\n.list-item-wrap-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-left: 0;\r\n}\r\n.list-item-wrap-container {\r\n  padding: 10px 0;\r\n}\r\n.list-item-wrap-container img {\r\n  max-width: 35%;\r\n}\r\n.list-item-wrap-container button i {\r\n  margin-right: auto;\r\n}\r\n.list-item-wrap-container .btn-small {\r\n  padding: 0 0.1em;\r\n}\r\n.btn-small {\r\n  padding: 0 0.8rem;\r\n}\r\n\r\n.playlist-play {\r\n  background-color: #0288d1;\r\n}\r\n.playlist-delete {\r\n  background-color: #d32f2f;\r\n}\r\n.list-item-wrapper {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.col.s3 {\r\n  margin-left: 0;\r\n}\r\n#search-input-container {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n.video-description {\r\n  display: none;\r\n}\r\n.video-playlist {\r\n  margin: 0;\r\n}\r\n.video-playlist-panel {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: #d5d5d5;\r\n  border: 1px solid #000;\r\n  position: absolute;\r\n  z-index: 3500;\r\n  transition: 0.4s;\r\n  overflow-y: auto;\r\n  overflow-x: hidden;\r\n}\r\n.no-videos {\r\n  position: relative;\r\n  top: 27%;\r\n  color: #5d5d5d;\r\n  font-weight: bold;\r\n  text-shadow: 0.3px 0.3px #5d5d5d;\r\n}\r\n.close-playlist {\r\n  position: absolute;\r\n  right: 4px;\r\n  top: 4px;\r\n  z-index: 200;\r\n}\r\n.video-playlist-title {\r\n  margin: 0;\r\n  position: relative;\r\n  top: 10px;\r\n  left: 10px;\r\n}\r\n.video-playlist-input::placeholder {\r\n  color: #000;\r\n}\r\n.playlist-logo-container i {\r\n  margin-right: 0;\r\n  color: rgb(2, 136, 209);\r\n  transition: 0.2s;\r\n  font-size: 2.1em;\r\n}\r\n.playlist-logo-container i:hover {\r\n  color: #0073b2;\r\n}\r\n.close-playlist-icon:hover {\r\n  cursor: pointer;\r\n}\r\n.playlist-play:hover {\r\n  background-color: #0073b2;\r\n}\r\n.playlist-delete:hover {\r\n  background-color: #b71c1c;\r\n}\r\n.playlist-delete:focus {\r\n  background-color: #d32f2f;\r\n}\r\n.vid-right-arrow:hover,\r\n.vid-left-arrow:hover {\r\n  background-color: #0288d1;\r\n}\r\n.video-btn:hover {\r\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.55);\r\n}\r\n.input-field {\r\n  position: relative;\r\n  top: 1vh;\r\n}\r\n@media screen and (max-width: 375px) and (orientation: portrait) {\r\n  .video-container iframe {\r\n    width: 100%;\r\n    height: 85vh;\r\n  }\r\n  .video-container#video-container {\r\n    height: 95%;\r\n  }\r\n  .iframe-wrapper {\r\n    height: 92vh;\r\n    top: -9vh;\r\n  }\r\n  .arrow-container {\r\n    top: 9vh;\r\n  }\r\n  .youtube-search-buttons {\r\n    position: relative;\r\n  }\r\n  .input-field {\r\n    top: 3vh;\r\n  }\r\n  .youtube-search-buttons {\r\n    top: 6vh;\r\n  }\r\n  .playlist-logo-container {\r\n    top: 9vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 17vh;\r\n    top: 4vh;\r\n  }\r\n}\r\n\r\n@media screen and (max-width: 740px) and (orientation: landscape) {\r\n  .video-container#video-container {\r\n    text-align: center;\r\n    height: 81%;\r\n    padding-bottom: 0;\r\n    position: relative;\r\n    top: -13vh;\r\n  }\r\n  .video-slide-out-input {\r\n    height: 25vh;\r\n    top: -3vh;\r\n  }\r\n  .video-container iframe {\r\n    width: 100%;\r\n  }\r\n}\r\n", ""]);
 
 // exports
 
@@ -117579,23 +117599,30 @@ exports.default = function () {
   var action = arguments[1];
 
   switch (action.type) {
-    case _types2.default.GET_VIDEO_RESULTS:
-      return _extends({}, state, { results: action.payload });
     case _types2.default.ADD_VIDEO_TO_DATABASE:
       return _extends({}, state, {
         addedVideo: action.payload.updatedPlaylist
       });
-    case _types2.default.GET_RESULT_STYLES:
+    case _types2.default.DELETE_FROM_PLAYLIST:
       return _extends({}, state, {
-        resultsStyles: action.payload,
-        toggleResults: !state.toggleResults
+        addedVideo: action.payload
       });
-    case _types2.default.GRAB_VIDEO_URL:
+    case _types2.default.GET_VIDEO_RESULTS:
+      return _extends({}, state, { results: action.payload });
+    case _types2.default.SET_VIDEO_PLAYLIST:
+      return _extends({}, state, {
+        addedVideo: action.payload
+      });
+    case _types2.default.GET_VIDEO_PLAYLIST:
+      return _extends({}, state, {
+        addedVideo: action.payload.data.video
+      });
+    case _types2.default.HANDLE_YOUTUBE_URL:
+      return _extends({}, state, {
+        videoId: action.payload
+      });
+    case _types2.default.SET_VIDEO_URL:
       return _extends({}, state, { videoLink: action.payload });
-    case _types2.default.TOGGLE_RESULTS:
-      return _extends({}, state, { toggleResults: !state.toggleResults });
-    case _types2.default.TOGGLE_MODAL:
-      return _extends({}, state, { addVideoModal: { display: action.payload } });
     case _types2.default.PLAY_PASTED_VIDEO_LINK:
       return _extends({}, state, { videoLink: action.payload });
     case _types2.default.PLAY_VIDEO:
@@ -117603,10 +117630,21 @@ exports.default = function () {
         videoLink: action.payload.videoLink,
         resultsStyles: { transform: 'translateX(-100%)' }
       });
-    case _types2.default.NO_VIDEO_LINK:
-      return _extends({}, state);
-    case _types2.default.SET_VIDEO_URL:
-      return _extends({}, state, { videoLink: action.payload });
+    case _types2.default.GET_SAVED_VIDEO_TITLE:
+      return _extends({}, state, {
+        savedVideoTitle: action.payload
+      });
+
+    case _types2.default.GET_SAVED_VIDEO_IMAGE:
+      return _extends({}, state, {
+        savedVideoImage: action.payload
+      });
+    case _types2.default.TOGGLE_PLAYLIST:
+      return _extends({}, state, {
+        playlistStyles: {
+          transform: action.payload
+        }
+      });
     case _types2.default.TOGGLE_VIDEO_SLIDE_OUT:
       return _extends({}, state, {
         videoLinkSlideOut: action.payload.slideOutStyles,
@@ -117616,32 +117654,17 @@ exports.default = function () {
       return _extends({}, state, {
         videoLinkSlideOut: action.payload.slideOutStyles.style
       });
-    case _types2.default.GET_SAVED_VIDEO_TITLE:
+    case _types2.default.GET_RESULT_STYLES:
       return _extends({}, state, {
-        savedVideoTitle: action.payload
+        resultsStyles: action.payload,
+        toggleResults: !state.toggleResults
       });
-    case _types2.default.DELETE_FROM_PLAYLIST:
-      return _extends({}, state, {
-        addedVideo: action.payload
-      });
-    case _types2.default.GET_SAVED_VIDEO_IMAGE:
-      return _extends({}, state, {
-        savedVideoImage: action.payload
-      });
-    case _types2.default.SET_VIDEO_PLAYLIST:
-      return _extends({}, state, {
-        addedVideo: action.payload
-      });
-    case _types2.default.GET_VIDEO_PLAYLIST:
-      return _extends({}, state, {
-        addedVideo: action.payload.data.video
-      });
-    case _types2.default.TOGGLE_PLAYLIST:
-      return _extends({}, state, {
-        playlistStyles: {
-          transform: action.payload
-        }
-      });
+    case _types2.default.TOGGLE_RESULTS:
+      return _extends({}, state, { toggleResults: !state.toggleResults });
+    case _types2.default.GRAB_VIDEO_URL:
+      return _extends({}, state, { videoLink: action.payload });
+    case _types2.default.NO_VIDEO_LINK:
+      return _extends({}, state);
     default:
       return state;
   }
@@ -117654,25 +117677,24 @@ var _types2 = _interopRequireDefault(_types);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var DEFAULT_STATE = {
+  videoLink: '',
+  videoId: '',
   results: [],
   addedVideo: [],
   savedVideoTitle: '',
   savedVideoImage: '',
   toggleResults: true,
-  addVideoModal: {
-    display: 'none'
-  },
+  toggleSlideOut: true,
   resultsStyles: {
     transform: 'translateX(-100%)'
   },
   playlistStyles: {
     transform: 'translateY(-100%)'
   },
-  videoLink: '',
+
   videoLinkSlideOut: {
     transform: 'translateY(-119px)'
-  },
-  toggleSlideOut: true
+  }
 };
 
 /***/ }),
@@ -117875,6 +117897,9 @@ exports.default = function () {
         case _types2.default.DELETE_TAB:
         case _types2.default.ADD_PAGE:
         case _types2.default.DELETE_PAGE:
+        case _types2.default.EDIT_BINDER:
+        case _types2.default.EDIT_TAB:
+        case _types2.default.EDIT_PAGE:
             return _extends({}, state, { pull_from_db: true });
         case _types2.default.UPDATE_BINDER_ARRAY:
             return _extends({}, state, { pull_from_db: false, sent_to_db: true });
