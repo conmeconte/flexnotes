@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  setTopLeftHeight,
-  setTopLeftWidth,
-  updateBinderArray
-} from '../actions';
+import * as actions from '../actions';
 import SplitPane from 'react-split-pane';
 import _ from 'lodash';
 import Video from './video';
@@ -31,7 +27,9 @@ class ThreePanel extends Component {
       document
         .querySelector('.Resizer.horizontal')
         .addEventListener('mousedown', this.resizeBlocker);
-      document.querySelector('body').addEventListener('mouseup', this.resizeBlockerDisplayNone);
+      document
+        .querySelector('body')
+        .addEventListener('mouseup', this.resizeBlockerDisplayNone);
     }
   }
 
@@ -52,41 +50,12 @@ class ThreePanel extends Component {
     document
       .querySelector('.Resizer.horizontal')
       .removeEventListener('mousedown', this.resizeBlocker);
-    document.querySelector('body').removeEventListener('mouseup', this.resizeBlockerDisplayNone);
+    document
+      .querySelector('body')
+      .removeEventListener('mouseup', this.resizeBlockerDisplayNone);
   }
   render() {
     const { width } = this.state;
-    // const loTLHsave = _.debounce((size) => {
-    //     this.logTopLeftHeight(size);
-    // }, 300);
-
-    // const loTLWsave = _.debounce((size) => {
-    //     this.logTopLeftWidth(size);
-    // }, 300);
-
-    // let { tab_arr_obj } = this.props.binderObj;
-    // let { interface_obj } = this.props;
-
-    // if (tab_arr_obj) {
-    //     let tabArrLength = tab_arr_obj.length;
-    //     let tabIndex = null;
-    //     let pageIndex = null;
-    //     for (let i = 0; i < tabArrLength; i++) {
-    //         if (interface_obj.tab_id === tab_arr_obj[i]._id) {
-    //             tabIndex = i;
-    //             break;
-    //         }
-    //     }
-    //     const { page_arr_obj } = tab_arr_obj[tabIndex];
-    //     for (let i = 0; i < page_arr_obj.length; i++) {
-    //         // for (let i = 0; i < tabArrLength; i++) {
-    //         if (interface_obj.page_id === page_arr_obj[i]._id) {
-    //             pageIndex = i;
-    //             breakd
-    //         }
-    //     }
-    // if (typeof page_arr_obj[pageIndex].panel_dimensions === 'undefined') {
-
     return (
       <SplitPane
         className={`width-w-nav ${this.props.interface_obj.navbar_min
@@ -115,21 +84,6 @@ class ThreePanel extends Component {
         </div>
       </SplitPane>
     );
-    // }
-    //     else {
-    //         return (
-    //             <SplitPane onChange={loTLHsave} className="width-w-nav" split="vertical" minSize={200} maxSize={-200} defaultSize={page_arr_obj[pageIndex].panel_dimensions.top_left_panel_height}>
-    //                 <SplitPane onChange={loTLWsave} split="horizontal" minSize={200} maxSize={-200} defaultSize={page_arr_obj[pageIndex].panel_dimensions.top_left_panel_width}>
-    //                     <div className="video-parent-panel"><Video /></div>
-    //                     <div className="slides-container"><Slides /></div>
-    //                 </SplitPane>
-    //                 <div className="notes-parent-panel"><Notes /></div>
-    //             </SplitPane>
-    //         )
-    //     }
-    // } else {
-    //     return <h2>Loading...</h2>
-    // }
   }
 }
 
@@ -140,8 +94,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {
-  setTopLeftHeight,
-  setTopLeftWidth,
-  updateBinderArray
-})(ThreePanel);
+export default connect(mapStateToProps, actions)(ThreePanel);
