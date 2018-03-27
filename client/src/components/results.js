@@ -29,12 +29,11 @@ class Results extends Component {
         }
       }
     }
-    this.props.slideOutVideoSearch(false);
-    this.props.getResultStyles(false);
-    this.props.playPastedLinkVideo(this.props.videoId);
     this.setState({
       alreadyExists: ''
     });
+    this.props.slideOutVideoSearch(false);
+    this.props.getResultStyles(false);
     this.props.playVideo(videoId);
     this.props
       .addVideoToDatabase(videoId, videoTitle, videoImg, interfaceObj)

@@ -56,8 +56,8 @@ class VideoPlaylist extends Component {
             this.setState({
               alreadyExists: ''
             });
-            this.props.slideOutVideoSearch(false);
           }
+          this.props.slideOutVideoSearch(false);
           this.props
             .addVideoToDatabase(
               this.props.videoId,
