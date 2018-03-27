@@ -7,7 +7,8 @@ class VideoPlaylist extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      deletedVideoList: {}
+      deletedVideoList: {},
+      alreadyExists: ''
     };
     this.deleteVideo = this.deleteVideo.bind(this);
     this.incrementDeleteCounter = this.incrementDeleteCounter.bind(this);
@@ -31,10 +32,32 @@ class VideoPlaylist extends Component {
     );
   }
   handleVideoInput(values) {
+    if (values['youtube-url'] === undefined) {
+      return;
+    }
     this.props.handleYouTubeUrl(values).then(() => {
-      this.props.playPastedLinkVideo(this.props.videoId);
       this.props.getSavedVideoImg(this.props.videoId).then(() => {
         this.props.getSavedVideoTitle(this.props.videoId).then(() => {
+          for (let i = 0; i < this.props.currentPlaylistItems.length; i++) {
+            if (
+              this.props.videoId === this.props.currentPlaylistItems[i].videoId
+            ) {
+              this.setState({
+                alreadyExists: 'Sorry this video already exists.'
+              });
+              setTimeout(() => {
+                this.setState({
+                  alreadyExists: ''
+                });
+              }, 2500);
+              return;
+            }
+            this.props.playPastedLinkVideo(this.props.videoId);
+            this.setState({
+              alreadyExists: ''
+            });
+          }
+          this.props.slideOutVideoSearch(false);
           this.props
             .addVideoToDatabase(
               this.props.videoId,
@@ -59,8 +82,6 @@ class VideoPlaylist extends Component {
       });
     });
     this.props.reset();
-    this.props.togglePlaylist('translateY(0%)');
-    this.props.slideOutVideoSearch(false);
   }
   incrementDeleteCounter(videoId) {
     const { deletedVideoList } = this.state;
@@ -106,8 +127,12 @@ class VideoPlaylist extends Component {
   }
   render() {
     const { playlistStyles } = this.props;
+    const { alreadyExists } = this.state;
     let createPlaylist = '';
-    if (this.props.currentPlaylistItems.length !== 0) {
+    if (
+      this.props.currentPlaylistItems !== undefined &&
+      this.props.currentPlaylistItems.length !== 0
+    ) {
       createPlaylist = this.props.currentPlaylistItems.map((item, index) => {
         if (!item.hasOwnProperty('videoId')) {
           return;
@@ -172,7 +197,11 @@ class VideoPlaylist extends Component {
               </div>
             </div>
           </form>
-          {this.props.currentPlaylistItems.length >= 1 &&
+          <div className="red-text">
+            {alreadyExists}
+          </div>
+          {this.props.currentPlaylistItems &&
+          this.props.currentPlaylistItems.length >= 1 &&
           this.props.currentPlaylistItems[0].videoId !== undefined
             ? createPlaylist
             : <div className="no-videos">

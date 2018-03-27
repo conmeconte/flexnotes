@@ -198,8 +198,14 @@ button.close {
   position: relative;
   right: 1vw;
 }
-.red-text {
+.red-text,
+.vid-container-red-text {
   color: red;
+  position: relative;
+  left: 1vw;
+}
+.vid-container-red-text {
+  clear: both;
 }
 .Pane.horizontal.Pane2 {
   height: 325px;
@@ -327,6 +333,7 @@ button.close {
 .input-field {
   position: relative;
   top: 1vh;
+  height: 8vh;
 }
 @media screen and (max-width: 375px) and (orientation: portrait) {
   .video-container iframe {
