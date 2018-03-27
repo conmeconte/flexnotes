@@ -6,7 +6,6 @@ import _ from 'lodash';
 import Video from './video';
 import Notes from './notes';
 import Slides from './slides';
-import Modal from './modal';
 
 class ThreePanel extends Component {
   constructor(props) {

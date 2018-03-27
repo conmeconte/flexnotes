@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import PanelNum from './panel_num';
 import ThreePanel from './panel_three';
 import axios from 'axios';
 import { connect } from 'react-redux';
