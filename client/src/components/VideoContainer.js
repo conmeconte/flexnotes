@@ -7,6 +7,9 @@ class VideoContainer extends Component {
   constructor(props) {
     super(props);
     this.currentVideoList = this.props.currentPlaylistItems;
+    this.state = {
+      alreadyExists: ''
+    };
   }
 
   renderInput({ input, type, meta: { error, touched } }) {
@@ -28,10 +31,32 @@ class VideoContainer extends Component {
     );
   }
   handleVideoInput(values) {
+    if (values['youtube-url'] === undefined) {
+      return;
+    }
     this.props.handleYouTubeUrl(values).then(() => {
-      this.props.playPastedLinkVideo(this.props.videoId);
       this.props.getSavedVideoImg(this.props.videoId).then(() => {
         this.props.getSavedVideoTitle(this.props.videoId).then(() => {
+          for (let i = 0; i < this.props.currentPlaylistItems.length; i++) {
+            if (
+              this.props.videoId === this.props.currentPlaylistItems[i].videoId
+            ) {
+              this.setState({
+                alreadyExists: 'Sorry this video already exists.'
+              });
+              setTimeout(() => {
+                this.setState({
+                  alreadyExists: ''
+                });
+              }, 2500);
+              return;
+            }
+            this.props.playPastedLinkVideo(this.props.videoId);
+            this.setState({
+              alreadyExists: ''
+            });
+            this.props.slideOutVideoSearch(false);
+          }
           this.props
             .addVideoToDatabase(
               this.props.videoId,
@@ -57,10 +82,10 @@ class VideoContainer extends Component {
     });
 
     this.props.reset();
-    this.props.slideOutVideoSearch(false);
   }
 
   render() {
+    const { alreadyExists } = this.state;
     return (
       <div className="iframe-wrapper">
         <form
@@ -85,7 +110,11 @@ class VideoContainer extends Component {
               </button>
             </div>
           </div>
+          <div className="vid-container-red-text">
+            {alreadyExists}
+          </div>
         </form>
+
         <div
           onClick={() => {
             this.props.togglePlaylist(this.props.playlistStyles.transform);
@@ -109,7 +138,8 @@ class VideoContainer extends Component {
           className="video-container video-container-safari"
         >
           <div className="resize-blocker" />
-          {this.props.currentPlaylistItems.length >= 1 &&
+          {this.props.currentPlaylistItems !== undefined &&
+          this.props.currentPlaylistItems.length >= 1 &&
           this.props.currentPlaylistItems[0].videoId !== undefined
             ? <iframe
                 allowFullScreen

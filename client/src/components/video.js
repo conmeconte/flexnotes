@@ -205,7 +205,10 @@ class Video extends Component {
             </form>
           </div>
           <div className="row">
-            <Results results={this.props.videoResults} />
+            <Results
+              results={this.props.videoResults}
+              currentPlaylistItems={this.props.playlistItems}
+            />
           </div>
         </div>
         <VideoPlaylist
