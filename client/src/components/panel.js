@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import PanelNum from './panel_num';
+// import PanelNum from './panel_num';
+import ThreePanel from './panel_three';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import {
@@ -20,7 +21,7 @@ class Panel extends Component {
             ? 's12'
             : 's10'}`}
         >
-          <PanelNum num={3} />
+          <ThreePanel />
         </div>
       </div>
     );
