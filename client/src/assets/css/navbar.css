@@ -450,6 +450,66 @@ footer {
     }
 }
 
+@media (min-width: 768px) and (max-width: 800px){
+    .binder-edit-btn{
+        right: 40%;
+    }
+    .tab-edit-btn{
+        right: 42%;
+    }
+    .page-edit-btn{
+        right: 50%;
+    }
+}
+
+@media (min-width: 801px) and (max-width: 1024px){
+    .binder-edit-btn{
+        right: 36%;
+    }
+    .tab-edit-btn{
+        right: 40%;
+    }
+    .page-edit-btn{
+        right: 45%;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1279px){
+    .binder-edit-btn{
+        right: 26%;
+    }
+    .tab-edit-btn{
+        right: 30%;
+    }
+    .page-edit-btn{
+        right: 36%;
+    }
+}
+
+@media (min-width: 1280px) and (max-width: 1440px){
+    .binder-edit-btn{
+        right: 24%;
+    }
+    .tab-edit-btn{
+        right: 28%;
+    }
+    .page-edit-btn{
+        right: 30%;
+    }
+}
+
+@media (min-width: 1441px) and (max-width: 1880px){
+    .binder-edit-btn{
+        right: 22%;
+    }
+    .tab-edit-btn{
+        right: 24%;
+    }
+    .page-edit-btn{
+        right: 25%;
+    }
+}
+
 @media (max-width: 767px){
     .hideNavbar.btn, .navbarShow.btn {
         display: none;
