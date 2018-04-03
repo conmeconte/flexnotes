@@ -11,7 +11,8 @@ class ThreePanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: window.innerWidth
+      width: window.innerWidth,
+      height: window.innerHeight
     };
 
     this.resizeBlocker = this.resizeBlocker.bind(this);
@@ -54,7 +55,13 @@ class ThreePanel extends Component {
       .removeEventListener('mouseup', this.resizeBlockerDisplayNone);
   }
   render() {
-    const { width } = this.state;
+    const { width, height } = this.state;
+    window.onresize = () => {
+      this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    }
     return (
       <SplitPane
         className={`width-w-nav ${this.props.interface_obj.navbar_min
@@ -62,14 +69,14 @@ class ThreePanel extends Component {
           : ''}`}
         split="vertical"
         minSize={300}
-        maxSize={1000}
+        maxSize={width - 425}
         defaultSize={425}
         primary="second"
       >
         <SplitPane
           split="horizontal"
           minSize={50}
-          maxSize={window.innerHeight - 50}
+          maxSize={height - 50}
           defaultSize={450}
         >
           <div className="video-parent-panel">
