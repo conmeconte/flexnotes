@@ -117,6 +117,9 @@
     height: 90vh;
 }
 
+.startTour.btn, .logoutBtn.btn {
+    width: 40%;
+}
 
 .SplitPane.width-w-nav{
     -webkit-box-orient: vertical !important;
@@ -225,6 +228,9 @@
     }
     .btn.sample > a {
         font-size: 0.97rem;
+    }
+    .startTour.btn, .logoutBtn.btn {
+        width: 40%;
     }
     .slides-container {
         height: 95%;

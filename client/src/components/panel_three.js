@@ -64,6 +64,7 @@ class ThreePanel extends Component {
         minSize={300}
         maxSize={1000}
         defaultSize={425}
+        primary="second"
       >
         <SplitPane
           split="horizontal"
