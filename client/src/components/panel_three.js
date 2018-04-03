@@ -69,7 +69,7 @@ class ThreePanel extends Component {
           : ''}`}
         split="vertical"
         minSize={300}
-        maxSize={width - 425}
+        maxSize={width - 500}
         defaultSize={425}
         primary="second"
       >
