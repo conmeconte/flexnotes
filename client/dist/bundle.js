@@ -84829,7 +84829,8 @@ var ThreePanel = function (_Component) {
     var _this = _possibleConstructorReturn(this, (ThreePanel.__proto__ || Object.getPrototypeOf(ThreePanel)).call(this, props));
 
     _this.state = {
-      width: window.innerWidth
+      width: window.innerWidth,
+      height: window.innerHeight
     };
 
     _this.resizeBlocker = _this.resizeBlocker.bind(_this);
@@ -84870,23 +84871,34 @@ var ThreePanel = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var width = this.state.width;
+      var _this2 = this;
 
+      var _state = this.state,
+          width = _state.width,
+          height = _state.height;
+
+      window.onresize = function () {
+        _this2.setState({
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
+      };
       return _react2.default.createElement(
         _reactSplitPane2.default,
         {
           className: 'width-w-nav ' + (this.props.interface_obj.navbar_min ? 'full_width' : ''),
           split: 'vertical',
           minSize: 300,
-          maxSize: 1000,
-          defaultSize: 425
+          maxSize: width - 500,
+          defaultSize: 425,
+          primary: 'second'
         },
         _react2.default.createElement(
           _reactSplitPane2.default,
           {
             split: 'horizontal',
             minSize: 50,
-            maxSize: window.innerHeight - 50,
+            maxSize: height - 50,
             defaultSize: 450
           },
           _react2.default.createElement(
