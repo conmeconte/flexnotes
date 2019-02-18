@@ -94,10 +94,8 @@ class LandingPage extends Component {
             </div>
           </div>
           <div className="email-wrapper">
-            <span>Contact Us: </span>
-            <a href="mailto:info.flexnotes@gmail.com">
-              info.flexnotes@gmail.com
-            </a>
+            <span>Privacy Policy</span><a href="/privacy">Our Privacy Policy</a>
+            <span>Contact Us: </span><a href="mailto:info.flexnotes@gmail.com">info.flexnotes@gmail.com</a>
           </div>
         </div>
       </div>

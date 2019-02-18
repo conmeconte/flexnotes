@@ -9,8 +9,8 @@ const fs            = require('fs'); // file writing for logging errors and logi
 
 
 const app   = express();
-// const PORT  = process.env.PORT || 80;
-const PORT  = process.env.PORT || 9000;
+const PORT  = process.env.PORT || 80;
+// const PORT  = process.env.PORT || 9000;
 
 /* Create connection to Mongo and Load in Auth Strategy */
 /* Mongoose Connection */

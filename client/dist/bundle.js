@@ -84612,6 +84612,16 @@ var LandingPage = function (_Component) {
             _react2.default.createElement(
               'span',
               null,
+              'Privacy Policy'
+            ),
+            _react2.default.createElement(
+              'a',
+              { href: '/privacy' },
+              'Our Privacy Policy'
+            ),
+            _react2.default.createElement(
+              'span',
+              null,
               'Contact Us: '
             ),
             _react2.default.createElement(
