@@ -161,6 +161,7 @@ a.landing-login-text {
 }
 .item-text {
     display: inline-block;
+    color: white;
 }
 .material-icons {
     display: inline-block;
@@ -170,6 +171,8 @@ a.landing-login-text {
     color: #0393d7; 
 }
 .email-wrapper {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     bottom: 0;
     color: #fff;
