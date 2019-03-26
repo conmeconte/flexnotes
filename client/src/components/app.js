@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchUser, fetchSampleUser } from '../actions/index';
 import LandingPage from './landingpage';
 import Dashboard from './dashboard';
+import Privacy from './Privacy';
 import 'normalize.css/normalize.css';
 import 'materialize-css/dist/css/materialize.min.css';
 import '../assets/css/landing-page.css';
@@ -14,6 +15,7 @@ import '../assets/css/panel.css';
 import '../assets/css/slides.css';
 import '../assets/css/video-add-modal.css';
 import '../assets/css/video.css';
+import '../assets/css/privacy.css';
 
 class App extends Component {
   componentWillMount() {
@@ -25,6 +27,7 @@ class App extends Component {
         <Router>
           <div>
             <Route path="/main" component={Dashboard} />
+            <Route path="/privacy" component={Privacy} />
             <Route exact path="/" component={LandingPage} />
           </div>
         </Router>
