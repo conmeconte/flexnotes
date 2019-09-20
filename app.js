@@ -49,6 +49,10 @@ app.use(errorHandler);
 app.use(clientErrorHandler);
 
 /* Start server and listen on PORT */
-app.listen(PORT, ()=>{
+try{
+  app.listen(PORT, ()=>{
     console.log('Server is Running at localhost:' + PORT);
 });
+}catch(err){
+  console.log('Server init error ', err); 
+}
