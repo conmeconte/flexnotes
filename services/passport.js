@@ -92,8 +92,8 @@ passport.use(
         {
             clientID: keys.googleClientID,
             clientSecret: keys.googleClientSecret,
-            callbackURL: 'https://flexnotes.conmeconte.com/auth/google/callback'
-            // callbackURL: '/auth/google/callback'
+            // callbackURL: 'https://flexnotes.conmeconte.com/auth/google/callback'
+            callbackURL: '/auth/google/callback'
 
         },
         async (accessToken, refreshToken, profile, done) => {
