@@ -1,0 +1,7 @@
+steps:
+- name: 'docker/compose:1.24.1'
+  args: ['up', '-d']
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/flexnotes-test', '.' ]
+images:
+- 'gcr.io/$PROJECT_ID/flexnotes-test'
