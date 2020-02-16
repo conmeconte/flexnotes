@@ -22,7 +22,7 @@ services:
   # Setup client container
   #######################
   client:
-    build: ./client
+    build: ../client
     environment: 
       REACT_APP_PORT: ${REACT_APP_PORT}
     expose:
@@ -30,8 +30,8 @@ services:
     ports:
       - ${REACT_APP_PORT}:${REACT_APP_PORT}
     volumes:
-      - ./client/src:/srv/app/client/src
-      - ./client/public:/srv/app/client/public
+      - ../client/src:/srv/app/client/src
+      - ../client/public:/srv/app/client/public
     links:
       - server
     command: npm bundle
