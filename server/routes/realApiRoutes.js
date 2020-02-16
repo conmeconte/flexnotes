@@ -10,15 +10,6 @@ module.exports = app => {
     res.send('Homepage');
   });
 
-  // app.get('/api/sample', requireLogin, async (req, res) => {
-  //   const existingUser = await User.findById(keys.sampleId, function(err) {
-  //     if (err) {
-  //       return res.send('error pulling sampleUser');
-  //     }
-  //   });
-  //   res.send(existingUser);
-  // });
-
   app.post('/api/lfz', requireLogin, async (req, res) => {
     if (req.body.pw === keys.lfzpw) {
       const lfzUserInfo = await User.findById(keys.lfzId, function(err) {
