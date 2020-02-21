@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
-const keys = require('../config/keys');
 
 //Restful/ CRUD operation
 
@@ -11,8 +10,8 @@ module.exports = app => {
   });
 
   app.post('/api/lfz', requireLogin, async (req, res) => {
-    if (req.body.pw === keys.lfzpw) {
-      const lfzUserInfo = await User.findById(keys.lfzId, function(err) {
+    if (req.body.pw === process.env.LFZ_PW) {
+      const lfzUserInfo = await User.findById(process.env.LFZ_ID, function(err) {
         if (err) {
           return res.send('error pulling sampleUser');
         }

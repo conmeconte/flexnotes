@@ -2,7 +2,6 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const LocalStrategy= require('passport-local').Strategy;
 const mongoose = require('mongoose');
-const keys = require('../config/keys');
 const fs            = require('fs');
 const path = require('path');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
@@ -90,8 +89,8 @@ passport.use(
 passport.use(
     new GoogleStrategy(
         {
-            clientID: keys.googleClientID,
-            clientSecret: keys.googleClientSecret,
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             // callbackURL: 'https://flexnotes.conmeconte.com/auth/google/callback'
             callbackURL: '/auth/google/callback'
 
