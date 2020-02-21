@@ -6,3 +6,5 @@ errorLogs
 keys.js
 logins.log
 serverError.log
+.env
+
