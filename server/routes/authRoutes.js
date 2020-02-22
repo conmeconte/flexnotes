@@ -3,7 +3,6 @@ const fs = require('fs');
 const path= require('path');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const LocalStrategy= require('passport-local').Strategy;
-const keys = require('../config/keys');
 const { User, Binder, Tab, Page, Note, Video } = require('../models');
 
 
